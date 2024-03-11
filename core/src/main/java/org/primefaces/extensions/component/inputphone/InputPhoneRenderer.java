@@ -130,13 +130,13 @@ public class InputPhoneRenderer extends InputRenderer {
 
         writer.startElement("span", inputPhone);
         writer.writeAttribute("id", clientId, null);
-        writer.writeAttribute("dir", ComponentUtils.isRTL(context, inputPhone) ? "rtl" : "ltr", null);
         writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
 
         if (inputPhone.getStyle() != null) {
             writer.writeAttribute(Attrs.STYLE, inputPhone.getStyle(), Attrs.STYLE);
         }
 
+        renderRTLDirection(context, inputPhone);
         encodeInput(context, inputPhone, clientId, valueToRender);
         encodeHiddenInputs(context, inputPhone, clientId, valueToRender);
 
@@ -228,6 +228,7 @@ public class InputPhoneRenderer extends InputRenderer {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private Collection<String> toCollection(final Object object) {
         if (object instanceof String) {
             final String string = ((String) object).replace(' ', ',').toLowerCase();
@@ -236,13 +237,14 @@ public class InputPhoneRenderer extends InputRenderer {
         return (Collection<String>) object;
     }
 
+    @SuppressWarnings("unchecked")
     private String objectToJsonString(final Object object) {
         if (object == null || object instanceof String) {
             return (String) object;
         }
-        Map<String, String> map = (Map) object;
+        Map<String, String> map = (Map<String, String>) object;
         JSONObject jsonObj = new JSONObject();
-        map.entrySet().forEach(entry -> jsonObj.put(entry.getKey(), entry.getValue()));
+        map.forEach(jsonObj::put);
         return jsonObj.toString();
     }
 

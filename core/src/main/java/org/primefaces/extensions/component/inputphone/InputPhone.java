@@ -70,28 +70,27 @@ public class InputPhone extends AbstractPrimeHtmlInputText implements Widget, In
     // @formatter:off
     @SuppressWarnings("java:S115")
     public enum PropertyKeys {
-        placeholder,
-        widgetVar,
-        type,
-        dir,
         allowDropdown,
         autoHideDialCode,
         autoPlaceholder,
+        countrySearch,
         excludeCountries,
         fixDropdownWidth,
-        formatOnDisplay,
         formatAsYouType,
+        formatOnDisplay,
+        geoIpLookup,
         initialCountry,
+        inputStyle,
+        inputStyleClass,
+        localizedCountries,
         nationalMode,
         onlyCountries,
+        placeholder,
         placeholderNumberType,
         preferredCountries,
         separateDialCode,
-        inputStyle,
-        inputStyleClass,
-        geoIpLookup,
-        localizedCountries,
-        countrySearch
+        type,
+        widgetVar
     }
 
     @SuppressWarnings("java:S115")
@@ -148,16 +147,6 @@ public class InputPhone extends AbstractPrimeHtmlInputText implements Widget, In
     @Override
     public void setLabelledBy(final String labelledBy) {
         getStateHelper().put("labelledby", labelledBy);
-    }
-
-    @Override
-    public void setDir(final String _dir) {
-        getStateHelper().put(PropertyKeys.dir, _dir);
-    }
-
-    @Override
-    public String getDir() {
-        return (String) getStateHelper().eval(PropertyKeys.dir, "ltr");
     }
 
     public String getPlaceholder() {
