@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+<body>
+
+<ui:composition template="/templates/showcaseLayout.xhtml">
+
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="InputPlace"/>
+        </f:facet>
+        <h:graphicImage library="images" name="inputplace.png" alt="Input Place" height="110" width="110"/>
+        <p>
+            InputPlace is a component to wrap Google Places AutoComplete functionality.
+        </p>
+        <p>
+            Autocomplete is a feature of the Places library in the Maps JavaScript API. You can use autocomplete to give your
+            applications the type-ahead-search behavior of the Google Maps search field. The autocomplete service can match
+            on full words and substrings, resolving place names, addresses, and plus codes. Applications can therefore send
+            queries as the user types, to provide on-the-fly place predictions.
+        </p>
+        <p>
+            Based on <h:outputLink id="placeLink"
+                                   value="https://developers.google.com/maps/documentation/javascript/place-autocomplete">Google Places AutoComplete</h:outputLink> by Google.
+        </p>
+    </ui:define>
+
+    <ui:define name="useCases">
+        <ui:include src="/sections/inputplace/useCasesChoice.xhtml"/>
+    </ui:define>
+
+    <ui:define name="docuTable">
+        <ui:include src="/sections/shared/documentation.xhtml">
+            <ui:param name="tagName" value="inputPlace"/>
+        </ui:include>
+    </ui:define>
+
+</ui:composition>
+
+</body>
+</html>

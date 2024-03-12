@@ -1,0 +1,88 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions"
+        xmlns:jsf="http://xmlns.jcp.org/jsf"
+>
+
+    <!-- EXAMPLE-SOURCE-START -->
+    <script async="async" defer="defer" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvCDkYieuUBmMWon_mfLAfjuaeuosuqow&amp;loading=async&amp;libraries=places" />
+
+    <p:growl id="growl" showDetail="true" showSummary="true" globalOnly="false">
+        <p:autoUpdate/>
+    </p:growl>
+
+    <div jsf:id="inputGroup" class="field grid">
+        <p:outputLabel for="txtPlace" value="Location:" styleClass="col-12 md:col-1"/>
+        <div class="col-12 md:col-6">
+            <div  class="ui-inputgroup">
+                <div class="ui-inputgroup-addon"><i class="fa-solid fa-location-dot"></i></div>
+                <pe:inputPlace id="txtPlace" widgetVar="place" value="#{basicInputPlaceController.input}" required="true"
+                               placeholder="Enter a location" styleClass="w-full" restrictCountries="us,ca">
+                    <p:ajax event="placeChanged" listener="#{basicInputPlaceController.onPlaceChanged}" update="selectedPlace"/>
+                </pe:inputPlace>
+            </div>
+        </div>
+        <div class="col-12 md:col-2">
+            <p:commandButton value="Submit" actionListener="#{basicInputPlaceController.submit}" update="inputGroup"/>
+        </div>
+    </div>
+
+    <div jsf:id="selectedPlace">
+        <p:card rendered="#{basicInputPlaceController.selectedPlace != null}">
+            <f:facet name="title">
+                Type: #{basicInputPlaceController.selectedPlace.types}
+            </f:facet>
+            <p:divider/>
+            <div class="formgrid grid">
+                <div class="field col-12 md:col-4">
+                    <label>Place ID</label>
+                    <p:inputText  value="#{basicInputPlaceController.selectedPlace.placeId}" readonly="true" styleClass="w-full" />
+                </div>
+                <div class="field col-12 md:col-4">
+                    <label>Latitude</label>
+                    <p:inputText value="#{basicInputPlaceController.selectedPlace.latitude}" readonly="true" styleClass="w-full" />
+                </div>
+                <div class="field col-12 md:col-4">
+                    <label>Longitude</label>
+                    <p:inputText value="#{basicInputPlaceController.selectedPlace.longitude}" readonly="true" styleClass="w-full" />
+                </div>
+                <div class="field col-12">
+                    <label>Formatted Address</label>
+                    <p:inputText value="#{basicInputPlaceController.selectedPlace.formattedAddress}" readonly="true" styleClass="w-full" />
+                </div>
+                <div class="field col-12">
+                    <label>Address Line</label>
+                    <p:inputText value="#{basicInputPlaceController.selectedPlace.addressLine}" readonly="true" styleClass="w-full" />
+                </div>
+                <div class="field col-12 md:col-3">
+                    <label>City</label>
+                    <p:inputText value="#{basicInputPlaceController.selectedPlace.city}" readonly="true" styleClass="w-full" />
+                </div>
+                <div class="field col-12 md:col-3">
+                    <label>State</label>
+                    <p:inputText value="#{basicInputPlaceController.selectedPlace.state}" readonly="true" styleClass="w-full" />
+                </div>
+                <div class="field col-12 md:col-3">
+                    <label>Country</label>
+                    <p:inputText value="#{basicInputPlaceController.selectedPlace.country}" readonly="true" styleClass="w-full" />
+                </div>
+                <div class="field col-12 md:col-3">
+                    <label>Postal Code</label>
+                    <p:inputText value="#{basicInputPlaceController.selectedPlace.postalCode}" readonly="true" styleClass="w-full" />
+                </div>
+                <div class="field col-12 md:col-6">
+                    <label>Area 2</label>
+                    <p:inputText value="#{basicInputPlaceController.selectedPlace.administrativeAreaLevel2}" readonly="true" styleClass="w-full" />
+                </div>
+                <div class="field col-12 md:col-6">
+                    <label>Area 3</label>
+                    <p:inputText value="#{basicInputPlaceController.selectedPlace.administrativeAreaLevel3}" readonly="true" styleClass="w-full" />
+                </div>
+            </div>
+        </p:card>
+    </div>
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>
