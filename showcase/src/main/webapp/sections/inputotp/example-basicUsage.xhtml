@@ -13,9 +13,9 @@
 
     <h:panelGrid id="pnlOtp" columns="2" rowClasses="mb-2">
         <p:outputLabel for="@next" value="Required"/>
-        <pe:inputOtp id="txtNormal" length="6" value="#{basicInputOtpController.normal}" required="true"/>
+        <pe:inputOtp id="txtNormal" length="4" value="#{basicInputOtpController.normal}" required="true"/>
         <p:outputLabel for="@next" value="Password"/>
-        <pe:inputOtp id="txtPassword" length="6" mask="true" value="#{basicInputOtpController.password}"/>
+        <pe:inputOtp id="txtPassword" length="5" mask="true" value="#{basicInputOtpController.password}"/>
         <p:outputLabel for="@next" value="Number"/>
         <pe:inputOtp id="txtNumber" length="6" integerOnly="true" value="#{basicInputOtpController.number}"/>
     </h:panelGrid>

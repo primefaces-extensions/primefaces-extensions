@@ -4,34 +4,43 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
 
-    <body>
+<body>
 
-        <ui:composition template="/templates/showcaseLayout.xhtml">
+<ui:composition template="/templates/showcaseLayout.xhtml">
 
-            <ui:define name="centerContent">
-                <f:facet name="header">
-                    <h:outputText value="InputOtp"/>
-                </f:facet>
-                <h:graphicImage library="images" name="inputotp.png" alt="Input OTP" height="130" width="130" />
-                <p>
-                InputOtp is an input component suitable for inserting fixed-size PINs or one time passwords (OTP).
-                </p>
-                <p>
-                    Based on <h:outputLink id="githubLink" value="https://github.com/shuqikhor/Vanilla-OTP-Input">Vanilla OTP Input</h:outputLink> by Shuqi Khor.
-                </p>
-            </ui:define>
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="InputOtp"/>
+        </f:facet>
+        <h:graphicImage library="images" name="inputotp.png" alt="Input OTP" height="130" width="130"/>
+        <p>
+            InputOtp is an input component suitable for inserting fixed-size PINs or one time passwords (OTP).
+        </p>
+        <p>
+            A one-time password (OTP), also known as a one-time PIN, one-time authorization code (OTAC) or dynamic password,
+            is a password that is valid for only one login session or transaction, on a computer system or other digital device.
+            OTPs avoid several shortcomings that are associated with traditional (static) password-based authentication;
+            a number of implementations also incorporate two-factor authentication by ensuring that the one-time password
+            requires access to something a person has (such as a small keyring fob device with the OTP calculator built into it,
+            or a smartcard or specific cellphone) as well as something a person knows (such as a PIN).
+        </p>
+        <p>
+            Based on <h:outputLink id="githubLink"
+                                   value="https://github.com/shuqikhor/Vanilla-OTP-Input">Vanilla OTP Input</h:outputLink> by Shuqi Khor.
+        </p>
+    </ui:define>
 
-            <ui:define name="useCases">
-                <ui:include src="/sections/inputotp/useCasesChoice.xhtml"/>
-            </ui:define>
+    <ui:define name="useCases">
+        <ui:include src="/sections/inputotp/useCasesChoice.xhtml"/>
+    </ui:define>
 
-            <ui:define name="docuTable">
-                <ui:include src="/sections/shared/documentation.xhtml">
-                    <ui:param name="tagName" value="inputOtp"/>
-                </ui:include>
-            </ui:define>
+    <ui:define name="docuTable">
+        <ui:include src="/sections/shared/documentation.xhtml">
+            <ui:param name="tagName" value="inputOtp"/>
+        </ui:include>
+    </ui:define>
 
-        </ui:composition>
+</ui:composition>
 
-    </body>
+</body>
 </html>
