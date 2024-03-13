@@ -231,6 +231,14 @@ PrimeFaces.widget.ExtInputPlace = PrimeFaces.widget.BaseWidget.extend({
     },
 
     /**
+     * Returns the current Google Places instance.
+     * @return {google.maps.places.Place} The current map instance.
+     */
+    getPlace: function() {
+        return this.autocomplete.getPlace();
+    },
+
+    /**
      * Disables this input so that the user cannot enter a value anymore.
      */
     disable: function () {
