@@ -67,8 +67,23 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
                 $this.callBehavior('countrySelect', ext);
             }
         });
-        this.input.addEventListener('input', function () {
+
+        // get the current attached events if using CSP
+        let events = this.inputJq[0] ? $._data(this.inputJq[0], "events") : null;
+
+        // use DOM if non-CSP and JQ event if CSP
+        let originalOninput = this.inputJq.prop('oninput');
+        if (!originalOninput && events && events.input) {
+            originalOninput = events.input[0].handler;
+        }
+
+        this.inputJq.prop('oninput', null).off('input').on('input', function (e) {
+            let oldVal = $this.inputHiddenJq.val();
             $this.inputHiddenJq.val($this.getNumber());
+            if (originalOninput && originalOninput.call(this, e) === false) {
+                $this.inputHiddenJq.val(oldVal);
+                return false;
+            }
         });
     },
 
