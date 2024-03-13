@@ -26,7 +26,7 @@
         </converter>
         <attribute>
             <description>
-                <![CDATA[Data type of the value object (optional). Any primitive type, array, non generic or generic type is supported. Data type is sometimes required to convert a value to a JSON representation. All data types should be fully qualified. Default is null.]]>
+                <![CDATA[Data type of the value object (optional). Any primitive type, array, non-generic or generic type is supported. Data type is sometimes required to convert a value to a JSON representation. All data types should be fully qualified. Default is null.]]>
             </description>
             <name>type</name>
             <required>false</required>
@@ -531,11 +531,11 @@
                 <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneEditorConstructionOptions.html">IStandaloneEditorConstructionOptions</a>
                 for all editor options.</li>
                 <li>afterCreate(editorWidget). Called after the editor was created.</li>
-                <li>beforeDestroy(editorWidget). Called before the editor is destroyed, eg. when updating a component via AJAX.</li>
-                <li>afterDestroy(editorWidget). Called after the editor is destroyed, eg. when updating a component via AJAX. Note that <code>editorWidget.getMonaco()</code> now returns undefined.</li>
-                <li>createModel(editorWidget, options). Called when a model needs to retrieved or created. The options contains <code>value</code> (current value that should be set on the model by the extender), <code>url</code> (default URL that was determined for the model), <code>language</code> (requested code language), and <code>editorOptions</code> (monaco editor constructor options). Should return the model. When it returns nothing, the default mechanism for creating a model is used. Note that <code>editorWidget.getMonaco()</code> returns undefined as the monaco editor was not created yet.</li>
-                <li>createEditorOverrideServices(editorWidget, options). Called when the monaco editor is created. May return an object with services that should be overriden. See <a href="https://github.com/Microsoft/monaco-editor/issues/935#issuecomment-402174095">here on github</a> for details on the available services. The options are the editor constructor options that will be used to create the editor, they are readonly and must not be changed.</li>
-                <li>createWorker(editorWidget, moduleId, label). Called when a worker for additional language support needs to be created. By default, monaco editor ships with the workers for JSON, CSS, HTML, and TYPESCRIPT. The label is the name of the language, eg. <code>css</code> or <code>javascript</code>. Must return the worker to be used for the given language. Note that <code>editorWidget.getMonaco()</code> returns undefined as the monaco editor was not created yet.</li>
+                <li>beforeDestroy(editorWidget). Called before the editor is destroyed, e.g. when updating a component via AJAX.</li>
+                <li>afterDestroy(editorWidget). Called after the editor is destroyed, e.g. when updating a component via AJAX. Note that <code>editorWidget.getMonaco()</code> now returns undefined.</li>
+                <li>createModel(editorWidget, options). Called when a model needs to retrieved or created. The options contain <code>value</code> (current value that should be set on the model by the extender), <code>url</code> (default URL that was determined for the model), <code>language</code> (requested code language), and <code>editorOptions</code> (monaco editor constructor options). Should return the model. When it returns nothing, the default mechanism for creating a model is used. Note that <code>editorWidget.getMonaco()</code> returns undefined as the monaco editor was not created yet.</li>
+                <li>createEditorOverrideServices(editorWidget, options). Called when the monaco editor is created. May return an object with services that should be overriden. See <a href="https://github.com/Microsoft/monaco-editor/issues/935#issuecomment-402174095">here on GitHub</a> for details on the available services. The options are the editor constructor options that will be used to create the editor, they are readonly and must not be changed.</li>
+                <li>createWorker(editorWidget, moduleId, label). Called when a worker for additional language support needs to be created. By default, monaco editor ships with the workers for JSON, CSS, HTML, and TYPESCRIPT. The label is the name of the language, e.g. <code>css</code> or <code>javascript</code>. Must return the worker to be used for the given language. Note that <code>editorWidget.getMonaco()</code> returns undefined as the monaco editor was not created yet.</li>
                 </ul>
                 ]]>
             </description>
@@ -793,7 +793,7 @@
         <attribute>
             <description>
                 <![CDATA[Client side callback when the editor area receives focus.
-                Please not that the callback is run in the context of the main window, not in the iframe context.]]>
+                Please note that the callback is run in the context of the main window, not in the iframe context.]]>
             </description>
             <name>onfocus</name>
             <required>false</required>
@@ -802,7 +802,7 @@
         <attribute>
             <description>
                 <![CDATA[Client side callback when the editor area loses focus.
-                Please not that the callback is run in the context of the main window, not in the iframe context.]]>
+                Please note that the callback is run in the context of the main window, not in the iframe context.]]>
             </description>
             <name>onblur</name>
             <required>false</required>
@@ -811,7 +811,7 @@
         <attribute>
             <description>
                 <![CDATA[Client side callback when the editor content changes.
-                Please not that the callback is run in the context of the main window, not in the iframe context.]]>
+                Please note that the callback is run in the context of the main window, not in the iframe context.]]>
             </description>
             <name>onchange</name>
             <required>false</required>
@@ -820,7 +820,7 @@
         <attribute>
             <description>
                 <![CDATA[Client side callback when the editor was rendered.
-                Please not that the callback is run in the context of the main window, not in the iframe context.]]>
+                Please note that the callback is run in the context of the main window, not in the iframe context.]]>
             </description>
             <name>oninitialized</name>
             <required>false</required>
@@ -829,7 +829,7 @@
         <attribute>
             <description>
                 <![CDATA[Client side callback when text was pasted into the editor.
-                Please not that the callback is run in the context of the main window, not in the iframe context.]]>
+                Please note that the callback is run in the context of the main window, not in the iframe context.]]>
             </description>
             <name>onpaste</name>
             <required>false</required>
@@ -838,7 +838,7 @@
         <attribute>
             <description>
                 <![CDATA[Client side callback when a mousedown event was triggered on the editor area.
-                Please not that the callback is run in the context of the main window, not in the iframe context.]]>
+                Please note that the callback is run in the context of the main window, not in the iframe context.]]>
             </description>
             <name>onmousedown</name>
             <required>false</required>
@@ -847,7 +847,7 @@
         <attribute>
             <description>
                 <![CDATA[Client side callback when a mousemove event was triggered on the editor area.
-                Please not that the callback is run in the context of the main window, not in the iframe context.]]>
+                Please note that the callback is run in the context of the main window, not in the iframe context.]]>
             </description>
             <name>onmousemove</name>
             <required>false</required>
@@ -856,7 +856,7 @@
         <attribute>
             <description>
                 <![CDATA[Client side callback when a mouseup event was triggered on the editor area.
-                Please not that the callback is run in the context of the main window, not in the iframe context.]]>
+                Please note that the callback is run in the context of the main window, not in the iframe context.]]>
             </description>
             <name>onmouseup</name>
             <required>false</required>
@@ -865,7 +865,7 @@
         <attribute>
             <description>
                 <![CDATA[Client side callback when a keyup event was triggered on the editor area.
-                Please not that the callback is run in the context of the main window, not in the iframe context.]]>
+                Please note that the callback is run in the context of the main window, not in the iframe context.]]>
             </description>
             <name>onkeyup</name>
             <required>false</required>
@@ -874,7 +874,7 @@
         <attribute>
             <description>
                 <![CDATA[Client side callback when a keydown event was triggered on the editor area.
-                Please not that the callback is run in the context of the main window, not in the iframe context.]]>
+                Please note that the callback is run in the context of the main window, not in the iframe context.]]>
             </description>
             <name>onkeydown</name>
             <required>false</required>
@@ -935,11 +935,11 @@
                 <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneEditorConstructionOptions.html">IStandaloneEditorConstructionOptions</a>
                 for all editor options.</li>
                 <li>afterCreate(monacoContext). Called after the editor was created.</li>
-                <li>beforeDestroy(monacoContext). Called before the editor is destroyed, eg. when updating a component via AJAX.</li>
-                <li>afterDestroy(monacoContext). Called after the editor is destroyed, eg. when updating a component via AJAX. Note that <code>monacoContext.getMonaco()</code> now returns undefined.</li>
-                <li>createEditorOverrideServices(monacoContext, options). Called when the monaco editor is created. May return an object with services that should be overriden. See <a href="https://github.com/Microsoft/monaco-editor/issues/935#issuecomment-402174095">here on github</a> for details on the available services. The options are the editor constructor options that will be used to create the editor, they are readonly and must not be changed.</li>
-                <li>createModel(monacoContext, options). Called when a model needs to retrieved or created. The options contains <code>value</code> (current value that should be set on the model by the extender), <code>url</code> (default URL that was determined for the model), <code>language</code> (requested code language), and <code>editorOptions</code> (monaco editor constructor options). Should return the model. When it returns nothing, the default mechanism for creating a model is used. Note that <code>monacoContext.getMonaco()</code> returns undefined as the Monaco editor was not created yet.</li>
-                <li>createWorker(monacoContext, moduleId, label). Called when a worker for additional language support needs to be created. By default, monaco editor ships with the workers for JSON, CSS, HTML, and TYPESCRIPT. The label is the name of the language, eg. <code>css</code> or <code>javascript</code>. Must return the worker to be used for the given language. Note that <code>monacoContext.getMonaco()</code> returns undefined as the Monaco editor was not created yet.</li>
+                <li>beforeDestroy(monacoContext). Called before the editor is destroyed, e.g. when updating a component via AJAX.</li>
+                <li>afterDestroy(monacoContext). Called after the editor is destroyed, e.g. when updating a component via AJAX. Note that <code>monacoContext.getMonaco()</code> now returns undefined.</li>
+                <li>createEditorOverrideServices(monacoContext, options). Called when the monaco editor is created. May return an object with services that should be overriden. See <a href="https://github.com/Microsoft/monaco-editor/issues/935#issuecomment-402174095">here on GitHub</a> for details on the available services. The options are the editor constructor options that will be used to create the editor, they are readonly and must not be changed.</li>
+                <li>createModel(monacoContext, options). Called when a model needs to retrieved or created. The options contain <code>value</code> (current value that should be set on the model by the extender), <code>url</code> (default URL that was determined for the model), <code>language</code> (requested code language), and <code>editorOptions</code> (monaco editor constructor options). Should return the model. When it returns nothing, the default mechanism for creating a model is used. Note that <code>monacoContext.getMonaco()</code> returns undefined as the Monaco editor was not created yet.</li>
+                <li>createWorker(monacoContext, moduleId, label). Called when a worker for additional language support needs to be created. By default, monaco editor ships with the workers for JSON, CSS, HTML, and TYPESCRIPT. The label is the name of the language, e.g. <code>css</code> or <code>javascript</code>. Must return the worker to be used for the given language. Note that <code>monacoContext.getMonaco()</code> returns undefined as the Monaco editor was not created yet.</li>
                 </ul>
                 All methods of the extender are evaluated within the iframe page, so the editor widget instance is not
                 available. The <code>monacoContext</code> passed as the first argument to the extender methods is an object
@@ -1472,12 +1472,12 @@
                 <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneDiffEditorConstructionOptions.html">IStandaloneDiffEditorConstructionOptions</a>
                 for all editor options.</li>
                 <li>afterCreate(editorWidget). Called after the editor was created.</li>
-                <li>beforeDestroy(editorWidget). Called before the editor is destroyed, eg. when updating a component via AJAX.</li>
-                <li>afterDestroy(editorWidget). Called after the editor is destroyed, eg. when updating a component via AJAX. Note that <code>editorWidget.getMonaco()</code> now returns undefined.</li>
-                <li>createModel(editorWidget, options). Called when a for the modified editor model needs to retrieved or created. The options contains <code>value</code> (current value that should be set on the model by the extender), <code>url</code> (default URL that was determined for the model), <code>language</code> (requested code language), and <code>editorOptions</code> (monaco editor constructor options). Should return the model. When it returns nothing, the default mechanism for creating a model is used. Note that <code>editorWidget.getMonaco()</code> returns undefined as the monaco editor was not created yet.</li>
-                <li>createOriginalModel(editorWidget, options). Called when a model for the original editor needs to retrieved or created. The options contains <code>value</code> (current value that should be set on the model by the extender), <code>url</code> (default URL that was determined for the model), <code>language</code> (requested code language), and <code>editorOptions</code> (monaco editor constructor options). Should return the model. When it returns nothing, the default mechanism for creating a model is used. Note that <code>editorWidget.getMonaco()</code> returns undefined as the monaco editor was not created yet.</li>
-                <li>createEditorOverrideServices(editorWidget, options). Called when the monaco editor is created. May return an object with services that should be overriden. See <a href="https://github.com/Microsoft/monaco-editor/issues/935#issuecomment-402174095">here on github</a> for details on the available services. The options are the editor constructor options that will be used to create the editor, they are readonly and must not be changed.</li>
-                <li>createWorker(editorWidget, moduleId, label). Called when a worker for additional language support needs to be created. By default, monaco editor ships with the workers for JSON, CSS, HTML, and TYPESCRIPT. The label is the name of the language, eg. <code>css</code> or <code>javascript</code>. Must return the worker to be used for the given language. Note that <code>editorWidget.getMonaco()</code> returns undefined as the monaco editor was not created yet.</li>
+                <li>beforeDestroy(editorWidget). Called before the editor is destroyed, e.g. when updating a component via AJAX.</li>
+                <li>afterDestroy(editorWidget). Called after the editor is destroyed, e.g. when updating a component via AJAX. Note that <code>editorWidget.getMonaco()</code> now returns undefined.</li>
+                <li>createModel(editorWidget, options). Called when a for the modified editor model needs to retrieved or created. The options contain <code>value</code> (current value that should be set on the model by the extender), <code>url</code> (default URL that was determined for the model), <code>language</code> (requested code language), and <code>editorOptions</code> (monaco editor constructor options). Should return the model. When it returns nothing, the default mechanism for creating a model is used. Note that <code>editorWidget.getMonaco()</code> returns undefined as the monaco editor was not created yet.</li>
+                <li>createOriginalModel(editorWidget, options). Called when a model for the original editor needs to retrieved or created. The options contain <code>value</code> (current value that should be set on the model by the extender), <code>url</code> (default URL that was determined for the model), <code>language</code> (requested code language), and <code>editorOptions</code> (monaco editor constructor options). Should return the model. When it returns nothing, the default mechanism for creating a model is used. Note that <code>editorWidget.getMonaco()</code> returns undefined as the monaco editor was not created yet.</li>
+                <li>createEditorOverrideServices(editorWidget, options). Called when the monaco editor is created. May return an object with services that should be overriden. See <a href="https://github.com/Microsoft/monaco-editor/issues/935#issuecomment-402174095">here on GitHub</a> for details on the available services. The options are the editor constructor options that will be used to create the editor, they are readonly and must not be changed.</li>
+                <li>createWorker(editorWidget, moduleId, label). Called when a worker for additional language support needs to be created. By default, monaco editor ships with the workers for JSON, CSS, HTML, and TYPESCRIPT. The label is the name of the language, e.g. <code>css</code> or <code>javascript</code>. Must return the worker to be used for the given language. Note that <code>editorWidget.getMonaco()</code> returns undefined as the monaco editor was not created yet.</li>
                 </ul>
                 ]]>
             </description>
@@ -1812,7 +1812,7 @@
         <attribute>
             <description>
                 <![CDATA[Client side callback when the editor area receives focus.
-                Please not that the callback is run in the context of the main window, not in the iframe context.]]>
+                Please note that the callback is run in the context of the main window, not in the iframe context.]]>
             </description>
             <name>onfocus</name>
             <required>false</required>
@@ -1821,7 +1821,7 @@
         <attribute>
             <description>
                 <![CDATA[Client side callback when the editor area loses focus.
-                Please not that the callback is run in the context of the main window, not in the iframe context.]]>
+                Please note that the callback is run in the context of the main window, not in the iframe context.]]>
             </description>
             <name>onblur</name>
             <required>false</required>
@@ -1830,7 +1830,7 @@
         <attribute>
             <description>
                 <![CDATA[Client side callback when the editor content changes.
-                Please not that the callback is run in the context of the main window, not in the iframe context.]]>
+                Please note that the callback is run in the context of the main window, not in the iframe context.]]>
             </description>
             <name>onchange</name>
             <required>false</required>
@@ -1839,7 +1839,7 @@
         <attribute>
             <description>
                 <![CDATA[Client side callback when the editor was rendered.
-                Please not that the callback is run in the context of the main window, not in the iframe context.]]>
+                Please note that the callback is run in the context of the main window, not in the iframe context.]]>
             </description>
             <name>oninitialized</name>
             <required>false</required>
@@ -1848,7 +1848,7 @@
         <attribute>
             <description>
                 <![CDATA[Client side callback when text was pasted into the editor.
-                Please not that the callback is run in the context of the main window, not in the iframe context.]]>
+                Please note that the callback is run in the context of the main window, not in the iframe context.]]>
             </description>
             <name>onpaste</name>
             <required>false</required>
@@ -1857,7 +1857,7 @@
         <attribute>
             <description>
                 <![CDATA[Client side callback when a mousedown event was triggered on the editor area.
-                Please not that the callback is run in the context of the main window, not in the iframe context.]]>
+                Please note that the callback is run in the context of the main window, not in the iframe context.]]>
             </description>
             <name>onmousedown</name>
             <required>false</required>
@@ -1866,7 +1866,7 @@
         <attribute>
             <description>
                 <![CDATA[Client side callback when a mousemove event was triggered on the editor area.
-                Please not that the callback is run in the context of the main window, not in the iframe context.]]>
+                Please note that the callback is run in the context of the main window, not in the iframe context.]]>
             </description>
             <name>onmousemove</name>
             <required>false</required>
@@ -1875,7 +1875,7 @@
         <attribute>
             <description>
                 <![CDATA[Client side callback when a mouseup event was triggered on the editor area.
-                Please not that the callback is run in the context of the main window, not in the iframe context.]]>
+                Please note that the callback is run in the context of the main window, not in the iframe context.]]>
             </description>
             <name>onmouseup</name>
             <required>false</required>
@@ -1884,7 +1884,7 @@
         <attribute>
             <description>
                 <![CDATA[Client side callback when a keyup event was triggered on the editor area.
-                Please not that the callback is run in the context of the main window, not in the iframe context.]]>
+                Please note that the callback is run in the context of the main window, not in the iframe context.]]>
             </description>
             <name>onkeyup</name>
             <required>false</required>
@@ -1893,7 +1893,7 @@
         <attribute>
             <description>
                 <![CDATA[Client side callback when a keydown event was triggered on the editor area.
-                Please not that the callback is run in the context of the main window, not in the iframe context.]]>
+                Please note that the callback is run in the context of the main window, not in the iframe context.]]>
             </description>
             <name>onkeydown</name>
             <required>false</required>
@@ -2055,12 +2055,12 @@
                 <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneDiffEditorConstructionOptions.html">IStandaloneDiffEditorConstructionOptions</a>
                 for all editor options.</li>
                 <li>afterCreate(monacoContext). Called after the editor was created.</li>
-                <li>beforeDestroy(monacoContext). Called before the editor is destroyed, eg. when updating a component via AJAX.</li>
-                <li>afterDestroy(monacoContext). Called after the editor is destroyed, eg. when updating a component via AJAX. Note that <code>monacoContext.getMonaco()</code> now returns undefined.</li>
-                <li>createEditorOverrideServices(monacoContext, options). Called when the monaco editor is created. May return an object with services that should be overriden. See <a href="https://github.com/Microsoft/monaco-editor/issues/935#issuecomment-402174095">here on github</a> for details on the available services. The options are the editor constructor options that will be used to create the editor, they are readonly and must not be changed.</li>
-                <li>createModel(monacoContext, options). Called when a model for the modified needs to retrieved or created. The options contains <code>value</code> (current value that should be set on the model by the extender), <code>url</code> (default URL that was determined for the model), <code>language</code> (requested code language), and <code>editorOptions</code> (monaco editor constructor options). Should return the model. When it returns nothing, the default mechanism for creating a model is used. Note that <code>monacoContext.getMonaco()</code> returns undefined as the Monaco editor was not created yet.</li>
-                <li>createOriginalModel(monacoContext, options). Called when a model for the original editor needs to retrieved or created. The options contains <code>value</code> (current value that should be set on the model by the extender), <code>url</code> (default URL that was determined for the model), <code>language</code> (requested code language), and <code>editorOptions</code> (monaco editor constructor options). Should return the model. When it returns nothing, the default mechanism for creating a model is used. Note that <code>monacoContext.getMonaco()</code> returns undefined as the Monaco editor was not created yet.</li>
-                <li>createWorker(monacoContext, moduleId, label). Called when a worker for additional language support needs to be created. By default, monaco editor ships with the workers for JSON, CSS, HTML, and TYPESCRIPT. The label is the name of the language, eg. <code>css</code> or <code>javascript</code>. Must return the worker to be used for the given language. Note that <code>monacoContext.getMonaco()</code> returns undefined as the Monaco editor was not created yet.</li>
+                <li>beforeDestroy(monacoContext). Called before the editor is destroyed, e.g. when updating a component via AJAX.</li>
+                <li>afterDestroy(monacoContext). Called after the editor is destroyed, e.g. when updating a component via AJAX. Note that <code>monacoContext.getMonaco()</code> now returns undefined.</li>
+                <li>createEditorOverrideServices(monacoContext, options). Called when the monaco editor is created. May return an object with services that should be overriden. See <a href="https://github.com/Microsoft/monaco-editor/issues/935#issuecomment-402174095">here on GitHub</a> for details on the available services. The options are the editor constructor options that will be used to create the editor, they are readonly and must not be changed.</li>
+                <li>createModel(monacoContext, options). Called when a model for the modified needs to retrieved or created. The options contain <code>value</code> (current value that should be set on the model by the extender), <code>url</code> (default URL that was determined for the model), <code>language</code> (requested code language), and <code>editorOptions</code> (monaco editor constructor options). Should return the model. When it returns nothing, the default mechanism for creating a model is used. Note that <code>monacoContext.getMonaco()</code> returns undefined as the Monaco editor was not created yet.</li>
+                <li>createOriginalModel(monacoContext, options). Called when a model for the original editor needs to retrieved or created. The options contain <code>value</code> (current value that should be set on the model by the extender), <code>url</code> (default URL that was determined for the model), <code>language</code> (requested code language), and <code>editorOptions</code> (monaco editor constructor options). Should return the model. When it returns nothing, the default mechanism for creating a model is used. Note that <code>monacoContext.getMonaco()</code> returns undefined as the Monaco editor was not created yet.</li>
+                <li>createWorker(monacoContext, moduleId, label). Called when a worker for additional language support needs to be created. By default, monaco editor ships with the workers for JSON, CSS, HTML, and TYPESCRIPT. The label is the name of the language, e.g. <code>css</code> or <code>javascript</code>. Must return the worker to be used for the given language. Note that <code>monacoContext.getMonaco()</code> returns undefined as the Monaco editor was not created yet.</li>
                 </ul>
                 All methods of the extender are evaluated within the iframe page, so the editor widget instance is not
                 available. The <code>monacoContext</code> passed as the first argument to the extender methods is an object
@@ -2241,7 +2241,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[The trigger to execute the action. Typically a button.]]>
+                <![CDATA[The trigger to execute the action. Typically, a button.]]>
             </description>
             <name>trigger</name>
             <required>true</required>
@@ -2356,7 +2356,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Client side callback to execute when input element is double clicked.]]>
+                <![CDATA[Client side callback to execute when input element is double-clicked.]]>
             </description>
             <name>ondblclick</name>
             <required>false</required>
@@ -3210,7 +3210,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Name of the request-scoped variable which contains the prefix of the client Id within pe:dynaFormControl. This property allows to get the whole clientId of a component within pe:dynaFormControl. The whole client Id is sometimes required for JavaScript or RequestContext.update(...).]]>
+                <![CDATA[Name of the request-scoped variable which contains the prefix of the client ID within pe:dynaFormControl. This property allows to get the whole clientId of a component within pe:dynaFormControl. The whole client ID is sometimes required for JavaScript or RequestContext.update(...).]]>
             </description>
             <name>varContainerId</name>
             <required>false</required>
@@ -3389,7 +3389,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Name of the request-scoped variable which contains the prefix of the client Id within pe:fluidGridItem. This property allows to get the whole clientId of a component within pe:fluidGridItem. The whole client Id is sometimes required for JavaScript or RequestContext.update(...).]]>
+                <![CDATA[Name of the request-scoped variable which contains the prefix of the client ID within pe:fluidGridItem. This property allows to get the whole clientId of a component within pe:fluidGridItem. The whole client ID is sometimes required for JavaScript or RequestContext.update(...).]]>
             </description>
             <name>varContainerId</name>
             <required>false</required>
@@ -3453,7 +3453,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Binds layout to window resizing. You can bind and unbind resize layout afterwards with the bindResize and unbindResize client-side widget's methods. Default is true.]]>
+                <![CDATA[Binds layout to window resizing. You can bind and unbind resize layout afterward with the bindResize and unbindResize client-side widget's methods. Default is true.]]>
             </description>
             <name>resizeBound</name>
             <required>false</required>
@@ -3461,7 +3461,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Specifies which elements are stamped within the layout. These are special layout elements which will not be laid out. Rather, FluidGrid will layout item elements below stamped elements. You can use here every search expressions supported by PrimeFaces Search Expression Framework. Default is null.]]>
+                <![CDATA[Specifies which elements are stamped within the layout. These are special layout elements which will not be laid out. Rather, FluidGrid will lay out item elements below stamped elements. You can use here every search expressions supported by PrimeFaces Search Expression Framework. Default is null.]]>
             </description>
             <name>stamp</name>
             <required>false</required>
@@ -3477,7 +3477,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean flag if items contain any images. This can fix overlapping items which are caused by items that change size after a layout due to unloaded media like images. Setting this flag allows to layout all items after they have their proper sizes (images have been loaded). Default value is false.]]>
+                <![CDATA[Boolean flag if items contain any images. This can fix overlapping items which are caused by items that change size after a layout due to unloaded media like images. Setting this flag allows to lay out all items after they have their proper sizes (images have been loaded). Default value is false.]]>
             </description>
             <name>hasImages</name>
             <required>false</required>
@@ -3900,7 +3900,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[If set to true, clicking outside the selection area will not start a new selection (ie. the user will only be able to move/resize the existing selection area). Default value: false.]]>
+                <![CDATA[If set to true, clicking outside the selection area will not start a new selection (i.e. the user will only be able to move/resize the existing selection area). Default value: false.]]>
             </description>
             <name>persistent</name>
             <required>false</required>
@@ -5231,7 +5231,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Level of this detail. Level is unique inside of masterDetail component. This is a required attribute. Default is none.]]>
+                <![CDATA[Level of this detail. Level is unique inside masterDetail component. This is a required attribute. Default is none.]]>
             </description>
             <name>level</name>
             <required>true</required>
@@ -5655,7 +5655,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Client side callback to execute when input element is double clicked.]]>
+                <![CDATA[Client side callback to execute when input element is double-clicked.]]>
             </description>
             <name>ondblclick</name>
             <required>false</required>
@@ -5903,7 +5903,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Defines whether or not to show AM/PM with selected time. Default is false.]]>
+                <![CDATA[Defines whether to show AM/PM with selected time. Default is false.]]>
             </description>
             <name>showPeriod</name>
             <required>false</required>
@@ -7170,7 +7170,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[The format to use when diplaying the value. Accepted values are: 'percentage' to diplay the remaining time as percentage. 'Human' to print a human readable interval. Any other value will be evaluated as a moment.js format]]>
+                <![CDATA[The format to use when displaying the value. Accepted values are: 'percentage' to display the remaining time as percentage. 'Human' to print a human-readable interval. Any other value will be evaluated as a moment.js format]]>
             </description>
             <name>format</name>
             <required>false</required>
@@ -7922,7 +7922,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[How the sheet rows should be sorted initially. If it is an expression, it must evaluate to the property to be used for sorting - this will not work when columns are specified dynamically. Otherwise, it can also be the ID (without any naming containers prefixed, ie. no parent elements with colons) of a sheet column by which the sheet rows should be sorted. In this case, you also need to set the sortBy attribute on the sheet column.]]>
+                <![CDATA[How the sheet rows should be sorted initially. If it is an expression, it must evaluate to the property to be used for sorting - this will not work when columns are specified dynamically. Otherwise, it can also be the ID (without any naming containers prefixed, i.e. no parent elements with colons) of a sheet column by which the sheet rows should be sorted. In this case, you also need to set the sortBy attribute on the sheet column.]]>
             </description>
             <name>sortBy</name>
             <required>false</required>
@@ -7962,7 +7962,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Choose between selecting a single cell, a range of adjacent cells and multiple ranges of non-contiguous cells..  Valid values are "single", "multiple", "range".]]>
+                <![CDATA[Choose between selecting a single cell, a range of adjacent cells and multiple ranges of non-contiguous cells.  Valid values are "single", "multiple", "range".]]>
             </description>
             <name>selectionMode</name>
             <required>false</required>
@@ -8155,7 +8155,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[The column data entry type.  Currently supports "text", "numeric", "date", "password", "dropdown", "autocomplete", and "checkbox" are experimental.]]>
+                <![CDATA[The column data entry type.  Currently, supports "text", "numeric", "date", "password", "dropdown", "autocomplete", and "checkbox" are experimental.]]>
             </description>
             <name>colType</name>
             <required>false</required>
@@ -8606,7 +8606,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[when you wanna instantiate multiple orgcharts on one page, you should add diffent classname to them in order to distinguish them. Default is ""]]>
+                <![CDATA[when you want to instantiate multiple orgcharts on one page, you should add different classname to them in order to distinguish them. Default is ""]]>
             </description>
             <name>chartClass</name>
             <required>false</required>
@@ -8858,7 +8858,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Client side callback to execute when input element is double clicked.]]>
+                <![CDATA[Client side callback to execute when input element is double-clicked.]]>
             </description>
             <name>ondblclick</name>
             <required>false</required>
@@ -9399,7 +9399,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Client side callback to execute when input element is double clicked.]]>
+                <![CDATA[Client side callback to execute when input element is double-clicked.]]>
             </description>
             <name>ondblclick</name>
             <required>false</required>
@@ -9712,7 +9712,7 @@
         <attribute>
             <description>
                 <![CDATA[Whether or not to allow the dropdown. If disabled, there is no dropdown arrow, and the selected flag is not clickable.
-Also we display the selected flag on the right instead because it is just a country marker.]]>
+Also, we display the selected flag on the right instead because it is just a country marker.]]>
             </description>
             <name>allowDropdown</name>
             <required>false</required>
@@ -9774,7 +9774,7 @@ Loads the utils script. Default true.]]>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Set the initial country selection by specifying it's country code.
+                <![CDATA[Set the initial country selection by specifying its country code.
 If you leave initialCountry blank, it will default to the first country in the list. Default is "us".]]>
             </description>
             <name>initialCountry</name>
@@ -9827,7 +9827,7 @@ Either a comma separated string or collection of ISO 2 country codes. Default is
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Display the country dial code next to the selected flag so it's not part of the typed number.
+                <![CDATA[Display the country dial code next to the selected flag, so it's not part of the typed number.
 Note that this will disable nationalMode because technically we are dealing with international numbers,
 but with the dial code separated. Default false.]]>
             </description>
@@ -11148,7 +11148,7 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Client side callback to execute when input element is double clicked.]]>
+                <![CDATA[Client side callback to execute when input element is double-clicked.]]>
             </description>
             <name>ondblclick</name>
             <required>false</required>
@@ -11604,7 +11604,7 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Inline style of the component. Typically height and width of the chart are defined here.]]>
+                <![CDATA[Inline style of the component. Typically, height and width of the chart are defined here.]]>
             </description>
             <name>style</name>
             <required>false</required>
