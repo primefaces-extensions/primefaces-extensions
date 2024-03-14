@@ -157,7 +157,7 @@ public class InputPhoneRenderer extends InputRenderer {
         writer.writeAttribute("name", inputId, null);
         writer.writeAttribute("type", inputPhone.getType(), null);
         writer.writeAttribute("value", valueToRender, null);
-        writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
+        writer.writeAttribute(Attrs.CLASS, styleClass, "inputStyleClass");
 
         if (!isValueBlank(inputStyle)) {
             writer.writeAttribute(Attrs.STYLE, inputStyle, null);
