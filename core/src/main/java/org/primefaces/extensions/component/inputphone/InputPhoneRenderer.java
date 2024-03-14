@@ -150,13 +150,14 @@ public class InputPhoneRenderer extends InputRenderer {
         final ResponseWriter writer = context.getResponseWriter();
         final String inputId = clientId + InputPhone.INPUT_SUFFIX;
         final String inputStyle = inputPhone.getInputStyle();
+        final String styleClass = createStyleClass(inputPhone, "inputStyleClass", InputText.STYLE_CLASS);
 
         writer.startElement("input", null);
         writer.writeAttribute("id", inputId, null);
         writer.writeAttribute("name", inputId, null);
         writer.writeAttribute("type", inputPhone.getType(), null);
         writer.writeAttribute("value", valueToRender, null);
-        writer.writeAttribute(Attrs.CLASS, createStyleClass(inputPhone, InputText.STYLE_CLASS), "styleClass");
+        writer.writeAttribute(Attrs.CLASS, styleClass, "inputStyleClass");
 
         if (!isValueBlank(inputStyle)) {
             writer.writeAttribute(Attrs.STYLE, inputStyle, null);

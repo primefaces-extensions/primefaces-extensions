@@ -172,6 +172,7 @@
                                 <include>imageareaselect/**</include>
                                 <include>imagezoom/**</include>
                                 <include>inputotp/**</include>
+                                <include>inputplace/**</include>
                                 <include>layout/**</include>
                                 <include>legend/**</include>
                                 <include>qrcode/**</include>
