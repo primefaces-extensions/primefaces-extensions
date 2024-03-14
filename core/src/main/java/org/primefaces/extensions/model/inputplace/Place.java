@@ -54,6 +54,7 @@ public class Place implements Serializable {
 
     public Place(final String clientId, final Map<String, String> params) {
         this.placeId = params.get(clientId + "_place_id");
+        this.name = params.get(clientId + "_name");
         this.formattedAddress = params.get(clientId + "_formatted_address");
         this.addressLine = params.get(clientId + "_address");
         this.postalCode = params.get(clientId + "_postcode");

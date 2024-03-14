@@ -148,7 +148,7 @@ PrimeFaces.widget.ExtInputPlace = PrimeFaces.widget.BaseWidget.extend({
                         break;
                     }
                     case "route": {
-                        address1 += component.short_name;
+                        address1 += component.long_name;
                         break;
                     }
                     case "postal_code": {
