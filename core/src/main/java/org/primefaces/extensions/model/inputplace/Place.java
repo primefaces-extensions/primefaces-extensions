@@ -52,6 +52,10 @@ public class Place implements Serializable {
     private double latitude;
     private double longitude;
 
+    public Place() {
+        // default constructor
+    }
+
     public Place(final String clientId, final Map<String, String> params) {
         this.placeId = params.get(clientId + "_place_id");
         this.name = params.get(clientId + "_name");
