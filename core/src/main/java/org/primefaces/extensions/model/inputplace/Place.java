@@ -36,19 +36,21 @@ public class Place implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private final String placeId;
-    private final String formattedAddress;
-    private final String addressLine;
-    private final String postalCode;
-    private final String city;
-    private final String state;
-    private final String country;
-    private final String administrativeAreaLevel1;
-    private final String administrativeAreaLevel2;
-    private final String administrativeAreaLevel3;
-    private final String types;
-    private final double latitude;
-    private final double longitude;
+    private String placeId;
+    private String formattedAddress;
+    private String name;
+    private String addressLine;
+    private String postalCode;
+    private String city;
+    private String state;
+    private String country;
+    private String countryCode;
+    private String administrativeAreaLevel1;
+    private String administrativeAreaLevel2;
+    private String administrativeAreaLevel3;
+    private String types;
+    private double latitude;
+    private double longitude;
 
     public Place(final String clientId, final Map<String, String> params) {
         this.placeId = params.get(clientId + "_place_id");
@@ -58,6 +60,7 @@ public class Place implements Serializable {
         this.city = params.get(clientId + "_city");
         this.state = params.get(clientId + "_state");
         this.country = params.get(clientId + "_country");
+        this.countryCode = params.get(clientId + "_country_code");
         this.latitude = Double.parseDouble(params.get(clientId + "_lat"));
         this.longitude = Double.parseDouble(params.get(clientId + "_lng"));
         this.administrativeAreaLevel1 = params.get(clientId + "_administrative_area_level_1");
@@ -66,74 +69,124 @@ public class Place implements Serializable {
         this.types = params.get(clientId + "_types");
     }
 
-    public Place(String placeId, String formattedAddress, String addressLine, String postalCode, String city, String state, String country,
-                String administrativeAreaLevel1, String administrativeAreaLevel2, String administrativeAreaLevel3, String types, double latitude,
-                double longitude) {
-        this.placeId = placeId;
-        this.formattedAddress = formattedAddress;
-        this.addressLine = addressLine;
-        this.postalCode = postalCode;
-        this.city = city;
-        this.state = state;
-        this.country = country;
-        this.administrativeAreaLevel1 = administrativeAreaLevel1;
-        this.administrativeAreaLevel2 = administrativeAreaLevel2;
-        this.administrativeAreaLevel3 = administrativeAreaLevel3;
-        this.types = types;
-        this.latitude = latitude;
-        this.longitude = longitude;
-    }
-
     public String getPlaceId() {
         return placeId;
+    }
+
+    public void setPlaceId(String placeId) {
+        this.placeId = placeId;
     }
 
     public String getFormattedAddress() {
         return formattedAddress;
     }
 
+    public void setFormattedAddress(String formattedAddress) {
+        this.formattedAddress = formattedAddress;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getAddressLine() {
         return addressLine;
+    }
+
+    public void setAddressLine(String addressLine) {
+        this.addressLine = addressLine;
     }
 
     public String getPostalCode() {
         return postalCode;
     }
 
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
+
     public String getCity() {
         return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getState() {
         return state;
     }
 
+    public void setState(String state) {
+        this.state = state;
+    }
+
     public String getCountry() {
         return country;
     }
 
-    public double getLatitude() {
-        return latitude;
+    public void setCountry(String country) {
+        this.country = country;
     }
 
-    public double getLongitude() {
-        return longitude;
+    public String getCountryCode() {
+        return countryCode;
+    }
+
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
     }
 
     public String getAdministrativeAreaLevel1() {
         return administrativeAreaLevel1;
     }
 
+    public void setAdministrativeAreaLevel1(String administrativeAreaLevel1) {
+        this.administrativeAreaLevel1 = administrativeAreaLevel1;
+    }
+
     public String getAdministrativeAreaLevel2() {
         return administrativeAreaLevel2;
+    }
+
+    public void setAdministrativeAreaLevel2(String administrativeAreaLevel2) {
+        this.administrativeAreaLevel2 = administrativeAreaLevel2;
     }
 
     public String getAdministrativeAreaLevel3() {
         return administrativeAreaLevel3;
     }
 
+    public void setAdministrativeAreaLevel3(String administrativeAreaLevel3) {
+        this.administrativeAreaLevel3 = administrativeAreaLevel3;
+    }
+
     public String getTypes() {
         return types;
+    }
+
+    public void setTypes(String types) {
+        this.types = types;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     @Override
@@ -158,11 +211,13 @@ public class Place implements Serializable {
         return new StringJoiner(", ", Place.class.getSimpleName() + "[", "]")
                     .add("placeId='" + placeId + "'")
                     .add("formattedAddress='" + formattedAddress + "'")
+                    .add("name='" + name + "'")
                     .add("addressLine='" + addressLine + "'")
                     .add("postalCode='" + postalCode + "'")
                     .add("city='" + city + "'")
                     .add("state='" + state + "'")
                     .add("country='" + country + "'")
+                    .add("countryCode='" + countryCode + "'")
                     .add("administrativeAreaLevel1='" + administrativeAreaLevel1 + "'")
                     .add("administrativeAreaLevel2='" + administrativeAreaLevel2 + "'")
                     .add("administrativeAreaLevel3='" + administrativeAreaLevel3 + "'")

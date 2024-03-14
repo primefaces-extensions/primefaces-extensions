@@ -60,7 +60,7 @@ PrimeFaces.widget.ExtInputPlace = PrimeFaces.widget.BaseWidget.extend({
     initializeInput: function () {
         const input = this.jq[0];
         const options = {
-            fields: ["address_components", "geometry", "formatted_address", "place_id", "types"],
+            fields: ["address_components", "geometry", "formatted_address", "place_id", "types", "name"],
             strictBounds: false
         };
         this.autocomplete = new google.maps.places.Autocomplete(input, options);
@@ -130,6 +130,7 @@ PrimeFaces.widget.ExtInputPlace = PrimeFaces.widget.BaseWidget.extend({
             let city = "";
             let state = "";
             let country = "";
+            let countryCode = "";
             let administrative_area_level_1 = "";
             let administrative_area_level_2 = "";
             let administrative_area_level_3 = "";
@@ -176,6 +177,7 @@ PrimeFaces.widget.ExtInputPlace = PrimeFaces.widget.BaseWidget.extend({
                     }
                     case "country":
                         country = component.long_name;
+                        countryCode = component.short_name;
                         break;
                 }
             }
@@ -193,6 +195,9 @@ PrimeFaces.widget.ExtInputPlace = PrimeFaces.widget.BaseWidget.extend({
                         name: $this.id + '_formatted_address',
                         value: place.formatted_address
                     }, {
+                        name: $this.id + '_name',
+                        value: place.name
+                    }, {
                         name: $this.id + '_address',
                         value: address1
                     }, {
@@ -207,6 +212,9 @@ PrimeFaces.widget.ExtInputPlace = PrimeFaces.widget.BaseWidget.extend({
                     }, {
                         name: $this.id + '_country',
                         value: country
+                    }, {
+                        name: $this.id + '_country_code',
+                        value: countryCode
                     }, {
                         name: $this.id + '_administrative_area_level_1',
                         value: administrative_area_level_1
