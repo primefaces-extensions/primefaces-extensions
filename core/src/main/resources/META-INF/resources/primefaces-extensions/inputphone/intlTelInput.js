@@ -1,5 +1,5 @@
 /*
- * International Telephone Input v19.5.6
+ * International Telephone Input v19.5.7
  * https://github.com/jackocnr/intl-tel-input.git
  * Licensed under the MIT license
  */
@@ -835,12 +835,15 @@
                             _this6._triggerCountryChange();
                         }
                         // if user types their own formatting char (not a plus or a numeric), then set the override
-                        if (e && e.data && /[^+0-9]/.test(e.data)) {
+                        var isFormattingChar = e && e.data && /[^+0-9]/.test(e.data);
+                        var isPaste = e && e.inputType === "insertFromPaste" && _this6.telInput.value;
+                        if (isFormattingChar || isPaste) {
                             userOverrideFormatting = true;
                         } else if (!/[^+0-9]/.test(_this6.telInput.value)) {
                             userOverrideFormatting = false;
                         }
-                        if (_this6.options.formatAsYouType && !userOverrideFormatting) {
+                        // handle FAYT, unless userOverrideFormatting or it's a paste event
+                        if (_this6.options.formatAsYouType && !userOverrideFormatting && e.inputType !== "insertFromPaste") {
                             // maintain caret position after reformatting
                             var currentCaretPos = _this6.telInput.selectionStart;
                             var valueBeforeCaret = _this6.telInput.value.substring(0, currentCaretPos);
@@ -1375,13 +1378,14 @@
             }, {
                 key: "_updatePlaceholder",
                 value: function _updatePlaceholder() {
-                    var shouldSetPlaceholder = this.options.autoPlaceholder === "aggressive" || !this.hadInitialPlaceholder && this.options.autoPlaceholder === "polite";
+                    var _this$options4 = this.options, autoPlaceholder = _this$options4.autoPlaceholder, placeholderNumberType = _this$options4.placeholderNumberType, nationalMode = _this$options4.nationalMode, customPlaceholder = _this$options4.customPlaceholder;
+                    var shouldSetPlaceholder = autoPlaceholder === "aggressive" || !this.hadInitialPlaceholder && autoPlaceholder === "polite";
                     if (window.intlTelInputUtils && shouldSetPlaceholder) {
-                        var numberType = intlTelInputUtils.numberType[this.options.placeholderNumberType];
-                        var placeholder = this.selectedCountryData.iso2 ? intlTelInputUtils.getExampleNumber(this.selectedCountryData.iso2, this.options.nationalMode, numberType) : "";
+                        var numberType = intlTelInputUtils.numberType[placeholderNumberType];
+                        var placeholder = this.selectedCountryData.iso2 ? intlTelInputUtils.getExampleNumber(this.selectedCountryData.iso2, nationalMode, numberType) : "";
                         placeholder = this._beforeSetNumber(placeholder);
-                        if (typeof this.options.customPlaceholder === "function") {
-                            placeholder = this.options.customPlaceholder(placeholder, this.selectedCountryData);
+                        if (typeof customPlaceholder === "function") {
+                            placeholder = customPlaceholder(placeholder, this.selectedCountryData);
                         }
                         this.telInput.setAttribute("placeholder", placeholder);
                     }
@@ -1595,7 +1599,9 @@
                         if (this.telInput.value) {
                             this._updateValFromNumber(this.telInput.value);
                         }
-                        this._updatePlaceholder();
+                        if (this.selectedCountryData.iso2) {
+                            this._updatePlaceholder();
+                        }
                     }
                     this.resolveUtilsScriptPromise();
                 }
@@ -1769,7 +1775,7 @@
         // default options
         intlTelInputGlobals.defaults = defaults;
         // version
-        intlTelInputGlobals.version = "19.5.6";
+        intlTelInputGlobals.version = "19.5.7";
         // convenience wrapper
         return function(input, options) {
             var iti = new Iti(input, options);
