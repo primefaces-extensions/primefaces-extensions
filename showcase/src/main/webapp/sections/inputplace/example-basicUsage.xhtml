@@ -53,7 +53,11 @@
                     <label>Formatted Address</label>
                     <p:inputText value="#{basicInputPlaceController.selectedPlace.formattedAddress}" readonly="true" styleClass="w-full" />
                 </div>
-                <div class="field col-12">
+                <div class="field col-12 md:col-6">
+                    <label>Name</label>
+                    <p:inputText value="#{basicInputPlaceController.selectedPlace.name}" readonly="true" styleClass="w-full" />
+                </div>
+                <div class="field col-12 md:col-6">
                     <label>Address Line</label>
                     <p:inputText value="#{basicInputPlaceController.selectedPlace.addressLine}" readonly="true" styleClass="w-full" />
                 </div>
@@ -62,7 +66,7 @@
                     <p:inputText value="#{basicInputPlaceController.selectedPlace.city}" readonly="true" styleClass="w-full" />
                 </div>
                 <div class="field col-12 md:col-3">
-                    <label>State</label>
+                    <label>State/Province</label>
                     <p:inputText value="#{basicInputPlaceController.selectedPlace.state}" readonly="true" styleClass="w-full" />
                 </div>
                 <div class="field col-12 md:col-3">
@@ -70,7 +74,7 @@
                     <p:inputText value="#{basicInputPlaceController.selectedPlace.country}" readonly="true" styleClass="w-full" />
                 </div>
                 <div class="field col-12 md:col-3">
-                    <label>Postal Code</label>
+                    <label>Zip/Postal Code</label>
                     <p:inputText value="#{basicInputPlaceController.selectedPlace.postalCode}" readonly="true" styleClass="w-full" />
                 </div>
                 <div class="field col-12 md:col-6">
