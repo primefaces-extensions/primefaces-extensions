@@ -21,8 +21,7 @@ PrimeFaces.widget.ExtWaypoint = PrimeFaces.widget.BaseWidget.extend({
         delete this.cfg.target;
 
         if (this.cfg.context) {
-            this.cfg.context = PrimeFaces.expressions.SearchExpressionFacade
-                .resolveComponentsAsSelector(this.cfg.context);
+            this.cfg.context = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.jq, this.cfg.context);
         }
 
         this.destroy().create();
