@@ -22,6 +22,7 @@
 package org.primefaces.extensions.component.inputotp;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.application.ResourceDependency;
@@ -192,11 +193,29 @@ public class InputOtp extends AbstractPrimeHtmlInputText implements Widget, Inpu
         if (!isValid()) {
             return;
         }
-        String submittedValue = (String) getSubmittedValue();
+        String submittedValue = Objects.toString(getSubmittedValue(), org.primefaces.util.Constants.EMPTY_STRING);
         if (LangUtils.isEmpty(submittedValue)) {
             return;
         }
-        if (isIntegerOnly()) {
+
+        // all characters must match the length to be complete
+        if (isValid() && isRequired() && submittedValue.length() != getLength()) {
+            String requiredMessageStr = getRequiredMessage();
+            FacesMessage message;
+            if (null != requiredMessageStr) {
+                message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                            requiredMessageStr,
+                            requiredMessageStr);
+            }
+            else {
+                message = MessageFactory.getMessage(REQUIRED_MESSAGE_ID, FacesMessage.SEVERITY_ERROR,
+                            MessageFactory.getLabel(context, this));
+            }
+            context.addMessage(getClientId(context), message);
+            setValid(false);
+        }
+
+        if (isValid() && isIntegerOnly()) {
             boolean isDigit = ExtLangUtils.isDigitsOnly(submittedValue);
             if (!isDigit) {
                 setValid(false);
