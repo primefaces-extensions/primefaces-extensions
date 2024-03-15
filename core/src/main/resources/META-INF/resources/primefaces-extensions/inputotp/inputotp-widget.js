@@ -116,7 +116,7 @@ PrimeFaces.widget.ExtInputOtp = PrimeFaces.widget.BaseWidget.extend({
                 let originalValue = $this.updateInput();
 
                 if (originalOninput && originalOninput.call(this, e) === false) {
-                    setValue(originalValue);
+                    $this.setValue(originalValue);
                     return false;
                 }
             });
@@ -124,6 +124,7 @@ PrimeFaces.widget.ExtInputOtp = PrimeFaces.widget.BaseWidget.extend({
             $(input).prop('onkeydown', null).off('keydown').on('keydown', function (e) {
                 switch (e.code) {
                     case 'Backspace':
+                    case 'Delete':
                         if (input.value === '' && i > 0) {
                             // shift next values towards the left
                             for (let pos = i; pos < inputsJq.length - 1; pos++) {
@@ -137,20 +138,9 @@ PrimeFaces.widget.ExtInputOtp = PrimeFaces.widget.BaseWidget.extend({
                             return;
                         }
                         break;
-                    case 'Delete':
-                        if (i < inputsJq.length - 1) {
-                            // shift next values towards the left
-                            for (let pos = i; pos < inputsJq.length - 1; pos++) {
-                                inputsJq[pos].value = inputsJq[pos + 1].value;
-                            }
-
-                            // clear the last box
-                            inputsJq[inputsJq.length - 1].value = '';
-                            inputsJq[i].select();
-                            e.preventDefault();
-                            inputsJq[inputsJq.length - 1].dispatchEvent(new Event("input"));
-                            return;
-                        }
+                    case 'ArrowUp':
+                    case 'ArrowDown':
+                        e.preventDefault();
                         break;
                     case 'ArrowLeft':
                         if (i > 0) {
@@ -158,14 +148,16 @@ PrimeFaces.widget.ExtInputOtp = PrimeFaces.widget.BaseWidget.extend({
                             inputsJq[i - 1].focus();
                             inputsJq[i - 1].select();
                         }
-                        return;
+                        break;
                     case 'ArrowRight':
                         if (i + 1 < inputsJq.length) {
                             e.preventDefault();
                             inputsJq[i + 1].focus();
                             inputsJq[i + 1].select();
                         }
-                        return;
+                        break;
+                    default:
+                        break;
                 }
 
                 if (originalOnkeydown && originalOnkeydown.call(this, e) === false) {
