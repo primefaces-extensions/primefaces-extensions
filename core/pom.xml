@@ -175,6 +175,7 @@
                                 <include>inputplace/**</include>
                                 <include>layout/**</include>
                                 <include>legend/**</include>
+                                <include>markdowneditor/1-markdowneditor-widget.js</include>
                                 <include>qrcode/**</include>
                                 <include>sheet/**</include>
                                 <include>slideout/**</include>
@@ -192,6 +193,19 @@
                                     <inputDir>${resources.dir.compressed}</inputDir>
                                     <subDirMode>true</subDirMode>
                                     <withoutCompress>${withoutCompress}</withoutCompress>
+                                </aggregation>
+                            </aggregations>
+                        </resourcesSet>
+                        <!-- uncompressed widgets -->
+                        <resourcesSet>
+                            <includes>
+                                <include>markdowneditor/**</include>
+                            </includes>
+                            <aggregations>
+                                <aggregation>
+                                    <inputDir>${resources.dir.compressed}</inputDir>
+                                    <subDirMode>true</subDirMode>
+                                    <withoutCompress>true</withoutCompress>
                                 </aggregation>
                             </aggregations>
                         </resourcesSet>
