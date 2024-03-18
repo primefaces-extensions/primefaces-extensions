@@ -53,6 +53,15 @@ public class MarkdownEditor extends AbstractPrimeHtmlInputTextArea implements Wi
         placeholder,
         extender,
         sideBySideFullscreen,
+        allowBlocks,
+        allowFormatting,
+        allowLinks,
+        allowStyles,
+        allowImages,
+        allowTables,
+        allowMedia,
+        secure,
+        toolbar,
         widgetVar
     }
     // @formatter:on
@@ -112,5 +121,77 @@ public class MarkdownEditor extends AbstractPrimeHtmlInputTextArea implements Wi
 
     public void setSideBySideFullscreen(boolean sideBySideFullscreen) {
         getStateHelper().put(PropertyKeys.sideBySideFullscreen, sideBySideFullscreen);
+    }
+
+    public String getToolbar() {
+        return (String) getStateHelper().eval(PropertyKeys.toolbar, null);
+    }
+
+    public void setToolbar(String toolbar) {
+        getStateHelper().put(PropertyKeys.toolbar, toolbar);
+    }
+
+    public boolean isSecure() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.secure, true);
+    }
+
+    public void setSecure(boolean secure) {
+        getStateHelper().put(PropertyKeys.secure, secure);
+    }
+
+    public boolean isAllowBlocks() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.allowBlocks, true);
+    }
+
+    public void setAllowBlocks(boolean allowBlocks) {
+        getStateHelper().put(PropertyKeys.allowBlocks, allowBlocks);
+    }
+
+    public boolean isAllowFormatting() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.allowFormatting, true);
+    }
+
+    public void setAllowFormatting(boolean allowFormatting) {
+        getStateHelper().put(PropertyKeys.allowFormatting, allowFormatting);
+    }
+
+    public boolean isAllowLinks() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.allowLinks, true);
+    }
+
+    public void setAllowLinks(boolean allowLinks) {
+        getStateHelper().put(PropertyKeys.allowLinks, allowLinks);
+    }
+
+    public boolean isAllowStyles() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.allowStyles, true);
+    }
+
+    public void setAllowStyles(boolean allowStyles) {
+        getStateHelper().put(PropertyKeys.allowStyles, allowStyles);
+    }
+
+    public boolean isAllowImages() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.allowImages, true);
+    }
+
+    public void setAllowImages(boolean allowImages) {
+        getStateHelper().put(PropertyKeys.allowImages, allowImages);
+    }
+
+    public boolean isAllowTables() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.allowTables, true);
+    }
+
+    public void setAllowMedia(boolean allowMedia) {
+        getStateHelper().put(PropertyKeys.allowMedia, allowMedia);
+    }
+
+    public boolean isAllowMedia() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.allowMedia, true);
+    }
+
+    public void setAllowTables(boolean allowTables) {
+        getStateHelper().put(PropertyKeys.allowTables, allowTables);
     }
 }

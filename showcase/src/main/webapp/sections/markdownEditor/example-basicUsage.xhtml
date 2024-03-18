@@ -1,0 +1,31 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <!-- EXAMPLE-SOURCE-START -->
+    <p:growl id="growl" keepAlive="true">
+        <p:autoUpdate/>
+    </p:growl>
+
+    <h:panelGrid columns="2" id="pnlDetails" styleClass="p-4" >
+        <p:outputLabel value="RTL:" for="@next" styleClass="mr-2"/>
+        <p:selectBooleanCheckbox id="chkRtl" value="#{markdownEditorController.rtl}" styleClass="mr-2">
+            <p:ajax update="txtMarkdown"/>
+        </p:selectBooleanCheckbox>
+    </h:panelGrid>
+
+    <pe:markdownEditor id="txtMarkdown" widgetVar="mde" value="#{markdownEditorController.markdown}"
+                       maxHeight="300px" sideBySideFullscreen="false" required="true" dir="#{markdownEditorController.rtl ? 'rtl' : 'ltr'}"
+    toolbar="bold, italic, strikethrough, |, heading-1, heading-2, heading-3,|, code, quote, unordered-list, ordered-list,|, clean-block, link, image, table, horizontal-rule,|, preview, side-by-side, fullscreen, |, guide">
+        <p:ajax event="paste" listener="#{markdownEditorController.onPaste}"/>
+        <p:ajax event="copy" listener="#{markdownEditorController.onCopy}"/>
+        <p:ajax event="cut" listener="#{markdownEditorController.onCut}"/>
+    </pe:markdownEditor>
+
+    <p:commandButton value="Submit" actionListener="#{markdownEditorController.submit}" update="txtMarkdown" styleClass="mt-4"/>
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

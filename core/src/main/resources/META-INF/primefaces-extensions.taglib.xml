@@ -12658,5 +12658,68 @@ See showcase for an example. Default null.]]>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Comma separated list of actions that defines the toolbar. If "false" it will remove the toolbar.]]></description>
+            <name>toolbar</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Secure the component with the HTML Sanitizer library on the classpath. Default is true.]]></description>
+            <name>secure</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Whether to allow formatting to be included when secure=true and the HTML is sanitized. Default true.]]></description>
+            <name>allowFormatting</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Whether to allow blocks to be included when secure=true and the HTML is sanitized. Default true.]]></description>
+            <name>allowBlocks</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Whether to allow styles to be included when secure=true and the HTML is sanitized. Default true.]]></description>
+            <name>allowStyles</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Whether to allow links to be included when secure=true and the HTML is sanitized. Default true.]]></description>
+            <name>allowLinks</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Whether to allow images to be included when secure=true and the HTML is sanitized. Default true.]]></description>
+            <name>allowImages</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Whether to allow audio/video to be included when secure=true and the HTML is sanitized. Default true.]]></description>
+            <name>allowMedia</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Whether to allow tables to be included when secure=true and the HTML is sanitized. Default true.]]></description>
+            <name>allowTables</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
     </tag>
 </facelet-taglib>

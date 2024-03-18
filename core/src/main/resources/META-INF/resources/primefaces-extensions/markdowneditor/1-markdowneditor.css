@@ -23,6 +23,11 @@
     border-color: var(--surface-section);
 }
 
+.CodeMirror-gutters {
+    border-right: 1px solid var(--surface-border);
+    background-color: var(--surface-card);
+}
+
 .editor-toolbar {
     border-top: 1px solid var(--surface-border);
     border-left: 1px solid var(--surface-border);

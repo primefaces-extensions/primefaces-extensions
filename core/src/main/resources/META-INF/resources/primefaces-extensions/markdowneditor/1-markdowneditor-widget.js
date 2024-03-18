@@ -4,8 +4,8 @@
  * MarkdownEditor is an extension to standard inputTextarea with autoComplete, autoResize, remaining characters counter
  * and theming features.
  *
- * @prop {object} easyMDE Control handle for the underlying Markdown Editor
- * @prop {any | jQuery | HTMLElement} easyMDEContainer Container for the DIV of EasyMDE.
+ * @prop {object} editor Control handle for the underlying Markdown Editor
+ * @prop {any | jQuery | HTMLElement} container Container for the DIV of EasyMDE.
  *
  * @interface {PrimeFaces.widget.MarkdownEditorCfg} cfg The configuration for the {@link  MarkdownEditor| MarkdownEditor widget}.
  * You can access this configuration via {@link PrimeFaces.widget.BaseWidget.cfg|BaseWidget.cfg}. Please note that this
@@ -14,7 +14,7 @@
  *
  * @prop {boolean} cfg.direction Right To Left handling.
  */
-PrimeFaces.widget.ExtMarkdownEditor = PrimeFaces.widget.DeferredWidget.extend({
+PrimeFaces.widget.ExtMarkdownEditor = PrimeFaces.widget.BaseWidget.extend({
 
     /**
      * @override
@@ -24,7 +24,7 @@ PrimeFaces.widget.ExtMarkdownEditor = PrimeFaces.widget.DeferredWidget.extend({
     init: function (cfg) {
         this._super(cfg);
         this.textArea = this.jq[0];
-
+        this.bindOnRemove();
         this._render();
     },
 
@@ -35,6 +35,7 @@ PrimeFaces.widget.ExtMarkdownEditor = PrimeFaces.widget.DeferredWidget.extend({
      * @inheritdoc
      */
     _render: function () {
+        let $this = this;
         // user extension to configure markdown editor
         let extender = this.cfg.extender;
         if (extender) {
@@ -47,54 +48,61 @@ PrimeFaces.widget.ExtMarkdownEditor = PrimeFaces.widget.DeferredWidget.extend({
 
         const options = this.cfg;
         options.element = this.textArea;
-        options.toolbar = ["bold", "italic", "strikethrough", "|", "heading-1", "heading-2", "heading-3",
-            "|", "code", "quote", "unordered-list", "ordered-list",
-            "|", "clean-block", "link", "image", "table", "horizontal-rule",
-            "|", "preview", "side-by-side", "fullscreen", "|", "guide"];
-        this.easyMDE = new EasyMDE(options);
+        options.forceSync = true;
+
+        if (this.cfg.toolbar) {
+            if (this.cfg.toolbar === "false") {
+                options.toolbar = false;
+            } else {
+                options.toolbar = this.cfg.toolbar.split(',').map(function (item) {
+                    return item.trim();
+                });
+            }
+        } else {
+            // default toolbar if none given
+            options.toolbar = ["bold", "italic", "strikethrough", "|", "heading-1", "heading-2", "heading-3",
+                "|", "code", "quote", "unordered-list", "ordered-list",
+                "|", "clean-block", "link", "image", "table", "horizontal-rule",
+                "|", "preview", "side-by-side", "fullscreen", "|", "guide"];
+        }
+        this.editor = new EasyMDE(options);
+
+        // pass all AJAX behaviors to the editor
+        for (let key in this.cfg.behaviors) {
+            if (this.cfg.behaviors.hasOwnProperty(key)) {
+                this.editor.codemirror.on(key, () => {
+                    $this.callBehavior(key);
+                });
+            }
+        }
 
         // apply classes from textarea to easy MDE
         this.applyStyles();
     },
 
     /**
+     * When the underlying textArea is removed by an AJAX refresh we must clean up the editor.
+     * Clean up this widget and remove events from the DOM.
+     */
+    bindOnRemove: function () {
+        // when the underlying textArea is removed by an AJAX refresh we must clean up the editor.
+        let $this = this;
+        this.jq.off('remove.markdown').on('remove.markdown', function () {
+            if ($this.editor) {
+                $this.editor.toTextArea();
+                $this.editor = null;
+            }
+        });
+    },
+
+    /**
      * Apply classes from textarea to easy MDE.
      */
     applyStyles: function () {
-        this.easyMDEContainer = this.jq.next('.EasyMDEContainer');
-        if (this.easyMDEContainer.length > 0) {
+        this.container = this.jq.next('.EasyMDEContainer');
+        if (this.container.length > 0) {
             let classes = this.jq.attr('class');
-            this.easyMDEContainer.addClass(classes);
-        }
-    },
-
-    /**
-     * @override
-     * @inheritdoc
-     * @param {PrimeFaces.PartialWidgetCfg<TCfg>} cfg
-     */
-    refresh: function (cfg) {
-        this._cleanup();
-        this._super(cfg);
-    },
-
-    /**
-     * @override
-     * @inheritdoc
-     */
-    destroy: function () {
-        this._super();
-        this._cleanup();
-    },
-
-    /**
-     * Clean up this widget and remove events from the DOM.
-     * @private
-     */
-    _cleanup: function () {
-        if (this.easyMDE) {
-            this.easyMDE.toTextArea();
-            this.easyMDE = null;
+            this.container.addClass(classes);
         }
     },
 
@@ -110,8 +118,8 @@ PrimeFaces.widget.ExtMarkdownEditor = PrimeFaces.widget.DeferredWidget.extend({
      * @param {string} value the value to set
      */
     setValue: function (value) {
-        if (this.easyMDE) {
-            this.easyMDE.value(value);
+        if (this.editor) {
+            this.editor.value(value);
         }
     },
 
@@ -120,8 +128,8 @@ PrimeFaces.widget.ExtMarkdownEditor = PrimeFaces.widget.DeferredWidget.extend({
      * @return {string} the value of the editor
      */
     getValue: function () {
-        if (this.easyMDE) {
-            return this.easyMDE.value();
+        if (this.editor) {
+            return this.editor.value();
         }
     },
 
@@ -129,13 +137,13 @@ PrimeFaces.widget.ExtMarkdownEditor = PrimeFaces.widget.DeferredWidget.extend({
      * Disables this input so that the user cannot enter a value anymore.
      */
     disable: function () {
-        PrimeFaces.utils.disableInputWidget(this.easyMDEContainer, this.jq);
+        PrimeFaces.utils.disableInputWidget(this.container, this.jq);
     },
 
     /**
      * Enables this input so that the user can enter a value.
      */
     enable: function () {
-        PrimeFaces.utils.enableInputWidget(this.easyMDEContainer, this.jq);
+        PrimeFaces.utils.enableInputWidget(this.container, this.jq);
     }
 });
