@@ -23,15 +23,13 @@ package org.primefaces.extensions.component.markdowneditor;
 
 import java.io.IOException;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.convert.Converter;
 
 import org.primefaces.component.inputtextarea.InputTextarea;
-import org.primefaces.context.PrimeApplicationContext;
-import org.primefaces.extensions.util.HtmlSanitizer;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.HTML;
@@ -43,8 +41,6 @@ import org.primefaces.util.WidgetBuilder;
  * @since 14.0.0
  */
 public class MarkdownEditorRenderer extends InputRenderer {
-
-    private static final Logger LOGGER = Logger.getLogger(MarkdownEditorRenderer.class.getName());
 
     @Override
     public void decode(FacesContext context, UIComponent component) {
@@ -58,7 +54,7 @@ public class MarkdownEditorRenderer extends InputRenderer {
         String clientId = editor.getClientId(context);
         Map<String, String> params = context.getExternalContext().getRequestParameterMap();
         if (params.containsKey(clientId)) {
-            String value = sanitizeHtml(context, editor, params.get(clientId));
+            String value = editor.sanitizeHtml(context, params.get(clientId));
             editor.setSubmittedValue(value);
         }
 
@@ -69,6 +65,7 @@ public class MarkdownEditorRenderer extends InputRenderer {
     @Override
     public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
         MarkdownEditor editor = (MarkdownEditor) component;
+        editor.checkSecurity(context);
         encodeMarkup(context, editor);
         encodeScript(context, editor);
     }
@@ -80,6 +77,7 @@ public class MarkdownEditorRenderer extends InputRenderer {
                     .attr("maxHeight", editor.getMaxHeight(), null)
                     .attr("sideBySideFullscreen", editor.getSideBySideFullscreen(), true)
                     .attr("toolbar", editor.getToolbar())
+                    .attr("placeholder", editor.getPlaceholder())
                     .attr("direction", ComponentUtils.isRTL(context, editor) ? "rtl" : "ltr", "ltr")
                     .nativeAttr("extender", editor.getExtender());
 
@@ -96,6 +94,7 @@ public class MarkdownEditorRenderer extends InputRenderer {
         writer.writeAttribute("id", clientId, null);
         writer.writeAttribute("name", clientId, null);
         writer.writeAttribute("class", createStyleClass(editor, InputTextarea.STYLE_CLASS), "styleClass");
+        writer.writeAttribute("style", "display:none", "style");
 
         renderAccessibilityAttributes(context, editor);
         renderRTLDirection(context, editor);
@@ -111,27 +110,17 @@ public class MarkdownEditorRenderer extends InputRenderer {
         writer.endElement("textarea");
     }
 
-    /**
-     * If security is enabled sanitize the Markdown string to prevent XSS.
-     *
-     * @param context the FacesContext
-     * @param editor the TextEditor instance
-     * @param value the value to sanitize
-     * @return the sanitized value
-     */
-    protected String sanitizeHtml(FacesContext context, MarkdownEditor editor, String value) {
-        String result = value;
-        if (editor.isSecure()
-                    && PrimeApplicationContext.getCurrentInstance(context).getEnvironment().isHtmlSanitizerAvailable()) {
-            result = HtmlSanitizer.sanitizeHtml(value, editor.isAllowBlocks(), editor.isAllowFormatting(),
-                        editor.isAllowLinks(), editor.isAllowStyles(), editor.isAllowImages(), editor.isAllowTables(), editor.isAllowMedia());
+    @Override
+    public Object getConvertedValue(final FacesContext context, final UIComponent component,
+                final Object submittedValue) {
+        final MarkdownEditor editor = (MarkdownEditor) component;
+        final String value = (String) submittedValue;
+        final Converter converter = ComponentUtils.getConverter(context, component);
+
+        if (converter != null) {
+            return converter.getAsObject(context, editor, value);
         }
-        else {
-            if (!editor.isAllowBlocks() || !editor.isAllowFormatting() || !editor.isAllowLinks()
-                        || !editor.isAllowStyles() || !editor.isAllowImages() || !editor.isAllowTables()) {
-                LOGGER.warning("HTML sanitizer not available - skip sanitizing....");
-            }
-        }
-        return result;
+
+        return value;
     }
 }
