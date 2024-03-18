@@ -9,6 +9,7 @@
  *  @this {PrimeFaces.widget.ExtInputPlace} PrimeFaces.widget.ExtInputPlace.InputPlaceExtender
  *
  * @prop {google.maps.places.Autocomplete} autocomplete Google Places Autocomplete controller
+ * @prop {google.maps.places.Place}  currentPlace Current place found by the AutoComplete
  *
  * @interface {PrimeFaces.widget.InputPlaceCfg} cfg The configuration for the {@link  InputPlace| InputPlace widget}.
  * You can access this configuration via {@link PrimeFaces.widget.BaseWidget.cfg|BaseWidget.cfg}. Please note that this
@@ -119,6 +120,7 @@ PrimeFaces.widget.ExtInputPlace = PrimeFaces.widget.BaseWidget.extend({
                 return;
             }
             PrimeFaces.debug(place);
+            $this.currentPlace = place;
 
             // Call user onPlaceChanged client side callback
             if ($this.cfg.onPlaceChanged) {
@@ -240,10 +242,10 @@ PrimeFaces.widget.ExtInputPlace = PrimeFaces.widget.BaseWidget.extend({
 
     /**
      * Returns the current Google Places instance.
-     * @return {google.maps.places.Place} The current map instance.
+     * @return {google.maps.places.Place} The current map place.
      */
     getPlace: function() {
-        return this.autocomplete.getPlace();
+        return this.currentPlace;
     },
 
     /**
