@@ -17,11 +17,12 @@
         function editorExtender() {
             // this = widget
             // this.cfg = JSON configuration
-            this.cfg.autofocus = true;
-            this.cfg.indentWithTabs = true;
             this.cfg.lineNumbers = true;
             this.cfg.promptURLs = true;
-            this.cfg.tabSize = 4;
+            this.cfg.promptTexts = {
+                image: "Custom prompt for URL:",
+                link: "Custom prompt for URL:",
+            };
         };
     </script>
     <!-- EXAMPLE-SOURCE-END -->

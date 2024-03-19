@@ -12721,5 +12721,41 @@ See showcase for an example. Default null.]]>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
+        <attribute>
+            <description>
+                <![CDATA[If set, customize the tab size. Defaults to 2.]]></description>
+            <name>tabSize</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[If set to false, indent using spaces instead of tabs. Defaults to true.]]></description>
+            <name>indentWithTabs</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[If set to true, enables line numbers in the editor. Defaults to false.]]></description>
+            <name>lineNumbers</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[If set to true, a JS alert window appears asking for the link or image URL. Defaults to false.]]></description>
+            <name>promptURLs</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Mode specifies appearance of editor. Possible values are 'wysiwyg', 'preview', 'sidebyside', 'fullscreen'. Default is 'wysiwyg'.]]>
+            </description>
+            <name>mode</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
     </tag>
 </facelet-taglib>

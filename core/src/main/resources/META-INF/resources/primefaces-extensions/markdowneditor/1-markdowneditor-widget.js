@@ -76,6 +76,18 @@ PrimeFaces.widget.ExtMarkdownEditor = PrimeFaces.widget.BaseWidget.extend({
             }
         }
 
+        switch (this.cfg.mode) {
+            case 'sidebyside':
+                this.editor.toggleSideBySide();
+                break;
+            case 'preview':
+                this.editor.togglePreview();
+                break;
+            case 'fullscreen':
+                this.editor.toggleFullScreen();
+                break;
+        }
+
         // apply classes from textarea to easy MDE
         this.applyStyles();
     },

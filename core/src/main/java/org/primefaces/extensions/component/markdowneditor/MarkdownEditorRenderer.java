@@ -75,10 +75,15 @@ public class MarkdownEditorRenderer extends InputRenderer {
         wb.init("ExtMarkdownEditor", editor)
                     .attr("minHeight", editor.getMinHeight(), "300px")
                     .attr("maxHeight", editor.getMaxHeight(), null)
-                    .attr("sideBySideFullscreen", editor.getSideBySideFullscreen(), true)
+                    .attr("mode", editor.getMode())
                     .attr("toolbar", editor.getToolbar())
                     .attr("placeholder", editor.getPlaceholder())
                     .attr("direction", ComponentUtils.isRTL(context, editor) ? "rtl" : "ltr", "ltr")
+                    .attr("sideBySideFullscreen", editor.getSideBySideFullscreen(), true)
+                    .attr("indentWithTabs", editor.getIndentWithTabs(), true)
+                    .attr("lineNumbers", editor.getLineNumbers(), false)
+                    .attr("promptURLs", editor.getPromptURLs(), false)
+                    .attr("tabSize", editor.getTabSize(), 2)
                     .nativeAttr("extender", editor.getExtender());
 
         encodeClientBehaviors(context, editor);

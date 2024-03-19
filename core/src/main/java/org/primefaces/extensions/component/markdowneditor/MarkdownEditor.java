@@ -46,10 +46,15 @@ public class MarkdownEditor extends AbstractEditorInputTextArea {
     // @formatter:off
     @SuppressWarnings("java:S115")
     public enum PropertyKeys {
-        minHeight,
+        indentWithTabs,
+        lineNumbers,
         maxHeight,
+        minHeight,
+        mode,
         placeholder,
+        promptURLs,
         sideBySideFullscreen,
+        tabSize,
     }
     // @formatter:on
 
@@ -68,6 +73,14 @@ public class MarkdownEditor extends AbstractEditorInputTextArea {
 
     public void setPlaceholder(String placeholder) {
         getStateHelper().put(PropertyKeys.placeholder, placeholder);
+    }
+
+    public String getMode() {
+        return (String) getStateHelper().eval(PropertyKeys.mode, "wysiwyg");
+    }
+
+    public void setMode(String mode) {
+        getStateHelper().put(PropertyKeys.mode, mode);
     }
 
     public String getMinHeight() {
@@ -94,4 +107,35 @@ public class MarkdownEditor extends AbstractEditorInputTextArea {
         getStateHelper().put(PropertyKeys.sideBySideFullscreen, sideBySideFullscreen);
     }
 
+    public boolean getIndentWithTabs() {
+        return (boolean) getStateHelper().eval(PropertyKeys.indentWithTabs, true);
+    }
+
+    public void setIndentWithTabs(boolean indentWithTabs) {
+        getStateHelper().put(PropertyKeys.indentWithTabs, indentWithTabs);
+    }
+
+    public boolean getLineNumbers() {
+        return (boolean) getStateHelper().eval(PropertyKeys.lineNumbers, false);
+    }
+
+    public void setLineNumbers(boolean lineNumbers) {
+        getStateHelper().put(PropertyKeys.lineNumbers, lineNumbers);
+    }
+
+    public boolean getPromptURLs() {
+        return (boolean) getStateHelper().eval(PropertyKeys.promptURLs, false);
+    }
+
+    public void setPromptURLs(boolean promptURLs) {
+        getStateHelper().put(PropertyKeys.promptURLs, promptURLs);
+    }
+
+    public int getTabSize() {
+        return (int) getStateHelper().eval(PropertyKeys.tabSize, 2);
+    }
+
+    public void setTabSize(boolean tabSize) {
+        getStateHelper().put(PropertyKeys.tabSize, tabSize);
+    }
 }
