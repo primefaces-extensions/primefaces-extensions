@@ -165,7 +165,10 @@
                                 <include>blockui/**</include>
                                 <include>calculator/**</include>
                                 <include>clipboard/**</include>
+                                <include>clockpicker/**</include>
                                 <include>counter/**</include>
+                                <include>codescanner/codescanner-widget.js</include>
+                                <include>creditcard/1-card-widget.js</include>
                                 <include>echarts/**</include>
                                 <include>fluidgrid/**</include>
                                 <include>fuzzysearch/**</include>
@@ -176,17 +179,18 @@
                                 <include>layout/**</include>
                                 <include>legend/**</include>
                                 <include>markdowneditor/1-markdowneditor-widget.js</include>
+                                <include>orgchart/**</include>
                                 <include>qrcode/**</include>
                                 <include>sheet/**</include>
                                 <include>slideout/**</include>
                                 <include>speedtest/**</include>
+                                <include>suneditor/1-suneditor-widget.css</include>
+                                <include>suneditor/1-suneditor-widget.js</include>
                                 <include>timeago/*.js</include>
                                 <include>timepicker/**</include>
                                 <include>timer/**</include>
                                 <include>tooltip/**</include>
                                 <include>waypoint/**</include>
-                                <include>orgchart/**</include>
-                                <include>clockpicker/**</include>
                             </includes>
                             <aggregations>
                                 <aggregation>
@@ -199,64 +203,15 @@
                         <!-- uncompressed widgets -->
                         <resourcesSet>
                             <includes>
+                                <include>creditcard/**</include>
+                                <include>codescanner/**</include>
                                 <include>markdowneditor/**</include>
+                                <include>suneditor/**</include>
                             </includes>
                             <aggregations>
                                 <aggregation>
                                     <inputDir>${resources.dir.compressed}</inputDir>
                                     <subDirMode>true</subDirMode>
-                                    <withoutCompress>true</withoutCompress>
-                                </aggregation>
-                            </aggregations>
-                        </resourcesSet>
-                        <resourcesSet>
-                            <includes>
-                                <include>creditcard/0-card.js</include>
-                                <include>creditcard/1-card-widget.js</include>
-                            </includes>
-                            <aggregations>
-                                <aggregation>
-                                    <inputDir>${resources.dir.compressed}</inputDir>
-                                    <outputFile>${resources.dir.compressed}/creditcard/creditcard.js</outputFile>
-                                    <withoutCompress>true</withoutCompress>
-                                </aggregation>
-                            </aggregations>
-                        </resourcesSet>
-                        <resourcesSet>
-                            <includes>
-                                <include>creditcard/card.css</include>
-                            </includes>
-                            <aggregations>
-                                <aggregation>
-                                    <inputDir>${resources.dir.compressed}</inputDir>
-                                    <outputFile>${resources.dir.compressed}/creditcard/creditcard.css</outputFile>
-                                    <withoutCompress>true</withoutCompress>
-                                </aggregation>
-                            </aggregations>
-                        </resourcesSet>
-                        <resourcesSet>
-                            <includes>
-                                <include>suneditor/lang/*.js</include>
-                                <include>suneditor/0-suneditor.min.js</include>
-                                <include>suneditor/1-suneditor-widget.js</include>
-                            </includes>
-                            <aggregations>
-                                <aggregation>
-                                    <inputDir>${resources.dir.compressed}</inputDir>
-                                    <outputFile>${resources.dir.compressed}/suneditor/suneditor.js</outputFile>
-                                    <withoutCompress>true</withoutCompress>
-                                </aggregation>
-                            </aggregations>
-                        </resourcesSet>
-                        <resourcesSet>
-                            <includes>
-                                <include>suneditor/0-suneditor.min.css</include>
-                                <include>suneditor/1-suneditor-widget.css</include>
-                            </includes>
-                            <aggregations>
-                                <aggregation>
-                                    <inputDir>${resources.dir.compressed}</inputDir>
-                                    <outputFile>${resources.dir.compressed}/suneditor/suneditor.css</outputFile>
                                     <withoutCompress>true</withoutCompress>
                                 </aggregation>
                             </aggregations>
@@ -336,19 +291,6 @@
                                     <inputDir>${resources.dir.compressed}</inputDir>
                                     <outputFile>${resources.dir.compressed}/keynote/keynote.css</outputFile>
                                     <withoutCompress>${withoutCompress}</withoutCompress>
-                                </aggregation>
-                            </aggregations>
-                        </resourcesSet>
-                        <resourcesSet>
-                            <includes>
-                                <include>codescanner/zxing.min.js</include>
-                                <include>codescanner/codescanner-widget.js</include>
-                            </includes>
-                            <aggregations>
-                                <aggregation>
-                                    <inputDir>${resources.dir.compressed}</inputDir>
-                                    <outputFile>${resources.dir.compressed}/codescanner/codescanner.js</outputFile>
-                                    <withoutCompress>true</withoutCompress>
                                 </aggregation>
                             </aggregations>
                         </resourcesSet>
