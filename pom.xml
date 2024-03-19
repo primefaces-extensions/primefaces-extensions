@@ -561,7 +561,7 @@
             </build>
         </profile>
         <profile>
-            <id>compress</id>
+            <id>minify</id>
             <properties>
                 <withoutCompress>false</withoutCompress>
             </properties>

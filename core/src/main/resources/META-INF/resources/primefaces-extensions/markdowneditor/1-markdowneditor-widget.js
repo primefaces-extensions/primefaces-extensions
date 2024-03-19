@@ -49,6 +49,7 @@ PrimeFaces.widget.ExtMarkdownEditor = PrimeFaces.widget.BaseWidget.extend({
         const options = this.cfg;
         options.element = this.textArea;
         options.forceSync = true;
+        options.spellchecker = false; // prevent CSP issues https://github.com/Ionaru/easy-markdown-editor/issues/546
 
         if (this.cfg.toolbar) {
             if (this.cfg.toolbar === "false") {
