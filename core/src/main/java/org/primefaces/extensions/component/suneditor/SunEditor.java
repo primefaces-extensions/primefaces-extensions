@@ -28,9 +28,7 @@ import javax.faces.application.ResourceDependency;
 import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.context.FacesContext;
 
-import org.primefaces.component.api.AbstractPrimeHtmlInputTextArea;
-import org.primefaces.component.api.RTLAware;
-import org.primefaces.component.api.Widget;
+import org.primefaces.extensions.component.base.AbstractEditorInputTextArea;
 import org.primefaces.util.LangUtils;
 import org.primefaces.util.LocaleUtils;
 
@@ -47,7 +45,7 @@ import org.primefaces.util.LocaleUtils;
 @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
 @ResourceDependency(library = "primefaces-extensions", name = "suneditor/suneditor.css")
 @ResourceDependency(library = "primefaces-extensions", name = "suneditor/suneditor.js")
-public class SunEditor extends AbstractPrimeHtmlInputTextArea implements ClientBehaviorHolder, Widget, RTLAware {
+public class SunEditor extends AbstractEditorInputTextArea implements ClientBehaviorHolder {
     public static final String EDITOR_CLASS = "ui-suneditor";
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.SunEditor";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -59,22 +57,10 @@ public class SunEditor extends AbstractPrimeHtmlInputTextArea implements ClientB
     @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
         // @formatter:off
-        widgetVar,
-        dir,
         width,
         height,
-        allowBlocks,
-        allowFormatting,
-        allowLinks,
-        allowStyles,
-        allowImages,
-        allowTables,
-        allowMedia,
-        secure,
         mode,
         locale,
-        extender,
-        toolbar
         // @formatter:on
     }
 
@@ -99,23 +85,6 @@ public class SunEditor extends AbstractPrimeHtmlInputTextArea implements ClientB
         return COMPONENT_FAMILY;
     }
 
-    public void setDir(final String _dir) {
-        getStateHelper().put(PropertyKeys.dir, _dir);
-    }
-
-    @Override
-    public String getDir() {
-        return (String) getStateHelper().eval(PropertyKeys.dir, "ltr");
-    }
-
-    public String getWidgetVar() {
-        return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
-    }
-
-    public void setWidgetVar(String widgetVar) {
-        getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
-    }
-
     public String getWidth() {
         return (String) getStateHelper().eval(PropertyKeys.width, "100%");
     }
@@ -132,70 +101,6 @@ public class SunEditor extends AbstractPrimeHtmlInputTextArea implements ClientB
         getStateHelper().put(PropertyKeys.height, height);
     }
 
-    public boolean isSecure() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.secure, true);
-    }
-
-    public void setSecure(boolean secure) {
-        getStateHelper().put(PropertyKeys.secure, secure);
-    }
-
-    public boolean isAllowBlocks() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.allowBlocks, true);
-    }
-
-    public void setAllowBlocks(boolean allowBlocks) {
-        getStateHelper().put(PropertyKeys.allowBlocks, allowBlocks);
-    }
-
-    public boolean isAllowFormatting() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.allowFormatting, true);
-    }
-
-    public void setAllowFormatting(boolean allowFormatting) {
-        getStateHelper().put(PropertyKeys.allowFormatting, allowFormatting);
-    }
-
-    public boolean isAllowLinks() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.allowLinks, true);
-    }
-
-    public void setAllowLinks(boolean allowLinks) {
-        getStateHelper().put(PropertyKeys.allowLinks, allowLinks);
-    }
-
-    public boolean isAllowStyles() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.allowStyles, true);
-    }
-
-    public void setAllowStyles(boolean allowStyles) {
-        getStateHelper().put(PropertyKeys.allowStyles, allowStyles);
-    }
-
-    public boolean isAllowImages() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.allowImages, true);
-    }
-
-    public void setAllowImages(boolean allowImages) {
-        getStateHelper().put(PropertyKeys.allowImages, allowImages);
-    }
-
-    public boolean isAllowTables() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.allowTables, true);
-    }
-
-    public void setAllowMedia(boolean allowMedia) {
-        getStateHelper().put(PropertyKeys.allowMedia, allowMedia);
-    }
-
-    public boolean isAllowMedia() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.allowMedia, true);
-    }
-
-    public void setAllowTables(boolean allowTables) {
-        getStateHelper().put(PropertyKeys.allowTables, allowTables);
-    }
-
     public String getMode() {
         return (String) getStateHelper().eval(PropertyKeys.mode, "classic");
     }
@@ -210,22 +115,6 @@ public class SunEditor extends AbstractPrimeHtmlInputTextArea implements ClientB
 
     public void setLocale(final Object locale) {
         getStateHelper().put(PropertyKeys.locale, locale);
-    }
-
-    public String getExtender() {
-        return (String) getStateHelper().eval(PropertyKeys.extender, null);
-    }
-
-    public void setExtender(final String extender) {
-        getStateHelper().put(PropertyKeys.extender, extender);
-    }
-
-    public String getToolbar() {
-        return (String) getStateHelper().eval(PropertyKeys.toolbar, null);
-    }
-
-    public void setToolbar(String toolbar) {
-        getStateHelper().put(PropertyKeys.toolbar, toolbar);
     }
 
     public Locale calculateLocale() {

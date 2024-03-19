@@ -1,0 +1,29 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <!-- EXAMPLE-SOURCE-START -->
+
+    <pe:markdownEditor id="txtMarkdown" widgetVar="mde" value="#{markdownEditorController.markdown}"
+                       maxHeight="200px" toolbar="bold, italic, link, |, guide"
+                       extender="editorExtender">
+    </pe:markdownEditor>
+
+    <script type="text/javascript">
+        function editorExtender() {
+            // this = widget
+            // this.cfg = JSON configuration
+            this.cfg.lineNumbers = true;
+            this.cfg.promptURLs = true;
+            this.cfg.promptTexts = {
+                image: "Custom prompt for URL:",
+                link: "Custom prompt for URL:",
+            };
+        };
+    </script>
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>
