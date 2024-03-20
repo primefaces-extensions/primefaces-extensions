@@ -499,6 +499,20 @@
                 <artifactId>maven-site-plugin</artifactId>
                 <version>3.12.1</version>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.3.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <!-- Jakarta EE shading -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -515,6 +529,7 @@
                             <shadedArtifactAttached>true</shadedArtifactAttached>
                             <shadedClassifierName>jakarta</shadedClassifierName>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <createSourcesJar>true</createSourcesJar>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
                                 <transformer implementation="io.yupiik.maven.shade.transformer.RelocationTransformer">
