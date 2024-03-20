@@ -137,11 +137,7 @@
                         <exclude>**/META-INF/resources/**/keynote/lib/**</exclude>
                         <exclude>**/META-INF/resources/**/keynote/plugin/**</exclude>
                         <exclude>**/META-INF/resources/**/keynote/LICENSE</exclude>
-                        <exclude>**/META-INF/resources/**/dynaform/**</exclude>
                         <exclude>**/META-INF/resources/**/masterdetail/**</exclude>
-                        <exclude>**/META-INF/resources/**/imagerotateandresize/**</exclude>
-                        <exclude>**/META-INF/resources/**/tristatemanycheckbox/**</exclude>
-                        <exclude>**/META-INF/resources/**/gchart/**</exclude>
                         <exclude>**/META-INF/resources/**/monacoeditor/01-*.js</exclude>
                         <!-- Only used for development, not required -->
                         <exclude>**/META-INF/resources/**/node_modules/**</exclude>
@@ -166,14 +162,17 @@
                                 <include>calculator/**</include>
                                 <include>clipboard/**</include>
                                 <include>clockpicker/**</include>
-                                <include>counter/**</include>
                                 <include>codescanner/codescanner-widget.js</include>
+                                <include>counter/**</include>
                                 <include>creditcard/1-card-widget.js</include>
+                                <include>dynaform/**</include>
                                 <include>echarts/**</include>
                                 <include>fluidgrid/**</include>
                                 <include>fuzzysearch/**</include>
+                                <include>gchart/**</include>
                                 <include>imageareaselect/**</include>
                                 <include>imagezoom/**</include>
+                                <include>imagerotateandresize/**</include>
                                 <include>inputotp/**</include>
                                 <include>inputplace/**</include>
                                 <include>layout/**</include>
@@ -188,6 +187,7 @@
                                 <include>suneditor/1-suneditor-widget.js</include>
                                 <include>timeago/*.js</include>
                                 <include>timepicker/**</include>
+                                <include>tristatemanycheckbox/**</include>
                                 <include>timer/**</include>
                                 <include>tooltip/**</include>
                                 <include>waypoint/**</include>
@@ -296,9 +296,7 @@
                         </resourcesSet>
                         <resourcesSet>
                             <includes>
-                                <include>dynaform/dynaform.css</include>
                                 <include>masterdetail/masterdetail.css</include>
-                                <include>gchart/gchart.css</include>
                             </includes>
                             <aggregations>
                                 <aggregation>
@@ -312,10 +310,6 @@
                             <includes>
                                 <include>core/core.js</include>
                                 <include>core/core.timers.js</include>
-                                <include>dynaform/dynaform.js</include>
-                                <include>imagerotateandresize/imagerotateandresize.js</include>
-                                <include>tristatemanycheckbox/tristatemanycheckbox.js</include>
-                                <include>gchart/gchart.js</include>
                             </includes>
                             <aggregations>
                                 <aggregation>

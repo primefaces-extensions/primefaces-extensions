@@ -23,9 +23,9 @@
     <h:outputText value="Ajax Behavior with custom icons:"/>
     <pe:triStateManyCheckbox id="TriAjax"
                              value="#{triSateManyCheckBoxController.selectedOptionsTriStateAjax}"
-                             stateOneIcon="ui-icon-home"
-                             stateTwoIcon="ui-icon-heart"
-                             stateThreeIcon="ui-icon-star"
+                             stateOneIcon="pi pi-home"
+                             stateTwoIcon="pi pi-heart"
+                             stateThreeIcon="pi pi-star"
                              tabindex="2">
         <f:selectItem itemLabel="Tamara" itemValue="Tamara"/>
         <f:selectItem itemLabel="Mauricio" itemValue="Mauricio"/>
@@ -35,7 +35,7 @@
 
 <p:commandButton value="Submit" update="display" oncomplete="PF('dlg').show()"/>
 
-<p:dialog header="Selected Values" modal="false" showEffect="fade" hideEffect="fade" widgetVar="dlg" width="200">
+<p:dialog header="Selected Values" modal="false" showEffect="fade" hideEffect="fade" widgetVar="dlg" width="400">
     <p:outputPanel id="display">
         <p:dataList value="#{triSateManyCheckBoxController.selectedOptionsTriStateBasic.keySet().toArray()}"
                     var="optionsB">
