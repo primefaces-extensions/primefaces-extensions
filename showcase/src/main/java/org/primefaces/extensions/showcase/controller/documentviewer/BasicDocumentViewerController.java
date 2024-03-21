@@ -25,8 +25,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 
-import javax.enterprise.context.SessionScoped;
-import javax.faces.event.ComponentSystemEvent;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
 import org.primefaces.model.DefaultStreamedContent;
@@ -37,43 +36,44 @@ import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfWriter;
 
 @Named
-@SessionScoped
+@RequestScoped
 public class BasicDocumentViewerController implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private String downloadFileName = "pfe-rocks.pdf";
-    private StreamedContent content;
-
-    public void onPrerender(final ComponentSystemEvent event) {
-
-        try {
-
-            final ByteArrayOutputStream out = new ByteArrayOutputStream();
-
-            final Document document = new Document();
-            PdfWriter.getInstance(document, out);
-            document.open();
-
-            for (int i = 0; i < 50; i++) {
-                document.add(new Paragraph("All work and no play makes Jack a dull boy"));
-            }
-
-            document.close();
-            content = DefaultStreamedContent.builder().stream(() -> new ByteArrayInputStream(out.toByteArray()))
-                        .contentType("application/pdf").name("jack.pdf").build();
-        }
-        catch (final Exception e) {
-
-        }
-    }
 
     public StreamedContent getContent() {
-        return content;
-    }
+        try {
+            return DefaultStreamedContent.builder()
+                        .contentType("application/pdf")
+                        .name("jack.pdf")
+                        .stream(() -> {
+                            try {
+                                final ByteArrayOutputStream out = new ByteArrayOutputStream();
 
-    public void setContent(final StreamedContent content) {
-        this.content = content;
+                                final Document document = new Document();
+                                PdfWriter.getInstance(document, out);
+                                document.open();
+
+                                for (int i = 0; i < 50; i++) {
+                                    document.add(new Paragraph("All work and no play makes Jack a dull boy"));
+                                }
+
+                                document.close();
+                                return new ByteArrayInputStream(out.toByteArray());
+                            }
+                            catch (Exception e) {
+                                e.printStackTrace();
+                                return null;
+                            }
+                        })
+                        .build();
+        }
+        catch (final Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public String getDownloadFileName() {
