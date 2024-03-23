@@ -11,6 +11,13 @@
 .iti__v-hide {
   visibility: hidden;
 }
+.iti__a11y-text {
+  width: 1px;
+  height: 1px;
+  clip: rect(1px, 1px, 1px, 1px);
+  overflow: hidden;
+  position: absolute;
+}
 .iti input.iti__tel-input,
 .iti input.iti__tel-input[type=text],
 .iti input.iti__tel-input[type=tel] {
@@ -1294,7 +1301,6 @@
   box-shadow: 0px 0px 1px 0px #888;
   background-image: url("#{resource['primefaces-extensions:inputphone/flags.png']}");
   background-repeat: no-repeat;
-  background-color: #dbdbdb;
   background-position: 20px 0;
 }
 @media (min-resolution: 2x) {
