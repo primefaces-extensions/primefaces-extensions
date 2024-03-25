@@ -153,7 +153,7 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
      */
     isPossibleNumber: function () {
         if (this.iti) {
-            return this.iti.isValidNumber();
+            return this.iti.isValidNumber(false);
         }
     },
 
