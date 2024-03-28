@@ -60,6 +60,7 @@ public class InputOtp extends AbstractPrimeHtmlInputText implements Widget, Inpu
     public static final String STYLE_CLASS = "ui-inputotp ui-widget";
     public static final String RTL_STYLE_CLASS = "ui-inputotp-rtl";
     public static final String CELL_STYLE_CLASS = "ui-inputotp-input " + InputText.STYLE_CLASS;
+    public static final String SEPARATOR_STYLE_CLASS = "ui-inputotp-separator";
     public static final String INPUT_SUFFIX = "_input";
     public static final String HIDDEN_SUFFIX = "_hidden";
 

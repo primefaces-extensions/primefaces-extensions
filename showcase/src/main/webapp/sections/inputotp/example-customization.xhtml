@@ -1,0 +1,67 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pe="http://primefaces.org/ui/extensions"
+    xmlns:jsf="http://xmlns.jcp.org/jsf"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <!-- EXAMPLE-SOURCE-START -->
+    <style type="text/css">
+        body .custom-otp .ui-inputotp-separator:not(:nth-of-type(3)) {
+            display: none;
+        }
+        body .custom-otp .custom-otp-input {
+            width: 48px;
+            height: 48px;
+            font-size: 24px;
+            appearance: none;
+            text-align: center;
+            transition: all 0.2s;
+            border-radius: 0;
+            border: 1px solid var(--surface-400);
+            background: transparent;
+            outline-offset: -2px;
+            outline-color: transparent;
+            border-right: 0 none;
+            transition: outline-color 0.3s;
+        }
+
+        body .custom-otp .custom-otp-input:focus {
+            outline: 2px solid var(--primary-color);
+        }
+
+        body .custom-otp .custom-otp-input:nth-of-type(1),
+        body .custom-otp .custom-otp-input:nth-of-type(4) {
+            border-top-left-radius: 12px;
+            border-bottom-left-radius: 12px;
+        }
+
+        body .custom-otp .custom-otp-input:nth-of-type(3),
+        body .custom-otp .custom-otp-input:nth-of-type(6) {
+            border-top-right-radius: 12px;
+            border-bottom-right-radius: 12px;
+            border-right-width: 1px;
+            border-right-style: solid;
+            border-color: var(--surface-400);
+        }
+    </style>
+
+        <div class="flex justify-content-center">
+            <div class="flex flex-column align-items-center">
+                <div class="font-bold text-xl mb-2">Authenticate Your Account</div>
+                <p class="text-color-secondary block mb-5">Please enter the code sent to your phone.</p>
+                <pe:inputOtp length="6" style="gap: 0" inputStyleClass="custom-otp-input pi" styleClass="custom-otp">
+                    <f:facet name="separator">
+                        <span class="pi pi-minus px-3"/>
+                    </f:facet>
+                </pe:inputOtp>
+                <div class="flex justify-content-between mt-5 align-self-stretch align-items-center">
+                    <p:commandLink value="Resend Code"/>
+                    <p:commandButton value="Submit Code"/>
+                </div>
+            </div>
+        </div>
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>
