@@ -32,6 +32,7 @@ import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
+import org.primefaces.util.FacetUtils;
 import org.primefaces.util.HTML;
 import org.primefaces.util.LangUtils;
 import org.primefaces.util.WidgetBuilder;
@@ -109,10 +110,19 @@ public class InputOtpRenderer extends InputRenderer {
         final String inputStyle = inputOtp.getInputStyle();
         final String inputStyleClass = createStyleClass(inputOtp, InputOtp.PropertyKeys.inputStyleClass.name(), InputOtp.CELL_STYLE_CLASS);
         final char[] chars = valueToRender.toCharArray();
+        final boolean hasSeparatorFacet = FacetUtils.shouldRenderFacet(inputOtp.getFacet("separator"));
         for (int i = 1; i <= inputOtp.getLength(); i++) {
 
-            if (i > 1 && !LangUtils.isBlank(inputOtp.getSeparator())) {
-                writer.writeText(inputOtp.getSeparator(), InputOtp.PropertyKeys.separator.name());
+            if (i > 1 && (LangUtils.isNotBlank(inputOtp.getSeparator()) || hasSeparatorFacet)) {
+                writer.startElement("div", null);
+                writer.writeAttribute(Attrs.CLASS, InputOtp.SEPARATOR_STYLE_CLASS, null);
+                if (hasSeparatorFacet) {
+                    inputOtp.getFacet("separator").encodeAll(context);
+                }
+                else {
+                    writer.writeText(inputOtp.getSeparator(), InputOtp.PropertyKeys.separator.name());
+                }
+                writer.endElement("div");
             }
 
             final String inputId = clientId + InputOtp.INPUT_SUFFIX + i;
