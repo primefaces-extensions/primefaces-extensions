@@ -42,7 +42,7 @@
         <h:outputText id="lblRightClick">Right click me to view the menu options!</h:outputText>
 
         <p:contextMenu>
-            <p:menuitem id="mnuCopy" value="Copy" url="javascript:void(0)" icon="pi pi-copy"/>
+            <p:menuitem id="mnuCopy" value="Copy" url="javascript:void(0);" icon="pi pi-copy"/>
         </p:contextMenu>
 
         <pe:clipboard id="clipContextCopy" trigger="mnuCopy" action="copy" text="#{clipboardController.copyInput}">

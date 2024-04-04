@@ -119,7 +119,7 @@
     </context-param>
     <context-param>
         <param-name>primefaces.CSP_POLICY</param-name>
-        <param-value>frame-ancestors 'none'; script-src 'self' blob: https: *.googleapis.com</param-value>
+        <param-value>frame-ancestors 'none'; script-src 'self' blob: https: *.googleapis.com 'unsafe-hashes' 'sha256-kbHtQyYDQKz4SWMQ8OHVol3EC0t3tHEJFPCSwNG9NxQ='</param-value>
     </context-param>
 
     <!-- Context parameters - OmniFaces -->
