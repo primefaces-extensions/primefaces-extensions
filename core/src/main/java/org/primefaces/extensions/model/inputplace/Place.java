@@ -49,6 +49,8 @@ public class Place implements Serializable {
     private String administrativeAreaLevel2;
     private String administrativeAreaLevel3;
     private String types;
+    private String url;
+    private String phone;
     private double latitude;
     private double longitude;
 
@@ -72,6 +74,8 @@ public class Place implements Serializable {
         this.administrativeAreaLevel2 = params.get(clientId + "_administrative_area_level_2");
         this.administrativeAreaLevel3 = params.get(clientId + "_administrative_area_level_3");
         this.types = params.get(clientId + "_types");
+        this.url = params.get(clientId + "_url");
+        this.phone = params.get(clientId + "_phone");
     }
 
     public String getPlaceId() {
@@ -194,6 +198,22 @@ public class Place implements Serializable {
         this.longitude = longitude;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -227,6 +247,8 @@ public class Place implements Serializable {
                     .add("administrativeAreaLevel2='" + administrativeAreaLevel2 + "'")
                     .add("administrativeAreaLevel3='" + administrativeAreaLevel3 + "'")
                     .add("types='" + types + "'")
+                    .add("url='" + url + "'")
+                    .add("phone='" + phone + "'")
                     .add("latitude=" + latitude)
                     .add("longitude=" + longitude)
                     .toString();

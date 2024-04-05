@@ -22,6 +22,7 @@
 package org.primefaces.extensions.component.inputplace;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -73,6 +74,8 @@ public class InputPlaceRenderer extends InputRenderer {
     protected void encodeScript(FacesContext context, InputPlace inputPlace) throws IOException {
         WidgetBuilder wb = getWidgetBuilder(context);
         wb.init("ExtInputPlace", inputPlace)
+                    .attr("apiType", inputPlace.getApiType().toLowerCase(Locale.ROOT))
+                    .attr("apiKey", inputPlace.getApiKey(), null)
                     .attr("restrictTypes", inputPlace.getRestrictTypes(), null)
                     .attr("restrictCountries", inputPlace.getRestrictCountries(), null)
                     .callback("onPlaceChanged", "function(place)", inputPlace.getOnplacechanged());

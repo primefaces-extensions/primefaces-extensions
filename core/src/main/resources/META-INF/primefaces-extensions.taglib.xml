@@ -12121,6 +12121,22 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
+                <![CDATA[API type either "google" or "azure".  Defaults to "google".]]>
+            </description>
+            <name>apiType</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[API key for Microsoft Azure. Not necessary for Google as the Google API key is in the JS URL.]]>
+            </description>
+            <name>apiKey</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
                 <![CDATA[Client side callback to execute when place has been selected.]]>
             </description>
             <name>onplacechanged</name>
@@ -12137,7 +12153,7 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Comma separated list to constrain predictions by up to place types. This constraint specifies a type or a type collection, as listed in Place Types. If no constraint is specified, all types are returned.]]>
+                <![CDATA[For Google, a comma separated list to constrain predictions by up to 5 place types. This constraint specifies a type or a type collection, as listed in Place Types. If no constraint is specified, all types are returned. For Azure, either 'fuzzy', 'poi', 'address' defaults to 'fuzzy'.]]>
             </description>
             <name>restrictTypes</name>
             <required>false</required>

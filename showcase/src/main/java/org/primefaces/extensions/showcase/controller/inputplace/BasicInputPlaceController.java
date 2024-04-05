@@ -39,6 +39,7 @@ public class BasicInputPlaceController implements Serializable {
 
     private String input;
     private Place selectedPlace;
+    private String azureApiKey;
 
     public void submit() {
         FacesContext context = FacesContext.getCurrentInstance();
@@ -65,5 +66,13 @@ public class BasicInputPlaceController implements Serializable {
 
     public void setSelectedPlace(Place selectedPlace) {
         this.selectedPlace = selectedPlace;
+    }
+
+    public String getAzureApiKey() {
+        return azureApiKey;
+    }
+
+    public void setAzureApiKey(String azureApiKey) {
+        this.azureApiKey = azureApiKey;
     }
 }

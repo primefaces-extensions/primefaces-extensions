@@ -3,10 +3,14 @@
       xmlns:p="http://primefaces.org/ui">
     <ui:composition>
         <p:menu id="useCaseList">
-            <p:menuitem value="Address Form"
-                        styleClass="#{navigationContext.getMenuitemStyleClass('basicUsage')}"
+            <p:menuitem value="Google Address Form"
+                        styleClass="#{navigationContext.getMenuitemStyleClass('googleUsage')}"
                         onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
-                        url="#{request.contextPath}/sections/inputplace/basicUsage.jsf"/>
+                        url="#{request.contextPath}/sections/inputplace/googleUsage.jsf"/>
+            <p:menuitem value="Azure Address Form"
+                        styleClass="#{navigationContext.getMenuitemStyleClass('azureUsage')}"
+                        onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
+                        url="#{request.contextPath}/sections/inputplace/azureUsage.jsf"/>
             <p:menuitem value="Linked Map"
                         styleClass="#{navigationContext.getMenuitemStyleClass('mapUsage')}"
                         onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
