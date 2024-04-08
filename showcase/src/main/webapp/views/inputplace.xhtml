@@ -12,9 +12,8 @@
         <f:facet name="header">
             <h:outputText value="InputPlace"/>
         </f:facet>
-        <h:graphicImage library="images" name="inputplace.png" alt="Input Place" height="110" width="110"/>
         <p>
-            InputPlace is a component to wrap Google Places AutoComplete functionality.
+            InputPlace is a component to wrap Google Places or Azure Maps AutoComplete functionality.
         </p>
         <p>
             Autocomplete is a feature of the Places library in the Maps JavaScript API. You can use autocomplete to give your
@@ -23,8 +22,14 @@
             queries as the user types, to provide on-the-fly place predictions.
         </p>
         <p>
-            Based on <h:outputLink id="placeLink"
+            <h:graphicImage library="images" name="inputplace.png" alt="Input Place Google" height="110" width="110"/>
+            Based on <h:outputLink id="googleLink"
                                    value="https://developers.google.com/maps/documentation/javascript/place-autocomplete">Google Places AutoComplete</h:outputLink> by Google.
+        </p>
+        <p>
+            <h:graphicImage library="images" name="Microsoft_Azure.svg" alt="Input Place Azure" height="110" width="110"/>
+            Based on <h:outputLink id="azureLink"
+                                   value="https://learn.microsoft.com/en-us/rest/api/maps/search/get-search-fuzzy">Azure Maps Search</h:outputLink> by Microsoft.
         </p>
     </ui:define>
 

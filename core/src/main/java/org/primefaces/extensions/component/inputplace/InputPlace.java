@@ -43,6 +43,7 @@ import org.primefaces.util.LangUtils;
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
+@ResourceDependency(library = Constants.LIBRARY, name = "inputplace/inputplace.css")
 @ResourceDependency(library = Constants.LIBRARY, name = "inputplace/inputplace.js")
 public class InputPlace extends AbstractPrimeHtmlInputText implements Widget, MixedClientBehaviorHolder, RTLAware {
 
@@ -57,6 +58,8 @@ public class InputPlace extends AbstractPrimeHtmlInputText implements Widget, Mi
     // @formatter:off
     @SuppressWarnings("java:S115")
     public enum PropertyKeys {
+        apiType,
+        apiKey,
         placeholder,
         restrictCountries,
         restrictTypes,
@@ -119,6 +122,22 @@ public class InputPlace extends AbstractPrimeHtmlInputText implements Widget, Mi
 
     public void setRestrictTypes(String restrictTypes) {
         getStateHelper().put(PropertyKeys.restrictTypes, restrictTypes);
+    }
+
+    public String getApiType() {
+        return (String) getStateHelper().eval(PropertyKeys.apiType, "google");
+    }
+
+    public void setApiType(String apiType) {
+        getStateHelper().put(PropertyKeys.apiType, apiType);
+    }
+
+    public String getApiKey() {
+        return (String) getStateHelper().eval(PropertyKeys.apiKey, null);
+    }
+
+    public void setApiKey(String apiKey) {
+        getStateHelper().put(PropertyKeys.apiKey, apiKey);
     }
 
     public String getOnplacechanged() {

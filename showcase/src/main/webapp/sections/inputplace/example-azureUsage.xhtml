@@ -1,0 +1,123 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions"
+        xmlns:jsf="http://xmlns.jcp.org/jsf"
+>
+
+    <style>
+        /* InputPhone Full Width */
+        .iti {
+            width: 100%;
+        }
+    </style>
+    <!-- EXAMPLE-SOURCE-START -->
+    <p:growl id="growl" showDetail="true" showSummary="true" globalOnly="false">
+        <p:autoUpdate/>
+    </p:growl>
+
+    <div jsf:id="inputGroup" class="field grid ">
+        <p:outputLabel for="txtApiKey" value="API Key:" styleClass="col-12 md:col-1"/>
+        <div class="col-12 md:col-8 mb-2">
+            <div class="ui-inputgroup">
+                <div class="ui-inputgroup-addon"><i class="fa-solid fa-key"></i></div>
+                <p:inputText id="txtApiKey" value="#{basicInputPlaceController.azureApiKey}"
+                             placeholder="Enter your Azure API Key" styleClass="w-full" required="true"
+                             onkeydown="if(event.key=='Enter') return false;">
+                    <p:ajax update="inputGroup" process="@this"/>
+                </p:inputText>
+            </div>
+        </div>
+        <div class="col-12 md:col-3" />
+
+        <p:outputLabel for="txtPlace" value="Location:" styleClass="col-12 md:col-1"
+                       rendered="#{basicInputPlaceController.azureApiKey != null}"/>
+        <div class="col-12 md:col-8" jsf:id="inputPlace"
+             jsf:rendered="#{basicInputPlaceController.azureApiKey != null}">
+            <div class="ui-inputgroup">
+                <div class="ui-inputgroup-addon"><i class="fa-solid fa-location-dot"></i></div>
+                <pe:inputPlace id="txtPlace" widgetVar="place" value="#{basicInputPlaceController.input}"
+                               required="true" placeholder="Enter a location" styleClass="w-full" restrictTypes="poi"
+                               apiType="azure" apiKey="#{basicInputPlaceController.azureApiKey}">
+                    <p:ajax event="placeChanged" listener="#{basicInputPlaceController.onPlaceChanged}" update="selectedPlace"/>
+                </pe:inputPlace>
+            </div>
+        </div>
+        <div class="col-12 md:col-3" jsf:id="searchButton"
+             jsf:rendered="#{basicInputPlaceController.azureApiKey != null}">
+            <p:commandButton value="Search" actionListener="#{basicInputPlaceController.submit}" update="inputGroup"/>
+        </div>
+    </div>
+
+    <div jsf:id="selectedPlace">
+        <p:card rendered="#{basicInputPlaceController.selectedPlace != null}">
+            <f:facet name="title">
+                Type: #{basicInputPlaceController.selectedPlace.types}
+            </f:facet>
+            <p:divider/>
+            <div class="formgrid grid">
+                <div class="field col-12 md:col-4">
+                    <label>Place ID</label>
+                    <p:inputText value="#{basicInputPlaceController.selectedPlace.placeId}" readonly="true" styleClass="w-full"/>
+                </div>
+                <div class="field col-12 md:col-4">
+                    <label>Latitude</label>
+                    <p:inputText value="#{basicInputPlaceController.selectedPlace.latitude}" readonly="true" styleClass="w-full"/>
+                </div>
+                <div class="field col-12 md:col-4">
+                    <label>Longitude</label>
+                    <p:inputText value="#{basicInputPlaceController.selectedPlace.longitude}" readonly="true" styleClass="w-full"/>
+                </div>
+                <div class="field col-12">
+                    <label>Formatted Address</label>
+                    <p:inputText value="#{basicInputPlaceController.selectedPlace.formattedAddress}" readonly="true" styleClass="w-full"/>
+                </div>
+                <div class="field col-12 md:col-6">
+                    <label>Name</label>
+                    <p:inputText value="#{basicInputPlaceController.selectedPlace.name}" readonly="true" styleClass="w-full"/>
+                </div>
+                <div class="field col-12 md:col-6">
+                    <label>Address Line</label>
+                    <p:inputText value="#{basicInputPlaceController.selectedPlace.addressLine}" readonly="true" styleClass="w-full"/>
+                </div>
+                <div class="field col-12 md:col-3">
+                    <label>City</label>
+                    <p:inputText value="#{basicInputPlaceController.selectedPlace.city}" readonly="true" styleClass="w-full"/>
+                </div>
+                <div class="field col-12 md:col-3">
+                    <label>State/Province</label>
+                    <p:inputText value="#{basicInputPlaceController.selectedPlace.state}" readonly="true" styleClass="w-full"/>
+                </div>
+                <div class="field col-12 md:col-3">
+                    <label>Country</label>
+                    <p:inputText value="#{basicInputPlaceController.selectedPlace.country}" readonly="true" styleClass="w-full"/>
+                </div>
+                <div class="field col-12 md:col-3">
+                    <label>Zip/Postal Code</label>
+                    <p:inputText value="#{basicInputPlaceController.selectedPlace.postalCode}" readonly="true" styleClass="w-full"/>
+                </div>
+                <div class="field col-12 md:col-6">
+                    <label>Area 2</label>
+                    <p:inputText value="#{basicInputPlaceController.selectedPlace.administrativeAreaLevel2}" readonly="true" styleClass="w-full"/>
+                </div>
+                <div class="field col-12 md:col-6">
+                    <label>Area 3</label>
+                    <p:inputText value="#{basicInputPlaceController.selectedPlace.administrativeAreaLevel3}" readonly="true" styleClass="w-full"/>
+                </div>
+                <div class="field col-12 md:col-6">
+                    <label>Website</label>
+                    <p:inputText value="#{basicInputPlaceController.selectedPlace.url}" readonly="true" styleClass="w-full"/>
+                </div>
+                <div class="field col-12 md:col-6">
+                    <label>Phone</label>
+                    <pe:inputPhone initialCountry="#{basicInputPlaceController.selectedPlace.countryCode}"
+                                   value="#{basicInputPlaceController.selectedPlace.phone}" readonly="true"
+                                   styleClass="w-full" inputStyleClass="w-full" formatOnDisplay="true" />
+                </div>
+            </div>
+        </p:card>
+    </div>
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

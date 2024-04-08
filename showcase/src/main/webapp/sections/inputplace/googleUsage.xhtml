@@ -9,17 +9,18 @@
                 <h:outputText value="InputPlace"/>
             </f:facet>
             <h:panelGroup layout="block" styleClass="centerContent">
-                You can use autocomplete to give your applications the type-ahead-search behavior of the Google Maps search field. The autocomplete service can match on full words and substrings, resolving place names, addresses, and plus codes.
-                DO NOT FORGET TO INCLUDE <code>&lt;script&gt;</code> with your <strong>Google API Key</strong>.
+                You can use autocomplete to give your applications the type-ahead-search behavior of the Google/Azure Maps search field. The autocomplete service can match on full words and substrings, resolving place names, addresses, and plus codes.
+                <p><strong>GOOGLE:</strong> must include the <code>&lt;script&gt;</code> with your <strong>Google API Key</strong>.</p>
+                <p><strong>AZURE:</strong> must set <strong>apiType="azure"</strong> with your <strong>apiKey="XXX"</strong>.</p>
             </h:panelGroup>
 
             <h:panelGroup layout="block" styleClass="centerExample">
-                <ui:include src="/sections/inputplace/example-basicUsage.xhtml"/>
+                <ui:include src="/sections/inputplace/example-googleUsage.xhtml"/>
             </h:panelGroup>
 
             <ui:decorate template="/templates/twoTabsDecorator.xhtml">
                 <ui:define name="contentTab1">
-                    ${showcase:getFileContent('/sections/inputplace/example-basicUsage.xhtml')}
+                    ${showcase:getFileContent('/sections/inputplace/example-googleUsage.xhtml')}
                 </ui:define>
                 <ui:define name="contentTab2">
                     ${showcase:getFileContent('/org/primefaces/extensions/showcase/controller/inputplace/BasicInputPlaceController.java')}
