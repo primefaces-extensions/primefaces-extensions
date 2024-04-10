@@ -142,7 +142,7 @@ PrimeFaces.widget.ExtInputPlace = PrimeFaces.widget.BaseWidget.extend({
 
         this.addDestroyListener(() => {
             $this.jq.autocomplete("destroy");
-        })
+        });
 
         this.bindAzureEvents();
     },
@@ -348,6 +348,10 @@ PrimeFaces.widget.ExtInputPlace = PrimeFaces.widget.BaseWidget.extend({
         }
 
         this.bindGoogleEvents();
+
+        this.addDestroyListener(() => {
+            PrimeFaces.debug("Google does not have any way to destroy the AutoComplete!");
+        });
     },
 
     /**
