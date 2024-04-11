@@ -18,7 +18,7 @@
 
         <h:outputText value="Cut"/>
         <p:inputText id="txtCut" value="#{clipboardController.cutInput}"/>
-        <p:commandButton id="btnCut" value="Cut" icon="pi pi-cut"/>
+        <p:commandButton id="btnCut" value="Cut" icon="pi pi-clipboard"/>
         <pe:clipboard id="clipCut" trigger="btnCut" action="cut" target="txtCut">
             <p:ajax event="success" listener="#{clipboardController.successListener}"/>
             <p:ajax event="error" listener="#{clipboardController.errorListener}"/>

@@ -168,13 +168,13 @@ PrimeFaces.widget.ExtImageAreaSelect = PrimeFaces.widget.BaseWidget.extend({
     reload : function() {
         this.setOptions({remove: true});
         this.update();
-        this.instance = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.cfg.target).imgAreaSelect(this.options);
+        this.instance = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.jq, this.cfg.target).imgAreaSelect(this.options);
     },
 
     destroy : function() {
         this.cancelSelection();
         this.instance = null;
-        PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.cfg.target).imgAreaSelect({remove:true});
+        PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.jq, this.cfg.target).imgAreaSelect({remove:true});
     },
 
     refresh : function(cfg) {

@@ -37,7 +37,36 @@ PrimeFaces.widget.ExtCalculator = PrimeFaces.widget.BaseWidget.extend({
         } else {
             this._applyCalculator(input, cfg);
         }
+    },
 
+    /**
+     * @override
+     * @inheritdoc
+     * @param {PrimeFaces.PartialWidgetCfg<TCfg>} cfg
+     */
+    refresh: function(cfg) {
+        this._remove();
+        this._super(cfg);
+    },
+
+    /**
+     * @override
+     * @inheritdoc
+     */
+    destroy: function() {
+        this._super();
+        this._remove();
+    },
+
+    /**
+     * Clean up this widget and remove elements from DOM.
+     * @private
+     */
+    _remove: function() {
+        if (this.input) {
+            this.input.calculator('destroy');
+            this.input = null;
+        }
     },
 
     /**
@@ -167,13 +196,6 @@ PrimeFaces.widget.ExtCalculator = PrimeFaces.widget.BaseWidget.extend({
             disabled = this.input.calculator('isDisabled')
         }
         return disabled;
-    },
-
-    destroy: function () {
-        if (this.input) {
-            this.input.calculator('destroy');
-            this.input = null;
-        }
     }
 });
 

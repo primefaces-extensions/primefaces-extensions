@@ -22,6 +22,35 @@ PrimeFaces.widget.ExtClipboard = PrimeFaces.widget.BaseWidget.extend({
     },
 
     /**
+     * @override
+     * @inheritdoc
+     * @param {PrimeFaces.PartialWidgetCfg<TCfg>} cfg
+     */
+    refresh: function(cfg) {
+        this._remove();
+        this._super(cfg);
+    },
+
+    /**
+     * @override
+     * @inheritdoc
+     */
+    destroy: function() {
+        this._super();
+        this._remove();
+    },
+
+    /**
+     * Clean up this widget and remove elements from DOM.
+     * @private
+     */
+    _remove: function() {
+        if (this.clipboard) {
+            this.clipboard.destroy();
+        }
+    },
+
+    /**
      * Applies the Clipboard to the given jQuery selector object. Delete
      * previous Clipboard to support ajax updates and create a new one.
      * 
@@ -48,7 +77,7 @@ PrimeFaces.widget.ExtClipboard = PrimeFaces.widget.BaseWidget.extend({
         if (cfg.target) {
             $.extend(true, opts, {
                 target : function(trigger) {
-                    var input = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(cfg.target);
+                    var input = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.jq, cfg.target);
                     var selector = input[0].id;
                     selector = selector.replace(new RegExp(':', 'g'), '\\:');
                     return document.querySelector('#' + selector);
@@ -113,11 +142,5 @@ PrimeFaces.widget.ExtClipboard = PrimeFaces.widget.BaseWidget.extend({
                 $this.cfg.onError.call(e);
             }
         });
-    },
-    
-    destroy : function() {
-        if (this.clipboard) {
-            this.clipboard.destroy();
-        }
     }
 });

@@ -23,9 +23,6 @@
 
       // this bit is to ensure we don't call setExpression when we shouldn't (with extra muscle to handle
       // confusing userAgent strings on Vista)
-      var msie = /MSIE/.test(navigator.userAgent);
-      var ie6  = /MSIE 6.0/.test(navigator.userAgent) && ! /MSIE 8.0/.test(navigator.userAgent);
-      var mode = document.documentMode || 0;
       var setExpr = $.isFunction( document.createElement('div').style.setExpression );
 
       // global $ methods for blocking/unblocking the entire page
@@ -291,7 +288,7 @@
          // layer2 is the overlay layer which has opacity and a wait cursor (by default)
          // layer3 is the message content that is displayed while blocking
          var lyr1, lyr2, lyr3, s;
-         if (msie || opts.forceIframe)
+         if (opts.forceIframe)
             lyr1 = $('<iframe class="blockUI" style="z-index:'+ (z++) +';display:none;border:none;margin:0;padding:0;position:absolute;width:100%;height:100%;top:0;left:0" src="'+opts.iframeSrc+'"></iframe>');
          else
             lyr1 = $('<div class="blockUI" style="display:none"></div>');
@@ -340,7 +337,7 @@
          lyr2.css('position', full ? 'fixed' : 'absolute');
 
          // make iframe layer transparent in IE
-         if (msie || opts.forceIframe)
+         if (opts.forceIframe)
             lyr1.css('opacity',0.0);
 
          //$([lyr1[0],lyr2[0],lyr3[0]]).appendTo(full ? 'body' : el);
@@ -359,13 +356,13 @@
          // ie7 must use absolute positioning in quirks mode and to account for activex issues (when scrolling)
          var isBoxModel = document.compatMode === "CSS1Compat";
          var expr = setExpr && (!isBoxModel || $('object,embed', full ? null : el).length > 0);
-         if (ie6 || expr) {
+         if (expr) {
             // give body 100% height
             if (full && opts.allowBodyStretch && isBoxModel)
                $('html,body').css('height','100%');
 
             // fix ie6 issue when blocked element has a border width
-            if ((ie6 || !isBoxModel) && !full) {
+            if ((!isBoxModel) && !full) {
                var t = sz(el,'borderTopWidth'), l = sz(el,'borderLeftWidth');
                var fixT = t ? '(0 - '+t+')' : 0;
                var fixL = l ? '(0 - '+l+')' : 0;
@@ -409,7 +406,7 @@
                $(msg).show();
          }
 
-         if ((msie || opts.forceIframe) && opts.showOverlay)
+         if ((opts.forceIframe) && opts.showOverlay)
             lyr1.show(); // opacity is zero
          if (opts.fadeIn) {
             var cb = opts.onBlock ? opts.onBlock : noOp;

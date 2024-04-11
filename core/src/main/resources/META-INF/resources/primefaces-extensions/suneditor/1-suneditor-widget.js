@@ -120,16 +120,21 @@ PrimeFaces.widget.ExtSunEditor = PrimeFaces.widget.DeferredWidget.extend({
 
     // @override
     refresh: function (cfg) {
-        if (this.editor) {
-            this.editor.destroy();
-            this.editor = null;
-        }
+        this._remove();
         this._super(cfg);
     },
 
     // @override
     destroy: function () {
         this._super();
+        this._remove();
+    },
+
+    /**
+     * Clean up this widget and remove elements from DOM.
+     * @private
+     */
+    _remove: function() {
         if (this.editor) {
             this.editor.destroy();
             this.editor = null;

@@ -38,11 +38,7 @@ PrimeFaces.widget.ExtEChart = PrimeFaces.widget.DeferredWidget.extend({
      * @param {PrimeFaces.PartialWidgetCfg<TCfg>} cfg
      */
     refresh: function (cfg) {
-        if (this.chart) {
-            this.unbindWindowResizeListener();
-            this.chart.dispose();
-        }
-
+        this._remove();
         this._super(cfg);
     },
 
@@ -52,7 +48,14 @@ PrimeFaces.widget.ExtEChart = PrimeFaces.widget.DeferredWidget.extend({
      */
     destroy: function () {
         this._super();
+        this._remove();
+    },
 
+    /**
+     * Clean up this widget and remove elements from DOM.
+     * @private
+     */
+    _remove: function() {
         if (this.chart) {
             this.unbindWindowResizeListener();
             this.chart.dispose();

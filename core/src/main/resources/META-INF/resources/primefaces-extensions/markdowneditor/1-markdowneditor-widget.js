@@ -28,6 +28,18 @@ PrimeFaces.widget.ExtMarkdownEditor = PrimeFaces.widget.BaseWidget.extend({
         this._render();
     },
 
+    // @override
+    refresh: function (cfg) {
+        this._remove();
+        this._super(cfg);
+    },
+
+    // @override
+    destroy: function () {
+        this._super();
+        this._remove();
+    },
+
     /**
      * @include
      * @override
@@ -94,6 +106,17 @@ PrimeFaces.widget.ExtMarkdownEditor = PrimeFaces.widget.BaseWidget.extend({
     },
 
     /**
+     * Clean up this widget and remove elements from DOM.
+     * @private
+     */
+    _remove: function() {
+        if (this.editor) {
+            this.editor.toTextArea();
+            this.editor = null;
+        }
+    },
+
+    /**
      * When the underlying textArea is removed by an AJAX refresh we must clean up the editor.
      * Clean up this widget and remove events from the DOM.
      */
@@ -101,10 +124,7 @@ PrimeFaces.widget.ExtMarkdownEditor = PrimeFaces.widget.BaseWidget.extend({
         // when the underlying textArea is removed by an AJAX refresh we must clean up the editor.
         let $this = this;
         this.jq.off('remove.markdown').on('remove.markdown', function () {
-            if ($this.editor) {
-                $this.editor.toTextArea();
-                $this.editor = null;
-            }
+            $this.destroy();
         });
     },
 

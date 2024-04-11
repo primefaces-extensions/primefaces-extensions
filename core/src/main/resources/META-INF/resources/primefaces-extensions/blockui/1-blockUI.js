@@ -1,7 +1,5 @@
 /**
  * PrimeFaces Extensions BlockUI Widget.
- *
- * @author Oleg Varaksin
  */
 PrimeFaces.widget.ExtBlockUI = PrimeFaces.widget.BaseWidget.extend({
 
@@ -12,7 +10,7 @@ PrimeFaces.widget.ExtBlockUI = PrimeFaces.widget.BaseWidget.extend({
      */
     init: function(cfg) {
         this._super(cfg);
-        
+
         this.source = cfg.source;
         this.target = cfg.target;
         this.contentId = cfg.content;
@@ -38,20 +36,42 @@ PrimeFaces.widget.ExtBlockUI = PrimeFaces.widget.BaseWidget.extend({
         $.blockUI.defaults.ignoreIfBlocked = true;
     },
 
+    /**
+     * @override
+     * @inheritdoc
+     * @param {PrimeFaces.PartialWidgetCfg<TCfg>} cfg
+     */
     refresh: function(cfg) {
-        $(document).off('pfAjaxSend.' + this.id + ' pfAjaxComplete.' + this.id);
-
+        this._remove();
         this._super(cfg);
+    },
+
+    /**
+     * @override
+     * @inheritdoc
+     */
+    destroy: function() {
+        this._super();
+        this._remove();
+    },
+
+    /**
+     * Clean up this widget and remove elements from DOM.
+     * @private
+     */
+    _remove: function() {
+        this.unblock();
+        $(document).off('pfAjaxSend.' + this.id + ' pfAjaxUpdated.' + this.id + ' pfAjaxComplete.' + this.id);
     },
 
     /* public access */
     setupAjaxHandlers: function() {
-        var $this = this;
-        var $document = $(document);
+        let $this = this;
+        let $document = $(document);
 
         $document.on('pfAjaxSend.' + this.id, function(e, xhr, settings) {
             // get IDs of the sources
-            var source = PrimeFaces.expressions.SearchExpressionFacade.resolveComponents($this.source);
+            let source = PrimeFaces.expressions.SearchExpressionFacade.resolveComponents(this.jq, $this.source);
 
             // first, check if event should be handled
             if ($this.isAppropriateEvent(source, settings)) {
@@ -61,7 +81,7 @@ PrimeFaces.widget.ExtBlockUI = PrimeFaces.widget.BaseWidget.extend({
 
         $document.on('pfAjaxComplete.' + this.id, function(e, xhr, settings) {
             // get IDs of the sources
-            var source = PrimeFaces.expressions.SearchExpressionFacade.resolveComponents($this.source);
+            let source = PrimeFaces.expressions.SearchExpressionFacade.resolveComponents(this.jq, $this.source);
 
             // first, check if event should be handled
             if ($this.isAppropriateEvent(source, settings)) {
@@ -71,10 +91,10 @@ PrimeFaces.widget.ExtBlockUI = PrimeFaces.widget.BaseWidget.extend({
     },
 
     block: function() {
-        var opt;
+        let opt;
 
         if (this.target) {
-            var targetEl = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.jq, this.target);
+            let targetEl = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.jq, this.target);
 
             // second, check if the target element has been found
             if (targetEl.length > 0) {
@@ -87,7 +107,7 @@ PrimeFaces.widget.ExtBlockUI = PrimeFaces.widget.BaseWidget.extend({
                 }
 
                 // get the current counter
-                var blocksCount = targetEl.data("blockUI.blocksCount");
+                let blocksCount = targetEl.data("blockUI.blocksCount");
                 if (typeof blocksCount === 'undefined') {
                     blocksCount = 0;
                 }
@@ -109,12 +129,12 @@ PrimeFaces.widget.ExtBlockUI = PrimeFaces.widget.BaseWidget.extend({
 
     unblock: function() {
         if (this.target) {
-            var targetEl = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.target);
+            let targetEl = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.jq, this.target);
 
             // second, check if the target element has been found
             if (targetEl.length > 0) {
                 // get the current counter
-                var blocksCount = targetEl.data("blockUI.blocksCount");
+                let blocksCount = targetEl.data("blockUI.blocksCount");
 
                 // check the counter
                 if (typeof blocksCount !== 'undefined') {
@@ -137,7 +157,7 @@ PrimeFaces.widget.ExtBlockUI = PrimeFaces.widget.BaseWidget.extend({
     /* private access */
 
     getOptions: function() {
-        var opt = null;
+        let opt = null;
 
         if (this.contentId != null) {
             opt = {};
@@ -177,11 +197,11 @@ PrimeFaces.widget.ExtBlockUI = PrimeFaces.widget.BaseWidget.extend({
         }
 
         // check if settings.source is an object and extract id if yes.
-        var sourceId;
+        let sourceId;
         if (Object.prototype.toString.call(settings.source) === "[object String]") {
             sourceId = settings.source;
         } else {
-            var idx = settings.source.id.lastIndexOf(this.namingContSep);
+            let idx = settings.source.id.lastIndexOf(this.namingContSep);
             if (idx == -1) {
                 sourceId = settings.source.id;
             } else {
@@ -194,10 +214,10 @@ PrimeFaces.widget.ExtBlockUI = PrimeFaces.widget.BaseWidget.extend({
         }
 
         // split options around ampersands
-        var params = settings.data.split(/&/g);
+        let params = settings.data.split(/&/g);
 
         // loop over the ajax options and try to match events
-        for (var i = 0; i < params.length; i++) {
+        for (let i = 0; i < params.length; i++) {
             if (this.eventRegEx.test(params[i])) {
                 return true;
             }

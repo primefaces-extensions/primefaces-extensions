@@ -44,6 +44,35 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
         this.bindEvents();
     },
 
+    /**
+     * @override
+     * @inheritdoc
+     * @param {PrimeFaces.PartialWidgetCfg<TCfg>} cfg
+     */
+    refresh: function(cfg) {
+        this._remove();
+        this._super(cfg);
+    },
+
+    /**
+     * @override
+     * @inheritdoc
+     */
+    destroy: function() {
+        this._super();
+        this._remove();
+    },
+
+    /**
+     * Clean up this widget and remove elements from DOM.
+     * @private
+     */
+    _remove: function() {
+        if (this.iti) {
+            this.iti.destroy();
+        }
+    },
+
     bindEvents: function () {
         var $this = this;
 
@@ -204,22 +233,6 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
         PrimeFaces.utils.disableInputWidget(this.inputIso2Jq);
         PrimeFaces.utils.disableInputWidget(this.inputHiddenJq);
         this.disabled = true;
-    },
-
-    // @override
-    refresh: function (cfg) {
-        if (this.iti) {
-            this.iti.destroy();
-        }
-        this._super(cfg);
-    },
-
-    // @override
-    destroy: function () {
-        this._super();
-        if (this.iti) {
-            this.iti.destroy();
-        }
     }
 
 });
