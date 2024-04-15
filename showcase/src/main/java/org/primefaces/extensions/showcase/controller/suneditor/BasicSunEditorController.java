@@ -83,6 +83,7 @@ public class BasicSunEditorController implements Serializable {
         results.add(new SelectItem("en", "English (US/UK)"));
         results.add(new SelectItem("es", "Español (Spanish)"));
         results.add(new SelectItem("fr", "Français (French)"));
+        results.add(new SelectItem("fa", "Farsi (Iran)"));
         results.add(new SelectItem("he", "Hebrew (Israel)"));
         results.add(new SelectItem("it", "Italiano (Italian)"));
         results.add(new SelectItem("ja", "Japanese"));
@@ -94,6 +95,7 @@ public class BasicSunEditorController implements Serializable {
         results.add(new SelectItem("ro", "Romanian"));
         results.add(new SelectItem("ru", "\u0420\u0443\u0441\u0441\u043a\u0438\u0439 (Russian)"));
         results.add(new SelectItem("se", "Swedish"));
+        results.add(new SelectItem("tr", "Turkish"));
         results.add(new SelectItem("uk_ua", "\u0423\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u0430 (Ukrainian)"));
         results.add(new SelectItem("zh_CN", "\u4e2d\u6587 (\u7b80\u4f53) (Chinese, Simplified)"));
         return results;

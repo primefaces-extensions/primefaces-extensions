@@ -49,8 +49,13 @@ PrimeFaces.widget.ExtSunEditor = PrimeFaces.widget.DeferredWidget.extend({
     _render: function () {
         const $this = this;
 
-        //initialize
+        // calculate the language to use
         this.getLanguage();
+
+        // do not alter HTML
+        this.cfg.strictMode = true;
+
+        // initialize
         this.editor = SUNEDITOR.create(this.id, this.cfg);
         this.editor.onload = function (core, reload) {
             $this.callBehavior('initialize');
@@ -61,10 +66,6 @@ PrimeFaces.widget.ExtSunEditor = PrimeFaces.widget.DeferredWidget.extend({
         if (this.disabled) {
             this.editor.disable();
         }
-
-        // do not alter HTML
-        this.editor.core.cleanHTML = function (html) {return html;}
-        this.editor.core.convertContentsForEditor = function (html) {return html;}
 
         //update input on change
         this.editor.onChange = function (contents, core) {
@@ -134,7 +135,7 @@ PrimeFaces.widget.ExtSunEditor = PrimeFaces.widget.DeferredWidget.extend({
      * Clean up this widget and remove elements from DOM.
      * @private
      */
-    _remove: function() {
+    _remove: function () {
         if (this.editor) {
             this.editor.destroy();
             this.editor = null;
@@ -145,7 +146,7 @@ PrimeFaces.widget.ExtSunEditor = PrimeFaces.widget.DeferredWidget.extend({
      * Sets up support for using the editor within an overlay dialog.
      * @private
      */
-    setupDialogSupport: function() {
+    setupDialogSupport: function () {
         const dlg = this.input[0].closest('.ui-dialog');
         if (dlg) {
             const dialog = $(dlg);

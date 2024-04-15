@@ -153,8 +153,8 @@
                 <configuration>
                     <useDataUri>true</useDataUri>
                     <imagesDir>${project.build.directory}/classes/META-INF/resources</imagesDir>
-                    <languageIn>ECMASCRIPT_2018</languageIn>
-                    <languageOut>ECMASCRIPT5</languageOut>
+                    <languageIn>ECMASCRIPT_2020</languageIn>
+                    <languageOut>ECMASCRIPT_2020</languageOut>
                     <resourcesSets>
                         <resourcesSet>
                             <includes>
