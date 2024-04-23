@@ -33,12 +33,12 @@ PrimeFaces.widget.ExtInputOtp = PrimeFaces.widget.BaseWidget.extend({
             this.hinput.attr("disabled", "disabled");
         }
 
-        // visual effects
-        PrimeFaces.skinInput(this.inputsJq);
-
         // ARIA and events
         this.setupARIA();
         this.bindEvents();
+
+        // visual effects
+        PrimeFaces.skinInput(this.inputsJq);
 
         //client Behaviors
         if (this.cfg.behaviors) {
@@ -83,7 +83,7 @@ PrimeFaces.widget.ExtInputOtp = PrimeFaces.widget.BaseWidget.extend({
 
             let input = inputsJq[i];
 
-            $(input).prop('oninput', null).off('input').on('input', function (e) {
+            $(input).prop('oninput', null).off('input').on('input.otp', function (e) {
                 // sanitise input
                 if ($this.cfg.integerOnly && input.value.length > 0 && isNaN(input.value)) {
                     input.value = '';
@@ -121,7 +121,7 @@ PrimeFaces.widget.ExtInputOtp = PrimeFaces.widget.BaseWidget.extend({
                 }
             });
 
-            $(input).prop('onkeydown', null).off('keydown').on('keydown', function (e) {
+            $(input).prop('onkeydown', null).off('keydown').on('keydown.otp', function (e) {
                 switch (e.code) {
                     case 'Backspace':
                     case 'Delete':
@@ -166,7 +166,7 @@ PrimeFaces.widget.ExtInputOtp = PrimeFaces.widget.BaseWidget.extend({
             });
         }
 
-        inputsJq.prop('onfocus', null).off('focus').on('focus', function (e) {
+        inputsJq.prop('onfocus', null).off('focus').on('focus.otp', function (e) {
             if (originalOnfocus && originalOnfocus.call(this, e) === false) {
                 return false;
             }
