@@ -42,11 +42,10 @@ import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortMeta;
 import org.primefaces.model.SortOrder;
+import org.primefaces.util.Callbacks;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
 import org.primefaces.util.PropertyDescriptorResolver;
-import org.primefaces.util.SerializableFunction;
-import org.primefaces.util.SerializableSupplier;
 
 import dev.morphia.Datastore;
 import dev.morphia.query.CountOptions;
@@ -67,9 +66,9 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
     private static final Logger LOGGER = Logger.getLogger(MorphiaLazyDataModel.class.getName());
 
     protected Class<T> entityClass;
-    protected SerializableSupplier<Datastore> datastore;
+    protected Callbacks.SerializableSupplier<Datastore> datastore;
     protected String rowKeyField;
-    protected SerializableFunction<T, Object> rowKeyProvider;
+    protected Callbacks.SerializableFunction<T, Object> rowKeyProvider;
 
     /*
      * if the default match mode queries in applyFilters() dont work for a specific field, overridden field queries with the overrideFieldQuery method will add
@@ -90,35 +89,6 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
      */
     public MorphiaLazyDataModel() {
         // for serialization only
-    }
-
-    /**
-     * Constructs a Morphia lazy data model with selection support.
-     *
-     * @param datastore the {@link Datastore}
-     * @param entityClass The entity class
-     * @param rowKeyField The name of the rowKey property (e.g. "id")
-     * @deprecated use {@link MorphiaLazyDataModel#builder()} instead
-     */
-    @Deprecated
-    public MorphiaLazyDataModel(final Class<T> entityClass, final SerializableSupplier<Datastore> datastore,
-                final String rowKeyField) {
-        this();
-        this.datastore = datastore;
-        this.entityClass = entityClass;
-        this.rowKeyField = rowKeyField;
-    }
-
-    /**
-     * Constructs a Morphia lazy data model with selection support with the default "id" field being the row key.
-     *
-     * @param datastore the {@link Datastore}
-     * @param entityClass The entity class
-     * @deprecated use {@link MorphiaLazyDataModel#builder()} instead
-     */
-    @Deprecated
-    public MorphiaLazyDataModel(final Class<T> entityClass, final SerializableSupplier<Datastore> datastore) {
-        this(entityClass, datastore, "id");
     }
 
     @Override
@@ -388,7 +358,7 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
             return this;
         }
 
-        public Builder<T> datastore(SerializableSupplier<Datastore> datastore) {
+        public Builder<T> datastore(Callbacks.SerializableSupplier<Datastore> datastore) {
             model.datastore = datastore;
             return this;
         }
@@ -398,7 +368,7 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
             return this;
         }
 
-        public Builder<T> rowKeyProvider(SerializableFunction<T, Object> rowKeyProvider) {
+        public Builder<T> rowKeyProvider(Callbacks.SerializableFunction<T, Object> rowKeyProvider) {
             model.rowKeyProvider = rowKeyProvider;
             return this;
         }
