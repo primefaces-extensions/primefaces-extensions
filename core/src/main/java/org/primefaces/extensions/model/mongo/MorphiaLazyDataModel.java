@@ -31,6 +31,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 import java.util.logging.Logger;
 
 import javax.faces.context.FacesContext;
@@ -48,6 +49,7 @@ import org.primefaces.util.SerializableFunction;
 import org.primefaces.util.SerializableSupplier;
 
 import dev.morphia.Datastore;
+import dev.morphia.query.CountOptions;
 import dev.morphia.query.FindOptions;
 import dev.morphia.query.MorphiaCursor;
 import dev.morphia.query.Query;
@@ -78,6 +80,10 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
     private transient Consumer<Query<T>> prependConsumer;
     // global filter consumer (to be implemented by the user)
     private transient BiConsumer<Query<T>, FilterMeta> globalFilterConsumer;
+    // for user supplied FindOptions
+    private transient Supplier<FindOptions> findOptionsSupplier;
+    // for user supplied CountOptions
+    private transient Supplier<CountOptions> countOptionsSupplier;
 
     /**
      * For serialization only
@@ -135,7 +141,8 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
     @Override
     public int count(final Map<String, FilterMeta> map) {
         final Query<T> q = this.buildQuery();
-        final long count = applyFilters(q, map).count();
+        final CountOptions opts = getCountOptions();
+        final long count = applyFilters(q, map).count(opts);
         return (int) count;
     }
 
@@ -143,13 +150,35 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
     public List<T> load(final int first, final int pageSize, final Map<String, SortMeta> sort,
                 final Map<String, FilterMeta> filters) {
         final Query<T> q = buildQuery();
-        final FindOptions opt = new FindOptions();
+        final FindOptions opt = getFindOptions();
         sort.forEach((field, sortData) -> opt.sort(sortData.getOrder() == SortOrder.DESCENDING ? Sort.descending(field) : Sort.ascending(field)));
 
         applyFilters(q, filters);
         opt.skip(first).limit(pageSize);
         try (MorphiaCursor<T> cursor = q.iterator(opt)) {
             return cursor.toList();
+        }
+    }
+
+    protected FindOptions getFindOptions() {
+        try {
+            FindOptions opt = findOptionsSupplier != null ? findOptionsSupplier.get() : new FindOptions();
+            return opt;
+        }
+        catch (Exception e) {
+            // if we get here, this means the user supplied FindOptions failed to resolve for some reason, so we fall back to the default
+            return new FindOptions();
+        }
+    }
+
+    protected CountOptions getCountOptions() {
+        try {
+            CountOptions opt = countOptionsSupplier != null ? countOptionsSupplier.get() : new CountOptions();
+            return opt;
+        }
+        catch (Exception e) {
+            // if we get here, this means the user supplied CountOptions failed to resolve for some reason, so we fall back to the default
+            return new CountOptions();
         }
     }
 
@@ -294,6 +323,24 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
     }
 
     /**
+     * use {@link Builder#findOptions(Supplier)} instead
+     */
+    @Deprecated
+    public MorphiaLazyDataModel<T> findOptions(final Supplier<FindOptions> supplier) {
+        this.findOptionsSupplier = supplier;
+        return this;
+    }
+
+    /**
+     * use {@link Builder#findOptions(Supplier)} instead
+     */
+    @Deprecated
+    public MorphiaLazyDataModel<T> countOptions(final Supplier<CountOptions> supplier) {
+        this.countOptionsSupplier = supplier;
+        return this;
+    }
+
+    /**
      * use {@link Builder#globalFilter(BiConsumer)} instead
      */
     @Deprecated
@@ -358,6 +405,16 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
 
         public Builder<T> rowKeyField(String rowKey) {
             model.rowKeyField = rowKey;
+            return this;
+        }
+
+        public Builder<T> findOptions(Supplier<FindOptions> findOptionsSupplier) {
+            model.findOptionsSupplier = findOptionsSupplier;
+            return this;
+        }
+
+        public Builder<T> countOptions(Supplier<CountOptions> countOptionsSupplier) {
+            model.countOptionsSupplier = countOptionsSupplier;
             return this;
         }
 
