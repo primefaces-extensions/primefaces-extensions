@@ -31,7 +31,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 import java.util.logging.Logger;
 
 import javax.faces.context.FacesContext;
@@ -80,9 +79,9 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
     // global filter consumer (to be implemented by the user)
     private transient BiConsumer<Query<T>, FilterMeta> globalFilterConsumer;
     // for user supplied FindOptions
-    private transient Supplier<FindOptions> findOptionsSupplier;
+    private transient Callbacks.SerializableSupplier<FindOptions> findOptionsSupplier;
     // for user supplied CountOptions
-    private transient Supplier<CountOptions> countOptionsSupplier;
+    private transient Callbacks.SerializableSupplier<CountOptions> countOptionsSupplier;
 
     /**
      * For serialization only
@@ -132,8 +131,7 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
 
     protected FindOptions getFindOptions() {
         try {
-            FindOptions opt = findOptionsSupplier != null ? findOptionsSupplier.get() : new FindOptions();
-            return opt;
+            return findOptionsSupplier != null ? findOptionsSupplier.get() : new FindOptions();
         }
         catch (Exception e) {
             // if we get here, this means the user supplied FindOptions failed to resolve for some reason, so we fall back to the default
@@ -143,8 +141,7 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
 
     protected CountOptions getCountOptions() {
         try {
-            CountOptions opt = countOptionsSupplier != null ? countOptionsSupplier.get() : new CountOptions();
-            return opt;
+            return countOptionsSupplier != null ? countOptionsSupplier.get() : new CountOptions();
         }
         catch (Exception e) {
             // if we get here, this means the user supplied CountOptions failed to resolve for some reason, so we fall back to the default
@@ -293,19 +290,19 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
     }
 
     /**
-     * use {@link Builder#findOptions(Supplier)} instead
+     * use {@link Builder#findOptions(Callbacks.SerializableSupplier)} instead
      */
     @Deprecated
-    public MorphiaLazyDataModel<T> findOptions(final Supplier<FindOptions> supplier) {
+    public MorphiaLazyDataModel<T> findOptions(final Callbacks.SerializableSupplier<FindOptions> supplier) {
         this.findOptionsSupplier = supplier;
         return this;
     }
 
     /**
-     * use {@link Builder#findOptions(Supplier)} instead
+     * use {@link Builder#findOptions(Callbacks.SerializableSupplier)} instead
      */
     @Deprecated
-    public MorphiaLazyDataModel<T> countOptions(final Supplier<CountOptions> supplier) {
+    public MorphiaLazyDataModel<T> countOptions(final Callbacks.SerializableSupplier<CountOptions> supplier) {
         this.countOptionsSupplier = supplier;
         return this;
     }
@@ -378,12 +375,12 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
             return this;
         }
 
-        public Builder<T> findOptions(Supplier<FindOptions> findOptionsSupplier) {
+        public Builder<T> findOptions(Callbacks.SerializableSupplier<FindOptions> findOptionsSupplier) {
             model.findOptionsSupplier = findOptionsSupplier;
             return this;
         }
 
-        public Builder<T> countOptions(Supplier<CountOptions> countOptionsSupplier) {
+        public Builder<T> countOptions(Callbacks.SerializableSupplier<CountOptions> countOptionsSupplier) {
             model.countOptionsSupplier = countOptionsSupplier;
             return this;
         }
