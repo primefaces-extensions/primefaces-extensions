@@ -494,6 +494,9 @@
                                         <transformer implementation="org.apache.maven.plugins.shade.resource.XmlAppendingTransformer">
                                             <resource>META-INF/primefaces-extensions.taglib.xml</resource>
                                         </transformer>
+                                        <transformer implementation="org.apache.maven.plugins.shade.resource.XmlAppendingTransformer">
+                                            <resource>META-INF/primefaces-extensions.urn.taglib.xml</resource>
+                                        </transformer>
                                         <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
                                             <resource>META-INF/resources/primefaces-extensions/session/session.js</resource>
                                         </transformer>
@@ -594,6 +597,30 @@
                         <version>0.0.5</version>
                     </dependency>
                 </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>rename-xml-file</id>
+                        <phase>process-resources</phase>
+                        <configuration>
+                            <target>
+                                <copy  file="${project.build.directory}/classes/META-INF/primefaces-extensions.taglib.xml"
+                                      tofile="${project.build.directory}/classes/META-INF/primefaces-extensions.urn.taglib.xml"/>
+                                <!-- Modify the copied file -->
+                                <replace file="${project.build.directory}/classes/META-INF/primefaces-extensions.urn.taglib.xml">
+                                    <replacefilter token="http://primefaces.org/ui/extensions" value="primefaces.extensions"/>
+                                </replace>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <!-- Check monaco editor widget types -->
             <plugin>
