@@ -187,8 +187,7 @@ public class InputPhoneRenderer extends InputRenderer {
         wb.attr("formatOnDisplay", inputPhone.isFormatOnDisplay(), true);
         wb.attr("formatAsYouType", inputPhone.isFormatAsYouType(), true);
         wb.attr("nationalMode", inputPhone.isNationalMode(), true);
-        wb.attr("countrySearch", inputPhone.isCountrySearch(), true);
-        wb.attr("showSelectedDialCode", inputPhone.isSeparateDialCode(), false);
+        wb.attr("separateDialCode", inputPhone.isSeparateDialCode(), false);
         if (inputPhone.getAutoPlaceholderEnum() != InputPhone.AutoPlaceholder.polite) {
             wb.attr("autoPlaceholder", inputPhone.getAutoPlaceholder());
         }
@@ -205,12 +204,12 @@ public class InputPhoneRenderer extends InputRenderer {
         if (inputPhone.getPlaceholderNumberTypeEnum() != InputPhone.PlaceholderNumberType.mobile) {
             wb.attr("placeholderNumberType", inputPhone.getPlaceholderNumberType().toUpperCase());
         }
-        encodeCountries(wb, "preferredCountries", inputPhone.getPreferredCountries());
+        encodeCountries(wb, "countryOrder", inputPhone.getPreferredCountries());
 
         wb.attr("utilsScript",
                     context.getApplication()
                                 .getResourceHandler()
-                                .createResource("inputphone/utils.js", "primefaces-extensions")
+                                .createResource("inputphone/utils.js", org.primefaces.extensions.util.Constants.LIBRARY)
                                 .getRequestPath());
         if (inputPhone.getLocalizedCountries() != null) {
             wb.nativeAttr("i18n", objectToJsonString(inputPhone.getLocalizedCountries()));

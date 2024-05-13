@@ -73,7 +73,6 @@ public class InputPhone extends AbstractPrimeHtmlInputText implements Widget, In
         allowDropdown,
         autoHideDialCode,
         autoPlaceholder,
-        countrySearch,
         excludeCountries,
         fixDropdownWidth,
         formatAsYouType,
@@ -315,14 +314,6 @@ public class InputPhone extends AbstractPrimeHtmlInputText implements Widget, In
 
     public void setLocalizedCountries(final Object localizedCountries) {
         getStateHelper().put(PropertyKeys.localizedCountries, localizedCountries);
-    }
-
-    public boolean isCountrySearch() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.countrySearch, true);
-    }
-
-    public void setCountrySearch(final boolean countrySearch) {
-        getStateHelper().put(PropertyKeys.countrySearch, countrySearch);
     }
 
     @Override
