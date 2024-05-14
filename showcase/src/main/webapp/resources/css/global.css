@@ -5,11 +5,11 @@
     --arya3: hsl(29, 44%, 33%);
     --arya4: hsl(29, 44%, 92%);
 
-    --saga0: hsl(29, 44%, 53%);
-    --saga1: hsl(29, 44%, 57%);
-    --saga2: hsl(29, 44%, 61%);
-    --saga3: hsl(29, 44%, 77%);
-    --saga4: hsl(29, 44%, 23%);
+    --saga0: #0B78D5; /* Main color */
+    --saga1: #0859A7; /* Hover color */
+    --saga2: #0859A7; /* Active color */
+    --saga3: #6CBCF9; /* Focus outline color */
+    --saga4: #495057; /* Text color */
 
     --vela0: hsl(29, 44%, 53%);
     --vela1: hsl(29, 44%, 57%);
