@@ -109,7 +109,7 @@
         <commons-lang3.version>3.14.0</commons-lang3.version>
         <gson.version>2.10.1</gson.version>
         <jakarta-faces.version>2.3.21</jakarta-faces.version>
-        <libphonenumber.version>8.13.36</libphonenumber.version>
+        <libphonenumber.version>8.13.37</libphonenumber.version>
         <morphia.version>2.4.13</morphia.version>
         <junit.version>5.10.2</junit.version>
         <primefaces.core.version>14.0.0</primefaces.core.version>
