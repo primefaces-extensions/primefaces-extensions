@@ -128,10 +128,14 @@ public class PrimeFacesResourceProcessor implements PhaseListener {
         // normal CSV is a required dependency for some special components like fileupload
         encodeJS(context, "validation/validation.js");
 
-        // BV CSV is optional and must be enabled by config
-        if (configuration.isClientSideValidationEnabled()
-                    && configuration.isBeanValidationEnabled()) {
-            encodeJS(context, "validation/validation.bv.js");
+        if (configuration.isClientSideValidationEnabled()) {
+            // moment is needed for Date validation
+            encodeJS(context, "moment/moment.js");
+
+            // BV CSV is optional and must be enabled by config
+            if (configuration.isBeanValidationEnabled()) {
+                encodeJS(context, "validation/validation.bv.js");
+            }
         }
     }
 
