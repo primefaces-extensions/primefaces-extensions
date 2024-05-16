@@ -9783,14 +9783,6 @@ If you leave initialCountry blank, it will default to the first country in the l
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Add a search input to the top of the dropdown, so users can filter the displayed countries. Defaul false.]]>
-            </description>
-            <name>countrySearch</name>
-            <required>false</required>
-            <type>boolean</type>
-        </attribute>
-        <attribute>
-            <description>
                 <![CDATA[Allow users to enter national numbers (and not have to think about international dial codes).
 Formatting, JS validation and placeholders still work. Defaults is true.]]>
             </description>
