@@ -90,6 +90,10 @@ PrimeFaces.widget.ExtInputPlace = PrimeFaces.widget.BaseWidget.extend({
                 $this.processAzureRequest(requestUrl).then(data => {
                     response(data.results);
                 });
+            },
+            open: function( event, ui ) {
+                // #1551 in dialogs must always stay on top
+                $('.ui-inputplace.ui-autocomplete-panel').css('z-index', PrimeFaces.nextZindex());
             }
         });
 
