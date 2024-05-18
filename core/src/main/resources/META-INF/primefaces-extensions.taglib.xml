@@ -11547,6 +11547,14 @@ See showcase for an example. Default null.]]>
         </attribute>
     </tag>
     <tag>
+        <description><![CDATA[Open Street Map using leaflet https://leafletjs.com/]]></description>
+        <tag-name>osmap</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.OSMap</component-type>
+            <renderer-type>org.primefaces.extensions.component.OSMapRenderer</renderer-type>
+        </component>
+    </tag>
+    <tag>
         <description>
             <![CDATA[Apache ECharts component using raw JSON model.]]>
         </description>
