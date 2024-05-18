@@ -24,19 +24,16 @@ package org.primefaces.extensions.component.osmap;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
-import javax.faces.component.behavior.ClientBehavior;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import org.primefaces.behavior.ajax.AjaxBehavior;
 import org.primefaces.model.map.*;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.EscapeUtils;
-import org.primefaces.util.WidgetBuilder;
+//import org.primefaces.util.WidgetBuilder;
 
 public class OSMapRenderer extends CoreRenderer {
 
@@ -58,7 +55,7 @@ public class OSMapRenderer extends CoreRenderer {
         String clientId = map.getClientId(context);
 
         writer.startElement("div", map);
-        writer.writeAttribute("id", clientId, null);
+        writer.writeAttribute("id", clientId + "_map", null);
         if (map.getStyle() != null) {
             writer.writeAttribute("style", map.getStyle(), null);
         }
@@ -70,66 +67,43 @@ public class OSMapRenderer extends CoreRenderer {
     }
 
     protected void encodeScript(FacesContext context, OSMap map) throws IOException {
-        String widgetVar = map.resolveWidgetVar(context);
-        OSMapInfoWindow infoWindow = map.getInfoWindow();
-
-        WidgetBuilder wb = getWidgetBuilder(context);
-        wb.init("OSMap", map)
-                    .nativeAttr("mapTypeId", "google.maps.MapTypeId." + map.getType().toUpperCase())
-                    .nativeAttr("center", "new google.maps.LatLng(" + map.getCenter() + ")")
-                    .attr("zoom", map.getZoom());
-
-        if (!map.isFitBounds()) {
-            wb.attr("fitBounds", false);
-        }
-
-        // Overlays
-        encodeOverlays(context, map);
-
-        // Controls
-        if (!map.isNavControl()) {
-            wb.attr("navControl", false);
-        }
-        if (!map.isMapTypeControl()) {
-            wb.attr("mapTypeControl", false);
-        }
-
-        // Options
-        if (!map.isDraggable()) {
-            wb.attr("draggable", false);
-        }
-        if (!map.isScrollWheel()) {
-            wb.attr("scrollwheel", false);
-        }
-
-        // Client events
-        if (map.getOnPointClick() != null) {
-            wb.callback("onPointClick", "function(event)", map.getOnPointClick() + ";");
-        }
 
         /*
-         * Behaviors - Adds hook to show info window if one defined - Encodes behaviors
+         * String widgetVar = map.resolveWidgetVar(context); OSMapInfoWindow infoWindow = map.getInfoWindow(); WidgetBuilder wb = getWidgetBuilder(context);
+         * wb.init("OSMap", map) .nativeAttr("mapTypeId", "google.maps.MapTypeId." + map.getType().toUpperCase()) .nativeAttr("center",
+         * "new google.maps.LatLng(" + map.getCenter() + ")") .attr("zoom", map.getZoom()); if (!map.isFitBounds()) { wb.attr("fitBounds", false); } // Overlays
+         * encodeOverlays(context, map); // Controls if (!map.isNavControl()) { wb.attr("navControl", false); } if (!map.isMapTypeControl()) {
+         * wb.attr("mapTypeControl", false); } // Options if (!map.isDraggable()) { wb.attr("draggable", false); } if (!map.isScrollWheel()) {
+         * wb.attr("scrollwheel", false); } // Client events if (map.getOnPointClick() != null) { wb.callback("onPointClick", "function(event)",
+         * map.getOnPointClick() + ";"); } if (infoWindow != null) { Map<String, List<ClientBehavior>> behaviorEvents = map.getClientBehaviors();
+         * List<ClientBehavior> overlaySelectBehaviors = behaviorEvents.get("overlaySelect"); if (overlaySelectBehaviors != null) { for (ClientBehavior
+         * clientBehavior : overlaySelectBehaviors) { ((AjaxBehavior) clientBehavior).setOnsuccess("PF('" + widgetVar + "').openWindow(data)"); } }
+         * List<ClientBehavior> overlayDblSelectBehaviors = behaviorEvents.get("overlayDblSelect"); if (overlayDblSelectBehaviors != null) { for (ClientBehavior
+         * clientBehavior : overlayDblSelectBehaviors) { ((AjaxBehavior) clientBehavior).setOnsuccess("PF('" + widgetVar + "').openWindow(data)"); } } }
+         * encodeClientBehaviors(context, map); wb.finish();
          */
-        if (infoWindow != null) {
-            Map<String, List<ClientBehavior>> behaviorEvents = map.getClientBehaviors();
-            List<ClientBehavior> overlaySelectBehaviors = behaviorEvents.get("overlaySelect");
-            if (overlaySelectBehaviors != null) {
-                for (ClientBehavior clientBehavior : overlaySelectBehaviors) {
-                    ((AjaxBehavior) clientBehavior).setOnsuccess("PF('" + widgetVar + "').openWindow(data)");
-                }
-            }
 
-            List<ClientBehavior> overlayDblSelectBehaviors = behaviorEvents.get("overlayDblSelect");
-            if (overlayDblSelectBehaviors != null) {
-                for (ClientBehavior clientBehavior : overlayDblSelectBehaviors) {
-                    ((AjaxBehavior) clientBehavior).setOnsuccess("PF('" + widgetVar + "').openWindow(data)");
-                }
-            }
-        }
+        final ResponseWriter writer = context.getResponseWriter();
+        writer.startElement("script", map);
+        writer.writeAttribute("type", "text/javascript", null);
+        writer.writeAttribute("id", map.getClientId() + "_script", null);
 
-        encodeClientBehaviors(context, map);
+        /*
+         * writer.write(name + " = function("); // parameters for (int i = 0; i < parameters.size(); i++) { if (i != 0) { writer.write(","); } final
+         * AbstractParameter param = parameters.get(i); writer.write(param.getName()); } writer.write(") {"); writer.write(request); writer.write("}"); if
+         * (command.isAutoRun()) { writer.write(";$(function() {"); writer.write(name + "();"); writer.write("});"); }
+         */
 
-        wb.finish();
+        String parts[] = map.getCenter().split(",");
+
+        writer.write("const map = L.map('" + map.getClientId() + "_map').setView(['" + parts[0].trim() + "', '" + parts[1].trim() + "'], 16);");
+
+        writer.write("const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {");
+        writer.write("maxZoom: " + map.getZoom() + ",");
+        writer.write("attribution: '&copy; <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap</a>'");
+        writer.write("}).addTo(map);");
+
+        writer.endElement("script");
     }
 
     protected void encodeOverlays(FacesContext context, OSMap map) throws IOException {
