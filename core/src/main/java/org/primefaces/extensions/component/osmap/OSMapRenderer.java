@@ -96,12 +96,15 @@ public class OSMapRenderer extends CoreRenderer {
 
         String parts[] = map.getCenter().split(",");
 
-        writer.write("const map = L.map('" + map.getClientId() + "_map').setView(['" + parts[0].trim() + "', '" + parts[1].trim() + "'], 16);");
+        String jsMap = map.getClientId().replaceAll(":", "_") + "JSmap";
+        String jsTiles = map.getClientId().replaceAll(":", "_") + "JStiles";
 
-        writer.write("const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {");
-        writer.write("maxZoom: " + map.getZoom() + ",");
+        writer.write("const " + jsMap + " = L.map('" + map.getClientId() + "_map').setView(['" + parts[0].trim() + "', '" + parts[1].trim()
+                    + "'], " + map.getZoom() + ");");
+
+        writer.write("const " + jsTiles + " = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {");
         writer.write("attribution: '&copy; <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap</a>'");
-        writer.write("}).addTo(map);");
+        writer.write("}).addTo(" + jsMap + ");");
 
         writer.endElement("script");
     }
