@@ -148,11 +148,14 @@ public class OSMapRenderer extends CoreRenderer {
 
         ExternalContext externalContext = context.getExternalContext();
         HttpServletRequest httpServletRequest = (HttpServletRequest) externalContext.getRequest();
-        String iconUrl = httpServletRequest.getContextPath() + "/jakarta.faces.resource/leaflet/images/marker-icon.png.xhtml?ln=primefaces-extensions";
-        String shadowUrl = httpServletRequest.getContextPath() + "/jakarta.faces.resource/leaflet/images/marker-shadow.png.xhtml?ln=primefaces-extensions";
 
         for (Iterator<Marker> iterator = model.getMarkers().iterator(); iterator.hasNext();) {
             Marker marker = iterator.next();
+            String iconUrl = httpServletRequest.getContextPath() + "/jakarta.faces.resource/leaflet/images/marker-icon.png.xhtml?ln=primefaces-extensions";
+            String shadowUrl = httpServletRequest.getContextPath() + "/jakarta.faces.resource/leaflet/images/marker-shadow.png.xhtml?ln=primefaces-extensions";
+            if (marker.getIcon() != null && marker.getIcon() instanceof String) {
+                iconUrl = (String) marker.getIcon();
+            }
             String jsMap = map.getClientId().replaceAll(":", "_") + "JSmap";
             writer.write("var myIcon = L.icon({ iconUrl: '" + iconUrl + "', shadowUrl: '" + shadowUrl + "', iconSize: [25, 41], iconAnchor: [12, 41] });\n");
             writer.write("L.marker([" + marker.getLatlng().getLat() + ", " + marker.getLatlng().getLng() + "], {icon: myIcon})");
