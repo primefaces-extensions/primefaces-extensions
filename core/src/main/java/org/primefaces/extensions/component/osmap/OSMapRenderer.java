@@ -34,8 +34,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.primefaces.model.map.*;
 import org.primefaces.renderkit.CoreRenderer;
-//import org.primefaces.util.EscapeUtils;
-//import org.primefaces.util.WidgetBuilder;
+import org.primefaces.util.WidgetBuilder;
 
 public class OSMapRenderer extends CoreRenderer {
 
@@ -85,10 +84,21 @@ public class OSMapRenderer extends CoreRenderer {
          * encodeClientBehaviors(context, map); wb.finish();
          */
 
-        final ResponseWriter writer = context.getResponseWriter();
-        writer.startElement("script", map);
-        writer.writeAttribute("type", "text/javascript", null);
-        writer.writeAttribute("id", map.getClientId() + "_script", null);
+        String parts[] = map.getCenter().split(",");
+
+        ExternalContext externalContext = context.getExternalContext();
+        HttpServletRequest httpServletRequest = (HttpServletRequest) externalContext.getRequest();
+
+        WidgetBuilder wb = getWidgetBuilder(context);
+        wb.init("OSMap", map);
+        wb.attr("center", map.getCenter());
+        wb.nativeAttr("iconUrl",
+                    "\"" + httpServletRequest.getContextPath() + "/jakarta.faces.resource/leaflet/images/marker-icon.png.xhtml?ln=primefaces-extensions\"");
+        wb.nativeAttr("shadowUrl",
+                    "\"" + httpServletRequest.getContextPath() + "/jakarta.faces.resource/leaflet/images/marker-shadow.png.xhtml?ln=primefaces-extensions\"");
+        wb.nativeAttr("map", "L.map('" + map.getClientId() + "_map').setView(['" + parts[0].trim() + "', '" + parts[1].trim() + "'], " + map.getZoom() + ")");
+        wb.nativeAttr("tile",
+                    "L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap</a>' })");
 
         /*
          * writer.write(name + " = function("); // parameters for (int i = 0; i < parameters.size(); i++) { if (i != 0) { writer.write(","); } final
@@ -96,21 +106,13 @@ public class OSMapRenderer extends CoreRenderer {
          * (command.isAutoRun()) { writer.write(";$(function() {"); writer.write(name + "();"); writer.write("});"); }
          */
 
-        String parts[] = map.getCenter().split(",");
-
-        String jsMap = map.getClientId().replaceAll(":", "_") + "JSmap";
-        String jsTiles = map.getClientId().replaceAll(":", "_") + "JStiles";
-
-        writer.write("const " + jsMap + " = L.map('" + map.getClientId() + "_map').setView(['" + parts[0].trim() + "', '" + parts[1].trim()
-                    + "'], " + map.getZoom() + ");");
-
-        writer.write("const " + jsTiles + " = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {");
-        writer.write("attribution: '&copy; <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap</a>'");
-        writer.write("}).addTo(" + jsMap + ");\n");
+        // String jsMap = map.getClientId().replaceAll(":", "_") + "JSmap";
+        // String jsTiles = map.getClientId().replaceAll(":", "_") + "JStiles";
+        // String widgetVar = map.resolveWidgetVar(context);
 
         encodeOverlays(context, map);
 
-        writer.endElement("script");
+        wb.finish();
     }
 
     protected void encodeOverlays(FacesContext context, OSMap map) throws IOException {
@@ -146,35 +148,46 @@ public class OSMapRenderer extends CoreRenderer {
         ResponseWriter writer = context.getResponseWriter();
         MapModel model = map.getModel();
 
-        ExternalContext externalContext = context.getExternalContext();
-        HttpServletRequest httpServletRequest = (HttpServletRequest) externalContext.getRequest();
+        writer.write(",markers:[");
+
+        // ExternalContext externalContext = context.getExternalContext();
+        // HttpServletRequest httpServletRequest = (HttpServletRequest) externalContext.getRequest();
 
         for (Iterator<Marker> iterator = model.getMarkers().iterator(); iterator.hasNext();) {
             Marker marker = iterator.next();
-            String iconUrl = httpServletRequest.getContextPath() + "/jakarta.faces.resource/leaflet/images/marker-icon.png.xhtml?ln=primefaces-extensions";
-            String shadowUrl = httpServletRequest.getContextPath() + "/jakarta.faces.resource/leaflet/images/marker-shadow.png.xhtml?ln=primefaces-extensions";
-            if (marker.getIcon() != null && marker.getIcon() instanceof String) {
-                iconUrl = (String) marker.getIcon();
-            }
-            String jsMap = map.getClientId().replaceAll(":", "_") + "JSmap";
-            writer.write("var myIcon = L.icon({ iconUrl: '" + iconUrl + "', shadowUrl: '" + shadowUrl + "', iconSize: [25, 41], iconAnchor: [12, 41] });\n");
-            writer.write("L.marker([" + marker.getLatlng().getLat() + ", " + marker.getLatlng().getLng() + "], {icon: myIcon})");
-            writer.write(".addTo(" + jsMap + ")\n");
-        }
+            encodeMarker(context, marker);
 
+            if (iterator.hasNext()) {
+                writer.write(",\n");
+            }
+        }
+        writer.write("]");
+
+        // String iconUrl = httpServletRequest.getContextPath() + "/jakarta.faces.resource/leaflet/images/marker-icon.png.xhtml?ln=primefaces-extensions";
+        // String shadowUrl = httpServletRequest.getContextPath() + "/jakarta.faces.resource/leaflet/images/marker-shadow.png.xhtml?ln=primefaces-extensions";
+        // if (marker.getIcon() != null && marker.getIcon() instanceof String) {
+        // iconUrl = (String) marker.getIcon();
+        // }
+        // String jsMap = map.getClientId().replaceAll(":", "_") + "JSmap";
+        // writer.write("var myIcon = L.icon({ iconUrl: '" + iconUrl + "', shadowUrl: '" + shadowUrl + "', iconSize: [25, 41], iconAnchor: [12, 41] });\n");
+        // writer.write("L.marker([" + marker.getLatlng().getLat() + ", " + marker.getLatlng().getLng() + "], {icon: myIcon})");
+        // writer.write(".addTo(" + jsMap + ")\n");
     }
 
-    /*
-     * protected void encodeMarker(FacesContext context, Marker marker) throws IOException { ResponseWriter writer = context.getResponseWriter(); String jsMap =
-     * map.getClientId().replaceAll(":", "_") + "JSmap"; writer.write("L.marker([" + marker.getLatlng().getLat() + ", " + marker.getLatlng().getLng() +
-     * "]).addTo(" + jsMap + ");\n"); writer.write("new google.maps.Marker({"); writer.write("position:new google.maps.LatLng(" + marker.getLatlng().getLat() +
-     * ", " + marker.getLatlng().getLng() + ")"); writer.write(",id:'" + marker.getId() + "'"); if (marker.getTitle() != null) { writer.write(",title:\"" +
-     * EscapeUtils.forJavaScript(marker.getTitle()) + "\""); } if (marker.getIcon() != null) { writer.write(",icon:"); encodeIcon(context, marker.getIcon()); }
-     * if (marker.getShadow() != null) { writer.write(",shadow:'" + marker.getShadow() + "'"); } if (marker.getCursor() != null) { writer.write(",cursor:'" +
-     * marker.getCursor() + "'"); } if (marker.isDraggable()) { writer.write(",draggable: true"); } if (!marker.isVisible()) { writer.write(",visible: false");
-     * } if (marker.isFlat()) { writer.write(",flat: true"); } if (marker.getZindex() > Integer.MIN_VALUE) { writer.write(",zIndex:" + marker.getZindex()); } if
-     * (marker.getAnimation() != null) { writer.write(",animation: google.maps.Animation." + marker.getAnimation().name()); } writer.write("})"); }
-     */
+    protected void encodeMarker(FacesContext context, Marker marker) throws IOException {
+        ResponseWriter writer = context.getResponseWriter();
+
+        writer.write("L.marker([");
+        writer.write(marker.getLatlng().getLat() + ", " + marker.getLatlng().getLng() + "]");
+
+        if (marker.getIcon() != null) {
+            writer.write(", {icon:");
+            encodeIcon(context, marker.getIcon());
+            writer.write("}");
+        }
+
+        writer.write(")\n");
+    }
 
     protected void encodeIcon(FacesContext context, Object icon) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
