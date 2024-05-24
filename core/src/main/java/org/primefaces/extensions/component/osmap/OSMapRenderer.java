@@ -106,11 +106,14 @@ public class OSMapRenderer extends CoreRenderer {
          * (command.isAutoRun()) { writer.write(";$(function() {"); writer.write(name + "();"); writer.write("});"); }
          */
 
-        // String jsMap = map.getClientId().replaceAll(":", "_") + "JSmap";
-        // String jsTiles = map.getClientId().replaceAll(":", "_") + "JStiles";
-        // String widgetVar = map.resolveWidgetVar(context);
-
         encodeOverlays(context, map);
+
+        // Client events
+        if (map.getOnPointClick() != null) {
+            wb.callback("onPointClick", "function(event)", map.getOnPointClick() + ";");
+        }
+
+        encodeClientBehaviors(context, map);
 
         wb.finish();
     }
@@ -150,9 +153,6 @@ public class OSMapRenderer extends CoreRenderer {
 
         writer.write(",markers:[");
 
-        // ExternalContext externalContext = context.getExternalContext();
-        // HttpServletRequest httpServletRequest = (HttpServletRequest) externalContext.getRequest();
-
         for (Iterator<Marker> iterator = model.getMarkers().iterator(); iterator.hasNext();) {
             Marker marker = iterator.next();
             encodeMarker(context, marker);
@@ -162,16 +162,6 @@ public class OSMapRenderer extends CoreRenderer {
             }
         }
         writer.write("]");
-
-        // String iconUrl = httpServletRequest.getContextPath() + "/jakarta.faces.resource/leaflet/images/marker-icon.png.xhtml?ln=primefaces-extensions";
-        // String shadowUrl = httpServletRequest.getContextPath() + "/jakarta.faces.resource/leaflet/images/marker-shadow.png.xhtml?ln=primefaces-extensions";
-        // if (marker.getIcon() != null && marker.getIcon() instanceof String) {
-        // iconUrl = (String) marker.getIcon();
-        // }
-        // String jsMap = map.getClientId().replaceAll(":", "_") + "JSmap";
-        // writer.write("var myIcon = L.icon({ iconUrl: '" + iconUrl + "', shadowUrl: '" + shadowUrl + "', iconSize: [25, 41], iconAnchor: [12, 41] });\n");
-        // writer.write("L.marker([" + marker.getLatlng().getLat() + ", " + marker.getLatlng().getLng() + "], {icon: myIcon})");
-        // writer.write(".addTo(" + jsMap + ")\n");
     }
 
     protected void encodeMarker(FacesContext context, Marker marker) throws IOException {
@@ -180,13 +170,15 @@ public class OSMapRenderer extends CoreRenderer {
         writer.write("L.marker([");
         writer.write(marker.getLatlng().getLat() + ", " + marker.getLatlng().getLng() + "]");
 
+        writer.write(", {customId:'" + marker.getId() + "'}");
+
         if (marker.getIcon() != null) {
             writer.write(", {icon:");
             encodeIcon(context, marker.getIcon());
             writer.write("}");
         }
 
-        writer.write(")\n");
+        writer.write(")");
     }
 
     protected void encodeIcon(FacesContext context, Object icon) throws IOException {

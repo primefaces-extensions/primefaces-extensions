@@ -22,6 +22,36 @@ PrimeFaces.widget.OSMap = PrimeFaces.widget.BaseWidget.extend({
             var marker = this.cfg.markers[i];
             marker.setIcon( myIcon );
             marker.addTo( this.cfg.map );
+
+            marker.on('click', function(event) {
+               _self.fireOverlaySelectEvent(event, this.options, 1);
+            });
+        }
+    },
+
+    /**
+     * Triggers the behavior for when an overlay shape was selected.
+     * @private
+     * @param {google.maps.MapMouseEvent | google.maps.IconMouseEvent} event The event that occurred.
+     * @param {PrimeFaces.widget.GMap.Overlay} overlay The shape that was selected.
+     * @param {number} clickCount whether it was single or double click
+     */
+    fireOverlaySelectEvent: function(event, overlay, clickCount) {
+        this.selectedOverlay = overlay;
+        console.log( 'fireOverlaySelectEvent: ' + overlay.customId );
+        console.log( 'fireOverlaySelectEvent: ' + this.id ); 
+        
+        var ext = {
+                params: [
+                    {name: this.id + '_overlayId', value: overlay.customId}
+                ]
+            };
+
+        if (clickCount === 1 && this.hasBehavior('overlaySelect')) {
+            this.callBehavior('overlaySelect', ext);
+        }
+        if (clickCount === 2 && this.hasBehavior('overlayDblSelect')) {
+            this.callBehavior('overlayDblSelect', ext);
         }
     },
 
