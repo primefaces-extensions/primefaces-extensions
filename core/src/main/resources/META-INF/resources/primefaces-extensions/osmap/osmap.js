@@ -1,5 +1,5 @@
 /**
- * PrimeFaces OpenStreet Maps Widget
+ * PrimeFaces OpenStreetMap Widget
  */
 PrimeFaces.widget.OSMap = PrimeFaces.widget.BaseWidget.extend({
 
@@ -10,6 +10,16 @@ PrimeFaces.widget.OSMap = PrimeFaces.widget.BaseWidget.extend({
 
         if(this.cfg.markers) {
             this.configureMarkers();
+        }
+
+        //add circles
+        if(this.cfg.circles) {
+            this.configureCircles();
+        }
+
+        //add rectangles
+        if(this.cfg.rectangles) {
+            this.configureRectangles();
         }
     },
 
@@ -62,6 +72,22 @@ PrimeFaces.widget.OSMap = PrimeFaces.widget.BaseWidget.extend({
     },
 
     /**
+     * Adds the overlay for a circle shape.
+     * @private
+     */
+    configureCircles: function() {
+        this.addOverlays(this.cfg.circles);
+    },
+
+    /**
+     * Adds the overlay for a rectangular shape.
+     * @private
+     */
+    configureRectangles: function() {
+        this.addOverlays(this.cfg.rectangles);
+    },
+
+    /**
      * Triggers the behavior for when an overlay shape was selected.
      * @private
      * @param {google.maps.MapMouseEvent | google.maps.IconMouseEvent} event The event that occurred.
@@ -83,6 +109,28 @@ PrimeFaces.widget.OSMap = PrimeFaces.widget.BaseWidget.extend({
         if (clickCount === 2 && this.hasBehavior('overlayDblSelect')) {
             this.callBehavior('overlayDblSelect', ext);
         }
+    },
+
+    /**
+     * Adds all overlay shapes (circle, polyline, or polygon) to this map.
+     * @param {PrimeFaces.widget.GMap.Overlay[]} overlays A list of overlay shapes to add to this map.
+     */
+    addOverlays: function(overlays) {
+        var _self = this;
+
+        $.each(overlays, function(index, item){
+            console.log( index + " " + item );
+            item.addTo( _self.cfg.map );
+
+            //bind overlay click event
+            item.on('click', function(event) {
+                _self.fireOverlaySelectEvent(event, item.options, 1);
+            });
+            
+            item.on('dblclick', function(event) {
+                _self.fireOverlaySelectEvent(event, item.options, 2);
+            });
+        })
     },
 
 });

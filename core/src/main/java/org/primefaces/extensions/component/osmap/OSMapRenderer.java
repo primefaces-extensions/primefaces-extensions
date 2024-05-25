@@ -134,10 +134,10 @@ public class OSMapRenderer extends CoreRenderer {
                 // encodePolygons(context, map);
             }
             if (!model.getCircles().isEmpty()) {
-                // encodeCircles(context, map);
+                encodeCircles(context, map);
             }
             if (!model.getRectangles().isEmpty()) {
-                // encodeRectangles(context, map);
+                encodeRectangles(context, map);
             }
         }
 
@@ -209,20 +209,14 @@ public class OSMapRenderer extends CoreRenderer {
         if (symbol.getFillOpacity() != null) {
             writer.write(",fillOpacity:" + symbol.getFillOpacity());
         }
-        if (symbol.getRotation() != null) {
-            writer.write(",rotation:" + symbol.getRotation());
-        }
-        if (symbol.getScale() != null) {
-            writer.write(",scale:" + symbol.getScale());
-        }
         if (symbol.getStrokeColor() != null) {
-            writer.write(",strokeColor:'" + symbol.getStrokeColor() + "'");
+            writer.write(",color:'" + symbol.getStrokeColor() + "'");
         }
         if (symbol.getStrokeOpacity() != null) {
-            writer.write(",strokeOpacity:" + symbol.getStrokeOpacity());
+            writer.write(",opacity:" + symbol.getStrokeOpacity());
         }
         if (symbol.getStrokeWeight() != null) {
-            writer.write(",strokeWeight:" + symbol.getStrokeWeight());
+            writer.write(",weight:" + symbol.getStrokeWeight());
         }
         writer.write("}");
     }
@@ -311,24 +305,22 @@ public class OSMapRenderer extends CoreRenderer {
         for (Iterator<Circle> circles = model.getCircles().iterator(); circles.hasNext();) {
             Circle circle = circles.next();
 
-            writer.write("new google.maps.Circle({");
-            writer.write("id:'" + circle.getId() + "'");
+            writer.write("L.circle([");
+            writer.write(circle.getCenter().getLat() + ", " + circle.getCenter().getLng() + "]");
 
-            writer.write(",center:new google.maps.LatLng(" + circle.getCenter().getLat() + ", " + circle.getCenter().getLng() + ")");
+            writer.write(", {customId:'" + circle.getId() + "'");
+
             writer.write(",radius:" + circle.getRadius());
 
-            writer.write(",strokeOpacity:" + circle.getStrokeOpacity());
-            writer.write(",strokeWeight:" + circle.getStrokeWeight());
+            writer.write(",opacity:" + circle.getStrokeOpacity());
+            writer.write(",weight:" + circle.getStrokeWeight());
             writer.write(",fillOpacity:" + circle.getFillOpacity());
 
             if (circle.getStrokeColor() != null) {
-                writer.write(",strokeColor:'" + circle.getStrokeColor() + "'");
+                writer.write(",color:'" + circle.getStrokeColor() + "'");
             }
             if (circle.getFillColor() != null) {
                 writer.write(",fillColor:'" + circle.getFillColor() + "'");
-            }
-            if (circle.getZindex() > Integer.MIN_VALUE) {
-                writer.write(",zIndex:" + circle.getZindex());
             }
 
             writer.write("})");
@@ -350,27 +342,24 @@ public class OSMapRenderer extends CoreRenderer {
         for (Iterator<Rectangle> rectangles = model.getRectangles().iterator(); rectangles.hasNext();) {
             Rectangle rectangle = rectangles.next();
 
-            writer.write("new google.maps.Rectangle({");
-            writer.write("id:'" + rectangle.getId() + "'");
-
             LatLng ne = rectangle.getBounds().getNorthEast();
             LatLng sw = rectangle.getBounds().getSouthWest();
 
-            writer.write(",bounds:new google.maps.LatLngBounds( new google.maps.LatLng("
-                        + sw.getLat() + "," + sw.getLng() + "), new google.maps.LatLng(" + ne.getLat() + "," + ne.getLng() + "))");
+            writer.write("L.rectangle([");
+            writer.write("[" + sw.getLat() + ", " + sw.getLng() + "],[" + ne.getLat() + ", " + ne.getLng() + "]");
+            writer.write("]");
 
-            writer.write(",strokeOpacity:" + rectangle.getStrokeOpacity());
-            writer.write(",strokeWeight:" + rectangle.getStrokeWeight());
+            writer.write(", {customId:'" + rectangle.getId() + "'");
+
+            writer.write(",opacity:" + rectangle.getStrokeOpacity());
+            writer.write(",weight:" + rectangle.getStrokeWeight());
             writer.write(",fillOpacity:" + rectangle.getFillOpacity());
 
             if (rectangle.getStrokeColor() != null) {
-                writer.write(",strokeColor:'" + rectangle.getStrokeColor() + "'");
+                writer.write(",color:'" + rectangle.getStrokeColor() + "'");
             }
             if (rectangle.getFillColor() != null) {
                 writer.write(",fillColor:'" + rectangle.getFillColor() + "'");
-            }
-            if (rectangle.getZindex() > Integer.MIN_VALUE) {
-                writer.write(",zIndex:" + rectangle.getZindex());
             }
 
             writer.write("})");
