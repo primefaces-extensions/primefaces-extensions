@@ -170,15 +170,14 @@ public class OSMapRenderer extends CoreRenderer {
         writer.write("L.marker([");
         writer.write(marker.getLatlng().getLat() + ", " + marker.getLatlng().getLng() + "]");
 
-        writer.write(", {customId:'" + marker.getId() + "'}");
+        writer.write(", {customId:'" + marker.getId() + "'");
 
         if (marker.getIcon() != null) {
-            writer.write(", {icon:");
+            writer.write(", icon:");
             encodeIcon(context, marker.getIcon());
-            writer.write("}");
         }
 
-        writer.write(")");
+        writer.write("})");
     }
 
     protected void encodeIcon(FacesContext context, Object icon) throws IOException {

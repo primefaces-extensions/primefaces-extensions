@@ -20,7 +20,15 @@ PrimeFaces.widget.OSMap = PrimeFaces.widget.BaseWidget.extend({
 
         for(var i=0; i < this.cfg.markers.length; i++) {
             var marker = this.cfg.markers[i];
-            marker.setIcon( myIcon );
+            console.log( marker.options.customId + " " + marker.options.icon );
+            if( typeof marker.options.icon === 'string' || marker.options.icon instanceof String )
+            {
+                    marker.setIcon( L.icon({ iconUrl: marker.options.icon, shadowUrl: this.cfg.shadowUrl, iconSize: [25, 41], iconAnchor: [12, 41] }) );
+            }
+            else
+            {
+		    marker.setIcon( myIcon );
+            }
             marker.addTo( this.cfg.map );
 
             marker.on('click', function(event) {
