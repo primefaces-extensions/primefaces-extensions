@@ -34,6 +34,30 @@ PrimeFaces.widget.OSMap = PrimeFaces.widget.BaseWidget.extend({
             marker.on('click', function(event) {
                _self.fireOverlaySelectEvent(event, this.options, 1);
             });
+   
+           marker.on('dragend', function() {
+               _self.fireMarkerDragEvent(event, marker);
+           });
+        }
+    },
+
+    /**
+     * Calls the behavior for when a marker was dragged.
+     * @private
+     * @param {google.maps.MapMouseEvent | google.maps.IconMouseEvent} event Event that occurred.
+     * @param {google.maps.MarkerOptions} marker The marker that was dragged.
+     */
+    fireMarkerDragEvent: function(event, marker) {
+        if(this.hasBehavior('markerDrag')) {
+            var ext = {
+                params: [
+                    {name: this.id + '_markerId', value: marker.options.customId},
+                    {name: this.id + '_lat', value: marker.getLatLng().lat},
+                    {name: this.id + '_lng', value: marker.getLatLng().lng}
+                ]
+            };
+
+            this.callBehavior('markerDrag', ext);
         }
     },
 
@@ -46,8 +70,6 @@ PrimeFaces.widget.OSMap = PrimeFaces.widget.BaseWidget.extend({
      */
     fireOverlaySelectEvent: function(event, overlay, clickCount) {
         this.selectedOverlay = overlay;
-        console.log( 'fireOverlaySelectEvent: ' + overlay.customId );
-        console.log( 'fireOverlaySelectEvent: ' + this.id ); 
         
         var ext = {
                 params: [

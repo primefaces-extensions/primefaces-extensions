@@ -176,6 +176,9 @@ public class OSMapRenderer extends CoreRenderer {
             writer.write(", icon:");
             encodeIcon(context, marker.getIcon());
         }
+        if (marker.isDraggable()) {
+            writer.write(",draggable: true");
+        }
 
         writer.write("})");
     }
