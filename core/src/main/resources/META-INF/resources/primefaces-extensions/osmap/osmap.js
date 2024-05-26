@@ -145,7 +145,42 @@ PrimeFaces.widget.OSMap = PrimeFaces.widget.BaseWidget.extend({
         var _self = this;
 
         //behaviors
+        this.configureStateChangeListener();
         this.configurePointSelectListener();
+    },
+
+    configureStateChangeListener: function() {
+        var _self = this,
+
+        onStateChange = function(event) {
+            _self.fireStateChangeEvent(event);
+        };
+
+        this.cfg.map.on('zoomend', onStateChange);
+        this.cfg.map.on('moveend', onStateChange);
+    },
+
+    /**
+     * Triggers the behavior for when the state of this map has changed.
+     * @private
+     * @param {never} event The event that triggered the state change.
+     */
+    fireStateChangeEvent: function(event) {
+        if(this.hasBehavior('stateChange')) {
+            var bounds = this.cfg.map.getBounds();
+
+            var ext = {
+                params: [
+                    {name: this.id + '_northeast', value: bounds.getNorthEast().lat + ',' + bounds.getNorthEast().lng},
+                    {name: this.id + '_southwest', value: bounds.getSouthWest().lat + ',' + bounds.getSouthWest().lng},
+                    {name: this.id + '_center', value: bounds.getCenter().lat + ',' + bounds.getCenter().lng},
+                    {name: this.id + '_zoom', value: this.cfg.map.getZoom()}
+                ]
+            };
+
+
+            this.callBehavior('stateChange', ext);
+        }
     },
 
     /**
