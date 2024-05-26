@@ -130,11 +130,6 @@ public class OSMapRenderer extends CoreRenderer {
                 encodeRectangles(context, map);
             }
         }
-
-        /*
-         * OSMapInfoWindow infoWindow = map.getInfoWindow(); if (infoWindow != null) { writer.write(",infoWindow: new google.maps.InfoWindow({");
-         * writer.write("id:'" + infoWindow.getClientId(context) + "'"); writer.write("})"); }
-         */
     }
 
     protected void encodeMarkers(FacesContext context, OSMap map) throws IOException {
