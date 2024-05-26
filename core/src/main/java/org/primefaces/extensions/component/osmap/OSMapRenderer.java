@@ -83,12 +83,18 @@ public class OSMapRenderer extends CoreRenderer {
                     "\"" + httpServletRequest.getContextPath() + "/jakarta.faces.resource/leaflet/images/marker-shadow.png.xhtml?ln=primefaces-extensions\"");
         wb.nativeAttr("map", "L.map('" + map.getClientId() + "_map').setView(['" + parts[0].trim() + "', '" + parts[1].trim() + "'], " + map.getZoom() + ")");
 
+        String tileUrl = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
         String attribution = "&copy; <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap</a>";
+
+        if (map.getTileUrl() != null) {
+            tileUrl = map.getTileUrl();
+        }
+
         if (map.getAttribution() != null) {
             attribution = map.getAttribution();
         }
 
-        wb.nativeAttr("tile", "L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '" + attribution + "' })");
+        wb.nativeAttr("tile", "L.tileLayer('" + tileUrl + "', { attribution: '" + attribution + "' })");
 
         encodeOverlays(context, map);
 

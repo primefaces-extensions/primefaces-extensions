@@ -35,7 +35,7 @@ public abstract class OSMapBase extends UIComponentBase implements Widget, Clien
 
     public enum PropertyKeys {
 
-        widgetVar, model, style, styleClass, center, zoom, attribution, draggable, onPointClick
+        widgetVar, model, style, styleClass, center, zoom, attribution, tileUrl, draggable, onPointClick
     }
 
     public OSMapBase() {
@@ -101,6 +101,14 @@ public abstract class OSMapBase extends UIComponentBase implements Widget, Clien
 
     public void setAttribution(String attribution) {
         getStateHelper().put(PropertyKeys.attribution, attribution);
+    }
+
+    public String getTileUrl() {
+        return (String) getStateHelper().eval(PropertyKeys.tileUrl, null);
+    }
+
+    public void setTileUrl(String tileUrl) {
+        getStateHelper().put(PropertyKeys.tileUrl, tileUrl);
     }
 
     public boolean isDraggable() {
