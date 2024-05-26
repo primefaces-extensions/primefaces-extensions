@@ -35,7 +35,7 @@ public abstract class OSMapBase extends UIComponentBase implements Widget, Clien
 
     public enum PropertyKeys {
 
-        widgetVar, model, style, styleClass, center, zoom, attribution, draggable, onPointClick, fitBounds, scrollWheel
+        widgetVar, model, style, styleClass, center, zoom, attribution, draggable, onPointClick
     }
 
     public OSMapBase() {
@@ -117,21 +117,5 @@ public abstract class OSMapBase extends UIComponentBase implements Widget, Clien
 
     public void setOnPointClick(String onPointClick) {
         getStateHelper().put(PropertyKeys.onPointClick, onPointClick);
-    }
-
-    public boolean isFitBounds() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.fitBounds, false);
-    }
-
-    public void setFitBounds(boolean fitBounds) {
-        getStateHelper().put(PropertyKeys.fitBounds, fitBounds);
-    }
-
-    public boolean isScrollWheel() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.scrollWheel, true);
-    }
-
-    public void setScrollWheel(boolean scrollWheel) {
-        getStateHelper().put(PropertyKeys.scrollWheel, scrollWheel);
     }
 }
