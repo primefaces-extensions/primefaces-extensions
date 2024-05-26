@@ -44,7 +44,7 @@ PrimeFaces.widget.OSMap = PrimeFaces.widget.BaseWidget.extend({
 
         for(var i=0; i < this.cfg.markers.length; i++) {
             var marker = this.cfg.markers[i];
-            console.log( marker.options.customId + " " + marker.options.icon );
+            //console.log( marker.options.customId + " " + marker.options.icon );
             if( typeof marker.options.icon === 'string' || marker.options.icon instanceof String )
             {
                     marker.setIcon( L.icon({ iconUrl: marker.options.icon, shadowUrl: this.cfg.shadowUrl, iconSize: [25, 41], iconAnchor: [12, 41] }) );
@@ -159,6 +159,10 @@ PrimeFaces.widget.OSMap = PrimeFaces.widget.BaseWidget.extend({
             _self.firePointSelectEvent(event, 1);
         });
 
+        this.cfg.map.on('dblclick', function(event) {
+            _self.firePointSelectEvent(event, 2);
+        });
+
     },
 
     /**
@@ -190,7 +194,7 @@ PrimeFaces.widget.OSMap = PrimeFaces.widget.BaseWidget.extend({
         var _self = this;
 
         $.each(overlays, function(index, item){
-            console.log( index + " " + item );
+            //console.log( index + " " + item );
             item.addTo( _self.cfg.map );
 
             //bind overlay click event
