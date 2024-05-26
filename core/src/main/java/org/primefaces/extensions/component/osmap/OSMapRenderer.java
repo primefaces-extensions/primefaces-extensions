@@ -69,21 +69,6 @@ public class OSMapRenderer extends CoreRenderer {
 
     protected void encodeScript(FacesContext context, OSMap map) throws IOException {
 
-        /*
-         * String widgetVar = map.resolveWidgetVar(context); OSMapInfoWindow infoWindow = map.getInfoWindow(); WidgetBuilder wb = getWidgetBuilder(context);
-         * wb.init("OSMap", map) .nativeAttr("mapTypeId", "google.maps.MapTypeId." + map.getType().toUpperCase()) .nativeAttr("center",
-         * "new google.maps.LatLng(" + map.getCenter() + ")") .attr("zoom", map.getZoom()); if (!map.isFitBounds()) { wb.attr("fitBounds", false); } // Overlays
-         * encodeOverlays(context, map); // Controls if (!map.isNavControl()) { wb.attr("navControl", false); } if (!map.isMapTypeControl()) {
-         * wb.attr("mapTypeControl", false); } // Options if (!map.isDraggable()) { wb.attr("draggable", false); } if (!map.isScrollWheel()) {
-         * wb.attr("scrollwheel", false); } // Client events if (map.getOnPointClick() != null) { wb.callback("onPointClick", "function(event)",
-         * map.getOnPointClick() + ";"); } if (infoWindow != null) { Map<String, List<ClientBehavior>> behaviorEvents = map.getClientBehaviors();
-         * List<ClientBehavior> overlaySelectBehaviors = behaviorEvents.get("overlaySelect"); if (overlaySelectBehaviors != null) { for (ClientBehavior
-         * clientBehavior : overlaySelectBehaviors) { ((AjaxBehavior) clientBehavior).setOnsuccess("PF('" + widgetVar + "').openWindow(data)"); } }
-         * List<ClientBehavior> overlayDblSelectBehaviors = behaviorEvents.get("overlayDblSelect"); if (overlayDblSelectBehaviors != null) { for (ClientBehavior
-         * clientBehavior : overlayDblSelectBehaviors) { ((AjaxBehavior) clientBehavior).setOnsuccess("PF('" + widgetVar + "').openWindow(data)"); } } }
-         * encodeClientBehaviors(context, map); wb.finish();
-         */
-
         String parts[] = map.getCenter().split(",");
 
         ExternalContext externalContext = context.getExternalContext();
@@ -97,14 +82,13 @@ public class OSMapRenderer extends CoreRenderer {
         wb.nativeAttr("shadowUrl",
                     "\"" + httpServletRequest.getContextPath() + "/jakarta.faces.resource/leaflet/images/marker-shadow.png.xhtml?ln=primefaces-extensions\"");
         wb.nativeAttr("map", "L.map('" + map.getClientId() + "_map').setView(['" + parts[0].trim() + "', '" + parts[1].trim() + "'], " + map.getZoom() + ")");
-        wb.nativeAttr("tile",
-                    "L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap</a>' })");
 
-        /*
-         * writer.write(name + " = function("); // parameters for (int i = 0; i < parameters.size(); i++) { if (i != 0) { writer.write(","); } final
-         * AbstractParameter param = parameters.get(i); writer.write(param.getName()); } writer.write(") {"); writer.write(request); writer.write("}"); if
-         * (command.isAutoRun()) { writer.write(";$(function() {"); writer.write(name + "();"); writer.write("});"); }
-         */
+        String attribution = "&copy; <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap</a>";
+        if (map.getAttribution() != null) {
+            attribution = map.getAttribution();
+        }
+
+        wb.nativeAttr("tile", "L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '" + attribution + "' })");
 
         encodeOverlays(context, map);
 

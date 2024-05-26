@@ -35,7 +35,7 @@ public abstract class OSMapBase extends UIComponentBase implements Widget, Clien
 
     public enum PropertyKeys {
 
-        widgetVar, model, style, styleClass, type, center, zoom, navControl, mapTypeControl, draggable, onPointClick, fitBounds, scrollWheel
+        widgetVar, model, style, styleClass, center, zoom, attribution, draggable, onPointClick, fitBounds, scrollWheel
     }
 
     public OSMapBase() {
@@ -79,14 +79,6 @@ public abstract class OSMapBase extends UIComponentBase implements Widget, Clien
         getStateHelper().put(PropertyKeys.styleClass, styleClass);
     }
 
-    public String getType() {
-        return (String) getStateHelper().eval(PropertyKeys.type, null);
-    }
-
-    public void setType(String type) {
-        getStateHelper().put(PropertyKeys.type, type);
-    }
-
     public String getCenter() {
         return (String) getStateHelper().eval(PropertyKeys.center, null);
     }
@@ -103,20 +95,12 @@ public abstract class OSMapBase extends UIComponentBase implements Widget, Clien
         getStateHelper().put(PropertyKeys.zoom, zoom);
     }
 
-    public boolean isNavControl() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.navControl, true);
+    public String getAttribution() {
+        return (String) getStateHelper().eval(PropertyKeys.attribution, null);
     }
 
-    public void setNavControl(boolean navControl) {
-        getStateHelper().put(PropertyKeys.navControl, navControl);
-    }
-
-    public boolean isMapTypeControl() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.mapTypeControl, true);
-    }
-
-    public void setMapTypeControl(boolean mapTypeControl) {
-        getStateHelper().put(PropertyKeys.mapTypeControl, mapTypeControl);
+    public void setAttribution(String attribution) {
+        getStateHelper().put(PropertyKeys.attribution, attribution);
     }
 
     public boolean isDraggable() {

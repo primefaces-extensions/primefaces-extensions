@@ -30,13 +30,11 @@ import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.BehaviorEvent;
 import javax.faces.event.FacesEvent;
 
-import org.primefaces.PrimeFaces;
 import org.primefaces.event.map.*;
 import org.primefaces.model.map.GeocodeResult;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.LatLngBounds;
 import org.primefaces.model.map.Marker;
-import org.primefaces.util.ComponentTraversalUtils;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
 import org.primefaces.util.MapBuilder;
@@ -85,12 +83,6 @@ public class OSMap extends OSMapBase {
 
             if ("overlaySelect".equals(eventName) || "overlayDblSelect".equals(eventName)) {
                 wrapperEvent = new OverlaySelectEvent(this, behaviorEvent.getBehavior(), getModel().findOverlay(params.get(clientId + "_overlayId")));
-
-                // if there is info window, update and show it
-                OSMapInfoWindow infoWindow = getInfoWindow();
-                if (infoWindow != null) {
-                    PrimeFaces.current().ajax().update(infoWindow.getClientId(context));
-                }
             }
             else if ("stateChange".equals(eventName)) {
                 String[] centerLoc = params.get(clientId + "_center").split(",");
@@ -153,9 +145,5 @@ public class OSMap extends OSMapBase {
         else {
             super.queueEvent(event);
         }
-    }
-
-    public OSMapInfoWindow getInfoWindow() {
-        return ComponentTraversalUtils.firstChildRendered(OSMapInfoWindow.class, this);
     }
 }
