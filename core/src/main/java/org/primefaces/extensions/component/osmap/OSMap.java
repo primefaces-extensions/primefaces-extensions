@@ -31,7 +31,6 @@ import javax.faces.event.BehaviorEvent;
 import javax.faces.event.FacesEvent;
 
 import org.primefaces.event.map.*;
-import org.primefaces.model.map.GeocodeResult;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.LatLngBounds;
 import org.primefaces.model.map.Marker;
@@ -53,8 +52,6 @@ public class OSMap extends OSMapBase {
                 .put("pointSelect", PointSelectEvent.class)
                 .put("pointDblSelect", PointSelectEvent.class)
                 .put("markerDrag", MarkerDragEvent.class)
-                .put("geocode", GeocodeEvent.class)
-                .put("reverseGeocode", ReverseGeocodeEvent.class)
                 .build();
 
     private static final Collection<String> EVENT_NAMES = BEHAVIOR_EVENT_MAPPING.keySet();
@@ -109,29 +106,6 @@ public class OSMap extends OSMapBase {
                 marker.setLatlng(new LatLng(lat, lng));
 
                 wrapperEvent = new MarkerDragEvent(this, behaviorEvent.getBehavior(), marker);
-            }
-            else if ("geocode".equals(eventName)) {
-                List<GeocodeResult> results = new ArrayList<>();
-                String query = params.get(clientId + "_query");
-                String[] addresses = params.get(clientId + "_addresses").split("_primefaces_");
-                String[] lats = params.get(clientId + "_lat").split(",");
-                String[] lngs = params.get(clientId + "_lng").split(",");
-
-                for (int i = 0; i < addresses.length; i++) {
-                    results.add(new GeocodeResult(addresses[i], new LatLng(Double.valueOf(lats[i]), Double.valueOf(lngs[i]))));
-                }
-
-                wrapperEvent = new GeocodeEvent(this, behaviorEvent.getBehavior(), query, results);
-            }
-            else if ("reverseGeocode".equals(eventName)) {
-                String[] results = params.get(clientId + "_address").split("_primefaces_");
-                List<String> addresses = Arrays.asList(results);
-
-                double lat = Double.parseDouble(params.get(clientId + "_lat"));
-                double lng = Double.parseDouble(params.get(clientId + "_lng"));
-                LatLng coord = new LatLng(lat, lng);
-
-                wrapperEvent = new ReverseGeocodeEvent(this, behaviorEvent.getBehavior(), coord, addresses);
             }
 
             if (wrapperEvent == null) {

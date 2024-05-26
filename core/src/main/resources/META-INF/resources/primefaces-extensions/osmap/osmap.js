@@ -32,6 +32,9 @@ PrimeFaces.widget.OSMap = PrimeFaces.widget.BaseWidget.extend({
         if(this.cfg.rectangles) {
             this.configureRectangles();
         }
+
+        //general map events
+        this.configureEventListeners();
     },
 
     configureMarkers: function() {
@@ -135,6 +138,47 @@ PrimeFaces.widget.OSMap = PrimeFaces.widget.BaseWidget.extend({
         }
         if (clickCount === 2 && this.hasBehavior('overlayDblSelect')) {
             this.callBehavior('overlayDblSelect', ext);
+        }
+    },
+
+    configureEventListeners: function() {
+        var _self = this;
+
+        //behaviors
+        this.configurePointSelectListener();
+    },
+
+    /**
+     * Sets up the event listeners for when a point on the map was selected.
+     * @private
+     */
+    configurePointSelectListener: function() {
+        var _self = this;
+
+        this.cfg.map.on('click', function(event) {
+            _self.firePointSelectEvent(event, 1);
+        });
+
+    },
+
+    /**
+     * Triggers the behavior for when a point on the map was selected.
+     * @private
+     * @param {MapMouseEvent | IconMouseEvent} event The event that triggered the point selection.
+     * @param {number} clickCount whether it was single or double click
+     */
+    firePointSelectEvent: function(event, clickCount) {
+        var ext = {
+                params: [
+                    {name: this.id + '_pointLatLng', value: event.latlng.lat + ',' + event.latlng.lng}
+                ]
+            };
+        
+        if (clickCount === 1 && this.hasBehavior('pointSelect')) {
+            this.callBehavior('pointSelect', ext);
+        }
+        if (clickCount === 2 && this.hasBehavior('pointDblSelect')) {
+            this.callBehavior('pointDblSelect', ext);
         }
     },
 
