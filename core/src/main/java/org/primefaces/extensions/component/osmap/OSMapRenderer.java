@@ -128,10 +128,10 @@ public class OSMapRenderer extends CoreRenderer {
                 encodeMarkers(context, map);
             }
             if (!model.getPolylines().isEmpty()) {
-                // encodePolylines(context, map);
+                encodePolylines(context, map);
             }
             if (!model.getPolygons().isEmpty()) {
-                // encodePolygons(context, map);
+                encodePolygons(context, map);
             }
             if (!model.getCircles().isEmpty()) {
                 encodeCircles(context, map);
@@ -230,22 +230,17 @@ public class OSMapRenderer extends CoreRenderer {
         for (Iterator<Polyline> lines = model.getPolylines().iterator(); lines.hasNext();) {
             Polyline polyline = lines.next();
 
-            writer.write("new google.maps.Polyline({");
-            writer.write("id:'" + polyline.getId() + "'");
+            writer.write("L.polyline([");
 
             encodePaths(context, polyline.getPaths());
 
-            writer.write(",strokeOpacity:" + polyline.getStrokeOpacity());
-            writer.write(",strokeWeight:" + polyline.getStrokeWeight());
+            writer.write("], {customId:'" + polyline.getId() + "'");
+
+            writer.write(",opacity:" + polyline.getStrokeOpacity());
+            writer.write(",weight:" + polyline.getStrokeWeight());
 
             if (polyline.getStrokeColor() != null) {
-                writer.write(",strokeColor:'" + polyline.getStrokeColor() + "'");
-            }
-            if (polyline.getZindex() > Integer.MIN_VALUE) {
-                writer.write(",zIndex:" + polyline.getZindex());
-            }
-            if (polyline.getIcons() != null) {
-                writer.write(", icons:" + polyline.getIcons());
+                writer.write(",color:'" + polyline.getStrokeColor() + "'");
             }
 
             writer.write("})");
@@ -267,25 +262,22 @@ public class OSMapRenderer extends CoreRenderer {
         for (Iterator<Polygon> polygons = model.getPolygons().iterator(); polygons.hasNext();) {
             Polygon polygon = polygons.next();
 
-            writer.write("new google.maps.Polygon({");
-            writer.write("id:'" + polygon.getId() + "'");
+            writer.write("L.polygon([");
 
             encodePaths(context, polygon.getPaths());
 
-            writer.write(",strokeOpacity:" + polygon.getStrokeOpacity());
-            writer.write(",strokeWeight:" + polygon.getStrokeWeight());
+            writer.write("], {customId:'" + polygon.getId() + "'");
+
+            writer.write(",opacity:" + polygon.getStrokeOpacity());
+            writer.write(",weight:" + polygon.getStrokeWeight());
             writer.write(",fillOpacity:" + polygon.getFillOpacity());
 
             if (polygon.getStrokeColor() != null) {
-                writer.write(",strokeColor:'" + polygon.getStrokeColor() + "'");
+                writer.write(",color:'" + polygon.getStrokeColor() + "'");
             }
             if (polygon.getFillColor() != null) {
                 writer.write(",fillColor:'" + polygon.getFillColor() + "'");
             }
-            if (polygon.getZindex() > Integer.MIN_VALUE) {
-                writer.write(",zIndex:" + polygon.getZindex());
-            }
-
             writer.write("})");
 
             if (polygons.hasNext()) {
@@ -375,18 +367,16 @@ public class OSMapRenderer extends CoreRenderer {
     protected void encodePaths(FacesContext context, List<LatLng> paths) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
 
-        writer.write(",path:[");
         for (Iterator<LatLng> coords = paths.iterator(); coords.hasNext();) {
             LatLng coord = coords.next();
 
-            writer.write("new google.maps.LatLng(" + coord.getLat() + ", " + coord.getLng() + ")");
+            writer.write("[" + coord.getLat() + ", " + coord.getLng() + "]");
 
             if (coords.hasNext()) {
                 writer.write(",");
             }
 
         }
-        writer.write("]");
     }
 
     @Override
