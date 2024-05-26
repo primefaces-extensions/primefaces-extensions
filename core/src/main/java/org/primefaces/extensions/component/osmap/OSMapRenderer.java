@@ -172,37 +172,9 @@ public class OSMapRenderer extends CoreRenderer {
         if (icon instanceof String) {
             writer.write("'" + icon + "'");
         }
-        else if (icon instanceof Symbol) {
-            encodeIcon(context, (Symbol) icon);
-        }
         else {
-            throw new FacesException("OSMap marker icon must be String or Symbol");
+            throw new FacesException("OSMap marker icon must be String");
         }
-    }
-
-    protected void encodeIcon(FacesContext context, Symbol symbol) throws IOException {
-        ResponseWriter writer = context.getResponseWriter();
-        writer.write("{path:'" + symbol.getPath() + "'");
-        if (symbol.getAnchor() != null) {
-            writer.write(",anchor:new google.maps.Point(" + symbol.getAnchor().getX()
-                        + "," + symbol.getAnchor().getY() + ")");
-        }
-        if (symbol.getFillColor() != null) {
-            writer.write(",fillColor:'" + symbol.getFillColor() + "'");
-        }
-        if (symbol.getFillOpacity() != null) {
-            writer.write(",fillOpacity:" + symbol.getFillOpacity());
-        }
-        if (symbol.getStrokeColor() != null) {
-            writer.write(",color:'" + symbol.getStrokeColor() + "'");
-        }
-        if (symbol.getStrokeOpacity() != null) {
-            writer.write(",opacity:" + symbol.getStrokeOpacity());
-        }
-        if (symbol.getStrokeWeight() != null) {
-            writer.write(",weight:" + symbol.getStrokeWeight());
-        }
-        writer.write("}");
     }
 
     protected void encodePolylines(FacesContext context, OSMap map) throws IOException {
