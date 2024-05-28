@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+<body>
+
+<ui:composition template="/templates/showcaseLayout.xhtml">
+
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="OpenStreetMap"/>
+        </f:facet>
+        <h:graphicImage library="images" name="osmap.svg" alt="Open Street Map" height="64" width="64"/>
+        <p>
+            <h:outputLink id="osmapLink" value="https://www.openstreetmap.org/">OpenStreetMap</h:outputLink> is a component allows you to embed an OpenStreetMap into your page. OpenStreetMap is a map of the world, created by people like you and free to use under an open license.
+        </p>
+        <p>
+            <h:graphicImage library="images" name="leaflet.png" alt="Leaflet.js" height="64"/>
+            Based on <h:outputLink id="leafletLink" value="https://leafletjs.com/">Leaflet JS</h:outputLink> by Volodymyr Agafonkin.
+        </p>
+    </ui:define>
+
+    <ui:define name="useCases">
+        <ui:include src="/sections/osmap/useCasesChoice.xhtml"/>
+    </ui:define>
+
+    <ui:define name="docuTable">
+        <ui:include src="/sections/shared/documentation.xhtml">
+            <ui:param name="tagName" value="osmap"/>
+        </ui:include>
+    </ui:define>
+
+</ui:composition>
+
+</body>
+</html>

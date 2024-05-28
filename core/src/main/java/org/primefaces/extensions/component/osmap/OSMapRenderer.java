@@ -67,7 +67,7 @@ public class OSMapRenderer extends CoreRenderer {
 
     protected void encodeScript(FacesContext context, OSMap map) throws IOException {
 
-        String parts[] = map.getCenter().split(",");
+        String[] parts = map.getCenter().split(",");
 
         WidgetBuilder wb = getWidgetBuilder(context);
         wb.init("OSMap", map);
@@ -79,7 +79,7 @@ public class OSMapRenderer extends CoreRenderer {
                                 + parts[1].trim() + "'], " + map.getZoom() + ")");
 
         String tileUrl = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
-        String attribution = "&copy; <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap</a>";
+        String attribution = "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a>";
 
         if (map.getTileUrl() != null) {
             tileUrl = map.getTileUrl();
@@ -105,7 +105,6 @@ public class OSMapRenderer extends CoreRenderer {
 
     protected void encodeOverlays(FacesContext context, OSMap map) throws IOException {
         MapModel model = map.getModel();
-        ResponseWriter writer = context.getResponseWriter();
 
         // Overlays
         if (model != null) {

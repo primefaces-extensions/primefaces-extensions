@@ -88,15 +88,15 @@ public class OSMap extends OSMapBase {
                 String[] southwestLoc = params.get(clientId + "_southwest").split(",");
                 int zoomLevel = Integer.parseInt(params.get(clientId + "_zoom"));
 
-                LatLng center = new LatLng(Double.valueOf(centerLoc[0]), Double.valueOf(centerLoc[1]));
-                LatLng northeast = new LatLng(Double.valueOf(northeastLoc[0]), Double.valueOf(northeastLoc[1]));
-                LatLng southwest = new LatLng(Double.valueOf(southwestLoc[0]), Double.valueOf(southwestLoc[1]));
+                LatLng center = new LatLng(Double.parseDouble(centerLoc[0]), Double.parseDouble(centerLoc[1]));
+                LatLng northeast = new LatLng(Double.parseDouble(northeastLoc[0]), Double.parseDouble(northeastLoc[1]));
+                LatLng southwest = new LatLng(Double.parseDouble(southwestLoc[0]), Double.parseDouble(southwestLoc[1]));
 
                 wrapperEvent = new StateChangeEvent(this, behaviorEvent.getBehavior(), new LatLngBounds(northeast, southwest), zoomLevel, center);
             }
             else if ("pointSelect".equals(eventName) || "pointDblSelect".equals(eventName)) {
                 String[] latlng = params.get(clientId + "_pointLatLng").split(",");
-                LatLng position = new LatLng(Double.valueOf(latlng[0]), Double.valueOf(latlng[1]));
+                LatLng position = new LatLng(Double.parseDouble(latlng[0]), Double.parseDouble(latlng[1]));
 
                 wrapperEvent = new PointSelectEvent(this, behaviorEvent.getBehavior(), position);
             }

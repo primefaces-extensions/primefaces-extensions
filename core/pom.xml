@@ -179,6 +179,7 @@
                                 <include>legend/**</include>
                                 <include>markdowneditor/1-markdowneditor-widget.js</include>
                                 <include>orgchart/**</include>
+                                <include>osmap/**</include>
                                 <include>qrcode/**</include>
                                 <include>sheet/**</include>
                                 <include>slideout/**</include>
