@@ -27,10 +27,8 @@ import java.util.List;
 
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.servlet.http.HttpServletRequest;
 
 import org.primefaces.model.map.*;
 import org.primefaces.renderkit.CoreRenderer;
@@ -71,16 +69,9 @@ public class OSMapRenderer extends CoreRenderer {
 
         String parts[] = map.getCenter().split(",");
 
-        ExternalContext externalContext = context.getExternalContext();
-        HttpServletRequest httpServletRequest = (HttpServletRequest) externalContext.getRequest();
-
         WidgetBuilder wb = getWidgetBuilder(context);
         wb.init("OSMap", map);
         wb.attr("center", map.getCenter());
-        wb.nativeAttr("iconUrl",
-                    "\"" + httpServletRequest.getContextPath() + "/jakarta.faces.resource/leaflet/images/marker-icon.png.xhtml?ln=primefaces-extensions\"");
-        wb.nativeAttr("shadowUrl",
-                    "\"" + httpServletRequest.getContextPath() + "/jakarta.faces.resource/leaflet/images/marker-shadow.png.xhtml?ln=primefaces-extensions\"");
         wb.nativeAttr("map", "L.map('" + map.getClientId() + "_map').setView(['" + parts[0].trim() + "', '" + parts[1].trim() + "'], " + map.getZoom() + ")");
 
         String tileUrl = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";

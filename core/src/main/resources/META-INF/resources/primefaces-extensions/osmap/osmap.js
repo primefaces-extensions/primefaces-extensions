@@ -40,7 +40,15 @@ PrimeFaces.widget.OSMap = PrimeFaces.widget.BaseWidget.extend({
     configureMarkers: function() {
         var _self = this;
 
-        var myIcon = L.icon({ iconUrl: this.cfg.iconUrl, shadowUrl: this.cfg.shadowUrl, iconSize: [25, 41], iconAnchor: [12, 41] });
+        var iconUrl = PrimeFaces.resources.getFacesResource('leaflet/images/marker-icon.png',
+		PrimeFacesExt.RESOURCE_LIBRARY,
+		PrimeFacesExt.VERSION);
+
+        var shadowUrl = PrimeFaces.resources.getFacesResource('leaflet/images/marker-shadow.png',
+		PrimeFacesExt.RESOURCE_LIBRARY,
+		PrimeFacesExt.VERSION);
+
+        var myIcon = L.icon({ iconUrl: iconUrl, shadowUrl: shadowUrl, iconSize: [25, 41], iconAnchor: [12, 41] });
 
         for(var i=0; i < this.cfg.markers.length; i++) {
             var marker = this.cfg.markers[i];
