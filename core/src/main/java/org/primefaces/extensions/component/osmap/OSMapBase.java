@@ -35,7 +35,7 @@ public abstract class OSMapBase extends UIComponentBase implements Widget, Clien
 
     public enum PropertyKeys {
 
-        widgetVar, model, style, styleClass, center, zoom, attribution, tileUrl, draggable, onPointClick
+        widgetVar, model, style, styleClass, center, zoom, zoomControl, attribution, tileUrl, draggable, onPointClick, scrollWheel
     }
 
     public OSMapBase() {
@@ -95,6 +95,14 @@ public abstract class OSMapBase extends UIComponentBase implements Widget, Clien
         getStateHelper().put(PropertyKeys.zoom, zoom);
     }
 
+    public boolean isZoomControl() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.zoomControl, true);
+    }
+
+    public void setZoomControl(boolean zoomControl) {
+        getStateHelper().put(PropertyKeys.zoomControl, zoomControl);
+    }
+
     public String getAttribution() {
         return (String) getStateHelper().eval(PropertyKeys.attribution, null);
     }
@@ -125,5 +133,13 @@ public abstract class OSMapBase extends UIComponentBase implements Widget, Clien
 
     public void setOnPointClick(String onPointClick) {
         getStateHelper().put(PropertyKeys.onPointClick, onPointClick);
+    }
+
+    public boolean isScrollWheel() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.scrollWheel, true);
+    }
+
+    public void setScrollWheel(boolean scrollWheel) {
+        getStateHelper().put(PropertyKeys.scrollWheel, scrollWheel);
     }
 }

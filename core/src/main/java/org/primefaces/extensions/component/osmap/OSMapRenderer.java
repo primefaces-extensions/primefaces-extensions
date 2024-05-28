@@ -72,7 +72,11 @@ public class OSMapRenderer extends CoreRenderer {
         WidgetBuilder wb = getWidgetBuilder(context);
         wb.init("OSMap", map);
         wb.attr("center", map.getCenter());
-        wb.nativeAttr("map", "L.map('" + map.getClientId() + "_map').setView(['" + parts[0].trim() + "', '" + parts[1].trim() + "'], " + map.getZoom() + ")");
+        wb.nativeAttr("map",
+                    "L.map('" + map.getClientId() + "_map', { dragging: " + map.isDraggable() + ", zoomControl: " + map.isZoomControl() + ", scrollWheelZoom: "
+                                + map.isScrollWheel() + " } ).setView(['"
+                                + parts[0].trim() + "', '"
+                                + parts[1].trim() + "'], " + map.getZoom() + ")");
 
         String tileUrl = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
         String attribution = "&copy; <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap</a>";
