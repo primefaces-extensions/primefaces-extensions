@@ -16,9 +16,12 @@
             <ui:include src="/sections/osmap/example-eventUsage.xhtml"/>
         </h:panelGroup>
 
-        <ui:decorate template="/templates/oneTabDecorator.xhtml">
+        <ui:decorate template="/templates/twoTabsDecorator.xhtml">
             <ui:define name="contentTab1">
 ${showcase:getFileContent('/sections/osmap/example-eventUsage.xhtml')}
+            </ui:define>
+            <ui:define name="contentTab2">
+                ${showcase:getFileContent('/org/primefaces/extensions/showcase/controller/osmap/EventView.java')}
             </ui:define>
         </ui:decorate>
     </ui:define>
