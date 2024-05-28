@@ -11547,6 +11547,110 @@ See showcase for an example. Default null.]]>
         </attribute>
     </tag>
     <tag>
+        <description><![CDATA[Open Street Map using leaflet https://leafletjs.com/]]></description>
+        <tag-name>osmap</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.OSMap</component-type>
+            <renderer-type>org.primefaces.extensions.component.OSMapRenderer</renderer-type>
+        </component>
+        <attribute>
+            <description>
+                <![CDATA[Name of the client side widget.]]>
+            </description>
+            <name>widgetVar</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[An org.primefaces.model.MapModel instance.]]>
+            </description>
+            <name>model</name>
+            <required>false</required>
+            <type>org.primefaces.model.map.MapModel</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Inline style of the map container.]]>
+            </description>
+            <name>style</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Style class of the map container.]]>
+            </description>
+            <name>styleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Center point of the map. Required.]]>
+            </description>
+            <name>center</name>
+            <required>true</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Defines the initial zoom level. Default is 8.]]>
+            </description>
+            <name>zoom</name>
+            <required>true</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Display zoom control on a map. Default is true.]]>
+            </description>
+            <name>zoomControl</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[When using OpenStreetMap data, you are required to provide credit and display copyright notice.]]>
+            </description>
+            <name>attribution</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Url of a custom tile provider.]]>
+            </description>
+            <name>tileUrl</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Defines draggability of map. Default is true.]]>
+            </description>
+            <name>draggable</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Javascript callback to execute when a point on map is clicked.]]>
+            </description>
+            <name>onPointClick</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Controls scrollwheel zooming on the map. Default is true.]]>
+            </description>
+            <name>scrollWheel</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+    </tag>
+    <tag>
         <description>
             <![CDATA[Apache ECharts component using raw JSON model.]]>
         </description>
