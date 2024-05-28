@@ -1,0 +1,19 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pe="http://primefaces.org/ui/extensions">
+
+<!-- EXAMPLE-SOURCE-START -->
+    <p:growl id="growl" showDetail="true" showSummary="true" globalOnly="false">
+        <p:autoUpdate />
+    </p:growl>
+
+    <pe:osmap style="width:100%; height:500px;"
+              center="42.3402,-3.6972"
+              zoom="17">
+              <p:ajax event="stateChange" listener="#{eventView.onStateChange}" update="growl"/>
+              <p:ajax event="pointSelect" listener="#{eventView.onPointSelect}" update="messages"/>
+    </pe:osmap>
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>
