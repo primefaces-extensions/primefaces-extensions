@@ -68,7 +68,7 @@ PrimeFaces.widget.OSMap = PrimeFaces.widget.BaseWidget.extend({
             });
 
            marker.on('dragend', function() {
-               _self.fireMarkerDragEvent(event, marker);
+               _self.fireMarkerDragEvent(event, this);
            });
         }
     },

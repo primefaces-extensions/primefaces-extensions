@@ -7,6 +7,26 @@
                         styleClass="#{navigationContext.getMenuitemStyleClass('basicUsage')}"
                         onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
                         url="#{request.contextPath}/sections/osmap/basicUsage.jsf"/>
+            <p:menuitem value="Event usage"
+                        styleClass="#{navigationContext.getMenuitemStyleClass('eventUsage')}"
+                        onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
+                        url="#{request.contextPath}/sections/osmap/eventUsage.jsf"/>
+            <p:menuitem value="Marker usage"
+                        styleClass="#{navigationContext.getMenuitemStyleClass('markerUsage')}"
+                        onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
+                        url="#{request.contextPath}/sections/osmap/markerUsage.jsf"/>
+            <p:menuitem value="Marker Selection"
+                        styleClass="#{navigationContext.getMenuitemStyleClass('markerSelection')}"
+                        onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
+                        url="#{request.contextPath}/sections/osmap/markerSelection.jsf"/>
+            <p:menuitem value="Draggable Marker"
+                        styleClass="#{navigationContext.getMenuitemStyleClass('draggableMarkers')}"
+                        onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
+                        url="#{request.contextPath}/sections/osmap/draggableMarkers.jsf"/>
+            <p:menuitem value="Shape Usage"
+                        styleClass="#{navigationContext.getMenuitemStyleClass('shapeUsage')}"
+                        onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
+                        url="#{request.contextPath}/sections/osmap/shapeUsage.jsf"/>
         </p:menu>
     </ui:composition>
 </html>
