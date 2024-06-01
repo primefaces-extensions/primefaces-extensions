@@ -19,6 +19,10 @@
                         styleClass="#{navigationContext.getMenuitemStyleClass('markerSelection')}"
                         onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
                         url="#{request.contextPath}/sections/osmap/markerSelection.jsf"/>
+            <p:menuitem value="Draggable Marker"
+                        styleClass="#{navigationContext.getMenuitemStyleClass('draggableMarkers')}"
+                        onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
+                        url="#{request.contextPath}/sections/osmap/draggableMarkers.jsf"/>
         </p:menu>
     </ui:composition>
 </html>
