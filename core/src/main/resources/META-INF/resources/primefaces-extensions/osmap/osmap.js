@@ -38,7 +38,7 @@ PrimeFaces.widget.OSMap = PrimeFaces.widget.BaseWidget.extend({
     },
 
     configureMarkers: function() {
-        var _self = this;
+        var $this = this;
 
         var iconUrl = PrimeFaces.resources.getFacesResource('leaflet/images/marker-icon.png',
 		PrimeFacesExt.RESOURCE_LIBRARY,
@@ -64,11 +64,11 @@ PrimeFaces.widget.OSMap = PrimeFaces.widget.BaseWidget.extend({
             marker.addTo( this.cfg.map );
 
             marker.on('click', function(event) {
-               _self.fireOverlaySelectEvent(event, this.options, 1);
+               $this.fireOverlaySelectEvent(event, this.options, 1);
             });
 
            marker.on('dragend', function() {
-               _self.fireMarkerDragEvent(event, this);
+               $this.fireMarkerDragEvent(event, this);
            });
         }
     },
@@ -150,7 +150,7 @@ PrimeFaces.widget.OSMap = PrimeFaces.widget.BaseWidget.extend({
     },
 
     configureEventListeners: function() {
-        var _self = this;
+        var $this = this;
 
         //behaviors
         this.configureStateChangeListener();
@@ -158,10 +158,10 @@ PrimeFaces.widget.OSMap = PrimeFaces.widget.BaseWidget.extend({
     },
 
     configureStateChangeListener: function() {
-        var _self = this,
+        var $this = this,
 
         onStateChange = function(event) {
-            _self.fireStateChangeEvent(event);
+            $this.fireStateChangeEvent(event);
         };
 
         this.cfg.map.on('zoomend', onStateChange);
@@ -196,14 +196,14 @@ PrimeFaces.widget.OSMap = PrimeFaces.widget.BaseWidget.extend({
      * @private
      */
     configurePointSelectListener: function() {
-        var _self = this;
+        var $this = this;
 
         this.cfg.map.on('click', function(event) {
-            _self.firePointSelectEvent(event, 1);
+            $this.firePointSelectEvent(event, 1);
         });
 
         this.cfg.map.on('dblclick', function(event) {
-            _self.firePointSelectEvent(event, 2);
+            $this.firePointSelectEvent(event, 2);
         });
 
     },
@@ -234,19 +234,19 @@ PrimeFaces.widget.OSMap = PrimeFaces.widget.BaseWidget.extend({
      * @param {PrimeFaces.widget.GMap.Overlay[]} overlays A list of overlay shapes to add to this map.
      */
     addOverlays: function(overlays) {
-        var _self = this;
+        var $this = this;
 
         $.each(overlays, function(index, item){
             //console.log( index + " " + item );
-            item.addTo( _self.cfg.map );
+            item.addTo( $this.cfg.map );
 
             //bind overlay click event
             item.on('click', function(event) {
-                _self.fireOverlaySelectEvent(event, item.options, 1);
+                $this.fireOverlaySelectEvent(event, item.options, 1);
             });
             
             item.on('dblclick', function(event) {
-                _self.fireOverlaySelectEvent(event, item.options, 2);
+                $this.fireOverlaySelectEvent(event, item.options, 2);
             });
         })
     },
