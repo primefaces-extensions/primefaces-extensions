@@ -174,6 +174,7 @@
                                 <include>imagezoom/**</include>
                                 <include>imagerotateandresize/**</include>
                                 <include>inputotp/**</include>
+                                <include>inputphone/inputphone-widget.js</include>
                                 <include>inputplace/**</include>
                                 <include>layout/**</include>
                                 <include>legend/**</include>
@@ -219,14 +220,14 @@
                         </resourcesSet>
                         <resourcesSet>
                             <includes>
-                                <include>inputphone/intlTelInput.js</include>
+                                <include>inputphone/intlTelInput.min.js</include>
                                 <include>inputphone/inputphone-widget.js</include>
                             </includes>
                             <aggregations>
                                 <aggregation>
                                     <inputDir>${resources.dir.compressed}</inputDir>
                                     <outputFile>${resources.dir.compressed}/inputphone/inputphone.js</outputFile>
-                                    <withoutCompress>${withoutCompress}</withoutCompress>
+                                    <withoutCompress>true</withoutCompress>
                                 </aggregation>
                             </aggregations>
                         </resourcesSet>
