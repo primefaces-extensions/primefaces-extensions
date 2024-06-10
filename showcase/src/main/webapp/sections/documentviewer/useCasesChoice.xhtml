@@ -11,6 +11,10 @@
                     styleClass="#{navigationContext.getMenuitemStyleClass('documentViewerAdvanced')}"
                     onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
                     url="#{request.contextPath}/sections/documentviewer/advanced.jsf"/>
+        <p:menuitem value="Embedded Fonts"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('documentViewerEmbedded')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
+                    url="#{request.contextPath}/sections/documentviewer/embedded.jsf"/>
     </p:menu>
 </ui:composition>
 </html>

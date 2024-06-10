@@ -1,183 +1,213 @@
-# Copyright 2012 Mozilla Foundation
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-# Main toolbar buttons (tooltips and alt text for images)
-previous.title=An Leathanach Roimhe Seo
-previous_label=Roimhe Seo
-next.title=An Chéad Leathanach Eile
-next_label=Ar Aghaidh
 
-# LOCALIZATION NOTE (page.title): The tooltip for the pageNumber input.
-page.title=Leathanach
-# LOCALIZATION NOTE (of_pages): "{{pagesCount}}" will be replaced by a number
-# representing the total number of pages in the document.
-of_pages=as {{pagesCount}}
-# LOCALIZATION NOTE (page_of_pages): "{{pageNumber}}" and "{{pagesCount}}"
-# will be replaced by a number representing the currently visible page,
-# respectively a number representing the total number of pages in the document.
-page_of_pages=({{pageNumber}} as {{pagesCount}})
+## Main toolbar buttons (tooltips and alt text for images)
 
-zoom_out.title=Súmáil Amach
-zoom_out_label=Súmáil Amach
-zoom_in.title=Súmáil Isteach
-zoom_in_label=Súmáil Isteach
-zoom.title=Súmáil
-presentation_mode.title=Úsáid an Mód Láithreoireachta
-presentation_mode_label=Mód Láithreoireachta
-open_file.title=Oscail Comhad
-open_file_label=Oscail
-print.title=Priontáil
-print_label=Priontáil
-download.title=Íoslódáil
-download_label=Íoslódáil
-bookmark.title=An t-amharc reatha (cóipeáil nó oscail i bhfuinneog nua)
-bookmark_label=An tAmharc Reatha
+pdfjs-previous-button =
+    .title = An Leathanach Roimhe Seo
+pdfjs-previous-button-label = Roimhe Seo
+pdfjs-next-button =
+    .title = An Chéad Leathanach Eile
+pdfjs-next-button-label = Ar Aghaidh
+# .title: Tooltip for the pageNumber input.
+pdfjs-page-input =
+    .title = Leathanach
+# Variables:
+#   $pagesCount (Number) - the total number of pages in the document
+# This string follows an input field with the number of the page currently displayed.
+pdfjs-of-pages = as { $pagesCount }
+# Variables:
+#   $pageNumber (Number) - the currently visible page
+#   $pagesCount (Number) - the total number of pages in the document
+pdfjs-page-of-pages = ({ $pageNumber } as { $pagesCount })
+pdfjs-zoom-out-button =
+    .title = Súmáil Amach
+pdfjs-zoom-out-button-label = Súmáil Amach
+pdfjs-zoom-in-button =
+    .title = Súmáil Isteach
+pdfjs-zoom-in-button-label = Súmáil Isteach
+pdfjs-zoom-select =
+    .title = Súmáil
+pdfjs-presentation-mode-button =
+    .title = Úsáid an Mód Láithreoireachta
+pdfjs-presentation-mode-button-label = Mód Láithreoireachta
+pdfjs-open-file-button =
+    .title = Oscail Comhad
+pdfjs-open-file-button-label = Oscail
+pdfjs-print-button =
+    .title = Priontáil
+pdfjs-print-button-label = Priontáil
 
-# Secondary toolbar and context menu
-tools.title=Uirlisí
-tools_label=Uirlisí
-first_page.title=Go dtí an chéad leathanach
-first_page.label=Go dtí an chéad leathanach
-first_page_label=Go dtí an chéad leathanach
-last_page.title=Go dtí an leathanach deiridh
-last_page.label=Go dtí an leathanach deiridh
-last_page_label=Go dtí an leathanach deiridh
-page_rotate_cw.title=Rothlaigh ar deiseal
-page_rotate_cw.label=Rothlaigh ar deiseal
-page_rotate_cw_label=Rothlaigh ar deiseal
-page_rotate_ccw.title=Rothlaigh ar tuathal
-page_rotate_ccw.label=Rothlaigh ar tuathal
-page_rotate_ccw_label=Rothlaigh ar tuathal
+##  Secondary toolbar and context menu
 
-cursor_text_select_tool.title=Cumasaigh an Uirlis Roghnaithe Téacs
-cursor_text_select_tool_label=Uirlis Roghnaithe Téacs
-cursor_hand_tool.title=Cumasaigh an Uirlis Láimhe
-cursor_hand_tool_label=Uirlis Láimhe
+pdfjs-tools-button =
+    .title = Uirlisí
+pdfjs-tools-button-label = Uirlisí
+pdfjs-first-page-button =
+    .title = Go dtí an chéad leathanach
+pdfjs-first-page-button-label = Go dtí an chéad leathanach
+pdfjs-last-page-button =
+    .title = Go dtí an leathanach deiridh
+pdfjs-last-page-button-label = Go dtí an leathanach deiridh
+pdfjs-page-rotate-cw-button =
+    .title = Rothlaigh ar deiseal
+pdfjs-page-rotate-cw-button-label = Rothlaigh ar deiseal
+pdfjs-page-rotate-ccw-button =
+    .title = Rothlaigh ar tuathal
+pdfjs-page-rotate-ccw-button-label = Rothlaigh ar tuathal
+pdfjs-cursor-text-select-tool-button =
+    .title = Cumasaigh an Uirlis Roghnaithe Téacs
+pdfjs-cursor-text-select-tool-button-label = Uirlis Roghnaithe Téacs
+pdfjs-cursor-hand-tool-button =
+    .title = Cumasaigh an Uirlis Láimhe
+pdfjs-cursor-hand-tool-button-label = Uirlis Láimhe
 
-# Document properties dialog box
-document_properties.title=Airíonna na Cáipéise…
-document_properties_label=Airíonna na Cáipéise…
-document_properties_file_name=Ainm an chomhaid:
-document_properties_file_size=Méid an chomhaid:
-# LOCALIZATION NOTE (document_properties_kb): "{{size_kb}}" and "{{size_b}}"
-# will be replaced by the PDF file size in kilobytes, respectively in bytes.
-document_properties_kb={{size_kb}} kB ({{size_b}} beart)
-# LOCALIZATION NOTE (document_properties_mb): "{{size_mb}}" and "{{size_b}}"
-# will be replaced by the PDF file size in megabytes, respectively in bytes.
-document_properties_mb={{size_mb}} MB ({{size_b}} beart)
-document_properties_title=Teideal:
-document_properties_author=Údar:
-document_properties_subject=Ábhar:
-document_properties_keywords=Eochairfhocail:
-document_properties_creation_date=Dáta Cruthaithe:
-document_properties_modification_date=Dáta Athraithe:
-# LOCALIZATION NOTE (document_properties_date_string): "{{date}}" and "{{time}}"
-# will be replaced by the creation/modification date, and time, of the PDF file.
-document_properties_date_string={{date}}, {{time}}
-document_properties_creator=Cruthaitheoir:
-document_properties_producer=Cruthaitheoir an PDF:
-document_properties_version=Leagan PDF:
-document_properties_page_count=Líon Leathanach:
-document_properties_close=Dún
+## Document properties dialog
 
-print_progress_message=Cáipéis á hullmhú le priontáil…
-# LOCALIZATION NOTE (print_progress_percent): "{{progress}}" will be replaced by
-# a numerical per cent value.
-print_progress_percent={{progress}}%
-print_progress_close=Cealaigh
+pdfjs-document-properties-button =
+    .title = Airíonna na Cáipéise…
+pdfjs-document-properties-button-label = Airíonna na Cáipéise…
+pdfjs-document-properties-file-name = Ainm an chomhaid:
+pdfjs-document-properties-file-size = Méid an chomhaid:
+# Variables:
+#   $size_kb (Number) - the PDF file size in kilobytes
+#   $size_b (Number) - the PDF file size in bytes
+pdfjs-document-properties-kb = { $size_kb } kB ({ $size_b } beart)
+# Variables:
+#   $size_mb (Number) - the PDF file size in megabytes
+#   $size_b (Number) - the PDF file size in bytes
+pdfjs-document-properties-mb = { $size_mb } MB ({ $size_b } beart)
+pdfjs-document-properties-title = Teideal:
+pdfjs-document-properties-author = Údar:
+pdfjs-document-properties-subject = Ábhar:
+pdfjs-document-properties-keywords = Eochairfhocail:
+pdfjs-document-properties-creation-date = Dáta Cruthaithe:
+pdfjs-document-properties-modification-date = Dáta Athraithe:
+# Variables:
+#   $date (Date) - the creation/modification date of the PDF file
+#   $time (Time) - the creation/modification time of the PDF file
+pdfjs-document-properties-date-string = { $date }, { $time }
+pdfjs-document-properties-creator = Cruthaitheoir:
+pdfjs-document-properties-producer = Cruthaitheoir an PDF:
+pdfjs-document-properties-version = Leagan PDF:
+pdfjs-document-properties-page-count = Líon Leathanach:
 
-# Tooltips and alt text for side panel toolbar buttons
-# (the _label strings are alt text for the buttons, the .title strings are
-# tooltips)
-toggle_sidebar.title=Scoránaigh an Barra Taoibh
-toggle_sidebar_notification.title=Scoránaigh an Barra Taoibh (achoimre/iatáin sa cháipéis)
-toggle_sidebar_label=Scoránaigh an Barra Taoibh
-document_outline.title=Taispeáin Imlíne na Cáipéise (déchliceáil chun chuile rud a leathnú nó a laghdú)
-document_outline_label=Creatlach na Cáipéise
-attachments.title=Taispeáin Iatáin
-attachments_label=Iatáin
-thumbs.title=Taispeáin Mionsamhlacha
-thumbs_label=Mionsamhlacha
-findbar.title=Aimsigh sa Cháipéis
-findbar_label=Aimsigh
+## Variables:
+##   $width (Number) - the width of the (current) page
+##   $height (Number) - the height of the (current) page
+##   $unit (String) - the unit of measurement of the (current) page
+##   $name (String) - the name of the (current) page
+##   $orientation (String) - the orientation of the (current) page
 
-# Thumbnails panel item (tooltip and alt text for images)
-# LOCALIZATION NOTE (thumb_page_title): "{{page}}" will be replaced by the page
-# number.
-thumb_page_title=Leathanach {{page}}
-# LOCALIZATION NOTE (thumb_page_canvas): "{{page}}" will be replaced by the page
-# number.
-thumb_page_canvas=Mionsamhail Leathanaigh {{page}}
 
-# Find panel button title and messages
-find_input.title=Aimsigh
-find_input.placeholder=Aimsigh sa cháipéis…
-find_previous.title=Aimsigh an sampla roimhe seo den nath seo
-find_previous_label=Roimhe seo
-find_next.title=Aimsigh an chéad sampla eile den nath sin
-find_next_label=Ar aghaidh
-find_highlight=Aibhsigh uile
-find_match_case_label=Cásíogair
-find_reached_top=Ag barr na cáipéise, ag leanúint ón mbun
-find_reached_bottom=Ag bun na cáipéise, ag leanúint ón mbarr
-find_not_found=Frása gan aimsiú
+##
 
-# Error panel labels
-error_more_info=Tuilleadh Eolais
-error_less_info=Níos Lú Eolais
-error_close=Dún
-# LOCALIZATION NOTE (error_version_info): "{{version}}" and "{{build}}" will be
-# replaced by the PDF.JS version and build ID.
-error_version_info=PDF.js v{{version}} (build: {{build}})
-# LOCALIZATION NOTE (error_message): "{{message}}" will be replaced by an
-# english string describing the error.
-error_message=Teachtaireacht: {{message}}
-# LOCALIZATION NOTE (error_stack): "{{stack}}" will be replaced with a stack
-# trace.
-error_stack=Cruach: {{stack}}
-# LOCALIZATION NOTE (error_file): "{{file}}" will be replaced with a filename
-error_file=Comhad: {{file}}
-# LOCALIZATION NOTE (error_line): "{{line}}" will be replaced with a line number
-error_line=Líne: {{line}}
-rendering_error=Tharla earráid agus an leathanach á leagan amach.
+pdfjs-document-properties-close-button = Dún
 
-# Predefined zoom values
-page_scale_width=Leithead Leathanaigh
-page_scale_fit=Laghdaigh go dtí an Leathanach
-page_scale_auto=Súmáil Uathoibríoch
-page_scale_actual=Fíormhéid
-# LOCALIZATION NOTE (page_scale_percent): "{{scale}}" will be replaced by a
-# numerical scale value.
-page_scale_percent={{scale}}%
+## Print
 
-# Loading indicator messages
-loading_error_indicator=Earráid
-loading_error=Tharla earráid agus an cháipéis PDF á lódáil.
-invalid_file_error=Comhad neamhbhailí nó truaillithe PDF.
-missing_file_error=Comhad PDF ar iarraidh.
-unexpected_response_error=Freagra ón bhfreastalaí nach rabhthas ag súil leis.
+pdfjs-print-progress-message = Cáipéis á hullmhú le priontáil…
+# Variables:
+#   $progress (Number) - percent value
+pdfjs-print-progress-percent = { $progress }%
+pdfjs-print-progress-close-button = Cealaigh
+pdfjs-printing-not-supported = Rabhadh: Ní thacaíonn an brabhsálaí le priontáil go hiomlán.
+pdfjs-printing-not-ready = Rabhadh: Ní féidir an PDF a phriontáil go dtí go mbeidh an cháipéis iomlán lódáilte.
 
-# LOCALIZATION NOTE (text_annotation_type.alt): This is used as a tooltip.
-# "{{type}}" will be replaced with an annotation type from a list defined in
-# the PDF spec (32000-1:2008 Table 169 – Annotation types).
+## Tooltips and alt text for side panel toolbar buttons
+
+pdfjs-toggle-sidebar-button =
+    .title = Scoránaigh an Barra Taoibh
+pdfjs-toggle-sidebar-button-label = Scoránaigh an Barra Taoibh
+pdfjs-document-outline-button =
+    .title = Taispeáin Imlíne na Cáipéise (déchliceáil chun chuile rud a leathnú nó a laghdú)
+pdfjs-document-outline-button-label = Creatlach na Cáipéise
+pdfjs-attachments-button =
+    .title = Taispeáin Iatáin
+pdfjs-attachments-button-label = Iatáin
+pdfjs-thumbs-button =
+    .title = Taispeáin Mionsamhlacha
+pdfjs-thumbs-button-label = Mionsamhlacha
+pdfjs-findbar-button =
+    .title = Aimsigh sa Cháipéis
+pdfjs-findbar-button-label = Aimsigh
+
+## Thumbnails panel item (tooltip and alt text for images)
+
+# Variables:
+#   $page (Number) - the page number
+pdfjs-thumb-page-title =
+    .title = Leathanach { $page }
+# Variables:
+#   $page (Number) - the page number
+pdfjs-thumb-page-canvas =
+    .aria-label = Mionsamhail Leathanaigh { $page }
+
+## Find panel button title and messages
+
+pdfjs-find-input =
+    .title = Aimsigh
+    .placeholder = Aimsigh sa cháipéis…
+pdfjs-find-previous-button =
+    .title = Aimsigh an sampla roimhe seo den nath seo
+pdfjs-find-previous-button-label = Roimhe seo
+pdfjs-find-next-button =
+    .title = Aimsigh an chéad sampla eile den nath sin
+pdfjs-find-next-button-label = Ar aghaidh
+pdfjs-find-highlight-checkbox = Aibhsigh uile
+pdfjs-find-match-case-checkbox-label = Cásíogair
+pdfjs-find-entire-word-checkbox-label = Focail iomlána
+pdfjs-find-reached-top = Ag barr na cáipéise, ag leanúint ón mbun
+pdfjs-find-reached-bottom = Ag bun na cáipéise, ag leanúint ón mbarr
+pdfjs-find-not-found = Frása gan aimsiú
+
+## Predefined zoom values
+
+pdfjs-page-scale-width = Leithead Leathanaigh
+pdfjs-page-scale-fit = Laghdaigh go dtí an Leathanach
+pdfjs-page-scale-auto = Súmáil Uathoibríoch
+pdfjs-page-scale-actual = Fíormhéid
+# Variables:
+#   $scale (Number) - percent value for page scale
+pdfjs-page-scale-percent = { $scale }%
+
+## PDF page
+
+
+## Loading indicator messages
+
+pdfjs-loading-error = Tharla earráid agus an cháipéis PDF á lódáil.
+pdfjs-invalid-file-error = Comhad neamhbhailí nó truaillithe PDF.
+pdfjs-missing-file-error = Comhad PDF ar iarraidh.
+pdfjs-unexpected-response-error = Freagra ón bhfreastalaí nach rabhthas ag súil leis.
+pdfjs-rendering-error = Tharla earráid agus an leathanach á leagan amach.
+
+## Annotations
+
+# .alt: This is used as a tooltip.
+# Variables:
+#   $type (String) - an annotation type from a list defined in the PDF spec
+# (32000-1:2008 Table 169 – Annotation types).
 # Some common types are e.g.: "Check", "Text", "Comment", "Note"
-text_annotation_type.alt=[Anótáil {{type}}]
-password_label=Cuir an focal faire isteach chun an comhad PDF seo a oscailt.
-password_invalid=Focal faire mícheart. Déan iarracht eile.
-password_ok=OK
-password_cancel=Cealaigh
+pdfjs-text-annotation-type =
+    .alt = [Anótáil { $type }]
 
-printing_not_supported=Rabhadh: Ní thacaíonn an brabhsálaí le priontáil go hiomlán.
-printing_not_ready=Rabhadh: Ní féidir an PDF a phriontáil go dtí go mbeidh an cháipéis iomlán lódáilte.
-web_fonts_disabled=Tá clófhoirne Gréasáin díchumasaithe: ní féidir clófhoirne leabaithe PDF a úsáid.
+## Password
+
+pdfjs-password-label = Cuir an focal faire isteach chun an comhad PDF seo a oscailt.
+pdfjs-password-invalid = Focal faire mícheart. Déan iarracht eile.
+pdfjs-password-ok-button = OK
+pdfjs-password-cancel-button = Cealaigh
+pdfjs-web-fonts-disabled = Tá clófhoirne Gréasáin díchumasaithe: ní féidir clófhoirne leabaithe PDF a úsáid.
+
+## Editing
+
+
+## Alt-text dialog
+
+
+## Editor resizers
+## This is used in an aria label to help to understand the role of the resizer.
+

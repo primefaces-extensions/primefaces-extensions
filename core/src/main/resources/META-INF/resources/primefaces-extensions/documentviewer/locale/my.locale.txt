@@ -1,197 +1,206 @@
-# Copyright 2012 Mozilla Foundation
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
-# Main toolbar buttons (tooltips and alt text for images)
-previous.title=အရင် စာမျက်နှာ
-previous_label=အရင်နေရာ
-next.title=ရှေ့ စာမျက်နှာ
-next_label=နောက်တခု
-
-# LOCALIZATION NOTE (page.title): The tooltip for the pageNumber input.
-page.title=စာမျက်နှာ
-# LOCALIZATION NOTE (of_pages): "{{pagesCount}}" will be replaced by a number
-# representing the total number of pages in the document.
-of_pages={{pagesCount}} ၏
-# LOCALIZATION NOTE (page_of_pages): "{{pageNumber}}" and "{{pagesCount}}"
-# will be replaced by a number representing the currently visible page,
-# respectively a number representing the total number of pages in the document.
-page_of_pages=({{pagesCount}} ၏ {{pageNumber}})
-
-zoom_out.title=ချုံ့ပါ
-zoom_out_label=ချုံ့ပါ
-zoom_in.title=ချဲ့ပါ
-zoom_in_label=ချဲ့ပါ
-zoom.title=ချုံ့/ချဲ့ပါ
-presentation_mode.title=ဆွေးနွေးတင်ပြစနစ်သို့ ကူးပြောင်းပါ
-presentation_mode_label=ဆွေးနွေးတင်ပြစနစ်
-open_file.title=ဖိုင်အားဖွင့်ပါ။
-open_file_label=ဖွင့်ပါ
-print.title=ပုံနှိုပ်ပါ
-print_label=ပုံနှိုပ်ပါ
-download.title=ကူးဆွဲ
-download_label=ကူးဆွဲ
-bookmark.title=လက်ရှိ မြင်ကွင်း (ဝင်းဒိုးအသစ်မှာ ကူးပါ သို့မဟုတ် ဖွင့်ပါ)
-bookmark_label=လက်ရှိ မြင်ကွင်း
-
-# Secondary toolbar and context menu
-tools.title=ကိရိယာများ
-tools_label=ကိရိယာများ
-first_page.title=ပထမ စာမျက်နှာသို့
-first_page.label=ပထမ စာမျက်နှာသို့
-first_page_label=ပထမ စာမျက်နှာသို့
-last_page.title=နောက်ဆုံး စာမျက်နှာသို့
-last_page.label=နောက်ဆုံး စာမျက်နှာသို့
-last_page_label=နောက်ဆုံး စာမျက်နှာသို့
-page_rotate_cw.title=နာရီလက်တံ အတိုင်း
-page_rotate_cw.label=နာရီလက်တံ အတိုင်း
-page_rotate_cw_label=နာရီလက်တံ အတိုင်း
-page_rotate_ccw.title=နာရီလက်တံ ပြောင်းပြန်
-page_rotate_ccw.label=နာရီလက်တံ ပြောင်းပြန်
-page_rotate_ccw_label=နာရီလက်တံ ပြောင်းပြန်
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 
+## Main toolbar buttons (tooltips and alt text for images)
+
+pdfjs-previous-button =
+    .title = အရင် စာမျက်နှာ
+pdfjs-previous-button-label = အရင်နေရာ
+pdfjs-next-button =
+    .title = ရှေ့ စာမျက်နှာ
+pdfjs-next-button-label = နောက်တခု
+# .title: Tooltip for the pageNumber input.
+pdfjs-page-input =
+    .title = စာမျက်နှာ
+# Variables:
+#   $pagesCount (Number) - the total number of pages in the document
+# This string follows an input field with the number of the page currently displayed.
+pdfjs-of-pages = { $pagesCount } ၏
+# Variables:
+#   $pageNumber (Number) - the currently visible page
+#   $pagesCount (Number) - the total number of pages in the document
+pdfjs-page-of-pages = ({ $pagesCount } ၏ { $pageNumber })
+pdfjs-zoom-out-button =
+    .title = ချုံ့ပါ
+pdfjs-zoom-out-button-label = ချုံ့ပါ
+pdfjs-zoom-in-button =
+    .title = ချဲ့ပါ
+pdfjs-zoom-in-button-label = ချဲ့ပါ
+pdfjs-zoom-select =
+    .title = ချုံ့/ချဲ့ပါ
+pdfjs-presentation-mode-button =
+    .title = ဆွေးနွေးတင်ပြစနစ်သို့ ကူးပြောင်းပါ
+pdfjs-presentation-mode-button-label = ဆွေးနွေးတင်ပြစနစ်
+pdfjs-open-file-button =
+    .title = ဖိုင်အားဖွင့်ပါ။
+pdfjs-open-file-button-label = ဖွင့်ပါ
+pdfjs-print-button =
+    .title = ပုံနှိုပ်ပါ
+pdfjs-print-button-label = ပုံနှိုပ်ပါ
+
+##  Secondary toolbar and context menu
+
+pdfjs-tools-button =
+    .title = ကိရိယာများ
+pdfjs-tools-button-label = ကိရိယာများ
+pdfjs-first-page-button =
+    .title = ပထမ စာမျက်နှာသို့
+pdfjs-first-page-button-label = ပထမ စာမျက်နှာသို့
+pdfjs-last-page-button =
+    .title = နောက်ဆုံး စာမျက်နှာသို့
+pdfjs-last-page-button-label = နောက်ဆုံး စာမျက်နှာသို့
+pdfjs-page-rotate-cw-button =
+    .title = နာရီလက်တံ အတိုင်း
+pdfjs-page-rotate-cw-button-label = နာရီလက်တံ အတိုင်း
+pdfjs-page-rotate-ccw-button =
+    .title = နာရီလက်တံ ပြောင်းပြန်
+pdfjs-page-rotate-ccw-button-label = နာရီလက်တံ ပြောင်းပြန်
+
+## Document properties dialog
+
+pdfjs-document-properties-button =
+    .title = မှတ်တမ်းမှတ်ရာ ဂုဏ်သတ္တိများ
+pdfjs-document-properties-button-label = မှတ်တမ်းမှတ်ရာ ဂုဏ်သတ္တိများ
+pdfjs-document-properties-file-name = ဖိုင် :
+pdfjs-document-properties-file-size = ဖိုင်ဆိုဒ် :
+# Variables:
+#   $size_kb (Number) - the PDF file size in kilobytes
+#   $size_b (Number) - the PDF file size in bytes
+pdfjs-document-properties-kb = { $size_kb } ကီလိုဘိုတ် ({ $size_b }ဘိုတ်)
+# Variables:
+#   $size_mb (Number) - the PDF file size in megabytes
+#   $size_b (Number) - the PDF file size in bytes
+pdfjs-document-properties-mb = { $size_mb } MB ({ $size_b } bytes)
+pdfjs-document-properties-title = ခေါင်းစဉ်‌ -
+pdfjs-document-properties-author = ရေးသားသူ:
+pdfjs-document-properties-subject = အကြောင်းအရာ:
+pdfjs-document-properties-keywords = သော့ချက် စာလုံး:
+pdfjs-document-properties-creation-date = ထုတ်လုပ်ရက်စွဲ:
+pdfjs-document-properties-modification-date = ပြင်ဆင်ရက်စွဲ:
+# Variables:
+#   $date (Date) - the creation/modification date of the PDF file
+#   $time (Time) - the creation/modification time of the PDF file
+pdfjs-document-properties-date-string = { $date }, { $time }
+pdfjs-document-properties-creator = ဖန်တီးသူ:
+pdfjs-document-properties-producer = PDF ထုတ်လုပ်သူ:
+pdfjs-document-properties-version = PDF ဗားရှင်း:
+pdfjs-document-properties-page-count = စာမျက်နှာအရေအတွက်:
+
+## Variables:
+##   $width (Number) - the width of the (current) page
+##   $height (Number) - the height of the (current) page
+##   $unit (String) - the unit of measurement of the (current) page
+##   $name (String) - the name of the (current) page
+##   $orientation (String) - the orientation of the (current) page
 
 
-# Document properties dialog box
-document_properties.title=မှတ်တမ်းမှတ်ရာ ဂုဏ်သတ္တိများ
-document_properties_label=မှတ်တမ်းမှတ်ရာ ဂုဏ်သတ္တိများ
-document_properties_file_name=ဖိုင် :
-document_properties_file_size=ဖိုင်ဆိုဒ် :
-# LOCALIZATION NOTE (document_properties_kb): "{{size_kb}}" and "{{size_b}}"
-# will be replaced by the PDF file size in kilobytes, respectively in bytes.
-document_properties_kb={{size_kb}} ကီလိုဘိုတ် ({{size_b}}ဘိုတ်)
-# LOCALIZATION NOTE (document_properties_mb): "{{size_mb}}" and "{{size_b}}"
-# will be replaced by the PDF file size in megabytes, respectively in bytes.
-document_properties_mb={{size_mb}} MB ({{size_b}} bytes)
-document_properties_title=ခေါင်းစဉ်‌ -
-document_properties_author=ရေးသားသူ:
-document_properties_subject=အကြောင်းအရာ:\u0020
-document_properties_keywords=သော့ချက် စာလုံး:
-document_properties_creation_date=ထုတ်လုပ်ရက်စွဲ:
-document_properties_modification_date=ပြင်ဆင်ရက်စွဲ:
-# LOCALIZATION NOTE (document_properties_date_string): "{{date}}" and "{{time}}"
-# will be replaced by the creation/modification date, and time, of the PDF file.
-document_properties_date_string={{date}}, {{time}}
-document_properties_creator=ဖန်တီးသူ:
-document_properties_producer=PDF ထုတ်လုပ်သူ:
-document_properties_version=PDF ဗားရှင်း:
-document_properties_page_count=စာမျက်နှာအရေအတွက်:
-# LOCALIZATION NOTE (document_properties_page_size_dimension_string):
-# "{{width}}", "{{height}}", {{unit}}, and {{orientation}} will be replaced by
-# the size, respectively their unit of measurement and orientation, of the (current) page.
-# LOCALIZATION NOTE (document_properties_page_size_dimension_name_string):
-# "{{width}}", "{{height}}", {{unit}}, {{name}}, and {{orientation}} will be replaced by
-# the size, respectively their unit of measurement, name, and orientation, of the (current) page.
-# LOCALIZATION NOTE (document_properties_linearized): The linearization status of
-# the document; usually called "Fast Web View" in English locales of Adobe software.
-document_properties_close=ပိတ်
+##
 
-print_progress_message=Preparing document for printing…
-# LOCALIZATION NOTE (print_progress_percent): "{{progress}}" will be replaced by
-# a numerical per cent value.
-print_progress_percent={{progress}}%
-print_progress_close=ပယ်​ဖျက်ပါ
+pdfjs-document-properties-close-button = ပိတ်
 
-# Tooltips and alt text for side panel toolbar buttons
-# (the _label strings are alt text for the buttons, the .title strings are
-# tooltips)
-toggle_sidebar.title=ဘေးတန်းဖွင့်ပိတ်
-toggle_sidebar_notification.title=ဘေးဘားတန်းကို အဖွင့်/အပိတ် လုပ်ရန် (စာတမ်းတွင် outline/attachments ပါဝင်နိုင်သည်)
-toggle_sidebar_label=ဖွင့်ပိတ် ဆလိုက်ဒါ
-document_outline.title=စာတမ်းအကျဉ်းချုပ်ကို ပြပါ (စာရင်းအားလုံးကို ချုံ့/ချဲ့ရန် ကလစ်နှစ်ချက်နှိပ်ပါ)
-document_outline_label=စာတမ်းအကျဉ်းချုပ်
-attachments.title=တွဲချက်များ ပြပါ
-attachments_label=တွဲထားချက်များ
-thumbs.title=ပုံရိပ်ငယ်များကို ပြပါ
-thumbs_label=ပုံရိပ်ငယ်များ
-findbar.title=Find in Document
-findbar_label=ရှာဖွေပါ
+## Print
 
-# Thumbnails panel item (tooltip and alt text for images)
-# LOCALIZATION NOTE (thumb_page_title): "{{page}}" will be replaced by the page
-# number.
-thumb_page_title=စာမျက်နှာ {{page}}
-# LOCALIZATION NOTE (thumb_page_canvas): "{{page}}" will be replaced by the page
-# number.
-thumb_page_canvas=စာမျက်နှာရဲ့ ပုံရိပ်ငယ် {{page}}
+pdfjs-print-progress-message = Preparing document for printing…
+# Variables:
+#   $progress (Number) - percent value
+pdfjs-print-progress-percent = { $progress }%
+pdfjs-print-progress-close-button = ပယ်​ဖျက်ပါ
+pdfjs-printing-not-supported = သတိပေးချက်၊ပရင့်ထုတ်ခြင်းကိုဤဘယောက်ဆာသည် ပြည့်ဝစွာထောက်ပံ့မထားပါ ။
+pdfjs-printing-not-ready = သတိပေးချက်: ယခု PDF ဖိုင်သည် ပုံနှိပ်ရန် မပြည့်စုံပါ
 
-# Find panel button title and messages
-find_input.title=ရှာဖွေပါ
-find_input.placeholder=စာတမ်းထဲတွင် ရှာဖွေရန်…
-find_previous.title=စကားစုရဲ့ အရင် ​ဖြစ်ပွားမှုကို ရှာဖွေပါ
-find_previous_label=နောက်သို့
-find_next.title=စကားစုရဲ့ နောက်ထပ် ​ဖြစ်ပွားမှုကို ရှာဖွေပါ
-find_next_label=ရှေ့သို့
-find_highlight=အားလုံးကို မျဉ်းသားပါ
-find_match_case_label=စာလုံး တိုက်ဆိုင်ပါ
-find_reached_top=စာမျက်နှာထိပ် ရောက်နေပြီ၊ အဆုံးကနေ ပြန်စပါ
-find_reached_bottom=စာမျက်နှာအဆုံး ရောက်နေပြီ၊ ထိပ်ကနေ ပြန်စပါ
-# LOCALIZATION NOTE (find_match_count): The supported plural forms are
-# [one|two|few|many|other], with [other] as the default value.
-# "{{current}}" and "{{total}}" will be replaced by a number representing the
-# index of the currently active find result, respectively a number representing
-# the total number of matches in the document.
-# LOCALIZATION NOTE (find_match_count_limit): The supported plural forms are
-# [zero|one|two|few|many|other], with [other] as the default value.
-# "{{limit}}" will be replaced by a numerical value.
-find_not_found=စကားစု မတွေ့ရဘူး
+## Tooltips and alt text for side panel toolbar buttons
 
-# Error panel labels
-error_more_info=နောက်ထပ်အချက်အလက်များ
-error_less_info=အနည်းငယ်မျှသော သတင်းအချက်အလက်
-error_close=ပိတ်
-# LOCALIZATION NOTE (error_version_info): "{{version}}" and "{{build}}" will be
-# replaced by the PDF.JS version and build ID.
-error_version_info=PDF.js v{{version}} (build: {{build}})
-# LOCALIZATION NOTE (error_message): "{{message}}" will be replaced by an
-# english string describing the error.
-error_message=မက်ဆေ့ - {{message}}
-# LOCALIZATION NOTE (error_stack): "{{stack}}" will be replaced with a stack
-# trace.
-error_stack=အထပ် - {{stack}}
-# LOCALIZATION NOTE (error_file): "{{file}}" will be replaced with a filename
-error_file=ဖိုင် {{file}}
-# LOCALIZATION NOTE (error_line): "{{line}}" will be replaced with a line number
-error_line=လိုင်း - {{line}}
-rendering_error=စာမျက်နှာကို ပုံဖော်နေချိန်မှာ အမှားတစ်ခုတွေ့ရပါတယ်။
+pdfjs-toggle-sidebar-button =
+    .title = ဘေးတန်းဖွင့်ပိတ်
+pdfjs-toggle-sidebar-button-label = ဖွင့်ပိတ် ဆလိုက်ဒါ
+pdfjs-document-outline-button =
+    .title = စာတမ်းအကျဉ်းချုပ်ကို ပြပါ (စာရင်းအားလုံးကို ချုံ့/ချဲ့ရန် ကလစ်နှစ်ချက်နှိပ်ပါ)
+pdfjs-document-outline-button-label = စာတမ်းအကျဉ်းချုပ်
+pdfjs-attachments-button =
+    .title = တွဲချက်များ ပြပါ
+pdfjs-attachments-button-label = တွဲထားချက်များ
+pdfjs-thumbs-button =
+    .title = ပုံရိပ်ငယ်များကို ပြပါ
+pdfjs-thumbs-button-label = ပုံရိပ်ငယ်များ
+pdfjs-findbar-button =
+    .title = Find in Document
+pdfjs-findbar-button-label = ရှာဖွေပါ
 
-# Predefined zoom values
-page_scale_width=စာမျက်နှာ အကျယ်
-page_scale_fit=စာမျက်နှာ ကွက်တိ
-page_scale_auto=အလိုအလျောက် ချုံ့ချဲ့
-page_scale_actual=အမှန်တကယ်ရှိတဲ့ အရွယ်
-# LOCALIZATION NOTE (page_scale_percent): "{{scale}}" will be replaced by a
-# numerical scale value.
-page_scale_percent={{scale}}%
+## Thumbnails panel item (tooltip and alt text for images)
 
-# Loading indicator messages
-loading_error_indicator=အမှား
-loading_error=PDF ဖိုင် ကိုဆွဲတင်နေချိန်မှာ အမှားတစ်ခုတွေ့ရပါတယ်။
-invalid_file_error=မရသော သို့ ပျက်နေသော PDF ဖိုင်
-missing_file_error=PDF ပျောက်ဆုံး
-unexpected_response_error=မမျှော်လင့်ထားသော ဆာဗာမှ ပြန်ကြားချက်
+# Variables:
+#   $page (Number) - the page number
+pdfjs-thumb-page-title =
+    .title = စာမျက်နှာ { $page }
+# Variables:
+#   $page (Number) - the page number
+pdfjs-thumb-page-canvas =
+    .aria-label = စာမျက်နှာရဲ့ ပုံရိပ်ငယ် { $page }
 
-# LOCALIZATION NOTE (text_annotation_type.alt): This is used as a tooltip.
-# "{{type}}" will be replaced with an annotation type from a list defined in
-# the PDF spec (32000-1:2008 Table 169 – Annotation types).
+## Find panel button title and messages
+
+pdfjs-find-input =
+    .title = ရှာဖွေပါ
+    .placeholder = စာတမ်းထဲတွင် ရှာဖွေရန်…
+pdfjs-find-previous-button =
+    .title = စကားစုရဲ့ အရင် ​ဖြစ်ပွားမှုကို ရှာဖွေပါ
+pdfjs-find-previous-button-label = နောက်သို့
+pdfjs-find-next-button =
+    .title = စကားစုရဲ့ နောက်ထပ် ​ဖြစ်ပွားမှုကို ရှာဖွေပါ
+pdfjs-find-next-button-label = ရှေ့သို့
+pdfjs-find-highlight-checkbox = အားလုံးကို မျဉ်းသားပါ
+pdfjs-find-match-case-checkbox-label = စာလုံး တိုက်ဆိုင်ပါ
+pdfjs-find-reached-top = စာမျက်နှာထိပ် ရောက်နေပြီ၊ အဆုံးကနေ ပြန်စပါ
+pdfjs-find-reached-bottom = စာမျက်နှာအဆုံး ရောက်နေပြီ၊ ထိပ်ကနေ ပြန်စပါ
+pdfjs-find-not-found = စကားစု မတွေ့ရဘူး
+
+## Predefined zoom values
+
+pdfjs-page-scale-width = စာမျက်နှာ အကျယ်
+pdfjs-page-scale-fit = စာမျက်နှာ ကွက်တိ
+pdfjs-page-scale-auto = အလိုအလျောက် ချုံ့ချဲ့
+pdfjs-page-scale-actual = အမှန်တကယ်ရှိတဲ့ အရွယ်
+# Variables:
+#   $scale (Number) - percent value for page scale
+pdfjs-page-scale-percent = { $scale }%
+
+## PDF page
+
+
+## Loading indicator messages
+
+pdfjs-loading-error = PDF ဖိုင် ကိုဆွဲတင်နေချိန်မှာ အမှားတစ်ခုတွေ့ရပါတယ်။
+pdfjs-invalid-file-error = မရသော သို့ ပျက်နေသော PDF ဖိုင်
+pdfjs-missing-file-error = PDF ပျောက်ဆုံး
+pdfjs-unexpected-response-error = မမျှော်လင့်ထားသော ဆာဗာမှ ပြန်ကြားချက်
+pdfjs-rendering-error = စာမျက်နှာကို ပုံဖော်နေချိန်မှာ အမှားတစ်ခုတွေ့ရပါတယ်။
+
+## Annotations
+
+# .alt: This is used as a tooltip.
+# Variables:
+#   $type (String) - an annotation type from a list defined in the PDF spec
+# (32000-1:2008 Table 169 – Annotation types).
 # Some common types are e.g.: "Check", "Text", "Comment", "Note"
-text_annotation_type.alt=[{{type}} အဓိပ္ပာယ်ဖွင့်ဆိုချက်]
-password_label=ယခု PDF ကို ဖွင့်ရန် စကားဝှက်ကို ရိုက်ပါ။
-password_invalid=စာဝှက် မှားသည်။ ထပ်ကြိုးစားကြည့်ပါ။
-password_ok=OK
-password_cancel=ပယ်​ဖျက်ပါ
+pdfjs-text-annotation-type =
+    .alt = [{ $type } အဓိပ္ပာယ်ဖွင့်ဆိုချက်]
 
-printing_not_supported=သတိပေးချက်၊ပရင့်ထုတ်ခြင်းကိုဤဘယောက်ဆာသည် ပြည့်ဝစွာထောက်ပံ့မထားပါ ။
-printing_not_ready=သတိပေးချက်: ယခု PDF ဖိုင်သည် ပုံနှိပ်ရန် မပြည့်စုံပါ
-web_fonts_disabled=Web fonts are disabled: unable to use embedded PDF fonts.
+## Password
+
+pdfjs-password-label = ယခု PDF ကို ဖွင့်ရန် စကားဝှက်ကို ရိုက်ပါ။
+pdfjs-password-invalid = စာဝှက် မှားသည်။ ထပ်ကြိုးစားကြည့်ပါ။
+pdfjs-password-ok-button = OK
+pdfjs-password-cancel-button = ပယ်​ဖျက်ပါ
+pdfjs-web-fonts-disabled = Web fonts are disabled: unable to use embedded PDF fonts.
+
+## Editing
+
+
+## Alt-text dialog
+
+
+## Editor resizers
+## This is used in an aria label to help to understand the role of the resizer.
+
