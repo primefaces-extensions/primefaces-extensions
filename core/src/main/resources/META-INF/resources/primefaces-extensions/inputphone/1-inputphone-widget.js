@@ -47,9 +47,27 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
     /**
      * @override
      * @inheritdoc
+     * @param {PrimeFaces.PartialWidgetCfg<TCfg>} cfg
+     */
+    refresh: function(cfg) {
+        //this._remove();
+        this._super(cfg);
+    },
+
+    /**
+     * @override
+     * @inheritdoc
      */
     destroy: function() {
         this._super();
+        this._remove();
+    },
+
+    /**
+     * Clean up this widget and remove elements from DOM.
+     * @private
+     */
+    _remove: function() {
         if (this.iti) {
             this.iti.destroy();
             this.iti = null;
