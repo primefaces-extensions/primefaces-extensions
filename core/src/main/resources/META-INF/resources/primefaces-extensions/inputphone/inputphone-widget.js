@@ -185,6 +185,9 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
 
     // @override
     refresh: function (cfg) {
+        if (this.iti) {
+            this.iti.destroy();
+        }
         this._super(cfg);
     },
 

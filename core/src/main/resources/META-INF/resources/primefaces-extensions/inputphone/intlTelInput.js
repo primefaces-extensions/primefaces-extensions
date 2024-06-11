@@ -1,5 +1,5 @@
 /*
- * International Telephone Input v19.2.20
+ * International Telephone Input v19.5.7
  * https://github.com/jackocnr/intl-tel-input.git
  * Licensed under the MIT license
  */
@@ -169,7 +169,6 @@
             // whether or not to allow the dropdown
             allowDropdown: true,
             // auto insert dial code (A) on init, (B) on user selecting a country, (C) on calling setCountry
-            // also listen for blur/submit and auto remove dial code if that's all there is
             autoInsertDialCode: false,
             // add a placeholder in the input with an example number for the selected country
             autoPlaceholder: "polite",
@@ -179,6 +178,8 @@
             containerClass: "",
             // modify the auto placeholder
             customPlaceholder: null,
+            // by default, initialise with the first country in the list selected (if no country set via the initial value or initialCountry option)
+            defaultToFirstCountry: true,
             // append menu to specified element
             dropdownContainer: null,
             // don't display these countries
@@ -309,8 +310,8 @@
                 value: function _processCountryData() {
                     // process onlyCountries or excludeCountries array if present
                     this._processAllCountries();
-                    // process the countryCodes map
-                    this._processCountryCodes();
+                    // generate this.dialCodes and this.dialCodeToIso2Map
+                    this._processDialCodes();
                     // process the preferredCountries
                     this._processPreferredCountries();
                     // translate country names according to i18n option
@@ -321,23 +322,23 @@
                     }
                 }
             }, {
-                key: "_addCountryCode",
-                value: function _addCountryCode(iso2, countryCode, priority) {
-                    if (countryCode.length > this.countryCodeMaxLen) {
-                        this.countryCodeMaxLen = countryCode.length;
+                key: "_addToDialCodeMap",
+                value: function _addToDialCodeMap(iso2, dialCode, priority) {
+                    if (dialCode.length > this.dialCodeMaxLen) {
+                        this.dialCodeMaxLen = dialCode.length;
                     }
-                    if (!this.countryCodes.hasOwnProperty(countryCode)) {
-                        this.countryCodes[countryCode] = [];
+                    if (!this.dialCodeToIso2Map.hasOwnProperty(dialCode)) {
+                        this.dialCodeToIso2Map[dialCode] = [];
                     }
-                    // bail if we already have this country for this countryCode
-                    for (var i = 0; i < this.countryCodes[countryCode].length; i++) {
-                        if (this.countryCodes[countryCode][i] === iso2) {
+                    // bail if we already have this country for this dialCode
+                    for (var i = 0; i < this.dialCodeToIso2Map[dialCode].length; i++) {
+                        if (this.dialCodeToIso2Map[dialCode][i] === iso2) {
                             return;
                         }
                     }
                     // check for undefined as 0 is falsy
-                    var index = priority !== undefined ? priority : this.countryCodes[countryCode].length;
-                    this.countryCodes[countryCode][index] = iso2;
+                    var index = priority !== undefined ? priority : this.dialCodeToIso2Map[dialCode].length;
+                    this.dialCodeToIso2Map[dialCode][index] = iso2;
                 }
             }, {
                 key: "_processAllCountries",
@@ -382,20 +383,30 @@
                     return 0;
                 }
             }, {
-                key: "_processCountryCodes",
-                value: function _processCountryCodes() {
-                    this.countryCodeMaxLen = 0;
-                    // here we store just dial codes
+                key: "_processDialCodes",
+                value: function _processDialCodes() {
+                    // here we store just dial codes, where the key is the dial code, and the value is true
+                    // e.g. { 1: true, 7: true, 20: true, ... }
                     this.dialCodes = {};
-                    // here we store "country codes" (both dial codes and their area codes)
-                    this.countryCodes = {};
+                    this.dialCodeMaxLen = 0;
+                    // here we map dialCodes (inc both dialCode and dialCode+areaCode) to iso2 codes
+                    /* e.g.
+       * {
+       *   1: [ 'us', 'ca', ... ],    # all NANP countries
+       *   12: [ 'us', 'ca', ... ],   # subset of NANP countries
+       *   120: [ 'us', 'ca' ],       # just US and Canada
+       *   1204: [ 'ca' ],            # only Canada
+       *   ...
+       *  }
+       */
+                    this.dialCodeToIso2Map = {};
                     // first: add dial codes
                     for (var i = 0; i < this.countries.length; i++) {
                         var c = this.countries[i];
                         if (!this.dialCodes[c.dialCode]) {
                             this.dialCodes[c.dialCode] = true;
                         }
-                        this._addCountryCode(c.iso2, c.dialCode, c.priority);
+                        this._addToDialCodeMap(c.iso2, c.dialCode, c.priority);
                     }
                     // next: add area codes
                     // this is a second loop over countries, to make sure we have all of the "root" countries
@@ -405,7 +416,7 @@
                         var _c = this.countries[_i];
                         // area codes
                         if (_c.areaCodes) {
-                            var rootCountryCode = this.countryCodes[_c.dialCode][0];
+                            var rootIso2Code = this.dialCodeToIso2Map[_c.dialCode][0];
                             // for each area code
                             for (var j = 0; j < _c.areaCodes.length; j++) {
                                 var areaCode = _c.areaCodes[j];
@@ -413,11 +424,11 @@
                                 for (var k = 1; k < areaCode.length; k++) {
                                     var partialDialCode = _c.dialCode + areaCode.substr(0, k);
                                     // start with the root country, as that also matches this dial code
-                                    this._addCountryCode(rootCountryCode, partialDialCode);
-                                    this._addCountryCode(_c.iso2, partialDialCode);
+                                    this._addToDialCodeMap(rootIso2Code, partialDialCode);
+                                    this._addToDialCodeMap(_c.iso2, partialDialCode);
                                 }
                                 // add the full area code
-                                this._addCountryCode(_c.iso2, _c.dialCode + areaCode);
+                                this._addToDialCodeMap(_c.iso2, _c.dialCode + areaCode);
                             }
                         }
                     }
@@ -427,8 +438,8 @@
                 value: function _processPreferredCountries() {
                     this.preferredCountries = [];
                     for (var i = 0; i < this.options.preferredCountries.length; i++) {
-                        var countryCode = this.options.preferredCountries[i].toLowerCase();
-                        var countryData = this._getCountryData(countryCode, true);
+                        var iso2 = this.options.preferredCountries[i].toLowerCase();
+                        var countryData = this._getCountryData(iso2, true);
                         if (countryData) {
                             this.preferredCountries.push(countryData);
                         }
@@ -572,17 +583,32 @@
                     }
                     if (hiddenInput) {
                         var telInputName = this.telInput.getAttribute("name");
-                        var hiddenInputName = hiddenInput(telInputName);
+                        var result = hiddenInput(telInputName);
+                        var isObject = result !== null && typeof result === "object";
+                        var hiddenInputPhoneName;
+                        var hiddenInputCountryName;
+                        if (isObject) {
+                            hiddenInputPhoneName = result.phone || telInputName;
+                            hiddenInputCountryName = result.country || "".concat(hiddenInputPhoneName, "_country");
+                        } else {
+                            hiddenInputPhoneName = result || telInputName;
+                            hiddenInputCountryName = "".concat(hiddenInputPhoneName, "_country");
+                        }
+                        // Check if a name has been determined for the phone input field after all conditions
+                        if (!hiddenInputPhoneName) {
+                            return;
+                        }
+                        // Create hidden input for the full international number
                         this.hiddenInput = this._createEl("input", {
                             type: "hidden",
-                            name: hiddenInputName
+                            name: hiddenInputPhoneName
                         });
-                        wrapper.appendChild(this.hiddenInput);
-                        // add a 2nd hidden input for the selected country code - this is useful for handling invalid numbers with server-side validation, as getNumber does not always include the international dial code for invalid numbers
+                        // Create hidden input for the selected country iso2 code
                         this.hiddenInputCountry = this._createEl("input", {
                             type: "hidden",
-                            name: "".concat(hiddenInputName, "_country")
+                            name: hiddenInputCountryName
                         });
+                        wrapper.appendChild(this.hiddenInput);
                         wrapper.appendChild(this.hiddenInputCountry);
                     }
                 }
@@ -627,7 +653,7 @@
                     var val = useAttribute ? attributeValue : inputValue;
                     var dialCode = this._getDialCode(val);
                     var isRegionlessNanp = this._isRegionlessNanp(val);
-                    var _this$options2 = this.options, initialCountry = _this$options2.initialCountry, autoInsertDialCode = _this$options2.autoInsertDialCode;
+                    var _this$options2 = this.options, initialCountry = _this$options2.initialCountry, autoInsertDialCode = _this$options2.autoInsertDialCode, defaultToFirstCountry = _this$options2.defaultToFirstCountry;
                     // if we already have a dial code, and it's not a regionlessNanp, we can go ahead and set the
                     // flag, else fall back to the default country
                     if (dialCode && !isRegionlessNanp) {
@@ -642,12 +668,13 @@
                             if (dialCode && isRegionlessNanp) {
                                 // has intl dial code, is regionless nanp, and no initialCountry, so default to US
                                 this._setFlag("us");
-                            } else {
+                            } else if (defaultToFirstCountry && !val) {
                                 // no dial code and no initialCountry, so default to first in list
                                 this.defaultCountry = this.preferredCountries.length ? this.preferredCountries[0].iso2 : this.countries[0].iso2;
-                                if (!val) {
-                                    this._setFlag(this.defaultCountry);
-                                }
+                                this._setFlag(this.defaultCountry);
+                            } else {
+                                // display the empty state (globe icon)
+                                this._setFlag();
                             }
                         }
                         // if empty and autoInsertDialCode then insert the dial code
@@ -773,11 +800,11 @@
                         window.intlTelInputGlobals.startedLoadingAutoCountry = true;
                         if (typeof this.options.geoIpLookup === "function") {
                             this.options.geoIpLookup(function() {
-                                var countryCode = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
-                                var lowerCountryCode = countryCode.toLowerCase();
-                                var isValidCountryCode = lowerCountryCode && _this5._getCountryData(lowerCountryCode, true);
-                                if (isValidCountryCode) {
-                                    window.intlTelInputGlobals.autoCountry = lowerCountryCode;
+                                var iso2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+                                var iso2Lower = iso2.toLowerCase();
+                                var isValidIso2 = iso2Lower && _this5._getCountryData(iso2Lower, true);
+                                if (isValidIso2) {
+                                    window.intlTelInputGlobals.autoCountry = iso2Lower;
                                     // tell all instances the auto country is ready
                                     // TODO: this should just be the current instances
                                     // UPDATE: use setTimeout in case their geoIpLookup function calls this callback straight
@@ -808,12 +835,15 @@
                             _this6._triggerCountryChange();
                         }
                         // if user types their own formatting char (not a plus or a numeric), then set the override
-                        if (e && e.data && /[^+0-9]/.test(e.data)) {
+                        var isFormattingChar = e && e.data && /[^+0-9]/.test(e.data);
+                        var isPaste = e && e.inputType === "insertFromPaste" && _this6.telInput.value;
+                        if (isFormattingChar || isPaste) {
                             userOverrideFormatting = true;
                         } else if (!/[^+0-9]/.test(_this6.telInput.value)) {
                             userOverrideFormatting = false;
                         }
-                        if (_this6.options.formatAsYouType && !userOverrideFormatting) {
+                        // handle FAYT, unless userOverrideFormatting or it's a paste event
+                        if (_this6.options.formatAsYouType && !userOverrideFormatting && e.inputType !== "insertFromPaste") {
                             // maintain caret position after reformatting
                             var currentCaretPos = _this6.telInput.selectionStart;
                             var valueBeforeCaret = _this6.telInput.value.substring(0, currentCaretPos);
@@ -1189,25 +1219,25 @@
                     // try and extract valid dial code from input
                     var dialCode = this._getDialCode(number, true);
                     var numeric = this._getNumeric(number);
-                    var countryCode = null;
+                    var iso2 = null;
                     if (dialCode) {
-                        var countryCodes = this.countryCodes[this._getNumeric(dialCode)];
+                        var iso2Codes = this.dialCodeToIso2Map[this._getNumeric(dialCode)];
                         // check if the right country is already selected. this should be false if the number is
                         // longer than the matched dial code because in this case we need to make sure that if
                         // there are multiple country matches, that the first one is selected (note: we could
                         // just check that here, but it requires the same loop that we already have later)
-                        var alreadySelected = countryCodes.indexOf(this.selectedCountryData.iso2) !== -1 && numeric.length <= dialCode.length - 1;
+                        var alreadySelected = iso2Codes.indexOf(this.selectedCountryData.iso2) !== -1 && numeric.length <= dialCode.length - 1;
                         var isRegionlessNanpNumber = selectedDialCode === "1" && this._isRegionlessNanp(numeric);
                         // only update the flag if:
                         // A) NOT (we currently have a NANP flag selected, and the number is a regionlessNanp)
                         // AND
                         // B) the right country is not already selected
                         if (!isRegionlessNanpNumber && !alreadySelected) {
-                            // if using onlyCountries option, countryCodes[0] may be empty, so we must find the first
+                            // if using onlyCountries option, iso2Codes[0] may be empty, so we must find the first
                             // non-empty index
-                            for (var j = 0; j < countryCodes.length; j++) {
-                                if (countryCodes[j]) {
-                                    countryCode = countryCodes[j];
+                            for (var j = 0; j < iso2Codes.length; j++) {
+                                if (iso2Codes[j]) {
+                                    iso2 = iso2Codes[j];
                                     break;
                                 }
                             }
@@ -1216,13 +1246,13 @@
                         // invalid dial code, so empty
                         // Note: use getNumeric here because the number has not been formatted yet, so could contain
                         // bad chars
-                        countryCode = "";
+                        iso2 = "";
                     } else if ((!number || number === "+") && !this.selectedCountryData.iso2) {
                         // if no selected flag, and user either clears the input, or just types a plus, then show default
-                        countryCode = this.defaultCountry;
+                        iso2 = this.defaultCountry;
                     }
-                    if (countryCode !== null) {
-                        return this._setFlag(countryCode);
+                    if (iso2 !== null) {
+                        return this._setFlag(iso2);
                     }
                     return false;
                 }
@@ -1252,32 +1282,33 @@
                 }
             }, {
                 key: "_getCountryData",
-                value: function _getCountryData(countryCode, allowFail) {
+                value: function _getCountryData(iso2, allowFail) {
                     for (var i = 0; i < this.countries.length; i++) {
-                        if (this.countries[i].iso2 === countryCode) {
+                        if (this.countries[i].iso2 === iso2) {
                             return this.countries[i];
                         }
                     }
                     if (allowFail) {
                         return null;
                     }
-                    throw new Error("No country data for '".concat(countryCode, "'"));
+                    throw new Error("No country data for '".concat(iso2, "'"));
                 }
             }, {
                 key: "_setFlag",
-                value: function _setFlag(countryCode) {
+                value: function _setFlag(iso2) {
                     var _this$options3 = this.options, allowDropdown = _this$options3.allowDropdown, showSelectedDialCode = _this$options3.showSelectedDialCode, showFlags = _this$options3.showFlags, countrySearch = _this$options3.countrySearch;
                     var prevCountry = this.selectedCountryData.iso2 ? this.selectedCountryData : {};
-                    // do this first as it will throw an error and stop if countryCode is invalid
-                    this.selectedCountryData = countryCode ? this._getCountryData(countryCode, false) : {};
+                    // do this first as it will throw an error and stop if iso2 is invalid
+                    this.selectedCountryData = iso2 ? this._getCountryData(iso2, false) : {};
                     // update the defaultCountry - we only need the iso2 from now on, so just store that
                     if (this.selectedCountryData.iso2) {
                         this.defaultCountry = this.selectedCountryData.iso2;
                     }
                     if (showFlags) {
-                        this.selectedFlagInner.setAttribute("class", "iti__flag iti__".concat(countryCode));
+                        var flagClass = iso2 ? "iti__".concat(iso2) : "iti__globe";
+                        this.selectedFlagInner.setAttribute("class", "iti__flag ".concat(flagClass));
                     }
-                    this._setSelectedCountryFlagTitleAttribute(countryCode, showSelectedDialCode);
+                    this._setSelectedCountryFlagTitleAttribute(iso2, showSelectedDialCode);
                     if (showSelectedDialCode) {
                         var dialCode = this.selectedCountryData.dialCode ? "+".concat(this.selectedCountryData.dialCode) : "";
                         this.selectedDialCode.innerHTML = dialCode;
@@ -1299,27 +1330,27 @@
                             prevItem.classList.remove("iti__active");
                             prevItem.setAttribute("aria-selected", "false");
                         }
-                        if (countryCode) {
+                        if (iso2) {
                             // check if there is a preferred item first, else fall back to standard
-                            var nextItem = this.countryList.querySelector("#iti-".concat(this.id, "__item-").concat(countryCode, "-preferred")) || this.countryList.querySelector("#iti-".concat(this.id, "__item-").concat(countryCode));
+                            var nextItem = this.countryList.querySelector("#iti-".concat(this.id, "__item-").concat(iso2, "-preferred")) || this.countryList.querySelector("#iti-".concat(this.id, "__item-").concat(iso2));
                             nextItem.setAttribute("aria-selected", "true");
                             nextItem.classList.add("iti__active");
                             this.activeItem = nextItem;
                         }
                     }
                     // return if the flag has changed or not
-                    return prevCountry.iso2 !== countryCode;
+                    return prevCountry.iso2 !== iso2;
                 }
             }, {
                 key: "_setSelectedCountryFlagTitleAttribute",
-                value: function _setSelectedCountryFlagTitleAttribute(countryCode, showSelectedDialCode) {
+                value: function _setSelectedCountryFlagTitleAttribute(iso2, showSelectedDialCode) {
                     if (!this.selectedFlag) {
                         return;
                     }
                     var title;
-                    if (countryCode && !showSelectedDialCode) {
+                    if (iso2 && !showSelectedDialCode) {
                         title = "".concat(this.selectedCountryData.name, ": +").concat(this.selectedCountryData.dialCode);
-                    } else if (countryCode) {
+                    } else if (iso2) {
                         // For screen reader output, we don't want to include the dial code in the reader output twice
                         // so just use the selected country name here:
                         title = this.selectedCountryData.name;
@@ -1347,13 +1378,14 @@
             }, {
                 key: "_updatePlaceholder",
                 value: function _updatePlaceholder() {
-                    var shouldSetPlaceholder = this.options.autoPlaceholder === "aggressive" || !this.hadInitialPlaceholder && this.options.autoPlaceholder === "polite";
+                    var _this$options4 = this.options, autoPlaceholder = _this$options4.autoPlaceholder, placeholderNumberType = _this$options4.placeholderNumberType, nationalMode = _this$options4.nationalMode, customPlaceholder = _this$options4.customPlaceholder;
+                    var shouldSetPlaceholder = autoPlaceholder === "aggressive" || !this.hadInitialPlaceholder && autoPlaceholder === "polite";
                     if (window.intlTelInputUtils && shouldSetPlaceholder) {
-                        var numberType = intlTelInputUtils.numberType[this.options.placeholderNumberType];
-                        var placeholder = this.selectedCountryData.iso2 ? intlTelInputUtils.getExampleNumber(this.selectedCountryData.iso2, this.options.nationalMode, numberType) : "";
+                        var numberType = intlTelInputUtils.numberType[placeholderNumberType];
+                        var placeholder = this.selectedCountryData.iso2 ? intlTelInputUtils.getExampleNumber(this.selectedCountryData.iso2, nationalMode, numberType) : "";
                         placeholder = this._beforeSetNumber(placeholder);
-                        if (typeof this.options.customPlaceholder === "function") {
-                            placeholder = this.options.customPlaceholder(placeholder, this.selectedCountryData);
+                        if (typeof customPlaceholder === "function") {
+                            placeholder = customPlaceholder(placeholder, this.selectedCountryData);
                         }
                         this.telInput.setAttribute("placeholder", placeholder);
                     }
@@ -1471,7 +1503,7 @@
                                 numericChars += c;
                                 // if current numericChars make a valid dial code
                                 if (includeAreaCode) {
-                                    if (this.countryCodes[numericChars]) {
+                                    if (this.dialCodeToIso2Map[numericChars]) {
                                         // store the actual raw string (useful for matching later)
                                         dialCode = number.substr(0, i + 1);
                                     }
@@ -1483,7 +1515,7 @@
                                     }
                                 }
                                 // stop searching as soon as we can - in this case when we hit max len
-                                if (numericChars.length === this.countryCodeMaxLen) {
+                                if (numericChars.length === this.dialCodeMaxLen) {
                                     break;
                                 }
                             }
@@ -1567,7 +1599,9 @@
                         if (this.telInput.value) {
                             this._updateValFromNumber(this.telInput.value);
                         }
-                        this._updatePlaceholder();
+                        if (this.selectedCountryData.iso2) {
+                            this._updatePlaceholder();
+                        }
                     }
                     this.resolveUtilsScriptPromise();
                 }
@@ -1650,9 +1684,9 @@
                 }
             }, {
                 key: "isValidNumber",
-                value: function isValidNumber() {
+                value: function isValidNumber(mobileOnly) {
                     var val = this._getFullNumber();
-                    return window.intlTelInputUtils ? intlTelInputUtils.isPossibleNumber(val, this.selectedCountryData.iso2) : null;
+                    return window.intlTelInputUtils ? intlTelInputUtils.isPossibleNumber(val, this.selectedCountryData.iso2, mobileOnly) : null;
                 }
             }, {
                 key: "isValidNumberPrecise",
@@ -1662,11 +1696,11 @@
                 }
             }, {
                 key: "setCountry",
-                value: function setCountry(originalCountryCode) {
-                    var countryCode = originalCountryCode.toLowerCase();
+                value: function setCountry(iso2) {
+                    var iso2Lower = iso2.toLowerCase();
                     // check if already selected
-                    if (this.selectedCountryData.iso2 !== countryCode) {
-                        this._setFlag(countryCode);
+                    if (this.selectedCountryData.iso2 !== iso2Lower) {
+                        this._setFlag(iso2Lower);
                         this._updateDialCode(this.selectedCountryData.dialCode);
                         this._triggerCountryChange();
                     }
@@ -1741,7 +1775,7 @@
         // default options
         intlTelInputGlobals.defaults = defaults;
         // version
-        intlTelInputGlobals.version = "19.2.20";
+        intlTelInputGlobals.version = "19.5.7";
         // convenience wrapper
         return function(input, options) {
             var iti = new Iti(input, options);

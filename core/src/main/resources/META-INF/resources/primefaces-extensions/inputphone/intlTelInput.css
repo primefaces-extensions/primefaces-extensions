@@ -174,7 +174,7 @@
   margin-right: 6px;
 }
 .iti--container {
-  position: absolute;
+  position: fixed;
   top: -1000px;
   left: -1000px;
   z-index: 1060;
@@ -1294,7 +1294,6 @@
   box-shadow: 0px 0px 1px 0px #888;
   background-image: url("#{resource['primefaces-extensions:inputphone/flags.png']}");
   background-repeat: no-repeat;
-  background-color: #dbdbdb;
   background-position: 20px 0;
 }
 @media (min-resolution: 2x) {
@@ -1303,6 +1302,15 @@
   }
 }
 
-.iti__flag.iti__np {
-  background-color: transparent;
+.iti__globe {
+  background-image: url("#{resource['primefaces-extensions:inputphone/globe.png']}");
+  background-size: contain;
+  background-position: right;
+  box-shadow: none;
+  height: 19px;
+}
+@media (min-resolution: 2x) {
+  .iti__globe {
+    background-image: url("#{resource['primefaces-extensions:inputphone/globe@2x.png']}");
+  }
 }
