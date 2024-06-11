@@ -116,6 +116,8 @@ public class DocumentViewerRenderer extends CoreRenderer {
             params.add("pagemode=" + documentViewer.getPagemode());
         }
 
+        params.add("disableFontFace=" + documentViewer.isDisableFontFace());
+
         return "#" + String.join("&", params.toArray(new String[0]));
     }
 
