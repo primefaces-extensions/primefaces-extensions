@@ -115,12 +115,9 @@ public class DocumentViewerRenderer extends CoreRenderer {
             params.add("pagemode=" + documentViewer.getPagemode());
         }
 
-        if (!params.isEmpty()) {
-            return "#" + String.join("&", params.toArray(new String[params.size()]));
-        }
-        else {
-            return Constants.EMPTY_STRING;
-        }
+        params.add("disableFontFace=" + documentViewer.isDisableFontFace());
+
+        return "#" + String.join("&", params.toArray(new String[0]));
     }
 
     private String getResourceURL(final FacesContext context) {

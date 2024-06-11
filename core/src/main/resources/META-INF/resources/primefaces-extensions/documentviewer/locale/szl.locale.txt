@@ -1,256 +1,257 @@
-# Copyright 2012 Mozilla Foundation
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-# Main toolbar buttons (tooltips and alt text for images)
-previous.title=Piyrwyjszo strōna
-previous_label=Piyrwyjszo
-next.title=Nastympno strōna
-next_label=Dalij
 
-# LOCALIZATION NOTE (page.title): The tooltip for the pageNumber input.
-page.title=Strōna
-# LOCALIZATION NOTE (of_pages): "{{pagesCount}}" will be replaced by a number
-# representing the total number of pages in the document.
-of_pages=ze {{pagesCount}}
-# LOCALIZATION NOTE (page_of_pages): "{{pageNumber}}" and "{{pagesCount}}"
-# will be replaced by a number representing the currently visible page,
-# respectively a number representing the total number of pages in the document.
-page_of_pages=({{pageNumber}} ze {{pagesCount}})
+## Main toolbar buttons (tooltips and alt text for images)
 
-zoom_out.title=Zmyńsz
-zoom_out_label=Zmyńsz
-zoom_in.title=Zwiynksz
-zoom_in_label=Zwiynksz
-zoom.title=Srogość
-presentation_mode.title=Przełōncz na tryb prezyntacyje
-presentation_mode_label=Tryb prezyntacyje
-open_file.title=Ôdewrzij zbiōr
-open_file_label=Ôdewrzij
-print.title=Durkuj
-print_label=Durkuj
-download.title=Pobier
-download_label=Pobier
-bookmark.title=Aktualny widok (kopiuj abo ôdewrzij w nowym ôknie)
-bookmark_label=Aktualny widok
+pdfjs-previous-button =
+    .title = Piyrwyjszo strōna
+pdfjs-previous-button-label = Piyrwyjszo
+pdfjs-next-button =
+    .title = Nastympno strōna
+pdfjs-next-button-label = Dalij
+# .title: Tooltip for the pageNumber input.
+pdfjs-page-input =
+    .title = Strōna
+# Variables:
+#   $pagesCount (Number) - the total number of pages in the document
+# This string follows an input field with the number of the page currently displayed.
+pdfjs-of-pages = ze { $pagesCount }
+# Variables:
+#   $pageNumber (Number) - the currently visible page
+#   $pagesCount (Number) - the total number of pages in the document
+pdfjs-page-of-pages = ({ $pageNumber } ze { $pagesCount })
+pdfjs-zoom-out-button =
+    .title = Zmyńsz
+pdfjs-zoom-out-button-label = Zmyńsz
+pdfjs-zoom-in-button =
+    .title = Zwiynksz
+pdfjs-zoom-in-button-label = Zwiynksz
+pdfjs-zoom-select =
+    .title = Srogość
+pdfjs-presentation-mode-button =
+    .title = Przełōncz na tryb prezyntacyje
+pdfjs-presentation-mode-button-label = Tryb prezyntacyje
+pdfjs-open-file-button =
+    .title = Ôdewrzij zbiōr
+pdfjs-open-file-button-label = Ôdewrzij
+pdfjs-print-button =
+    .title = Durkuj
+pdfjs-print-button-label = Durkuj
 
-# Secondary toolbar and context menu
-tools.title=Noczynia
-tools_label=Noczynia
-first_page.title=Idź ku piyrszyj strōnie
-first_page.label=Idź ku piyrszyj strōnie
-first_page_label=Idź ku piyrszyj strōnie
-last_page.title=Idź ku ôstatnij strōnie
-last_page.label=Idź ku ôstatnij strōnie
-last_page_label=Idź ku ôstatnij strōnie
-page_rotate_cw.title=Zwyrtnij w prawo
-page_rotate_cw.label=Zwyrtnij w prawo
-page_rotate_cw_label=Zwyrtnij w prawo
-page_rotate_ccw.title=Zwyrtnij w lewo
-page_rotate_ccw.label=Zwyrtnij w lewo
-page_rotate_ccw_label=Zwyrtnij w lewo
+##  Secondary toolbar and context menu
 
-cursor_text_select_tool.title=Załōncz noczynie ôbiyranio tekstu
-cursor_text_select_tool_label=Noczynie ôbiyranio tekstu
-cursor_hand_tool.title=Załōncz noczynie rōnczka
-cursor_hand_tool_label=Noczynie rōnczka
+pdfjs-tools-button =
+    .title = Noczynia
+pdfjs-tools-button-label = Noczynia
+pdfjs-first-page-button =
+    .title = Idź ku piyrszyj strōnie
+pdfjs-first-page-button-label = Idź ku piyrszyj strōnie
+pdfjs-last-page-button =
+    .title = Idź ku ôstatnij strōnie
+pdfjs-last-page-button-label = Idź ku ôstatnij strōnie
+pdfjs-page-rotate-cw-button =
+    .title = Zwyrtnij w prawo
+pdfjs-page-rotate-cw-button-label = Zwyrtnij w prawo
+pdfjs-page-rotate-ccw-button =
+    .title = Zwyrtnij w lewo
+pdfjs-page-rotate-ccw-button-label = Zwyrtnij w lewo
+pdfjs-cursor-text-select-tool-button =
+    .title = Załōncz noczynie ôbiyranio tekstu
+pdfjs-cursor-text-select-tool-button-label = Noczynie ôbiyranio tekstu
+pdfjs-cursor-hand-tool-button =
+    .title = Załōncz noczynie rōnczka
+pdfjs-cursor-hand-tool-button-label = Noczynie rōnczka
+pdfjs-scroll-vertical-button =
+    .title = Używej piōnowego przewijanio
+pdfjs-scroll-vertical-button-label = Piōnowe przewijanie
+pdfjs-scroll-horizontal-button =
+    .title = Używej poziōmego przewijanio
+pdfjs-scroll-horizontal-button-label = Poziōme przewijanie
+pdfjs-scroll-wrapped-button =
+    .title = Używej szichtowego przewijanio
+pdfjs-scroll-wrapped-button-label = Szichtowe przewijanie
+pdfjs-spread-none-button =
+    .title = Niy dowej strōn w widoku po dwie
+pdfjs-spread-none-button-label = Po jednyj strōnie
+pdfjs-spread-odd-button =
+    .title = Pokoż strōny po dwie; niyporziste po lewyj
+pdfjs-spread-odd-button-label = Niyporziste po lewyj
+pdfjs-spread-even-button =
+    .title = Pokoż strōny po dwie; porziste po lewyj
+pdfjs-spread-even-button-label = Porziste po lewyj
 
-scroll_vertical.title=Używej piōnowego przewijanio
-scroll_vertical_label=Piōnowe przewijanie
-scroll_horizontal.title=Używej poziōmego przewijanio
-scroll_horizontal_label=Poziōme przewijanie
-scroll_wrapped.title=Używej szichtowego przewijanio
-scroll_wrapped_label=Szichtowe przewijanie
+## Document properties dialog
 
-spread_none.title=Niy dowej strōn w widoku po dwie
-spread_none_label=Po jednyj strōnie
-spread_odd.title=Dej strōny po dwie: niyparzysto i parzysto
-spread_odd_label=Niyparzysto i parzysto
-spread_even.title=Dej strōny po dwie: parzysto i niyparzysto
-spread_even_label=Parzysto i niyparzysto
+pdfjs-document-properties-button =
+    .title = Włosności dokumyntu…
+pdfjs-document-properties-button-label = Włosności dokumyntu…
+pdfjs-document-properties-file-name = Miano zbioru:
+pdfjs-document-properties-file-size = Srogość zbioru:
+# Variables:
+#   $size_kb (Number) - the PDF file size in kilobytes
+#   $size_b (Number) - the PDF file size in bytes
+pdfjs-document-properties-kb = { $size_kb } KB ({ $size_b } B)
+# Variables:
+#   $size_mb (Number) - the PDF file size in megabytes
+#   $size_b (Number) - the PDF file size in bytes
+pdfjs-document-properties-mb = { $size_mb } MB ({ $size_b } B)
+pdfjs-document-properties-title = Tytuł:
+pdfjs-document-properties-author = Autōr:
+pdfjs-document-properties-subject = Tymat:
+pdfjs-document-properties-keywords = Kluczowe słowa:
+pdfjs-document-properties-creation-date = Data zrychtowanio:
+pdfjs-document-properties-modification-date = Data zmiany:
+# Variables:
+#   $date (Date) - the creation/modification date of the PDF file
+#   $time (Time) - the creation/modification time of the PDF file
+pdfjs-document-properties-date-string = { $date }, { $time }
+pdfjs-document-properties-creator = Zrychtowane ôd:
+pdfjs-document-properties-producer = PDF ôd:
+pdfjs-document-properties-version = Wersyjo PDF:
+pdfjs-document-properties-page-count = Wielość strōn:
+pdfjs-document-properties-page-size = Srogość strōny:
+pdfjs-document-properties-page-size-unit-inches = in
+pdfjs-document-properties-page-size-unit-millimeters = mm
+pdfjs-document-properties-page-size-orientation-portrait = piōnowo
+pdfjs-document-properties-page-size-orientation-landscape = poziōmo
+pdfjs-document-properties-page-size-name-a-three = A3
+pdfjs-document-properties-page-size-name-a-four = A4
+pdfjs-document-properties-page-size-name-letter = Letter
+pdfjs-document-properties-page-size-name-legal = Legal
 
-# Document properties dialog box
-document_properties.title=Włosności dokumyntu…
-document_properties_label=Włosności dokumyntu…
-document_properties_file_name=Miano zbioru:
-document_properties_file_size=Srogość zbioru:
-# LOCALIZATION NOTE (document_properties_kb): "{{size_kb}}" and "{{size_b}}"
-# will be replaced by the PDF file size in kilobytes, respectively in bytes.
-document_properties_kb={{size_kb}} KB ({{size_b}} B)
-# LOCALIZATION NOTE (document_properties_mb): "{{size_mb}}" and "{{size_b}}"
-# will be replaced by the PDF file size in megabytes, respectively in bytes.
-document_properties_mb={{size_mb}} MB ({{size_b}} B)
-document_properties_title=Tytuł:
-document_properties_author=Autōr:
-document_properties_subject=Tymat:
-document_properties_keywords=Kluczowe słowa:
-document_properties_creation_date=Data zrychtowanio:
-document_properties_modification_date=Data zmiany:
-# LOCALIZATION NOTE (document_properties_date_string): "{{date}}" and "{{time}}"
-# will be replaced by the creation/modification date, and time, of the PDF file.
-document_properties_date_string={{date}}, {{time}}
-document_properties_creator=Zrychtowane ôd:
-document_properties_producer=PDF ôd:
-document_properties_version=Wersyjo PDF:
-document_properties_page_count=Wielość strōn:
-document_properties_page_size=Srogość strōny:
-document_properties_page_size_unit_inches=in
-document_properties_page_size_unit_millimeters=mm
-document_properties_page_size_orientation_portrait=piōnowo
-document_properties_page_size_orientation_landscape=poziōmo
-document_properties_page_size_name_a3=A3
-document_properties_page_size_name_a4=A4
-document_properties_page_size_name_letter=Letter
-document_properties_page_size_name_legal=Legal
-# LOCALIZATION NOTE (document_properties_page_size_dimension_string):
-# "{{width}}", "{{height}}", {{unit}}, and {{orientation}} will be replaced by
-# the size, respectively their unit of measurement and orientation, of the (current) page.
-document_properties_page_size_dimension_string={{width}} × {{height}} {{unit}} ({{orientation}})
-# LOCALIZATION NOTE (document_properties_page_size_dimension_name_string):
-# "{{width}}", "{{height}}", {{unit}}, {{name}}, and {{orientation}} will be replaced by
-# the size, respectively their unit of measurement, name, and orientation, of the (current) page.
-document_properties_page_size_dimension_name_string={{width}} × {{height}} {{unit}} ({{name}}, {{orientation}})
-# LOCALIZATION NOTE (document_properties_linearized): The linearization status of
-# the document; usually called "Fast Web View" in English locales of Adobe software.
-document_properties_linearized=Gibki necowy podglōnd:
-document_properties_linearized_yes=Ja
-document_properties_linearized_no=Niy
-document_properties_close=Zawrzij
+## Variables:
+##   $width (Number) - the width of the (current) page
+##   $height (Number) - the height of the (current) page
+##   $unit (String) - the unit of measurement of the (current) page
+##   $name (String) - the name of the (current) page
+##   $orientation (String) - the orientation of the (current) page
 
-print_progress_message=Rychtowanie dokumyntu do durku…
-# LOCALIZATION NOTE (print_progress_percent): "{{progress}}" will be replaced by
-# a numerical per cent value.
-print_progress_percent={{progress}}%
-print_progress_close=Pociep
+pdfjs-document-properties-page-size-dimension-string = { $width } × { $height } { $unit } ({ $orientation })
+pdfjs-document-properties-page-size-dimension-name-string = { $width } × { $height } { $unit } ({ $name }, { $orientation })
 
-# Tooltips and alt text for side panel toolbar buttons
-# (the _label strings are alt text for the buttons, the .title strings are
-# tooltips)
-toggle_sidebar.title=Przełōncz posek na rancie
-toggle_sidebar_notification.title=Przełōncz posek na rancie (dokumynt mo struktura/przidowki)
-toggle_sidebar_notification2.title=Przełōncz posek na rancie (dokumynt mo struktura/przidowki/warstwy)
-toggle_sidebar_label=Przełōncz posek na rancie
-document_outline.title=Pokoż struktura dokumyntu (tuplowane klikniyncie rozszyrzo/swijo wszyskie elymynta)
-document_outline_label=Struktura dokumyntu
-attachments.title=Pokoż przidowki
-attachments_label=Przidowki
-layers.title=Pokoż warstwy (tuplowane klikniyncie resetuje wszyskie warstwy do bazowego stanu)
-layers_label=Warstwy
-thumbs.title=Pokoż miniatury
-thumbs_label=Miniatury
-findbar.title=Znojdź w dokumyncie
-findbar_label=Znojdź
+##
 
-additional_layers=Nadbytnie warstwy
-# LOCALIZATION NOTE (page_canvas): "{{page}}" will be replaced by the page number.
-page_canvas=Strōna {{page}}
-# LOCALIZATION NOTE (page_landmark): "{{page}}" will be replaced by the page number.
-# Thumbnails panel item (tooltip and alt text for images)
-# LOCALIZATION NOTE (thumb_page_title): "{{page}}" will be replaced by the page
-# number.
-thumb_page_title=Strōna {{page}}
-# LOCALIZATION NOTE (thumb_page_canvas): "{{page}}" will be replaced by the page
-# number.
-thumb_page_canvas=Miniatura strōny {{page}}
+# The linearization status of the document; usually called "Fast Web View" in
+# English locales of Adobe software.
+pdfjs-document-properties-linearized = Gibki necowy podglōnd:
+pdfjs-document-properties-linearized-yes = Ja
+pdfjs-document-properties-linearized-no = Niy
+pdfjs-document-properties-close-button = Zawrzij
 
-# Find panel button title and messages
-find_input.title=Znojdź
-find_input.placeholder=Znojdź w dokumyncie…
-find_previous.title=Znojdź piyrwyjsze pokozanie sie tyj frazy
-find_previous_label=Piyrwyjszo
-find_next.title=Znojdź nastympne pokozanie sie tyj frazy
-find_next_label=Dalij
-find_highlight=Zaznacz wszysko
-find_match_case_label=Poznowej srogość liter
-find_entire_word_label=Cołke słowa
-find_reached_top=Doszło do samego wiyrchu strōny, dalij ôd spodku
-find_reached_bottom=Doszło do samego spodku strōny, dalij ôd wiyrchu
-# LOCALIZATION NOTE (find_match_count): The supported plural forms are
-# [one|two|few|many|other], with [other] as the default value.
-# "{{current}}" and "{{total}}" will be replaced by a number representing the
-# index of the currently active find result, respectively a number representing
-# the total number of matches in the document.
-find_match_count={[ plural(total) ]}
-find_match_count[one]={{current}} ze {{total}}, co pasujōm
-find_match_count[two]={{current}} ze {{total}}, co pasujōm
-find_match_count[few]={{current}} ze {{total}}, co pasujōm
-find_match_count[many]={{current}} ze {{total}}, co pasujōm
-find_match_count[other]={{current}} ze {{total}}, co pasujōm
-# LOCALIZATION NOTE (find_match_count_limit): The supported plural forms are
-# [zero|one|two|few|many|other], with [other] as the default value.
-# "{{limit}}" will be replaced by a numerical value.
-find_match_count_limit={[ plural(total) ]}
-find_match_count_limit[zero]=Wiyncyj jak {{limit}}, co pasujōm
-find_match_count_limit[one]=Wiyncyj jak {{limit}}, co pasuje
-find_match_count_limit[two]=Wiyncyj jak {{limit}}, co pasujōm
-find_match_count_limit[few]=Wiyncyj jak {{limit}}, co pasujōm
-find_match_count_limit[many]=Wiyncyj jak {{limit}}, co pasujōm
-find_match_count_limit[other]=Wiyncyj jak {{limit}}, co pasujōm
-find_not_found=Fraza niy ma znodniynto
+## Print
 
-# Error panel labels
-error_more_info=Wiyncyj informacyji
-error_less_info=Mynij informacyji
-error_close=Zawrzij
-# LOCALIZATION NOTE (error_version_info): "{{version}}" and "{{build}}" will be
-# replaced by the PDF.JS version and build ID.
-error_version_info=PDF.js v{{version}} (build: {{build}})
-# LOCALIZATION NOTE (error_message): "{{message}}" will be replaced by an
-# english string describing the error.
-error_message=Wiadōmość: {{message}}
-# LOCALIZATION NOTE (error_stack): "{{stack}}" will be replaced with a stack
-# trace.
-error_stack=Sztapel: {{stack}}
-# LOCALIZATION NOTE (error_file): "{{file}}" will be replaced with a filename
-error_file=Zbiōr: {{file}}
-# LOCALIZATION NOTE (error_line): "{{line}}" will be replaced with a line number
-error_line=Linijo: {{line}}
-rendering_error=Przi renderowaniu strōny pokozoł sie feler.
+pdfjs-print-progress-message = Rychtowanie dokumyntu do durku…
+# Variables:
+#   $progress (Number) - percent value
+pdfjs-print-progress-percent = { $progress }%
+pdfjs-print-progress-close-button = Pociep
+pdfjs-printing-not-supported = Pozōr: Ta przeglōndarka niy cołkiym ôbsuguje durk.
+pdfjs-printing-not-ready = Pozōr: Tyn PDF niy ma za tela zaladowany do durku.
 
-# Predefined zoom values
-page_scale_width=Szyrzka strōny
-page_scale_fit=Napasowanie strōny
-page_scale_auto=Autōmatyczno srogość
-page_scale_actual=Aktualno srogość
-# LOCALIZATION NOTE (page_scale_percent): "{{scale}}" will be replaced by a
-# numerical scale value.
-page_scale_percent={{scale}}%
+## Tooltips and alt text for side panel toolbar buttons
 
-# Loading indicator messages
-loading_error_indicator=Feler
+pdfjs-toggle-sidebar-button =
+    .title = Przełōncz posek na rancie
+pdfjs-toggle-sidebar-notification-button =
+    .title = Przełōncz posek na rancie (dokumynt mo struktura/przidowki/warstwy)
+pdfjs-toggle-sidebar-button-label = Przełōncz posek na rancie
+pdfjs-document-outline-button =
+    .title = Pokoż struktura dokumyntu (tuplowane klikniyncie rozszyrzo/swijo wszyskie elymynta)
+pdfjs-document-outline-button-label = Struktura dokumyntu
+pdfjs-attachments-button =
+    .title = Pokoż przidowki
+pdfjs-attachments-button-label = Przidowki
+pdfjs-layers-button =
+    .title = Pokoż warstwy (tuplowane klikniyncie resetuje wszyskie warstwy do bazowego stanu)
+pdfjs-layers-button-label = Warstwy
+pdfjs-thumbs-button =
+    .title = Pokoż miniatury
+pdfjs-thumbs-button-label = Miniatury
+pdfjs-findbar-button =
+    .title = Znojdź w dokumyncie
+pdfjs-findbar-button-label = Znojdź
+pdfjs-additional-layers = Nadbytnie warstwy
 
-# Loading indicator messages
-loading_error=Przi ladowaniu PDFa pokozoł sie feler.
-invalid_file_error=Zły abo felerny zbiōr PDF.
-missing_file_error=Chybio zbioru PDF.
-unexpected_response_error=Niyôczekowano ôdpowiydź serwera.
+## Thumbnails panel item (tooltip and alt text for images)
 
-# LOCALIZATION NOTE (annotation_date_string): "{{date}}" and "{{time}}" will be
-# replaced by the modification date, and time, of the annotation.
-annotation_date_string={{date}}, {{time}}
+# Variables:
+#   $page (Number) - the page number
+pdfjs-thumb-page-title =
+    .title = Strōna { $page }
+# Variables:
+#   $page (Number) - the page number
+pdfjs-thumb-page-canvas =
+    .aria-label = Miniatura strōny { $page }
 
-# LOCALIZATION NOTE (text_annotation_type.alt): This is used as a tooltip.
-# "{{type}}" will be replaced with an annotation type from a list defined in
-# the PDF spec (32000-1:2008 Table 169 – Annotation types).
+## Find panel button title and messages
+
+pdfjs-find-input =
+    .title = Znojdź
+    .placeholder = Znojdź w dokumyncie…
+pdfjs-find-previous-button =
+    .title = Znojdź piyrwyjsze pokozanie sie tyj frazy
+pdfjs-find-previous-button-label = Piyrwyjszo
+pdfjs-find-next-button =
+    .title = Znojdź nastympne pokozanie sie tyj frazy
+pdfjs-find-next-button-label = Dalij
+pdfjs-find-highlight-checkbox = Zaznacz wszysko
+pdfjs-find-match-case-checkbox-label = Poznowej srogość liter
+pdfjs-find-entire-word-checkbox-label = Cołke słowa
+pdfjs-find-reached-top = Doszło do samego wiyrchu strōny, dalij ôd spodku
+pdfjs-find-reached-bottom = Doszło do samego spodku strōny, dalij ôd wiyrchu
+pdfjs-find-not-found = Fraza niy znaleziōno
+
+## Predefined zoom values
+
+pdfjs-page-scale-width = Szyrzka strōny
+pdfjs-page-scale-fit = Napasowanie strōny
+pdfjs-page-scale-auto = Autōmatyczno srogość
+pdfjs-page-scale-actual = Aktualno srogość
+# Variables:
+#   $scale (Number) - percent value for page scale
+pdfjs-page-scale-percent = { $scale }%
+
+## PDF page
+
+
+## Loading indicator messages
+
+pdfjs-loading-error = Przi ladowaniu PDFa pokozoł sie feler.
+pdfjs-invalid-file-error = Zły abo felerny zbiōr PDF.
+pdfjs-missing-file-error = Chybio zbioru PDF.
+pdfjs-unexpected-response-error = Niyôczekowano ôdpowiydź serwera.
+pdfjs-rendering-error = Przi renderowaniu strōny pokozoł sie feler.
+
+## Annotations
+
+# Variables:
+#   $date (Date) - the modification date of the annotation
+#   $time (Time) - the modification time of the annotation
+pdfjs-annotation-date-string = { $date }, { $time }
+# .alt: This is used as a tooltip.
+# Variables:
+#   $type (String) - an annotation type from a list defined in the PDF spec
+# (32000-1:2008 Table 169 – Annotation types).
 # Some common types are e.g.: "Check", "Text", "Comment", "Note"
-text_annotation_type.alt=[Anotacyjo typu {{type}}]
-password_label=Wkludź hasło, coby ôdewrzić tyn zbiōr PDF.
-password_invalid=Hasło je złe. Sprōbuj jeszcze roz.
-password_ok=OK
-password_cancel=Pociep
+pdfjs-text-annotation-type =
+    .alt = [Anotacyjo typu { $type }]
 
-printing_not_supported=Pozōr: Ta przeglōndarka niy cołkiym ôbsuguje durk.
-printing_not_ready=Pozōr: Tyn PDF niy ma za tela zaladowany do durku.
-web_fonts_disabled=Necowe fōnty sōm zastawiōne: niy idzie użyć wkludzōnych fōntōw PDF.
-# LOCALIZATION NOTE (unsupported_feature_signatures): Should contain the same
-# exact string as in the `chrome.properties` file.
+## Password
+
+pdfjs-password-label = Wkludź hasło, coby ôdewrzić tyn zbiōr PDF.
+pdfjs-password-invalid = Hasło je złe. Sprōbuj jeszcze roz.
+pdfjs-password-ok-button = OK
+pdfjs-password-cancel-button = Pociep
+pdfjs-web-fonts-disabled = Necowe fōnty sōm zastawiōne: niy idzie użyć wkludzōnych fōntōw PDF.
+
+## Editing
+
+
+## Alt-text dialog
+
+
+## Editor resizers
+## This is used in an aria label to help to understand the role of the resizer.
+

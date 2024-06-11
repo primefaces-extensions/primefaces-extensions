@@ -1,261 +1,402 @@
-# Copyright 2012 Mozilla Foundation
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-# Main toolbar buttons (tooltips and alt text for images)
-previous.title=Vorige pagina
-previous_label=Vorige
-next.title=Volgende pagina
-next_label=Volgende
 
-# LOCALIZATION NOTE (page.title): The tooltip for the pageNumber input.
-page.title=Pagina
-# LOCALIZATION NOTE (of_pages): "{{pagesCount}}" will be replaced by a number
-# representing the total number of pages in the document.
-of_pages=van {{pagesCount}}
-# LOCALIZATION NOTE (page_of_pages): "{{pageNumber}}" and "{{pagesCount}}"
-# will be replaced by a number representing the currently visible page,
-# respectively a number representing the total number of pages in the document.
-page_of_pages=({{pageNumber}} van {{pagesCount}})
+## Main toolbar buttons (tooltips and alt text for images)
 
-zoom_out.title=Uitzoomen
-zoom_out_label=Uitzoomen
-zoom_in.title=Inzoomen
-zoom_in_label=Inzoomen
-zoom.title=Zoomen
-presentation_mode.title=Wisselen naar presentatiemodus
-presentation_mode_label=Presentatiemodus
-open_file.title=Bestand openen
-open_file_label=Openen
-print.title=Afdrukken
-print_label=Afdrukken
-download.title=Downloaden
-download_label=Downloaden
-bookmark.title=Huidige weergave (kopiëren of openen in nieuw venster)
-bookmark_label=Huidige weergave
+pdfjs-previous-button =
+    .title = Vorige pagina
+pdfjs-previous-button-label = Vorige
+pdfjs-next-button =
+    .title = Volgende pagina
+pdfjs-next-button-label = Volgende
+# .title: Tooltip for the pageNumber input.
+pdfjs-page-input =
+    .title = Pagina
+# Variables:
+#   $pagesCount (Number) - the total number of pages in the document
+# This string follows an input field with the number of the page currently displayed.
+pdfjs-of-pages = van { $pagesCount }
+# Variables:
+#   $pageNumber (Number) - the currently visible page
+#   $pagesCount (Number) - the total number of pages in the document
+pdfjs-page-of-pages = ({ $pageNumber } van { $pagesCount })
+pdfjs-zoom-out-button =
+    .title = Uitzoomen
+pdfjs-zoom-out-button-label = Uitzoomen
+pdfjs-zoom-in-button =
+    .title = Inzoomen
+pdfjs-zoom-in-button-label = Inzoomen
+pdfjs-zoom-select =
+    .title = Zoomen
+pdfjs-presentation-mode-button =
+    .title = Wisselen naar presentatiemodus
+pdfjs-presentation-mode-button-label = Presentatiemodus
+pdfjs-open-file-button =
+    .title = Bestand openen
+pdfjs-open-file-button-label = Openen
+pdfjs-print-button =
+    .title = Afdrukken
+pdfjs-print-button-label = Afdrukken
+pdfjs-save-button =
+    .title = Opslaan
+pdfjs-save-button-label = Opslaan
+# Used in Firefox for Android as a tooltip for the download button (“download” is a verb).
+pdfjs-download-button =
+    .title = Downloaden
+# Used in Firefox for Android as a label for the download button (“download” is a verb).
+# Length of the translation matters since we are in a mobile context, with limited screen estate.
+pdfjs-download-button-label = Downloaden
+pdfjs-bookmark-button =
+    .title = Huidige pagina (URL van huidige pagina bekijken)
+pdfjs-bookmark-button-label = Huidige pagina
+# Used in Firefox for Android.
+pdfjs-open-in-app-button =
+    .title = Openen in app
+# Used in Firefox for Android.
+# Length of the translation matters since we are in a mobile context, with limited screen estate.
+pdfjs-open-in-app-button-label = Openen in app
 
-# Secondary toolbar and context menu
-tools.title=Hulpmiddelen
-tools_label=Hulpmiddelen
-first_page.title=Naar eerste pagina gaan
-first_page.label=Naar eerste pagina gaan
-first_page_label=Naar eerste pagina gaan
-last_page.title=Naar laatste pagina gaan
-last_page.label=Naar laatste pagina gaan
-last_page_label=Naar laatste pagina gaan
-page_rotate_cw.title=Rechtsom draaien
-page_rotate_cw.label=Rechtsom draaien
-page_rotate_cw_label=Rechtsom draaien
-page_rotate_ccw.title=Linksom draaien
-page_rotate_ccw.label=Linksom draaien
-page_rotate_ccw_label=Linksom draaien
+##  Secondary toolbar and context menu
 
-cursor_text_select_tool.title=Tekstselectiehulpmiddel inschakelen
-cursor_text_select_tool_label=Tekstselectiehulpmiddel
-cursor_hand_tool.title=Handhulpmiddel inschakelen
-cursor_hand_tool_label=Handhulpmiddel
+pdfjs-tools-button =
+    .title = Hulpmiddelen
+pdfjs-tools-button-label = Hulpmiddelen
+pdfjs-first-page-button =
+    .title = Naar eerste pagina gaan
+pdfjs-first-page-button-label = Naar eerste pagina gaan
+pdfjs-last-page-button =
+    .title = Naar laatste pagina gaan
+pdfjs-last-page-button-label = Naar laatste pagina gaan
+pdfjs-page-rotate-cw-button =
+    .title = Rechtsom draaien
+pdfjs-page-rotate-cw-button-label = Rechtsom draaien
+pdfjs-page-rotate-ccw-button =
+    .title = Linksom draaien
+pdfjs-page-rotate-ccw-button-label = Linksom draaien
+pdfjs-cursor-text-select-tool-button =
+    .title = Tekstselectiehulpmiddel inschakelen
+pdfjs-cursor-text-select-tool-button-label = Tekstselectiehulpmiddel
+pdfjs-cursor-hand-tool-button =
+    .title = Handhulpmiddel inschakelen
+pdfjs-cursor-hand-tool-button-label = Handhulpmiddel
+pdfjs-scroll-page-button =
+    .title = Paginascrollen gebruiken
+pdfjs-scroll-page-button-label = Paginascrollen
+pdfjs-scroll-vertical-button =
+    .title = Verticaal scrollen gebruiken
+pdfjs-scroll-vertical-button-label = Verticaal scrollen
+pdfjs-scroll-horizontal-button =
+    .title = Horizontaal scrollen gebruiken
+pdfjs-scroll-horizontal-button-label = Horizontaal scrollen
+pdfjs-scroll-wrapped-button =
+    .title = Scrollen met terugloop gebruiken
+pdfjs-scroll-wrapped-button-label = Scrollen met terugloop
+pdfjs-spread-none-button =
+    .title = Dubbele pagina’s niet samenvoegen
+pdfjs-spread-none-button-label = Geen dubbele pagina’s
+pdfjs-spread-odd-button =
+    .title = Dubbele pagina’s samenvoegen vanaf oneven pagina’s
+pdfjs-spread-odd-button-label = Oneven dubbele pagina’s
+pdfjs-spread-even-button =
+    .title = Dubbele pagina’s samenvoegen vanaf even pagina’s
+pdfjs-spread-even-button-label = Even dubbele pagina’s
 
-scroll_vertical.title=Verticaal scrollen gebruiken
-scroll_vertical_label=Verticaal scrollen
-scroll_horizontal.title=Horizontaal scrollen gebruiken
-scroll_horizontal_label=Horizontaal scrollen
-scroll_wrapped.title=Scrollen met terugloop gebruiken
-scroll_wrapped_label=Scrollen met terugloop
+## Document properties dialog
 
-spread_none.title=Dubbele pagina’s niet samenvoegen
-spread_none_label=Geen dubbele pagina’s
-spread_odd.title=Dubbele pagina’s samenvoegen vanaf oneven pagina’s
-spread_odd_label=Oneven dubbele pagina’s
-spread_even.title=Dubbele pagina’s samenvoegen vanaf even pagina’s
-spread_even_label=Even dubbele pagina’s
+pdfjs-document-properties-button =
+    .title = Documenteigenschappen…
+pdfjs-document-properties-button-label = Documenteigenschappen…
+pdfjs-document-properties-file-name = Bestandsnaam:
+pdfjs-document-properties-file-size = Bestandsgrootte:
+# Variables:
+#   $size_kb (Number) - the PDF file size in kilobytes
+#   $size_b (Number) - the PDF file size in bytes
+pdfjs-document-properties-kb = { $size_kb } KB ({ $size_b } bytes)
+# Variables:
+#   $size_mb (Number) - the PDF file size in megabytes
+#   $size_b (Number) - the PDF file size in bytes
+pdfjs-document-properties-mb = { $size_mb } MB ({ $size_b } bytes)
+pdfjs-document-properties-title = Titel:
+pdfjs-document-properties-author = Auteur:
+pdfjs-document-properties-subject = Onderwerp:
+pdfjs-document-properties-keywords = Sleutelwoorden:
+pdfjs-document-properties-creation-date = Aanmaakdatum:
+pdfjs-document-properties-modification-date = Wijzigingsdatum:
+# Variables:
+#   $date (Date) - the creation/modification date of the PDF file
+#   $time (Time) - the creation/modification time of the PDF file
+pdfjs-document-properties-date-string = { $date }, { $time }
+pdfjs-document-properties-creator = Maker:
+pdfjs-document-properties-producer = PDF-producent:
+pdfjs-document-properties-version = PDF-versie:
+pdfjs-document-properties-page-count = Aantal pagina’s:
+pdfjs-document-properties-page-size = Paginagrootte:
+pdfjs-document-properties-page-size-unit-inches = in
+pdfjs-document-properties-page-size-unit-millimeters = mm
+pdfjs-document-properties-page-size-orientation-portrait = staand
+pdfjs-document-properties-page-size-orientation-landscape = liggend
+pdfjs-document-properties-page-size-name-a-three = A3
+pdfjs-document-properties-page-size-name-a-four = A4
+pdfjs-document-properties-page-size-name-letter = Letter
+pdfjs-document-properties-page-size-name-legal = Legal
 
-# Document properties dialog box
-document_properties.title=Documenteigenschappen…
-document_properties_label=Documenteigenschappen…
-document_properties_file_name=Bestandsnaam:
-document_properties_file_size=Bestandsgrootte:
-# LOCALIZATION NOTE (document_properties_kb): "{{size_kb}}" and "{{size_b}}"
-# will be replaced by the PDF file size in kilobytes, respectively in bytes.
-document_properties_kb={{size_kb}} KB ({{size_b}} bytes)
-# LOCALIZATION NOTE (document_properties_mb): "{{size_mb}}" and "{{size_b}}"
-# will be replaced by the PDF file size in megabytes, respectively in bytes.
-document_properties_mb={{size_mb}} MB ({{size_b}} bytes)
-document_properties_title=Titel:
-document_properties_author=Auteur:
-document_properties_subject=Onderwerp:
-document_properties_keywords=Sleutelwoorden:
-document_properties_creation_date=Aanmaakdatum:
-document_properties_modification_date=Wijzigingsdatum:
-# LOCALIZATION NOTE (document_properties_date_string): "{{date}}" and "{{time}}"
-# will be replaced by the creation/modification date, and time, of the PDF file.
-document_properties_date_string={{date}}, {{time}}
-document_properties_creator=Maker:
-document_properties_producer=PDF-producent:
-document_properties_version=PDF-versie:
-document_properties_page_count=Aantal pagina’s:
-document_properties_page_size=Paginagrootte:
-document_properties_page_size_unit_inches=in
-document_properties_page_size_unit_millimeters=mm
-document_properties_page_size_orientation_portrait=staand
-document_properties_page_size_orientation_landscape=liggend
-document_properties_page_size_name_a3=A3
-document_properties_page_size_name_a4=A4
-document_properties_page_size_name_letter=Letter
-document_properties_page_size_name_legal=Legal
-# LOCALIZATION NOTE (document_properties_page_size_dimension_string):
-# "{{width}}", "{{height}}", {{unit}}, and {{orientation}} will be replaced by
-# the size, respectively their unit of measurement and orientation, of the (current) page.
-document_properties_page_size_dimension_string={{width}} × {{height}} {{unit}} ({{orientation}})
-# LOCALIZATION NOTE (document_properties_page_size_dimension_name_string):
-# "{{width}}", "{{height}}", {{unit}}, {{name}}, and {{orientation}} will be replaced by
-# the size, respectively their unit of measurement, name, and orientation, of the (current) page.
-document_properties_page_size_dimension_name_string={{width}} × {{height}} {{unit}} ({{name}}, {{orientation}})
-# LOCALIZATION NOTE (document_properties_linearized): The linearization status of
-# the document; usually called "Fast Web View" in English locales of Adobe software.
-document_properties_linearized=Snelle webweergave:
-document_properties_linearized_yes=Ja
-document_properties_linearized_no=Nee
-document_properties_close=Sluiten
+## Variables:
+##   $width (Number) - the width of the (current) page
+##   $height (Number) - the height of the (current) page
+##   $unit (String) - the unit of measurement of the (current) page
+##   $name (String) - the name of the (current) page
+##   $orientation (String) - the orientation of the (current) page
 
-print_progress_message=Document voorbereiden voor afdrukken…
-# LOCALIZATION NOTE (print_progress_percent): "{{progress}}" will be replaced by
-# a numerical per cent value.
-print_progress_percent={{progress}}%
-print_progress_close=Annuleren
+pdfjs-document-properties-page-size-dimension-string = { $width } × { $height } { $unit } ({ $orientation })
+pdfjs-document-properties-page-size-dimension-name-string = { $width } × { $height } { $unit } ({ $name }, { $orientation })
 
-# Tooltips and alt text for side panel toolbar buttons
-# (the _label strings are alt text for the buttons, the .title strings are
-# tooltips)
-toggle_sidebar.title=Zijbalk in-/uitschakelen
-toggle_sidebar_notification.title=Zijbalk in-/uitschakelen (document bevat overzicht/bijlagen)
-toggle_sidebar_notification2.title=Zijbalk in-/uitschakelen (document bevat overzicht/bijlagen/lagen)
-toggle_sidebar_label=Zijbalk in-/uitschakelen
-document_outline.title=Documentoverzicht tonen (dubbelklik om alle items uit/samen te vouwen)
-document_outline_label=Documentoverzicht
-attachments.title=Bijlagen tonen
-attachments_label=Bijlagen
-layers.title=Lagen tonen (dubbelklik om alle lagen naar de standaardstatus terug te zetten)
-layers_label=Lagen
-thumbs.title=Miniaturen tonen
-thumbs_label=Miniaturen
-current_outline_item.title=Huidig item in inhoudsopgave zoeken
-current_outline_item_label=Huidig item in inhoudsopgave
-findbar.title=Zoeken in document
-findbar_label=Zoeken
+##
 
-additional_layers=Aanvullende lagen
-# LOCALIZATION NOTE (page_canvas): "{{page}}" will be replaced by the page number.
-page_canvas=Pagina {{page}}
-# LOCALIZATION NOTE (page_landmark): "{{page}}" will be replaced by the page number.
-page_landmark=Pagina {{page}}
-# Thumbnails panel item (tooltip and alt text for images)
-# LOCALIZATION NOTE (thumb_page_title): "{{page}}" will be replaced by the page
-# number.
-thumb_page_title=Pagina {{page}}
-# LOCALIZATION NOTE (thumb_page_canvas): "{{page}}" will be replaced by the page
-# number.
-thumb_page_canvas=Miniatuur van pagina {{page}}
+# The linearization status of the document; usually called "Fast Web View" in
+# English locales of Adobe software.
+pdfjs-document-properties-linearized = Snelle webweergave:
+pdfjs-document-properties-linearized-yes = Ja
+pdfjs-document-properties-linearized-no = Nee
+pdfjs-document-properties-close-button = Sluiten
 
-# Find panel button title and messages
-find_input.title=Zoeken
-find_input.placeholder=Zoeken in document…
-find_previous.title=De vorige overeenkomst van de tekst zoeken
-find_previous_label=Vorige
-find_next.title=De volgende overeenkomst van de tekst zoeken
-find_next_label=Volgende
-find_highlight=Alles markeren
-find_match_case_label=Hoofdlettergevoelig
-find_entire_word_label=Hele woorden
-find_reached_top=Bovenkant van document bereikt, doorgegaan vanaf onderkant
-find_reached_bottom=Onderkant van document bereikt, doorgegaan vanaf bovenkant
-# LOCALIZATION NOTE (find_match_count): The supported plural forms are
-# [one|two|few|many|other], with [other] as the default value.
-# "{{current}}" and "{{total}}" will be replaced by a number representing the
-# index of the currently active find result, respectively a number representing
-# the total number of matches in the document.
-find_match_count={[ plural(total) ]}
-find_match_count[one]={{current}} van {{total}} overeenkomst
-find_match_count[two]={{current}} van {{total}} overeenkomsten
-find_match_count[few]={{current}} van {{total}} overeenkomsten
-find_match_count[many]={{current}} van {{total}} overeenkomsten
-find_match_count[other]={{current}} van {{total}} overeenkomsten
-# LOCALIZATION NOTE (find_match_count_limit): The supported plural forms are
-# [zero|one|two|few|many|other], with [other] as the default value.
-# "{{limit}}" will be replaced by a numerical value.
-find_match_count_limit={[ plural(limit) ]}
-find_match_count_limit[zero]=Meer dan {{limit}} overeenkomsten
-find_match_count_limit[one]=Meer dan {{limit}} overeenkomst
-find_match_count_limit[two]=Meer dan {{limit}} overeenkomsten
-find_match_count_limit[few]=Meer dan {{limit}} overeenkomsten
-find_match_count_limit[many]=Meer dan {{limit}} overeenkomsten
-find_match_count_limit[other]=Meer dan {{limit}} overeenkomsten
-find_not_found=Tekst niet gevonden
+## Print
 
-# Error panel labels
-error_more_info=Meer informatie
-error_less_info=Minder informatie
-error_close=Sluiten
-# LOCALIZATION NOTE (error_version_info): "{{version}}" and "{{build}}" will be
-# replaced by the PDF.JS version and build ID.
-error_version_info=PDF.js v{{version}} (build: {{build}})
-# LOCALIZATION NOTE (error_message): "{{message}}" will be replaced by an
-# english string describing the error.
-error_message=Bericht: {{message}}
-# LOCALIZATION NOTE (error_stack): "{{stack}}" will be replaced with a stack
-# trace.
-error_stack=Stack: {{stack}}
-# LOCALIZATION NOTE (error_file): "{{file}}" will be replaced with a filename
-error_file=Bestand: {{file}}
-# LOCALIZATION NOTE (error_line): "{{line}}" will be replaced with a line number
-error_line=Regel: {{line}}
-rendering_error=Er is een fout opgetreden bij het weergeven van de pagina.
+pdfjs-print-progress-message = Document voorbereiden voor afdrukken…
+# Variables:
+#   $progress (Number) - percent value
+pdfjs-print-progress-percent = { $progress }%
+pdfjs-print-progress-close-button = Annuleren
+pdfjs-printing-not-supported = Waarschuwing: afdrukken wordt niet volledig ondersteund door deze browser.
+pdfjs-printing-not-ready = Waarschuwing: de PDF is niet volledig geladen voor afdrukken.
 
-# Predefined zoom values
-page_scale_width=Paginabreedte
-page_scale_fit=Hele pagina
-page_scale_auto=Automatisch zoomen
-page_scale_actual=Werkelijke grootte
-# LOCALIZATION NOTE (page_scale_percent): "{{scale}}" will be replaced by a
-# numerical scale value.
-page_scale_percent={{scale}}%
+## Tooltips and alt text for side panel toolbar buttons
 
-# Loading indicator messages
-loading_error_indicator=Fout
+pdfjs-toggle-sidebar-button =
+    .title = Zijbalk in-/uitschakelen
+pdfjs-toggle-sidebar-notification-button =
+    .title = Zijbalk in-/uitschakelen (document bevat overzicht/bijlagen/lagen)
+pdfjs-toggle-sidebar-button-label = Zijbalk in-/uitschakelen
+pdfjs-document-outline-button =
+    .title = Documentoverzicht tonen (dubbelklik om alle items uit/samen te vouwen)
+pdfjs-document-outline-button-label = Documentoverzicht
+pdfjs-attachments-button =
+    .title = Bijlagen tonen
+pdfjs-attachments-button-label = Bijlagen
+pdfjs-layers-button =
+    .title = Lagen tonen (dubbelklik om alle lagen naar de standaardstatus terug te zetten)
+pdfjs-layers-button-label = Lagen
+pdfjs-thumbs-button =
+    .title = Miniaturen tonen
+pdfjs-thumbs-button-label = Miniaturen
+pdfjs-current-outline-item-button =
+    .title = Huidig item in inhoudsopgave zoeken
+pdfjs-current-outline-item-button-label = Huidig item in inhoudsopgave
+pdfjs-findbar-button =
+    .title = Zoeken in document
+pdfjs-findbar-button-label = Zoeken
+pdfjs-additional-layers = Aanvullende lagen
 
-# Loading indicator messages
-loading=Laden…
-loading_error=Er is een fout opgetreden bij het laden van de PDF.
-invalid_file_error=Ongeldig of beschadigd PDF-bestand.
-missing_file_error=PDF-bestand ontbreekt. 
-unexpected_response_error=Onverwacht serverantwoord.
+## Thumbnails panel item (tooltip and alt text for images)
 
-# LOCALIZATION NOTE (annotation_date_string): "{{date}}" and "{{time}}" will be
-# replaced by the modification date, and time, of the annotation.
-annotation_date_string={{date}}, {{time}}
+# Variables:
+#   $page (Number) - the page number
+pdfjs-thumb-page-title =
+    .title = Pagina { $page }
+# Variables:
+#   $page (Number) - the page number
+pdfjs-thumb-page-canvas =
+    .aria-label = Miniatuur van pagina { $page }
 
-# LOCALIZATION NOTE (text_annotation_type.alt): This is used as a tooltip.
-# "{{type}}" will be replaced with an annotation type from a list defined in
-# the PDF spec (32000-1:2008 Table 169 – Annotation types).
+## Find panel button title and messages
+
+pdfjs-find-input =
+    .title = Zoeken
+    .placeholder = Zoeken in document…
+pdfjs-find-previous-button =
+    .title = De vorige overeenkomst van de tekst zoeken
+pdfjs-find-previous-button-label = Vorige
+pdfjs-find-next-button =
+    .title = De volgende overeenkomst van de tekst zoeken
+pdfjs-find-next-button-label = Volgende
+pdfjs-find-highlight-checkbox = Alles markeren
+pdfjs-find-match-case-checkbox-label = Hoofdlettergevoelig
+pdfjs-find-match-diacritics-checkbox-label = Diakritische tekens gebruiken
+pdfjs-find-entire-word-checkbox-label = Hele woorden
+pdfjs-find-reached-top = Bovenkant van document bereikt, doorgegaan vanaf onderkant
+pdfjs-find-reached-bottom = Onderkant van document bereikt, doorgegaan vanaf bovenkant
+# Variables:
+#   $current (Number) - the index of the currently active find result
+#   $total (Number) - the total number of matches in the document
+pdfjs-find-match-count =
+    { $total ->
+        [one] { $current } van { $total } overeenkomst
+       *[other] { $current } van { $total } overeenkomsten
+    }
+# Variables:
+#   $limit (Number) - the maximum number of matches
+pdfjs-find-match-count-limit =
+    { $limit ->
+        [one] Meer dan { $limit } overeenkomst
+       *[other] Meer dan { $limit } overeenkomsten
+    }
+pdfjs-find-not-found = Tekst niet gevonden
+
+## Predefined zoom values
+
+pdfjs-page-scale-width = Paginabreedte
+pdfjs-page-scale-fit = Hele pagina
+pdfjs-page-scale-auto = Automatisch zoomen
+pdfjs-page-scale-actual = Werkelijke grootte
+# Variables:
+#   $scale (Number) - percent value for page scale
+pdfjs-page-scale-percent = { $scale }%
+
+## PDF page
+
+# Variables:
+#   $page (Number) - the page number
+pdfjs-page-landmark =
+    .aria-label = Pagina { $page }
+
+## Loading indicator messages
+
+pdfjs-loading-error = Er is een fout opgetreden bij het laden van de PDF.
+pdfjs-invalid-file-error = Ongeldig of beschadigd PDF-bestand.
+pdfjs-missing-file-error = PDF-bestand ontbreekt.
+pdfjs-unexpected-response-error = Onverwacht serverantwoord.
+pdfjs-rendering-error = Er is een fout opgetreden bij het weergeven van de pagina.
+
+## Annotations
+
+# Variables:
+#   $date (Date) - the modification date of the annotation
+#   $time (Time) - the modification time of the annotation
+pdfjs-annotation-date-string = { $date }, { $time }
+# .alt: This is used as a tooltip.
+# Variables:
+#   $type (String) - an annotation type from a list defined in the PDF spec
+# (32000-1:2008 Table 169 – Annotation types).
 # Some common types are e.g.: "Check", "Text", "Comment", "Note"
-text_annotation_type.alt=[{{type}}-aantekening]
-password_label=Voer het wachtwoord in om dit PDF-bestand te openen.
-password_invalid=Ongeldig wachtwoord. Probeer het opnieuw.
-password_ok=OK
-password_cancel=Annuleren
+pdfjs-text-annotation-type =
+    .alt = [{ $type }-aantekening]
 
-printing_not_supported=Waarschuwing: afdrukken wordt niet volledig ondersteund door deze browser.
-printing_not_ready=Waarschuwing: de PDF is niet volledig geladen voor afdrukken.
-web_fonts_disabled=Weblettertypen zijn uitgeschakeld: gebruik van ingebedde PDF-lettertypen is niet mogelijk.
-# LOCALIZATION NOTE (unsupported_feature_signatures): Should contain the same
-# exact string as in the `chrome.properties` file.
-unsupported_feature_signatures=Dit pdf-document bevat digitale handtekeningen. Validatie van handtekeningen wordt niet ondersteund.
+## Password
+
+pdfjs-password-label = Voer het wachtwoord in om dit PDF-bestand te openen.
+pdfjs-password-invalid = Ongeldig wachtwoord. Probeer het opnieuw.
+pdfjs-password-ok-button = OK
+pdfjs-password-cancel-button = Annuleren
+pdfjs-web-fonts-disabled = Weblettertypen zijn uitgeschakeld: gebruik van ingebedde PDF-lettertypen is niet mogelijk.
+
+## Editing
+
+pdfjs-editor-free-text-button =
+    .title = Tekst
+pdfjs-editor-free-text-button-label = Tekst
+pdfjs-editor-ink-button =
+    .title = Tekenen
+pdfjs-editor-ink-button-label = Tekenen
+pdfjs-editor-stamp-button =
+    .title = Afbeeldingen toevoegen of bewerken
+pdfjs-editor-stamp-button-label = Afbeeldingen toevoegen of bewerken
+pdfjs-editor-highlight-button =
+    .title = Markeren
+pdfjs-editor-highlight-button-label = Markeren
+pdfjs-highlight-floating-button =
+    .title = Markeren
+pdfjs-highlight-floating-button1 =
+    .title = Markeren
+    .aria-label = Markeren
+pdfjs-highlight-floating-button-label = Markeren
+
+## Remove button for the various kind of editor.
+
+pdfjs-editor-remove-ink-button =
+    .title = Tekening verwijderen
+pdfjs-editor-remove-freetext-button =
+    .title = Tekst verwijderen
+pdfjs-editor-remove-stamp-button =
+    .title = Afbeelding verwijderen
+pdfjs-editor-remove-highlight-button =
+    .title = Markering verwijderen
+
+##
+
+# Editor Parameters
+pdfjs-editor-free-text-color-input = Kleur
+pdfjs-editor-free-text-size-input = Grootte
+pdfjs-editor-ink-color-input = Kleur
+pdfjs-editor-ink-thickness-input = Dikte
+pdfjs-editor-ink-opacity-input = Opaciteit
+pdfjs-editor-stamp-add-image-button =
+    .title = Afbeelding toevoegen
+pdfjs-editor-stamp-add-image-button-label = Afbeelding toevoegen
+# This refers to the thickness of the line used for free highlighting (not bound to text)
+pdfjs-editor-free-highlight-thickness-input = Dikte
+pdfjs-editor-free-highlight-thickness-title =
+    .title = Dikte wijzigen bij accentuering van andere items dan tekst
+pdfjs-free-text =
+    .aria-label = Tekstbewerker
+pdfjs-free-text-default-content = Begin met typen…
+pdfjs-ink =
+    .aria-label = Tekeningbewerker
+pdfjs-ink-canvas =
+    .aria-label = Door gebruiker gemaakte afbeelding
+
+## Alt-text dialog
+
+# Alternative text (alt text) helps when people can't see the image.
+pdfjs-editor-alt-text-button-label = Alternatieve tekst
+pdfjs-editor-alt-text-edit-button-label = Alternatieve tekst bewerken
+pdfjs-editor-alt-text-dialog-label = Kies een optie
+pdfjs-editor-alt-text-dialog-description = Alternatieve tekst helpt wanneer mensen de afbeelding niet kunnen zien of wanneer deze niet wordt geladen.
+pdfjs-editor-alt-text-add-description-label = Voeg een beschrijving toe
+pdfjs-editor-alt-text-add-description-description = Streef naar 1-2 zinnen die het onderwerp, de omgeving of de acties beschrijven.
+pdfjs-editor-alt-text-mark-decorative-label = Als decoratief markeren
+pdfjs-editor-alt-text-mark-decorative-description = Dit wordt gebruikt voor sierafbeeldingen, zoals randen of watermerken.
+pdfjs-editor-alt-text-cancel-button = Annuleren
+pdfjs-editor-alt-text-save-button = Opslaan
+pdfjs-editor-alt-text-decorative-tooltip = Als decoratief gemarkeerd
+# .placeholder: This is a placeholder for the alt text input area
+pdfjs-editor-alt-text-textarea =
+    .placeholder = Bijvoorbeeld: ‘Een jonge man gaat aan een tafel zitten om te eten’
+
+## Editor resizers
+## This is used in an aria label to help to understand the role of the resizer.
+
+pdfjs-editor-resizer-label-top-left = Linkerbovenhoek – formaat wijzigen
+pdfjs-editor-resizer-label-top-middle = Midden boven – formaat wijzigen
+pdfjs-editor-resizer-label-top-right = Rechterbovenhoek – formaat wijzigen
+pdfjs-editor-resizer-label-middle-right = Midden rechts – formaat wijzigen
+pdfjs-editor-resizer-label-bottom-right = Rechterbenedenhoek – formaat wijzigen
+pdfjs-editor-resizer-label-bottom-middle = Midden onder – formaat wijzigen
+pdfjs-editor-resizer-label-bottom-left = Linkerbenedenhoek – formaat wijzigen
+pdfjs-editor-resizer-label-middle-left = Links midden – formaat wijzigen
+
+## Color picker
+
+# This means "Color used to highlight text"
+pdfjs-editor-highlight-colorpicker-label = Markeringskleur
+pdfjs-editor-colorpicker-button =
+    .title = Kleur wijzigen
+pdfjs-editor-colorpicker-dropdown =
+    .aria-label = Kleurkeuzes
+pdfjs-editor-colorpicker-yellow =
+    .title = Geel
+pdfjs-editor-colorpicker-green =
+    .title = Groen
+pdfjs-editor-colorpicker-blue =
+    .title = Blauw
+pdfjs-editor-colorpicker-pink =
+    .title = Roze
+pdfjs-editor-colorpicker-red =
+    .title = Rood
+
+## Show all highlights
+## This is a toggle button to show/hide all the highlights.
+
+pdfjs-editor-highlight-show-all-button-label = Alles tonen
+pdfjs-editor-highlight-show-all-button =
+    .title = Alles tonen

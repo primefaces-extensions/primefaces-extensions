@@ -1,256 +1,404 @@
-# Copyright 2012 Mozilla Foundation
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-# Main toolbar buttons (tooltips and alt text for images)
-previous.title=الصفحة السابقة
-previous_label=السابقة
-next.title=الصفحة التالية
-next_label=التالية
 
-# LOCALIZATION NOTE (page.title): The tooltip for the pageNumber input.
-page.title=صفحة
-# LOCALIZATION NOTE (of_pages): "{{pagesCount}}" will be replaced by a number
-# representing the total number of pages in the document.
-of_pages=من {{pagesCount}}
-# LOCALIZATION NOTE (page_of_pages): "{{pageNumber}}" and "{{pagesCount}}"
-# will be replaced by a number representing the currently visible page,
-# respectively a number representing the total number of pages in the document.
-page_of_pages=({{pageNumber}} من {{pagesCount}})
+## Main toolbar buttons (tooltips and alt text for images)
 
-zoom_out.title=بعّد
-zoom_out_label=بعّد
-zoom_in.title=قرّب
-zoom_in_label=قرّب
-zoom.title=التقريب
-presentation_mode.title=انتقل لوضع العرض التقديمي
-presentation_mode_label=وضع العرض التقديمي
-open_file.title=افتح ملفًا
-open_file_label=افتح
-print.title=اطبع
-print_label=اطبع
-download.title=نزّل
-download_label=نزّل
-bookmark.title=المنظور الحالي (انسخ أو افتح في نافذة جديدة)
-bookmark_label=المنظور الحالي
+pdfjs-previous-button =
+    .title = الصفحة السابقة
+pdfjs-previous-button-label = السابقة
+pdfjs-next-button =
+    .title = الصفحة التالية
+pdfjs-next-button-label = التالية
+# .title: Tooltip for the pageNumber input.
+pdfjs-page-input =
+    .title = صفحة
+# Variables:
+#   $pagesCount (Number) - the total number of pages in the document
+# This string follows an input field with the number of the page currently displayed.
+pdfjs-of-pages = من { $pagesCount }
+# Variables:
+#   $pageNumber (Number) - the currently visible page
+#   $pagesCount (Number) - the total number of pages in the document
+pdfjs-page-of-pages = ({ $pageNumber } من { $pagesCount })
+pdfjs-zoom-out-button =
+    .title = بعّد
+pdfjs-zoom-out-button-label = بعّد
+pdfjs-zoom-in-button =
+    .title = قرّب
+pdfjs-zoom-in-button-label = قرّب
+pdfjs-zoom-select =
+    .title = التقريب
+pdfjs-presentation-mode-button =
+    .title = انتقل لوضع العرض التقديمي
+pdfjs-presentation-mode-button-label = وضع العرض التقديمي
+pdfjs-open-file-button =
+    .title = افتح ملفًا
+pdfjs-open-file-button-label = افتح
+pdfjs-print-button =
+    .title = اطبع
+pdfjs-print-button-label = اطبع
+pdfjs-save-button =
+    .title = احفظ
+pdfjs-save-button-label = احفظ
+# Used in Firefox for Android as a tooltip for the download button (“download” is a verb).
+pdfjs-download-button =
+    .title = نزّل
+# Used in Firefox for Android as a label for the download button (“download” is a verb).
+# Length of the translation matters since we are in a mobile context, with limited screen estate.
+pdfjs-download-button-label = نزّل
+pdfjs-bookmark-button =
+    .title = الصفحة الحالية (عرض URL من الصفحة الحالية)
+pdfjs-bookmark-button-label = الصفحة الحالية
 
-# Secondary toolbar and context menu
-tools.title=الأدوات
-tools_label=الأدوات
-first_page.title=انتقل إلى الصفحة الأولى
-first_page.label=انتقل إلى الصفحة الأولى
-first_page_label=انتقل إلى الصفحة الأولى
-last_page.title=انتقل إلى الصفحة الأخيرة
-last_page.label=انتقل إلى الصفحة الأخيرة
-last_page_label=انتقل إلى الصفحة الأخيرة
-page_rotate_cw.title=أدر باتجاه عقارب الساعة
-page_rotate_cw.label=أدر باتجاه عقارب الساعة
-page_rotate_cw_label=أدر باتجاه عقارب الساعة
-page_rotate_ccw.title=أدر بعكس اتجاه عقارب الساعة
-page_rotate_ccw.label=أدر بعكس اتجاه عقارب الساعة
-page_rotate_ccw_label=أدر بعكس اتجاه عقارب الساعة
+##  Secondary toolbar and context menu
 
-cursor_text_select_tool.title=فعّل أداة اختيار النص
-cursor_text_select_tool_label=أداة اختيار النص
-cursor_hand_tool.title=فعّل أداة اليد
-cursor_hand_tool_label=أداة اليد
+pdfjs-tools-button =
+    .title = الأدوات
+pdfjs-tools-button-label = الأدوات
+pdfjs-first-page-button =
+    .title = انتقل إلى الصفحة الأولى
+pdfjs-first-page-button-label = انتقل إلى الصفحة الأولى
+pdfjs-last-page-button =
+    .title = انتقل إلى الصفحة الأخيرة
+pdfjs-last-page-button-label = انتقل إلى الصفحة الأخيرة
+pdfjs-page-rotate-cw-button =
+    .title = أدر باتجاه عقارب الساعة
+pdfjs-page-rotate-cw-button-label = أدر باتجاه عقارب الساعة
+pdfjs-page-rotate-ccw-button =
+    .title = أدر بعكس اتجاه عقارب الساعة
+pdfjs-page-rotate-ccw-button-label = أدر بعكس اتجاه عقارب الساعة
+pdfjs-cursor-text-select-tool-button =
+    .title = فعّل أداة اختيار النص
+pdfjs-cursor-text-select-tool-button-label = أداة اختيار النص
+pdfjs-cursor-hand-tool-button =
+    .title = فعّل أداة اليد
+pdfjs-cursor-hand-tool-button-label = أداة اليد
+pdfjs-scroll-page-button =
+    .title = استخدم تمرير الصفحة
+pdfjs-scroll-page-button-label = تمرير الصفحة
+pdfjs-scroll-vertical-button =
+    .title = استخدم التمرير الرأسي
+pdfjs-scroll-vertical-button-label = التمرير الرأسي
+pdfjs-scroll-horizontal-button =
+    .title = استخدم التمرير الأفقي
+pdfjs-scroll-horizontal-button-label = التمرير الأفقي
+pdfjs-scroll-wrapped-button =
+    .title = استخدم التمرير الملتف
+pdfjs-scroll-wrapped-button-label = التمرير الملتف
+pdfjs-spread-none-button =
+    .title = لا تدمج هوامش الصفحات مع بعضها البعض
+pdfjs-spread-none-button-label = بلا هوامش
+pdfjs-spread-odd-button =
+    .title = ادمج هوامش الصفحات الفردية
+pdfjs-spread-odd-button-label = هوامش الصفحات الفردية
+pdfjs-spread-even-button =
+    .title = ادمج هوامش الصفحات الزوجية
+pdfjs-spread-even-button-label = هوامش الصفحات الزوجية
 
-scroll_vertical.title=استخدم التمرير الرأسي
-scroll_vertical_label=التمرير الرأسي
-scroll_horizontal.title=استخدم التمرير الأفقي
-scroll_horizontal_label=التمرير الأفقي
-scroll_wrapped.title=استخدم التمرير الملتف
-scroll_wrapped_label=التمرير الملتف
+## Document properties dialog
 
-spread_none.title=لا تدمج هوامش الصفحات مع بعضها البعض
-spread_none_label=بلا هوامش
-spread_odd.title=ادمج هوامش الصفحات الفردية
-spread_odd_label=هوامش الصفحات الفردية
-spread_even.title=ادمج هوامش الصفحات الزوجية
-spread_even_label=هوامش الصفحات الزوجية
+pdfjs-document-properties-button =
+    .title = خصائص المستند…
+pdfjs-document-properties-button-label = خصائص المستند…
+pdfjs-document-properties-file-name = اسم الملف:
+pdfjs-document-properties-file-size = حجم الملف:
+# Variables:
+#   $size_kb (Number) - the PDF file size in kilobytes
+#   $size_b (Number) - the PDF file size in bytes
+pdfjs-document-properties-kb = { $size_kb } ك.بايت ({ $size_b } بايت)
+# Variables:
+#   $size_mb (Number) - the PDF file size in megabytes
+#   $size_b (Number) - the PDF file size in bytes
+pdfjs-document-properties-mb = { $size_mb } م.بايت ({ $size_b } بايت)
+pdfjs-document-properties-title = العنوان:
+pdfjs-document-properties-author = المؤلف:
+pdfjs-document-properties-subject = الموضوع:
+pdfjs-document-properties-keywords = الكلمات الأساسية:
+pdfjs-document-properties-creation-date = تاريخ الإنشاء:
+pdfjs-document-properties-modification-date = تاريخ التعديل:
+# Variables:
+#   $date (Date) - the creation/modification date of the PDF file
+#   $time (Time) - the creation/modification time of the PDF file
+pdfjs-document-properties-date-string = { $date }، { $time }
+pdfjs-document-properties-creator = المنشئ:
+pdfjs-document-properties-producer = منتج PDF:
+pdfjs-document-properties-version = إصدارة PDF:
+pdfjs-document-properties-page-count = عدد الصفحات:
+pdfjs-document-properties-page-size = مقاس الورقة:
+pdfjs-document-properties-page-size-unit-inches = بوصة
+pdfjs-document-properties-page-size-unit-millimeters = ملم
+pdfjs-document-properties-page-size-orientation-portrait = طوليّ
+pdfjs-document-properties-page-size-orientation-landscape = عرضيّ
+pdfjs-document-properties-page-size-name-a-three = A3
+pdfjs-document-properties-page-size-name-a-four = A4
+pdfjs-document-properties-page-size-name-letter = خطاب
+pdfjs-document-properties-page-size-name-legal = قانونيّ
 
-# Document properties dialog box
-document_properties.title=خصائص المستند…
-document_properties_label=خصائص المستند…
-document_properties_file_name=اسم الملف:
-document_properties_file_size=حجم الملف:
-# LOCALIZATION NOTE (document_properties_kb): "{{size_kb}}" and "{{size_b}}"
-# will be replaced by the PDF file size in kilobytes, respectively in bytes.
-document_properties_kb={{size_kb}} ك.بايت ({{size_b}} بايت)
-# LOCALIZATION NOTE (document_properties_mb): "{{size_mb}}" and "{{size_b}}"
-# will be replaced by the PDF file size in megabytes, respectively in bytes.
-document_properties_mb={{size_mb}} م.بايت ({{size_b}} بايت)
-document_properties_title=العنوان:
-document_properties_author=المؤلف:
-document_properties_subject=الموضوع:
-document_properties_keywords=الكلمات الأساسية:
-document_properties_creation_date=تاريخ الإنشاء:
-document_properties_modification_date=تاريخ التعديل:
-# LOCALIZATION NOTE (document_properties_date_string): "{{date}}" and "{{time}}"
-# will be replaced by the creation/modification date, and time, of the PDF file.
-document_properties_date_string={{date}}، {{time}}
-document_properties_creator=المنشئ:
-document_properties_producer=منتج PDF:
-document_properties_version=إصدارة PDF:
-document_properties_page_count=عدد الصفحات:
-document_properties_page_size=مقاس الورقة:
-document_properties_page_size_unit_inches=بوصة
-document_properties_page_size_unit_millimeters=ملم
-document_properties_page_size_orientation_portrait=طوليّ
-document_properties_page_size_orientation_landscape=عرضيّ
-document_properties_page_size_name_a3=A3
-document_properties_page_size_name_a4=A4
-document_properties_page_size_name_letter=خطاب
-document_properties_page_size_name_legal=قانونيّ
-# LOCALIZATION NOTE (document_properties_page_size_dimension_string):
-# "{{width}}", "{{height}}", {{unit}}, and {{orientation}} will be replaced by
-# the size, respectively their unit of measurement and orientation, of the (current) page.
-document_properties_page_size_dimension_string=‏{{width}} × ‏{{height}} ‏{{unit}} (‏{{orientation}})
-# LOCALIZATION NOTE (document_properties_page_size_dimension_name_string):
-# "{{width}}", "{{height}}", {{unit}}, {{name}}, and {{orientation}} will be replaced by
-# the size, respectively their unit of measurement, name, and orientation, of the (current) page.
-document_properties_page_size_dimension_name_string=‏{{width}} × ‏{{height}} ‏{{unit}} (‏{{name}}، {{orientation}})
-# LOCALIZATION NOTE (document_properties_linearized): The linearization status of
-# the document; usually called "Fast Web View" in English locales of Adobe software.
-document_properties_linearized=العرض السريع عبر الوِب:
-document_properties_linearized_yes=نعم
-document_properties_linearized_no=لا
-document_properties_close=أغلق
+## Variables:
+##   $width (Number) - the width of the (current) page
+##   $height (Number) - the height of the (current) page
+##   $unit (String) - the unit of measurement of the (current) page
+##   $name (String) - the name of the (current) page
+##   $orientation (String) - the orientation of the (current) page
 
-print_progress_message=يُحضّر المستند للطباعة…
-# LOCALIZATION NOTE (print_progress_percent): "{{progress}}" will be replaced by
-# a numerical per cent value.
-print_progress_percent={{progress}}٪
-print_progress_close=ألغِ
+pdfjs-document-properties-page-size-dimension-string = ‏{ $width } × ‏{ $height } ‏{ $unit } (‏{ $orientation })
+pdfjs-document-properties-page-size-dimension-name-string = ‏{ $width } × ‏{ $height } ‏{ $unit } (‏{ $name }، { $orientation })
 
-# Tooltips and alt text for side panel toolbar buttons
-# (the _label strings are alt text for the buttons, the .title strings are
-# tooltips)
-toggle_sidebar.title=بدّل ظهور الشريط الجانبي
-toggle_sidebar_notification.title=بدّل ظهور الشريط الجانبي (يحتوي المستند على مخطط أو مرفقات)
-toggle_sidebar_notification2.title=بدّل ظهور الشريط الجانبي (يحتوي المستند على مخطط أو مرفقات أو طبقات)
-toggle_sidebar_label=بدّل ظهور الشريط الجانبي
-document_outline.title=اعرض فهرس المستند (نقر مزدوج لتمديد أو تقليص كل العناصر)
-document_outline_label=مخطط المستند
-attachments.title=اعرض المرفقات
-attachments_label=المُرفقات
-layers.title=اعرض الطبقات (انقر مرتين لتصفير كل الطبقات إلى الحالة المبدئية)
-layers_label=‏‏الطبقات
-thumbs.title=اعرض مُصغرات
-thumbs_label=مُصغّرات
-findbar.title=ابحث في المستند
-findbar_label=ابحث
+##
 
-additional_layers=الطبقات الإضافية
-# LOCALIZATION NOTE (page_canvas): "{{page}}" will be replaced by the page number.
-page_canvas=صفحة {{page}}
-# LOCALIZATION NOTE (page_landmark): "{{page}}" will be replaced by the page number.
-page_landmark=صفحة {{page}}
-# Thumbnails panel item (tooltip and alt text for images)
-# LOCALIZATION NOTE (thumb_page_title): "{{page}}" will be replaced by the page
-# number.
-thumb_page_title=صفحة {{page}}
-# LOCALIZATION NOTE (thumb_page_canvas): "{{page}}" will be replaced by the page
-# number.
-thumb_page_canvas=مصغّرة صفحة {{page}}
+# The linearization status of the document; usually called "Fast Web View" in
+# English locales of Adobe software.
+pdfjs-document-properties-linearized = العرض السريع عبر الوِب:
+pdfjs-document-properties-linearized-yes = نعم
+pdfjs-document-properties-linearized-no = لا
+pdfjs-document-properties-close-button = أغلق
 
-# Find panel button title and messages
-find_input.title=ابحث
-find_input.placeholder=ابحث في المستند…
-find_previous.title=ابحث عن التّواجد السّابق للعبارة
-find_previous_label=السابق
-find_next.title=ابحث عن التّواجد التّالي للعبارة
-find_next_label=التالي
-find_highlight=أبرِز الكل
-find_match_case_label=طابق حالة الأحرف
-find_entire_word_label=كلمات كاملة
-find_reached_top=تابعت من الأسفل بعدما وصلت إلى بداية المستند
-find_reached_bottom=تابعت من الأعلى بعدما وصلت إلى نهاية المستند
-# LOCALIZATION NOTE (find_match_count): The supported plural forms are
-# [one|two|few|many|other], with [other] as the default value.
-# "{{current}}" and "{{total}}" will be replaced by a number representing the
-# index of the currently active find result, respectively a number representing
-# the total number of matches in the document.
-find_match_count={[ plural(total) ]}
-find_match_count[one]={{current}} من أصل مطابقة واحدة
-find_match_count[two]={{current}} من أصل مطابقتين
-find_match_count[few]={{current}} من أصل {{total}} مطابقات
-find_match_count[many]={{current}} من أصل {{total}} مطابقة
-find_match_count[other]={{current}} من أصل {{total}} مطابقة
-# LOCALIZATION NOTE (find_match_count_limit): The supported plural forms are
-# [zero|one|two|few|many|other], with [other] as the default value.
-# "{{limit}}" will be replaced by a numerical value.
-find_match_count_limit={[ plural(limit) ]}
-find_match_count_limit[zero]=فقط
-find_match_count_limit[one]=أكثر من مطابقة واحدة
-find_match_count_limit[two]=أكثر من مطابقتين
-find_match_count_limit[few]=أكثر من {{limit}} مطابقات
-find_match_count_limit[many]=أكثر من {{limit}} مطابقة
-find_match_count_limit[other]=أكثر من {{limit}} مطابقة
-find_not_found=لا وجود للعبارة
+## Print
 
-# Error panel labels
-error_more_info=معلومات أكثر
-error_less_info=معلومات أقل
-error_close=أغلق
-# LOCALIZATION NOTE (error_version_info): "{{version}}" and "{{build}}" will be
-# replaced by the PDF.JS version and build ID.
-error_version_info=‏PDF.js ن{{version}} ‏(بناء: {{build}})
-# LOCALIZATION NOTE (error_message): "{{message}}" will be replaced by an
-# english string describing the error.
-error_message=الرسالة: {{message}}
-# LOCALIZATION NOTE (error_stack): "{{stack}}" will be replaced with a stack
-# trace.
-error_stack=الرصّة: {{stack}}
-# LOCALIZATION NOTE (error_file): "{{file}}" will be replaced with a filename
-error_file=الملف: {{file}}
-# LOCALIZATION NOTE (error_line): "{{line}}" will be replaced with a line number
-error_line=السطر: {{line}}
-rendering_error=حدث خطأ أثناء عرض الصفحة.
+pdfjs-print-progress-message = يُحضّر المستند للطباعة…
+# Variables:
+#   $progress (Number) - percent value
+pdfjs-print-progress-percent = { $progress }٪
+pdfjs-print-progress-close-button = ألغِ
+pdfjs-printing-not-supported = تحذير: لا يدعم هذا المتصفح الطباعة بشكل كامل.
+pdfjs-printing-not-ready = تحذير: ملف PDF لم يُحمّل كاملًا للطباعة.
 
-# Predefined zoom values
-page_scale_width=عرض الصفحة
-page_scale_fit=ملائمة الصفحة
-page_scale_auto=تقريب تلقائي
-page_scale_actual=الحجم الفعلي
-# LOCALIZATION NOTE (page_scale_percent): "{{scale}}" will be replaced by a
-# numerical scale value.
-page_scale_percent={{scale}}٪
+## Tooltips and alt text for side panel toolbar buttons
 
-# Loading indicator messages
-loading_error_indicator=عطل
+pdfjs-toggle-sidebar-button =
+    .title = بدّل ظهور الشريط الجانبي
+pdfjs-toggle-sidebar-notification-button =
+    .title = بدّل ظهور الشريط الجانبي (يحتوي المستند على مخطط أو مرفقات أو طبقات)
+pdfjs-toggle-sidebar-button-label = بدّل ظهور الشريط الجانبي
+pdfjs-document-outline-button =
+    .title = اعرض فهرس المستند (نقر مزدوج لتمديد أو تقليص كل العناصر)
+pdfjs-document-outline-button-label = مخطط المستند
+pdfjs-attachments-button =
+    .title = اعرض المرفقات
+pdfjs-attachments-button-label = المُرفقات
+pdfjs-layers-button =
+    .title = اعرض الطبقات (انقر مرتين لتصفير كل الطبقات إلى الحالة المبدئية)
+pdfjs-layers-button-label = ‏‏الطبقات
+pdfjs-thumbs-button =
+    .title = اعرض مُصغرات
+pdfjs-thumbs-button-label = مُصغّرات
+pdfjs-current-outline-item-button =
+    .title = ابحث عن عنصر المخطّط التفصيلي الحالي
+pdfjs-current-outline-item-button-label = عنصر المخطّط التفصيلي الحالي
+pdfjs-findbar-button =
+    .title = ابحث في المستند
+pdfjs-findbar-button-label = ابحث
+pdfjs-additional-layers = الطبقات الإضافية
 
-# Loading indicator messages
-loading=يحمّل…
-loading_error=حدث عطل أثناء تحميل ملف PDF.
-invalid_file_error=ملف PDF تالف أو غير صحيح.
-missing_file_error=ملف PDF غير موجود.
-unexpected_response_error=استجابة خادوم غير متوقعة.
+## Thumbnails panel item (tooltip and alt text for images)
 
-# LOCALIZATION NOTE (annotation_date_string): "{{date}}" and "{{time}}" will be
-# replaced by the modification date, and time, of the annotation.
-annotation_date_string={{date}}، {{time}}
+# Variables:
+#   $page (Number) - the page number
+pdfjs-thumb-page-title =
+    .title = صفحة { $page }
+# Variables:
+#   $page (Number) - the page number
+pdfjs-thumb-page-canvas =
+    .aria-label = مصغّرة صفحة { $page }
 
-# LOCALIZATION NOTE (text_annotation_type.alt): This is used as a tooltip.
-# "{{type}}" will be replaced with an annotation type from a list defined in
-# the PDF spec (32000-1:2008 Table 169 – Annotation types).
+## Find panel button title and messages
+
+pdfjs-find-input =
+    .title = ابحث
+    .placeholder = ابحث في المستند…
+pdfjs-find-previous-button =
+    .title = ابحث عن التّواجد السّابق للعبارة
+pdfjs-find-previous-button-label = السابق
+pdfjs-find-next-button =
+    .title = ابحث عن التّواجد التّالي للعبارة
+pdfjs-find-next-button-label = التالي
+pdfjs-find-highlight-checkbox = أبرِز الكل
+pdfjs-find-match-case-checkbox-label = طابق حالة الأحرف
+pdfjs-find-match-diacritics-checkbox-label = طابِق الحركات
+pdfjs-find-entire-word-checkbox-label = كلمات كاملة
+pdfjs-find-reached-top = تابعت من الأسفل بعدما وصلت إلى بداية المستند
+pdfjs-find-reached-bottom = تابعت من الأعلى بعدما وصلت إلى نهاية المستند
+# Variables:
+#   $current (Number) - the index of the currently active find result
+#   $total (Number) - the total number of matches in the document
+pdfjs-find-match-count =
+    { $total ->
+        [zero] لا  مطابقة
+        [one] { $current } من أصل { $total } مطابقة
+        [two] { $current } من أصل { $total } مطابقة
+        [few] { $current } من أصل { $total } مطابقة
+        [many] { $current } من أصل { $total } مطابقة
+       *[other] { $current } من أصل { $total } مطابقة
+    }
+# Variables:
+#   $limit (Number) - the maximum number of matches
+pdfjs-find-match-count-limit =
+    { $limit ->
+        [zero] { $limit } مطابقة
+        [one] أكثر من { $limit } مطابقة
+        [two] أكثر من { $limit } مطابقة
+        [few] أكثر من { $limit } مطابقة
+        [many] أكثر من { $limit } مطابقة
+       *[other] أكثر من { $limit } مطابقات
+    }
+pdfjs-find-not-found = لا وجود للعبارة
+
+## Predefined zoom values
+
+pdfjs-page-scale-width = عرض الصفحة
+pdfjs-page-scale-fit = ملائمة الصفحة
+pdfjs-page-scale-auto = تقريب تلقائي
+pdfjs-page-scale-actual = الحجم الفعلي
+# Variables:
+#   $scale (Number) - percent value for page scale
+pdfjs-page-scale-percent = { $scale }٪
+
+## PDF page
+
+# Variables:
+#   $page (Number) - the page number
+pdfjs-page-landmark =
+    .aria-label = صفحة { $page }
+
+## Loading indicator messages
+
+pdfjs-loading-error = حدث عطل أثناء تحميل ملف PDF.
+pdfjs-invalid-file-error = ملف PDF تالف أو غير صحيح.
+pdfjs-missing-file-error = ملف PDF غير موجود.
+pdfjs-unexpected-response-error = استجابة خادوم غير متوقعة.
+pdfjs-rendering-error = حدث خطأ أثناء عرض الصفحة.
+
+## Annotations
+
+# Variables:
+#   $date (Date) - the modification date of the annotation
+#   $time (Time) - the modification time of the annotation
+pdfjs-annotation-date-string = { $date }، { $time }
+# .alt: This is used as a tooltip.
+# Variables:
+#   $type (String) - an annotation type from a list defined in the PDF spec
+# (32000-1:2008 Table 169 – Annotation types).
 # Some common types are e.g.: "Check", "Text", "Comment", "Note"
-text_annotation_type.alt=[تعليق {{type}}]
-password_label=أدخل لكلمة السر لفتح هذا الملف.
-password_invalid=كلمة سر خطأ. من فضلك أعد المحاولة.
-password_ok=حسنا
-password_cancel=ألغِ
+pdfjs-text-annotation-type =
+    .alt = [تعليق { $type }]
 
-printing_not_supported=تحذير: لا يدعم هذا المتصفح الطباعة بشكل كامل.
-printing_not_ready=تحذير: ملف PDF لم يُحمّل كاملًا للطباعة.
-web_fonts_disabled=خطوط الوب مُعطّلة: تعذّر استخدام خطوط PDF المُضمّنة.
+## Password
+
+pdfjs-password-label = أدخل لكلمة السر لفتح هذا الملف.
+pdfjs-password-invalid = كلمة سر خطأ. من فضلك أعد المحاولة.
+pdfjs-password-ok-button = حسنا
+pdfjs-password-cancel-button = ألغِ
+pdfjs-web-fonts-disabled = خطوط الوب مُعطّلة: تعذّر استخدام خطوط PDF المُضمّنة.
+
+## Editing
+
+pdfjs-editor-free-text-button =
+    .title = نص
+pdfjs-editor-free-text-button-label = نص
+pdfjs-editor-ink-button =
+    .title = ارسم
+pdfjs-editor-ink-button-label = ارسم
+pdfjs-editor-stamp-button =
+    .title = أضِف أو حرّر الصور
+pdfjs-editor-stamp-button-label = أضِف أو حرّر الصور
+pdfjs-editor-highlight-button =
+    .title = أبرِز
+pdfjs-editor-highlight-button-label = أبرِز
+pdfjs-highlight-floating-button =
+    .title = أبرِز
+pdfjs-highlight-floating-button1 =
+    .title = أبرِز
+    .aria-label = أبرِز
+pdfjs-highlight-floating-button-label = أبرِز
+
+## Remove button for the various kind of editor.
+
+pdfjs-editor-remove-ink-button =
+    .title = أزِل الرسم
+pdfjs-editor-remove-freetext-button =
+    .title = أزِل النص
+pdfjs-editor-remove-stamp-button =
+    .title = أزِل الصورة
+pdfjs-editor-remove-highlight-button =
+    .title = أزِل الإبراز
+
+##
+
+# Editor Parameters
+pdfjs-editor-free-text-color-input = اللون
+pdfjs-editor-free-text-size-input = الحجم
+pdfjs-editor-ink-color-input = اللون
+pdfjs-editor-ink-thickness-input = السماكة
+pdfjs-editor-ink-opacity-input = العتامة
+pdfjs-editor-stamp-add-image-button =
+    .title = أضِف صورة
+pdfjs-editor-stamp-add-image-button-label = أضِف صورة
+# This refers to the thickness of the line used for free highlighting (not bound to text)
+pdfjs-editor-free-highlight-thickness-input = السماكة
+pdfjs-editor-free-highlight-thickness-title =
+    .title = غيّر السُمك عند إبراز عناصر أُخرى غير النص
+pdfjs-free-text =
+    .aria-label = محرِّر النص
+pdfjs-free-text-default-content = ابدأ الكتابة…
+pdfjs-ink =
+    .aria-label = محرِّر الرسم
+pdfjs-ink-canvas =
+    .aria-label = صورة أنشأها المستخدم
+
+## Alt-text dialog
+
+# Alternative text (alt text) helps when people can't see the image.
+pdfjs-editor-alt-text-button-label = نص بديل
+pdfjs-editor-alt-text-edit-button-label = تحرير النص البديل
+pdfjs-editor-alt-text-dialog-label = اختر خيار
+pdfjs-editor-alt-text-dialog-description = يساعد النص البديل عندما لا يتمكن الأشخاص من رؤية الصورة أو عندما لا يتم تحميلها.
+pdfjs-editor-alt-text-add-description-label = أضِف وصف
+pdfjs-editor-alt-text-add-description-description = استهدف جملتين تصفان الموضوع أو الإعداد أو الإجراءات.
+pdfjs-editor-alt-text-mark-decorative-label = علّمها على أنها زخرفية
+pdfjs-editor-alt-text-mark-decorative-description = يُستخدم هذا في الصور المزخرفة، مثل الحدود أو العلامات المائية.
+pdfjs-editor-alt-text-cancel-button = ألغِ
+pdfjs-editor-alt-text-save-button = احفظ
+pdfjs-editor-alt-text-decorative-tooltip = عُلّمت على أنها زخرفية
+# .placeholder: This is a placeholder for the alt text input area
+pdfjs-editor-alt-text-textarea =
+    .placeholder = على سبيل المثال، "يجلس شاب على الطاولة لتناول وجبة"
+
+## Editor resizers
+## This is used in an aria label to help to understand the role of the resizer.
+
+pdfjs-editor-resizer-label-top-left = الزاوية اليُسرى العُليا — غيّر الحجم
+pdfjs-editor-resizer-label-top-middle = أعلى الوسط - غيّر الحجم
+pdfjs-editor-resizer-label-top-right = الزاوية اليُمنى العُليا - غيّر الحجم
+pdfjs-editor-resizer-label-middle-right = اليمين الأوسط - غيّر الحجم
+pdfjs-editor-resizer-label-bottom-right = الزاوية اليُمنى السُفلى - غيّر الحجم
+pdfjs-editor-resizer-label-bottom-middle = أسفل الوسط - غيّر الحجم
+pdfjs-editor-resizer-label-bottom-left = الزاوية اليُسرى السُفلية - غيّر الحجم
+pdfjs-editor-resizer-label-middle-left = مُنتصف اليسار - غيّر الحجم
+
+## Color picker
+
+# This means "Color used to highlight text"
+pdfjs-editor-highlight-colorpicker-label = أبرِز اللون
+pdfjs-editor-colorpicker-button =
+    .title = غيّر اللون
+pdfjs-editor-colorpicker-dropdown =
+    .aria-label = اختيارات الألوان
+pdfjs-editor-colorpicker-yellow =
+    .title = أصفر
+pdfjs-editor-colorpicker-green =
+    .title = أخضر
+pdfjs-editor-colorpicker-blue =
+    .title = أزرق
+pdfjs-editor-colorpicker-pink =
+    .title = وردي
+pdfjs-editor-colorpicker-red =
+    .title = أحمر
+
+## Show all highlights
+## This is a toggle button to show/hide all the highlights.
+
+pdfjs-editor-highlight-show-all-button-label = أظهِر الكل
+pdfjs-editor-highlight-show-all-button =
+    .title = أظهِر الكل

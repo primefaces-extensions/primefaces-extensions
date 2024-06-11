@@ -1,258 +1,268 @@
-# Copyright 2012 Mozilla Foundation
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-# Main toolbar buttons (tooltips and alt text for images)
-previous.title=Ankstesnis puslapis
-previous_label=Ankstesnis
-next.title=Kitas puslapis
-next_label=Kitas
 
-# LOCALIZATION NOTE (page.title): The tooltip for the pageNumber input.
-page.title=Puslapis
-# LOCALIZATION NOTE (of_pages): "{{pagesCount}}" will be replaced by a number
-# representing the total number of pages in the document.
-of_pages=iš {{pagesCount}}
-# LOCALIZATION NOTE (page_of_pages): "{{pageNumber}}" and "{{pagesCount}}"
-# will be replaced by a number representing the currently visible page,
-# respectively a number representing the total number of pages in the document.
-page_of_pages=({{pageNumber}} iš {{pagesCount}})
+## Main toolbar buttons (tooltips and alt text for images)
 
-zoom_out.title=Sumažinti
-zoom_out_label=Sumažinti
-zoom_in.title=Padidinti
-zoom_in_label=Padidinti
-zoom.title=Mastelis
-presentation_mode.title=Pereiti į pateikties veikseną
-presentation_mode_label=Pateikties veiksena
-open_file.title=Atverti failą
-open_file_label=Atverti
-print.title=Spausdinti
-print_label=Spausdinti
-download.title=Parsiųsti
-download_label=Parsiųsti
-bookmark.title=Esamojo rodinio saitas (kopijavimui ar atvėrimui kitame lange)
-bookmark_label=Esamasis rodinys
+pdfjs-previous-button =
+    .title = Ankstesnis puslapis
+pdfjs-previous-button-label = Ankstesnis
+pdfjs-next-button =
+    .title = Kitas puslapis
+pdfjs-next-button-label = Kitas
+# .title: Tooltip for the pageNumber input.
+pdfjs-page-input =
+    .title = Puslapis
+# Variables:
+#   $pagesCount (Number) - the total number of pages in the document
+# This string follows an input field with the number of the page currently displayed.
+pdfjs-of-pages = iš { $pagesCount }
+# Variables:
+#   $pageNumber (Number) - the currently visible page
+#   $pagesCount (Number) - the total number of pages in the document
+pdfjs-page-of-pages = ({ $pageNumber } iš { $pagesCount })
+pdfjs-zoom-out-button =
+    .title = Sumažinti
+pdfjs-zoom-out-button-label = Sumažinti
+pdfjs-zoom-in-button =
+    .title = Padidinti
+pdfjs-zoom-in-button-label = Padidinti
+pdfjs-zoom-select =
+    .title = Mastelis
+pdfjs-presentation-mode-button =
+    .title = Pereiti į pateikties veikseną
+pdfjs-presentation-mode-button-label = Pateikties veiksena
+pdfjs-open-file-button =
+    .title = Atverti failą
+pdfjs-open-file-button-label = Atverti
+pdfjs-print-button =
+    .title = Spausdinti
+pdfjs-print-button-label = Spausdinti
 
-# Secondary toolbar and context menu
-tools.title=Priemonės
-tools_label=Priemonės
-first_page.title=Eiti į pirmą puslapį
-first_page.label=Eiti į pirmą puslapį
-first_page_label=Eiti į pirmą puslapį
-last_page.title=Eiti į paskutinį puslapį
-last_page.label=Eiti į paskutinį puslapį
-last_page_label=Eiti į paskutinį puslapį
-page_rotate_cw.title=Pasukti pagal laikrodžio rodyklę
-page_rotate_cw.label=Pasukti pagal laikrodžio rodyklę
-page_rotate_cw_label=Pasukti pagal laikrodžio rodyklę
-page_rotate_ccw.title=Pasukti prieš laikrodžio rodyklę
-page_rotate_ccw.label=Pasukti prieš laikrodžio rodyklę
-page_rotate_ccw_label=Pasukti prieš laikrodžio rodyklę
+##  Secondary toolbar and context menu
 
-cursor_text_select_tool.title=Įjungti teksto žymėjimo įrankį
-cursor_text_select_tool_label=Teksto žymėjimo įrankis
-cursor_hand_tool.title=Įjungti vilkimo įrankį
-cursor_hand_tool_label=Vilkimo įrankis
+pdfjs-tools-button =
+    .title = Priemonės
+pdfjs-tools-button-label = Priemonės
+pdfjs-first-page-button =
+    .title = Eiti į pirmą puslapį
+pdfjs-first-page-button-label = Eiti į pirmą puslapį
+pdfjs-last-page-button =
+    .title = Eiti į paskutinį puslapį
+pdfjs-last-page-button-label = Eiti į paskutinį puslapį
+pdfjs-page-rotate-cw-button =
+    .title = Pasukti pagal laikrodžio rodyklę
+pdfjs-page-rotate-cw-button-label = Pasukti pagal laikrodžio rodyklę
+pdfjs-page-rotate-ccw-button =
+    .title = Pasukti prieš laikrodžio rodyklę
+pdfjs-page-rotate-ccw-button-label = Pasukti prieš laikrodžio rodyklę
+pdfjs-cursor-text-select-tool-button =
+    .title = Įjungti teksto žymėjimo įrankį
+pdfjs-cursor-text-select-tool-button-label = Teksto žymėjimo įrankis
+pdfjs-cursor-hand-tool-button =
+    .title = Įjungti vilkimo įrankį
+pdfjs-cursor-hand-tool-button-label = Vilkimo įrankis
+pdfjs-scroll-page-button =
+    .title = Naudoti puslapio slinkimą
+pdfjs-scroll-page-button-label = Puslapio slinkimas
+pdfjs-scroll-vertical-button =
+    .title = Naudoti vertikalų slinkimą
+pdfjs-scroll-vertical-button-label = Vertikalus slinkimas
+pdfjs-scroll-horizontal-button =
+    .title = Naudoti horizontalų slinkimą
+pdfjs-scroll-horizontal-button-label = Horizontalus slinkimas
+pdfjs-scroll-wrapped-button =
+    .title = Naudoti išklotą slinkimą
+pdfjs-scroll-wrapped-button-label = Išklotas slinkimas
+pdfjs-spread-none-button =
+    .title = Nejungti puslapių į dvilapius
+pdfjs-spread-none-button-label = Be dvilapių
+pdfjs-spread-odd-button =
+    .title = Sujungti į dvilapius pradedant nelyginiais puslapiais
+pdfjs-spread-odd-button-label = Nelyginiai dvilapiai
+pdfjs-spread-even-button =
+    .title = Sujungti į dvilapius pradedant lyginiais puslapiais
+pdfjs-spread-even-button-label = Lyginiai dvilapiai
 
-scroll_vertical.title=Naudoti vertikalų slinkimą
-scroll_vertical_label=Vertikalus slinkimas
-scroll_horizontal.title=Naudoti horizontalų slinkimą
-scroll_horizontal_label=Horizontalus slinkimas
-scroll_wrapped.title=Naudoti išklotą slinkimą
-scroll_wrapped_label=Išklotas slinkimas
+## Document properties dialog
 
-spread_none.title=Nejungti puslapių į dvilapius
-spread_none_label=Be dvilapių
-spread_odd.title=Sujungti į dvilapius pradedant nelyginiais puslapiais
-spread_odd_label=Nelyginiai dvilapiai
-spread_even.title=Sujungti į dvilapius pradedant lyginiais puslapiais
-spread_even_label=Lyginiai dvilapiai
+pdfjs-document-properties-button =
+    .title = Dokumento savybės…
+pdfjs-document-properties-button-label = Dokumento savybės…
+pdfjs-document-properties-file-name = Failo vardas:
+pdfjs-document-properties-file-size = Failo dydis:
+# Variables:
+#   $size_kb (Number) - the PDF file size in kilobytes
+#   $size_b (Number) - the PDF file size in bytes
+pdfjs-document-properties-kb = { $size_kb } KB ({ $size_b } B)
+# Variables:
+#   $size_mb (Number) - the PDF file size in megabytes
+#   $size_b (Number) - the PDF file size in bytes
+pdfjs-document-properties-mb = { $size_mb } MB ({ $size_b } B)
+pdfjs-document-properties-title = Antraštė:
+pdfjs-document-properties-author = Autorius:
+pdfjs-document-properties-subject = Tema:
+pdfjs-document-properties-keywords = Reikšminiai žodžiai:
+pdfjs-document-properties-creation-date = Sukūrimo data:
+pdfjs-document-properties-modification-date = Modifikavimo data:
+# Variables:
+#   $date (Date) - the creation/modification date of the PDF file
+#   $time (Time) - the creation/modification time of the PDF file
+pdfjs-document-properties-date-string = { $date }, { $time }
+pdfjs-document-properties-creator = Kūrėjas:
+pdfjs-document-properties-producer = PDF generatorius:
+pdfjs-document-properties-version = PDF versija:
+pdfjs-document-properties-page-count = Puslapių skaičius:
+pdfjs-document-properties-page-size = Puslapio dydis:
+pdfjs-document-properties-page-size-unit-inches = in
+pdfjs-document-properties-page-size-unit-millimeters = mm
+pdfjs-document-properties-page-size-orientation-portrait = stačias
+pdfjs-document-properties-page-size-orientation-landscape = gulsčias
+pdfjs-document-properties-page-size-name-a-three = A3
+pdfjs-document-properties-page-size-name-a-four = A4
+pdfjs-document-properties-page-size-name-letter = Laiškas
+pdfjs-document-properties-page-size-name-legal = Dokumentas
 
-# Document properties dialog box
-document_properties.title=Dokumento savybės…
-document_properties_label=Dokumento savybės…
-document_properties_file_name=Failo vardas:
-document_properties_file_size=Failo dydis:
-# LOCALIZATION NOTE (document_properties_kb): "{{size_kb}}" and "{{size_b}}"
-# will be replaced by the PDF file size in kilobytes, respectively in bytes.
-document_properties_kb={{size_kb}} KB ({{size_b}} B)
-# LOCALIZATION NOTE (document_properties_mb): "{{size_mb}}" and "{{size_b}}"
-# will be replaced by the PDF file size in megabytes, respectively in bytes.
-document_properties_mb={{size_mb}} MB ({{size_b}} B)
-document_properties_title=Antraštė:
-document_properties_author=Autorius:
-document_properties_subject=Tema:
-document_properties_keywords=Reikšminiai žodžiai:
-document_properties_creation_date=Sukūrimo data:
-document_properties_modification_date=Modifikavimo data:
-# LOCALIZATION NOTE (document_properties_date_string): "{{date}}" and "{{time}}"
-# will be replaced by the creation/modification date, and time, of the PDF file.
-document_properties_date_string={{date}}, {{time}}
-document_properties_creator=Kūrėjas:
-document_properties_producer=PDF generatorius:
-document_properties_version=PDF versija:
-document_properties_page_count=Puslapių skaičius:
-document_properties_page_size=Puslapio dydis:
-document_properties_page_size_unit_inches=in
-document_properties_page_size_unit_millimeters=mm
-document_properties_page_size_orientation_portrait=stačias
-document_properties_page_size_orientation_landscape=gulsčias
-document_properties_page_size_name_a3=A3
-document_properties_page_size_name_a4=A4
-document_properties_page_size_name_letter=Laiškas
-document_properties_page_size_name_legal=Dokumentas
-# LOCALIZATION NOTE (document_properties_page_size_dimension_string):
-# "{{width}}", "{{height}}", {{unit}}, and {{orientation}} will be replaced by
-# the size, respectively their unit of measurement and orientation, of the (current) page.
-document_properties_page_size_dimension_string={{width}} × {{height}} {{unit}} ({{orientation}})
-# LOCALIZATION NOTE (document_properties_page_size_dimension_name_string):
-# "{{width}}", "{{height}}", {{unit}}, {{name}}, and {{orientation}} will be replaced by
-# the size, respectively their unit of measurement, name, and orientation, of the (current) page.
-document_properties_page_size_dimension_name_string={{width}} × {{height}} {{unit}} ({{name}}, {{orientation}})
-# LOCALIZATION NOTE (document_properties_linearized): The linearization status of
-# the document; usually called "Fast Web View" in English locales of Adobe software.
-document_properties_linearized=Spartus žiniatinklio rodinys:
-document_properties_linearized_yes=Taip
-document_properties_linearized_no=Ne
-document_properties_close=Užverti
+## Variables:
+##   $width (Number) - the width of the (current) page
+##   $height (Number) - the height of the (current) page
+##   $unit (String) - the unit of measurement of the (current) page
+##   $name (String) - the name of the (current) page
+##   $orientation (String) - the orientation of the (current) page
 
-print_progress_message=Dokumentas ruošiamas spausdinimui…
-# LOCALIZATION NOTE (print_progress_percent): "{{progress}}" will be replaced by
-# a numerical per cent value.
-print_progress_percent={{progress}}%
-print_progress_close=Atsisakyti
+pdfjs-document-properties-page-size-dimension-string = { $width } × { $height } { $unit } ({ $orientation })
+pdfjs-document-properties-page-size-dimension-name-string = { $width } × { $height } { $unit } ({ $name }, { $orientation })
 
-# Tooltips and alt text for side panel toolbar buttons
-# (the _label strings are alt text for the buttons, the .title strings are
-# tooltips)
-toggle_sidebar.title=Rodyti / slėpti šoninį polangį
-toggle_sidebar_notification.title=Parankinė (dokumentas turi struktūrą / priedų)
-toggle_sidebar_notification2.title=Parankinė (dokumentas turi struktūrą / priedų / sluoksnių)
-toggle_sidebar_label=Šoninis polangis
-document_outline.title=Rodyti dokumento struktūrą (spustelėkite dukart norėdami išplėsti/suskleisti visus elementus)
-document_outline_label=Dokumento struktūra
-attachments.title=Rodyti priedus
-attachments_label=Priedai
-layers.title=Rodyti sluoksnius (spustelėkite dukart, norėdami atstatyti visus sluoksnius į numatytąją būseną)
-layers_label=Sluoksniai
-thumbs.title=Rodyti puslapių miniatiūras
-thumbs_label=Miniatiūros
-current_outline_item.title=Rasti dabartinį struktūros elementą
-current_outline_item_label=Dabartinis struktūros elementas
-findbar.title=Ieškoti dokumente
-findbar_label=Rasti
+##
 
-additional_layers=Papildomi sluoksniai
-# LOCALIZATION NOTE (page_canvas): "{{page}}" will be replaced by the page number.
-page_canvas={{page}} puslapis
-# LOCALIZATION NOTE (page_landmark): "{{page}}" will be replaced by the page number.
-page_landmark={{page}} puslapis
-# Thumbnails panel item (tooltip and alt text for images)
-# LOCALIZATION NOTE (thumb_page_title): "{{page}}" will be replaced by the page
-# number.
-thumb_page_title={{page}} puslapis
-# LOCALIZATION NOTE (thumb_page_canvas): "{{page}}" will be replaced by the page
-# number.
-thumb_page_canvas={{page}} puslapio miniatiūra
+# The linearization status of the document; usually called "Fast Web View" in
+# English locales of Adobe software.
+pdfjs-document-properties-linearized = Spartus žiniatinklio rodinys:
+pdfjs-document-properties-linearized-yes = Taip
+pdfjs-document-properties-linearized-no = Ne
+pdfjs-document-properties-close-button = Užverti
 
-# Find panel button title and messages
-find_input.title=Rasti
-find_input.placeholder=Rasti dokumente…
-find_previous.title=Ieškoti ankstesnio frazės egzemplioriaus
-find_previous_label=Ankstesnis
-find_next.title=Ieškoti tolesnio frazės egzemplioriaus
-find_next_label=Tolesnis
-find_highlight=Viską paryškinti
-find_match_case_label=Skirti didžiąsias ir mažąsias raides
-find_entire_word_label=Ištisi žodžiai
-find_reached_top=Pasiekus dokumento pradžią, paieška pratęsta nuo pabaigos
-find_reached_bottom=Pasiekus dokumento pabaigą, paieška pratęsta nuo pradžios
-# LOCALIZATION NOTE (find_match_count): The supported plural forms are
-# [one|two|few|many|other], with [other] as the default value.
-# "{{current}}" and "{{total}}" will be replaced by a number representing the
-# index of the currently active find result, respectively a number representing
-# the total number of matches in the document.
-find_match_count={[ plural(total) ]}
-find_match_count[one]={{current}} iš {{total}} atitikmens
-find_match_count[two]={{current}} iš {{total}} atitikmenų
-find_match_count[few]={{current}} iš {{total}} atitikmenų
-find_match_count[many]={{current}} iš {{total}} atitikmenų
-find_match_count[other]={{current}} iš {{total}} atitikmens
-# LOCALIZATION NOTE (find_match_count_limit): The supported plural forms are
-# [zero|one|two|few|many|other], with [other] as the default value.
-# "{{limit}}" will be replaced by a numerical value.
-find_match_count_limit={[ plural(limit) ]}
-find_match_count_limit[zero]=Daugiau nei {{limit}} atitikmenų
-find_match_count_limit[one]=Daugiau nei {{limit}} atitikmuo
-find_match_count_limit[two]=Daugiau nei {{limit}} atitikmenys
-find_match_count_limit[few]=Daugiau nei {{limit}} atitikmenys
-find_match_count_limit[many]=Daugiau nei {{limit}} atitikmenų
-find_match_count_limit[other]=Daugiau nei {{limit}} atitikmuo
-find_not_found=Ieškoma frazė nerasta
+## Print
 
-# Error panel labels
-error_more_info=Išsamiau
-error_less_info=Glausčiau
-error_close=Užverti
-# LOCALIZATION NOTE (error_version_info): "{{version}}" and "{{build}}" will be
-# replaced by the PDF.JS version and build ID.
-error_version_info=PDF.js v. {{version}} (darinys: {{build}})
-# LOCALIZATION NOTE (error_message): "{{message}}" will be replaced by an
-# english string describing the error.
-error_message=Pranešimas: {{message}}
-# LOCALIZATION NOTE (error_stack): "{{stack}}" will be replaced with a stack
-# trace.
-error_stack=Dėklas: {{stack}}
-# LOCALIZATION NOTE (error_file): "{{file}}" will be replaced with a filename
-error_file=Failas: {{file}}
-# LOCALIZATION NOTE (error_line): "{{line}}" will be replaced with a line number
-error_line=Eilutė: {{line}}
-rendering_error=Atvaizduojant puslapį įvyko klaida.
+pdfjs-print-progress-message = Dokumentas ruošiamas spausdinimui…
+# Variables:
+#   $progress (Number) - percent value
+pdfjs-print-progress-percent = { $progress }%
+pdfjs-print-progress-close-button = Atsisakyti
+pdfjs-printing-not-supported = Dėmesio! Spausdinimas šioje naršyklėje nėra pilnai realizuotas.
+pdfjs-printing-not-ready = Dėmesio! PDF failas dar nėra pilnai įkeltas spausdinimui.
 
-# Predefined zoom values
-page_scale_width=Priderinti prie lapo pločio
-page_scale_fit=Pritaikyti prie lapo dydžio
-page_scale_auto=Automatinis mastelis
-page_scale_actual=Tikras dydis
-# LOCALIZATION NOTE (page_scale_percent): "{{scale}}" will be replaced by a
-# numerical scale value.
-page_scale_percent={{scale}}%
+## Tooltips and alt text for side panel toolbar buttons
 
-# Loading indicator messages
-loading_error_indicator=Klaida
+pdfjs-toggle-sidebar-button =
+    .title = Rodyti / slėpti šoninį polangį
+pdfjs-toggle-sidebar-notification-button =
+    .title = Parankinė (dokumentas turi struktūrą / priedų / sluoksnių)
+pdfjs-toggle-sidebar-button-label = Šoninis polangis
+pdfjs-document-outline-button =
+    .title = Rodyti dokumento struktūrą (spustelėkite dukart norėdami išplėsti/suskleisti visus elementus)
+pdfjs-document-outline-button-label = Dokumento struktūra
+pdfjs-attachments-button =
+    .title = Rodyti priedus
+pdfjs-attachments-button-label = Priedai
+pdfjs-layers-button =
+    .title = Rodyti sluoksnius (spustelėkite dukart, norėdami atstatyti visus sluoksnius į numatytąją būseną)
+pdfjs-layers-button-label = Sluoksniai
+pdfjs-thumbs-button =
+    .title = Rodyti puslapių miniatiūras
+pdfjs-thumbs-button-label = Miniatiūros
+pdfjs-current-outline-item-button =
+    .title = Rasti dabartinį struktūros elementą
+pdfjs-current-outline-item-button-label = Dabartinis struktūros elementas
+pdfjs-findbar-button =
+    .title = Ieškoti dokumente
+pdfjs-findbar-button-label = Rasti
+pdfjs-additional-layers = Papildomi sluoksniai
 
-# Loading indicator messages
-loading=Įkeliama…
-loading_error=Įkeliant PDF failą įvyko klaida.
-invalid_file_error=Tai nėra PDF failas arba jis yra sugadintas.
-missing_file_error=PDF failas nerastas.
-unexpected_response_error=Netikėtas serverio atsakas.
+## Thumbnails panel item (tooltip and alt text for images)
 
-# LOCALIZATION NOTE (annotation_date_string): "{{date}}" and "{{time}}" will be
-# replaced by the modification date, and time, of the annotation.
-annotation_date_string={{date}}, {{time}}
+# Variables:
+#   $page (Number) - the page number
+pdfjs-thumb-page-title =
+    .title = { $page } puslapis
+# Variables:
+#   $page (Number) - the page number
+pdfjs-thumb-page-canvas =
+    .aria-label = { $page } puslapio miniatiūra
 
-# LOCALIZATION NOTE (text_annotation_type.alt): This is used as a tooltip.
-# "{{type}}" will be replaced with an annotation type from a list defined in
-# the PDF spec (32000-1:2008 Table 169 – Annotation types).
+## Find panel button title and messages
+
+pdfjs-find-input =
+    .title = Rasti
+    .placeholder = Rasti dokumente…
+pdfjs-find-previous-button =
+    .title = Ieškoti ankstesnio frazės egzemplioriaus
+pdfjs-find-previous-button-label = Ankstesnis
+pdfjs-find-next-button =
+    .title = Ieškoti tolesnio frazės egzemplioriaus
+pdfjs-find-next-button-label = Tolesnis
+pdfjs-find-highlight-checkbox = Viską paryškinti
+pdfjs-find-match-case-checkbox-label = Skirti didžiąsias ir mažąsias raides
+pdfjs-find-match-diacritics-checkbox-label = Skirti diakritinius ženklus
+pdfjs-find-entire-word-checkbox-label = Ištisi žodžiai
+pdfjs-find-reached-top = Pasiekus dokumento pradžią, paieška pratęsta nuo pabaigos
+pdfjs-find-reached-bottom = Pasiekus dokumento pabaigą, paieška pratęsta nuo pradžios
+pdfjs-find-not-found = Ieškoma frazė nerasta
+
+## Predefined zoom values
+
+pdfjs-page-scale-width = Priderinti prie lapo pločio
+pdfjs-page-scale-fit = Pritaikyti prie lapo dydžio
+pdfjs-page-scale-auto = Automatinis mastelis
+pdfjs-page-scale-actual = Tikras dydis
+# Variables:
+#   $scale (Number) - percent value for page scale
+pdfjs-page-scale-percent = { $scale }%
+
+## PDF page
+
+# Variables:
+#   $page (Number) - the page number
+pdfjs-page-landmark =
+    .aria-label = { $page } puslapis
+
+## Loading indicator messages
+
+pdfjs-loading-error = Įkeliant PDF failą įvyko klaida.
+pdfjs-invalid-file-error = Tai nėra PDF failas arba jis yra sugadintas.
+pdfjs-missing-file-error = PDF failas nerastas.
+pdfjs-unexpected-response-error = Netikėtas serverio atsakas.
+pdfjs-rendering-error = Atvaizduojant puslapį įvyko klaida.
+
+## Annotations
+
+# Variables:
+#   $date (Date) - the modification date of the annotation
+#   $time (Time) - the modification time of the annotation
+pdfjs-annotation-date-string = { $date }, { $time }
+# .alt: This is used as a tooltip.
+# Variables:
+#   $type (String) - an annotation type from a list defined in the PDF spec
+# (32000-1:2008 Table 169 – Annotation types).
 # Some common types are e.g.: "Check", "Text", "Comment", "Note"
-text_annotation_type.alt=[„{{type}}“ tipo anotacija]
-password_label=Įveskite slaptažodį šiam PDF failui atverti.
-password_invalid=Slaptažodis neteisingas. Bandykite dar kartą.
-password_ok=Gerai
-password_cancel=Atsisakyti
+pdfjs-text-annotation-type =
+    .alt = [„{ $type }“ tipo anotacija]
 
-printing_not_supported=Dėmesio! Spausdinimas šioje naršyklėje nėra pilnai realizuotas.
-printing_not_ready=Dėmesio! PDF failas dar nėra pilnai įkeltas spausdinimui.
-web_fonts_disabled=Saityno šriftai išjungti – PDF faile esančių šriftų naudoti negalima.
+## Password
+
+pdfjs-password-label = Įveskite slaptažodį šiam PDF failui atverti.
+pdfjs-password-invalid = Slaptažodis neteisingas. Bandykite dar kartą.
+pdfjs-password-ok-button = Gerai
+pdfjs-password-cancel-button = Atsisakyti
+pdfjs-web-fonts-disabled = Saityno šriftai išjungti – PDF faile esančių šriftų naudoti negalima.
+
+## Editing
+
+
+## Alt-text dialog
+
+
+## Editor resizers
+## This is used in an aria label to help to understand the role of the resizer.
+

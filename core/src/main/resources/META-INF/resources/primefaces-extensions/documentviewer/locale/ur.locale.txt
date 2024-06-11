@@ -1,241 +1,248 @@
-# Copyright 2012 Mozilla Foundation
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-# Main toolbar buttons (tooltips and alt text for images)
-previous.title=پچھلا صفحہ
-previous_label=پچھلا
-next.title=اگلا صفحہ
-next_label=آگے
 
-# LOCALIZATION NOTE (page.title): The tooltip for the pageNumber input.
-page.title=صفحہ
-# LOCALIZATION NOTE (of_pages): "{{pagesCount}}" will be replaced by a number
-# representing the total number of pages in the document.
-of_pages={{pagesCount}} کا
-# LOCALIZATION NOTE (page_of_pages): "{{pageNumber}}" and "{{pagesCount}}"
-# will be replaced by a number representing the currently visible page,
-# respectively a number representing the total number of pages in the document.
-page_of_pages=({{pageNumber}} کا {{pagesCount}})
+## Main toolbar buttons (tooltips and alt text for images)
 
-zoom_out.title=باہر زوم کریں
-zoom_out_label=باہر زوم کریں
-zoom_in.title=اندر زوم کریں
-zoom_in_label=اندر زوم کریں
-zoom.title=زوم
-presentation_mode.title=پیشکش موڈ میں چلے جائیں
-presentation_mode_label=پیشکش موڈ
-open_file.title=مسل کھولیں
-open_file_label=کھولیں
-print.title=چھاپیں
-print_label=چھاپیں
-download.title=ڈاؤن لوڈ
-download_label=ڈاؤن لوڈ
-bookmark.title=حالیہ نظارہ (نۓ دریچہ میں نقل کریں یا کھولیں)
-bookmark_label=حالیہ نظارہ
+pdfjs-previous-button =
+    .title = پچھلا صفحہ
+pdfjs-previous-button-label = پچھلا
+pdfjs-next-button =
+    .title = اگلا صفحہ
+pdfjs-next-button-label = آگے
+# .title: Tooltip for the pageNumber input.
+pdfjs-page-input =
+    .title = صفحہ
+# Variables:
+#   $pagesCount (Number) - the total number of pages in the document
+# This string follows an input field with the number of the page currently displayed.
+pdfjs-of-pages = { $pagesCount } کا
+# Variables:
+#   $pageNumber (Number) - the currently visible page
+#   $pagesCount (Number) - the total number of pages in the document
+pdfjs-page-of-pages = ({ $pageNumber } کا { $pagesCount })
+pdfjs-zoom-out-button =
+    .title = باہر زوم کریں
+pdfjs-zoom-out-button-label = باہر زوم کریں
+pdfjs-zoom-in-button =
+    .title = اندر زوم کریں
+pdfjs-zoom-in-button-label = اندر زوم کریں
+pdfjs-zoom-select =
+    .title = زوم
+pdfjs-presentation-mode-button =
+    .title = پیشکش موڈ میں چلے جائیں
+pdfjs-presentation-mode-button-label = پیشکش موڈ
+pdfjs-open-file-button =
+    .title = مسل کھولیں
+pdfjs-open-file-button-label = کھولیں
+pdfjs-print-button =
+    .title = چھاپیں
+pdfjs-print-button-label = چھاپیں
 
-# Secondary toolbar and context menu
-tools.title=آلات
-tools_label=آلات
-first_page.title=پہلے صفحہ پر جائیں
-first_page.label=پہلے صفحہ پر جائیں
-first_page_label=پہلے صفحہ پر جائیں
-last_page.title=آخری صفحہ پر جائیں
-last_page.label=آخری صفحہ پر جائیں
-last_page_label=آخری صفحہ پر جائیں
-page_rotate_cw.title=گھڑی وار گھمائیں
-page_rotate_cw.label=گھڑی وار گھمائیں
-page_rotate_cw_label=گھڑی وار گھمائیں
-page_rotate_ccw.title=ضد گھڑی وار گھمائیں
-page_rotate_ccw.label=ضد گھڑی وار گھمائیں
-page_rotate_ccw_label=ضد گھڑی وار گھمائیں
+##  Secondary toolbar and context menu
 
-cursor_text_select_tool.title=متن کے انتخاب کے ٹول کو فعال بناے
-cursor_text_select_tool_label=متن کے انتخاب کا آلہ
-cursor_hand_tool.title=ہینڈ ٹول کو فعال بناییں
-cursor_hand_tool_label=ہاتھ کا آلہ
+pdfjs-tools-button =
+    .title = آلات
+pdfjs-tools-button-label = آلات
+pdfjs-first-page-button =
+    .title = پہلے صفحہ پر جائیں
+pdfjs-first-page-button-label = پہلے صفحہ پر جائیں
+pdfjs-last-page-button =
+    .title = آخری صفحہ پر جائیں
+pdfjs-last-page-button-label = آخری صفحہ پر جائیں
+pdfjs-page-rotate-cw-button =
+    .title = گھڑی وار گھمائیں
+pdfjs-page-rotate-cw-button-label = گھڑی وار گھمائیں
+pdfjs-page-rotate-ccw-button =
+    .title = ضد گھڑی وار گھمائیں
+pdfjs-page-rotate-ccw-button-label = ضد گھڑی وار گھمائیں
+pdfjs-cursor-text-select-tool-button =
+    .title = متن کے انتخاب کے ٹول کو فعال بناے
+pdfjs-cursor-text-select-tool-button-label = متن کے انتخاب کا آلہ
+pdfjs-cursor-hand-tool-button =
+    .title = ہینڈ ٹول کو فعال بناییں
+pdfjs-cursor-hand-tool-button-label = ہاتھ کا آلہ
+pdfjs-scroll-vertical-button =
+    .title = عمودی اسکرولنگ کا استعمال کریں
+pdfjs-scroll-vertical-button-label = عمودی اسکرولنگ
+pdfjs-scroll-horizontal-button =
+    .title = افقی سکرولنگ کا استعمال کریں
+pdfjs-scroll-horizontal-button-label = افقی سکرولنگ
+pdfjs-spread-none-button =
+    .title = صفحہ پھیلانے میں شامل نہ ہوں
+pdfjs-spread-none-button-label = کوئی پھیلاؤ نہیں
+pdfjs-spread-odd-button-label = تاک پھیلاؤ
+pdfjs-spread-even-button-label = جفت پھیلاؤ
 
-scroll_vertical.title=عمودی اسکرولنگ کا استعمال کریں
-scroll_vertical_label=عمودی اسکرولنگ
-scroll_horizontal.title=افقی سکرولنگ کا استعمال کریں
-scroll_horizontal_label=افقی سکرولنگ
+## Document properties dialog
 
-spread_none.title=صفحہ پھیلانے میں شامل نہ ہوں
-spread_none_label=کوئی پھیلاؤ نہیں
-spread_odd_label=تاک پھیلاؤ
-spread_even_label=جفت پھیلاؤ
+pdfjs-document-properties-button =
+    .title = دستاویز خواص…
+pdfjs-document-properties-button-label = دستاویز خواص…
+pdfjs-document-properties-file-name = نام مسل:
+pdfjs-document-properties-file-size = مسل سائز:
+# Variables:
+#   $size_kb (Number) - the PDF file size in kilobytes
+#   $size_b (Number) - the PDF file size in bytes
+pdfjs-document-properties-kb = { $size_kb } KB ({ $size_b } bytes)
+# Variables:
+#   $size_mb (Number) - the PDF file size in megabytes
+#   $size_b (Number) - the PDF file size in bytes
+pdfjs-document-properties-mb = { $size_mb } MB ({ $size_b } bytes)
+pdfjs-document-properties-title = عنوان:
+pdfjs-document-properties-author = تخلیق کار:
+pdfjs-document-properties-subject = موضوع:
+pdfjs-document-properties-keywords = کلیدی الفاظ:
+pdfjs-document-properties-creation-date = تخلیق کی تاریخ:
+pdfjs-document-properties-modification-date = ترمیم کی تاریخ:
+# Variables:
+#   $date (Date) - the creation/modification date of the PDF file
+#   $time (Time) - the creation/modification time of the PDF file
+pdfjs-document-properties-date-string = { $date }، { $time }
+pdfjs-document-properties-creator = تخلیق کار:
+pdfjs-document-properties-producer = PDF پیدا کار:
+pdfjs-document-properties-version = PDF ورژن:
+pdfjs-document-properties-page-count = صفحہ شمار:
+pdfjs-document-properties-page-size = صفہ کی لمبائ:
+pdfjs-document-properties-page-size-unit-inches = میں
+pdfjs-document-properties-page-size-unit-millimeters = mm
+pdfjs-document-properties-page-size-orientation-portrait = عمودی انداز
+pdfjs-document-properties-page-size-orientation-landscape = افقى انداز
+pdfjs-document-properties-page-size-name-a-three = A3
+pdfjs-document-properties-page-size-name-a-four = A4
+pdfjs-document-properties-page-size-name-letter = خط
+pdfjs-document-properties-page-size-name-legal = قانونی
 
-# Document properties dialog box
-document_properties.title=دستاویز خواص…
-document_properties_label=دستاویز خواص…\u0020
-document_properties_file_name=نام مسل:
-document_properties_file_size=مسل سائز:
-# LOCALIZATION NOTE (document_properties_kb): "{{size_kb}}" and "{{size_b}}"
-# will be replaced by the PDF file size in kilobytes, respectively in bytes.
-document_properties_kb={{size_kb}} KB ({{size_b}} bytes)
-# LOCALIZATION NOTE (document_properties_mb): "{{size_mb}}" and "{{size_b}}"
-# will be replaced by the PDF file size in megabytes, respectively in bytes.
-document_properties_mb={{size_mb}} MB ({{size_b}} bytes)
-document_properties_title=عنوان:
-document_properties_author=تخلیق کار:
-document_properties_subject=موضوع:
-document_properties_keywords=کلیدی الفاظ:
-document_properties_creation_date=تخلیق کی تاریخ:
-document_properties_modification_date=ترمیم کی تاریخ:
-# LOCALIZATION NOTE (document_properties_date_string): "{{date}}" and "{{time}}"
-# will be replaced by the creation/modification date, and time, of the PDF file.
-document_properties_date_string={{date}}، {{time}}
-document_properties_creator=تخلیق کار:
-document_properties_producer=PDF پیدا کار:
-document_properties_version=PDF ورژن:
-document_properties_page_count=صفحہ شمار:
-document_properties_page_size=صفہ کی لمبائ:
-document_properties_page_size_unit_inches=میں
-document_properties_page_size_unit_millimeters=mm
-document_properties_page_size_orientation_portrait=عمودی انداز
-document_properties_page_size_orientation_landscape=افقى انداز
-document_properties_page_size_name_a3=A3
-document_properties_page_size_name_a4=A4
-document_properties_page_size_name_letter=خط
-document_properties_page_size_name_legal=قانونی
-# LOCALIZATION NOTE (document_properties_page_size_dimension_string):
-# "{{width}}", "{{height}}", {{unit}}, and {{orientation}} will be replaced by
-# the size, respectively their unit of measurement and orientation, of the (current) page.
-document_properties_page_size_dimension_string={{width}} × {{height}} {{unit}} ({{orientation}})
-# LOCALIZATION NOTE (document_properties_page_size_dimension_name_string):
-# "{{width}}", "{{height}}", {{unit}}, {{name}}, and {{orientation}} will be replaced by
-# the size, respectively their unit of measurement, name, and orientation, of the (current) page.
-document_properties_page_size_dimension_name_string={{width}} × {{height}} {{unit}} {{name}} {{orientation}}
-# LOCALIZATION NOTE (document_properties_linearized): The linearization status of
-# the document; usually called "Fast Web View" in English locales of Adobe software.
-document_properties_linearized=تیز ویب دیکھیں:
-document_properties_linearized_yes=ہاں
-document_properties_linearized_no=نہیں
-document_properties_close=بند کریں
+## Variables:
+##   $width (Number) - the width of the (current) page
+##   $height (Number) - the height of the (current) page
+##   $unit (String) - the unit of measurement of the (current) page
+##   $name (String) - the name of the (current) page
+##   $orientation (String) - the orientation of the (current) page
 
-print_progress_message=چھاپنے کرنے کے لیے دستاویز تیار کیے جا رھے ھیں
-# LOCALIZATION NOTE (print_progress_percent): "{{progress}}" will be replaced by
-# a numerical per cent value.
-print_progress_percent=*{{progress}}%*
-print_progress_close=منسوخ کریں
+pdfjs-document-properties-page-size-dimension-string = { $width } × { $height } { $unit } ({ $orientation })
+pdfjs-document-properties-page-size-dimension-name-string = { $width } × { $height } { $unit } { $name } { $orientation }
 
-# Tooltips and alt text for side panel toolbar buttons
-# (the _label strings are alt text for the buttons, the .title strings are
-# tooltips)
-toggle_sidebar.title=سلائیڈ ٹوگل کریں
-toggle_sidebar_label=سلائیڈ ٹوگل کریں
-document_outline.title=دستاویز کی سرخیاں دکھایں (تمام اشیاء وسیع / غائب کرنے کے لیے ڈبل کلک کریں)
-document_outline_label=دستاویز آؤٹ لائن
-attachments.title=منسلکات دکھائیں
-attachments_label=منسلکات
-thumbs.title=تھمبنیل دکھائیں
-thumbs_label=مجمل
-findbar.title=دستاویز میں ڈھونڈیں
-findbar_label=ڈھونڈیں
+##
 
-# LOCALIZATION NOTE (page_canvas): "{{page}}" will be replaced by the page number.
-page_canvas=صفحہ {{page}}
-# Thumbnails panel item (tooltip and alt text for images)
-# LOCALIZATION NOTE (thumb_page_title): "{{page}}" will be replaced by the page
-# number.
-thumb_page_title=صفحہ {{page}}
-# LOCALIZATION NOTE (thumb_page_canvas): "{{page}}" will be replaced by the page
-# number.
-thumb_page_canvas=صفحے کا مجمل {{page}}
+# The linearization status of the document; usually called "Fast Web View" in
+# English locales of Adobe software.
+pdfjs-document-properties-linearized = تیز ویب دیکھیں:
+pdfjs-document-properties-linearized-yes = ہاں
+pdfjs-document-properties-linearized-no = نہیں
+pdfjs-document-properties-close-button = بند کریں
 
-# Find panel button title and messages
-find_input.title=ڈھونڈیں
-find_input.placeholder=دستاویز… میں ڈھونڈیں
-find_previous.title=فقرے کا پچھلا وقوع ڈھونڈیں
-find_previous_label=پچھلا
-find_next.title=فقرے کا اگلہ وقوع ڈھونڈیں
-find_next_label=آگے
-find_highlight=تمام نمایاں کریں
-find_match_case_label=حروف مشابہ کریں
-find_entire_word_label=تمام الفاظ
-find_reached_top=صفحہ کے شروع پر پہنچ گیا، نیچے سے جاری کیا
-find_reached_bottom=صفحہ کے اختتام پر پہنچ گیا، اوپر سے جاری کیا
-# LOCALIZATION NOTE (find_match_count): The supported plural forms are
-# [one|two|few|many|other], with [other] as the default value.
-# "{{current}}" and "{{total}}" will be replaced by a number representing the
-# index of the currently active find result, respectively a number representing
-# the total number of matches in the document.
-find_match_count={[ plural(total) ]}
-find_match_count[one]={{total}} میچ کا {{current}}
-find_match_count[few]={{total}} میچوں میں سے {{current}}
-find_match_count[many]={{total}} میچوں میں سے {{current}}
-find_match_count[other]={{total}} میچوں میں سے {{current}}
-# LOCALIZATION NOTE (find_match_count_limit): The supported plural forms are
-# [zero|one|two|few|many|other], with [other] as the default value.
-# "{{limit}}" will be replaced by a numerical value.
-find_match_count_limit={[ plural(total) ]}
-find_match_count_limit[zero]={{limit}} سے زیادہ میچ
-find_match_count_limit[one]={{limit}} سے زیادہ میچ
-find_match_count_limit[two]={{limit}} سے زیادہ میچ
-find_match_count_limit[few]={{limit}} سے زیادہ میچ
-find_match_count_limit[many]={{limit}} سے زیادہ میچ
-find_match_count_limit[other]={{limit}} سے زیادہ میچ
-find_not_found=فقرا نہیں ملا
+## Print
 
-# Error panel labels
-error_more_info=مزید معلومات
-error_less_info=کم معلومات
-error_close=بند کریں
-# LOCALIZATION NOTE (error_version_info): "{{version}}" and "{{build}}" will be
-# replaced by the PDF.JS version and build ID.
-error_version_info=PDF.js v{{version}} (build: {{build}})
-# LOCALIZATION NOTE (error_message): "{{message}}" will be replaced by an
-# english string describing the error.
-error_message=پیغام: {{message}}
-# LOCALIZATION NOTE (error_stack): "{{stack}}" will be replaced with a stack
-# trace.
-error_stack=سٹیک: {{stack}}
-# LOCALIZATION NOTE (error_file): "{{file}}" will be replaced with a filename
-error_file=مسل: {{file}}
-# LOCALIZATION NOTE (error_line): "{{line}}" will be replaced with a line number
-error_line=لائن: {{line}}
-rendering_error=صفحہ بناتے ہوئے نقص آ گیا۔
+pdfjs-print-progress-message = چھاپنے کرنے کے لیے دستاویز تیار کیے جا رھے ھیں
+# Variables:
+#   $progress (Number) - percent value
+pdfjs-print-progress-percent = *{ $progress }%*
+pdfjs-print-progress-close-button = منسوخ کریں
+pdfjs-printing-not-supported = تنبیہ:چھاپنا اس براؤزر پر پوری طرح معاونت شدہ نہیں ہے۔
+pdfjs-printing-not-ready = تنبیہ: PDF چھپائی کے لیے پوری طرح لوڈ نہیں ہوئی۔
 
-# Predefined zoom values
-page_scale_width=صفحہ چوڑائی
-page_scale_fit=صفحہ فٹنگ
-page_scale_auto=خودکار زوم
-page_scale_actual=اصل سائز
-# LOCALIZATION NOTE (page_scale_percent): "{{scale}}" will be replaced by a
-# numerical scale value.
-page_scale_percent={{scale}}%
+## Tooltips and alt text for side panel toolbar buttons
 
-# Loading indicator messages
-loading_error_indicator=نقص
-loading_error=PDF لوڈ کرتے وقت نقص آ گیا۔
-invalid_file_error=ناجائز یا خراب PDF مسل
-missing_file_error=PDF مسل غائب ہے۔
-unexpected_response_error=غیرمتوقع پیش کار جواب
+pdfjs-toggle-sidebar-button =
+    .title = سلائیڈ ٹوگل کریں
+pdfjs-toggle-sidebar-button-label = سلائیڈ ٹوگل کریں
+pdfjs-document-outline-button =
+    .title = دستاویز کی سرخیاں دکھایں (تمام اشیاء وسیع / غائب کرنے کے لیے ڈبل کلک کریں)
+pdfjs-document-outline-button-label = دستاویز آؤٹ لائن
+pdfjs-attachments-button =
+    .title = منسلکات دکھائیں
+pdfjs-attachments-button-label = منسلکات
+pdfjs-thumbs-button =
+    .title = تھمبنیل دکھائیں
+pdfjs-thumbs-button-label = مجمل
+pdfjs-findbar-button =
+    .title = دستاویز میں ڈھونڈیں
+pdfjs-findbar-button-label = ڈھونڈیں
 
-# LOCALIZATION NOTE (annotation_date_string): "{{date}}" and "{{time}}" will be
-# replaced by the modification date, and time, of the annotation.
-annotation_date_string={{date}}.{{time}}
+## Thumbnails panel item (tooltip and alt text for images)
 
-# LOCALIZATION NOTE (text_annotation_type.alt): This is used as a tooltip.
-# "{{type}}" will be replaced with an annotation type from a list defined in
-# the PDF spec (32000-1:2008 Table 169 – Annotation types).
+# Variables:
+#   $page (Number) - the page number
+pdfjs-thumb-page-title =
+    .title = صفحہ { $page }
+# Variables:
+#   $page (Number) - the page number
+pdfjs-thumb-page-canvas =
+    .aria-label = صفحے کا مجمل { $page }
+
+## Find panel button title and messages
+
+pdfjs-find-input =
+    .title = ڈھونڈیں
+    .placeholder = دستاویز… میں ڈھونڈیں
+pdfjs-find-previous-button =
+    .title = فقرے کا پچھلا وقوع ڈھونڈیں
+pdfjs-find-previous-button-label = پچھلا
+pdfjs-find-next-button =
+    .title = فقرے کا اگلہ وقوع ڈھونڈیں
+pdfjs-find-next-button-label = آگے
+pdfjs-find-highlight-checkbox = تمام نمایاں کریں
+pdfjs-find-match-case-checkbox-label = حروف مشابہ کریں
+pdfjs-find-entire-word-checkbox-label = تمام الفاظ
+pdfjs-find-reached-top = صفحہ کے شروع پر پہنچ گیا، نیچے سے جاری کیا
+pdfjs-find-reached-bottom = صفحہ کے اختتام پر پہنچ گیا، اوپر سے جاری کیا
+pdfjs-find-not-found = فقرا نہیں ملا
+
+## Predefined zoom values
+
+pdfjs-page-scale-width = صفحہ چوڑائی
+pdfjs-page-scale-fit = صفحہ فٹنگ
+pdfjs-page-scale-auto = خودکار زوم
+pdfjs-page-scale-actual = اصل سائز
+# Variables:
+#   $scale (Number) - percent value for page scale
+pdfjs-page-scale-percent = { $scale }%
+
+## PDF page
+
+# Variables:
+#   $page (Number) - the page number
+pdfjs-page-landmark =
+    .aria-label = صفحہ { $page }
+
+## Loading indicator messages
+
+pdfjs-loading-error = PDF لوڈ کرتے وقت نقص آ گیا۔
+pdfjs-invalid-file-error = ناجائز یا خراب PDF مسل
+pdfjs-missing-file-error = PDF مسل غائب ہے۔
+pdfjs-unexpected-response-error = غیرمتوقع پیش کار جواب
+pdfjs-rendering-error = صفحہ بناتے ہوئے نقص آ گیا۔
+
+## Annotations
+
+# Variables:
+#   $date (Date) - the modification date of the annotation
+#   $time (Time) - the modification time of the annotation
+pdfjs-annotation-date-string = { $date }.{ $time }
+# .alt: This is used as a tooltip.
+# Variables:
+#   $type (String) - an annotation type from a list defined in the PDF spec
+# (32000-1:2008 Table 169 – Annotation types).
 # Some common types are e.g.: "Check", "Text", "Comment", "Note"
-text_annotation_type.alt=[{{type}} نوٹ]
-password_label=PDF مسل کھولنے کے لیے پاس ورڈ داخل کریں.
-password_invalid=ناجائز پاس ورڈ. براےؑ کرم دوبارہ کوشش کریں.
-password_ok=ٹھیک ہے
-password_cancel=منسوخ کریں
+pdfjs-text-annotation-type =
+    .alt = [{ $type } نوٹ]
 
-printing_not_supported=تنبیہ:چھاپنا اس براؤزر پر پوری طرح معاونت شدہ نہیں ہے۔
-printing_not_ready=تنبیہ: PDF چھپائی کے لیے پوری طرح لوڈ نہیں ہوئی۔
-web_fonts_disabled=ویب فانٹ نا اہل ہیں: شامل PDF فانٹ استعمال کرنے میں ناکام۔
+## Password
+
+pdfjs-password-label = PDF مسل کھولنے کے لیے پاس ورڈ داخل کریں.
+pdfjs-password-invalid = ناجائز پاس ورڈ. براےؑ کرم دوبارہ کوشش کریں.
+pdfjs-password-ok-button = ٹھیک ہے
+pdfjs-password-cancel-button = منسوخ کریں
+pdfjs-web-fonts-disabled = ویب فانٹ نا اہل ہیں: شامل PDF فانٹ استعمال کرنے میں ناکام۔
+
+## Editing
+
+
+## Alt-text dialog
+
+
+## Editor resizers
+## This is used in an aria label to help to understand the role of the resizer.
+

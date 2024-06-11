@@ -1,261 +1,402 @@
-# Copyright 2012 Mozilla Foundation
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-# Main toolbar buttons (tooltips and alt text for images)
-previous.title=Προηγούμενη σελίδα
-previous_label=Προηγούμενη
-next.title=Επόμενη σελίδα
-next_label=Επόμενη
 
-# LOCALIZATION NOTE (page.title): The tooltip for the pageNumber input.
-page.title=Σελίδα
-# LOCALIZATION NOTE (of_pages): "{{pagesCount}}" will be replaced by a number
-# representing the total number of pages in the document.
-of_pages=από {{pagesCount}}
-# LOCALIZATION NOTE (page_of_pages): "{{pageNumber}}" and "{{pagesCount}}"
-# will be replaced by a number representing the currently visible page,
-# respectively a number representing the total number of pages in the document.
-page_of_pages=({{pageNumber}} από {{pagesCount}})
+## Main toolbar buttons (tooltips and alt text for images)
 
-zoom_out.title=Σμίκρυνση
-zoom_out_label=Σμίκρυνση
-zoom_in.title=Μεγέθυνση
-zoom_in_label=Μεγέθυνση
-zoom.title=Ζουμ
-presentation_mode.title=Εναλλαγή σε λειτουργία παρουσίασης
-presentation_mode_label=Λειτουργία παρουσίασης
-open_file.title=Άνοιγμα αρχείου
-open_file_label=Άνοιγμα
-print.title=Εκτύπωση
-print_label=Εκτύπωση
-download.title=Λήψη
-download_label=Λήψη
-bookmark.title=Τρέχουσα προβολή (αντιγραφή ή άνοιγμα σε νέο παράθυρο)
-bookmark_label=Τρέχουσα προβολή
+pdfjs-previous-button =
+    .title = Προηγούμενη σελίδα
+pdfjs-previous-button-label = Προηγούμενη
+pdfjs-next-button =
+    .title = Επόμενη σελίδα
+pdfjs-next-button-label = Επόμενη
+# .title: Tooltip for the pageNumber input.
+pdfjs-page-input =
+    .title = Σελίδα
+# Variables:
+#   $pagesCount (Number) - the total number of pages in the document
+# This string follows an input field with the number of the page currently displayed.
+pdfjs-of-pages = από { $pagesCount }
+# Variables:
+#   $pageNumber (Number) - the currently visible page
+#   $pagesCount (Number) - the total number of pages in the document
+pdfjs-page-of-pages = ({ $pageNumber } από { $pagesCount })
+pdfjs-zoom-out-button =
+    .title = Σμίκρυνση
+pdfjs-zoom-out-button-label = Σμίκρυνση
+pdfjs-zoom-in-button =
+    .title = Μεγέθυνση
+pdfjs-zoom-in-button-label = Μεγέθυνση
+pdfjs-zoom-select =
+    .title = Ζουμ
+pdfjs-presentation-mode-button =
+    .title = Εναλλαγή σε λειτουργία παρουσίασης
+pdfjs-presentation-mode-button-label = Λειτουργία παρουσίασης
+pdfjs-open-file-button =
+    .title = Άνοιγμα αρχείου
+pdfjs-open-file-button-label = Άνοιγμα
+pdfjs-print-button =
+    .title = Εκτύπωση
+pdfjs-print-button-label = Εκτύπωση
+pdfjs-save-button =
+    .title = Αποθήκευση
+pdfjs-save-button-label = Αποθήκευση
+# Used in Firefox for Android as a tooltip for the download button (“download” is a verb).
+pdfjs-download-button =
+    .title = Λήψη
+# Used in Firefox for Android as a label for the download button (“download” is a verb).
+# Length of the translation matters since we are in a mobile context, with limited screen estate.
+pdfjs-download-button-label = Λήψη
+pdfjs-bookmark-button =
+    .title = Τρέχουσα σελίδα (Προβολή URL από τρέχουσα σελίδα)
+pdfjs-bookmark-button-label = Τρέχουσα σελίδα
+# Used in Firefox for Android.
+pdfjs-open-in-app-button =
+    .title = Άνοιγμα σε εφαρμογή
+# Used in Firefox for Android.
+# Length of the translation matters since we are in a mobile context, with limited screen estate.
+pdfjs-open-in-app-button-label = Άνοιγμα σε εφαρμογή
 
-# Secondary toolbar and context menu
-tools.title=Εργαλεία
-tools_label=Εργαλεία
-first_page.title=Μετάβαση στην πρώτη σελίδα
-first_page.label=Μετάβαση στην πρώτη σελίδα
-first_page_label=Μετάβαση στην πρώτη σελίδα
-last_page.title=Μετάβαση στην τελευταία σελίδα
-last_page.label=Μετάβαση στην τελευταία σελίδα
-last_page_label=Μετάβαση στην τελευταία σελίδα
-page_rotate_cw.title=Δεξιόστροφη περιστροφή
-page_rotate_cw.label=Δεξιόστροφη περιστροφή
-page_rotate_cw_label=Δεξιόστροφη περιστροφή
-page_rotate_ccw.title=Αριστερόστροφη περιστροφή
-page_rotate_ccw.label=Αριστερόστροφη περιστροφή
-page_rotate_ccw_label=Αριστερόστροφη περιστροφή
+##  Secondary toolbar and context menu
 
-cursor_text_select_tool.title=Ενεργοποίηση εργαλείου επιλογής κειμένου
-cursor_text_select_tool_label=Εργαλείο επιλογής κειμένου
-cursor_hand_tool.title=Ενεργοποίηση εργαλείου χεριού
-cursor_hand_tool_label=Εργαλείο χεριού
+pdfjs-tools-button =
+    .title = Εργαλεία
+pdfjs-tools-button-label = Εργαλεία
+pdfjs-first-page-button =
+    .title = Μετάβαση στην πρώτη σελίδα
+pdfjs-first-page-button-label = Μετάβαση στην πρώτη σελίδα
+pdfjs-last-page-button =
+    .title = Μετάβαση στην τελευταία σελίδα
+pdfjs-last-page-button-label = Μετάβαση στην τελευταία σελίδα
+pdfjs-page-rotate-cw-button =
+    .title = Δεξιόστροφη περιστροφή
+pdfjs-page-rotate-cw-button-label = Δεξιόστροφη περιστροφή
+pdfjs-page-rotate-ccw-button =
+    .title = Αριστερόστροφη περιστροφή
+pdfjs-page-rotate-ccw-button-label = Αριστερόστροφη περιστροφή
+pdfjs-cursor-text-select-tool-button =
+    .title = Ενεργοποίηση εργαλείου επιλογής κειμένου
+pdfjs-cursor-text-select-tool-button-label = Εργαλείο επιλογής κειμένου
+pdfjs-cursor-hand-tool-button =
+    .title = Ενεργοποίηση εργαλείου χεριού
+pdfjs-cursor-hand-tool-button-label = Εργαλείο χεριού
+pdfjs-scroll-page-button =
+    .title = Χρήση κύλισης σελίδας
+pdfjs-scroll-page-button-label = Κύλιση σελίδας
+pdfjs-scroll-vertical-button =
+    .title = Χρήση κάθετης κύλισης
+pdfjs-scroll-vertical-button-label = Κάθετη κύλιση
+pdfjs-scroll-horizontal-button =
+    .title = Χρήση οριζόντιας κύλισης
+pdfjs-scroll-horizontal-button-label = Οριζόντια κύλιση
+pdfjs-scroll-wrapped-button =
+    .title = Χρήση κυκλικής κύλισης
+pdfjs-scroll-wrapped-button-label = Κυκλική κύλιση
+pdfjs-spread-none-button =
+    .title = Να μη γίνει σύνδεση επεκτάσεων σελίδων
+pdfjs-spread-none-button-label = Χωρίς επεκτάσεις
+pdfjs-spread-odd-button =
+    .title = Σύνδεση επεκτάσεων σελίδων ξεκινώντας από τις μονές σελίδες
+pdfjs-spread-odd-button-label = Μονές επεκτάσεις
+pdfjs-spread-even-button =
+    .title = Σύνδεση επεκτάσεων σελίδων ξεκινώντας από τις ζυγές σελίδες
+pdfjs-spread-even-button-label = Ζυγές επεκτάσεις
 
-scroll_vertical.title=Χρήση κάθετης κύλισης
-scroll_vertical_label=Κάθετη κύλιση
-scroll_horizontal.title=Χρήση οριζόντιας κύλισης
-scroll_horizontal_label=Οριζόντια κύλιση
-scroll_wrapped.title=Χρήση κυκλικής κύλισης
-scroll_wrapped_label=Κυκλική κύλιση
+## Document properties dialog
 
-spread_none.title=Να μην γίνει σύνδεση επεκτάσεων σελίδων
-spread_none_label=Χωρίς επεκτάσεις
-spread_odd.title=Σύνδεση επεκτάσεων σελίδων ξεκινώντας από τις μονές σελίδες
-spread_odd_label=Μονές επεκτάσεις
-spread_even.title=Σύνδεση επεκτάσεων σελίδων ξεκινώντας από τις ζυγές σελίδες
-spread_even_label=Ζυγές επεκτάσεις
+pdfjs-document-properties-button =
+    .title = Ιδιότητες εγγράφου…
+pdfjs-document-properties-button-label = Ιδιότητες εγγράφου…
+pdfjs-document-properties-file-name = Όνομα αρχείου:
+pdfjs-document-properties-file-size = Μέγεθος αρχείου:
+# Variables:
+#   $size_kb (Number) - the PDF file size in kilobytes
+#   $size_b (Number) - the PDF file size in bytes
+pdfjs-document-properties-kb = { $size_kb } KB ({ $size_b } bytes)
+# Variables:
+#   $size_mb (Number) - the PDF file size in megabytes
+#   $size_b (Number) - the PDF file size in bytes
+pdfjs-document-properties-mb = { $size_mb } MB ({ $size_b } bytes)
+pdfjs-document-properties-title = Τίτλος:
+pdfjs-document-properties-author = Συγγραφέας:
+pdfjs-document-properties-subject = Θέμα:
+pdfjs-document-properties-keywords = Λέξεις-κλειδιά:
+pdfjs-document-properties-creation-date = Ημερομηνία δημιουργίας:
+pdfjs-document-properties-modification-date = Ημερομηνία τροποποίησης:
+# Variables:
+#   $date (Date) - the creation/modification date of the PDF file
+#   $time (Time) - the creation/modification time of the PDF file
+pdfjs-document-properties-date-string = { $date }, { $time }
+pdfjs-document-properties-creator = Δημιουργός:
+pdfjs-document-properties-producer = Παραγωγός PDF:
+pdfjs-document-properties-version = Έκδοση PDF:
+pdfjs-document-properties-page-count = Αριθμός σελίδων:
+pdfjs-document-properties-page-size = Μέγεθος σελίδας:
+pdfjs-document-properties-page-size-unit-inches = ίντσες
+pdfjs-document-properties-page-size-unit-millimeters = mm
+pdfjs-document-properties-page-size-orientation-portrait = κατακόρυφα
+pdfjs-document-properties-page-size-orientation-landscape = οριζόντια
+pdfjs-document-properties-page-size-name-a-three = A3
+pdfjs-document-properties-page-size-name-a-four = A4
+pdfjs-document-properties-page-size-name-letter = Επιστολή
+pdfjs-document-properties-page-size-name-legal = Τύπου Legal
 
-# Document properties dialog box
-document_properties.title=Ιδιότητες εγγράφου…
-document_properties_label=Ιδιότητες εγγράφου…
-document_properties_file_name=Όνομα αρχείου:
-document_properties_file_size=Μέγεθος αρχείου:
-# LOCALIZATION NOTE (document_properties_kb): "{{size_kb}}" and "{{size_b}}"
-# will be replaced by the PDF file size in kilobytes, respectively in bytes.
-document_properties_kb={{size_kb}} KB ({{size_b}} bytes)
-# LOCALIZATION NOTE (document_properties_mb): "{{size_mb}}" and "{{size_b}}"
-# will be replaced by the PDF file size in megabytes, respectively in bytes.
-document_properties_mb={{size_mb}} MB ({{size_b}} bytes)
-document_properties_title=Τίτλος:
-document_properties_author=Συγγραφέας:
-document_properties_subject=Θέμα:
-document_properties_keywords=Λέξεις κλειδιά:
-document_properties_creation_date=Ημερομηνία δημιουργίας:
-document_properties_modification_date=Ημερομηνία τροποποίησης:
-# LOCALIZATION NOTE (document_properties_date_string): "{{date}}" and "{{time}}"
-# will be replaced by the creation/modification date, and time, of the PDF file.
-document_properties_date_string={{date}}, {{time}}
-document_properties_creator=Δημιουργός:
-document_properties_producer=Παραγωγός PDF:
-document_properties_version=Έκδοση PDF:
-document_properties_page_count=Αριθμός σελίδων:
-document_properties_page_size=Μέγεθος σελίδας:
-document_properties_page_size_unit_inches=ίντσες
-document_properties_page_size_unit_millimeters=mm
-document_properties_page_size_orientation_portrait=κατακόρυφα
-document_properties_page_size_orientation_landscape=οριζόντια
-document_properties_page_size_name_a3=A3
-document_properties_page_size_name_a4=A4
-document_properties_page_size_name_letter=Επιστολή
-document_properties_page_size_name_legal=Τύπου Legal
-# LOCALIZATION NOTE (document_properties_page_size_dimension_string):
-# "{{width}}", "{{height}}", {{unit}}, and {{orientation}} will be replaced by
-# the size, respectively their unit of measurement and orientation, of the (current) page.
-document_properties_page_size_dimension_string={{width}} × {{height}} {{unit}} ({{orientation}})
-# LOCALIZATION NOTE (document_properties_page_size_dimension_name_string):
-# "{{width}}", "{{height}}", {{unit}}, {{name}}, and {{orientation}} will be replaced by
-# the size, respectively their unit of measurement, name, and orientation, of the (current) page.
-document_properties_page_size_dimension_name_string={{width}} × {{height}} {{unit}} ({{name}}, {{orientation}})
-# LOCALIZATION NOTE (document_properties_linearized): The linearization status of
-# the document; usually called "Fast Web View" in English locales of Adobe software.
-document_properties_linearized=Ταχεία προβολή ιστού:
-document_properties_linearized_yes=Ναι
-document_properties_linearized_no=Όχι
-document_properties_close=Κλείσιμο
+## Variables:
+##   $width (Number) - the width of the (current) page
+##   $height (Number) - the height of the (current) page
+##   $unit (String) - the unit of measurement of the (current) page
+##   $name (String) - the name of the (current) page
+##   $orientation (String) - the orientation of the (current) page
 
-print_progress_message=Προετοιμασία του εγγράφου για εκτύπωση…
-# LOCALIZATION NOTE (print_progress_percent): "{{progress}}" will be replaced by
-# a numerical per cent value.
-print_progress_percent={{progress}}%
-print_progress_close=Ακύρωση
+pdfjs-document-properties-page-size-dimension-string = { $width } × { $height } { $unit } ({ $orientation })
+pdfjs-document-properties-page-size-dimension-name-string = { $width } × { $height } { $unit } ({ $name }, { $orientation })
 
-# Tooltips and alt text for side panel toolbar buttons
-# (the _label strings are alt text for the buttons, the .title strings are
-# tooltips)
-toggle_sidebar.title=(Απ)ενεργοποίηση πλευρικής στήλης
-toggle_sidebar_notification.title=(Απ)ενεργοποίηση πλευρικής στήλης (το έγγραφο περιέχει περίγραμμα/συνημμένα)
-toggle_sidebar_notification2.title=(Απ)ενεργοποίηση πλευρικής στήλης (το έγγραφο περιέχει περίγραμμα/συνημμένα/επίπεδα)
-toggle_sidebar_label=(Απ)ενεργοποίηση πλευρικής στήλης
-document_outline.title=Εμφάνιση διάρθρωσης εγγράφου (διπλό κλικ για ανάπτυξη/σύμπτυξη όλων των στοιχείων)
-document_outline_label=Διάρθρωση εγγράφου
-attachments.title=Προβολή συνημμένων
-attachments_label=Συνημμένα
-layers.title=Εμφάνιση επιπέδων (διπλό κλικ για επαναφορά όλων των επιπέδων στην προεπιλεγμένη κατάσταση)
-layers_label=Επίπεδα
-thumbs.title=Προβολή μικρογραφιών
-thumbs_label=Μικρογραφίες
-current_outline_item.title=Εύρεση τρέχοντος στοιχείου διάρθρωσης
-current_outline_item_label=Τρέχον στοιχείο διάρθρωσης
-findbar.title=Εύρεση στο έγγραφο
-findbar_label=Εύρεση
+##
 
-additional_layers=Επιπρόσθετα επίπεδα
-# LOCALIZATION NOTE (page_canvas): "{{page}}" will be replaced by the page number.
-page_canvas=Σελίδα {{page}}
-# LOCALIZATION NOTE (page_landmark): "{{page}}" will be replaced by the page number.
-page_landmark=Σελίδα {{page}}
-# Thumbnails panel item (tooltip and alt text for images)
-# LOCALIZATION NOTE (thumb_page_title): "{{page}}" will be replaced by the page
-# number.
-thumb_page_title=Σελίδα {{page}}
-# LOCALIZATION NOTE (thumb_page_canvas): "{{page}}" will be replaced by the page
-# number.
-thumb_page_canvas=Μικρογραφία της σελίδας {{page}}
+# The linearization status of the document; usually called "Fast Web View" in
+# English locales of Adobe software.
+pdfjs-document-properties-linearized = Ταχεία προβολή ιστού:
+pdfjs-document-properties-linearized-yes = Ναι
+pdfjs-document-properties-linearized-no = Όχι
+pdfjs-document-properties-close-button = Κλείσιμο
 
-# Find panel button title and messages
-find_input.title=Εύρεση
-find_input.placeholder=Εύρεση στο έγγραφο…
-find_previous.title=Εύρεση της προηγούμενης εμφάνισης της φράσης
-find_previous_label=Προηγούμενο
-find_next.title=Εύρεση της επόμενης εμφάνισης της φράσης
-find_next_label=Επόμενο
-find_highlight=Επισήμανση όλων
-find_match_case_label=Συμφωνία πεζών/κεφαλαίων
-find_entire_word_label=Ολόκληρες λέξεις
-find_reached_top=Έλευση στην αρχή του εγγράφου, συνέχεια από το τέλος
-find_reached_bottom=Έλευση στο τέλος του εγγράφου, συνέχεια από την αρχή
-# LOCALIZATION NOTE (find_match_count): The supported plural forms are
-# [one|two|few|many|other], with [other] as the default value.
-# "{{current}}" and "{{total}}" will be replaced by a number representing the
-# index of the currently active find result, respectively a number representing
-# the total number of matches in the document.
-find_match_count={[ plural(total) ]}
-find_match_count[one]={{current}} από {{total}} αντιστοιχία
-find_match_count[two]={{current}} από {{total}} αντιστοιχίες
-find_match_count[few]={{current}} από {{total}} αντιστοιχίες
-find_match_count[many]={{current}} από {{total}} αντιστοιχίες
-find_match_count[other]={{current}} από {{total}} αντιστοιχίες
-# LOCALIZATION NOTE (find_match_count_limit): The supported plural forms are
-# [zero|one|two|few|many|other], with [other] as the default value.
-# "{{limit}}" will be replaced by a numerical value.
-find_match_count_limit={[ plural(limit) ]}
-find_match_count_limit[zero]=Περισσότερες από {{limit}} αντιστοιχίες
-find_match_count_limit[one]=Περισσότερες από {{limit}} αντιστοιχία
-find_match_count_limit[two]=Περισσότερες από {{limit}} αντιστοιχίες
-find_match_count_limit[few]=Περισσότερες από {{limit}} αντιστοιχίες
-find_match_count_limit[many]=Περισσότερες από {{limit}} αντιστοιχίες
-find_match_count_limit[other]=Περισσότερες από {{limit}} αντιστοιχίες
-find_not_found=Η φράση δεν βρέθηκε
+## Print
 
-# Error panel labels
-error_more_info=Περισσότερες πληροφορίες
-error_less_info=Λιγότερες πληροφορίες
-error_close=Κλείσιμο
-# LOCALIZATION NOTE (error_version_info): "{{version}}" and "{{build}}" will be
-# replaced by the PDF.JS version and build ID.
-error_version_info=PDF.js v{{version}} (build: {{build}})
-# LOCALIZATION NOTE (error_message): "{{message}}" will be replaced by an
-# english string describing the error.
-error_message=Μήνυμα: {{message}}
-# LOCALIZATION NOTE (error_stack): "{{stack}}" will be replaced with a stack
-# trace.
-error_stack=Στοίβα: {{stack}}
-# LOCALIZATION NOTE (error_file): "{{file}}" will be replaced with a filename
-error_file=Αρχείο: {{file}}
-# LOCALIZATION NOTE (error_line): "{{line}}" will be replaced with a line number
-error_line=Γραμμή: {{line}}
-rendering_error=Προέκυψε σφάλμα κατά την ανάλυση της σελίδας.
+pdfjs-print-progress-message = Προετοιμασία του εγγράφου για εκτύπωση…
+# Variables:
+#   $progress (Number) - percent value
+pdfjs-print-progress-percent = { $progress }%
+pdfjs-print-progress-close-button = Ακύρωση
+pdfjs-printing-not-supported = Προειδοποίηση: Η εκτύπωση δεν υποστηρίζεται πλήρως από το πρόγραμμα περιήγησης.
+pdfjs-printing-not-ready = Προειδοποίηση: Το PDF δεν φορτώθηκε πλήρως για εκτύπωση.
 
-# Predefined zoom values
-page_scale_width=Πλάτος σελίδας
-page_scale_fit=Μέγεθος σελίδας
-page_scale_auto=Αυτόματο ζουμ
-page_scale_actual=Πραγματικό μέγεθος
-# LOCALIZATION NOTE (page_scale_percent): "{{scale}}" will be replaced by a
-# numerical scale value.
-page_scale_percent={{scale}}%
+## Tooltips and alt text for side panel toolbar buttons
 
-# Loading indicator messages
-loading_error_indicator=Σφάλμα
+pdfjs-toggle-sidebar-button =
+    .title = (Απ)ενεργοποίηση πλαϊνής γραμμής
+pdfjs-toggle-sidebar-notification-button =
+    .title = (Απ)ενεργοποίηση πλαϊνής γραμμής (το έγγραφο περιέχει περίγραμμα/συνημμένα/επίπεδα)
+pdfjs-toggle-sidebar-button-label = (Απ)ενεργοποίηση πλαϊνής γραμμής
+pdfjs-document-outline-button =
+    .title = Εμφάνιση διάρθρωσης εγγράφου (διπλό κλικ για ανάπτυξη/σύμπτυξη όλων των στοιχείων)
+pdfjs-document-outline-button-label = Διάρθρωση εγγράφου
+pdfjs-attachments-button =
+    .title = Εμφάνιση συνημμένων
+pdfjs-attachments-button-label = Συνημμένα
+pdfjs-layers-button =
+    .title = Εμφάνιση επιπέδων (διπλό κλικ για επαναφορά όλων των επιπέδων στην προεπιλεγμένη κατάσταση)
+pdfjs-layers-button-label = Επίπεδα
+pdfjs-thumbs-button =
+    .title = Εμφάνιση μικρογραφιών
+pdfjs-thumbs-button-label = Μικρογραφίες
+pdfjs-current-outline-item-button =
+    .title = Εύρεση τρέχοντος στοιχείου διάρθρωσης
+pdfjs-current-outline-item-button-label = Τρέχον στοιχείο διάρθρωσης
+pdfjs-findbar-button =
+    .title = Εύρεση στο έγγραφο
+pdfjs-findbar-button-label = Εύρεση
+pdfjs-additional-layers = Επιπρόσθετα επίπεδα
 
-# Loading indicator messages
-loading=Φόρτωση…
-loading_error=Προέκυψε ένα σφάλμα κατά τη φόρτωση του PDF.
-invalid_file_error=Μη έγκυρο ή κατεστραμμένο αρχείο PDF.
-missing_file_error=Λείπει αρχείο PDF.
-unexpected_response_error=Μη αναμενόμενη απόκριση από το διακομιστή.
+## Thumbnails panel item (tooltip and alt text for images)
 
-# LOCALIZATION NOTE (annotation_date_string): "{{date}}" and "{{time}}" will be
-# replaced by the modification date, and time, of the annotation.
-annotation_date_string={{date}}, {{time}}
+# Variables:
+#   $page (Number) - the page number
+pdfjs-thumb-page-title =
+    .title = Σελίδα { $page }
+# Variables:
+#   $page (Number) - the page number
+pdfjs-thumb-page-canvas =
+    .aria-label = Μικρογραφία σελίδας { $page }
 
-# LOCALIZATION NOTE (text_annotation_type.alt): This is used as a tooltip.
-# "{{type}}" will be replaced with an annotation type from a list defined in
-# the PDF spec (32000-1:2008 Table 169 – Annotation types).
+## Find panel button title and messages
+
+pdfjs-find-input =
+    .title = Εύρεση
+    .placeholder = Εύρεση στο έγγραφο…
+pdfjs-find-previous-button =
+    .title = Εύρεση της προηγούμενης εμφάνισης της φράσης
+pdfjs-find-previous-button-label = Προηγούμενο
+pdfjs-find-next-button =
+    .title = Εύρεση της επόμενης εμφάνισης της φράσης
+pdfjs-find-next-button-label = Επόμενο
+pdfjs-find-highlight-checkbox = Επισήμανση όλων
+pdfjs-find-match-case-checkbox-label = Συμφωνία πεζών/κεφαλαίων
+pdfjs-find-match-diacritics-checkbox-label = Αντιστοίχιση διακριτικών
+pdfjs-find-entire-word-checkbox-label = Ολόκληρες λέξεις
+pdfjs-find-reached-top = Φτάσατε στην αρχή του εγγράφου, συνέχεια από το τέλος
+pdfjs-find-reached-bottom = Φτάσατε στο τέλος του εγγράφου, συνέχεια από την αρχή
+# Variables:
+#   $current (Number) - the index of the currently active find result
+#   $total (Number) - the total number of matches in the document
+pdfjs-find-match-count =
+    { $total ->
+        [one] { $current } από { $total } αντιστοιχία
+       *[other] { $current } από { $total } αντιστοιχίες
+    }
+# Variables:
+#   $limit (Number) - the maximum number of matches
+pdfjs-find-match-count-limit =
+    { $limit ->
+        [one] Περισσότερες από { $limit } αντιστοιχία
+       *[other] Περισσότερες από { $limit } αντιστοιχίες
+    }
+pdfjs-find-not-found = Η φράση δεν βρέθηκε
+
+## Predefined zoom values
+
+pdfjs-page-scale-width = Πλάτος σελίδας
+pdfjs-page-scale-fit = Μέγεθος σελίδας
+pdfjs-page-scale-auto = Αυτόματο ζουμ
+pdfjs-page-scale-actual = Πραγματικό μέγεθος
+# Variables:
+#   $scale (Number) - percent value for page scale
+pdfjs-page-scale-percent = { $scale }%
+
+## PDF page
+
+# Variables:
+#   $page (Number) - the page number
+pdfjs-page-landmark =
+    .aria-label = Σελίδα { $page }
+
+## Loading indicator messages
+
+pdfjs-loading-error = Προέκυψε σφάλμα κατά τη φόρτωση του PDF.
+pdfjs-invalid-file-error = Μη έγκυρο ή κατεστραμμένο αρχείο PDF.
+pdfjs-missing-file-error = Λείπει αρχείο PDF.
+pdfjs-unexpected-response-error = Μη αναμενόμενη απόκριση από το διακομιστή.
+pdfjs-rendering-error = Προέκυψε σφάλμα κατά την εμφάνιση της σελίδας.
+
+## Annotations
+
+# Variables:
+#   $date (Date) - the modification date of the annotation
+#   $time (Time) - the modification time of the annotation
+pdfjs-annotation-date-string = { $date }, { $time }
+# .alt: This is used as a tooltip.
+# Variables:
+#   $type (String) - an annotation type from a list defined in the PDF spec
+# (32000-1:2008 Table 169 – Annotation types).
 # Some common types are e.g.: "Check", "Text", "Comment", "Note"
-text_annotation_type.alt=[{{type}} Σχόλιο]
-password_label=Εισαγωγή κωδικού για το άνοιγμα του PDF αρχείου.
-password_invalid=Μη έγκυρος κωδικός. Προσπαθείστε ξανά.
-password_ok=OK
-password_cancel=Ακύρωση
+pdfjs-text-annotation-type =
+    .alt = [Σχόλιο «{ $type }»]
 
-printing_not_supported=Προειδοποίηση: Η εκτύπωση δεν υποστηρίζεται πλήρως από το πρόγραμμα περιήγησης.
-printing_not_ready=Προειδοποίηση: Το PDF δεν φορτώθηκε πλήρως για εκτύπωση.
-web_fonts_disabled=Οι γραμματοσειρές Web απενεργοποιημένες: αδυναμία χρήσης των ενσωματωμένων γραμματοσειρών PDF.
-# LOCALIZATION NOTE (unsupported_feature_signatures): Should contain the same
-# exact string as in the `chrome.properties` file.
-unsupported_feature_signatures=Αυτό το έγγραφο PDF περιέχει ψηφιακές υπογραφές. Δεν υποστηρίζεται η επαλήθευση υπογραφών.
+## Password
+
+pdfjs-password-label = Εισαγάγετε τον κωδικό πρόσβασης για να ανοίξετε αυτό το αρχείο PDF.
+pdfjs-password-invalid = Μη έγκυρος κωδικός πρόσβασης. Παρακαλώ δοκιμάστε ξανά.
+pdfjs-password-ok-button = OK
+pdfjs-password-cancel-button = Ακύρωση
+pdfjs-web-fonts-disabled = Οι γραμματοσειρές ιστού είναι ανενεργές: δεν είναι δυνατή η χρήση των ενσωματωμένων γραμματοσειρών PDF.
+
+## Editing
+
+pdfjs-editor-free-text-button =
+    .title = Κείμενο
+pdfjs-editor-free-text-button-label = Κείμενο
+pdfjs-editor-ink-button =
+    .title = Σχέδιο
+pdfjs-editor-ink-button-label = Σχέδιο
+pdfjs-editor-stamp-button =
+    .title = Προσθήκη ή επεξεργασία εικόνων
+pdfjs-editor-stamp-button-label = Προσθήκη ή επεξεργασία εικόνων
+pdfjs-editor-highlight-button =
+    .title = Επισήμανση
+pdfjs-editor-highlight-button-label = Επισήμανση
+pdfjs-highlight-floating-button =
+    .title = Επισήμανση
+pdfjs-highlight-floating-button1 =
+    .title = Επισήμανση
+    .aria-label = Επισήμανση
+pdfjs-highlight-floating-button-label = Επισήμανση
+
+## Remove button for the various kind of editor.
+
+pdfjs-editor-remove-ink-button =
+    .title = Αφαίρεση σχεδίου
+pdfjs-editor-remove-freetext-button =
+    .title = Αφαίρεση κειμένου
+pdfjs-editor-remove-stamp-button =
+    .title = Αφαίρεση εικόνας
+pdfjs-editor-remove-highlight-button =
+    .title = Αφαίρεση επισήμανσης
+
+##
+
+# Editor Parameters
+pdfjs-editor-free-text-color-input = Χρώμα
+pdfjs-editor-free-text-size-input = Μέγεθος
+pdfjs-editor-ink-color-input = Χρώμα
+pdfjs-editor-ink-thickness-input = Πάχος
+pdfjs-editor-ink-opacity-input = Αδιαφάνεια
+pdfjs-editor-stamp-add-image-button =
+    .title = Προσθήκη εικόνας
+pdfjs-editor-stamp-add-image-button-label = Προσθήκη εικόνας
+# This refers to the thickness of the line used for free highlighting (not bound to text)
+pdfjs-editor-free-highlight-thickness-input = Πάχος
+pdfjs-editor-free-highlight-thickness-title =
+    .title = Αλλαγή πάχους κατά την επισήμανση στοιχείων εκτός κειμένου
+pdfjs-free-text =
+    .aria-label = Επεξεργασία κειμένου
+pdfjs-free-text-default-content = Ξεκινήστε να πληκτρολογείτε…
+pdfjs-ink =
+    .aria-label = Επεξεργασία σχεδίων
+pdfjs-ink-canvas =
+    .aria-label = Εικόνα από τον χρήστη
+
+## Alt-text dialog
+
+# Alternative text (alt text) helps when people can't see the image.
+pdfjs-editor-alt-text-button-label = Εναλλακτικό κείμενο
+pdfjs-editor-alt-text-edit-button-label = Επεξεργασία εναλλακτικού κειμένου
+pdfjs-editor-alt-text-dialog-label = Διαλέξτε μια επιλογή
+pdfjs-editor-alt-text-dialog-description = Το εναλλακτικό κείμενο είναι χρήσιμο όταν οι άνθρωποι δεν μπορούν να δουν την εικόνα ή όταν αυτή δεν φορτώνεται.
+pdfjs-editor-alt-text-add-description-label = Προσθήκη περιγραφής
+pdfjs-editor-alt-text-add-description-description = Στοχεύστε σε μία ή δύο προτάσεις που περιγράφουν το θέμα, τη ρύθμιση ή τις ενέργειες.
+pdfjs-editor-alt-text-mark-decorative-label = Επισήμανση ως διακοσμητικό
+pdfjs-editor-alt-text-mark-decorative-description = Χρησιμοποιείται για διακοσμητικές εικόνες, όπως περιγράμματα ή υδατογραφήματα.
+pdfjs-editor-alt-text-cancel-button = Ακύρωση
+pdfjs-editor-alt-text-save-button = Αποθήκευση
+pdfjs-editor-alt-text-decorative-tooltip = Επισημασμένο ως διακοσμητικό
+# .placeholder: This is a placeholder for the alt text input area
+pdfjs-editor-alt-text-textarea =
+    .placeholder = Για παράδειγμα, «Ένας νεαρός άνδρας κάθεται σε ένα τραπέζι για να φάει ένα γεύμα»
+
+## Editor resizers
+## This is used in an aria label to help to understand the role of the resizer.
+
+pdfjs-editor-resizer-label-top-left = Επάνω αριστερή γωνία — αλλαγή μεγέθους
+pdfjs-editor-resizer-label-top-middle = Μέσο επάνω πλευράς — αλλαγή μεγέθους
+pdfjs-editor-resizer-label-top-right = Επάνω δεξιά γωνία — αλλαγή μεγέθους
+pdfjs-editor-resizer-label-middle-right = Μέσο δεξιάς πλευράς — αλλαγή μεγέθους
+pdfjs-editor-resizer-label-bottom-right = Κάτω δεξιά γωνία — αλλαγή μεγέθους
+pdfjs-editor-resizer-label-bottom-middle = Μέσο κάτω πλευράς — αλλαγή μεγέθους
+pdfjs-editor-resizer-label-bottom-left = Κάτω αριστερή γωνία — αλλαγή μεγέθους
+pdfjs-editor-resizer-label-middle-left = Μέσο αριστερής πλευράς — αλλαγή μεγέθους
+
+## Color picker
+
+# This means "Color used to highlight text"
+pdfjs-editor-highlight-colorpicker-label = Χρώμα επισήμανσης
+pdfjs-editor-colorpicker-button =
+    .title = Αλλαγή χρώματος
+pdfjs-editor-colorpicker-dropdown =
+    .aria-label = Επιλογές χρωμάτων
+pdfjs-editor-colorpicker-yellow =
+    .title = Κίτρινο
+pdfjs-editor-colorpicker-green =
+    .title = Πράσινο
+pdfjs-editor-colorpicker-blue =
+    .title = Μπλε
+pdfjs-editor-colorpicker-pink =
+    .title = Ροζ
+pdfjs-editor-colorpicker-red =
+    .title = Κόκκινο
+
+## Show all highlights
+## This is a toggle button to show/hide all the highlights.
+
+pdfjs-editor-highlight-show-all-button-label = Εμφάνιση όλων
+pdfjs-editor-highlight-show-all-button =
+    .title = Εμφάνιση όλων
