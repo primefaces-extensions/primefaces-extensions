@@ -110,6 +110,9 @@ public class InputPhoneRenderer extends InputRenderer {
         if (country == null || InputPhone.COUNTRY_AUTO.equals(country)) {
             country = Constants.EMPTY_STRING;
         }
+        else {
+            inputPhone.setInitialCountry(country);
+        }
         if (PrimeExtensionsEnvironment.getCurrentInstance(context).isLibphonenumberAvailable()) {
             PhoneNumberUtilWrapper.validate(value, country.toUpperCase(), inputPhone.getValidatorMessage());
         }

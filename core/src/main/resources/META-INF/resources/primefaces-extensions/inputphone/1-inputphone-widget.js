@@ -50,7 +50,7 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
      * @param {PrimeFaces.PartialWidgetCfg<TCfg>} cfg
      */
     refresh: function(cfg) {
-        //this._remove();
+        this._remove();
         this._super(cfg);
     },
 
