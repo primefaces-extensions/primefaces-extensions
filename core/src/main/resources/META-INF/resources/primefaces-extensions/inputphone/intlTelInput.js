@@ -1639,8 +1639,11 @@
                     this.telInput.removeAttribute("data-intl-tel-input-id");
                     // remove markup (but leave the original input)
                     var wrapper = this.telInput.parentNode;
-                    wrapper.parentNode.insertBefore(this.telInput, wrapper);
-                    wrapper.parentNode.removeChild(wrapper);
+                    if (wrapper && wrapper.parentNode) {
+                        wrapper.parentNode.insertBefore(this.telInput, wrapper);
+                        wrapper.parentNode.removeChild(wrapper);
+                    }
+
                     delete window.intlTelInputGlobals.instances[this.id];
                 }
             }, {

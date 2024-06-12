@@ -44,6 +44,7 @@ public class BasicInputPhoneController implements Serializable {
     private static final long serialVersionUID = 1L;
     private String phoneNumber;
     private Map<String, String> localizedCountries;
+    private boolean rendered;
 
     @PostConstruct
     protected void init() {
@@ -51,6 +52,7 @@ public class BasicInputPhoneController implements Serializable {
         localizedCountries.put("nl", "Nederland");
         localizedCountries.put("be", "België");
         localizedCountries.put("de", "Duitsland");
+        rendered = true;
     }
 
     public void onCountrySelect(final SelectEvent<Country> event) {
@@ -64,6 +66,12 @@ public class BasicInputPhoneController implements Serializable {
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Phone Number  " + phoneNumber, null));
     }
 
+    public void destroy() {
+        setRendered(false);
+        FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_WARN, "Destroyed", null));
+    }
+
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -74,6 +82,14 @@ public class BasicInputPhoneController implements Serializable {
 
     public Map<String, String> getLocalizedCountries() {
         return localizedCountries;
+    }
+
+    public boolean isRendered() {
+        return rendered;
+    }
+
+    public void setRendered(boolean rendered) {
+        this.rendered = rendered;
     }
 
 }

@@ -9,13 +9,17 @@
         <p:autoUpdate />
     </p:growl>
 
+    <p:outputPanel id="pnlPhone" styleClass="mb-2">
     <pe:inputPhone id="txtPhone" 
                    initialCountry="us"
                    value="#{basicInputPhoneController.phoneNumber}"
                    formatOnDisplay="true"
+                   rendered="#{basicInputPhoneController.rendered}"
                    dir="ltr">
         <p:ajax event="countrySelect" listener="#{basicInputPhoneController.onCountrySelect}"/>
     </pe:inputPhone>
-    <p:commandButton value="Submit" update="txtPhone" actionListener="#{basicInputPhoneController.submit}" styleClass="ml-2" />
+    </p:outputPanel>
+    <p:commandButton value="Submit" update="pnlPhone" actionListener="#{basicInputPhoneController.submit}"  />
+    <p:commandButton value="Destroy" update="pnlPhone" actionListener="#{basicInputPhoneController.destroy}" styleClass="ml-2" />
 <!-- EXAMPLE-SOURCE-END -->
 </ui:composition>
