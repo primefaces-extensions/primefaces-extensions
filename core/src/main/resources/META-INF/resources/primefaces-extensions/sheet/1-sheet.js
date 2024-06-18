@@ -92,6 +92,9 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
             },
             cells: function (row, col, prop) {
                 var cp = {};
+                if (col < 0) {
+                    return cp;
+                }
                 var column = $this.cfg.columns[col];
                 if (column.type === 'password') {
                     cp.renderer = this.passwordCellRenderer;
