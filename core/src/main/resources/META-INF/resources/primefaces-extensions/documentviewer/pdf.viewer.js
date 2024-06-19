@@ -16368,7 +16368,7 @@ const PDFWorkerUtil = {
 {
   if (isNodeJS) {
     PDFWorkerUtil.isWorkerDisabled = true;
-    GlobalWorkerOptions.workerSrc ||= "./pdf.worker.mjs";
+    GlobalWorkerOptions.workerSrc ||= "./pdf.worker.js";
   }
   PDFWorkerUtil.isSameOrigin = function (baseUrl, otherUrl) {
     let base;
@@ -29027,7 +29027,9 @@ const defaultOptions = {
     kind: OptionKind.WORKER
   },
   workerSrc: {
-    value: "../build/pdf.worker.mjs",
+    value: window.parent.PrimeFaces.resources.getFacesResource('documentviewer/pdf.worker.js',
+        window.parent.PrimeFacesExt.RESOURCE_LIBRARY,
+        window.parent.PrimeFacesExt.VERSION),
     kind: OptionKind.WORKER
   }
 };
@@ -29037,7 +29039,9 @@ const defaultOptions = {
     kind: OptionKind.VIEWER
   };
   defaultOptions.sandboxBundleSrc = {
-    value: "../build/pdf.sandbox.mjs",
+      value: window.parent.PrimeFaces.resources.getFacesResource('documentviewer/pdf.sandbox.js',
+          window.parent.PrimeFacesExt.RESOURCE_LIBRARY,
+          window.parent.PrimeFacesExt.VERSION),
     kind: OptionKind.VIEWER
   };
   defaultOptions.viewerCssTheme = {
