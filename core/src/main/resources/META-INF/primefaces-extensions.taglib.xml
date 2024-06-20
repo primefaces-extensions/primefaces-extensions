@@ -4,7 +4,9 @@
                 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facelettaglibrary_2_2.xsd"
                 version="2.2">
 
+    <description>PrimeFaces Extensions UI components.</description>
     <namespace>http://primefaces.org/ui/extensions</namespace>
+    <short-name>pe</short-name>
 
     <!-- Functions -->
     <function>
@@ -20,6 +22,9 @@
 
     <!-- Converters -->
     <tag>
+        <description>
+            <![CDATA[Converter to convert JSON.]]>
+        </description>
         <tag-name>convertJson</tag-name>
         <converter>
             <converter-id>org.primefaces.extensions.converter.JsonConverter</converter-id>
@@ -34,6 +39,9 @@
         </attribute>
     </tag>
     <tag>
+        <description>
+            <![CDATA[Converter to convert an ISO Locale.]]>
+        </description>
         <tag-name>convertLocale</tag-name>
         <converter>
             <converter-id>org.primefaces.extensions.converter.LocaleConverter</converter-id>
@@ -48,6 +56,9 @@
         </attribute>
     </tag>
     <tag>
+        <description>
+            <![CDATA[Converter to sanitize HTML with an OWASP PolicyFactory.]]>
+        </description>
         <tag-name>sanitizer</tag-name>
         <converter>
             <converter-id>org.primefaces.extensions.converter.SanitizingConverter</converter-id>
@@ -72,6 +83,9 @@
 
     <!-- Behaviors -->
     <tag>
+        <description>
+            <![CDATA[Behavior to intercept a Javascript event to prevent the AJAX from firing.]]>
+        </description>
         <tag-name>javascript</tag-name>
         <behavior>
             <behavior-id>org.primefaces.extensions.behavior.JavascriptBehavior</behavior-id>
@@ -3534,7 +3548,7 @@
         </attribute>
     </tag>
     <tag>
-        <description><![CDATA["Fast SublimeText-like fuzzy search for JavaScript."]]></description>
+        <description><![CDATA[Fast SublimeText-like fuzzy search for JavaScript.]]></description>
         <tag-name>fuzzySearch</tag-name>
         <component>
             <component-type>org.primefaces.extensions.component.FuzzySearch</component-type>
@@ -3739,6 +3753,9 @@
         </attribute>
     </tag>
     <tag>
+        <description>
+            <![CDATA[Custom HTML head renderer.]]>
+        </description>
         <tag-name>head</tag-name>
         <component>
             <component-type>org.primefaces.extensions.component.Head</component-type>
@@ -5200,6 +5217,9 @@
         </attribute>
     </tag>
     <tag>
+        <description>
+            <![CDATA[A single level for the Master Detail component.]]>
+        </description>
         <tag-name>masterDetailLevel</tag-name>
         <component>
             <component-type>org.primefaces.extensions.component.MasterDetailLevel</component-type>
@@ -5263,6 +5283,9 @@
         </attribute>
     </tag>
     <tag>
+        <description>
+            <![CDATA[Tag handler for selecting a master detail level.]]>
+        </description>
         <tag-name>selectDetailLevel</tag-name>
         <handler-class>org.primefaces.extensions.component.masterdetail.SelectDetailLevelTagHandler</handler-class>
         <attribute>
@@ -5324,7 +5347,7 @@
     </tag>
     <tag>
         <description>
-            <![CDATA[blockUI blocks any piece of page during various Ajax calls.]]>
+            <![CDATA[BlockUI blocks any piece of page during various Ajax calls.]]>
         </description>
         <tag-name>blockUI</tag-name>
         <component>
@@ -6104,7 +6127,7 @@
     </tag>
     <tag>
         <description>
-            <![CDATA[]]>
+            <![CDATA[Tri-State multiple checkbox component.]]>
         </description>
         <tag-name>triStateManyCheckbox</tag-name>
         <component>
@@ -6750,6 +6773,9 @@
         </attribute>
     </tag>
     <tag>
+        <description>
+            <![CDATA[PDF Viewer based on Mozilla PDF.js to display PDF documents in browser.]]>
+        </description>
         <tag-name>documentViewer</tag-name>
         <component>
             <component-type>org.primefaces.extensions.component.DocumentViewer</component-type>
@@ -10574,6 +10600,9 @@ See showcase for an example. Default null.]]>
     </tag>
 
     <tag>
+        <description>
+            <![CDATA[Tag Handler for saving a cookie policy.]]>
+        </description>
         <tag-name>saveCookiePolicy</tag-name>
         <handler-class>org.primefaces.extensions.component.cookiepolicy.CookiePolicySaveTagHandler</handler-class>
         <attribute>
