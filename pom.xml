@@ -113,7 +113,7 @@
         <morphia.version>2.4.14</morphia.version>
         <junit.version>5.10.2</junit.version>
         <primefaces.core.version>14.0.1</primefaces.core.version>
-        <primefaces.optimizer.version>2.6.3</primefaces.optimizer.version>
+        <primefaces.optimizer.version>2.6.4</primefaces.optimizer.version>
         <withoutCompress>true</withoutCompress>
     </properties>
     <dependencyManagement>
