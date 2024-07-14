@@ -75,14 +75,15 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
     },
 
     bindEvents: function () {
-        var $this = this;
+        let $this = this;
 
         this.input.addEventListener('countrychange', function () {
-            var country = $this.iti.getSelectedCountryData();
+            let country = $this.iti.getSelectedCountryData();
             $this.inputIso2Jq.val(country.iso2);
             $this.inputHiddenJq.val($this.getNumber());
             if ($this.hasBehavior('countrySelect')) {
-                var ext = {
+                let options = {
+                    process: '@none',
                     params: [{
                         name: $this.id + '_name',
                         value: country.name
@@ -94,7 +95,7 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
                         value: country.dialCode
                     }]
                 };
-                $this.callBehavior('countrySelect', ext);
+                $this.callBehavior('countrySelect', options);
             }
         });
 
