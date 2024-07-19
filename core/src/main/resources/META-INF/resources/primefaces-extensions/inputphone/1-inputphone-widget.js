@@ -14,33 +14,10 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
      */
     init: function (cfg) {
         this._super(cfg);
-        this.id = cfg.id;
-        this.cfg = cfg;
         this.disabled = cfg.disabled;
 
-        // JQuery inputs
-        this.inputJq = $(this.jqId + '_input');
-        this.inputIso2Jq = $(this.jqId + '_iso2');
-        this.inputHiddenJq = $(this.jqId + '_hidden');
-
-        // pfs metadata
-        this.inputJq.data(PrimeFaces.CLIENT_ID_DATA, this.id);
-
-        // style disabled if necessary
-        if (this.disabled) {
-            this.inputJq.attr("disabled", "disabled");
-            this.inputJq.addClass("ui-state-disabled");
-            this.inputIso2Jq.attr("disabled", "disabled");
-            this.inputHiddenJq.attr("disabled", "disabled");
-        }
-
-        // visual effects
-        PrimeFaces.skinInput(this.inputJq);
-
-        // component creation
-        this.input = this.inputJq[0];
-        this.iti = intlTelInput(this.input, cfg);
-
+        this.bindInputs();
+        this.bindComponent();
         this.bindEvents();
     },
 
@@ -69,8 +46,62 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
      */
     _remove: function() {
         if (this.iti) {
+            this.currentCountry = this.inputIso2Jq.val();
             this.iti.destroy();
             this.iti = null;
+        }
+    },
+
+    /**
+     * Binds the input elements to jQuery objects and sets up metadata.
+     *
+     * This method initializes jQuery objects for the input elements based on their IDs.
+     * It also assigns data for PrimeFaces metadata to the main input element.
+     */
+    bindInputs: function () {
+        // JQuery inputs
+        this.inputJq = $(this.jqId + '_input');
+        this.input = this.inputJq[0];
+        this.inputIso2Jq = $(this.jqId + '_iso2');
+        this.inputHiddenJq = $(this.jqId + '_hidden');
+
+        // pfs metadata
+        this.inputJq.data(PrimeFaces.CLIENT_ID_DATA, this.id);
+
+        // now add visual effects to inputs
+        this.bindVisualEffects();
+    },
+
+    /**
+     * Binds and initializes the component.
+     *
+     * This method sets the initial country configuration if it's defined.
+     * It then creates and initializes the international telephone input component.
+     */
+    bindComponent: function () {
+        // #1623 Initial country can be set back accidentally to original if AJAX validation issue
+        if (this.currentCountry) {
+            this.cfg.initialCountry = this.currentCountry;
+        }
+
+        // component creation
+        this.iti = intlTelInput(this.input, this.cfg);
+    },
+
+    /**
+     * Renders the disabled state for the input elements.
+     * If the component is marked as disabled, it disables the relevant input elements
+     * and adds a CSS class to indicate the disabled state.
+     */
+    bindVisualEffects: function () {
+        // visual effects
+        PrimeFaces.skinInput(this.inputJq);
+
+        if (this.disabled) {
+            this.inputJq.attr("disabled", "disabled");
+            this.inputJq.addClass("ui-state-disabled");
+            this.inputIso2Jq.attr("disabled", "disabled");
+            this.inputHiddenJq.attr("disabled", "disabled");
         }
     },
 
@@ -121,10 +152,7 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
      * Get the current number in the given format.
      */
     getNumber: function () {
-        if (this.iti) {
-            return this.iti.getNumber();
-        }
-        return '';
+        return this.iti ? this.iti.getNumber() : '';
     },
 
     /**
@@ -145,10 +173,7 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
      * Get the country data for the currently selected flag.
      */
     getCountry: function () {
-        if (this.iti) {
-            return this.iti.getSelectedCountryData();
-        }
-        return '';
+        return this.iti ? this.iti.getSelectedCountryData() : '';
     },
 
     /**
