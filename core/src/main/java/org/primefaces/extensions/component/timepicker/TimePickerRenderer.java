@@ -118,7 +118,7 @@ public class TimePickerRenderer extends InputRenderer {
                         e);
         }
         catch (final Exception e) {
-            throw new ConverterException(e);
+            throw new ConverterException(e.getMessage(), e);
         }
     }
 
@@ -324,7 +324,18 @@ public class TimePickerRenderer extends InputRenderer {
     }
 
     protected String getPattern(final TimePicker timepicker) {
-        return timepicker.isShowPeriod() ? timepicker.getTimePattern12() : timepicker.getTimePattern24();
+        if (!timepicker.isShowMinutes()) {
+            return timepicker.getTimePatternWithoutMinutes();
+        }
+        else if (!timepicker.isShowHours()) {
+            return timepicker.getTimePatternWithoutHours();
+        }
+        else if (timepicker.isShowPeriod()) {
+            return timepicker.getTimePattern12();
+        }
+        else {
+            return timepicker.getTimePattern24();
+        }
     }
 
     protected DateTimeFormatter getDateTimeFormatter(final TimePicker timepicker) {
