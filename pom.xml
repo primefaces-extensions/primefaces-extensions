@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.primefaces.extensions</groupId>
     <artifactId>primefaces-extensions-parent</artifactId>
-    <version>14.0.2</version>
+    <version>14.0.3-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>PrimeFaces Extensions Parent</name>
     <description>
@@ -483,8 +483,8 @@
                     <artifactId>frontend-maven-plugin</artifactId>
                     <version>1.15.0</version>
                     <configuration>
-                        <nodeVersion>v18.8.0</nodeVersion>
-                        <npmVersion>8.19.1</npmVersion>
+                        <nodeVersion>v20.14.0</nodeVersion>
+                        <npmVersion>10.7.0</npmVersion>
                         <installDirectory>${main.basedir}/target/node</installDirectory>
                     </configuration>
                 </plugin>
