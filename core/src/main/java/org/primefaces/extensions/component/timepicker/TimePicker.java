@@ -442,6 +442,14 @@ public class TimePicker extends AbstractPrimeHtmlInputText implements Widget, In
         }
     }
 
+    public String getTimePatternWithoutHours() {
+        return "mm";
+    }
+
+    public String getTimePatternWithoutMinutes() {
+        return "HH";
+    }
+
     public String getTimePattern24() {
         return "HH" + getTimeSeparator() + "mm";
     }
