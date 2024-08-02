@@ -62,9 +62,9 @@ public class QRCodeRenderer extends CoreRenderer {
                     .attr("text", qrCode.getText())
                     .attr("radius", qrCode.getRadius())
                     .attr("quiet", qrCode.getQuiet())
-                    .attr("mSize", qrCode.getMSize())
-                    .attr("mPosX", qrCode.getMPosX())
-                    .attr("mPosY", qrCode.getMPosY())
+                    .attr("mSize", qrCode.getLabelSize())
+                    .attr("mPosX", qrCode.getLabelPosX())
+                    .attr("mPosY", qrCode.getLabelPosY())
                     .attr(Attrs.LABEL, qrCode.getLabel())
                     .attr("fontname", qrCode.getFontName())
                     .attr("fontcolor", qrCode.getFontColor());

@@ -6734,7 +6734,7 @@
             <description>
                 <![CDATA[Label size percentage. Default value is 0.1]]>
             </description>
-            <name>mSize</name>
+            <name>labelSize</name>
             <required>false</required>
             <type>java.lang.Double</type>
         </attribute>
@@ -6742,7 +6742,7 @@
             <description>
                 <![CDATA[Label relative Y position. Default value is 0.5]]>
             </description>
-            <name>mPosX</name>
+            <name>labelPosX</name>
             <required>false</required>
             <type>java.lang.Double</type>
         </attribute>
@@ -6750,7 +6750,7 @@
             <description>
                 <![CDATA[Label relative Y position. Default value is 0.5]]>
             </description>
-            <name>mPosY</name>
+            <name>labelPosY</name>
             <required>false</required>
             <type>java.lang.Double</type>
         </attribute>
