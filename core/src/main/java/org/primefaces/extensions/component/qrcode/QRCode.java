@@ -61,9 +61,9 @@ public class QRCode extends UIOutput implements Widget {
         text,
         radius,
         quiet,
-        mSize,
-        mPosX,
-        mPosY,
+        labelSize,
+        labelPosX,
+        labelPosY,
         label,
         fontName,
         fontColor,
@@ -217,28 +217,28 @@ public class QRCode extends UIOutput implements Widget {
         getStateHelper().put(PropertyKeys.fontName, fontColor);
     }
 
-    public Double getMPosX() {
-        return (Double) getStateHelper().eval(PropertyKeys.mPosX, 0.5d);
+    public Double getLabelPosX() {
+        return (Double) getStateHelper().eval(PropertyKeys.labelPosX, 0.5d);
     }
 
-    public void setMPosX(final Double mPosX) {
-        getStateHelper().put(PropertyKeys.mPosX, mPosX);
+    public void setLabelPosX(final Double labelPosX) {
+        getStateHelper().put(PropertyKeys.labelPosX, labelPosX);
     }
 
-    public Double getMPosY() {
-        return (Double) getStateHelper().eval(PropertyKeys.mPosY, 0.5d);
+    public Double getLabelPosY() {
+        return (Double) getStateHelper().eval(PropertyKeys.labelPosY, 0.5d);
     }
 
-    public void setMPosY(final Double mPosY) {
-        getStateHelper().put(PropertyKeys.mPosY, mPosY);
+    public void setLabelPosY(final Double labelPosY) {
+        getStateHelper().put(PropertyKeys.labelPosY, labelPosY);
     }
 
-    public Double getMSize() {
-        return (Double) getStateHelper().eval(PropertyKeys.mSize, 0.1d);
+    public Double getLabelSize() {
+        return (Double) getStateHelper().eval(PropertyKeys.labelSize, 0.1d);
     }
 
-    public void setMSize(final Double mSize) {
-        getStateHelper().put(PropertyKeys.mSize, mSize);
+    public void setLabelSize(final Double labelSize) {
+        getStateHelper().put(PropertyKeys.labelSize, labelSize);
     }
 
     public String getStyle() {
