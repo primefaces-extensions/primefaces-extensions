@@ -34,6 +34,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import org.primefaces.context.PrimeRequestContext;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.extensions.util.ExtLangUtils;
 import org.primefaces.model.StreamedContent;
@@ -54,6 +55,12 @@ public class DocumentViewerRenderer extends CoreRenderer {
 
     @Override
     public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
+        boolean hideResourceVersion = PrimeRequestContext.getCurrentInstance(context).isHideResourceVersion();
+        if (hideResourceVersion) {
+            logDevelopmentWarning(context, "DocumentViewer requires a resource version to work properly and '" +
+                        Constants.ContextParams.HIDE_RESOURCE_VERSION + "' is currently configured.");
+        }
+
         final DocumentViewer documentViewer = (DocumentViewer) component;
         encodeMarkup(context, documentViewer);
     }
