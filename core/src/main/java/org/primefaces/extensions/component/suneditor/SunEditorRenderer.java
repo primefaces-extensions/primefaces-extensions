@@ -97,7 +97,8 @@ public class SunEditorRenderer extends InputRenderer {
 
         String valueToRender = sanitizeHtml(context, editor, ComponentUtils.getValueToRender(context, editor));
         if (valueToRender != null) {
-            writer.write(valueToRender);
+            // #1639 do not escape as its already been sanitized above, and we want to keep exact formatting
+            writer.writeText(valueToRender, "value");
         }
 
         writer.endElement("textarea");
