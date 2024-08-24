@@ -14,17 +14,17 @@
   "dependencies": {
     "cross-spawn": "^7.0.3",
     "insane": "^2.6.2",
-    "monaco-editor": "^0.47.0"
+    "monaco-editor": "^0.50.0"
   },
   "devDependencies": {
     "@types/cross-spawn": "^6.0.6",
     "@types/jquery": "^3.5.30",
-    "css-loader": "^6.7.1",
+    "css-loader": "^7.1.2",
     "mkdirp": "^3.0.1",
     "ncp": "^2.0.0",
     "recursive-readdir": "^2.2.3",
     "rimraf": "^6.0.1",
-    "style-loader": "^3.3.4",
+    "style-loader": "^4.0.0",
     "terser-webpack-plugin": "^5.3.10",
     "typescript": "^5.5.4",
     "webpack": "^5.94.0",
