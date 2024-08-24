@@ -189,6 +189,18 @@ async function main() {
         [Doc()]: "Relative size of the font in the minimap. Defaults to {@code 1}.",
         scale: T_Number(),
 
+        [Doc()]: "Font size of section headers. Defaults to {@code 9}.",
+        sectionHeaderFontSize: T_Number(),
+
+        [Doc()]: "Spacing between the section header characters (in CSS px). Defaults to {@code 1}.",
+        sectionHeaderLetterSpacing: T_Number(),
+
+        [Doc()]: "Whether to show MARK: comments as section headers. Defaults to {@code true}.",
+        showMarkSectionHeaders: T_Boolean(),
+
+        [Doc()]: "Whether to show named regions as section headers. Defaults to {@code true}.",
+        showRegionSectionHeaders: T_Boolean(),
+
         [Doc()]: "Control the rendering of the minimap slider. Defaults to {@code mouseover}.",
         showSlider: T_Enum("EMinimapShowSlider",
             "Control the rendering of the minimap slider. Defaults to {@code mouseover}.",
@@ -576,6 +588,9 @@ async function main() {
         [Doc()]: "Compute the diff by ignoring leading/trailing whitespace Defaults to {@code true}.",
         ignoreTrimWhitespace: T_Boolean(),
 
+        [Doc()]: "Indicates if the gutter menu should be rendered.",
+        renderGutterMenu: T_Boolean(),
+
         [Doc()]: "Render +/- indicators for added/deleted changes. Defaults to {@code true}.",
         renderIndicators: T_Boolean(),
 
@@ -698,6 +713,7 @@ async function main() {
             "tcl",
             "twig",
             "typescript",
+            "typespec",
             "vb",
             "verilog",
             "xml",
@@ -1147,6 +1163,8 @@ async function main() {
         [Doc()]: "Copying without a selection copies the current line",
         emptySelectionClipboard: T_Boolean(),
 
+        experimentalInlineEdit: T_Boolean(),
+
         [Doc()]: "Display overflow widgets as {@code fixed}. Defaults to {@code false}",
         fixedOverflowWidgets: T_Boolean(),
 
@@ -1176,6 +1194,9 @@ async function main() {
 
         [Doc()]: "Should the cursor be hidden in the overview ruler. Defaults to {@code false}",
         hideCursorInOverviewRuler: T_Boolean(),
+
+        [Doc()]: "Controls whether the accessibility hint should be provided to screen reader users when an inline completion is shown.",
+        inlineCompletionsAccessibilityVerbose: T_Boolean(),
 
         [Doc()]: "Special handling for large files to disable certain memory intensive features. Defaults to {@code true}.",
         largeFileOptimizations: T_Boolean(),
@@ -1348,6 +1369,9 @@ async function main() {
 
         [Doc()]: "The font family",
         fontFamily: T_String(),
+
+        [Doc()]: "Locales used for segmenting lines into words when doing word related navigations or operations.<p>Specify the BCP 47 language tag of the word you wish to recognize (e.g., ja, zh-CN, zh-Hant-TW, etc.). Defaults to empty array",
+        wordSegmenterLocales: T_Array(T_String()),
 
         [Doc()]: "A string containing the word separators used when doing word navigation. Defaults to `~!@#$%^&*()-=+[{]}\|;:'\",.<>/?",
         wordSeparators: T_String(),
