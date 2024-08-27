@@ -68,7 +68,7 @@ window.monacoModule = window.monacoModule || {};
      * @param {Partial<TExtender>} extender 
      */
     constructor(extender) {
-      if (window.MonacoEnvironment.InstanceId === undefined) {
+      if (window.MonacoEnvironment?.InstanceId === undefined) {
         throw new Error("IllegalState: No MonacoEnvironment.InstanceId available");
       }
 
@@ -231,7 +231,7 @@ window.monacoModule = window.monacoModule || {};
     }
 
     /**
-     * @template {PrimeFaces.MatchingKeys<TEditor, (...args: never[]) => unknown>} K
+     * @template {PrimeFaces.KeysMatchingCondition<TEditor, (...args: never[]) => unknown>} K
      * @param {K} method
      * @param {PrimeFaces.widget.ExtMonacoEditor.ParametersIfFn<TEditor[K]>} args
      * @returns {Promise<Awaited<PrimeFaces.widget.ExtMonacoEditor.ReturnTypeIfFn<TEditor[K]>>>}

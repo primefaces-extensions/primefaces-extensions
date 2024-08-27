@@ -209,7 +209,7 @@ window.monacoModule = window.monacoModule || {};
     }
 
     /**
-     * @template {PrimeFaces.MatchingKeys<TEditor, (...args: never[]) => unknown>} K
+     * @template {PrimeFaces.KeysMatchingCondition<TEditor, (...args: never[]) => unknown>} K
      * @param {K} method
      * @param {PrimeFaces.widget.ExtMonacoEditor.ParametersIfFn<TEditor[K]>} args
      * @returns {Promise<Awaited<PrimeFaces.widget.ExtMonacoEditor.ReturnTypeIfFn<TEditor[K]>>>}

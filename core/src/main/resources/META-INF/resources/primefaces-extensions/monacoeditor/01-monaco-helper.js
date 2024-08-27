@@ -328,7 +328,6 @@ window.monacoModule.helper = (function () {
         : undefined
     });
 
-
     // XHTML attribute takes precedence over the editor options
     const originalDisabled = opts.originalDisabled !== undefined
       ? opts.originalDisabled
@@ -339,6 +338,7 @@ window.monacoModule.helper = (function () {
     const baseEditorOptions = {
       domReadOnly: opts.readonly || opts.disabled,
       readOnly: opts.readonly || opts.disabled,
+      placeholder: opts.placeholder,
       originalEditable: !originalDisabled && !originalReadonly,
     };
 
@@ -406,6 +406,7 @@ window.monacoModule.helper = (function () {
     const baseEditorOptions = {
       domReadOnly: defaultIfNullish(opts.readonly, false) || defaultIfNullish(opts.disabled, false),
       model: model,
+      placeholder: opts.placeholder,
       readOnly: defaultIfNullish(opts.readonly, false) || defaultIfNullish(opts.disabled, false),
     };
     const editorOptions = assign(baseEditorOptions, incomingEditorOptions);
@@ -568,7 +569,7 @@ window.monacoModule.helper = (function () {
 
   /**
    * @template {import("monaco-editor").editor.IEditor} TEditor
-   * @template {PrimeFaces.MatchingKeys<TEditor, (...args: never[]) => unknown>} K
+   * @template {PrimeFaces.KeysMatchingCondition<TEditor, (...args: never[]) => unknown>} K
    * @param {K} method
    * @param {TEditor} editor
    * @param {PrimeFaces.widget.ExtMonacoEditor.ParametersIfFn<TEditor[K]>} args
@@ -584,7 +585,7 @@ window.monacoModule.helper = (function () {
         return await fn.apply(editor, args);
       }
       else {
-        throw new Error(`Method ${method} does not exist on the editor.`);
+        throw new Error(`Method ${String(method)} does not exist on the editor.`);
       }
     }
     else {
@@ -682,6 +683,7 @@ window.monacoModule.helper = (function () {
     extender: undefined,
     extension: "",
     language: "plaintext",
+    placeholder: "",
     scheme: "inmemory",
     tabIndex: undefined,
     readonly: false,
