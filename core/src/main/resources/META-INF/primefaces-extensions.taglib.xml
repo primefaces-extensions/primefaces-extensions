@@ -1156,6 +1156,14 @@
         </attribute>
         <attribute>
             <description>
+                <![CDATA[Sets a placeholder for the editor. If set, the placeholder is shown if the editor is empty.]]>
+            </description>
+            <name>placeholder</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
                 <![CDATA[Defines if the modified editor is readonly. This option makes the UI not editable, but still
                 accepts values that are submitted (e.g. when the editor value was changed via JavaScript). Use
                 <code>disabled</code> if submitted values should not be accepted.]]>
@@ -1790,6 +1798,14 @@
             <name>converter</name>
             <required>false</required>
             <type>javax.faces.convert.Converter</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Sets a placeholder for the editor. If set, the placeholder is shown if the editor is empty.]]>
+            </description>
+            <name>placeholder</name>
+            <required>false</required>
+            <type>java.lang.String</type>
         </attribute>
         <attribute>
             <description>
