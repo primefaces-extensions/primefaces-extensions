@@ -22,12 +22,16 @@ interface Window {
   /**
    * Monaco editor environment, which contains the locale and some factory functions.
    */
-  MonacoEnvironment: import("monaco-editor").Environment;
+  MonacoEnvironment?: import("monaco-editor").Environment | undefined;
 }
 
 // === Monaco editor widget
 
 declare namespace PrimeFaces {
+  type KeysMatchingCondition<Base, Condition> = Exclude<{
+    [Key in keyof Base]: Base[Key] extends Condition ? Key : never;
+  }[keyof Base], undefined>;
+  
   namespace widget {
     namespace ExtMonacoEditor {
       // === General helper types
@@ -100,7 +104,7 @@ declare namespace PrimeFaces {
          * @returns A promise that resolves with the value returned by the given method. The promise is rejected when
          * the editor is not ready yet.
          */
-        invokeMonaco<K extends PrimeFaces.MatchingKeys<TEditor, (...args: never[]) => unknown>>(
+        invokeMonaco<K extends PrimeFaces.KeysMatchingCondition<TEditor, (...args: never[]) => unknown>>(
           method: K, ...args: PrimeFaces.widget.ExtMonacoEditor.ParametersIfFn<TEditor[K]>
         ): Promise<Awaited<PrimeFaces.widget.ExtMonacoEditor.ReturnTypeIfFn<TEditor[K]>>>;
 
@@ -642,6 +646,11 @@ declare namespace PrimeFaces {
       locale: string;
 
       /**
+       * Sets a placeholder for the editor. If set, the placeholder is shown if the editor is empty.
+       */
+      placeholder: string;
+
+      /**
        * Whether the editor is read-only.
        */
       readonly: boolean;
@@ -882,7 +891,7 @@ declare namespace PrimeFaces {
       getWidgetId(): string;
       getWidgetOptions(): PartialWidgetCfg<TCfg>;
       getValue(): Promise<string>;
-      invokeMonaco<K extends PrimeFaces.MatchingKeys<TEditor, (...args: never[]) => unknown>>(
+      invokeMonaco<K extends PrimeFaces.KeysMatchingCondition<TEditor, (...args: never[]) => unknown>>(
         method: K, ...args: PrimeFaces.widget.ExtMonacoEditor.ParametersIfFn<TEditor[K]>
       ): Promise<Awaited<PrimeFaces.widget.ExtMonacoEditor.ReturnTypeIfFn<TEditor[K]>>>;
       invokeMonacoScript<TRetVal, TArgs extends any[]>(script: string | ((editor: TEditor, ...args: TArgs) => TRetVal), ...args: TArgs): Promise<Awaited<TRetVal>>;

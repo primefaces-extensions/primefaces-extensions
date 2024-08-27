@@ -347,6 +347,14 @@
         </attribute>
         <attribute>
             <description>
+                <![CDATA[Sets a placeholder for the editor. If set, the placeholder is shown if the editor is empty.]]>
+            </description>
+            <name>placeholder</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
                 <![CDATA[The tab index to assign to the editor. If not given, no tab index will be assigned.]]>
             </description>
             <name>tabindex</name>
@@ -745,6 +753,14 @@
             <name>disabled</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Sets a placeholder for the editor. If set, the placeholder is shown if the editor is empty.]]>
+            </description>
+            <name>placeholder</name>
+            <required>false</required>
+            <type>java.lang.String</type>
         </attribute>
         <attribute>
             <description>

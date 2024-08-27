@@ -99,7 +99,7 @@ window.monacoModule = window.monacoModule || {};
     }
 
     /**
-     * @template {PrimeFaces.MatchingKeys<TEditor, (...args: never[]) => unknown>} K
+     * @template {PrimeFaces.KeysMatchingCondition<TEditor, (...args: never[]) => unknown>} K
      * @param {K} method
      * @param {PrimeFaces.widget.ExtMonacoEditor.ParametersIfFn<TEditor[K]>} args
      * @returns {Promise<Awaited<PrimeFaces.widget.ExtMonacoEditor.ReturnTypeIfFn<TEditor[K]>>>}
@@ -198,7 +198,7 @@ window.monacoModule = window.monacoModule || {};
 
     /**
      * @protected
-     * @template {PrimeFaces.MatchingKeys<TEditor, (...args: never[]) => unknown>} K
+     * @template {PrimeFaces.KeysMatchingCondition<TEditor, (...args: never[]) => unknown>} K
      * @param {K} method
      * @param {PrimeFaces.widget.ExtMonacoEditor.ParametersIfFn<TEditor[K]>} args
      * @returns {Promise<Awaited<PrimeFaces.widget.ExtMonacoEditor.ReturnTypeIfFn<TEditor[K]>>>}
@@ -548,7 +548,7 @@ window.monacoModule = window.monacoModule || {};
 
     /**
      * @protected
-     * @template {PrimeFaces.MatchingKeys<import("monaco-editor").editor.IStandaloneCodeEditor, (...args: never[]) => unknown>} K
+     * @template {PrimeFaces.KeysMatchingCondition<import("monaco-editor").editor.IStandaloneCodeEditor, (...args: never[]) => unknown>} K
      * @param {K} method
      * @param {PrimeFaces.widget.ExtMonacoEditor.ParametersIfFn<import("monaco-editor").editor.IStandaloneCodeEditor[K]>} args
      * @returns {Promise<Awaited<PrimeFaces.widget.ExtMonacoEditor.ReturnTypeIfFn<import("monaco-editor").editor.IStandaloneCodeEditor[K]>>>}
@@ -695,7 +695,7 @@ window.monacoModule = window.monacoModule || {};
 
     /**
      * @protected
-     * @template {PrimeFaces.MatchingKeys<import("monaco-editor").editor.IStandaloneDiffEditor, (...args: never[]) => unknown>} K
+     * @template {PrimeFaces.KeysMatchingCondition<import("monaco-editor").editor.IStandaloneDiffEditor, (...args: never[]) => unknown>} K
      * @param {K} method
      * @param {PrimeFaces.widget.ExtMonacoEditor.ParametersIfFn<import("monaco-editor").editor.IStandaloneDiffEditor[K]>} args
      * @returns {Promise<Awaited<PrimeFaces.widget.ExtMonacoEditor.ReturnTypeIfFn<import("monaco-editor").editor.IStandaloneDiffEditor[K]>>>}

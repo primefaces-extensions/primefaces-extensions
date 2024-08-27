@@ -120,7 +120,7 @@ interface Helper {
   globalEval: (script: string, nonce?: string) => void;
   invokeMonaco: <
     TEditor extends import("monaco-editor").editor.IEditor,
-    K extends PrimeFaces.MatchingKeys<TEditor, (...args: never[]) => unknown>
+    K extends PrimeFaces.KeysMatchingCondition<TEditor, (...args: never[]) => unknown>
     >(
     editor: TEditor,
     method: K,
@@ -246,10 +246,10 @@ type ResponseMessageData =
 
 type InvokeMonacoMessageData<
   TEditor extends import("monaco-editor").editor.IEditor,
-  K extends PrimeFaces.MatchingKeys<
+  K extends PrimeFaces.KeysMatchingCondition<
     TEditor,
     (...args: never[]) => unknown
-  > = PrimeFaces.MatchingKeys<TEditor, (...args: never[]) => unknown>
+  > = PrimeFaces.KeysMatchingCondition<TEditor, (...args: never[]) => unknown>
   > = {
     args: PrimeFaces.widget.ExtMonacoEditor.ParametersIfFn<TEditor[K]>;
     messageId: number;

@@ -50,6 +50,7 @@ public abstract class MonacoEditorCommon<TEditorOpts> extends HtmlInputTextarea
     static final String DEFAULT_EXTENSION = "";
     static final String DEFAULT_HEIGHT = "600px";
     static final String DEFAULT_LANGUAGE = "plaintext";
+    static final String DEFAULT_PLACEHOLDER = "";
     static final boolean DEFAULT_READONLY = false;
     static final String DEFAULT_SCHEME = "inmemory";
     static final String DEFAULT_TABINDEX = null;
@@ -112,6 +113,10 @@ public abstract class MonacoEditorCommon<TEditorOpts> extends HtmlInputTextarea
         return (String) getStateHelper().eval(BaseEditorPropertyKeys.onpaste, null);
     }
 
+    public final String getPlaceholder() {
+        return (String) getStateHelper().eval(BaseEditorPropertyKeys.placeholder, null);
+    }
+
     public final String getScheme() {
         return (String) getStateHelper().eval(BaseEditorPropertyKeys.scheme, DEFAULT_SCHEME);
     }
@@ -171,6 +176,10 @@ public abstract class MonacoEditorCommon<TEditorOpts> extends HtmlInputTextarea
 
     public final void setOnpaste(final String onpaste) {
         getStateHelper().put(BaseEditorPropertyKeys.onpaste, onpaste);
+    }
+
+    public final void setPlaceholder(final String placeholder) {
+        getStateHelper().put(BaseEditorPropertyKeys.placeholder, placeholder);
     }
 
     public final void setScheme(final String scheme) {
