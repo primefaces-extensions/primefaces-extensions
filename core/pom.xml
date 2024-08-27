@@ -769,7 +769,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>3.4.0</version>
+                <version>3.5.0</version>
                 <configuration>
                     <aggregate>false</aggregate>
                 </configuration>
@@ -800,7 +800,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
-                <version>3.24.0</version>
+                <version>3.25.0</version>
                 <configuration>
                     <linkXref>true</linkXref>
                     <aggregate>true</aggregate>
