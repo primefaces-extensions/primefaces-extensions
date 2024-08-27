@@ -7,14 +7,15 @@
   "scripts": {
     "verify": "tsc --project jsconfig.json --noEmit",
     "generate-locales": "node src/scripts/generateLocales.js",
-    "generate-extras": "node src/scripts/generateExtras.js"
+    "generate-extras": "node src/scripts/generateExtras.js",
+    "webpack": "webpack --env production"
   },
   "author": "Andre Wachsmuth",
   "license": "MIT",
   "dependencies": {
     "cross-spawn": "^7.0.3",
     "insane": "^2.6.2",
-    "monaco-editor": "^0.50.0"
+    "monaco-editor": "^0.51.0"
   },
   "devDependencies": {
     "@types/cross-spawn": "^6.0.6",

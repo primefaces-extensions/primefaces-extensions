@@ -38,6 +38,7 @@ enum BaseEditorPropertyKeys {
     language, //
     oninitialized, //
     onpaste, //
+    placeholder, //
     scheme, //
     locale, //
     localeUrl, //

@@ -13,6 +13,10 @@ updates:
     schedule:
       interval: "daily"
   - package-ecosystem: "npm"
+    directory: "/core/src/main/resources/META-INF/resources/primefaces-extensions/monacoeditor"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "npm"
     directory: "/monacoeditor"
     schedule:
       interval: "daily"
