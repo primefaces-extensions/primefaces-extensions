@@ -24,6 +24,7 @@ package org.primefaces.extensions.application;
 import javax.faces.context.FacesContext;
 import javax.faces.context.FacesContextWrapper;
 import javax.faces.context.ResponseWriter;
+import javax.faces.context.ResponseWriterWrapper;
 
 /**
  * JSF generates all script tags with 'type="text/javascript"' which throws HTML5 validation warnings.
@@ -38,6 +39,28 @@ public class Html5Context extends FacesContextWrapper {
 
     @Override
     public void setResponseWriter(ResponseWriter responseWriter) {
-        super.setResponseWriter(new Html5ResponseWriter(responseWriter));
+        // #12591 - Don't wrap the response writer if it's already a Html5FacesContextResponseWriter
+        if (alreadyWrapped(responseWriter)) {
+            super.setResponseWriter(responseWriter);
+        }
+        else {
+            super.setResponseWriter(new Html5ResponseWriter(responseWriter));
+        }
+    }
+
+    /**
+     * Checks if the given ResponseWriter is already wrapped with Html5ResponseWriter.
+     *
+     * @param responseWriter The ResponseWriter to check
+     * @return true if the ResponseWriter is already wrapped, false otherwise
+     */
+    private boolean alreadyWrapped(ResponseWriter responseWriter) {
+        while (responseWriter instanceof ResponseWriterWrapper) {
+            if (responseWriter instanceof Html5ResponseWriter) {
+                return true;
+            }
+            responseWriter = ((ResponseWriterWrapper) responseWriter).getWrapped();
+        }
+        return responseWriter instanceof Html5ResponseWriter;
     }
 }
