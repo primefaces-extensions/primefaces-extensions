@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "@types/jquery": "^3.5.30",
+    "@types/jquery": "^3.5.31",
     "@types/node": "^22.7.2",
     "monaco-editor": "^0.52.0",
     "typescript": "^5.6.2"
