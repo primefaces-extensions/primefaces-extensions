@@ -36,6 +36,19 @@ public class HtmlSanitizer {
                 .allowAttributes("src")
                 .matching(Pattern.compile("^(data:image/(gif|png|jpeg|webp|svg)[,;]|http|https|mailto|//).+", Pattern.CASE_INSENSITIVE))
                 .onElements("img")
+                .allowAttributes(
+                            "data-rotate",
+                            "data-proportion",
+                            "data-rotatex",
+                            "data-rotatey",
+                            "data-size",
+                            "data-align",
+                            "data-percentage",
+                            "data-index",
+                            "data-file-name",
+                            "data-file-size",
+                            "data-origin")
+                .onElements("img")
                 .toFactory();
 
     private static final PolicyFactory HTML_MEDIA_SANITIZER = new HtmlPolicyBuilder()
