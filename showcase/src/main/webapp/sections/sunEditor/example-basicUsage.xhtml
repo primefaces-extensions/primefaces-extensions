@@ -44,6 +44,7 @@
         <p:ajax event="cut" listener="#{basicSunEditorController.onCut}"/>
         <p:ajax event="drop" listener="#{basicSunEditorController.onDrop}"/>
         <p:ajax event="save" listener="#{basicSunEditorController.onSave}" update="@this"/>
+        <f:attribute name="widgetPostConstruct" value="widget.editor.onPaste = function (e, cleanData, maxCharCount) {console.log('onpaste event detected!'); };" />
     </pe:sunEditor>
     <!-- EXAMPLE-SOURCE-END -->
 </ui:composition>
