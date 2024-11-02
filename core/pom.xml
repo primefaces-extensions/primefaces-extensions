@@ -280,7 +280,7 @@
                                 <aggregation>
                                     <inputDir>${resources.dir.compressed}</inputDir>
                                     <outputFile>${resources.dir.compressed}/keynote/keynote.js</outputFile>
-                                    <withoutCompress>${withoutCompress}</withoutCompress>
+                                    <withoutCompress>true</withoutCompress>
                                 </aggregation>
                             </aggregations>
                         </resourcesSet>
