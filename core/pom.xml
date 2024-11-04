@@ -725,8 +725,8 @@
                             <report>summary</report>
                             <report>dependencies</report>
                             <report>scm</report>
-                            <report>cim</report>
-                            <report>project-team</report>
+                            <report>ci-management</report>
+                            <report>team</report>
                             <report>distribution-management</report>
                             <report>plugins</report>
                         </reports>
@@ -793,39 +793,6 @@
                     <reportSet>
                         <reports>
                             <report>changes-report</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-pmd-plugin</artifactId>
-                <version>3.26.0</version>
-                <configuration>
-                    <linkXref>true</linkXref>
-                    <aggregate>true</aggregate>
-                    <minimumTokens>100</minimumTokens>
-                    <sourceEncoding>utf-8</sourceEncoding>
-                    <targetJdk>${maven.compiler.target}</targetJdk>
-                    <skipEmptyReport>false</skipEmptyReport>
-                    <ignoreLiterals>false</ignoreLiterals>
-                    <excludes>
-                        <exclude>**/generated-sources/**/*.java</exclude>
-                    </excludes>
-                    <excludeRoots>
-                        <excludeRoot>${project.basedir}/target/generated-sources</excludeRoot>
-                        <excludeRoot>${project.basedir}/target/generated-sources/annotations</excludeRoot>
-                        <excludeRoot>${project.basedir}/target/generated-sources/xjc</excludeRoot>
-                        <excludeRoot>${project.basedir}/target/generated-sources/cxf</excludeRoot>
-                    </excludeRoots>
-                    <rulesets>
-                        <ruleset>${project.basedir}/src/conf/pmd-rulesets.xml</ruleset>
-                    </rulesets>
-                </configuration>
-                <reportSets>
-                    <reportSet>
-                        <reports>
-                            <report>pmd</report>
                         </reports>
                     </reportSet>
                 </reportSets>
