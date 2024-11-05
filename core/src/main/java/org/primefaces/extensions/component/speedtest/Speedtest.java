@@ -21,9 +21,8 @@
  */
 package org.primefaces.extensions.component.speedtest;
 
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import javax.faces.FacesException;
@@ -47,15 +46,15 @@ import org.primefaces.util.Constants;
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
-@ResourceDependency(library = "primefaces", name = "raphael/raphael.js")
 @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
+@ResourceDependency(library = "primefaces-extensions", name = "echarts/echarts.js")
 @ResourceDependency(library = "primefaces-extensions", name = "speedtest/speedtest.js")
 public class Speedtest extends UIComponentBase implements ClientBehaviorHolder, Widget {
 
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
     public static final String COMPONENT_TYPE = COMPONENT_FAMILY + ".Speedtest";
     private static final String DEFAULT_RENDERER = COMPONENT_FAMILY + ".SpeedtestRenderer";
-    private static final Collection<String> EVENT_NAMES = Collections.unmodifiableCollection(Arrays.asList(SpeedTestEvent.NAME));
+    private static final Collection<String> EVENT_NAMES = List.of(SpeedTestEvent.NAME);
 
     @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
@@ -107,9 +106,9 @@ public class Speedtest extends UIComponentBase implements ClientBehaviorHolder, 
     }
 
     private static Double convertParam(final String clientId, final String paramName, final Map<String, String> params) {
-        Double res = 0.0;
+        double res;
         try {
-            res = Double.valueOf(params.get(clientId + paramName));
+            res = Double.parseDouble(params.get(clientId + paramName));
         }
         catch (final Exception e) {
             throw new FacesException("Speedtest: can not convert result value for '" + paramName + "'");
