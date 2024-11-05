@@ -82,21 +82,25 @@ public class SpeedtestRenderer extends CoreRenderer {
         // Download Gauge
         writer.startElement("div", speedtest);
         writer.writeAttribute(Attrs.CLASS, "ui-g-3", null);
+        writer.writeAttribute(Attrs.STYLE, "height:200px", null);
         writer.writeAttribute("id", clientId + "ggdown", "id");
         writer.endElement("div");
         // Upload Gauge
         writer.startElement("div", speedtest);
         writer.writeAttribute(Attrs.CLASS, "ui-g-3", null);
+        writer.writeAttribute(Attrs.STYLE, "height:200px", null);
         writer.writeAttribute("id", clientId + "ggup", "id");
         writer.endElement("div");
         // Ping Gauge
         writer.startElement("div", speedtest);
         writer.writeAttribute(Attrs.CLASS, "ui-g-3", null);
+        writer.writeAttribute(Attrs.STYLE, "height:200px", null);
         writer.writeAttribute("id", clientId + "ggping", "id");
         writer.endElement("div");
         // Jitter Gauge
         writer.startElement("div", speedtest);
         writer.writeAttribute(Attrs.CLASS, "ui-g-3", null);
+        writer.writeAttribute(Attrs.STYLE, "height:200px", null);
         writer.writeAttribute("id", clientId + "ggjitter", "id");
         writer.endElement("div");
         // Row End
