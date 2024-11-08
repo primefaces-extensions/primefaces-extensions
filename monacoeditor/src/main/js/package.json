@@ -13,7 +13,7 @@
   "author": "Andre Wachsmuth",
   "license": "MIT",
   "dependencies": {
-    "cross-spawn": "^7.0.3",
+    "cross-spawn": "^7.0.5",
     "insane": "^2.6.2",
     "monaco-editor": "^0.52.0"
   },
