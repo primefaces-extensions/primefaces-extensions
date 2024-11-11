@@ -32,6 +32,7 @@ import javax.el.ValueExpression;
 import javax.faces.FacesException;
 import javax.faces.application.ProjectStage;
 import javax.faces.application.Resource;
+import javax.faces.application.ResourceHandler;
 import javax.faces.component.UIOutput;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -140,7 +141,12 @@ public class PrimeFacesResourceProcessor implements PhaseListener {
     }
 
     private void encodeCSS(final FacesContext context, final String library, final String name) {
-        final Resource resource = context.getApplication().getResourceHandler().createResource(name, library);
+        ResourceHandler resourceHandler = context.getApplication().getResourceHandler();
+        if (resourceHandler.isResourceRendered(context, name, library)) {
+            // resource already rendered, skip
+            return;
+        }
+        final Resource resource = resourceHandler.createResource(name, library);
         if (resource == null) {
             throw new FacesException(
                         "Error loading CSS, cannot find \"" + name + "\" resource of \"" + library + "\" library");
@@ -155,7 +161,12 @@ public class PrimeFacesResourceProcessor implements PhaseListener {
     }
 
     private void encodeJS(final FacesContext context, final String name) {
-        final Resource resource = context.getApplication().getResourceHandler().createResource(name, LIBRARY);
+        ResourceHandler resourceHandler = context.getApplication().getResourceHandler();
+        if (resourceHandler.isResourceRendered(context, name, LIBRARY)) {
+            // resource already rendered, skip
+            return;
+        }
+        final Resource resource = resourceHandler.createResource(name, LIBRARY);
         if (resource == null) {
             throw new FacesException("Error loading JavaScript, cannot find \"" + name + "\" resource of \"" + LIBRARY +
                         "\" library");
