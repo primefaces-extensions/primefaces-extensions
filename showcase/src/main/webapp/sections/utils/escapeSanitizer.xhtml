@@ -1,0 +1,45 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+>
+<ui:composition template="/templates/showcaseLayout.xhtml">
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="EscapeSanitizerComponentListener"/>
+        </f:facet>
+        <h:panelGroup layout="block" styleClass="centerContent">
+            System event listener that sanitizes HTML content in components with escape="false".
+            This helps prevent XSS vulnerabilities while still allowing some HTML formatting using an OWASP Java HTML Sanitizer PolicyFactory.
+            See also <p:link outcome="/sections/converters/sanitizingConverter.xhtml" value="Sanitizing Converter" />
+        </h:panelGroup>
+
+        <h:panelGroup layout="block" styleClass="centerExample">
+            <h2>pom.xml</h2>
+            <pre>
+&lt;dependency&gt;
+     &lt;groupId>com.googlecode.owasp-java-html-sanitizer&lt;/groupId&gt;
+     &lt;artifactId>owasp-java-html-sanitizer&lt;/artifactId&gt;
+     &lt;version>20240325.1&lt;/version&gt;
+&lt;/dependency&gt;
+            </pre>
+
+            <h2>faces-config.xml</h2>
+            <pre>
+&lt;application&gt;
+    &lt;system-event-listener&gt;
+        &lt;system-event-listener-class>org.primefaces.extensions.application.EscapeSanitizerComponentListener&lt;/system-event-listener-class&gt;
+        &lt;system-event-class>javax.faces.event.PostAddToViewEvent&lt;/system-event-class&gt;
+        &lt;source-class>javax.faces.component.html.HtmlBody&lt;/source-class&gt;
+    &lt;/system-event-listener&gt;
+&lt;/application&gt;
+            </pre>
+        </h:panelGroup>
+
+    </ui:define>
+    <ui:define name="useCases">
+        <ui:include src="/sections/utils/useCasesChoice.xhtml"/>
+    </ui:define>
+</ui:composition>
+</html>
