@@ -61,6 +61,7 @@ public class SunEditor extends AbstractEditorInputTextArea implements ClientBeha
         height,
         mode,
         locale,
+        strictMode
         // @formatter:on
     }
 
@@ -115,6 +116,14 @@ public class SunEditor extends AbstractEditorInputTextArea implements ClientBeha
 
     public void setLocale(final Object locale) {
         getStateHelper().put(PropertyKeys.locale, locale);
+    }
+
+    public boolean isStrictMode() {
+        return (boolean) getStateHelper().eval(PropertyKeys.strictMode, true);
+    }
+
+    public void setStrictMode(boolean strictMode) {
+        getStateHelper().put(PropertyKeys.strictMode, strictMode);
     }
 
     public Locale calculateLocale() {

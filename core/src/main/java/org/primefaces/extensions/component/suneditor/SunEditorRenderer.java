@@ -108,6 +108,7 @@ public class SunEditorRenderer extends InputRenderer {
                     .attr("locale", editor.calculateLocale().toString())
                     .attr("readOnly", editor.isReadonly(), false)
                     .attr("disabled", editor.isDisabled(), false)
+                    .attr("strictMode", editor.isStrictMode(), true)
                     .attr("toolbar", editor.getToolbar())
                     .nativeAttr("extender", editor.getExtender());
 

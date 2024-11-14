@@ -15,6 +15,7 @@ PrimeFaces.widget.ExtSunEditor = PrimeFaces.widget.DeferredWidget.extend({
         this._super(cfg);
         this.input = $(this.jqId);
         this.disabled = (cfg.disabled === undefined) ? false : cfg.disabled;
+        this.cfg.strictMode = (cfg.strictMode === undefined) ? true : cfg.strictMode;
 
         if (this.disabled) {
             this.input.attr("disabled", "disabled");
@@ -51,9 +52,6 @@ PrimeFaces.widget.ExtSunEditor = PrimeFaces.widget.DeferredWidget.extend({
 
         // calculate the language to use
         this.getLanguage();
-
-        // do not alter HTML
-        this.cfg.strictMode = true;
 
         // initialize
         this.editor = SUNEDITOR.create(this.id, this.cfg);

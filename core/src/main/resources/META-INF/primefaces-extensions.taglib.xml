@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <facelet-taglib xmlns="http://xmlns.jcp.org/xml/ns/javaee"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_3.xsd" 
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facelettaglibrary_2_3.xsd"
     version="2.3">
 
     <description>PrimeFaces Extensions UI components.</description>
@@ -101,7 +101,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the behavior, when set to false behavior will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the behavior, when Set false behavior will not be rendered.]]>
             </description>
             <name>disabled</name>
             <required>false</required>
@@ -145,7 +145,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -177,7 +177,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[The layout of keys: 'standard', scientific', or a custom defined layout.]]>
+                <![CDATA[The layout of keys: 'standard', 'scientific', or a custom defined layout.]]>
             </description>
             <name>layout</name>
             <required>false</required>
@@ -279,7 +279,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -688,7 +688,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -1107,7 +1107,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -1687,7 +1687,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -2255,7 +2255,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -2333,8 +2333,8 @@
         <tag-name>codeMirror</tag-name>
         <component>
             <component-type>org.primefaces.extensions.component.CodeMirror</component-type>
-            <handler-class>org.primefaces.extensions.component.codemirror.CodeMirrorHandler</handler-class>
             <renderer-type>org.primefaces.extensions.component.CodeMirrorRenderer</renderer-type>
+            <handler-class>org.primefaces.extensions.component.codemirror.CodeMirrorHandler</handler-class>
         </component>
         <attribute>
             <description>
@@ -2346,7 +2346,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -2940,7 +2940,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -3084,7 +3084,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Set to false to hide the counter. The listener will be fired anyway. Default is true.]]>
+                <![CDATA[Set false to hide the counter. The listener will be fired anyway. Default is true.]]>
             </description>
             <name>visible</name>
             <required>false</required>
@@ -3216,7 +3216,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -3329,7 +3329,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -3395,7 +3395,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -3483,7 +3483,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Controls the horizontal flow of the layout. By default, item elements start positioning at the left. Set to false for right-to-left layouts.]]>
+                <![CDATA[Controls the horizontal flow of the layout. By default, item elements start positioning at the left. Set false for right-to-left layouts.]]>
             </description>
             <name>originLeft</name>
             <required>false</required>
@@ -3491,7 +3491,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Controls the vertical flow of the layout. By default, item elements start positioning at the top. Set to false for bottom-up layouts. It's like Tetris!]]>
+                <![CDATA[Controls the vertical flow of the layout. By default, item elements start positioning at the top. Set false for bottom-up layouts. It's like Tetris!]]>
             </description>
             <name>originTop</name>
             <required>false</required>
@@ -3548,7 +3548,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -3596,7 +3596,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -3803,7 +3803,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -3853,7 +3853,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -4047,7 +4047,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -4097,7 +4097,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -4195,7 +4195,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -4265,8 +4265,8 @@
         <tag-name>remoteCommand</tag-name>
         <component>
             <component-type>org.primefaces.extensions.component.RemoteCommand</component-type>
-            <handler-class>org.primefaces.extensions.component.remotecommand.RemoteCommandHandler</handler-class>
             <renderer-type>org.primefaces.extensions.component.RemoteCommandRenderer</renderer-type>
+            <handler-class>org.primefaces.extensions.component.remotecommand.RemoteCommandHandler</handler-class>
         </component>
         <attribute>
             <description>
@@ -4278,7 +4278,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -4456,7 +4456,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -4570,7 +4570,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -4788,7 +4788,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -4918,7 +4918,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -5148,8 +5148,8 @@
         <tag-name>masterDetail</tag-name>
         <component>
             <component-type>org.primefaces.extensions.component.MasterDetail</component-type>
-            <handler-class>org.primefaces.extensions.component.masterdetail.MasterDetailTagHandler</handler-class>
             <renderer-type>org.primefaces.extensions.component.MasterDetailRenderer</renderer-type>
+            <handler-class>org.primefaces.extensions.component.masterdetail.MasterDetailTagHandler</handler-class>
         </component>
         <attribute>
             <description>
@@ -5161,7 +5161,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -5267,7 +5267,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -5396,7 +5396,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -5550,7 +5550,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -6038,7 +6038,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Defines if the hours section is displayed or not. Set to false to get a minute only dialog. Default is true.]]>
+                <![CDATA[Defines if the hours section is displayed or not. Set false to get a minute only dialog. Default is true.]]>
             </description>
             <name>showHours</name>
             <required>false</required>
@@ -6046,7 +6046,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Defines if the minutes section is displayed or not. Set to false to get a hours only dialog. Default is true.]]>
+                <![CDATA[Defines if the minutes section is displayed or not. Set false to get an hours only dialog. Default is true.]]>
             </description>
             <name>showMinutes</name>
             <required>false</required>
@@ -6176,7 +6176,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -6394,7 +6394,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -6442,7 +6442,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Default waypoints live on the vertical axis. Their offset is calculated in relation to the top of the viewport and they listen for vertical scroll changes. If horizontal is set to true, offset is calculated in relation to the left of the viewport and listens for horizontal scroll changes. For instance, the value 50 means "when the left side of this element reaches 50px from the left side of the viewport". Default is false.]]>
+                <![CDATA[Default waypoints live on the vertical axis. Their offset is calculated in relation to the top of the viewport, and they listen for vertical scroll changes. If horizontal is set to true, offset is calculated in relation to the left of the viewport and listens for horizontal scroll changes. For instance, the value 50 means "when the left side of this element reaches 50px from the left side of the viewport". Default is false.]]>
             </description>
             <name>horizontal</name>
             <required>false</required>
@@ -6491,7 +6491,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -6748,7 +6748,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Corner radius relative to module width: 0.0 .. 0.5. Default value is 0.0]]>
+                <![CDATA[Corner radius relative to module width: 0.0 to 0.5. Default value is 0.0]]>
             </description>
             <name>radius</name>
             <required>false</required>
@@ -6823,7 +6823,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -6985,7 +6985,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -7071,8 +7071,8 @@
         <tag-name>timer</tag-name>
         <component>
             <component-type>org.primefaces.extensions.component.Timer</component-type>
-            <handler-class>org.primefaces.extensions.component.timer.TimerHandler</handler-class>
             <renderer-type>org.primefaces.extensions.component.TimerRenderer</renderer-type>
+            <handler-class>org.primefaces.extensions.component.timer.TimerHandler</handler-class>
         </component>
         <attribute>
             <description>
@@ -7084,7 +7084,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -7092,7 +7092,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[set to false to hide the timer. The listener will be fired anyway. Default is true.]]>
+                <![CDATA[Set false to hide the timer. The listener will be fired anyway. Default is true.]]>
             </description>
             <name>visible</name>
             <required>false</required>
@@ -7367,7 +7367,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -7601,7 +7601,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -7916,7 +7916,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -8406,7 +8406,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -8536,7 +8536,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -8747,7 +8747,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -9280,7 +9280,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -9787,7 +9787,7 @@ Also, we display the selected flag on the right instead because it is just a cou
         <attribute>
             <description>
                 <![CDATA[If there is just a dial code in the input: remove it on blur or submit.
-This is to prevent just a dial code getting submitted with the form. Requires nationalMode to be set to false.]]>
+This is to prevent just a dial code getting submitted with the form. Requires nationalMode to be Set false.]]>
             </description>
             <name>autoHideDialCode</name>
             <required>false</required>
@@ -9797,7 +9797,7 @@ This is to prevent just a dial code getting submitted with the form. Requires na
             <description>
                 <![CDATA[Set the input's placeholder to an example number for the selected country, and update it if the country changes.
 You can specify the number type using the placeholderNumberType attribute.
-By default it is set to "polite", which means it will only set the placeholder if the input doesn't already have one.
+By default, it is set to "polite", which means it will only set the placeholder if the input doesn't already have one.
 You can also set it to "aggressive", which will replace any existing placeholder, or "off". Loads the utils script.]]>
             </description>
             <name>autoPlaceholder</name>
@@ -9935,7 +9935,7 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -10177,7 +10177,7 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -10340,7 +10340,7 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -10424,7 +10424,7 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -10556,7 +10556,7 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -10669,7 +10669,7 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -10794,7 +10794,7 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]></description>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]></description>
             <name>rendered</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
@@ -11007,6 +11007,13 @@ See showcase for an example. Default null.]]>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Option to disable clean mode, which checks the styles, classes, etc. of the editor content. Default is true.]]></description>
+            <name>strictMode</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
     </tag>
     <tag>
         <description><![CDATA[ClockPicker based on https://weareoutman.github.io/clockpicker/]]></description>
@@ -11025,7 +11032,7 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -11738,7 +11745,7 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -11821,7 +11828,7 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -11998,7 +12005,7 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Client side callback to execute when input element is double clicked.]]>
+                <![CDATA[Client side callback to execute when input element is double-clicked.]]>
             </description>
             <name>ondblclick</name>
             <required>false</required>
@@ -12352,7 +12359,7 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -12513,7 +12520,7 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Client side callback to execute when input element is double clicked.]]>
+                <![CDATA[Client side callback to execute when input element is double-clicked.]]>
             </description>
             <name>ondblclick</name>
             <required>false</required>
@@ -12833,7 +12840,7 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[If set to false, allows side-by-side editing without going into fullscreen. Defaults to true.]]>
+                <![CDATA[If Set false, allows side-by-side editing without going into fullscreen. Defaults to true.]]>
             </description>
             <name>sideBySideFullscreen</name>
             <required>false</required>
@@ -12911,7 +12918,7 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[If set to false, indent using spaces instead of tabs. Defaults to true.]]></description>
+                <![CDATA[If Set false, indent using spaces instead of tabs. Defaults to true.]]></description>
             <name>indentWithTabs</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
