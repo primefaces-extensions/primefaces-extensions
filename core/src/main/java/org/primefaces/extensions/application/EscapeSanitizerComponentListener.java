@@ -84,14 +84,20 @@ public class EscapeSanitizerComponentListener implements SystemEventListener {
         if (component instanceof HtmlOutputText) {
             HtmlOutputText htmlOutputText = (HtmlOutputText) component;
             if (!htmlOutputText.isEscape()) {
-                component.getAttributes().put("value", sanitizeHtml(htmlOutputText.getValue().toString()));
+                Object value = htmlOutputText.getValue();
+                if (value instanceof String) {
+                    component.getAttributes().put("value", sanitizeHtml(value.toString()));
+                }
             }
         }
         // Check OutputLabel components
         else if (component instanceof OutputLabel) {
             OutputLabel outputLabel = (OutputLabel) component;
             if (!outputLabel.isEscape()) {
-                component.getAttributes().put("value", sanitizeHtml(outputLabel.getValue().toString()));
+                Object value = outputLabel.getValue();
+                if (value instanceof String) {
+                    component.getAttributes().put("value", sanitizeHtml(value.toString()));
+                }
             }
         }
 
