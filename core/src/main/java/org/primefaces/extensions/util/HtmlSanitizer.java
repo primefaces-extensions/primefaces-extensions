@@ -80,7 +80,7 @@ public class HtmlSanitizer {
 
     }
 
-    public static String sanitizeHtml(String value,
+    public static PolicyFactory creatPolicyFactory(
                 boolean allowBlocks,
                 boolean allowFormatting,
                 boolean allowLinks,
@@ -88,11 +88,6 @@ public class HtmlSanitizer {
                 boolean allowImages,
                 boolean allowTables,
                 boolean allowMedia) {
-
-        if (LangUtils.isBlank(value)) {
-            return value;
-        }
-
         PolicyFactory sanitizer = HTML_DENY_ALL_SANITIZER;
         if (allowBlocks) {
             sanitizer = sanitizer.and(Sanitizers.BLOCKS);
@@ -115,6 +110,23 @@ public class HtmlSanitizer {
         if (allowTables) {
             sanitizer = sanitizer.and(Sanitizers.TABLES);
         }
+        return sanitizer;
+    }
+
+    public static String sanitizeHtml(String value,
+                boolean allowBlocks,
+                boolean allowFormatting,
+                boolean allowLinks,
+                boolean allowStyles,
+                boolean allowImages,
+                boolean allowTables,
+                boolean allowMedia) {
+
+        if (LangUtils.isBlank(value)) {
+            return value;
+        }
+
+        PolicyFactory sanitizer = creatPolicyFactory(allowBlocks, allowFormatting, allowLinks, allowStyles, allowImages, allowTables, allowMedia);
 
         return sanitizer.sanitize(value);
     }
