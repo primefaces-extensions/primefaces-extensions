@@ -271,6 +271,10 @@
         <converter-id>org.primefaces.extensions.converter.SanitizingConverter</converter-id>
         <converter-class>org.primefaces.extensions.converter.SanitizingConverter</converter-class>
     </converter>
+    <converter>
+        <converter-id>org.primefaces.extensions.converter.SanitizingLenientConverter</converter-id>
+        <converter-class>org.primefaces.extensions.converter.SanitizingLenientConverter</converter-class>
+    </converter>
 
     <render-kit>
         <renderer>

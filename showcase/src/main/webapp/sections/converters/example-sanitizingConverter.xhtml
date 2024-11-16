@@ -23,6 +23,11 @@
                 <pe:sanitizer decodeHtml="true" policy="#{sanitizingController.policyFactory}"/>
             </p:inputText>
         </p>
+
+        <p>
+            Lenient converter allows &lt;i&gt; and &lt;strong&gt;:
+            <h:outputText id="lenientSanitizer" escape="false" converter="primefaces.SanitizingLenientConverter"  value="#{sanitizingController.customSanitizer}"/>
+        </p>
     </h:panelGroup>
 
     <h:panelGroup layout="block" style="margin-top: 10px;margin-bottom: 10px;">

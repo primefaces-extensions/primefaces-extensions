@@ -50,6 +50,8 @@ import org.primefaces.extensions.util.HtmlSanitizer;
  */
 public class EscapeSanitizerComponentListener implements SystemEventListener {
 
+    private static final String PASS_THROUGH_SANITIZED = "sanitized";
+
     /**
      * Processes the system event by traversing the component tree and sanitizing HTML content.
      *
@@ -75,30 +77,39 @@ public class EscapeSanitizerComponentListener implements SystemEventListener {
     }
 
     /**
-     * Recursively checks components and sanitizes HTML content for those with escape="false". Handles both HtmlOutputText and OutputLabel components.
+     * Recursively checks UI components for instances of {@link HtmlOutputText} and {@link OutputLabel} and sanitizes their HTML content if
+     * <code>escape="false"</code> is set. Ensures components are not sanitized multiple times by checking a pass through "pt:sanitized" attribute.
      *
-     * @param component The UI component to check
+     * @param component The root UI component to inspect and sanitize.
      */
     private void checkComponents(UIComponent component) {
-        // Apply modification logic here
+        if (component == null) {
+            return; // Safety check for null input
+        }
+
+        boolean shouldSanitize = false;
+        String value = null;
+
+        // Check if the component is HtmlOutputText and meets the sanitization criteria
         if (component instanceof HtmlOutputText) {
             HtmlOutputText htmlOutputText = (HtmlOutputText) component;
-            if (!htmlOutputText.isEscape()) {
-                Object value = htmlOutputText.getValue();
-                if (value instanceof String) {
-                    component.getAttributes().put("value", sanitizeHtml(value.toString()));
-                }
+            if (!htmlOutputText.isEscape() && isNotAlreadySanitized(component)) {
+                value = getValueAsString(htmlOutputText);
+                shouldSanitize = value != null;
             }
         }
-        // Check OutputLabel components
+        // Check if the component is OutputLabel and meets the sanitization criteria
         else if (component instanceof OutputLabel) {
             OutputLabel outputLabel = (OutputLabel) component;
-            if (!outputLabel.isEscape()) {
-                Object value = outputLabel.getValue();
-                if (value instanceof String) {
-                    component.getAttributes().put("value", sanitizeHtml(value.toString()));
-                }
+            if (!outputLabel.isEscape() && isNotAlreadySanitized(component)) {
+                value = getValueAsString(outputLabel);
+                shouldSanitize = value != null;
             }
+        }
+
+        // Apply sanitization if needed
+        if (shouldSanitize) {
+            component.getAttributes().put("value", sanitizeHtml(value));
         }
 
         // Recursively check all child components
@@ -121,5 +132,27 @@ public class EscapeSanitizerComponentListener implements SystemEventListener {
      */
     private String sanitizeHtml(String html) {
         return HtmlSanitizer.sanitizeHtml(html, true, true, true, true, false, false, false);
+    }
+
+    /**
+     * Safely retrieves the value of a component as a String.
+     *
+     * @param component The UI component from which to extract the value.
+     * @return The component's value as a String, or <code>null</code> if not applicable.
+     */
+    private String getValueAsString(UIComponent component) {
+        Object value = component.getAttributes().get("value");
+        return (value instanceof String) ? (String) value : null;
+    }
+
+    /**
+     * Checks if a component has not already been marked as sanitized. This is determined by checking the pass-through attribute "sanitized" which should be set
+     * to "true" if the component was previously sanitized.
+     *
+     * @param component The UI component to check for sanitization status
+     * @return true if the component has not been sanitized, false if it has been sanitized
+     */
+    private boolean isNotAlreadySanitized(UIComponent component) {
+        return !"true".equals(component.getPassThroughAttributes().get(PASS_THROUGH_SANITIZED));
     }
 }
