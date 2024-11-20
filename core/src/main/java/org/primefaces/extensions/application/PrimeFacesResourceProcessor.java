@@ -126,9 +126,6 @@ public class PrimeFacesResourceProcessor implements PhaseListener {
     }
 
     protected void encodeValidationResources(final FacesContext context, final PrimeConfiguration configuration) {
-        // normal CSV is a required dependency for some special components like fileupload
-        encodeJS(context, "validation/validation.js");
-
         if (configuration.isClientSideValidationEnabled()) {
             // moment is needed for Date validation
             encodeJS(context, "moment/moment.js");
