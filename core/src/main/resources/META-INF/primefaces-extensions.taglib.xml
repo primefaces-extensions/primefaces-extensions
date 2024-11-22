@@ -12293,7 +12293,7 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[API type either "google" or "azure".  Defaults to "google".]]>
+                <![CDATA[API type either "google" or "azure".  Defaults to "google," but if any other value is provided, it reverts to the standard InputText behavior.]]>
             </description>
             <name>apiType</name>
             <required>false</required>
