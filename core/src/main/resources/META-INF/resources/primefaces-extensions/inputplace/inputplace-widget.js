@@ -41,9 +41,13 @@ PrimeFaces.widget.ExtInputPlace = PrimeFaces.widget.BaseWidget.extend({
         if (this.cfg.apiType === "google") {
             // wait for Google script to be loaded then initialize
             this.configureGoogle();
-        } else {
+        } else if (this.cfg.apiType === "azure") {
             // load Azure
             this.configureAzure();
+        }
+        else {
+            // leave the field a plain old input text
+            PrimeFaces.debug("InputPlace is not configured for Google or Azure");
         }
     },
 
