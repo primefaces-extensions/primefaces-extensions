@@ -25,7 +25,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.faces.application.ProjectStage;
-import javax.faces.component.UIOutput;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AbortProcessingException;
@@ -38,9 +37,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.primefaces.clientwindow.PrimeClientWindow;
 import org.primefaces.clientwindow.PrimeClientWindowUtils;
 import org.primefaces.config.PrimeConfiguration;
-import org.primefaces.config.PrimeEnvironment;
 import org.primefaces.context.PrimeApplicationContext;
 import org.primefaces.context.PrimeRequestContext;
+import org.primefaces.extensions.util.ResourceExtUtils;
 import org.primefaces.util.LocaleUtils;
 
 /**
@@ -87,7 +86,7 @@ public class PrimeFacesScriptProcessor implements SystemEventListener {
         encodeSettingScripts(context, script);
         encodeInitScripts(context, script);
 
-        addJS(context, script.toString());
+        ResourceExtUtils.addScriptToHead(context, script.toString());
     }
 
     protected void encodeSettingScripts(final FacesContext context, final StringBuilder writer) {
@@ -160,42 +159,33 @@ public class PrimeFacesScriptProcessor implements SystemEventListener {
         writer.append("}");
     }
 
-    protected void encodeInitScripts(final FacesContext context, final StringBuilder writer) {
-        final PrimeRequestContext requestContext = PrimeRequestContext.getCurrentInstance(context);
-        final List<String> scripts = requestContext.getInitScriptsToExecute();
+    protected void encodeInitScripts(FacesContext context, StringBuilder writer) {
+        PrimeRequestContext requestContext = PrimeRequestContext.getCurrentInstance(context);
+        List<String> scripts = requestContext.getInitScriptsToExecute();
 
         if (!scripts.isEmpty()) {
-            final boolean moveScriptsToBottom = requestContext.getApplicationContext().getConfig()
+            boolean moveScriptsToBottom = requestContext.getApplicationContext().getConfig()
                         .isMoveScriptsToBottom();
 
             if (!moveScriptsToBottom) {
-                writer.append("$(function(){");
-            }
+                writer.append("(function(){const pfInit=() => {");
 
-            for (final String script : scripts) {
-                writer.append(script);
-                writer.append(';');
-            }
+                for (int i = 0; i < scripts.size(); i++) {
+                    writer.append(scripts.get(i));
+                    writer.append(';');
+                }
 
-            if (!moveScriptsToBottom) {
-                writer.append("});");
+                writer.append("};if(window.$){$(function(){pfInit()})}");
+                writer.append("else if(document.readyState==='complete'){pfInit()}");
+                writer.append("else{document.addEventListener('DOMContentLoaded', pfInit)}})();");
+            }
+            else {
+                for (int i = 0; i < scripts.size(); i++) {
+                    writer.append(scripts.get(i));
+                    writer.append(';');
+                }
             }
         }
     }
 
-    private void addJS(final FacesContext context, final String script) {
-        final UIOutput js = new UIOutput();
-        js.setRendererType("javax.faces.resource.Script");
-        // https://github.com/primefaces-extensions/primefaces-extensions/issues/486
-        // https://github.com/primefaces-extensions/primefaces-extensions/issues/517
-        // MyFaces needs ID set to prevent duplicate ID check in Dev mode, Mojarra does not
-        final PrimeEnvironment environment = PrimeApplicationContext.getCurrentInstance(context).getEnvironment();
-        if (!environment.isMojarra()) {
-            js.setId("primfaces-script-processor");
-        }
-        final UIOutput content = new UIOutput();
-        content.setValue(script);
-        js.getChildren().add(content);
-        context.getViewRoot().addComponentResource(context, js);
-    }
 }

@@ -22,7 +22,6 @@
 package org.primefaces.extensions.application;
 
 import java.util.Locale;
-import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,10 +30,6 @@ import javax.el.ExpressionFactory;
 import javax.el.ValueExpression;
 import javax.faces.FacesException;
 import javax.faces.application.ProjectStage;
-import javax.faces.application.Resource;
-import javax.faces.application.ResourceHandler;
-import javax.faces.component.UIOutput;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;
@@ -43,6 +38,7 @@ import javax.faces.event.PhaseListener;
 import org.primefaces.config.PrimeConfiguration;
 import org.primefaces.context.PrimeApplicationContext;
 import org.primefaces.context.PrimeRequestContext;
+import org.primefaces.extensions.util.ResourceExtUtils;
 import org.primefaces.util.LocaleUtils;
 
 /**
@@ -74,11 +70,6 @@ public class PrimeFacesResourceProcessor implements PhaseListener {
     }
 
     @Override
-    public void afterPhase(final PhaseEvent event) {
-        // NOOP.
-    }
-
-    @Override
     public void beforePhase(final PhaseEvent event) {
         final FacesContext context = event.getFacesContext();
         final PrimeRequestContext requestContext = PrimeRequestContext.getCurrentInstance(context);
@@ -100,13 +91,21 @@ public class PrimeFacesResourceProcessor implements PhaseListener {
         }
 
         if (theme != null && !"none".equals(theme)) {
-            encodeCSS(context, LIBRARY + "-" + theme, "theme.css");
+            ResourceExtUtils.addCssResource(context, LIBRARY + "-" + theme, "theme.css");
         }
 
         // Icons
         if (configuration.isPrimeIconsEnabled()) {
-            encodeCSS(context, LIBRARY, "primeicons/primeicons.css");
+            ResourceExtUtils.addCssResource(context, LIBRARY, "primeicons/primeicons.css");
         }
+    }
+
+    @Override
+    public void afterPhase(final PhaseEvent event) {
+        final FacesContext context = event.getFacesContext();
+        final PrimeRequestContext requestContext = PrimeRequestContext.getCurrentInstance(context);
+        final PrimeApplicationContext applicationContext = requestContext.getApplicationContext();
+        final PrimeConfiguration configuration = applicationContext.getConfig();
 
         // normal CSV is a required dependency for some special components like fileupload
         encodeValidationResources(context, configuration);
@@ -114,7 +113,7 @@ public class PrimeFacesResourceProcessor implements PhaseListener {
         if (configuration.isClientSideLocalizationEnabled()) {
             try {
                 final Locale locale = LocaleUtils.getCurrentLocale(context);
-                encodeJS(context, "locales/locale-" + locale.getLanguage() + ".js");
+                ResourceExtUtils.addJavascriptResource(context, LIBRARY, "locales/locale-" + locale.getLanguage() + ".js");
             }
             catch (FacesException e) {
                 if (context.isProjectStage(ProjectStage.Development)) {
@@ -126,69 +125,17 @@ public class PrimeFacesResourceProcessor implements PhaseListener {
     }
 
     protected void encodeValidationResources(final FacesContext context, final PrimeConfiguration configuration) {
+        // normal CSV is a required dependency for some special components like fileupload
+        ResourceExtUtils.addJavascriptResource(context, LIBRARY, "validation/validation.js");
+
         if (configuration.isClientSideValidationEnabled()) {
             // moment is needed for Date validation
-            encodeJS(context, "moment/moment.js");
+            ResourceExtUtils.addJavascriptResource(context, LIBRARY, "moment/moment.js");
 
             // BV CSV is optional and must be enabled by config
             if (configuration.isBeanValidationEnabled()) {
-                encodeJS(context, "validation/validation.bv.js");
+                ResourceExtUtils.addJavascriptResource(context, LIBRARY, "validation/validation.bv.js");
             }
         }
     }
-
-    private void encodeCSS(final FacesContext context, final String library, final String name) {
-        ResourceHandler resourceHandler = context.getApplication().getResourceHandler();
-        if (resourceHandler.isResourceRendered(context, name, library)) {
-            // resource already rendered, skip
-            return;
-        }
-        final Resource resource = resourceHandler.createResource(name, library);
-        if (resource == null) {
-            throw new FacesException(
-                        "Error loading CSS, cannot find \"" + name + "\" resource of \"" + library + "\" library");
-        }
-        final UIOutput css = new UIOutput();
-        css.setId("css-" + UUID.randomUUID());
-        css.setRendererType("javax.faces.resource.Stylesheet");
-        css.getAttributes().put("library", library);
-        css.getAttributes().put("name", name);
-        final String target = getTarget(context.getExternalContext(), "css");
-        context.getViewRoot().addComponentResource(context, css, target);
-    }
-
-    private void encodeJS(final FacesContext context, final String name) {
-        ResourceHandler resourceHandler = context.getApplication().getResourceHandler();
-        if (resourceHandler.isResourceRendered(context, name, LIBRARY)) {
-            // resource already rendered, skip
-            return;
-        }
-        final Resource resource = resourceHandler.createResource(name, LIBRARY);
-        if (resource == null) {
-            throw new FacesException("Error loading JavaScript, cannot find \"" + name + "\" resource of \"" + LIBRARY +
-                        "\" library");
-        }
-        final UIOutput js = new UIOutput();
-        js.setId("js-" + UUID.randomUUID());
-        js.setRendererType("javax.faces.resource.Script");
-        js.getAttributes().put("library", LIBRARY);
-        js.getAttributes().put("name", name);
-        final String target = getTarget(context.getExternalContext(), "js");
-        context.getViewRoot().addComponentResource(context, js, target);
-    }
-
-    /**
-     * Return "head" to capture in Omnifaces CombinedResourceHandler or "body" to not capture it.
-     *
-     * @param externalContext the Faces external context
-     * @param type the type either "css" or "js"
-     * @return either "head" or "body"
-     */
-    private String getTarget(final ExternalContext externalContext, final String type) {
-        final String parameter = String.format("primefaces.%s.COMBINED_RESOURCE_HANDLER_DISABLED", type);
-        final String value = externalContext.getInitParameter(parameter);
-        final boolean disabled = Boolean.parseBoolean(value);
-        return disabled ? "body" : "head";
-    }
-
 }
