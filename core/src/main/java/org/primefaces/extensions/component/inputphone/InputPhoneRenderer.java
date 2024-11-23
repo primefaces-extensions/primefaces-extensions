@@ -21,6 +21,8 @@
  */
 package org.primefaces.extensions.component.inputphone;
 
+import static org.primefaces.extensions.component.inputphone.InputPhone.EVENT_COUNTRY_SELECT;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
@@ -113,13 +115,21 @@ public class InputPhoneRenderer extends InputRenderer {
         else {
             inputPhone.setInitialCountry(country);
         }
-        if (PrimeExtensionsEnvironment.getCurrentInstance(context).isLibphonenumberAvailable()) {
+        if (needsValidation(context)
+                    && PrimeExtensionsEnvironment.getCurrentInstance(context).isLibphonenumberAvailable()) {
             PhoneNumberUtilWrapper.validate(value, country.toUpperCase(), inputPhone.getValidatorMessage());
         }
         else {
             LOGGER.warning("Libphonenumber not available, unable to validate!");
         }
         return value;
+    }
+
+    protected boolean needsValidation(final FacesContext context) {
+        final String eventName = context.getExternalContext()
+                    .getRequestParameterMap()
+                    .get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+        return !EVENT_COUNTRY_SELECT.equals(eventName);
     }
 
     protected void encodeMarkup(final FacesContext context, final InputPhone inputPhone, final String valueToRender)

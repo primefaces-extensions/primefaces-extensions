@@ -124,11 +124,6 @@ public class InputPhone extends AbstractPrimeHtmlInputText implements Widget, In
     }
 
     @Override
-    public String getDefaultEventName() {
-        return EVENT_COUNTRY_SELECT;
-    }
-
-    @Override
     public String getInputClientId() {
         return getClientId() + INPUT_SUFFIX;
     }
