@@ -3,7 +3,7 @@
     "@types/jquery": "^3.5.32",
     "@types/node": "^22.9.1",
     "monaco-editor": "^0.52.0",
-    "typescript": "^5.6.3"
+    "typescript": "^5.7.2"
   },
   "scripts": {
     "verify": "tsc --noEmit",
