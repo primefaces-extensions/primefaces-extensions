@@ -21,15 +21,9 @@
  */
 package org.primefaces.extensions.application;
 
-import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javax.el.ELContext;
 import javax.el.ExpressionFactory;
 import javax.el.ValueExpression;
-import javax.faces.FacesException;
-import javax.faces.application.ProjectStage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;
@@ -39,7 +33,6 @@ import org.primefaces.config.PrimeConfiguration;
 import org.primefaces.context.PrimeApplicationContext;
 import org.primefaces.context.PrimeRequestContext;
 import org.primefaces.extensions.util.ResourceExtUtils;
-import org.primefaces.util.LocaleUtils;
 
 /**
  * Creates a custom PhaseListener for RENDER_RESPONSE phase which will during beforePhase() dynamically add those PrimeFaces resources via
@@ -61,7 +54,6 @@ import org.primefaces.util.LocaleUtils;
 public class PrimeFacesResourceProcessor implements PhaseListener {
 
     private static final long serialVersionUID = 1L;
-    private static final Logger LOGGER = Logger.getLogger(PrimeFacesResourceProcessor.class.getName());
     private static final String LIBRARY = "primefaces";
 
     @Override
@@ -101,41 +93,7 @@ public class PrimeFacesResourceProcessor implements PhaseListener {
     }
 
     @Override
-    public void afterPhase(final PhaseEvent event) {
-        final FacesContext context = event.getFacesContext();
-        final PrimeRequestContext requestContext = PrimeRequestContext.getCurrentInstance(context);
-        final PrimeApplicationContext applicationContext = requestContext.getApplicationContext();
-        final PrimeConfiguration configuration = applicationContext.getConfig();
-
-        // normal CSV is a required dependency for some special components like fileupload
-        encodeValidationResources(context, configuration);
-
-        if (configuration.isClientSideLocalizationEnabled()) {
-            try {
-                final Locale locale = LocaleUtils.getCurrentLocale(context);
-                ResourceExtUtils.addJavascriptResource(context, LIBRARY, "locales/locale-" + locale.getLanguage() + ".js");
-            }
-            catch (FacesException e) {
-                if (context.isProjectStage(ProjectStage.Development)) {
-                    LOGGER.log(Level.WARNING,
-                                "Failed to load client side locale.js. {0}", e.getMessage());
-                }
-            }
-        }
-    }
-
-    protected void encodeValidationResources(final FacesContext context, final PrimeConfiguration configuration) {
-        // normal CSV is a required dependency for some special components like fileupload
-        ResourceExtUtils.addJavascriptResource(context, LIBRARY, "validation/validation.js");
-
-        if (configuration.isClientSideValidationEnabled()) {
-            // moment is needed for Date validation
-            ResourceExtUtils.addJavascriptResource(context, LIBRARY, "moment/moment.js");
-
-            // BV CSV is optional and must be enabled by config
-            if (configuration.isBeanValidationEnabled()) {
-                ResourceExtUtils.addJavascriptResource(context, LIBRARY, "validation/validation.bv.js");
-            }
-        }
+    public void afterPhase(PhaseEvent event) {
+        // do nothing
     }
 }

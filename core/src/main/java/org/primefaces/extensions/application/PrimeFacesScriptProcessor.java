@@ -23,7 +23,11 @@ package org.primefaces.extensions.application;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import javax.faces.FacesException;
 import javax.faces.application.ProjectStage;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
@@ -40,6 +44,7 @@ import org.primefaces.config.PrimeConfiguration;
 import org.primefaces.context.PrimeApplicationContext;
 import org.primefaces.context.PrimeRequestContext;
 import org.primefaces.extensions.util.ResourceExtUtils;
+import org.primefaces.util.Constants;
 import org.primefaces.util.LocaleUtils;
 
 /**
@@ -64,6 +69,8 @@ import org.primefaces.util.LocaleUtils;
  */
 public class PrimeFacesScriptProcessor implements SystemEventListener {
 
+    private static final Logger LOGGER = Logger.getLogger(PrimeFacesScriptProcessor.class.getName());
+
     @Override
     public boolean isListenerForSource(final Object source) {
         return source instanceof UIViewRoot;
@@ -71,6 +78,15 @@ public class PrimeFacesScriptProcessor implements SystemEventListener {
 
     @Override
     public void processEvent(final SystemEvent event) throws AbortProcessingException {
+        final FacesContext context = event.getFacesContext();
+        /*
+         * Check if this is an AJAX request by checking postback or partial view context. For AJAX requests, we skip loading core resources since they should
+         * already be loaded.
+         */
+        if (context.getPartialViewContext().isAjaxRequest()) {
+            return;
+        }
+
         // Get the current stack trace
         // https://github.com/primefaces-extensions/primefaces-extensions/issues/517
         boolean shouldDiscard = Arrays.stream(Thread.currentThread().getStackTrace())
@@ -80,13 +96,52 @@ public class PrimeFacesScriptProcessor implements SystemEventListener {
             return; // Exit
         }
 
-        final FacesContext context = event.getFacesContext();
+        final PrimeRequestContext requestContext = PrimeRequestContext.getCurrentInstance(context);
+        final PrimeApplicationContext applicationContext = requestContext.getApplicationContext();
+        final PrimeConfiguration configuration = applicationContext.getConfig();
+
+        // normal CSV is a required dependency for some special components like fileupload
+        encodeValidationResources(context, configuration);
+
+        // encode client side locale
+        encodeLocaleResources(context, configuration);
+
         final StringBuilder script = new StringBuilder(4000);
 
         encodeSettingScripts(context, script);
         encodeInitScripts(context, script);
 
         ResourceExtUtils.addScriptToHead(context, script.toString());
+    }
+
+    protected void encodeValidationResources(final FacesContext context, final PrimeConfiguration configuration) {
+        // normal CSV is a required dependency for some special components like fileupload
+        ResourceExtUtils.addJavascriptResource(context, Constants.LIBRARY, "validation/validation.js");
+
+        if (configuration.isClientSideValidationEnabled()) {
+            // moment is needed for Date validation
+            ResourceExtUtils.addJavascriptResource(context, Constants.LIBRARY, "moment/moment.js");
+
+            // BV CSV is optional and must be enabled by config
+            if (configuration.isBeanValidationEnabled()) {
+                ResourceExtUtils.addJavascriptResource(context, Constants.LIBRARY, "validation/validation.bv.js");
+            }
+        }
+    }
+
+    protected void encodeLocaleResources(final FacesContext context, final PrimeConfiguration configuration) {
+        if (configuration.isClientSideLocalizationEnabled()) {
+            try {
+                final Locale locale = LocaleUtils.getCurrentLocale(context);
+                ResourceExtUtils.addJavascriptResource(context, Constants.LIBRARY, "locales/locale-" + locale.getLanguage() + ".js");
+            }
+            catch (FacesException e) {
+                if (context.isProjectStage(ProjectStage.Development)) {
+                    LOGGER.log(Level.WARNING,
+                                "Failed to load client side locale.js. {0}", e.getMessage());
+                }
+            }
+        }
     }
 
     protected void encodeSettingScripts(final FacesContext context, final StringBuilder writer) {

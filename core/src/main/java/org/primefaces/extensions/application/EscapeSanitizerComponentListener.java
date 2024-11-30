@@ -124,7 +124,7 @@ public class EscapeSanitizerComponentListener implements SystemEventListener {
     }
 
     /**
-     * Sanitizes HTML content by allowing only safe HTML elements and attributes. Allows formatting and links but does not allow blocks, styles and media
+     * Sanitizes HTML content by allowing only safe HTML elements and attributes. Allows formatting and links but does not allow images, tables and media
      * elements.
      *
      * @param html The HTML content to sanitize
