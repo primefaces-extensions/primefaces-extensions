@@ -30,6 +30,7 @@ import java.util.logging.Logger;
 import javax.faces.FacesException;
 import javax.faces.application.ProjectStage;
 import javax.faces.component.UIViewRoot;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.SystemEvent;
@@ -48,8 +49,16 @@ import org.primefaces.util.Constants;
 import org.primefaces.util.LocaleUtils;
 
 /**
- * Creates a custom SystemEventListener for PostAddToViewEvent on UIViewRoot. This will run after all those @ResourceDependency annotations of PrimeFaces
- * components have been processed. This is thus an ideal moment to add the PrimeFaces.settings script as a component resource, as intended by PrimeFaces.
+ * SystemEventListener implementation that processes PrimeFaces scripts and resources. This will run after all those @ResourceDependency annotations of
+ * PrimeFaces components have been processed. This is thus an ideal moment to add the PrimeFaces.settings script as a component resource, as intended by
+ * PrimeFaces. This listener handles:
+ * <ul>
+ * <li>Adding validation resources (moment.js, validation.bv.js)</li>
+ * <li>Adding locale resources for client-side localization (locale-xx.js)</li>
+ * <li>Encoding PrimeFaces settings (locale, viewId, contextPath, etc)</li>
+ * <li>Encoding initialization scripts</li>
+ * </ul>
+ * The listener only processes non-AJAX requests and avoids duplicate processing during view restore.
  * <p>
  * Register it as below in faces-config.xml:
  * </p>
@@ -63,7 +72,7 @@ import org.primefaces.util.LocaleUtils;
  *        &lt;/system-event-listener&gt;
  *     &lt;/application&gt;
  * </pre>
- *
+ * 
  * @see <a href="https://github.com/omnifaces/omnifaces/wiki/Combine-hardcoded-PrimeFaces-resources-using-CombinedResourceHandler">OmniFaces</a>
  * @since 10.0.0
  */
@@ -106,14 +115,24 @@ public class PrimeFacesScriptProcessor implements SystemEventListener {
         // encode client side locale
         encodeLocaleResources(context, configuration);
 
+        // encode PrimeFaces settings
         final StringBuilder script = new StringBuilder(4000);
-
         encodeSettingScripts(context, script);
+
+        // encode initialization scripts
         encodeInitScripts(context, script);
 
+        // add the scripts to the head
         ResourceExtUtils.addScriptToHead(context, script.toString());
     }
 
+    /**
+     * Adds validation related JavaScript resources to the view. This includes the core validation.js and optionally moment.js and validation.bv.js if
+     * client-side validation and bean validation are enabled.
+     *
+     * @param context The FacesContext
+     * @param configuration The PrimeFaces configuration
+     */
     protected void encodeValidationResources(final FacesContext context, final PrimeConfiguration configuration) {
         // normal CSV is a required dependency for some special components like fileupload
         ResourceExtUtils.addJavascriptResource(context, Constants.LIBRARY, "validation/validation.js");
@@ -129,117 +148,127 @@ public class PrimeFacesScriptProcessor implements SystemEventListener {
         }
     }
 
+    /**
+     * Adds locale JavaScript resources to the view if client-side localization is enabled. The locale file is determined by the current locale's language.
+     *
+     * @param context The FacesContext
+     * @param configuration The PrimeFaces configuration
+     */
     protected void encodeLocaleResources(final FacesContext context, final PrimeConfiguration configuration) {
-        if (configuration.isClientSideLocalizationEnabled()) {
-            try {
-                final Locale locale = LocaleUtils.getCurrentLocale(context);
-                ResourceExtUtils.addJavascriptResource(context, Constants.LIBRARY, "locales/locale-" + locale.getLanguage() + ".js");
-            }
-            catch (FacesException e) {
-                if (context.isProjectStage(ProjectStage.Development)) {
-                    LOGGER.log(Level.WARNING,
-                                "Failed to load client side locale.js. {0}", e.getMessage());
-                }
+        if (!configuration.isClientSideLocalizationEnabled()) {
+            return;
+        }
+
+        try {
+            final Locale locale = LocaleUtils.getCurrentLocale(context);
+            ResourceExtUtils.addJavascriptResource(context, Constants.LIBRARY,
+                        "locales/locale-" + locale.getLanguage() + ".js");
+        }
+        catch (FacesException e) {
+            if (context.isProjectStage(ProjectStage.Development)) {
+                LOGGER.log(Level.WARNING, "Failed to load client side locale.js. {0}", e.getMessage());
             }
         }
     }
 
+    /**
+     * Encodes PrimeFaces settings as JavaScript that will be added to the view. This includes settings for locale, viewId, contextPath, cookies, validation,
+     * widget namespace, project stage and client window.
+     *
+     * @param context The FacesContext
+     * @param writer StringBuilder to append the settings JavaScript to
+     */
     protected void encodeSettingScripts(final FacesContext context, final StringBuilder writer) {
         final PrimeRequestContext requestContext = PrimeRequestContext.getCurrentInstance(context);
         final PrimeApplicationContext applicationContext = requestContext.getApplicationContext();
         final PrimeConfiguration configuration = applicationContext.getConfig();
-
         final ProjectStage projectStage = context.getApplication().getProjectStage();
+        final ExternalContext externalContext = context.getExternalContext();
 
         writer.append("if(window.PrimeFaces){");
 
-        writer.append("PrimeFaces.settings.locale='").append(LocaleUtils.getCurrentLocale(context)).append("';");
-        writer.append("PrimeFaces.settings.viewId='").append(context.getViewRoot().getViewId()).append("';");
-        writer.append("PrimeFaces.settings.contextPath='").append(context.getExternalContext().getRequestContextPath())
-                    .append("';");
+        // Build settings object
+        writer.append("PrimeFaces.settings={")
+                    .append("locale:'").append(LocaleUtils.getCurrentLocale(context)).append("',")
+                    .append("viewId:'").append(context.getViewRoot().getViewId()).append("',")
+                    .append("contextPath:'").append(externalContext.getRequestContextPath()).append("',")
+                    .append("cookiesSecure:").append(requestContext.isSecure() && configuration.isCookiesSecure());
 
-        writer.append("PrimeFaces.settings.cookiesSecure=")
-                    .append(requestContext.isSecure() && configuration.isCookiesSecure()).append(";");
-        if (applicationContext.getConfig().getCookiesSameSite() != null) {
-            writer.append("PrimeFaces.settings.cookiesSameSite='").append(configuration.getCookiesSameSite())
-                        .append("';");
+        String cookiesSameSite = configuration.getCookiesSameSite();
+        if (cookiesSameSite != null) {
+            writer.append(",cookiesSameSite:'").append(cookiesSameSite).append("'");
         }
 
+        // Client side validation settings
         if (configuration.isClientSideValidationEnabled()) {
-            writer.append("PrimeFaces.settings.validateEmptyFields=").append(configuration.isValidateEmptyFields())
-                        .append(";");
-            writer.append("PrimeFaces.settings.considerEmptyStringNull=")
-                        .append(configuration.isInterpretEmptyStringAsNull()).append(";");
+            writer.append(",validateEmptyFields:").append(configuration.isValidateEmptyFields())
+                        .append(",considerEmptyStringNull:").append(configuration.isInterpretEmptyStringAsNull());
         }
 
-        if (configuration.isLegacyWidgetNamespace()) {
-            writer.append("PrimeFaces.settings.legacyWidgetNamespace=true;");
-        }
-
+        // Feature flags
         if (configuration.isEarlyPostParamEvaluation()) {
-            writer.append("PrimeFaces.settings.earlyPostParamEvaluation=true;");
+            writer.append(",earlyPostParamEvaluation:true");
         }
-
         if (configuration.isPartialSubmitEnabled()) {
-            writer.append("PrimeFaces.settings.partialSubmit=true;");
+            writer.append(",partialSubmit:true");
         }
 
+        // Non-production stage
         if (projectStage != ProjectStage.Production) {
-            writer.append("PrimeFaces.settings.projectStage='").append(projectStage.toString()).append("';");
+            writer.append(",projectStage:'").append(projectStage.toString()).append("'");
         }
 
-        if (context.getExternalContext().getClientWindow() != null) {
+        writer.append("};");
 
-            final ClientWindow clientWindow = context.getExternalContext().getClientWindow();
-            if (clientWindow instanceof PrimeClientWindow) {
+        // Client window handling
+        ClientWindow clientWindow = externalContext.getClientWindow();
+        if (clientWindow instanceof PrimeClientWindow) {
+            boolean initialRedirect = false;
+            Object cookie = PrimeClientWindowUtils.getInitialRedirectCookie(context, clientWindow.getId());
 
-                boolean initialRedirect = false;
-
-                final Object cookie = PrimeClientWindowUtils.getInitialRedirectCookie(context, clientWindow.getId());
-                if (cookie instanceof Cookie) {
-                    final Cookie servletCookie = (Cookie) cookie;
-                    initialRedirect = true;
-
-                    // expire/remove cookie
-                    servletCookie.setMaxAge(0);
-                    ((HttpServletResponse) context.getExternalContext().getResponse()).addCookie(servletCookie);
-                }
-                writer.append(
-                            String.format("PrimeFaces.clientwindow.init('%s', %s);",
-                                        PrimeClientWindowUtils.secureWindowId(clientWindow.getId()),
-                                        initialRedirect));
+            if (cookie instanceof Cookie) {
+                Cookie servletCookie = (Cookie) cookie;
+                initialRedirect = true;
+                servletCookie.setMaxAge(0);
+                ((HttpServletResponse) externalContext.getResponse()).addCookie(servletCookie);
             }
+
+            writer.append("PrimeFaces.clientwindow.init('")
+                        .append(PrimeClientWindowUtils.secureWindowId(clientWindow.getId())).append("',")
+                        .append(initialRedirect).append(");");
         }
 
         writer.append("}");
     }
 
+    /**
+     * Encodes initialization scripts that will be added to the view. The scripts can be moved to the bottom of the page based on configuration. When not moved
+     * to bottom, scripts are wrapped in a function that executes on DOM ready.
+     *
+     * @param context The FacesContext
+     * @param writer StringBuilder to append the initialization scripts to
+     */
     protected void encodeInitScripts(FacesContext context, StringBuilder writer) {
         PrimeRequestContext requestContext = PrimeRequestContext.getCurrentInstance(context);
         List<String> scripts = requestContext.getInitScriptsToExecute();
 
-        if (!scripts.isEmpty()) {
-            boolean moveScriptsToBottom = requestContext.getApplicationContext().getConfig()
-                        .isMoveScriptsToBottom();
+        if (scripts.isEmpty()) {
+            return;
+        }
 
-            if (!moveScriptsToBottom) {
-                writer.append("(function(){const pfInit=() => {");
+        boolean moveScriptsToBottom = requestContext.getApplicationContext().getConfig()
+                    .isMoveScriptsToBottom();
 
-                for (int i = 0; i < scripts.size(); i++) {
-                    writer.append(scripts.get(i));
-                    writer.append(';');
-                }
-
-                writer.append("};if(window.$){$(function(){pfInit()})}");
-                writer.append("else if(document.readyState==='complete'){pfInit()}");
-                writer.append("else{document.addEventListener('DOMContentLoaded', pfInit)}})();");
-            }
-            else {
-                for (int i = 0; i < scripts.size(); i++) {
-                    writer.append(scripts.get(i));
-                    writer.append(';');
-                }
-            }
+        if (!moveScriptsToBottom) {
+            writer.append("(function(){const pfInit=()=>{")
+                        .append(String.join(";", scripts))
+                        .append("};if(window.$){$(pfInit)}")
+                        .append("else if(document.readyState==='complete'){pfInit()}")
+                        .append("else{document.addEventListener('DOMContentLoaded',pfInit)}")
+                        .append("})();");
+        }
+        else {
+            writer.append(String.join(";", scripts)).append(';');
         }
     }
 
