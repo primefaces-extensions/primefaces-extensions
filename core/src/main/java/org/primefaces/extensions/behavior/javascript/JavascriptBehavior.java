@@ -71,19 +71,19 @@ public class JavascriptBehavior extends AbstractBehavior {
     }
 
     public final String getExecute() {
-        return eval(PropertyKeys.execute, null);
+        return (String) getStateHelper().eval(PropertyKeys.execute, null);
     }
 
     public void setExecute(final String execute) {
-        setLiteral(PropertyKeys.execute, execute);
+        getStateHelper().put(PropertyKeys.execute, execute);
     }
 
     public boolean isDisabled() {
-        return eval(PropertyKeys.disabled, Boolean.FALSE);
+        return (Boolean) getStateHelper().eval(PropertyKeys.disabled, Boolean.FALSE);
     }
 
     public void setDisabled(boolean disabled) {
-        setLiteral(PropertyKeys.disabled, disabled);
+        getStateHelper().put(PropertyKeys.disabled, disabled);
     }
 
 }

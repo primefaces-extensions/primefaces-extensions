@@ -21,6 +21,8 @@
  */
 package org.primefaces.extensions.application;
 
+import java.util.Map;
+
 import javax.el.ELContext;
 import javax.el.ExpressionFactory;
 import javax.el.ValueExpression;
@@ -33,6 +35,7 @@ import org.primefaces.config.PrimeConfiguration;
 import org.primefaces.context.PrimeApplicationContext;
 import org.primefaces.context.PrimeRequestContext;
 import org.primefaces.extensions.util.ResourceExtUtils;
+import org.primefaces.util.MapBuilder;
 
 /**
  * Creates a custom PhaseListener for RENDER_RESPONSE phase which will during beforePhase() dynamically add those PrimeFaces resources via
@@ -54,7 +57,12 @@ import org.primefaces.extensions.util.ResourceExtUtils;
 public class PrimeFacesResourceProcessor implements PhaseListener {
 
     private static final long serialVersionUID = 1L;
-    private static final String LIBRARY = "primefaces";
+    private static final String LIBRARY = org.primefaces.util.Constants.LIBRARY;
+    private static final Map<String, String> THEME_MAPPING = MapBuilder.<String, String> builder()
+                .put("saga", "saga-blue")
+                .put("arya", "arya-blue")
+                .put("vela", "vela-blue")
+                .build();
 
     @Override
     public PhaseId getPhaseId() {
@@ -68,21 +76,25 @@ public class PrimeFacesResourceProcessor implements PhaseListener {
         final PrimeApplicationContext applicationContext = requestContext.getApplicationContext();
         final PrimeConfiguration configuration = applicationContext.getConfig();
 
-        final String theme;
-        final String themeParamValue = configuration.getTheme();
+        String theme;
+        String themeParamValue = applicationContext.getConfig().getTheme();
 
         if (themeParamValue != null) {
-            final ELContext elContext = context.getELContext();
-            final ExpressionFactory expressionFactory = context.getApplication().getExpressionFactory();
-            final ValueExpression ve = expressionFactory.createValueExpression(elContext, themeParamValue,
-                        String.class);
+            ELContext elContext = context.getELContext();
+            ExpressionFactory expressionFactory = context.getApplication().getExpressionFactory();
+            ValueExpression ve = expressionFactory.createValueExpression(elContext, themeParamValue, String.class);
+
             theme = (String) ve.getValue(elContext);
         }
         else {
-            theme = "saga"; // default
+            theme = "saga-blue"; // default
         }
 
         if (theme != null && !"none".equals(theme)) {
+            if (THEME_MAPPING.containsKey(theme)) {
+                theme = THEME_MAPPING.get(theme);
+            }
+
             ResourceExtUtils.addCssResource(context, LIBRARY + "-" + theme, "theme.css");
         }
 

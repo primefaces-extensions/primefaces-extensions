@@ -71,7 +71,7 @@ abstract class MonacoEditorCommonRenderer<TEditor extends MonacoEditorCommon<TEd
     public final void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
         boolean hideResourceVersion = PrimeRequestContext.getCurrentInstance(context).isHideResourceVersion();
         if (hideResourceVersion) {
-            logDevelopmentWarning(context, "Monaco Editor requires a resource version to work properly and '" +
+            logDevelopmentWarning(context, this, "Monaco Editor requires a resource version to work properly and '" +
                         Constants.ContextParams.HIDE_RESOURCE_VERSION + "' is currently configured.");
         }
         final TEditor monacoEditor = componentClass.cast(component);

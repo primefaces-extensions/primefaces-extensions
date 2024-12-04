@@ -1093,7 +1093,7 @@
                      */
                     , state = {
                         // generate unique ID to use for event.namespace so can unbind only events added by 'this layout'
-                        id: "layout" + $.now() // code uses alias: sID
+                        id: "layout" + Date.now() // code uses alias: sID
                         , initialized: false
                         , paneResizing: false
                         , panesSliding: {}

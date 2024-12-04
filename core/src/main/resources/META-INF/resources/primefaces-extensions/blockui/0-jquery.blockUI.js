@@ -23,7 +23,7 @@
 
       // this bit is to ensure we don't call setExpression when we shouldn't (with extra muscle to handle
       // confusing userAgent strings on Vista)
-      var setExpr = $.isFunction( document.createElement('div').style.setExpression );
+      var setExpr = typeof document.createElement('div').style.setExpression === "function";
 
       // global $ methods for blocking/unblocking the entire page
       $.blockUI   = function(opts) { install(window, opts); };

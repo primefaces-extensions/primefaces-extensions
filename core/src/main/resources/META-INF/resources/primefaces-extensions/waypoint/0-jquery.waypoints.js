@@ -158,7 +158,7 @@ https://github.com/imakewebthings/jquery-waypoints/blob/master/licenses.txt
         var axes, cOffset, isWin,
           _this = this;
 
-        isWin = $.isWindow(this.element);
+        isWin = this.element === window;
         cOffset = this.$element.offset();
         this.doScroll();
         axes = {
@@ -187,7 +187,7 @@ https://github.com/imakewebthings/jquery-waypoints/blob/master/licenses.txt
 
             adjustment = waypoint.options.offset;
             oldOffset = waypoint.offset;
-            elementOffset = $.isWindow(waypoint.element) ? 0 : waypoint.$element.offset()[axis.offsetProp];
+            elementOffset = waypoint.element === window ? 0 : waypoint.element.getBoundingClientRect()[axis.offsetProp] + window.pageYOffset;
             if (typeof adjustment === "function") {
               adjustment = adjustment.apply(waypoint.element);
             } else if (typeof adjustment === 'string') {
@@ -230,7 +230,7 @@ https://github.com/imakewebthings/jquery-waypoints/blob/master/licenses.txt
             var contextHeight;
 
             contextHeight = $[wps]('viewportHeight');
-            if (!$.isWindow(context.element)) {
+            if (context.element !== window) {
               contextHeight = context.$element.height();
             }
             return contextHeight - $(this).outerHeight();
@@ -308,7 +308,7 @@ https://github.com/imakewebthings/jquery-waypoints/blob/master/licenses.txt
 
           $this = $(this);
           contextElement = (_ref1 = options.context) != null ? _ref1 : $.fn[wp].defaults.context;
-          if (!$.isWindow(contextElement)) {
+          if (contextElement !== window) {
             contextElement = $this.closest(contextElement);
           }
           contextElement = $(contextElement);

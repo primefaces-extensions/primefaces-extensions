@@ -3,7 +3,7 @@
     <parent>
         <groupId>org.primefaces.extensions</groupId>
         <artifactId>primefaces-extensions-parent</artifactId>
-        <version>14.0.9-SNAPSHOT</version>
+        <version>15.0.0-RC1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>primefaces-extensions-showcase</artifactId>
@@ -119,6 +119,10 @@
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces-themes</artifactId>
         </dependency>
         <dependency>
             <groupId>org.primefaces.extensions</groupId>

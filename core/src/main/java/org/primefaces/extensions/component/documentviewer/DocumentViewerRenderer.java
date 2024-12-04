@@ -57,7 +57,7 @@ public class DocumentViewerRenderer extends CoreRenderer {
     public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
         boolean hideResourceVersion = PrimeRequestContext.getCurrentInstance(context).isHideResourceVersion();
         if (hideResourceVersion) {
-            logDevelopmentWarning(context, "DocumentViewer requires a resource version to work properly and '" +
+            logDevelopmentWarning(context, this, "DocumentViewer requires a resource version to work properly and '" +
                         Constants.ContextParams.HIDE_RESOURCE_VERSION + "' is currently configured.");
         }
 

@@ -134,9 +134,6 @@ public class PrimeFacesScriptProcessor implements SystemEventListener {
      * @param configuration The PrimeFaces configuration
      */
     protected void encodeValidationResources(final FacesContext context, final PrimeConfiguration configuration) {
-        // normal CSV is a required dependency for some special components like fileupload
-        ResourceExtUtils.addJavascriptResource(context, Constants.LIBRARY, "validation/validation.js");
-
         if (configuration.isClientSideValidationEnabled()) {
             // moment is needed for Date validation
             ResourceExtUtils.addJavascriptResource(context, Constants.LIBRARY, "moment/moment.js");

@@ -228,7 +228,7 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
             params[0] = MessageFactory.getLabel(context, this);
 
             // Enqueue an error message if an invalid value was specified
-            final FacesMessage message = org.primefaces.util.MessageFactory.getFacesMessage(UISelectMany.INVALID_MESSAGE_ID,
+            final FacesMessage message = org.primefaces.util.MessageFactory.getFacesMessage(context, UISelectMany.INVALID_MESSAGE_ID,
                         FacesMessage.SEVERITY_ERROR, params);
             context.addMessage(getClientId(context), message);
             setValid(false);
