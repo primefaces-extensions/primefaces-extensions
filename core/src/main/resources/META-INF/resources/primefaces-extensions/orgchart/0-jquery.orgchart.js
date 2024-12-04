@@ -63,7 +63,7 @@
       if (typeof MutationObserver !== 'undefined') {
         this.triggerInitEvent();
       }
-      if ($.type(data) === 'object') {
+      if (typeof data === 'object' && data !== null) {
         if (data instanceof $) { // ul datasource
           this.buildHierarchy($chart, this.buildJsonDS(data.children()), 0, this.options);
         } else { // local json datasource
