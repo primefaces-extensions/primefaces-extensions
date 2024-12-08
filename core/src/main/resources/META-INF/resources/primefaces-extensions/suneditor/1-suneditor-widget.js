@@ -4,15 +4,15 @@
  *
  * @author Matthieu Valente
  */
-PrimeFaces.widget.ExtSunEditor = PrimeFaces.widget.DeferredWidget.extend({
+PrimeFaces.widget.ExtSunEditor = class extends PrimeFaces.widget.DeferredWidget {
 
     /**
      * Initializes the widget.
      *
      * @param {object} cfg The widget configuration.
      */
-    init: function (cfg) {
-        this._super(cfg);
+    init(cfg) {
+        super.init(cfg);
         this.input = $(this.jqId);
         this.disabled = (cfg.disabled === undefined) ? false : cfg.disabled;
         this.cfg.strictMode = (cfg.strictMode === undefined) ? true : cfg.strictMode;
@@ -39,7 +39,7 @@ PrimeFaces.widget.ExtSunEditor = PrimeFaces.widget.DeferredWidget.extend({
         }
 
         this.renderDeferred();
-    },
+    }
 
     /**
      * Initializes the SunEditor instance. This method will be called when the
@@ -47,7 +47,7 @@ PrimeFaces.widget.ExtSunEditor = PrimeFaces.widget.DeferredWidget.extend({
      *
      * @private
      */
-    _render: function () {
+    _render() {
         const $this = this;
 
         // calculate the language to use
@@ -115,36 +115,36 @@ PrimeFaces.widget.ExtSunEditor = PrimeFaces.widget.DeferredWidget.extend({
 
         // check if being used in dialog
         this.setupDialogSupport();
-    },
+    }
 
     // @override
-    refresh: function (cfg) {
+    refresh(cfg) {
         this._remove();
-        this._super(cfg);
-    },
+        super.refresh(cfg);
+    }
 
     // @override
-    destroy: function () {
-        this._super();
+    destroy() {
+        super.destroy();
         this._remove();
-    },
+    }
 
     /**
      * Clean up this widget and remove elements from DOM.
      * @private
      */
-    _remove: function () {
+    _remove() {
         if (this.editor) {
             this.editor.destroy();
             this.editor = null;
         }
-    },
+    }
 
     /**
      * Sets up support for using the editor within an overlay dialog.
      * @private
      */
-    setupDialogSupport: function () {
+    setupDialogSupport() {
         const dlg = this.input[0].closest('.ui-dialog');
         if (dlg) {
             const dialog = $(dlg);
@@ -152,12 +152,12 @@ PrimeFaces.widget.ExtSunEditor = PrimeFaces.widget.DeferredWidget.extend({
             dialog.find('.sun-editor .se-controller').zIndex(9999);
             dialog.find('.sun-editor .se-wrapper').zIndex(9998);
         }
-    },
+    }
 
     /**
      * Calculates the correct language or defaults to English if not found.
      */
-    getLanguage: function () {
+    getLanguage() {
         let localeKey = this.cfg.locale ? this.cfg.locale : PrimeFaces.settings.locale;
         let language = 'en';
         if (localeKey && window.SUNEDITOR_LANG) {
@@ -178,36 +178,36 @@ PrimeFaces.widget.ExtSunEditor = PrimeFaces.widget.DeferredWidget.extend({
             language = window.SUNEDITOR_LANG['en'];
         }
         this.cfg.lang = language;
-    },
+    }
 
     /**
      * Clears the entire text of the editor.
      */
-    clear: function () {
+    clear() {
         if (this.editor) {
             this.editor.setContents('');
         }
-    },
+    }
 
     /**
      * Enables this text editor so that text can be entered.
      */
-    enable: function () {
+    enable() {
         if (this.editor) {
             this.editor.enable();
         }
         PrimeFaces.utils.enableInputWidget(this.jq, this.input);
         this.disabled = false;
-    },
+    }
 
     /**
      * Disables this text editor so that no text can be entered or removed.
      */
-    disable: function () {
+    disable() {
         if (this.editor) {
             this.editor.disable();
         }
         PrimeFaces.utils.disableInputWidget(this.jq, this.input);
         this.disabled = true;
     }
-});
+};

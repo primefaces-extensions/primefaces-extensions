@@ -9,15 +9,15 @@
  * a global function and set it on the model, see the user guide for more details. The required typing of that function
  * is given by `PrimeFaces.widget.ExtEChart.ChartExtender`.
  */
-PrimeFaces.widget.ExtEChart = PrimeFaces.widget.DeferredWidget.extend({
+PrimeFaces.widget.ExtEChart = class extends PrimeFaces.widget.DeferredWidget {
 
     /**
      * @override
      * @inheritdoc
      * @param {PrimeFaces.PartialWidgetCfg<TCfg>} cfg
      */
-    init: function (cfg) {
-        this._super(cfg);
+    init(cfg) {
+        super.init(cfg);
 
         // user extension to configure chart
         let extender = this.cfg.extender;
@@ -30,37 +30,37 @@ PrimeFaces.widget.ExtEChart = PrimeFaces.widget.DeferredWidget.extend({
         }
 
         this.renderDeferred();
-    },
+    }
 
     /**
      * @override
      * @inheritdoc
      * @param {PrimeFaces.PartialWidgetCfg<TCfg>} cfg
      */
-    refresh: function (cfg) {
+    refresh(cfg) {
         this._remove();
-        this._super(cfg);
-    },
+        super.refresh(cfg);
+    }
 
     /**
      * @override
      * @inheritdoc
      */
-    destroy: function () {
-        this._super();
+    destroy() {
+        super.destroy();
         this._remove();
-    },
+    }
 
     /**
      * Clean up this widget and remove elements from DOM.
      * @private
      */
-    _remove: function() {
+    _remove() {
         if (this.chart) {
             this.unbindWindowResizeListener();
             this.chart.dispose();
         }
-    },
+    }
 
     /**
      * @include
@@ -68,7 +68,7 @@ PrimeFaces.widget.ExtEChart = PrimeFaces.widget.DeferredWidget.extend({
      * @protected
      * @inheritdoc
      */
-    _render: function () {
+    _render() {
         // configure theme
         let theme = this.cfg.theme || PrimeFaces.env.getThemeContrast();
 
@@ -82,32 +82,32 @@ PrimeFaces.widget.ExtEChart = PrimeFaces.widget.DeferredWidget.extend({
 
         this.bindWindowResizeListener();
         this.bindItemSelect();
-    },
+    }
 
     /**
      * Sets up the window resize listener to make the chart responsive.
      * @private
      */
-    bindWindowResizeListener: function() {
+    bindWindowResizeListener() {
         let $this = this;
         $(window).on('resize.' + this.id, function() {
             $this.chart.resize();
         });
-    },
+    }
 
     /**
      * Tears down the window resize listener.
      * @private
      */
-    unbindWindowResizeListener: function() {
+    unbindWindowResizeListener() {
         $(window).off('resize.' + this.id);
-    },
+    }
 
     /**
      * Setups the event listeners required by this widget when an item (data point) in the chart is selected.
      * @private
      */
-    bindItemSelect: function () {
+    bindItemSelect() {
         if (!this.hasBehavior('itemSelect')) {
             return;
         }
@@ -128,27 +128,27 @@ PrimeFaces.widget.ExtEChart = PrimeFaces.widget.DeferredWidget.extend({
             }
             $this.callBehavior("itemSelect", {params});
         });
-    },
+    }
 
     /**
      * Return this chart as an image with a data source URL (`<img src="data:url" />`)
      * @return {HTMLImageElement} The content of this chart as an HTML IMAGE.
      */
-    exportAsImage: function() {
+    exportAsImage() {
         let img = new Image();
         img.src = this.chart.getDataURL();
         return img;
-    },
+    }
 
     /**
      * Send this chart to the printer.
      */
-    print: function() {
+    print() {
         // Create a new image element
         let img = `<html><head><script>function s1(){setTimeout('s2()',10);}function s2(){window.print();window.close()}</script></head><body onload='s1()'><img src='${this.chart.getDataURL()}'/></body></html>`;
         let pwa = window.open("about:blank", "_new");
         pwa.document.open();
         pwa.document.write(img);
         pwa.document.close();
-    },
-});
+    }
+};

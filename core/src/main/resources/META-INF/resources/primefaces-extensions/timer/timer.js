@@ -3,15 +3,15 @@
  *
  * @author f.strazzullo
  */
-PrimeFaces.widget.ExtTimer = PrimeFaces.widget.BaseWidget.extend({
+PrimeFaces.widget.ExtTimer = class extends PrimeFaces.widget.BaseWidget {
 
     /**
      * @override
      * @inheritdoc
      * @param {PrimeFaces.PartialWidgetCfg<TCfg>} cfg
      */
-    init: function (cfg) {
-        this._super(cfg);
+    init(cfg) {
+        super.init(cfg);
         this.cfg = cfg;
         this.forward = cfg.forward;
         this.locale = cfg.locale;
@@ -23,22 +23,22 @@ PrimeFaces.widget.ExtTimer = PrimeFaces.widget.BaseWidget.extend({
         }
 
         this.print();
-    },
+    }
 
     /**
      * Calculate the current time in seconds.
      * @private
      * @returns {number} the number of seconds in the current time
      */
-    currentTimeInSecs: function () {
+    currentTimeInSecs() {
         return Math.floor(new Date().getTime() / 1000);
-    },
+    }
 
     /**
      * Prints the current step to the UI.
      * @private
      */
-    print: function () {
+    print() {
         var value = this.currentTimeout;
 
         if (this.cfg.formatFunction) {
@@ -57,13 +57,13 @@ PrimeFaces.widget.ExtTimer = PrimeFaces.widget.BaseWidget.extend({
         }
 
         this.jq.html(value);
-    },
+    }
 
     /**
      * Perform the increment of the second
      * @private
      */
-    doStep: function () {
+    doStep() {
         var currentSeconds = this.currentTimeInSecs(),
             seconds = currentSeconds - this.prevTime;
         this.prevTime = currentSeconds;
@@ -75,12 +75,12 @@ PrimeFaces.widget.ExtTimer = PrimeFaces.widget.BaseWidget.extend({
                 total: this.originalTimeout
             });
         }
-    },
+    }
 
     /**
      * Start the timer.
      */
-    start: function () {
+    start() {
         var $this = this;
         this.prevTime = this.currentTimeInSecs();
 
@@ -100,17 +100,17 @@ PrimeFaces.widget.ExtTimer = PrimeFaces.widget.BaseWidget.extend({
                 }
             }, $this.cfg.interval);
         }
-    },
+    }
 
     /**
      * Pause the timer.
      */
-    pause: function () {
+    pause() {
         if (this.intervalId) {
             PrimeFacesExt.timers.clearInterval(this.intervalId);
             this.intervalId = null;
         }
-    },
+    }
 
     /**
      * Stop the timer.
@@ -118,7 +118,7 @@ PrimeFaces.widget.ExtTimer = PrimeFaces.widget.BaseWidget.extend({
      * @param {boolean} silent true if you don't want to fire any AJAX events
      * @param {boolean} end true if you want to check the singleRun before stopping
      */
-    stop: function (silent, end) {
+    stop(silent, end) {
         if (!silent && this.cfg.listener) {
             this.cfg.listener();
         }
@@ -133,16 +133,16 @@ PrimeFaces.widget.ExtTimer = PrimeFaces.widget.BaseWidget.extend({
             this.currentTimeout = this.forward ? 0 : this.originalTimeout;
             this.print();
         }
-    },
+    }
 
     /**
      * Restart the timer back at its original value.
      *
      * @param {boolean} silent true if you don't want to fire any AJAX events
      */
-    restart: function (silent) {
+    restart(silent) {
         this.stop(silent, false);
         this.start();
     }
 
-});
+};

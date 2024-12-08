@@ -4,7 +4,7 @@
  * @author Jasper de Vries jepsar@gmail.com
  * @since 7.0.1
  */
-PrimeFaces.widget.ExtTimeAgo = PrimeFaces.widget.BaseWidget.extend({
+PrimeFaces.widget.ExtTimeAgo = class extends PrimeFaces.widget.BaseWidget {
 
     /**
      * Initializes the widget.
@@ -12,8 +12,8 @@ PrimeFaces.widget.ExtTimeAgo = PrimeFaces.widget.BaseWidget.extend({
      * @param {object}
      *            cfg The widget configuration.
      */
-    init: function (cfg) {
-        this._super(cfg);
+    init(cfg) {
+        super.init(cfg);
         this.id = cfg.id;
         this.cfg = cfg;
         this.selector = this.jqId + ' time';
@@ -23,21 +23,21 @@ PrimeFaces.widget.ExtTimeAgo = PrimeFaces.widget.BaseWidget.extend({
             $.timeago.settings.strings = PrimeFacesExt.locales.TimeAgo[this.cfg.locale];
         }
         this.timeAgo = $(this.selector).timeago();
-    },
+    }
 
     // @override
-    refresh: function (cfg) {
+    refresh(cfg) {
         $(this.selector).timeago('dispose');
-        this._super(cfg);
-    },
+        super.refresh(cfg);
+    }
 
     // @override
-    destroy: function () {
-        this._super();
+    destroy() {
+        super.destroy();
         $(this.selector).timeago('dispose');
     }
 
-});
+};
 
 PrimeFacesExt.locales.TimeAgo['en'] = {
     prefixAgo: null,

@@ -3,15 +3,15 @@
  *
  * @author Oleg Varaksin
  */
-PrimeFaces.widget.ExtLayout = PrimeFaces.widget.DeferredWidget.extend({
+PrimeFaces.widget.ExtLayout = class extends PrimeFaces.widget.DeferredWidget {
     /**
      * Initializes the widget.
      *
      * @param {object}
      *        cfg The widget configuration.
      */
-    init: function (cfg) {
-        this._super(cfg);
+    init(cfg) {
+        super.init(cfg);
         this.cfg = cfg;
         this.id = cfg.id;
         this.jq = $(cfg.forTarget);
@@ -47,9 +47,9 @@ PrimeFaces.widget.ExtLayout = PrimeFaces.widget.DeferredWidget.extend({
         }
 
         this.renderDeferred();
-    },
+    }
 
-    _render: function () {
+    _render() {
         // create layout
         this.layout = this.jq.layout(this.cfg.options);
 
@@ -63,9 +63,9 @@ PrimeFaces.widget.ExtLayout = PrimeFaces.widget.DeferredWidget.extend({
 
         // bind "open", "close" and "resize" events
         this.bindEvents(this.jq);
-    },
+    }
 
-    bindEvents: function (parent) {
+    bindEvents(parent) {
         var $this = this;
 
         // bind events
@@ -131,9 +131,9 @@ PrimeFaces.widget.ExtLayout = PrimeFaces.widget.DeferredWidget.extend({
                 }
             }
         });
-    },
+    }
 
-    toggle: function (pane) {
+    toggle(pane) {
         this.jq.find(".ui-layout-pane").each(function () {
             var combinedPosition = $(this).data('combinedposition');
             if (combinedPosition && combinedPosition === pane) {
@@ -141,9 +141,9 @@ PrimeFaces.widget.ExtLayout = PrimeFaces.widget.DeferredWidget.extend({
                 return false;
             }
         });
-    },
+    }
 
-    close: function (pane) {
+    close(pane) {
         var panes = this.jq.find(".ui-layout-pane");
         var length = panes.length;
         for (var i = 0; i < length; i++) {
@@ -153,9 +153,9 @@ PrimeFaces.widget.ExtLayout = PrimeFaces.widget.DeferredWidget.extend({
                 break;
             }
         }
-    },
+    }
 
-    open: function (pane) {
+    open(pane) {
         var panes = this.jq.find(".ui-layout-pane");
         var length = panes.length;
         for (var i = 0; i < length; i++) {
@@ -165,9 +165,9 @@ PrimeFaces.widget.ExtLayout = PrimeFaces.widget.DeferredWidget.extend({
                 break;
             }
         }
-    },
+    }
 
-    sizePane: function (pane, size) {
+    sizePane(pane, size) {
         var panes = this.jq.find(".ui-layout-pane");
         var length = panes.length;
         for (var i = 0; i < length; i++) {
@@ -177,9 +177,9 @@ PrimeFaces.widget.ExtLayout = PrimeFaces.widget.DeferredWidget.extend({
                 break;
             }
         }
-    },
+    }
 
-    sizeContent: function (pane) {
+    sizeContent(pane) {
         var panes = this.jq.find(".ui-layout-pane");
         var length = panes.length;
         for (var i = 0; i < length; i++) {
@@ -189,15 +189,15 @@ PrimeFaces.widget.ExtLayout = PrimeFaces.widget.DeferredWidget.extend({
                 break;
             }
         }
-    },
+    }
 
     /**
      * Automatically resize the whole layout.
      */
-    resizeAll: function () {
+    resizeAll() {
         if (this.layout) {
             this.layout.resizeAll();
         }
     }
 
-});
+};

@@ -4,7 +4,7 @@
  *
  * @since 14.0.0
  */
-PrimeFaces.widget.ExtInputOtp = PrimeFaces.widget.BaseWidget.extend({
+PrimeFaces.widget.ExtInputOtp = class extends PrimeFaces.widget.BaseWidget {
 
     /**
      * Initializes the widget.
@@ -12,8 +12,8 @@ PrimeFaces.widget.ExtInputOtp = PrimeFaces.widget.BaseWidget.extend({
      * @param {object}
      *            cfg The widget configuration.
      */
-    init: function (cfg) {
-        this._super(cfg);
+    init(cfg) {
+        super.init(cfg);
         this.id = cfg.id;
         this.cfg = cfg;
         this.disabled = cfg.disabled;
@@ -44,21 +44,21 @@ PrimeFaces.widget.ExtInputOtp = PrimeFaces.widget.BaseWidget.extend({
         if (this.cfg.behaviors) {
             PrimeFaces.attachBehaviors(this.inputsJq, this.cfg.behaviors);
         }
-    },
+    }
 
     /**
      * Set up the ARIA accessibility.
      */
-    setupARIA: function () {
+    setupARIA() {
         let $this = this;
         this.ariaLabel = this.cfg.ariaLabel ||
             PrimeFaces.getAriaLabel('otpLabel', 'Please enter OTP/PIN character {0}');
         this.inputsJq.each(function (index, elem) {
             $(elem).attr('aria-label', $this.ariaLabel.replace('{0}', (index + 1)));
         });
-    },
+    }
 
-    bindEvents: function () {
+    bindEvents() {
         let $this = this;
         let inputsJq = this.inputsJq;
 
@@ -172,13 +172,13 @@ PrimeFaces.widget.ExtInputOtp = PrimeFaces.widget.BaseWidget.extend({
             }
             this.select();
         });
-    },
+    }
 
     /**
      *
      * @returns {string} The original value of the hidden input.
      */
-    updateInput: function () {
+    updateInput() {
         let oldValue = this.hinput.val();
         let newValue = '';
         for (let i = 0; i < this.inputsJq.length; i++) {
@@ -186,17 +186,17 @@ PrimeFaces.widget.ExtInputOtp = PrimeFaces.widget.BaseWidget.extend({
         }
         this.hinput.val(newValue);
         return oldValue;
-    },
+    }
 
-    getValue: function () {
+    getValue() {
         this.hinput.val();
-    },
+    }
 
     /**
      * Sets the value of this input number widget to the given value.
      * @param {number | string} value The new value to set.
      */
-    setValue: function (value) {
+    setValue(value) {
         if (value.length > this.inputCount || (this.cfg.integerOnly && isNaN(value))) {
             return;
         }
@@ -210,31 +210,31 @@ PrimeFaces.widget.ExtInputOtp = PrimeFaces.widget.BaseWidget.extend({
             }
         }
         this.updateInput();
-    },
+    }
 
     /**
      * Focus the component by focusing on the correct input box.
      */
-    focus: function () {
+    focus() {
         this.inputsJq[0].trigger('focus');
-    },
+    }
 
     /**
      * Enable the input
      */
-    enable: function () {
+    enable() {
         PrimeFaces.utils.enableInputWidget(this.inputsJq);
         PrimeFaces.utils.enableInputWidget(this.hinput);
         this.disabled = false;
-    },
+    }
 
     /**
      * Disable the input
      */
-    disable: function () {
+    disable() {
         PrimeFaces.utils.disableInputWidget(this.inputsJq);
         PrimeFaces.utils.disableInputWidget(this.hinput);
         this.disabled = true;
     }
 
-});
+};

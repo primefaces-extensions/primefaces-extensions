@@ -4,29 +4,29 @@
  * @author Melloware mellowaredev@gmail.com
  * @since 8.0.1
  */
-PrimeFaces.widget.ExtCreditCard = PrimeFaces.widget.BaseWidget.extend({
+PrimeFaces.widget.ExtCreditCard = class extends PrimeFaces.widget.BaseWidget {
 
     /**
      * @override
      * @inheritdoc
      * @param {PrimeFaces.BaseWidget} cfg
      */
-    init: function (cfg) {
-        this._super(cfg);
+    init(cfg) {
+        super.init(cfg);
         this.cfg.container = '.ui-credit-card';
         this.form = this.jq.closest('form');
         this.cfg.form = PrimeFaces.escapeClientId(this.form.attr('id'))
         this.card = new Card(this.cfg)
 
         this.bindListeners();
-    },
+    }
 
     /**
      * GitHub #791: If any input box values have changed dynamically then
      * trigger blur/change for Card.js to pick up the changes. Especially
      * after AJAX postback.
      */
-    bindListeners: function () {
+    bindListeners() {
         var $this = this;
         this.addRefreshListener(function () {
             $(document).ready(function () {
@@ -43,7 +43,7 @@ PrimeFaces.widget.ExtCreditCard = PrimeFaces.widget.BaseWidget.extend({
                 });
             });
         });
-    },
+    }
 
     /**
      * Checks if this input has the name we are looking for.
@@ -52,26 +52,26 @@ PrimeFaces.widget.ExtCreditCard = PrimeFaces.widget.BaseWidget.extend({
      * @param name the name of the input to look for
      * @returns {boolean|*} true if the field matches the name
      */
-    isInput: function (input, name) {
+    isInput(input, name) {
         return input.name === name;
-    },
+    }
 
     /**
      * Flips the card to the back of the card.
      */
-    flipToBack: function () {
+    flipToBack() {
         this.form.find('input[name="name"]').each(function () {
             this.dispatchEvent(new Event('blur'));
         });
         this.form.find('input[name="cvc"]').each(function () {
             this.dispatchEvent(new Event('focus'));
         });
-    },
+    }
 
     /**
      * Flips the card to the front of the card.
      */
-    flipToFront: function () {
+    flipToFront() {
         this.form.find('input[name="cvc"]').each(function () {
             this.dispatchEvent(new Event('blur'));
         });
@@ -79,6 +79,6 @@ PrimeFaces.widget.ExtCreditCard = PrimeFaces.widget.BaseWidget.extend({
             this.dispatchEvent(new Event('focus'));
         });
     }
-});
+};
 
 

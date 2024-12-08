@@ -4,7 +4,7 @@
  * @author Oleg Varaksin
  * @author Melloware
  */
-PrimeFaces.widget.ExtTooltip = PrimeFaces.widget.BaseWidget.extend({
+PrimeFaces.widget.ExtTooltip = class extends PrimeFaces.widget.BaseWidget {
 
     /**
      * Initializes the widget.
@@ -12,8 +12,8 @@ PrimeFaces.widget.ExtTooltip = PrimeFaces.widget.BaseWidget.extend({
      * @param {object}
      *            cfg The widget configuration.
      */
-    init: function (cfg) {
-        this._super(cfg);
+    init(cfg) {
+        super.init(cfg);
         this.cfg = cfg;
         var _self = this;
         var targetSelectors = null;
@@ -65,7 +65,7 @@ PrimeFaces.widget.ExtTooltip = PrimeFaces.widget.BaseWidget.extend({
                 });
             }
         }
-    },
+    }
 
     /**
      * Apply the QTip to Jquery object by deleting the old tip first. Delete
@@ -78,27 +78,27 @@ PrimeFaces.widget.ExtTooltip = PrimeFaces.widget.BaseWidget.extend({
      * @param event
      *            the optional event to attach to
      */
-    applyTooltip: function (jq, cfg, event) {
+    applyTooltip(jq, cfg, event) {
         if (event) {
             jq.qtip('destroy').qtip(cfg, event);
         } else {
             jq.qtip('destroy').qtip(cfg);
         }
-    },
+    }
 
-    show: function () {
+    show() {
         if (this.cfg.forTarget) {
             this.cfg.forTarget.qtip('show');
         }
-    },
+    }
 
-    hide: function () {
+    hide() {
         if (this.cfg.forTarget) {
             this.cfg.forTarget.qtip('hide');
         }
-    },
+    }
 
-    destroy: function () {
+    destroy() {
         if (this.cfg.forTarget) {
             this.cfg.forTarget.qtip('destroy');
 
@@ -106,15 +106,15 @@ PrimeFaces.widget.ExtTooltip = PrimeFaces.widget.BaseWidget.extend({
                 $(window).off("debouncedresize.tooltip" + this.jqId);
             }
         }
-    },
+    }
 
-    reposition: function () {
+    reposition() {
         if (this.cfg.forTarget) {
             this.cfg.forTarget.qtip('reposition');
         }
     }
 
-});
+};
 
 /**
  * Converts expressions into an array of Jquery Selectors.
@@ -123,7 +123,7 @@ PrimeFaces.widget.ExtTooltip = PrimeFaces.widget.BaseWidget.extend({
  */
 PrimeFaces.expressions.CssSelectorResolver = {
 
-    resolveCssSelectors: function (expressions) {
+    resolveCssSelectors(expressions) {
         var splittedExpressions = PrimeFaces.expressions.SearchExpressionFacade.splitExpressions(expressions);
         var elements = [];
 

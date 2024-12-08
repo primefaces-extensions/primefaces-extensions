@@ -3,18 +3,18 @@
  *
  * @author Mauricio Fenoglio
  */
-PrimeFaces.widget.ExtQRCode = PrimeFaces.widget.BaseWidget.extend({
+PrimeFaces.widget.ExtQRCode = class extends PrimeFaces.widget.BaseWidget {
     /**
      * Initializes the widget.
      *
      * @param {object} cfg The widget configuration.
      */
-    init: function(cfg) {
-        this._super(cfg);
+    init(cfg) {
+        super.init(cfg);
         this.container = $(this.jqId);
         this._render();
-    },
-    _render: function() {
+    }
+    _render() {
         this.cfg.fontcolor = this.toHexColor(this.cfg.fontcolor);
         this.cfg.fill = this.toHexColor(this.cfg.fill);
 
@@ -24,8 +24,8 @@ PrimeFaces.widget.ExtQRCode = PrimeFaces.widget.BaseWidget.extend({
         }
 
         this.instance = this.container.qrcode(this.cfg);
-    },
-    toHexColor: function(value) {
+    }
+    toHexColor(value) {
         if (!(/^#/).test(value)) {
             return '#' + value;
         } else {
@@ -33,4 +33,4 @@ PrimeFaces.widget.ExtQRCode = PrimeFaces.widget.BaseWidget.extend({
         }
     }
 
-});
+};

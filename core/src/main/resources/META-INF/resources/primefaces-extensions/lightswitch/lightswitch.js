@@ -4,7 +4,7 @@
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
  * @since 10.0
  */
-PrimeFaces.widget.ExtLightSwitch = PrimeFaces.widget.BaseWidget.extend({
+PrimeFaces.widget.ExtLightSwitch = class extends PrimeFaces.widget.BaseWidget {
 
     /**
      * Initializes the widget.
@@ -12,8 +12,8 @@ PrimeFaces.widget.ExtLightSwitch = PrimeFaces.widget.BaseWidget.extend({
      * @param {object}
      *        cfg The widget configuration.
      */
-    init: function (cfg) {
-        this._super(cfg);
+    init(cfg) {
+        super.init(cfg);
         this.id = cfg.id;
         this.cfg = cfg;
         this.formId = $(PrimeFaces.escapeClientId(this.cfg.parent)).closest('form').attr('id');
@@ -21,41 +21,41 @@ PrimeFaces.widget.ExtLightSwitch = PrimeFaces.widget.BaseWidget.extend({
         if (cfg.automatic) {
             this.automatic();
         }
-    },
+    }
 
     /**
      * Automatically set the theme based on the OS setting.
      */
-    automatic: function () {
+    automatic() {
         this.changeTheme(PrimeFaces.env.preferredColorSchemeDark ? this.cfg.dark : this.cfg.light);
-    },
+    }
 
     /**
      * Change to the light theme.
      */
-    light: function () {
+    light() {
         this.changeTheme(this.cfg.light);
-    },
+    }
 
     /**
      * Change to the dark theme.
      */
-    dark: function () {
+    dark() {
         this.changeTheme(this.cfg.dark);
-    },
+    }
 
     /**
      * Toggle between the light and dark theme.
      */
-    toggle: function () {
+    toggle() {
         this.changeTheme(this.selected === this.cfg.dark ? this.cfg.light : this.cfg.dark);
-    },
+    }
 
     /**
      * Change the theme to the one provided, if it is not the selected theme, and sends the theme to the server side.
      * @param {string} theme to change to.
      */
-    changeTheme: function (theme) {
+    changeTheme(theme) {
         var $this = this;
         if (theme !== this.selected) {
             this.selected = theme;
@@ -76,4 +76,4 @@ PrimeFaces.widget.ExtLightSwitch = PrimeFaces.widget.BaseWidget.extend({
         }
     }
 
-});
+};

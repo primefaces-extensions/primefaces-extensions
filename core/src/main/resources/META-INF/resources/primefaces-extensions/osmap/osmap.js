@@ -1,10 +1,10 @@
 /**
  * PrimeFaces OpenStreetMap Widget
  */
-PrimeFaces.widget.OSMap = PrimeFaces.widget.BaseWidget.extend({
+PrimeFaces.widget.OSMap = class extends PrimeFaces.widget.BaseWidget {
 
-    init: function(cfg) {
-        this._super(cfg);
+    init(cfg) {
+        super.init(cfg);
 
         this.cfg.tile.addTo( this.cfg.map );
 
@@ -35,9 +35,9 @@ PrimeFaces.widget.OSMap = PrimeFaces.widget.BaseWidget.extend({
 
         //general map events
         this.configureEventListeners();
-    },
+    }
 
-    configureMarkers: function() {
+    configureMarkers() {
         var $this = this;
 
         var iconUrl = PrimeFaces.resources.getFacesResource('leaflet/images/marker-icon.png',
@@ -71,7 +71,7 @@ PrimeFaces.widget.OSMap = PrimeFaces.widget.BaseWidget.extend({
                $this.fireMarkerDragEvent(event, this);
            });
         }
-    },
+    }
 
     /**
      * Calls the behavior for when a marker was dragged.
@@ -79,7 +79,7 @@ PrimeFaces.widget.OSMap = PrimeFaces.widget.BaseWidget.extend({
      * @param {MapMouseEvent | IconMouseEvent} event Event that occurred.
      * @param {MarkerOptions} marker The marker that was dragged.
      */
-    fireMarkerDragEvent: function(event, marker) {
+    fireMarkerDragEvent(event, marker) {
         if(this.hasBehavior('markerDrag')) {
             var ext = {
                 params: [
@@ -91,39 +91,39 @@ PrimeFaces.widget.OSMap = PrimeFaces.widget.BaseWidget.extend({
 
             this.callBehavior('markerDrag', ext);
         }
-    },
+    }
 
     /**
      * Adds the overlay for a polyline shape.
      * @private
      */
-    configurePolylines: function() {
+    configurePolylines() {
         this.addOverlays(this.cfg.polylines);
-    },
+    }
 
     /**
      * Adds the overlay for a circle shape.
      * @private
      */
-    configureCircles: function() {
+    configureCircles() {
         this.addOverlays(this.cfg.circles);
-    },
+    }
 
     /**
      * Adds the overlay for a rectangular shape.
      * @private
      */
-    configureRectangles: function() {
+    configureRectangles() {
         this.addOverlays(this.cfg.rectangles);
-    },
+    }
 
     /**
      * Adds the overlay for a polygonal shape.
      * @private
      */
-    configurePolygons: function() {
+    configurePolygons() {
         this.addOverlays(this.cfg.polygons);
-    },
+    }
 
     /**
      * Triggers the behavior for when an overlay shape was selected.
@@ -132,7 +132,7 @@ PrimeFaces.widget.OSMap = PrimeFaces.widget.BaseWidget.extend({
      * @param {PrimeFaces.widget.GMap.Overlay} overlay The shape that was selected.
      * @param {number} clickCount whether it was single or double click
      */
-    fireOverlaySelectEvent: function(event, overlay, clickCount) {
+    fireOverlaySelectEvent(event, overlay, clickCount) {
         this.selectedOverlay = overlay;
         
         var ext = {
@@ -147,17 +147,17 @@ PrimeFaces.widget.OSMap = PrimeFaces.widget.BaseWidget.extend({
         if (clickCount === 2 && this.hasBehavior('overlayDblSelect')) {
             this.callBehavior('overlayDblSelect', ext);
         }
-    },
+    }
 
-    configureEventListeners: function() {
+    configureEventListeners() {
         var $this = this;
 
         //behaviors
         this.configureStateChangeListener();
         this.configurePointSelectListener();
-    },
+    }
 
-    configureStateChangeListener: function() {
+    configureStateChangeListener() {
         var $this = this,
 
         onStateChange = function(event) {
@@ -166,14 +166,14 @@ PrimeFaces.widget.OSMap = PrimeFaces.widget.BaseWidget.extend({
 
         this.cfg.map.on('zoomend', onStateChange);
         this.cfg.map.on('moveend', onStateChange);
-    },
+    }
 
     /**
      * Triggers the behavior for when the state of this map has changed.
      * @private
      * @param {never} event The event that triggered the state change.
      */
-    fireStateChangeEvent: function(event) {
+    fireStateChangeEvent(event) {
         if(this.hasBehavior('stateChange')) {
             var bounds = this.cfg.map.getBounds();
 
@@ -189,13 +189,13 @@ PrimeFaces.widget.OSMap = PrimeFaces.widget.BaseWidget.extend({
 
             this.callBehavior('stateChange', ext);
         }
-    },
+    }
 
     /**
      * Sets up the event listeners for when a point on the map was selected.
      * @private
      */
-    configurePointSelectListener: function() {
+    configurePointSelectListener() {
         var $this = this;
 
         this.cfg.map.on('click', function(event) {
@@ -206,7 +206,7 @@ PrimeFaces.widget.OSMap = PrimeFaces.widget.BaseWidget.extend({
             $this.firePointSelectEvent(event, 2);
         });
 
-    },
+    }
 
     /**
      * Triggers the behavior for when a point on the map was selected.
@@ -214,7 +214,7 @@ PrimeFaces.widget.OSMap = PrimeFaces.widget.BaseWidget.extend({
      * @param {MapMouseEvent | IconMouseEvent} event The event that triggered the point selection.
      * @param {number} clickCount whether it was single or double click
      */
-    firePointSelectEvent: function(event, clickCount) {
+    firePointSelectEvent(event, clickCount) {
         var ext = {
                 params: [
                     {name: this.id + '_pointLatLng', value: event.latlng.lat + ',' + event.latlng.lng}
@@ -227,13 +227,13 @@ PrimeFaces.widget.OSMap = PrimeFaces.widget.BaseWidget.extend({
         if (clickCount === 2 && this.hasBehavior('pointDblSelect')) {
             this.callBehavior('pointDblSelect', ext);
         }
-    },
+    }
 
     /**
      * Adds all overlay shapes (circle, polyline, or polygon) to this map.
      * @param {PrimeFaces.widget.GMap.Overlay[]} overlays A list of overlay shapes to add to this map.
      */
-    addOverlays: function(overlays) {
+    addOverlays(overlays) {
         var $this = this;
 
         $.each(overlays, function(index, item){
@@ -249,6 +249,6 @@ PrimeFaces.widget.OSMap = PrimeFaces.widget.BaseWidget.extend({
                 $this.fireOverlaySelectEvent(event, item.options, 2);
             });
         })
-    },
+    }
 
-});
+};

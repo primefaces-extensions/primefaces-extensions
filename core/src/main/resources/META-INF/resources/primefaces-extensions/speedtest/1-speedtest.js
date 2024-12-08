@@ -4,17 +4,17 @@
  * @author ssibitz ssibitz@me.com
  * @since 6.2
  */
-PrimeFaces.widget.ExtSpeedtest = PrimeFaces.widget.BaseWidget.extend({
+PrimeFaces.widget.ExtSpeedtest = class extends PrimeFaces.widget.BaseWidget {
 
-    init: function(cfg) {
-        this._super(cfg);
+    init(cfg) {
+        super.init(cfg);
         this.id = cfg.id;
         this.cfg = cfg;
 
         this.render();
-    },
+    }
 
-    start: function() {
+    start() {
         // Start the speedtest
         let $this = this;
         $this.testPing();
@@ -31,9 +31,9 @@ PrimeFaces.widget.ExtSpeedtest = PrimeFaces.widget.BaseWidget.extend({
                 ]
             };
         $this.callBehavior('speedtest', options);
-    },
+    }
 
-    render: function() {
+    render() {
         let $this = this;
 
         // Reset values
@@ -50,9 +50,9 @@ PrimeFaces.widget.ExtSpeedtest = PrimeFaces.widget.BaseWidget.extend({
             $this.gaugePing = $this.createGage($this.cfg.idPing, $this.cfg.captionPing, 'ms', '#999999', $this.cfg.colorPing);
             $this.gaugeJitter = $this.createGage($this.cfg.idJitter, $this.cfg.captionJitter, 'ms', '#999999', $this.cfg.colorJitter);
         });
-    },
+    }
 
-    updateGauge: function(gaugeChart, value, label, maxfactor) {
+    updateGauge(gaugeChart, value, label, maxfactor) {
         // Calculate the new max value based on maxfactor and current value
         let max = (Math.round(value / maxfactor) + 1) * maxfactor;
 
@@ -63,9 +63,9 @@ PrimeFaces.widget.ExtSpeedtest = PrimeFaces.widget.BaseWidget.extend({
                 data: [{ value: value, name: label }]
             }]
         });
-    },
+    }
 
-    createGage: function(id, title, label, color1, color2) {
+    createGage(id, title, label, color1, color2) {
         // Get the DOM element where the gauge will be rendered
         let gaugeElement = document.getElementById(id);
 
@@ -134,38 +134,38 @@ PrimeFaces.widget.ExtSpeedtest = PrimeFaces.widget.BaseWidget.extend({
         gaugeChart.setOption(options);
 
         return gaugeChart; // return the chart instance for later updates
-    },
+    }
 
-    genBytes: function(len) {
+    genBytes(len) {
         let pC = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         let ret = "";
         for (let i = 0; i < len; i++) {
             ret += pC.charAt(Math.floor(Math.random() * pC.length));
         }
         return ret;
-    },
+    }
 
-    startMS: function() {
+    startMS() {
         return performance.now();
-    },
+    }
 
-    diffMS: function(startTime) {
+    diffMS(startTime) {
         let $this = this;
         return ($this.startMS() - startTime);
-    },
+    }
 
-    C2MBps: function(bytes) {
+    C2MBps(bytes) {
         return Math.round(100 * bytes * 8 / 1024 / 1024) / 100;
-    },
+    }
 
-    getFileName: function() {
+    getFileName() {
         let $this = this;
         let ret = "";
         ret = ret + String($this.cfg.file);
         return ret;
-    },
+    }
 
-    singlePing: function(cnt, upLoadDatas) {
+    singlePing(cnt, upLoadDatas) {
         let $this = this;
         let pMSC = 0;
         let start = $this.startMS();
@@ -185,9 +185,9 @@ PrimeFaces.widget.ExtSpeedtest = PrimeFaces.widget.BaseWidget.extend({
                 $this.lastPingTimeMS = pMSC;
             }
         });
-    },
+    }
 
-    testPing: function() {
+    testPing() {
         let successfulPings = 0;
         let PING_COUNT = 10;
         let BYTE_SIZE = 32;
@@ -209,10 +209,10 @@ PrimeFaces.widget.ExtSpeedtest = PrimeFaces.widget.BaseWidget.extend({
         // Display results by updating the gauges
         this.updateGauge(this.gaugePing, this.pingTimeMS, 'ms',10);
         this.updateGauge(this.gaugeJitter, this.jitterTimeMS, 'ms',10);
-    },
+    }
 
 
-    testDown: function() {
+    testDown() {
         let $this = this;
         let start = $this.startMS();
         $.ajax({
@@ -227,9 +227,9 @@ PrimeFaces.widget.ExtSpeedtest = PrimeFaces.widget.BaseWidget.extend({
                 $this.updateGauge($this.gaugeDown, $this.downSpeed, 'Mbps', 50);
             }
         });
-    },
+    }
 
-    testUp: function() {
+    testUp() {
         let $this = this;
         let upLoadDatas = $this.genBytes(200000);
         let start = $this.startMS();
@@ -246,4 +246,4 @@ PrimeFaces.widget.ExtSpeedtest = PrimeFaces.widget.BaseWidget.extend({
             }
         });
     }
-});
+};

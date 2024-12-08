@@ -3,14 +3,14 @@
  *
  * @author Thomas Andraschko
  */
-PrimeFaces.widget.ExtImageAreaSelect = PrimeFaces.widget.BaseWidget.extend({
+PrimeFaces.widget.ExtImageAreaSelect = class extends PrimeFaces.widget.BaseWidget {
 
     /**
      * Initializes the widget.
      *
      * @param {object} cfg The widget configuration.
      */
-    init : function(cfg) {
+    init(cfg) {
         this.id = cfg.id;
         this.cfg = cfg;
 
@@ -71,14 +71,14 @@ PrimeFaces.widget.ExtImageAreaSelect = PrimeFaces.widget.BaseWidget.extend({
         this.instance = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.jq, this.cfg.target).imgAreaSelect(this.options);
 
         this.removeScriptElement(this.id);
-    },
+    }
 
     /**
      * Binds the selectEnd callback.
      *
      * @private
      */
-    bindSelectEndCallback : function() {
+    bindSelectEndCallback() {
         if (this.cfg.behaviors) {
             var selectEndCallback = this.cfg.behaviors['selectEnd'];
             if (selectEndCallback) {
@@ -91,14 +91,14 @@ PrimeFaces.widget.ExtImageAreaSelect = PrimeFaces.widget.BaseWidget.extend({
                 }, this);
             }
         }
-    },
+    }
 
     /**
      * Binds the selectStart callback.
      *
      * @private
      */
-    bindSelectStartCallback : function() {
+    bindSelectStartCallback() {
         if (this.cfg.behaviors) {
             var selectStartCallback = this.cfg.behaviors['selectStart'];
             if (selectStartCallback) {
@@ -111,14 +111,14 @@ PrimeFaces.widget.ExtImageAreaSelect = PrimeFaces.widget.BaseWidget.extend({
                 }, this);
             }
         }
-    },
+    }
 
     /**
      * Binds the selectChange callback.
      *
      * @private
      */
-    bindSelectChangeCallback : function() {
+    bindSelectChangeCallback() {
         if (this.cfg.behaviors) {
             var selectChangeCallback = this.cfg.behaviors['selectChange'];
             if (selectChangeCallback) {
@@ -131,7 +131,7 @@ PrimeFaces.widget.ExtImageAreaSelect = PrimeFaces.widget.BaseWidget.extend({
                 }, this);
             }
         }
-    },
+    }
 
     /**
      * Fills the required parameters.
@@ -141,7 +141,7 @@ PrimeFaces.widget.ExtImageAreaSelect = PrimeFaces.widget.BaseWidget.extend({
      * @param {object} ext The AJAX extensions object.
      * @private
      */
-    fillSelectEventsParameter : function(img, selection, options) {
+    fillSelectEventsParameter(img, selection, options) {
         options.params = [
             { name: this.id + '_x1', value: selection.x1 },
             { name: this.id + '_x2', value: selection.x2 },
@@ -153,54 +153,54 @@ PrimeFaces.widget.ExtImageAreaSelect = PrimeFaces.widget.BaseWidget.extend({
             { name: this.id + '_imgHeight', value: img.height },
             { name: this.id + '_imgWidth', value: img.width }
         ];
-    },
+    }
 
     /**
      * Updates the widget.
      */
-    update : function() {
+    update() {
         this.instance.update();
-    },
+    }
 
     /**
      * Reloads the widget.
      */
-    reload : function() {
+    reload() {
         this.setOptions({remove: true});
         this.update();
         this.instance = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.jq, this.cfg.target).imgAreaSelect(this.options);
-    },
+    }
 
-    destroy : function() {
+    destroy() {
         this.cancelSelection();
         this.instance = null;
         PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.jq, this.cfg.target).imgAreaSelect({remove:true});
-    },
+    }
 
-    refresh : function(cfg) {
+    refresh(cfg) {
         this.destroy();
         this.init(cfg);
-    },
+    }
 
     /**
      * Cancel the current selection.
      * This method hides the selection/outer area,
      * so no call to update() is necessary (as opposed to setSelection()).
      */
-    cancelSelection : function() {
+    cancelSelection() {
         if (this.instance) {
             this.instance.cancelSelection();
         }
-    },
+    }
 
     /**
      * Get the current selection.
      *
      * @returns {object} An object containing the selection.
      */
-    getSelection : function() {
+    getSelection() {
         return this.instance.getSelection();
-    },
+    }
 
     /**
      * Set the current selection.
@@ -214,18 +214,18 @@ PrimeFaces.widget.ExtImageAreaSelect = PrimeFaces.widget.BaseWidget.extend({
      * @param {int} x2 X coordinate of the bottom right corner of the selection area.
      * @param {int} y2 Y coordinate of the bottom right corner of the selection area.
      */
-    setSelection : function(x1, y1, x2, y2) {
+    setSelection(x1, y1, x2, y2) {
         this.instance.setSelection(x1, y1, x2, y2);
-    },
+    }
 
     /**
      * Get current options.
      *
      * @returns {object} An object containing the set of options currently in use.
      */
-    getOptions : function() {
+    getOptions() {
         return this.instance.getOptions();
-    },
+    }
 
     /**
      * Set the plugin options.
@@ -236,7 +236,7 @@ PrimeFaces.widget.ExtImageAreaSelect = PrimeFaces.widget.BaseWidget.extend({
      *
      * @param {object} options The options for the widget.
      */
-    setOptions : function(options) {
+    setOptions(options) {
         this.instance.setOptions(options);
     }
-});
+};

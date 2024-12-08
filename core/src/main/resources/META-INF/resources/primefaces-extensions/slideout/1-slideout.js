@@ -4,7 +4,7 @@
  * @author Melloware mellowaredev@gmail.com
  * @since 6.1
  */
-PrimeFaces.widget.ExtSlideOut = PrimeFaces.widget.BaseWidget.extend({
+PrimeFaces.widget.ExtSlideOut = class extends PrimeFaces.widget.BaseWidget {
 
     /**
      * Initializes the widget.
@@ -12,13 +12,13 @@ PrimeFaces.widget.ExtSlideOut = PrimeFaces.widget.BaseWidget.extend({
      * @param {object}
      *        cfg The widget configuration.
      */
-    init : function(cfg) {
-        this._super(cfg);
+    init(cfg) {
+        super.init(cfg);
         this.id = cfg.id;
         this.cfg = cfg;
         
         this._applySlideOut(this.cfg);
-    },
+    }
 
     /**
      * Applies the SlideOut to the given jQuery selector object.
@@ -27,7 +27,7 @@ PrimeFaces.widget.ExtSlideOut = PrimeFaces.widget.BaseWidget.extend({
      *        cfg The widget configuration.
      * @private
      */
-    _applySlideOut : function(cfg) {
+    _applySlideOut(cfg) {
         var $this = this;
         // make a copy of the configuration
         var opts = $.extend(true, {}, cfg);
@@ -39,14 +39,14 @@ PrimeFaces.widget.ExtSlideOut = PrimeFaces.widget.BaseWidget.extend({
         
         // bind "open", "close" events
         this._bindEvents();
-    },
+    }
     
     /**
      * Binds all events to p:ajax events
      * 
      * @private
      */
-    _bindEvents : function() {
+    _bindEvents() {
         var $this = this;
         
         this.jq.on("slideouttabopen",function () {
@@ -54,41 +54,41 @@ PrimeFaces.widget.ExtSlideOut = PrimeFaces.widget.BaseWidget.extend({
         }).on("slideouttabclose",function () {
             $this.callBehavior('close');
         });
-    },
+    }
 
     /**
      * Open the tab.
      */
-    open : function() {
+    open() {
         this.jq.tabSlideOut('open');
-    },
+    }
 
     /**
      * Close the tab.
      */
-    close : function() {
+    close() {
         this.jq.tabSlideOut('close');
-    },
+    }
     
     /**
      * Toggle the tab open or closed.
      */
-    toggle : function() {
+    toggle() {
         this.jq.tabSlideOut('toggle'); 
-    },
+    }
     
     /**
      * Bounce the tab using an animation.
      */
-    bounce : function() {
+    bounce() {
         this.jq.tabSlideOut('bounce'); 
-    },
+    }
     
     /**
      * True if tab is currently open, false if closed.
      */
-    isOpen : function() {
+    isOpen() {
         return this.jq.tabSlideOut('isOpen');
     }
 
-});
+};
