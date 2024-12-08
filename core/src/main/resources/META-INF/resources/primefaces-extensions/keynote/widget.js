@@ -1,8 +1,8 @@
-PrimeFaces.widget.ExtKeynote = PrimeFaces.widget.BaseWidget.extend({
+PrimeFaces.widget.ExtKeynote = class extends PrimeFaces.widget.BaseWidget {
 
-    init: function (cfg) {
+    init(cfg) {
 
-        this._super(cfg);
+        super.init(cfg);
         this.id = cfg.id;
         this.cfg = cfg;
 
@@ -40,9 +40,9 @@ PrimeFaces.widget.ExtKeynote = PrimeFaces.widget.BaseWidget.extend({
         this.bindEvents();
 
         this.keynote.initialize();
-    },
+    }
 
-    bindEvents: function () {
+    bindEvents() {
         var $this = this;
 
         this.keynote.on('slidechanged', event => {
@@ -52,9 +52,9 @@ PrimeFaces.widget.ExtKeynote = PrimeFaces.widget.BaseWidget.extend({
         this.keynote.on('slidetransitionend', event => {
             $this.slideTransitionEnd(event);
         });
-    },
+    }
 
-    slideChanged: function (event) {
+    slideChanged(event) {
         var $this = this;
 
         if (this.hasBehavior('slideChanged')) {
@@ -66,9 +66,9 @@ PrimeFaces.widget.ExtKeynote = PrimeFaces.widget.BaseWidget.extend({
             };
             this.callBehavior('slideChanged', options);
         }
-    },
+    }
 
-    slideTransitionEnd: function (event) {
+    slideTransitionEnd(event) {
         var $this = this;
 
         if (this.hasBehavior('slideTransitionEnd')) {
@@ -82,4 +82,4 @@ PrimeFaces.widget.ExtKeynote = PrimeFaces.widget.BaseWidget.extend({
         }
     }
 
-});
+};

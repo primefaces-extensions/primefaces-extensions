@@ -3,16 +3,16 @@
  *
  * @since 8.0.1
  */
-PrimeFaces.widget.ExtCounter = PrimeFaces.widget.BaseWidget.extend({
+PrimeFaces.widget.ExtCounter = class extends PrimeFaces.widget.BaseWidget {
 
     /**
      * @override
      * @inheritdoc
      * @param {PrimeFaces.widget.BaseWidget.cfg} cfg
      */
-    init: function (cfg) {
+    init(cfg) {
 
-        this._super(cfg);
+        super.init(cfg);
         this.id = cfg.id;
         this.cfg = cfg;
 
@@ -39,12 +39,12 @@ PrimeFaces.widget.ExtCounter = PrimeFaces.widget.BaseWidget.extend({
         if (this.autoStart) {
             this.startCounter();
         }
-    },
+    }
 
     /**
      * Starts the counter.
      */
-    startCounter: function () {
+    startCounter() {
         var $this = this;
 
         if (!this.counter.error) {
@@ -68,12 +68,12 @@ PrimeFaces.widget.ExtCounter = PrimeFaces.widget.BaseWidget.extend({
         } else {
             PrimeFaces.error($this.counter.error);
         }
-    },
+    }
 
     /**
      * Ends the counter.
      */
-    endCounter: function () {
+    endCounter() {
         var $this = this;
 
         if (this.onEnd) {
@@ -89,20 +89,20 @@ PrimeFaces.widget.ExtCounter = PrimeFaces.widget.BaseWidget.extend({
             };
             this.callBehavior('end', options);
         }
-    },
+    }
 
     /**
      * Pause and Resume toggle.
      */
-    pauseResume: function () {
+    pauseResume() {
         this.counter.pauseResume();
-    },
+    }
 
     /**
      * Reset the counter.
      */
-    reset: function () {
+    reset() {
         this.counter.reset();
     }
 
-});
+};

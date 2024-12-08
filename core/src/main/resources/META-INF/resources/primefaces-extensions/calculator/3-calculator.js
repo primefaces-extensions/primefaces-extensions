@@ -4,7 +4,7 @@
  * @author Melloware info@melloware.com
  * @since 6.1
  */
-PrimeFaces.widget.ExtCalculator = PrimeFaces.widget.BaseWidget.extend({
+PrimeFaces.widget.ExtCalculator = class extends PrimeFaces.widget.BaseWidget {
 
     /**
      * Initializes the widget.
@@ -12,8 +12,8 @@ PrimeFaces.widget.ExtCalculator = PrimeFaces.widget.BaseWidget.extend({
      * @param {object}
      *        cfg The widget configuration.
      */
-    init: function (cfg) {
-        this._super(cfg);
+    init(cfg) {
+        super.init(cfg);
         this.id = cfg.id;
         this.cfg = cfg;
         this.target = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.jq, this.cfg.target);
@@ -37,37 +37,37 @@ PrimeFaces.widget.ExtCalculator = PrimeFaces.widget.BaseWidget.extend({
         } else {
             this._applyCalculator(input, cfg);
         }
-    },
+    }
 
     /**
      * @override
      * @inheritdoc
      * @param {PrimeFaces.PartialWidgetCfg<TCfg>} cfg
      */
-    refresh: function(cfg) {
+    refresh(cfg) {
         this._remove();
-        this._super(cfg);
-    },
+        super.refresh(cfg);
+    }
 
     /**
      * @override
      * @inheritdoc
      */
-    destroy: function() {
-        this._super();
+    destroy() {
+        super.destroy();
         this._remove();
-    },
+    }
 
     /**
      * Clean up this widget and remove elements from DOM.
      * @private
      */
-    _remove: function() {
+    _remove() {
         if (this.input) {
             this.input.calculator('destroy');
             this.input = null;
         }
-    },
+    }
 
     /**
      * Applies the calculator to the given jQuery selector object. Delete
@@ -79,7 +79,7 @@ PrimeFaces.widget.ExtCalculator = PrimeFaces.widget.BaseWidget.extend({
      *        cfg The widget configuration.
      * @private
      */
-    _applyCalculator: function (input, cfg) {
+    _applyCalculator(input, cfg) {
         this.input = input;
 
         // do not attach calculator if field is readonly
@@ -137,14 +137,14 @@ PrimeFaces.widget.ExtCalculator = PrimeFaces.widget.BaseWidget.extend({
 
         // bind "open", "close" events
         this._bindEvents();
-    },
+    }
 
     /**
      * Binds all events to p:ajax events
      *
      * @private
      */
-    _bindEvents: function () {
+    _bindEvents() {
         var $this = this;
 
         this.input.on("calculatoropen", function () {
@@ -163,33 +163,33 @@ PrimeFaces.widget.ExtCalculator = PrimeFaces.widget.BaseWidget.extend({
             };
             $this.callBehavior('button', options);
         });
-    },
+    }
 
-    show: function () {
+    show() {
         if (this.input) {
             this.input.calculator('show') // Show the calculator
         }
-    },
+    }
 
-    hide: function () {
+    hide() {
         if (this.input) {
             this.input.calculator('hide') // Hide the calculator
         }
-    },
+    }
 
-    enable: function () {
+    enable() {
         if (this.input) {
             this.input.calculator('enable') // Enable the calculator
         }
-    },
+    }
 
-    disable: function () {
+    disable() {
         if (this.input) {
             this.input.calculator('disable') // Disable the calculator
         }
-    },
+    }
 
-    isDisabled: function () {
+    isDisabled() {
         // Is the calculator disabled?
         var disabled = false;
         if (this.input) {
@@ -197,7 +197,7 @@ PrimeFaces.widget.ExtCalculator = PrimeFaces.widget.BaseWidget.extend({
         }
         return disabled;
     }
-});
+};
 
 /**
  * Global calculator defaults

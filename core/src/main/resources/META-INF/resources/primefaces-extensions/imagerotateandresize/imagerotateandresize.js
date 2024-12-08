@@ -3,28 +3,28 @@
  *
  * @author Thomas Andraschko
  */
-PrimeFaces.widget.ExtImageRotateAndResize = PrimeFaces.widget.BaseWidget.extend({
+PrimeFaces.widget.ExtImageRotateAndResize = class extends PrimeFaces.widget.BaseWidget {
 
     /**
      * Initializes the widget.
      *
      * @param {object} cfg The widget configuration.
      */
-    init: function (cfg) {
+    init(cfg) {
         this.id = cfg.id;
         this.cfg = cfg;
 
         this.initialized = false;
 
         this.removeScriptElement(this.id);
-    },
+    }
 
     /**
      * Initializes the settings.
      *
      * @private
      */
-    initializeLazy: function () {
+    initializeLazy() {
         if (!this.initialized) {
             this.target = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.jq, this.cfg.target)[0];
             this.imageSrc = this.target.src;
@@ -35,22 +35,22 @@ PrimeFaces.widget.ExtImageRotateAndResize = PrimeFaces.widget.BaseWidget.extend(
             this.newImageHeight = this.target.height;
             this.initialized = true;
         }
-    },
+    }
 
     /**
      * Reloads the widget.
      */
-    reload: function () {
+    reload() {
         this.initialized = false;
         this.initializeLazy();
-    },
+    }
 
     /**
      * Rotates the image to the left direction.
      *
      * @param {number} degree The degree.
      */
-    rotateLeft: function (degree) {
+    rotateLeft(degree) {
         this.initializeLazy();
 
         if ((this.degree - degree) <= 0) {
@@ -60,14 +60,14 @@ PrimeFaces.widget.ExtImageRotateAndResize = PrimeFaces.widget.BaseWidget.extend(
         }
 
         this.redrawImage(false, true);
-    },
+    }
 
     /**
      * Rotates the image to the right direction.
      *
      * @param {number} degree The degree.
      */
-    rotateRight: function (degree) {
+    rotateRight(degree) {
         this.initializeLazy();
 
         if ((this.degree + degree) >= 360) {
@@ -77,7 +77,7 @@ PrimeFaces.widget.ExtImageRotateAndResize = PrimeFaces.widget.BaseWidget.extend(
         }
 
         this.redrawImage(false, true);
-    },
+    }
 
     /**
      * Resizes the image to the given width and height.
@@ -85,34 +85,34 @@ PrimeFaces.widget.ExtImageRotateAndResize = PrimeFaces.widget.BaseWidget.extend(
      * @param {number} width The new width of the image.
      * @param {number} height The new height of the image.
      */
-    resize: function (width, height) {
+    resize(width, height) {
         this.initializeLazy();
 
         this.newImageWidth = width;
         this.newImageHeight = height;
 
         this.redrawImage(true, false);
-    },
+    }
 
     /**
      * Scales the image with the given factor.
      *
      * @param {number} scaleFactor The scale factor. For example: 1.1 = scales the image to 110% size.
      */
-    scale: function (scaleFactor) {
+    scale(scaleFactor) {
         this.initializeLazy();
 
         this.newImageWidth = this.newImageWidth * scaleFactor;
         this.newImageHeight = this.newImageHeight * scaleFactor;
 
         this.redrawImage(true, false);
-    },
+    }
 
     /**
      * Restores the default image.
      * It also fires the rotate and resize event with the default values.
      */
-    restoreDefaults: function () {
+    restoreDefaults() {
         this.initializeLazy();
 
         this.newImageWidth = this.imageWidth;
@@ -120,7 +120,7 @@ PrimeFaces.widget.ExtImageRotateAndResize = PrimeFaces.widget.BaseWidget.extend(
         this.degree = 0;
 
         this.redrawImage(true, true);
-    },
+    }
 
     /**
      * Redraws the image.
@@ -129,7 +129,7 @@ PrimeFaces.widget.ExtImageRotateAndResize = PrimeFaces.widget.BaseWidget.extend(
      * @param {fireRotateEvent} fireRotateEvent If the rotate event should be fired.
      * @private
      */
-    redrawImage: function (fireResizeEvent, fireRotateEvent) {
+    redrawImage(fireResizeEvent, fireRotateEvent) {
 
         var rotation;
         if (this.degree >= 0) {
@@ -188,28 +188,28 @@ PrimeFaces.widget.ExtImageRotateAndResize = PrimeFaces.widget.BaseWidget.extend(
         newImage.width = this.newImageWidth;
         newImage.height = this.newImageHeight;
 
-    },
+    }
 
     /**
      * Fires the rotate event.
      *
      * @private
      */
-    fireRotateEvent: function () {
+    fireRotateEvent() {
         var options = {
                 params: [
                     {name: this.id + '_degree', value: this.degree}
                 ]
         };
         this.callBehavior('rotate', options);
-    },
+    }
 
     /**
      * Fires the resize event.
      *
      * @private
      */
-    fireResizeEvent: function () {
+    fireResizeEvent() {
         var options = {
                 params: [
                     {name: this.id + '_width', value: this.newImageWidth},
@@ -218,4 +218,4 @@ PrimeFaces.widget.ExtImageRotateAndResize = PrimeFaces.widget.BaseWidget.extend(
         };
         this.callBehavior('resize', options);
     }
-});
+};
