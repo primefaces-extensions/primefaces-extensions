@@ -3,15 +3,13 @@
     "@types/jquery": "^3.5.32",
     "@types/node": "^22.10.1",
     "monaco-editor": "^0.52.2",
-    "patch-package": "^6.4.7",
     "typescript": "^5.7.2"
   },
   "scripts": {
     "verify": "tsc --noEmit",
-    "postinstall": "patch-package",
     "generate-editor-options": "node scripts/generateEditorOptions.js"
   },
   "dependencies": {
-    "primefaces": "^11.0.0"
+    "primefaces": "^13.0.0"
   }
 }
