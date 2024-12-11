@@ -333,6 +333,14 @@
         </attribute>
         <attribute>
             <description>
+                <![CDATA[Sets a placeholder for the editor. If set, the placeholder is shown if the editor is empty.]]>
+            </description>
+            <name>placeholder</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
                 <![CDATA[The tab index to assign to the editor. If not given, no tab index will be assigned.]]>
             </description>
             <name>tabindex</name>
@@ -734,6 +742,14 @@
         </attribute>
         <attribute>
             <description>
+                <![CDATA[Sets a placeholder for the editor. If set, the placeholder is shown if the editor is empty.]]>
+            </description>
+            <name>placeholder</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
                 <![CDATA[The tab index to assign to the editor. If not given, no tab index will be assigned.]]>
             </description>
             <name>tabindex</name>
@@ -1123,6 +1139,14 @@
             <name>value</name>
             <required>false</required>
             <type>org.primefaces.extensions.model.monacoeditor.MonacoDiffEditorModel</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Sets a placeholder for the editor. If set, the placeholder is shown if the editor is empty.]]>
+            </description>
+            <name>placeholder</name>
+            <required>false</required>
+            <type>java.lang.String</type>
         </attribute>
         <attribute>
             <description>
@@ -1760,6 +1784,14 @@
             <name>converter</name>
             <required>false</required>
             <type>javax.faces.convert.Converter</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Sets a placeholder for the editor. If set, the placeholder is shown if the editor is empty.]]>
+            </description>
+            <name>placeholder</name>
+            <required>false</required>
+            <type>java.lang.String</type>
         </attribute>
         <attribute>
             <description>

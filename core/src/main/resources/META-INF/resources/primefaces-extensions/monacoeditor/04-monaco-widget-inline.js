@@ -209,7 +209,7 @@ window.monacoModule = window.monacoModule || {};
     }
 
     /**
-     * @template {PrimeFaces.MatchingKeys<TEditor, (...args: never[]) => unknown>} K
+     * @template {PrimeFaces.KeysMatchingCondition<TEditor, (...args: never[]) => unknown>} K
      * @param {K} method
      * @param {PrimeFaces.widget.ExtMonacoEditor.ParametersIfFn<TEditor[K]>} args
      * @returns {Promise<Awaited<PrimeFaces.widget.ExtMonacoEditor.ReturnTypeIfFn<TEditor[K]>>>}
@@ -259,7 +259,7 @@ window.monacoModule = window.monacoModule || {};
     /**
      * @abstract
      * @protected
-     * @param {HTMLElement} domElement
+     * @param {HTMLElement | undefined} domElement
      * @param {EditorInitData<TEditorOpts, TCustomInitData>} data
      * @param {import("monaco-editor").editor.IEditorOverrideServices | undefined} override
      * @returns {TEditor}
@@ -283,7 +283,7 @@ window.monacoModule = window.monacoModule || {};
      * @abstract
      * @protected
      * @param {TEditorOpts} options
-     * @param {HTMLElement} target 
+     * @param {HTMLElement | undefined} target 
      */
     _setOverflowWidgetsDomNode(options, target) {
       throw new Error("Must override abstract method");
@@ -460,8 +460,11 @@ window.monacoModule = window.monacoModule || {};
       // Auto resize when browser supports ResizeObserver
       if (this.cfg.autoResize) {
         if (typeof ResizeObserver === "function") {
-          this._resizeObserver = new ResizeObserver(this._onResize.bind(this));
-          this._resizeObserver.observe(this.jq.get(0));
+          const element = this.jq.get(0);
+          if (element !== undefined) {
+            this._resizeObserver = new ResizeObserver(this._onResize.bind(this));
+            this._resizeObserver.observe(element);
+          }
         }
         else {
           console.warn("[MonacoEditor] Browser environment does not support auto resize: window.ResizeObserver is not available.");
@@ -627,7 +630,7 @@ window.monacoModule = window.monacoModule || {};
     /**
      * @protected
      * @param {import("monaco-editor").editor.IStandaloneEditorConstructionOptions} options
-     * @param {HTMLElement} target 
+     * @param {HTMLElement | undefined} target 
      */
     _setOverflowWidgetsDomNode(options, target) {
       options.overflowWidgetsDomNode = target;
@@ -792,7 +795,7 @@ window.monacoModule = window.monacoModule || {};
     /**
      * @protected
      * @param {import("monaco-editor").editor.IStandaloneDiffEditorConstructionOptions} options
-     * @param {HTMLElement} target 
+     * @param {HTMLElement | undefined} target 
      */
     _setOverflowWidgetsDomNode(options, target) {
       options.overflowWidgetsDomNode = target;

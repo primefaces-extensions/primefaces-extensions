@@ -103,12 +103,14 @@ async function main() {
         alternativeDefinitionCommand: T_String(),
         alternativeImplementationCommand: T_String(),
         alternativeReferenceCommand: T_String(),
+        alternativeTestsCommand: T_String(),
         alternativeTypeDefinitionCommand: T_String(),
         multiple: EGoToLocationValues,
         multipleDeclarations: EGoToLocationValues,
         multipleDefinitions: EGoToLocationValues,
         multipleImplementations: EGoToLocationValues,
         multipleReferences: EGoToLocationValues,
+        multipleTests: EGoToLocationValues,
         multipleTypeDefinitions: EGoToLocationValues,
     }, "Configuration options for go to location");
 
@@ -142,6 +144,23 @@ async function main() {
 
         [Doc()]: "Enables the padding around the inlay hint. Defaults to {@code false}.",
         padding: T_Boolean(),
+    }, "Control the behavior and rendering of the inline hints.");
+
+    const EditorInlineEditOptions = T_Class("EditorInlineEditOptions", {
+        [Doc()]: "Enable or disable the rendering of automatic inline edit.",
+        enabled: T_Boolean(),
+
+        [Doc()]: "Font family for inline suggestions.",
+        fontFamily: T_String(),
+
+        [Doc()]: "Does not clear active inline suggestions when the editor loses focus.",
+        keepOnBlur: T_Boolean(),
+
+        showToolbar: T_Enum("EInlineEditorShowToolbarMode",
+            "Whether to show the toolbar for inline suggestions.",
+            false,
+            "always", "never", "onHover"
+        ),
     }, "Control the behavior and rendering of the inline hints.");
 
     const EditorInlineSuggestOptions = T_Class("EditorInlineSuggestOptions", {
@@ -188,6 +207,18 @@ async function main() {
 
         [Doc()]: "Relative size of the font in the minimap. Defaults to {@code 1}.",
         scale: T_Number(),
+
+        [Doc()]: "Font size of section headers. Defaults to {@code 9}.",
+        sectionHeaderFontSize: T_Number(),
+
+        [Doc()]: "Spacing between the section header characters (in CSS px). Defaults to {@code 1}.",
+        sectionHeaderLetterSpacing: T_Number(),
+
+        [Doc()]: "Whether to show MARK: comments as section headers. Defaults to {@code true}.",
+        showMarkSectionHeaders: T_Boolean(),
+
+        [Doc()]: "Whether to show named regions as section headers. Defaults to {@code true}.",
+        showRegionSectionHeaders: T_Boolean(),
 
         [Doc()]: "Control the rendering of the minimap slider. Defaults to {@code mouseover}.",
         showSlider: T_Enum("EMinimapShowSlider",
@@ -462,6 +493,13 @@ async function main() {
         width: T_Number(),
     }, "The initial editor dimension (to avoid measuring the container).");
 
+    const EditorHideUnchangedRegions = T_Class("EditorHideUnchangedRegions", {
+        contextLineCount: T_Number(),
+        enabled: T_Boolean(),
+        minimumLineCount: T_Number(),
+        revealLineCount: T_Number(),
+    }, "Options for whether unchanged regions should be hidden or visible.");
+
     const EditorBracketPairColorizationOptions = T_Class("EditorBracketPairColorizationOptions", {
         [Doc()]: "Enable or disable bracket pair colorization.",
         enabled: T_Boolean(),
@@ -534,6 +572,9 @@ async function main() {
         [Doc()]: "The initial editor dimension (to avoid measuring the container).",
         dimension: EditorDimension,
 
+        [Doc()]: "Options for whether unchanged regions should be hidden or visible.",
+        hideUnchangedRegions: EditorHideUnchangedRegions,
+
         [Doc()]: "Controls the diff algorithm.",
         diffAlgorithm: T_Enum("EDiffAlgorithm",
             "Controls the diff algorithm.",
@@ -567,6 +608,9 @@ async function main() {
         [Doc()]: "Whether the diff editor aria label should be verbose.",
         accessibilityVerbose: T_Boolean(),
 
+        [Doc()]: "If set, the diff editor is optimized for small views. Defaults to {@code false}.",
+        compactMode: T_Boolean(),
+
         [Doc()]: "Should the diff editor enable code lens? Defaults to {@code false}.",
         diffCodeLens: T_Boolean(),
 
@@ -575,6 +619,12 @@ async function main() {
 
         [Doc()]: "Compute the diff by ignoring leading/trailing whitespace Defaults to {@code true}.",
         ignoreTrimWhitespace: T_Boolean(),
+
+        [Doc()]: "If the diff editor should only show the difference review mode.",
+        onlyShowAccessibleDiffViewer: T_Boolean(),
+
+        [Doc()]: "Indicates if the gutter menu should be rendered.",
+        renderGutterMenu: T_Boolean(),
 
         [Doc()]: "Render +/- indicators for added/deleted changes. Defaults to {@code true}.",
         renderIndicators: T_Boolean(),
@@ -588,6 +638,9 @@ async function main() {
         [Doc()]: "Render the differences in two side-by-side editors. Defaults to {@code true}.",
         renderSideBySide: T_Boolean(),
 
+        [Doc()]: "When <code>renderSideBySide</code> is enabled, <code>useInlineViewWhenSpaceIsLimited</code> is set, and the diff editor has a width less than <code>renderSideBySideInlineBreakpoint</code>, the inline view is used.",
+        useInlineViewWhenSpaceIsLimited: T_Boolean(),
+        
         [Doc()]: "Timeout in milliseconds after which diff computation is cancelled. Defaults to {@code 5000}.",
         maxComputationTime: T_Number(),
 
@@ -596,6 +649,9 @@ async function main() {
 
         [Doc()]: "When <code>renderSideBySide</code> is enabled, <code>useInlineViewWhenSpaceIsLimited</code> is set, and the diff editor has a width less than <code>renderSideBySideInlineBreakpoint</code>, the inline view is used.",
         renderSideBySideInlineBreakpoint: T_Number(),
+
+        [Doc()]: "The default ratio when rendering side-by-side editors. Must be a number between <code>0</code> and <code>1</code>, min sizes apply. Defaults to <code>0.5</code>",
+        splitViewDefaultRatio: T_Number(),
 
         [Doc()]: "Aria label for modified editor.",
         modifiedAriaLabel: T_String(),
@@ -698,6 +754,7 @@ async function main() {
             "tcl",
             "twig",
             "typescript",
+            "typespec",
             "vb",
             "verilog",
             "xml",
@@ -1147,6 +1204,8 @@ async function main() {
         [Doc()]: "Copying without a selection copies the current line",
         emptySelectionClipboard: T_Boolean(),
 
+        experimentalInlineEdit: EditorInlineEditOptions,
+
         [Doc()]: "Display overflow widgets as {@code fixed}. Defaults to {@code false}",
         fixedOverflowWidgets: T_Boolean(),
 
@@ -1176,6 +1235,9 @@ async function main() {
 
         [Doc()]: "Should the cursor be hidden in the overview ruler. Defaults to {@code false}",
         hideCursorInOverviewRuler: T_Boolean(),
+
+        [Doc()]: "Controls whether the accessibility hint should be provided to screen reader users when an inline completion is shown.",
+        inlineCompletionsAccessibilityVerbose: T_Boolean(),
 
         [Doc()]: "Special handling for large files to disable certain memory intensive features. Defaults to {@code true}.",
         largeFileOptimizations: T_Boolean(),
@@ -1348,6 +1410,12 @@ async function main() {
 
         [Doc()]: "The font family",
         fontFamily: T_String(),
+
+        [Doc()]: "Sets a placeholder for the editor. If set, the placeholder is shown if the editor is empty.",
+        placeholder: T_String(),
+
+        [Doc()]: "Locales used for segmenting lines into words when doing word related navigations or operations.<p>Specify the BCP 47 language tag of the word you wish to recognize (e.g., ja, zh-CN, zh-Hant-TW, etc.). Defaults to empty array",
+        wordSegmenterLocales: T_Array(T_String()),
 
         [Doc()]: "A string containing the word separators used when doing word navigation. Defaults to `~!@#$%^&*()-=+[{]}\|;:'\",.<>/?",
         wordSeparators: T_String(),
