@@ -1,10 +1,10 @@
 {
   "devDependencies": {
-    "@types/jquery": "^3.5.30",
-    "@types/node": "^20.14.8",
-    "monaco-editor": "^0.51.0",
+    "@types/jquery": "^3.5.32",
+    "@types/node": "^22.10.1",
+    "monaco-editor": "^0.52.2",
     "patch-package": "^6.4.7",
-    "typescript": "^5.5.4"
+    "typescript": "^5.7.2"
   },
   "scripts": {
     "verify": "tsc --noEmit",
