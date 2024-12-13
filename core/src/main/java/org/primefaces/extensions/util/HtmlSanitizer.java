@@ -32,9 +32,9 @@ public class HtmlSanitizer {
 
     private static final PolicyFactory HTML_IMAGES_SANITIZER = new HtmlPolicyBuilder()
                 .allowUrlProtocols("data", "http", "https")
-                .allowElements("img")
+                .allowElements("img", "figure")
                 .allowAttributes("src")
-                .matching(Pattern.compile("^(data:image/(gif|png|jpeg|webp|svg)[,;]|http|https|mailto|//).+", Pattern.CASE_INSENSITIVE))
+                .matching(Pattern.compile("^(data:image/(gif|png|jpeg|webp|svg)[,;]|http|https|//).+", Pattern.CASE_INSENSITIVE))
                 .onElements("img")
                 .allowAttributes(
                             "data-rotate",
@@ -49,6 +49,8 @@ public class HtmlSanitizer {
                             "data-file-size",
                             "data-origin")
                 .onElements("img")
+                .allowAttributes("id", "style")
+                .onElements("img", "figure")
                 .toFactory();
 
     private static final PolicyFactory HTML_MEDIA_SANITIZER = new HtmlPolicyBuilder()
