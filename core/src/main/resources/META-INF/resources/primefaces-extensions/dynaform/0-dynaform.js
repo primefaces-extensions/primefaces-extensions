@@ -17,7 +17,9 @@ PrimeFaces.widget.ExtDynaForm = class extends PrimeFaces.widget.BaseWidget {
         }
 
         if (cfg.autoSubmit && !PF(cfg.widgetVar)) {
-            this.submitForm();
+            // Delay submission until the CSP handler was registered, needed when CSP is enabled
+            // See https://github.com/primefaces-extensions/primefaces-extensions/issues/1794#issuecomment-2526318388
+            $(() => this.submitForm());
         } else if (cfg.isPostback && this.toggledExtended && this.uuid == cfg.uuid) {
             var rows = this.jq.find("tr.pe-dynaform-extendedrow");
             if (rows.length > 0) {

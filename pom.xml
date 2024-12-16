@@ -109,7 +109,7 @@
         <commons-lang3.version>3.17.0</commons-lang3.version>
         <gson.version>2.11.0</gson.version>
         <jakarta-faces.version>2.3.21</jakarta-faces.version>
-        <libphonenumber.version>8.13.51</libphonenumber.version>
+        <libphonenumber.version>8.13.52</libphonenumber.version>
         <morphia.version>2.4.14</morphia.version>
         <junit.version>5.11.3</junit.version>
         <primefaces.core.version>15.0.0-RC1</primefaces.core.version>
@@ -322,7 +322,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>3.11.1</version>
+                    <version>3.11.2</version>
                     <configuration>
                         <source>${maven.compiler.source}</source>
                         <detectJavaApiLink>false</detectJavaApiLink>
@@ -437,7 +437,7 @@
                         <dependency>
                             <groupId>com.puppycrawl.tools</groupId>
                             <artifactId>checkstyle</artifactId>
-                            <version>10.20.2</version>
+                            <version>10.21.0</version>
                         </dependency>
                     </dependencies>
                 </plugin>
