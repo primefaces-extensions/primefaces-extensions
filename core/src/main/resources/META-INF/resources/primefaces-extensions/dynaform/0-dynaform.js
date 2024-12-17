@@ -3,15 +3,15 @@
  *
  * @author Oleg Varaksin
  */
-PrimeFaces.widget.ExtDynaForm = PrimeFaces.widget.BaseWidget.extend({
+PrimeFaces.widget.ExtDynaForm = class extends PrimeFaces.widget.BaseWidget {
 
     /**
      * Initializes the widget.
      *
      * @param {object} cfg The widget configuration.
      */
-    init : function(cfg) {
-        this._super(cfg);
+    init(cfg) {
+        super.init(cfg);
         if (!cfg.isPostback) {
             this.toggledExtended = false;
         }
@@ -32,9 +32,9 @@ PrimeFaces.widget.ExtDynaForm = PrimeFaces.widget.BaseWidget.extend({
         }
 
         this.uuid = cfg.uuid;
-    },
+    }
 
-    toggleExtended : function() {
+    toggleExtended() {
         var rows = this.jq.find("tr.pe-dynaform-extendedrow");
         if (rows.length > 0) {
             rows.toggle();
@@ -42,9 +42,9 @@ PrimeFaces.widget.ExtDynaForm = PrimeFaces.widget.BaseWidget.extend({
             this.toggledExtended = true;
             this.openExtended = $(rows[0]).css("display") != "none";
         }
-    },
+    }
 
-    submitForm : function() {
+    submitForm() {
         this.jq.find(":submit").trigger('click');
     }
-});
+};

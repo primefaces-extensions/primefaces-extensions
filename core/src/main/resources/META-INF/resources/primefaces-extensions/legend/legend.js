@@ -4,7 +4,7 @@
  * @author Melloware info@melloware.com
  * @since 7.1
  */
-PrimeFaces.widget.ExtLegend = PrimeFaces.widget.BaseWidget.extend({
+PrimeFaces.widget.ExtLegend = class extends PrimeFaces.widget.BaseWidget {
 
     /**
      * Initializes the widget.
@@ -12,11 +12,11 @@ PrimeFaces.widget.ExtLegend = PrimeFaces.widget.BaseWidget.extend({
      * @param {object}
      *        cfg The widget configuration.
      */
-    init : function(cfg) {
-        this._super(cfg);
+    init(cfg) {
+        super.init(cfg);
         this.id = cfg.id;
         this.cfg = cfg;
-    },
+    }
 
     /**
      * Show the legend with optional animation duration.
@@ -25,9 +25,9 @@ PrimeFaces.widget.ExtLegend = PrimeFaces.widget.BaseWidget.extend({
      *                 The strings 'fast' and 'slow' can be supplied to indicate durations of 200 and 600 milliseconds, 
      *                 respectively.
      */
-    show: function(duration) {
+    show(duration) {
         this.jq.show(duration);
-    },
+    }
     
     /**
      * Hide the legend with optional animation duration.
@@ -36,9 +36,9 @@ PrimeFaces.widget.ExtLegend = PrimeFaces.widget.BaseWidget.extend({
      *                 The strings 'fast' and 'slow' can be supplied to indicate durations of 200 and 600 milliseconds, 
      *                 respectively.
      */
-    hide: function(duration) {
+    hide(duration) {
         this.jq.hide(duration);
-    },
-});
+    }
+};
 
 

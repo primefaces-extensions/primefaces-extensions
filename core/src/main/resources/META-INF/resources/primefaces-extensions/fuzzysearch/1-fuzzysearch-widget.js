@@ -3,15 +3,15 @@
  *
  * @since 8.0.1
  */
-PrimeFaces.widget.FuzzySearch = PrimeFaces.widget.BaseWidget.extend({
+PrimeFaces.widget.FuzzySearch = class extends PrimeFaces.widget.BaseWidget {
 
     /**
      * @override
      * @inheritdoc
      * @param {PrimeFaces.widget.BaseWidget.cfg} cfg
      */
-    init: function (cfg) {
-        this._super(cfg);
+    init(cfg) {
+        super.init(cfg);
 
         this.keys = ['label'];
         this.datasource = JSON.parse(this.cfg.datasource);
@@ -29,9 +29,9 @@ PrimeFaces.widget.FuzzySearch = PrimeFaces.widget.BaseWidget.extend({
 
         //pfs metadata
         this.inputs.data(PrimeFaces.CLIENT_ID_DATA, this.id);
-    },
+    }
 
-    bindEvents: function () {
+    bindEvents() {
         var $this = this;
 
         this.input.on('input', function (e) {
@@ -39,9 +39,9 @@ PrimeFaces.widget.FuzzySearch = PrimeFaces.widget.BaseWidget.extend({
         });
 
         this.bindEventsForButtons(this.buttons);
-    },
+    }
 
-    bindEventsForButtons: function (buttons) {
+    bindEventsForButtons(buttons) {
         var $this = this;
 
         buttons.off()
@@ -89,9 +89,9 @@ PrimeFaces.widget.FuzzySearch = PrimeFaces.widget.BaseWidget.extend({
                     e.preventDefault();
                 }
             });
-    },
+    }
 
-    search: function (query) {
+    search(query) {
         var $this = this;
 
         var resultStyle = this.cfg.resultStyle || '';
@@ -128,25 +128,25 @@ PrimeFaces.widget.FuzzySearch = PrimeFaces.widget.BaseWidget.extend({
         $this.results.empty();
         $this.results.append(itemDisplayMarkup);
         this.bindEventsForButtons($this.results.children());
-    },
+    }
 
-    select: function (button) {
+    select(button) {
         this.buttons.filter('.ui-state-active').removeClass('ui-state-active ui-state-hover').children(':radio').prop('checked', false);
 
         button.addClass('ui-state-active').children(':radio').prop('checked', true);
 
         this.triggerChange(button);
-    },
+    }
 
-    unselect: function (button) {
+    unselect(button) {
         if (this.cfg.unselectable) {
             button.removeClass('ui-state-active ui-state-hover').children(':radio').prop('checked', false).change();
 
             this.triggerChange(button);
         }
-    },
+    }
 
-    triggerChange: function (button) {
+    triggerChange(button) {
         var itemValue = button.attr('data-item-value');
         this.input.val(itemValue);
 
@@ -161,15 +161,15 @@ PrimeFaces.widget.FuzzySearch = PrimeFaces.widget.BaseWidget.extend({
         };
 
         this.callBehavior('change', ext);
-    },
+    }
 
-    disable: function () {
+    disable() {
         this.buttons.removeClass('ui-state-hover ui-state-focus ui-state-active')
             .addClass('ui-state-disabled').attr('disabled', 'disabled');
-    },
+    }
 
-    enable: function () {
+    enable() {
         this.buttons.removeClass('ui-state-disabled').removeAttr('disabled');
     }
 
-});
+};

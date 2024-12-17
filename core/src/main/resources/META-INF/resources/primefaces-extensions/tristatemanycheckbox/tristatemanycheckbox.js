@@ -3,15 +3,15 @@
  *
  * @author Mauricio Fenoglio
  */
-PrimeFaces.widget.ExtTriStateManyCheckbox = PrimeFaces.widget.BaseWidget.extend({
+PrimeFaces.widget.ExtTriStateManyCheckbox = class extends PrimeFaces.widget.BaseWidget {
 
     /**
      * @override
      * @inheritdoc
      * @param {PrimeFaces.widget.BaseWidget.cfg} cfg
      */
-    init: function (cfg) {
-        this._super(cfg);
+    init(cfg) {
+        super.init(cfg);
 
         this.outputs = this.jq.find('.ui-chkbox-box:not(.ui-state-disabled)');
         this.inputs = this.jq.find(':text:not(:disabled)');
@@ -97,9 +97,9 @@ PrimeFaces.widget.ExtTriStateManyCheckbox = PrimeFaces.widget.BaseWidget.extend(
 
         // pfs metadata
         this.inputs.data(PrimeFaces.CLIENT_ID_DATA, this.id);
-    },
+    }
 
-    toggle: function (checkbox, direction) {
+    toggle(checkbox, direction) {
         var inputField = checkbox.prev().find(':input');
         if (!checkbox.hasClass('ui-state-disabled')) {
             var oldValue = parseInt(inputField.val());
@@ -126,19 +126,19 @@ PrimeFaces.widget.ExtTriStateManyCheckbox = PrimeFaces.widget.BaseWidget.extend(
             // fire change event
             inputField.change();
         }
-    },
+    }
 
     /**
      * Disables this input so that the user cannot enter a value anymore.
      */
-    disable: function () {
+    disable() {
         PrimeFaces.utils.disableInputWidget(this.inputs);
-    },
+    }
 
     /**
      * Enables this input so that the user can enter a value.
      */
-    enable: function () {
+    enable() {
         PrimeFaces.utils.enableInputWidget(this.inputs);
     }
-});
+};
