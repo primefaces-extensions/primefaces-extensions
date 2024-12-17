@@ -1,261 +1,293 @@
-# Copyright 2012 Mozilla Foundation
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-# Main toolbar buttons (tooltips and alt text for images)
-previous.title=Laman Sebelumnya
-previous_label=Sebelumnya
-next.title=Laman Selanjutnya
-next_label=Selanjutnya
 
-# LOCALIZATION NOTE (page.title): The tooltip for the pageNumber input.
-page.title=Halaman
-# LOCALIZATION NOTE (of_pages): "{{pagesCount}}" will be replaced by a number
-# representing the total number of pages in the document.
-of_pages=dari {{pagesCount}}
-# LOCALIZATION NOTE (page_of_pages): "{{pageNumber}}" and "{{pagesCount}}"
-# will be replaced by a number representing the currently visible page,
-# respectively a number representing the total number of pages in the document.
-page_of_pages=({{pageNumber}} dari {{pagesCount}})
+## Main toolbar buttons (tooltips and alt text for images)
 
-zoom_out.title=Perkecil
-zoom_out_label=Perkecil
-zoom_in.title=Perbesar
-zoom_in_label=Perbesar
-zoom.title=Perbesaran
-presentation_mode.title=Ganti ke Mode Presentasi
-presentation_mode_label=Mode Presentasi
-open_file.title=Buka Berkas
-open_file_label=Buka
-print.title=Cetak
-print_label=Cetak
-download.title=Unduh
-download_label=Unduh
-bookmark.title=Tampilan Sekarang (salin atau buka di jendela baru)
-bookmark_label=Tampilan Sekarang
+pdfjs-previous-button =
+    .title = Laman Sebelumnya
+pdfjs-previous-button-label = Sebelumnya
+pdfjs-next-button =
+    .title = Laman Selanjutnya
+pdfjs-next-button-label = Selanjutnya
+# .title: Tooltip for the pageNumber input.
+pdfjs-page-input =
+    .title = Halaman
+# Variables:
+#   $pagesCount (Number) - the total number of pages in the document
+# This string follows an input field with the number of the page currently displayed.
+pdfjs-of-pages = dari { $pagesCount }
+# Variables:
+#   $pageNumber (Number) - the currently visible page
+#   $pagesCount (Number) - the total number of pages in the document
+pdfjs-page-of-pages = ({ $pageNumber } dari { $pagesCount })
+pdfjs-zoom-out-button =
+    .title = Perkecil
+pdfjs-zoom-out-button-label = Perkecil
+pdfjs-zoom-in-button =
+    .title = Perbesar
+pdfjs-zoom-in-button-label = Perbesar
+pdfjs-zoom-select =
+    .title = Perbesaran
+pdfjs-presentation-mode-button =
+    .title = Ganti ke Mode Presentasi
+pdfjs-presentation-mode-button-label = Mode Presentasi
+pdfjs-open-file-button =
+    .title = Buka Berkas
+pdfjs-open-file-button-label = Buka
+pdfjs-print-button =
+    .title = Cetak
+pdfjs-print-button-label = Cetak
+pdfjs-save-button =
+    .title = Simpan
+pdfjs-save-button-label = Simpan
+pdfjs-bookmark-button =
+    .title = Laman Saat Ini (Lihat URL dari Laman Sekarang)
+pdfjs-bookmark-button-label = Laman Saat Ini
 
-# Secondary toolbar and context menu
-tools.title=Alat
-tools_label=Alat
-first_page.title=Buka Halaman Pertama
-first_page.label=Ke Halaman Pertama
-first_page_label=Buka Halaman Pertama
-last_page.title=Buka Halaman Terakhir
-last_page.label=Ke Halaman Terakhir
-last_page_label=Buka Halaman Terakhir
-page_rotate_cw.title=Putar Searah Jarum Jam
-page_rotate_cw.label=Putar Searah Jarum Jam
-page_rotate_cw_label=Putar Searah Jarum Jam
-page_rotate_ccw.title=Putar Berlawanan Arah Jarum Jam
-page_rotate_ccw.label=Putar Berlawanan Arah Jarum Jam
-page_rotate_ccw_label=Putar Berlawanan Arah Jarum Jam
+##  Secondary toolbar and context menu
 
-cursor_text_select_tool.title=Aktifkan Alat Seleksi Teks
-cursor_text_select_tool_label=Alat Seleksi Teks
-cursor_hand_tool.title=Aktifkan Alat Tangan
-cursor_hand_tool_label=Alat Tangan
+pdfjs-tools-button =
+    .title = Alat
+pdfjs-tools-button-label = Alat
+pdfjs-first-page-button =
+    .title = Buka Halaman Pertama
+pdfjs-first-page-button-label = Buka Halaman Pertama
+pdfjs-last-page-button =
+    .title = Buka Halaman Terakhir
+pdfjs-last-page-button-label = Buka Halaman Terakhir
+pdfjs-page-rotate-cw-button =
+    .title = Putar Searah Jarum Jam
+pdfjs-page-rotate-cw-button-label = Putar Searah Jarum Jam
+pdfjs-page-rotate-ccw-button =
+    .title = Putar Berlawanan Arah Jarum Jam
+pdfjs-page-rotate-ccw-button-label = Putar Berlawanan Arah Jarum Jam
+pdfjs-cursor-text-select-tool-button =
+    .title = Aktifkan Alat Seleksi Teks
+pdfjs-cursor-text-select-tool-button-label = Alat Seleksi Teks
+pdfjs-cursor-hand-tool-button =
+    .title = Aktifkan Alat Tangan
+pdfjs-cursor-hand-tool-button-label = Alat Tangan
+pdfjs-scroll-page-button =
+    .title = Gunakan Pengguliran Laman
+pdfjs-scroll-page-button-label = Pengguliran Laman
+pdfjs-scroll-vertical-button =
+    .title = Gunakan Penggeseran Vertikal
+pdfjs-scroll-vertical-button-label = Penggeseran Vertikal
+pdfjs-scroll-horizontal-button =
+    .title = Gunakan Penggeseran Horizontal
+pdfjs-scroll-horizontal-button-label = Penggeseran Horizontal
+pdfjs-scroll-wrapped-button =
+    .title = Gunakan Penggeseran Terapit
+pdfjs-scroll-wrapped-button-label = Penggeseran Terapit
+pdfjs-spread-none-button =
+    .title = Jangan gabungkan lembar halaman
+pdfjs-spread-none-button-label = Tidak Ada Lembaran
+pdfjs-spread-odd-button =
+    .title = Gabungkan lembar lamanan mulai dengan halaman ganjil
+pdfjs-spread-odd-button-label = Lembaran Ganjil
+pdfjs-spread-even-button =
+    .title = Gabungkan lembar halaman dimulai dengan halaman genap
+pdfjs-spread-even-button-label = Lembaran Genap
 
-scroll_vertical.title=Gunakan Penggeseran Vertikal
-scroll_vertical_label=Penggeseran Vertikal
-scroll_horizontal.title=Gunakan Penggeseran Horizontal
-scroll_horizontal_label=Penggeseran Horizontal
-scroll_wrapped.title=Gunakan Penggeseran Terapit
-scroll_wrapped_label=Penggeseran Terapit
+## Document properties dialog
 
-spread_none.title=Jangan gabungkan lembar halaman
-spread_none_label=Tidak Ada Lembaran
-spread_odd.title=Gabungkan lembar lamanan mulai dengan halaman ganjil
-spread_odd_label=Lembaran Ganjil
-spread_even.title=Gabungkan lembar halaman dimulai dengan halaman genap
-spread_even_label=Lembaran Genap
+pdfjs-document-properties-button =
+    .title = Properti Dokumen…
+pdfjs-document-properties-button-label = Properti Dokumen…
+pdfjs-document-properties-file-name = Nama berkas:
+pdfjs-document-properties-file-size = Ukuran berkas:
+# Variables:
+#   $size_kb (Number) - the PDF file size in kilobytes
+#   $size_b (Number) - the PDF file size in bytes
+pdfjs-document-properties-kb = { $size_kb } KB ({ $size_b } byte)
+# Variables:
+#   $size_mb (Number) - the PDF file size in megabytes
+#   $size_b (Number) - the PDF file size in bytes
+pdfjs-document-properties-mb = { $size_mb } MB ({ $size_b } byte)
+pdfjs-document-properties-title = Judul:
+pdfjs-document-properties-author = Penyusun:
+pdfjs-document-properties-subject = Subjek:
+pdfjs-document-properties-keywords = Kata Kunci:
+pdfjs-document-properties-creation-date = Tanggal Dibuat:
+pdfjs-document-properties-modification-date = Tanggal Dimodifikasi:
+# Variables:
+#   $date (Date) - the creation/modification date of the PDF file
+#   $time (Time) - the creation/modification time of the PDF file
+pdfjs-document-properties-date-string = { $date }, { $time }
+pdfjs-document-properties-creator = Pembuat:
+pdfjs-document-properties-producer = Pemroduksi PDF:
+pdfjs-document-properties-version = Versi PDF:
+pdfjs-document-properties-page-count = Jumlah Halaman:
+pdfjs-document-properties-page-size = Ukuran Laman:
+pdfjs-document-properties-page-size-unit-inches = inci
+pdfjs-document-properties-page-size-unit-millimeters = mm
+pdfjs-document-properties-page-size-orientation-portrait = tegak
+pdfjs-document-properties-page-size-orientation-landscape = mendatar
+pdfjs-document-properties-page-size-name-a-three = A3
+pdfjs-document-properties-page-size-name-a-four = A4
+pdfjs-document-properties-page-size-name-letter = Letter
+pdfjs-document-properties-page-size-name-legal = Legal
 
-# Document properties dialog box
-document_properties.title=Properti Dokumen…
-document_properties_label=Properti Dokumen…
-document_properties_file_name=Nama berkas:
-document_properties_file_size=Ukuran berkas:
-# LOCALIZATION NOTE (document_properties_kb): "{{size_kb}}" and "{{size_b}}"
-# will be replaced by the PDF file size in kilobytes, respectively in bytes.
-document_properties_kb={{size_kb}} KB ({{size_b}} byte)
-# LOCALIZATION NOTE (document_properties_mb): "{{size_mb}}" and "{{size_b}}"
-# will be replaced by the PDF file size in megabytes, respectively in bytes.
-document_properties_mb={{size_mb}} MB ({{size_b}} byte)
-document_properties_title=Judul:
-document_properties_author=Penyusun:
-document_properties_subject=Subjek:
-document_properties_keywords=Kata Kunci:
-document_properties_creation_date=Tanggal Dibuat:
-document_properties_modification_date=Tanggal Dimodifikasi:
-# LOCALIZATION NOTE (document_properties_date_string): "{{date}}" and "{{time}}"
-# will be replaced by the creation/modification date, and time, of the PDF file.
-document_properties_date_string={{date}}, {{time}}
-document_properties_creator=Pembuat:
-document_properties_producer=Pemroduksi PDF:
-document_properties_version=Versi PDF:
-document_properties_page_count=Jumlah Halaman:
-document_properties_page_size=Ukuran Laman:
-document_properties_page_size_unit_inches=inci
-document_properties_page_size_unit_millimeters=mm
-document_properties_page_size_orientation_portrait=tegak
-document_properties_page_size_orientation_landscape=mendatar
-document_properties_page_size_name_a3=A3
-document_properties_page_size_name_a4=A4
-document_properties_page_size_name_letter=Letter
-document_properties_page_size_name_legal=Legal
-# LOCALIZATION NOTE (document_properties_page_size_dimension_string):
-# "{{width}}", "{{height}}", {{unit}}, and {{orientation}} will be replaced by
-# the size, respectively their unit of measurement and orientation, of the (current) page.
-document_properties_page_size_dimension_string={{width}} × {{height}} {{unit}} ({{orientation}})
-# LOCALIZATION NOTE (document_properties_page_size_dimension_name_string):
-# "{{width}}", "{{height}}", {{unit}}, {{name}}, and {{orientation}} will be replaced by
-# the size, respectively their unit of measurement, name, and orientation, of the (current) page.
-document_properties_page_size_dimension_name_string={{width}} × {{height}} {{unit}} ({{name}}, {{orientation}})
-# LOCALIZATION NOTE (document_properties_linearized): The linearization status of
-# the document; usually called "Fast Web View" in English locales of Adobe software.
-document_properties_linearized=Tampilan Web Kilat:
-document_properties_linearized_yes=Ya
-document_properties_linearized_no=Tidak
-document_properties_close=Tutup
+## Variables:
+##   $width (Number) - the width of the (current) page
+##   $height (Number) - the height of the (current) page
+##   $unit (String) - the unit of measurement of the (current) page
+##   $name (String) - the name of the (current) page
+##   $orientation (String) - the orientation of the (current) page
 
-print_progress_message=Menyiapkan dokumen untuk pencetakan…
-# LOCALIZATION NOTE (print_progress_percent): "{{progress}}" will be replaced by
-# a numerical per cent value.
-print_progress_percent={{progress}}%
-print_progress_close=Batalkan
+pdfjs-document-properties-page-size-dimension-string = { $width } × { $height } { $unit } ({ $orientation })
+pdfjs-document-properties-page-size-dimension-name-string = { $width } × { $height } { $unit } ({ $name }, { $orientation })
 
-# Tooltips and alt text for side panel toolbar buttons
-# (the _label strings are alt text for the buttons, the .title strings are
-# tooltips)
-toggle_sidebar.title=Aktif/Nonaktifkan Bilah Samping
-toggle_sidebar_notification.title=Aktif/Nonaktifkan Bilah Samping (dokumen berisi kerangka/lampiran)
-toggle_sidebar_notification2.title=Aktif/Nonaktifkan Bilah Samping (dokumen berisi kerangka/lampiran/lapisan)
-toggle_sidebar_label=Aktif/Nonaktifkan Bilah Samping
-document_outline.title=Tampilkan Kerangka Dokumen (klik ganda untuk membentangkan/menciutkan semua item)
-document_outline_label=Kerangka Dokumen
-attachments.title=Tampilkan Lampiran
-attachments_label=Lampiran
-layers.title=Tampilkan Lapisan (klik ganda untuk mengatur ulang semua lapisan ke keadaan baku)
-layers_label=Lapisan
-thumbs.title=Tampilkan Miniatur
-thumbs_label=Miniatur
-current_outline_item.title=Cari Butir Ikhtisar Saat Ini
-current_outline_item_label=Butir Ikhtisar Saat Ini
-findbar.title=Temukan di Dokumen
-findbar_label=Temukan
+##
 
-additional_layers=Lapisan Tambahan
-# LOCALIZATION NOTE (page_canvas): "{{page}}" will be replaced by the page number.
-page_canvas=Laman {{page}}
-# LOCALIZATION NOTE (page_landmark): "{{page}}" will be replaced by the page number.
-page_landmark=Halaman {{page}}
-# Thumbnails panel item (tooltip and alt text for images)
-# LOCALIZATION NOTE (thumb_page_title): "{{page}}" will be replaced by the page
-# number.
-thumb_page_title=Laman {{page}}
-# LOCALIZATION NOTE (thumb_page_canvas): "{{page}}" will be replaced by the page
-# number.
-thumb_page_canvas=Miniatur Laman {{page}}
+# The linearization status of the document; usually called "Fast Web View" in
+# English locales of Adobe software.
+pdfjs-document-properties-linearized = Tampilan Web Kilat:
+pdfjs-document-properties-linearized-yes = Ya
+pdfjs-document-properties-linearized-no = Tidak
+pdfjs-document-properties-close-button = Tutup
 
-# Find panel button title and messages
-find_input.title=Temukan
-find_input.placeholder=Temukan di dokumen…
-find_previous.title=Temukan kata sebelumnya
-find_previous_label=Sebelumnya
-find_next.title=Temukan lebih lanjut
-find_next_label=Selanjutnya
-find_highlight=Sorot semuanya
-find_match_case_label=Cocokkan BESAR/kecil
-find_entire_word_label=Seluruh teks
-find_reached_top=Sampai di awal dokumen, dilanjutkan dari bawah
-find_reached_bottom=Sampai di akhir dokumen, dilanjutkan dari atas
-# LOCALIZATION NOTE (find_match_count): The supported plural forms are
-# [one|two|few|many|other], with [other] as the default value.
-# "{{current}}" and "{{total}}" will be replaced by a number representing the
-# index of the currently active find result, respectively a number representing
-# the total number of matches in the document.
-find_match_count={[ plural(total) ]}
-find_match_count[one]={{current}} dari {{total}} hasil
-find_match_count[two]={{current}} dari {{total}} hasil
-find_match_count[few]={{current}} dari {{total}} hasil
-find_match_count[many]={{current}} dari {{total}} hasil
-find_match_count[other]={{current}} dari {{total}} hasil
-# LOCALIZATION NOTE (find_match_count_limit): The supported plural forms are
-# [zero|one|two|few|many|other], with [other] as the default value.
-# "{{limit}}" will be replaced by a numerical value.
-find_match_count_limit={[ plural(limit) ]}
-find_match_count_limit[zero]=Ditemukan lebih dari {{limit}}
-find_match_count_limit[one]=Ditemukan lebih dari {{limit}}
-find_match_count_limit[two]=Ditemukan lebih dari {{limit}}
-find_match_count_limit[few]=Ditemukan lebih dari {{limit}}
-find_match_count_limit[many]=Ditemukan lebih dari {{limit}}
-find_match_count_limit[other]=Ditemukan lebih dari {{limit}}
-find_not_found=Frasa tidak ditemukan
+## Print
 
-# Error panel labels
-error_more_info=Lebih Banyak Informasi
-error_less_info=Lebih Sedikit Informasi
-error_close=Tutup
-# LOCALIZATION NOTE (error_version_info): "{{version}}" and "{{build}}" will be
-# replaced by the PDF.JS version and build ID.
-error_version_info=PDF.js v{{version}} (build: {{build}})
-# LOCALIZATION NOTE (error_message): "{{message}}" will be replaced by an
-# english string describing the error.
-error_message=Pesan: {{message}}
-# LOCALIZATION NOTE (error_stack): "{{stack}}" will be replaced with a stack
-# trace.
-error_stack=Stack: {{stack}}
-# LOCALIZATION NOTE (error_file): "{{file}}" will be replaced with a filename
-error_file=Berkas: {{file}}
-# LOCALIZATION NOTE (error_line): "{{line}}" will be replaced with a line number
-error_line=Baris: {{line}}
-rendering_error=Galat terjadi saat merender laman.
+pdfjs-print-progress-message = Menyiapkan dokumen untuk pencetakan…
+# Variables:
+#   $progress (Number) - percent value
+pdfjs-print-progress-percent = { $progress }%
+pdfjs-print-progress-close-button = Batalkan
+pdfjs-printing-not-supported = Peringatan: Pencetakan tidak didukung secara lengkap pada peramban ini.
+pdfjs-printing-not-ready = Peringatan: Berkas PDF masih belum dimuat secara lengkap untuk dapat dicetak.
 
-# Predefined zoom values
-page_scale_width=Lebar Laman
-page_scale_fit=Muat Laman
-page_scale_auto=Perbesaran Otomatis
-page_scale_actual=Ukuran Asli
-# LOCALIZATION NOTE (page_scale_percent): "{{scale}}" will be replaced by a
-# numerical scale value.
-page_scale_percent={{scale}}%
+## Tooltips and alt text for side panel toolbar buttons
 
-# Loading indicator messages
-loading_error_indicator=Galat
+pdfjs-toggle-sidebar-button =
+    .title = Aktif/Nonaktifkan Bilah Samping
+pdfjs-toggle-sidebar-notification-button =
+    .title = Aktif/Nonaktifkan Bilah Samping (dokumen berisi kerangka/lampiran/lapisan)
+pdfjs-toggle-sidebar-button-label = Aktif/Nonaktifkan Bilah Samping
+pdfjs-document-outline-button =
+    .title = Tampilkan Kerangka Dokumen (klik ganda untuk membentangkan/menciutkan semua item)
+pdfjs-document-outline-button-label = Kerangka Dokumen
+pdfjs-attachments-button =
+    .title = Tampilkan Lampiran
+pdfjs-attachments-button-label = Lampiran
+pdfjs-layers-button =
+    .title = Tampilkan Lapisan (klik ganda untuk mengatur ulang semua lapisan ke keadaan baku)
+pdfjs-layers-button-label = Lapisan
+pdfjs-thumbs-button =
+    .title = Tampilkan Miniatur
+pdfjs-thumbs-button-label = Miniatur
+pdfjs-current-outline-item-button =
+    .title = Cari Butir Ikhtisar Saat Ini
+pdfjs-current-outline-item-button-label = Butir Ikhtisar Saat Ini
+pdfjs-findbar-button =
+    .title = Temukan di Dokumen
+pdfjs-findbar-button-label = Temukan
+pdfjs-additional-layers = Lapisan Tambahan
 
-# Loading indicator messages
-loading=Memuat…
-loading_error=Galat terjadi saat memuat PDF.
-invalid_file_error=Berkas PDF tidak valid atau rusak.
-missing_file_error=Berkas PDF tidak ada.
-unexpected_response_error=Balasan server yang tidak diharapkan.
+## Thumbnails panel item (tooltip and alt text for images)
 
-# LOCALIZATION NOTE (annotation_date_string): "{{date}}" and "{{time}}" will be
-# replaced by the modification date, and time, of the annotation.
-annotation_date_string={{date}}, {{time}}
+# Variables:
+#   $page (Number) - the page number
+pdfjs-thumb-page-title =
+    .title = Laman { $page }
+# Variables:
+#   $page (Number) - the page number
+pdfjs-thumb-page-canvas =
+    .aria-label = Miniatur Laman { $page }
 
-# LOCALIZATION NOTE (text_annotation_type.alt): This is used as a tooltip.
-# "{{type}}" will be replaced with an annotation type from a list defined in
-# the PDF spec (32000-1:2008 Table 169 – Annotation types).
+## Find panel button title and messages
+
+pdfjs-find-input =
+    .title = Temukan
+    .placeholder = Temukan di dokumen…
+pdfjs-find-previous-button =
+    .title = Temukan kata sebelumnya
+pdfjs-find-previous-button-label = Sebelumnya
+pdfjs-find-next-button =
+    .title = Temukan lebih lanjut
+pdfjs-find-next-button-label = Selanjutnya
+pdfjs-find-highlight-checkbox = Sorot semuanya
+pdfjs-find-match-case-checkbox-label = Cocokkan BESAR/kecil
+pdfjs-find-match-diacritics-checkbox-label = Pencocokan Diakritik
+pdfjs-find-entire-word-checkbox-label = Seluruh teks
+pdfjs-find-reached-top = Sampai di awal dokumen, dilanjutkan dari bawah
+pdfjs-find-reached-bottom = Sampai di akhir dokumen, dilanjutkan dari atas
+pdfjs-find-not-found = Frasa tidak ditemukan
+
+## Predefined zoom values
+
+pdfjs-page-scale-width = Lebar Laman
+pdfjs-page-scale-fit = Muat Laman
+pdfjs-page-scale-auto = Perbesaran Otomatis
+pdfjs-page-scale-actual = Ukuran Asli
+# Variables:
+#   $scale (Number) - percent value for page scale
+pdfjs-page-scale-percent = { $scale }%
+
+## PDF page
+
+# Variables:
+#   $page (Number) - the page number
+pdfjs-page-landmark =
+    .aria-label = Halaman { $page }
+
+## Loading indicator messages
+
+pdfjs-loading-error = Galat terjadi saat memuat PDF.
+pdfjs-invalid-file-error = Berkas PDF tidak valid atau rusak.
+pdfjs-missing-file-error = Berkas PDF tidak ada.
+pdfjs-unexpected-response-error = Balasan server yang tidak diharapkan.
+pdfjs-rendering-error = Galat terjadi saat merender laman.
+
+## Annotations
+
+# Variables:
+#   $date (Date) - the modification date of the annotation
+#   $time (Time) - the modification time of the annotation
+pdfjs-annotation-date-string = { $date }, { $time }
+# .alt: This is used as a tooltip.
+# Variables:
+#   $type (String) - an annotation type from a list defined in the PDF spec
+# (32000-1:2008 Table 169 – Annotation types).
 # Some common types are e.g.: "Check", "Text", "Comment", "Note"
-text_annotation_type.alt=[Anotasi {{type}}]
-password_label=Masukkan sandi untuk membuka berkas PDF ini.
-password_invalid=Sandi tidak valid. Silakan coba lagi.
-password_ok=Oke
-password_cancel=Batal
+pdfjs-text-annotation-type =
+    .alt = [Anotasi { $type }]
 
-printing_not_supported=Peringatan: Pencetakan tidak didukung secara lengkap pada peramban ini.
-printing_not_ready=Peringatan: Berkas PDF masih belum dimuat secara lengkap untuk dapat dicetak.
-web_fonts_disabled=Font web dinonaktifkan: tidak dapat menggunakan font PDF yang tersemat.
-# LOCALIZATION NOTE (unsupported_feature_signatures): Should contain the same
-# exact string as in the `chrome.properties` file.
-unsupported_feature_signatures=Dokumen PDF ini mengandung tanda tangan digital. Validasi tanda tangan tidak didukung.
+## Password
+
+pdfjs-password-label = Masukkan sandi untuk membuka berkas PDF ini.
+pdfjs-password-invalid = Sandi tidak valid. Silakan coba lagi.
+pdfjs-password-ok-button = Oke
+pdfjs-password-cancel-button = Batal
+pdfjs-web-fonts-disabled = Font web dinonaktifkan: tidak dapat menggunakan font PDF yang tersemat.
+
+## Editing
+
+pdfjs-editor-free-text-button =
+    .title = Teks
+pdfjs-editor-free-text-button-label = Teks
+pdfjs-editor-ink-button =
+    .title = Gambar
+pdfjs-editor-ink-button-label = Gambar
+# Editor Parameters
+pdfjs-editor-free-text-color-input = Warna
+pdfjs-editor-free-text-size-input = Ukuran
+pdfjs-editor-ink-color-input = Warna
+pdfjs-editor-ink-thickness-input = Ketebalan
+pdfjs-editor-ink-opacity-input = Opasitas
+pdfjs-free-text =
+    .aria-label = Editor Teks
+pdfjs-free-text-default-content = Mulai mengetik…
+pdfjs-ink =
+    .aria-label = Editor Gambar
+pdfjs-ink-canvas =
+    .aria-label = Gambar yang dibuat pengguna
+
+## Alt-text dialog
+
+
+## Editor resizers
+## This is used in an aria label to help to understand the role of the resizer.
+

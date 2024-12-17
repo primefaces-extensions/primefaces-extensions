@@ -61,6 +61,7 @@ public class DocumentViewer extends UIGraphic {
         page,
         download,
         locale,
+        disableFontFace,
         nameddest,
         pagemode,
         zoom;
@@ -186,6 +187,14 @@ public class DocumentViewer extends UIGraphic {
 
     public String getZoom() {
         return (String) getStateHelper().eval(PropertyKeys.zoom, null);
+    }
+
+    public boolean isDisableFontFace() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.disableFontFace, true);
+    }
+
+    public void setDisableFontFace(final boolean _disableFontFace) {
+        getStateHelper().put(PropertyKeys.disableFontFace, _disableFontFace);
     }
 
     @Override
