@@ -7,7 +7,7 @@
 4. Execute to convert images to data URI:
 	npm install
 	npm install -g grunt-cli
-	grunt dataUri   https://github.com/ahomu/grunt-data-uri
+	grunt dataUri  https://github.com/ahomu/grunt-data-uri --force
 	
 package.json
 
@@ -59,7 +59,7 @@ module.exports = function(grunt) {
 
 };
 
-5. Replace all mask-iage CSS styles that use variables to directly use the base64 encoded images as it doesn't work using the variables.
+5. Replace all mask-image CSS styles that use variables to directly use the base64 encoded images as it doesn't work using the variables.
 
 6. Compress the CSS from #4 and place right into the <style></style> of the viewer.html
 
@@ -135,9 +135,9 @@ to
 10. In the /web/locale directory of the distribution run this DOS script..
 
 @echo off
-for /r %%a in (viewer.properties) do for %%b in ("%%~dpa\.") do ren "%%~a" "%%~nxb.locale.txt"
+for /r %%a in (viewer.ftl) do for %%b in ("%%~dpa\.") do ren "%%~a" "%%~nxb.locale.txt"
 pause
 
-This renames all viewer.properties correctly.  Then move the new XX.locale.txt files into the /locale folder of PFE.
+This renames all viewer.ftl correctly.  Then move the new XX.locale.txt files into the /locale folder of PFE.
 
 Also make sure there is an "en" file which you can just copy "en-US" and make it "en".

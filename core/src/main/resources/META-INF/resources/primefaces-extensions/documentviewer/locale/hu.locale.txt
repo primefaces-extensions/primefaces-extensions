@@ -1,261 +1,396 @@
-# Copyright 2012 Mozilla Foundation
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-# Main toolbar buttons (tooltips and alt text for images)
-previous.title=Előző oldal
-previous_label=Előző
-next.title=Következő oldal
-next_label=Tovább
 
-# LOCALIZATION NOTE (page.title): The tooltip for the pageNumber input.
-page.title=Oldal
-# LOCALIZATION NOTE (of_pages): "{{pagesCount}}" will be replaced by a number
-# representing the total number of pages in the document.
-of_pages=összesen: {{pagesCount}}
-# LOCALIZATION NOTE (page_of_pages): "{{pageNumber}}" and "{{pagesCount}}"
-# will be replaced by a number representing the currently visible page,
-# respectively a number representing the total number of pages in the document.
-page_of_pages=({{pageNumber}} / {{pagesCount}})
+## Main toolbar buttons (tooltips and alt text for images)
 
-zoom_out.title=Kicsinyítés
-zoom_out_label=Kicsinyítés
-zoom_in.title=Nagyítás
-zoom_in_label=Nagyítás
-zoom.title=Nagyítás
-presentation_mode.title=Váltás bemutató módba
-presentation_mode_label=Bemutató mód
-open_file.title=Fájl megnyitása
-open_file_label=Megnyitás
-print.title=Nyomtatás
-print_label=Nyomtatás
-download.title=Letöltés
-download_label=Letöltés
-bookmark.title=Jelenlegi nézet (másolás vagy megnyitás új ablakban)
-bookmark_label=Aktuális nézet
+pdfjs-previous-button =
+    .title = Előző oldal
+pdfjs-previous-button-label = Előző
+pdfjs-next-button =
+    .title = Következő oldal
+pdfjs-next-button-label = Tovább
+# .title: Tooltip for the pageNumber input.
+pdfjs-page-input =
+    .title = Oldal
+# Variables:
+#   $pagesCount (Number) - the total number of pages in the document
+# This string follows an input field with the number of the page currently displayed.
+pdfjs-of-pages = összesen: { $pagesCount }
+# Variables:
+#   $pageNumber (Number) - the currently visible page
+#   $pagesCount (Number) - the total number of pages in the document
+pdfjs-page-of-pages = ({ $pageNumber } / { $pagesCount })
+pdfjs-zoom-out-button =
+    .title = Kicsinyítés
+pdfjs-zoom-out-button-label = Kicsinyítés
+pdfjs-zoom-in-button =
+    .title = Nagyítás
+pdfjs-zoom-in-button-label = Nagyítás
+pdfjs-zoom-select =
+    .title = Nagyítás
+pdfjs-presentation-mode-button =
+    .title = Váltás bemutató módba
+pdfjs-presentation-mode-button-label = Bemutató mód
+pdfjs-open-file-button =
+    .title = Fájl megnyitása
+pdfjs-open-file-button-label = Megnyitás
+pdfjs-print-button =
+    .title = Nyomtatás
+pdfjs-print-button-label = Nyomtatás
+pdfjs-save-button =
+    .title = Mentés
+pdfjs-save-button-label = Mentés
+# Used in Firefox for Android as a tooltip for the download button (“download” is a verb).
+pdfjs-download-button =
+    .title = Letöltés
+# Used in Firefox for Android as a label for the download button (“download” is a verb).
+# Length of the translation matters since we are in a mobile context, with limited screen estate.
+pdfjs-download-button-label = Letöltés
+pdfjs-bookmark-button =
+    .title = Jelenlegi oldal (webcím megtekintése a jelenlegi oldalról)
+pdfjs-bookmark-button-label = Jelenlegi oldal
 
-# Secondary toolbar and context menu
-tools.title=Eszközök
-tools_label=Eszközök
-first_page.title=Ugrás az első oldalra
-first_page.label=Ugrás az első oldalra
-first_page_label=Ugrás az első oldalra
-last_page.title=Ugrás az utolsó oldalra
-last_page.label=Ugrás az utolsó oldalra
-last_page_label=Ugrás az utolsó oldalra
-page_rotate_cw.title=Forgatás az óramutató járásával egyezően
-page_rotate_cw.label=Forgatás az óramutató járásával egyezően
-page_rotate_cw_label=Forgatás az óramutató járásával egyezően
-page_rotate_ccw.title=Forgatás az óramutató járásával ellentétesen
-page_rotate_ccw.label=Forgatás az óramutató járásával ellentétesen
-page_rotate_ccw_label=Forgatás az óramutató járásával ellentétesen
+##  Secondary toolbar and context menu
 
-cursor_text_select_tool.title=Szövegkijelölő eszköz bekapcsolása
-cursor_text_select_tool_label=Szövegkijelölő eszköz
-cursor_hand_tool.title=Kéz eszköz bekapcsolása
-cursor_hand_tool_label=Kéz eszköz
+pdfjs-tools-button =
+    .title = Eszközök
+pdfjs-tools-button-label = Eszközök
+pdfjs-first-page-button =
+    .title = Ugrás az első oldalra
+pdfjs-first-page-button-label = Ugrás az első oldalra
+pdfjs-last-page-button =
+    .title = Ugrás az utolsó oldalra
+pdfjs-last-page-button-label = Ugrás az utolsó oldalra
+pdfjs-page-rotate-cw-button =
+    .title = Forgatás az óramutató járásával egyezően
+pdfjs-page-rotate-cw-button-label = Forgatás az óramutató járásával egyezően
+pdfjs-page-rotate-ccw-button =
+    .title = Forgatás az óramutató járásával ellentétesen
+pdfjs-page-rotate-ccw-button-label = Forgatás az óramutató járásával ellentétesen
+pdfjs-cursor-text-select-tool-button =
+    .title = Szövegkijelölő eszköz bekapcsolása
+pdfjs-cursor-text-select-tool-button-label = Szövegkijelölő eszköz
+pdfjs-cursor-hand-tool-button =
+    .title = Kéz eszköz bekapcsolása
+pdfjs-cursor-hand-tool-button-label = Kéz eszköz
+pdfjs-scroll-page-button =
+    .title = Oldalgörgetés használata
+pdfjs-scroll-page-button-label = Oldalgörgetés
+pdfjs-scroll-vertical-button =
+    .title = Függőleges görgetés használata
+pdfjs-scroll-vertical-button-label = Függőleges görgetés
+pdfjs-scroll-horizontal-button =
+    .title = Vízszintes görgetés használata
+pdfjs-scroll-horizontal-button-label = Vízszintes görgetés
+pdfjs-scroll-wrapped-button =
+    .title = Rácsos elrendezés használata
+pdfjs-scroll-wrapped-button-label = Rácsos elrendezés
+pdfjs-spread-none-button =
+    .title = Ne tapassza össze az oldalakat
+pdfjs-spread-none-button-label = Nincs összetapasztás
+pdfjs-spread-odd-button =
+    .title = Lapok összetapasztása, a páratlan számú oldalakkal kezdve
+pdfjs-spread-odd-button-label = Összetapasztás: páratlan
+pdfjs-spread-even-button =
+    .title = Lapok összetapasztása, a páros számú oldalakkal kezdve
+pdfjs-spread-even-button-label = Összetapasztás: páros
 
-scroll_vertical.title=Függőleges görgetés használata
-scroll_vertical_label=Függőleges görgetés
-scroll_horizontal.title=Vízszintes görgetés használata
-scroll_horizontal_label=Vízszintes görgetés
-scroll_wrapped.title=Rácsos elrendezés használata
-scroll_wrapped_label=Rácsos elrendezés
+## Document properties dialog
 
-spread_none.title=Ne tapassza össze az oldalakat
-spread_none_label=Nincs összetapasztás
-spread_odd.title=Lapok összetapasztása, a páratlan számú oldalakkal kezdve
-spread_odd_label=Összetapasztás: páratlan
-spread_even.title=Lapok összetapasztása, a páros számú oldalakkal kezdve
-spread_even_label=Összetapasztás: páros
+pdfjs-document-properties-button =
+    .title = Dokumentum tulajdonságai…
+pdfjs-document-properties-button-label = Dokumentum tulajdonságai…
+pdfjs-document-properties-file-name = Fájlnév:
+pdfjs-document-properties-file-size = Fájlméret:
+# Variables:
+#   $size_kb (Number) - the PDF file size in kilobytes
+#   $size_b (Number) - the PDF file size in bytes
+pdfjs-document-properties-kb = { $size_kb } KB ({ $size_b } bájt)
+# Variables:
+#   $size_mb (Number) - the PDF file size in megabytes
+#   $size_b (Number) - the PDF file size in bytes
+pdfjs-document-properties-mb = { $size_mb } MB ({ $size_b } bájt)
+pdfjs-document-properties-title = Cím:
+pdfjs-document-properties-author = Szerző:
+pdfjs-document-properties-subject = Tárgy:
+pdfjs-document-properties-keywords = Kulcsszavak:
+pdfjs-document-properties-creation-date = Létrehozás dátuma:
+pdfjs-document-properties-modification-date = Módosítás dátuma:
+# Variables:
+#   $date (Date) - the creation/modification date of the PDF file
+#   $time (Time) - the creation/modification time of the PDF file
+pdfjs-document-properties-date-string = { $date }, { $time }
+pdfjs-document-properties-creator = Létrehozta:
+pdfjs-document-properties-producer = PDF előállító:
+pdfjs-document-properties-version = PDF verzió:
+pdfjs-document-properties-page-count = Oldalszám:
+pdfjs-document-properties-page-size = Lapméret:
+pdfjs-document-properties-page-size-unit-inches = in
+pdfjs-document-properties-page-size-unit-millimeters = mm
+pdfjs-document-properties-page-size-orientation-portrait = álló
+pdfjs-document-properties-page-size-orientation-landscape = fekvő
+pdfjs-document-properties-page-size-name-a-three = A3
+pdfjs-document-properties-page-size-name-a-four = A4
+pdfjs-document-properties-page-size-name-letter = Letter
+pdfjs-document-properties-page-size-name-legal = Jogi információk
 
-# Document properties dialog box
-document_properties.title=Dokumentum tulajdonságai…
-document_properties_label=Dokumentum tulajdonságai…
-document_properties_file_name=Fájlnév:
-document_properties_file_size=Fájlméret:
-# LOCALIZATION NOTE (document_properties_kb): "{{size_kb}}" and "{{size_b}}"
-# will be replaced by the PDF file size in kilobytes, respectively in bytes.
-document_properties_kb={{size_kb}} KB ({{size_b}} bájt)
-# LOCALIZATION NOTE (document_properties_mb): "{{size_mb}}" and "{{size_b}}"
-# will be replaced by the PDF file size in megabytes, respectively in bytes.
-document_properties_mb={{size_mb}} MB ({{size_b}} bájt)
-document_properties_title=Cím:
-document_properties_author=Szerző:
-document_properties_subject=Tárgy:
-document_properties_keywords=Kulcsszavak:
-document_properties_creation_date=Létrehozás dátuma:
-document_properties_modification_date=Módosítás dátuma:
-# LOCALIZATION NOTE (document_properties_date_string): "{{date}}" and "{{time}}"
-# will be replaced by the creation/modification date, and time, of the PDF file.
-document_properties_date_string={{date}}, {{time}}
-document_properties_creator=Létrehozta:
-document_properties_producer=PDF előállító:
-document_properties_version=PDF verzió:
-document_properties_page_count=Oldalszám:
-document_properties_page_size=Lapméret:
-document_properties_page_size_unit_inches=in
-document_properties_page_size_unit_millimeters=mm
-document_properties_page_size_orientation_portrait=álló
-document_properties_page_size_orientation_landscape=fekvő
-document_properties_page_size_name_a3=A3
-document_properties_page_size_name_a4=A4
-document_properties_page_size_name_letter=Letter
-document_properties_page_size_name_legal=Jogi információk
-# LOCALIZATION NOTE (document_properties_page_size_dimension_string):
-# "{{width}}", "{{height}}", {{unit}}, and {{orientation}} will be replaced by
-# the size, respectively their unit of measurement and orientation, of the (current) page.
-document_properties_page_size_dimension_string={{width}} × {{height}} {{unit}} ({{orientation}})
-# LOCALIZATION NOTE (document_properties_page_size_dimension_name_string):
-# "{{width}}", "{{height}}", {{unit}}, {{name}}, and {{orientation}} will be replaced by
-# the size, respectively their unit of measurement, name, and orientation, of the (current) page.
-document_properties_page_size_dimension_name_string={{width}} × {{height}} {{unit}} ({{name}}, {{orientation}})
-# LOCALIZATION NOTE (document_properties_linearized): The linearization status of
-# the document; usually called "Fast Web View" in English locales of Adobe software.
-document_properties_linearized=Gyors webes nézet:
-document_properties_linearized_yes=Igen
-document_properties_linearized_no=Nem
-document_properties_close=Bezárás
+## Variables:
+##   $width (Number) - the width of the (current) page
+##   $height (Number) - the height of the (current) page
+##   $unit (String) - the unit of measurement of the (current) page
+##   $name (String) - the name of the (current) page
+##   $orientation (String) - the orientation of the (current) page
 
-print_progress_message=Dokumentum előkészítése nyomtatáshoz…
-# LOCALIZATION NOTE (print_progress_percent): "{{progress}}" will be replaced by
-# a numerical per cent value.
-print_progress_percent={{progress}}%
-print_progress_close=Mégse
+pdfjs-document-properties-page-size-dimension-string = { $width } × { $height } { $unit } ({ $orientation })
+pdfjs-document-properties-page-size-dimension-name-string = { $width } × { $height } { $unit } ({ $name }, { $orientation })
 
-# Tooltips and alt text for side panel toolbar buttons
-# (the _label strings are alt text for the buttons, the .title strings are
-# tooltips)
-toggle_sidebar.title=Oldalsáv be/ki
-toggle_sidebar_notification.title=Oldalsáv be/ki (a dokumentum vázlatot/mellékleteket tartalmaz)
-toggle_sidebar_notification2.title=Oldalsáv be/ki (a dokumentum vázlatot/mellékleteket/rétegeket tartalmaz)
-toggle_sidebar_label=Oldalsáv be/ki
-document_outline.title=Dokumentum megjelenítése online (dupla kattintás minden elem kinyitásához/összecsukásához)
-document_outline_label=Dokumentumvázlat
-attachments.title=Mellékletek megjelenítése
-attachments_label=Van melléklet
-layers.title=Rétegek megjelenítése (dupla kattintás az összes réteg alapértelmezett állapotra visszaállításához)
-layers_label=Rétegek
-thumbs.title=Bélyegképek megjelenítése
-thumbs_label=Bélyegképek
-current_outline_item.title=Jelenlegi vázlatelem megkeresése
-current_outline_item_label=Jelenlegi vázlatelem
-findbar.title=Keresés a dokumentumban
-findbar_label=Keresés
+##
 
-additional_layers=További rétegek
-# LOCALIZATION NOTE (page_canvas): "{{page}}" will be replaced by the page number.
-page_canvas={{page}}. oldal
-# LOCALIZATION NOTE (page_landmark): "{{page}}" will be replaced by the page number.
-page_landmark={{page}}. oldal
-# Thumbnails panel item (tooltip and alt text for images)
-# LOCALIZATION NOTE (thumb_page_title): "{{page}}" will be replaced by the page
-# number.
-thumb_page_title={{page}}. oldal
-# LOCALIZATION NOTE (thumb_page_canvas): "{{page}}" will be replaced by the page
-# number.
-thumb_page_canvas={{page}}. oldal bélyegképe
+# The linearization status of the document; usually called "Fast Web View" in
+# English locales of Adobe software.
+pdfjs-document-properties-linearized = Gyors webes nézet:
+pdfjs-document-properties-linearized-yes = Igen
+pdfjs-document-properties-linearized-no = Nem
+pdfjs-document-properties-close-button = Bezárás
 
-# Find panel button title and messages
-find_input.title=Keresés
-find_input.placeholder=Keresés a dokumentumban…
-find_previous.title=A kifejezés előző előfordulásának keresése
-find_previous_label=Előző
-find_next.title=A kifejezés következő előfordulásának keresése
-find_next_label=Tovább
-find_highlight=Összes kiemelése
-find_match_case_label=Kis- és nagybetűk megkülönböztetése
-find_entire_word_label=Teljes szavak
-find_reached_top=A dokumentum eleje elérve, folytatás a végétől
-find_reached_bottom=A dokumentum vége elérve, folytatás az elejétől
-# LOCALIZATION NOTE (find_match_count): The supported plural forms are
-# [one|two|few|many|other], with [other] as the default value.
-# "{{current}}" and "{{total}}" will be replaced by a number representing the
-# index of the currently active find result, respectively a number representing
-# the total number of matches in the document.
-find_match_count={[ plural(total) ]}
-find_match_count[one]={{current}} / {{total}} találat
-find_match_count[two]={{current}} / {{total}} találat
-find_match_count[few]={{current}} / {{total}} találat
-find_match_count[many]={{current}} / {{total}} találat
-find_match_count[other]={{current}} / {{total}} találat
-# LOCALIZATION NOTE (find_match_count_limit): The supported plural forms are
-# [zero|one|two|few|many|other], with [other] as the default value.
-# "{{limit}}" will be replaced by a numerical value.
-find_match_count_limit={[ plural(limit) ]}
-find_match_count_limit[zero]=Több mint {{limit}} találat
-find_match_count_limit[one]=Több mint {{limit}} találat
-find_match_count_limit[two]=Több mint {{limit}} találat
-find_match_count_limit[few]=Több mint {{limit}} találat
-find_match_count_limit[many]=Több mint {{limit}} találat
-find_match_count_limit[other]=Több mint {{limit}} találat
-find_not_found=A kifejezés nem található
+## Print
 
-# Error panel labels
-error_more_info=További tudnivalók
-error_less_info=Kevesebb információ
-error_close=Bezárás
-# LOCALIZATION NOTE (error_version_info): "{{version}}" and "{{build}}" will be
-# replaced by the PDF.JS version and build ID.
-error_version_info=PDF.js v{{version}} (build: {{build}})
-# LOCALIZATION NOTE (error_message): "{{message}}" will be replaced by an
-# english string describing the error.
-error_message=Üzenet: {{message}}
-# LOCALIZATION NOTE (error_stack): "{{stack}}" will be replaced with a stack
-# trace.
-error_stack=Verem: {{stack}}
-# LOCALIZATION NOTE (error_file): "{{file}}" will be replaced with a filename
-error_file=Fájl: {{file}}
-# LOCALIZATION NOTE (error_line): "{{line}}" will be replaced with a line number
-error_line=Sor: {{line}}
-rendering_error=Hiba történt az oldal feldolgozása közben.
+pdfjs-print-progress-message = Dokumentum előkészítése nyomtatáshoz…
+# Variables:
+#   $progress (Number) - percent value
+pdfjs-print-progress-percent = { $progress }%
+pdfjs-print-progress-close-button = Mégse
+pdfjs-printing-not-supported = Figyelmeztetés: Ez a böngésző nem teljesen támogatja a nyomtatást.
+pdfjs-printing-not-ready = Figyelmeztetés: A PDF nincs teljesen betöltve a nyomtatáshoz.
 
-# Predefined zoom values
-page_scale_width=Oldalszélesség
-page_scale_fit=Teljes oldal
-page_scale_auto=Automatikus nagyítás
-page_scale_actual=Valódi méret
-# LOCALIZATION NOTE (page_scale_percent): "{{scale}}" will be replaced by a
-# numerical scale value.
-page_scale_percent={{scale}}%
+## Tooltips and alt text for side panel toolbar buttons
 
-# Loading indicator messages
-loading_error_indicator=Hiba
+pdfjs-toggle-sidebar-button =
+    .title = Oldalsáv be/ki
+pdfjs-toggle-sidebar-notification-button =
+    .title = Oldalsáv be/ki (a dokumentum vázlatot/mellékleteket/rétegeket tartalmaz)
+pdfjs-toggle-sidebar-button-label = Oldalsáv be/ki
+pdfjs-document-outline-button =
+    .title = Dokumentum megjelenítése online (dupla kattintás minden elem kinyitásához/összecsukásához)
+pdfjs-document-outline-button-label = Dokumentumvázlat
+pdfjs-attachments-button =
+    .title = Mellékletek megjelenítése
+pdfjs-attachments-button-label = Van melléklet
+pdfjs-layers-button =
+    .title = Rétegek megjelenítése (dupla kattintás az összes réteg alapértelmezett állapotra visszaállításához)
+pdfjs-layers-button-label = Rétegek
+pdfjs-thumbs-button =
+    .title = Bélyegképek megjelenítése
+pdfjs-thumbs-button-label = Bélyegképek
+pdfjs-current-outline-item-button =
+    .title = Jelenlegi vázlatelem megkeresése
+pdfjs-current-outline-item-button-label = Jelenlegi vázlatelem
+pdfjs-findbar-button =
+    .title = Keresés a dokumentumban
+pdfjs-findbar-button-label = Keresés
+pdfjs-additional-layers = További rétegek
 
-# Loading indicator messages
-loading=Betöltés…
-loading_error=Hiba történt a PDF betöltésekor.
-invalid_file_error=Érvénytelen vagy sérült PDF fájl.
-missing_file_error=Hiányzó PDF fájl.
-unexpected_response_error=Váratlan kiszolgálóválasz.
+## Thumbnails panel item (tooltip and alt text for images)
 
-# LOCALIZATION NOTE (annotation_date_string): "{{date}}" and "{{time}}" will be
-# replaced by the modification date, and time, of the annotation.
-annotation_date_string={{date}}, {{time}}
+# Variables:
+#   $page (Number) - the page number
+pdfjs-thumb-page-title =
+    .title = { $page }. oldal
+# Variables:
+#   $page (Number) - the page number
+pdfjs-thumb-page-canvas =
+    .aria-label = { $page }. oldal bélyegképe
 
-# LOCALIZATION NOTE (text_annotation_type.alt): This is used as a tooltip.
-# "{{type}}" will be replaced with an annotation type from a list defined in
-# the PDF spec (32000-1:2008 Table 169 – Annotation types).
+## Find panel button title and messages
+
+pdfjs-find-input =
+    .title = Keresés
+    .placeholder = Keresés a dokumentumban…
+pdfjs-find-previous-button =
+    .title = A kifejezés előző előfordulásának keresése
+pdfjs-find-previous-button-label = Előző
+pdfjs-find-next-button =
+    .title = A kifejezés következő előfordulásának keresése
+pdfjs-find-next-button-label = Tovább
+pdfjs-find-highlight-checkbox = Összes kiemelése
+pdfjs-find-match-case-checkbox-label = Kis- és nagybetűk megkülönböztetése
+pdfjs-find-match-diacritics-checkbox-label = Diakritikus jelek
+pdfjs-find-entire-word-checkbox-label = Teljes szavak
+pdfjs-find-reached-top = A dokumentum eleje elérve, folytatás a végétől
+pdfjs-find-reached-bottom = A dokumentum vége elérve, folytatás az elejétől
+# Variables:
+#   $current (Number) - the index of the currently active find result
+#   $total (Number) - the total number of matches in the document
+pdfjs-find-match-count =
+    { $total ->
+        [one] { $current } / { $total } találat
+       *[other] { $current } / { $total } találat
+    }
+# Variables:
+#   $limit (Number) - the maximum number of matches
+pdfjs-find-match-count-limit =
+    { $limit ->
+        [one] Több mint { $limit } találat
+       *[other] Több mint { $limit } találat
+    }
+pdfjs-find-not-found = A kifejezés nem található
+
+## Predefined zoom values
+
+pdfjs-page-scale-width = Oldalszélesség
+pdfjs-page-scale-fit = Teljes oldal
+pdfjs-page-scale-auto = Automatikus nagyítás
+pdfjs-page-scale-actual = Valódi méret
+# Variables:
+#   $scale (Number) - percent value for page scale
+pdfjs-page-scale-percent = { $scale }%
+
+## PDF page
+
+# Variables:
+#   $page (Number) - the page number
+pdfjs-page-landmark =
+    .aria-label = { $page }. oldal
+
+## Loading indicator messages
+
+pdfjs-loading-error = Hiba történt a PDF betöltésekor.
+pdfjs-invalid-file-error = Érvénytelen vagy sérült PDF fájl.
+pdfjs-missing-file-error = Hiányzó PDF fájl.
+pdfjs-unexpected-response-error = Váratlan kiszolgálóválasz.
+pdfjs-rendering-error = Hiba történt az oldal feldolgozása közben.
+
+## Annotations
+
+# Variables:
+#   $date (Date) - the modification date of the annotation
+#   $time (Time) - the modification time of the annotation
+pdfjs-annotation-date-string = { $date }, { $time }
+# .alt: This is used as a tooltip.
+# Variables:
+#   $type (String) - an annotation type from a list defined in the PDF spec
+# (32000-1:2008 Table 169 – Annotation types).
 # Some common types are e.g.: "Check", "Text", "Comment", "Note"
-text_annotation_type.alt=[{{type}} megjegyzés]
-password_label=Adja meg a jelszót a PDF fájl megnyitásához.
-password_invalid=Helytelen jelszó. Próbálja újra.
-password_ok=OK
-password_cancel=Mégse
+pdfjs-text-annotation-type =
+    .alt = [{ $type } megjegyzés]
 
-printing_not_supported=Figyelmeztetés: Ez a böngésző nem teljesen támogatja a nyomtatást.
-printing_not_ready=Figyelmeztetés: A PDF nincs teljesen betöltve a nyomtatáshoz.
-web_fonts_disabled=Webes betűkészletek letiltva: nem használhatók a beágyazott PDF betűkészletek.
-# LOCALIZATION NOTE (unsupported_feature_signatures): Should contain the same
-# exact string as in the `chrome.properties` file.
-unsupported_feature_signatures=Ez a PDF-dokumentum digitális aláírásokat tartalmaz. Az aláírások ellenőrzése nem támogatott.
+## Password
+
+pdfjs-password-label = Adja meg a jelszót a PDF fájl megnyitásához.
+pdfjs-password-invalid = Helytelen jelszó. Próbálja újra.
+pdfjs-password-ok-button = OK
+pdfjs-password-cancel-button = Mégse
+pdfjs-web-fonts-disabled = Webes betűkészletek letiltva: nem használhatók a beágyazott PDF betűkészletek.
+
+## Editing
+
+pdfjs-editor-free-text-button =
+    .title = Szöveg
+pdfjs-editor-free-text-button-label = Szöveg
+pdfjs-editor-ink-button =
+    .title = Rajzolás
+pdfjs-editor-ink-button-label = Rajzolás
+pdfjs-editor-stamp-button =
+    .title = Képek hozzáadása vagy szerkesztése
+pdfjs-editor-stamp-button-label = Képek hozzáadása vagy szerkesztése
+pdfjs-editor-highlight-button =
+    .title = Kiemelés
+pdfjs-editor-highlight-button-label = Kiemelés
+pdfjs-highlight-floating-button =
+    .title = Kiemelés
+pdfjs-highlight-floating-button1 =
+    .title = Kiemelés
+    .aria-label = Kiemelés
+pdfjs-highlight-floating-button-label = Kiemelés
+
+## Remove button for the various kind of editor.
+
+pdfjs-editor-remove-ink-button =
+    .title = Rajz eltávolítása
+pdfjs-editor-remove-freetext-button =
+    .title = Szöveg eltávolítása
+pdfjs-editor-remove-stamp-button =
+    .title = Kép eltávolítása
+pdfjs-editor-remove-highlight-button =
+    .title = Kiemelés eltávolítása
+
+##
+
+# Editor Parameters
+pdfjs-editor-free-text-color-input = Szín
+pdfjs-editor-free-text-size-input = Méret
+pdfjs-editor-ink-color-input = Szín
+pdfjs-editor-ink-thickness-input = Vastagság
+pdfjs-editor-ink-opacity-input = Átlátszatlanság
+pdfjs-editor-stamp-add-image-button =
+    .title = Kép hozzáadása
+pdfjs-editor-stamp-add-image-button-label = Kép hozzáadása
+# This refers to the thickness of the line used for free highlighting (not bound to text)
+pdfjs-editor-free-highlight-thickness-input = Vastagság
+pdfjs-editor-free-highlight-thickness-title =
+    .title = Vastagság módosítása, ha nem szöveges elemeket emel ki
+pdfjs-free-text =
+    .aria-label = Szövegszerkesztő
+pdfjs-free-text-default-content = Kezdjen el gépelni…
+pdfjs-ink =
+    .aria-label = Rajzszerkesztő
+pdfjs-ink-canvas =
+    .aria-label = Felhasználó által készített kép
+
+## Alt-text dialog
+
+# Alternative text (alt text) helps when people can't see the image.
+pdfjs-editor-alt-text-button-label = Alternatív szöveg
+pdfjs-editor-alt-text-edit-button-label = Alternatív szöveg szerkesztése
+pdfjs-editor-alt-text-dialog-label = Válasszon egy lehetőséget
+pdfjs-editor-alt-text-dialog-description = Az alternatív szöveg segít, ha az emberek nem látják a képet, vagy ha az nem töltődik be.
+pdfjs-editor-alt-text-add-description-label = Leírás hozzáadása
+pdfjs-editor-alt-text-add-description-description = Törekedjen 1-2 mondatra, amely jellemzi a témát, környezetet vagy cselekvést.
+pdfjs-editor-alt-text-mark-decorative-label = Megjelölés dekoratívként
+pdfjs-editor-alt-text-mark-decorative-description = Ez a díszítőképeknél használatos, mint a szegélyek vagy a vízjelek.
+pdfjs-editor-alt-text-cancel-button = Mégse
+pdfjs-editor-alt-text-save-button = Mentés
+pdfjs-editor-alt-text-decorative-tooltip = Megjelölve dekoratívként
+# .placeholder: This is a placeholder for the alt text input area
+pdfjs-editor-alt-text-textarea =
+    .placeholder = Például: „Egy fiatal férfi leül enni egy asztalhoz”
+
+## Editor resizers
+## This is used in an aria label to help to understand the role of the resizer.
+
+pdfjs-editor-resizer-label-top-left = Bal felső sarok – átméretezés
+pdfjs-editor-resizer-label-top-middle = Felül középen – átméretezés
+pdfjs-editor-resizer-label-top-right = Jobb felső sarok – átméretezés
+pdfjs-editor-resizer-label-middle-right = Jobbra középen – átméretezés
+pdfjs-editor-resizer-label-bottom-right = Jobb alsó sarok – átméretezés
+pdfjs-editor-resizer-label-bottom-middle = Alul középen – átméretezés
+pdfjs-editor-resizer-label-bottom-left = Bal alsó sarok – átméretezés
+pdfjs-editor-resizer-label-middle-left = Balra középen – átméretezés
+
+## Color picker
+
+# This means "Color used to highlight text"
+pdfjs-editor-highlight-colorpicker-label = Kiemelés színe
+pdfjs-editor-colorpicker-button =
+    .title = Szín módosítása
+pdfjs-editor-colorpicker-dropdown =
+    .aria-label = Színválasztások
+pdfjs-editor-colorpicker-yellow =
+    .title = Sárga
+pdfjs-editor-colorpicker-green =
+    .title = Zöld
+pdfjs-editor-colorpicker-blue =
+    .title = Kék
+pdfjs-editor-colorpicker-pink =
+    .title = Rózsaszín
+pdfjs-editor-colorpicker-red =
+    .title = Vörös
+
+## Show all highlights
+## This is a toggle button to show/hide all the highlights.
+
+pdfjs-editor-highlight-show-all-button-label = Összes megjelenítése
+pdfjs-editor-highlight-show-all-button =
+    .title = Összes megjelenítése

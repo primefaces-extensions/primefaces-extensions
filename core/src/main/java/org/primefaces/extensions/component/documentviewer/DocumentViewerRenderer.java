@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.faces.application.Resource;
 import javax.faces.application.ResourceHandler;
@@ -114,12 +115,9 @@ public class DocumentViewerRenderer extends CoreRenderer {
             params.add("pagemode=" + documentViewer.getPagemode());
         }
 
-        if (!params.isEmpty()) {
-            return "#" + String.join("&", params.toArray(new String[params.size()]));
-        }
-        else {
-            return Constants.EMPTY_STRING;
-        }
+        params.add("disableFontFace=" + documentViewer.isDisableFontFace());
+
+        return "#" + String.join("&", params.toArray(new String[0]));
     }
 
     private String getResourceURL(final FacesContext context) {
@@ -149,7 +147,7 @@ public class DocumentViewerRenderer extends CoreRenderer {
             String downloadName = documentViewer.getDownload();
             if (value instanceof StreamedContent) {
                 final StreamedContent streamedContent = (StreamedContent) value;
-                downloadName = streamedContent.getName();
+                downloadName = Objects.toString(streamedContent.getName(), downloadName);
             }
             return DynamicContentSrcBuilder.build(context,
                         documentViewer,

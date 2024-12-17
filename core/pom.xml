@@ -3,7 +3,7 @@
     <parent>
         <groupId>org.primefaces.extensions</groupId>
         <artifactId>primefaces-extensions-parent</artifactId>
-        <version>12.0.11</version>
+        <version>12.0.12-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -288,33 +288,6 @@
                                     <inputDir>${resources.dir.compressed}</inputDir>
                                     <outputFile>${resources.dir.compressed}/primefaces-extensions.js</outputFile>
                                     <withoutCompress>${withoutCompress}</withoutCompress>
-                                </aggregation>
-                            </aggregations>
-                        </resourcesSet>
-                        <!-- PDF Viewer Compression -->
-                        <resourcesSet>
-                            <includes>
-                                <include>documentviewer/pdf.viewer.js</include>
-                            </includes>
-                            <aggregations>
-                                <aggregation>
-                                    <inputDir>${resources.dir.compressed}</inputDir>
-                                    <outputFile>${resources.dir.compressed}/documentviewer/pdf.viewer.js</outputFile>
-                                    <withoutCompress>${withoutCompress}</withoutCompress>
-                                    <removeIncluded>false</removeIncluded>
-                                </aggregation>
-                            </aggregations>
-                        </resourcesSet>
-                        <resourcesSet>
-                            <includes>
-                                <include>documentviewer/pdf.worker.js</include>
-                            </includes>
-                            <aggregations>
-                                <aggregation>
-                                    <inputDir>${resources.dir.compressed}</inputDir>
-                                    <outputFile>${resources.dir.compressed}/documentviewer/pdf.worker.js</outputFile>
-                                    <withoutCompress>${withoutCompress}</withoutCompress>
-                                    <removeIncluded>false</removeIncluded>
                                 </aggregation>
                             </aggregations>
                         </resourcesSet>

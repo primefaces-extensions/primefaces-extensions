@@ -6899,6 +6899,14 @@
             <required>false</required>
             <type>java.lang.Object</type>
         </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Flag to control using system fonts or font loaded in document.  If your PDF does not render correctly try setting this flag to false. Default is true.]]>
+            </description>
+            <name>disableFontFace</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
     </tag>
     <tag>
         <description>

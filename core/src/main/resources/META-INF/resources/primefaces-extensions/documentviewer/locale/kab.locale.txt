@@ -1,258 +1,337 @@
-# Copyright 2012 Mozilla Foundation
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-# Main toolbar buttons (tooltips and alt text for images)
-previous.title=Asebter azewwar
-previous_label=Azewwar
-next.title=Asebter d-iteddun
-next_label=Ddu ɣer zdat
 
-# LOCALIZATION NOTE (page.title): The tooltip for the pageNumber input.
-page.title=Asebter
-# LOCALIZATION NOTE (of_pages): "{{pagesCount}}" will be replaced by a number
-# representing the total number of pages in the document.
-of_pages=ɣef {{pagesCount}}
-# LOCALIZATION NOTE (page_of_pages): "{{pageNumber}}" and "{{pagesCount}}"
-# will be replaced by a number representing the currently visible page,
-# respectively a number representing the total number of pages in the document.
-page_of_pages=({{pageNumber}} n {{pagesCount}})
+## Main toolbar buttons (tooltips and alt text for images)
 
-zoom_out.title=Semẓi
-zoom_out_label=Semẓi
-zoom_in.title=Semɣeṛ
-zoom_in_label=Semɣeṛ
-zoom.title=Semɣeṛ/Semẓi
-presentation_mode.title=Uɣal ɣer Uskar Tihawt
-presentation_mode_label=Askar Tihawt
-open_file.title=Ldi Afaylu
-open_file_label=Ldi
-print.title=Siggez
-print_label=Siggez
-download.title=Sader
-download_label=Azdam
-bookmark.title=Timeẓri tamirant (nɣel neɣ ldi ɣef usfaylu amaynut)
-bookmark_label=Askan amiran
+pdfjs-previous-button =
+    .title = Asebter azewwar
+pdfjs-previous-button-label = Azewwar
+pdfjs-next-button =
+    .title = Asebter d-iteddun
+pdfjs-next-button-label = Ddu ɣer zdat
+# .title: Tooltip for the pageNumber input.
+pdfjs-page-input =
+    .title = Asebter
+# Variables:
+#   $pagesCount (Number) - the total number of pages in the document
+# This string follows an input field with the number of the page currently displayed.
+pdfjs-of-pages = ɣef { $pagesCount }
+# Variables:
+#   $pageNumber (Number) - the currently visible page
+#   $pagesCount (Number) - the total number of pages in the document
+pdfjs-page-of-pages = ({ $pageNumber } n { $pagesCount })
+pdfjs-zoom-out-button =
+    .title = Semẓi
+pdfjs-zoom-out-button-label = Semẓi
+pdfjs-zoom-in-button =
+    .title = Semɣeṛ
+pdfjs-zoom-in-button-label = Semɣeṛ
+pdfjs-zoom-select =
+    .title = Semɣeṛ/Semẓi
+pdfjs-presentation-mode-button =
+    .title = Uɣal ɣer Uskar Tihawt
+pdfjs-presentation-mode-button-label = Askar Tihawt
+pdfjs-open-file-button =
+    .title = Ldi Afaylu
+pdfjs-open-file-button-label = Ldi
+pdfjs-print-button =
+    .title = Siggez
+pdfjs-print-button-label = Siggez
+pdfjs-save-button =
+    .title = Sekles
+pdfjs-save-button-label = Sekles
+# Used in Firefox for Android as a tooltip for the download button (“download” is a verb).
+pdfjs-download-button =
+    .title = Sader
+# Used in Firefox for Android as a label for the download button (“download” is a verb).
+# Length of the translation matters since we are in a mobile context, with limited screen estate.
+pdfjs-download-button-label = Sader
+pdfjs-bookmark-button =
+    .title = Asebter amiran (Sken-d tansa URL seg usebter amiran)
+pdfjs-bookmark-button-label = Asebter amiran
+# Used in Firefox for Android.
+pdfjs-open-in-app-button =
+    .title = Ldi deg usnas
+# Used in Firefox for Android.
+# Length of the translation matters since we are in a mobile context, with limited screen estate.
+pdfjs-open-in-app-button-label = Ldi deg usnas
 
-# Secondary toolbar and context menu
-tools.title=Ifecka
-tools_label=Ifecka
-first_page.title=Ddu ɣer usebter amezwaru
-first_page.label=Ddu ɣer usebter amezwaru
-first_page_label=Ddu ɣer usebter amezwaru
-last_page.title=Ddu ɣer usebter aneggaru
-last_page.label=Ddu ɣer usebter aneggaru
-last_page_label=Ddu ɣer usebter aneggaru
-page_rotate_cw.title=Tuzzya tusrigt
-page_rotate_cw.label=Tuzzya tusrigt
-page_rotate_cw_label=Tuzzya tusrigt
-page_rotate_ccw.title=Tuzzya amgal-usrig
-page_rotate_ccw.label=Tuzzya amgal-usrig
-page_rotate_ccw_label=Tuzzya amgal-usrig
+##  Secondary toolbar and context menu
 
-cursor_text_select_tool.title=Rmed afecku n tefrant n uḍris
-cursor_text_select_tool_label=Afecku n tefrant n uḍris
-cursor_hand_tool.title=Rmed afecku afus
-cursor_hand_tool_label=Afecku afus
+pdfjs-tools-button =
+    .title = Ifecka
+pdfjs-tools-button-label = Ifecka
+pdfjs-first-page-button =
+    .title = Ddu ɣer usebter amezwaru
+pdfjs-first-page-button-label = Ddu ɣer usebter amezwaru
+pdfjs-last-page-button =
+    .title = Ddu ɣer usebter aneggaru
+pdfjs-last-page-button-label = Ddu ɣer usebter aneggaru
+pdfjs-page-rotate-cw-button =
+    .title = Tuzzya tusrigt
+pdfjs-page-rotate-cw-button-label = Tuzzya tusrigt
+pdfjs-page-rotate-ccw-button =
+    .title = Tuzzya amgal-usrig
+pdfjs-page-rotate-ccw-button-label = Tuzzya amgal-usrig
+pdfjs-cursor-text-select-tool-button =
+    .title = Rmed afecku n tefrant n uḍris
+pdfjs-cursor-text-select-tool-button-label = Afecku n tefrant n uḍris
+pdfjs-cursor-hand-tool-button =
+    .title = Rmed afecku afus
+pdfjs-cursor-hand-tool-button-label = Afecku afus
+pdfjs-scroll-page-button =
+    .title = Seqdec adrurem n usebter
+pdfjs-scroll-page-button-label = Adrurem n usebter
+pdfjs-scroll-vertical-button =
+    .title = Seqdec adrurem ubdid
+pdfjs-scroll-vertical-button-label = Adrurem ubdid
+pdfjs-scroll-horizontal-button =
+    .title = Seqdec adrurem aglawan
+pdfjs-scroll-horizontal-button-label = Adrurem aglawan
+pdfjs-scroll-wrapped-button =
+    .title = Seqdec adrurem yuẓen
+pdfjs-scroll-wrapped-button-label = Adrurem yuẓen
+pdfjs-spread-none-button =
+    .title = Ur sedday ara isiɣzaf n usebter
+pdfjs-spread-none-button-label = Ulac isiɣzaf
+pdfjs-spread-odd-button =
+    .title = Seddu isiɣzaf n usebter ibeddun s yisebtar irayuganen
+pdfjs-spread-odd-button-label = Isiɣzaf irayuganen
+pdfjs-spread-even-button =
+    .title = Seddu isiɣzaf n usebter ibeddun s yisebtar iyuganen
+pdfjs-spread-even-button-label = Isiɣzaf iyuganen
 
-scroll_vertical.title=Seqdec adrurem ubdid
-scroll_vertical_label=Adrurem ubdid
-scroll_horizontal.title=Seqdec adrurem aglawan
-scroll_horizontal_label=Adrurem aglawan
-scroll_wrapped.title=Seqdec adrurem yuẓen
-scroll_wrapped_label=Adrurem yuẓen
+## Document properties dialog
 
-spread_none.title=Ur sedday ara isiɣzaf n usebter
-spread_none_label=Ulac isiɣzaf
-spread_odd.title=Seddu isiɣzaf n usebter ibeddun s yisebtar irayuganen
-spread_odd_label=Isiɣzaf irayuganen
-spread_even.title=Seddu isiɣzaf n usebter ibeddun s yisebtar iyuganen
-spread_even_label=Isiɣzaf iyuganen
+pdfjs-document-properties-button =
+    .title = Taɣaṛa n isemli…
+pdfjs-document-properties-button-label = Taɣaṛa n isemli…
+pdfjs-document-properties-file-name = Isem n ufaylu:
+pdfjs-document-properties-file-size = Teɣzi n ufaylu:
+# Variables:
+#   $size_kb (Number) - the PDF file size in kilobytes
+#   $size_b (Number) - the PDF file size in bytes
+pdfjs-document-properties-kb = { $size_kb } KAṬ ({ $size_b } ibiten)
+# Variables:
+#   $size_mb (Number) - the PDF file size in megabytes
+#   $size_b (Number) - the PDF file size in bytes
+pdfjs-document-properties-mb = { $size_mb } MAṬ ({ $size_b } iṭamḍanen)
+pdfjs-document-properties-title = Azwel:
+pdfjs-document-properties-author = Ameskar:
+pdfjs-document-properties-subject = Amgay:
+pdfjs-document-properties-keywords = Awalen n tsaruţ
+pdfjs-document-properties-creation-date = Azemz n tmerna:
+pdfjs-document-properties-modification-date = Azemz n usnifel:
+# Variables:
+#   $date (Date) - the creation/modification date of the PDF file
+#   $time (Time) - the creation/modification time of the PDF file
+pdfjs-document-properties-date-string = { $date }, { $time }
+pdfjs-document-properties-creator = Yerna-t:
+pdfjs-document-properties-producer = Afecku n uselket PDF:
+pdfjs-document-properties-version = Lqem PDF:
+pdfjs-document-properties-page-count = Amḍan n yisebtar:
+pdfjs-document-properties-page-size = Tuγzi n usebter:
+pdfjs-document-properties-page-size-unit-inches = deg
+pdfjs-document-properties-page-size-unit-millimeters = mm
+pdfjs-document-properties-page-size-orientation-portrait = s teɣzi
+pdfjs-document-properties-page-size-orientation-landscape = s tehri
+pdfjs-document-properties-page-size-name-a-three = A3
+pdfjs-document-properties-page-size-name-a-four = A4
+pdfjs-document-properties-page-size-name-letter = Asekkil
+pdfjs-document-properties-page-size-name-legal = Usḍif
 
-# Document properties dialog box
-document_properties.title=Taɣaṛa n isemli…
-document_properties_label=Taɣaṛa n isemli…
-document_properties_file_name=Isem n ufaylu:
-document_properties_file_size=Teɣzi n ufaylu:
-# LOCALIZATION NOTE (document_properties_kb): "{{size_kb}}" and "{{size_b}}"
-# will be replaced by the PDF file size in kilobytes, respectively in bytes.
-document_properties_kb={{size_kb}} KAṬ ({{size_b}} ibiten)
-# LOCALIZATION NOTE (document_properties_mb): "{{size_mb}}" and "{{size_b}}"
-# will be replaced by the PDF file size in megabytes, respectively in bytes.
-document_properties_mb={{size_mb}} MAṬ ({{size_b}} iṭamḍanen)
-document_properties_title=Azwel:
-document_properties_author=Ameskar:
-document_properties_subject=Amgay:
-document_properties_keywords=Awalen n tsaruţ
-document_properties_creation_date=Azemz n tmerna:
-document_properties_modification_date=Azemz n usnifel:
-# LOCALIZATION NOTE (document_properties_date_string): "{{date}}" and "{{time}}"
-# will be replaced by the creation/modification date, and time, of the PDF file.
-document_properties_date_string={{date}}, {{time}}
-document_properties_creator=Yerna-t:
-document_properties_producer=Afecku n uselket PDF:
-document_properties_version=Lqem PDF:
-document_properties_page_count=Amḍan n yisebtar:
-document_properties_page_size=Tuγzi n usebter:
-document_properties_page_size_unit_inches=deg
-document_properties_page_size_unit_millimeters=mm
-document_properties_page_size_orientation_portrait=s teɣzi
-document_properties_page_size_orientation_landscape=s tehri
-document_properties_page_size_name_a3=A3
-document_properties_page_size_name_a4=A4
-document_properties_page_size_name_letter=Asekkil
-document_properties_page_size_name_legal=Usḍif
-# LOCALIZATION NOTE (document_properties_page_size_dimension_string):
-# "{{width}}", "{{height}}", {{unit}}, and {{orientation}} will be replaced by
-# the size, respectively their unit of measurement and orientation, of the (current) page.
-document_properties_page_size_dimension_string={{width}} × {{height}} {{unit}} ({{orientation}})
-# LOCALIZATION NOTE (document_properties_page_size_dimension_name_string):
-# "{{width}}", "{{height}}", {{unit}}, {{name}}, and {{orientation}} will be replaced by
-# the size, respectively their unit of measurement, name, and orientation, of the (current) page.
-document_properties_page_size_dimension_name_string={{width}} × {{height}} {{unit}} ({{name}}, {{orientation}})
-# LOCALIZATION NOTE (document_properties_linearized): The linearization status of
-# the document; usually called "Fast Web View" in English locales of Adobe software.
-document_properties_linearized=Taskant Web taruradt:
-document_properties_linearized_yes=Ih
-document_properties_linearized_no=Ala
-document_properties_close=Mdel
+## Variables:
+##   $width (Number) - the width of the (current) page
+##   $height (Number) - the height of the (current) page
+##   $unit (String) - the unit of measurement of the (current) page
+##   $name (String) - the name of the (current) page
+##   $orientation (String) - the orientation of the (current) page
 
-print_progress_message=Aheggi i usiggez n isemli…
-# LOCALIZATION NOTE (print_progress_percent): "{{progress}}" will be replaced by
-# a numerical per cent value.
-print_progress_percent={{progress}}%
-print_progress_close=Sefsex
+pdfjs-document-properties-page-size-dimension-string = { $width } × { $height } { $unit } ({ $orientation })
+pdfjs-document-properties-page-size-dimension-name-string = { $width } × { $height } { $unit } ({ $name }, { $orientation })
 
-# Tooltips and alt text for side panel toolbar buttons
-# (the _label strings are alt text for the buttons, the .title strings are
-# tooltips)
-toggle_sidebar.title=Sken/Fer agalis adisan
-toggle_sidebar_notification.title=Ffer/Sken agalis adisan (isemli yegber aɣawas/imeddayen)
-toggle_sidebar_notification2.title=Ffer/Sekn agalis adisan (isemli yegber aɣawas/ticeqqufin yeddan/tissiwin)
-toggle_sidebar_label=Sken/Fer agalis adisan
-document_outline.title=Sken isemli (Senned snat tikal i wesemɣer/Afneẓ n iferdisen meṛṛa)
-document_outline_label=Isɣalen n isebtar
-attachments.title=Sken ticeqqufin yeddan
-attachments_label=Ticeqqufin yeddan
-layers.title=Skeen tissiwin (sit sin yiberdan i uwennez n meṛṛa tissiwin ɣer waddad amezwer)
-layers_label=Tissiwin
-thumbs.title=Sken tanfult.
-thumbs_label=Tinfulin
-current_outline_item.title=Af-d aferdis n uɣawas amiran
-current_outline_item_label=Aferdis n uɣawas amiran
-findbar.title=Nadi deg isemli
-findbar_label=Nadi
+##
 
-additional_layers=Tissiwin-nniḍen
-# LOCALIZATION NOTE (page_canvas): "{{page}}" will be replaced by the page number.
-page_canvas=Asebter {{page}}
-# LOCALIZATION NOTE (page_landmark): "{{page}}" will be replaced by the page number.
-page_landmark=Asebter {{page}}
-# Thumbnails panel item (tooltip and alt text for images)
-# LOCALIZATION NOTE (thumb_page_title): "{{page}}" will be replaced by the page
-# number.
-thumb_page_title=Asebter {{page}}
-# LOCALIZATION NOTE (thumb_page_canvas): "{{page}}" will be replaced by the page
-# number.
-thumb_page_canvas=Tanfult n usebter {{page}}
+# The linearization status of the document; usually called "Fast Web View" in
+# English locales of Adobe software.
+pdfjs-document-properties-linearized = Taskant Web taruradt:
+pdfjs-document-properties-linearized-yes = Ih
+pdfjs-document-properties-linearized-no = Ala
+pdfjs-document-properties-close-button = Mdel
 
-# Find panel button title and messages
-find_input.title=Nadi
-find_input.placeholder=Nadi deg isemli…
-find_previous.title=Aff-d tamseḍriwt n twinest n deffir
-find_previous_label=Azewwar
-find_next.title=Aff-d timseḍriwt n twinest d-iteddun
-find_next_label=Ddu ɣer zdat
-find_highlight=Err izirig imaṛṛa
-find_match_case_label=Qadeṛ amasal n isekkilen
-find_entire_word_label=Awalen iččuranen
-find_reached_top=Yabbeḍ s afella n usebter, tuɣalin s wadda
-find_reached_bottom=Tebḍeḍ s adda n usebter, tuɣalin s afella
-# LOCALIZATION NOTE (find_match_count): The supported plural forms are
-# [one|two|few|many|other], with [other] as the default value.
-# "{{current}}" and "{{total}}" will be replaced by a number representing the
-# index of the currently active find result, respectively a number representing
-# the total number of matches in the document.
-find_match_count={[ plural(total) ]}
-find_match_count[one]={{current}} seg {{total}} n tmeɣṛuḍin
-find_match_count[two]={{current}} seg {{total}} n tmeɣṛuḍin
-find_match_count[few]={{current}} seg {{total}} n tmeɣṛuḍin
-find_match_count[many]={{current}} seg {{total}} n tmeɣṛuḍin
-find_match_count[other]={{current}} seg {{total}} n tmeɣṛuḍin
-# LOCALIZATION NOTE (find_match_count_limit): The supported plural forms are
-# [zero|one|two|few|many|other], with [other] as the default value.
-# "{{limit}}" will be replaced by a numerical value.
-find_match_count_limit={[ plural(limit) ]}
-find_match_count_limit[zero]=Ugar n {{limit}} n tmeɣṛuḍin
-find_match_count_limit[one]=Ugar n {{limit}} n tmeɣṛuḍin
-find_match_count_limit[two]=Ugar n {{limit}} n tmeɣṛuḍin
-find_match_count_limit[few]=Ugar n {{limit}} n tmeɣṛuḍin
-find_match_count_limit[many]=Ugar n {{limit}} n tmeɣṛuḍin
-find_match_count_limit[other]=Ugar n {{limit}} n tmeɣṛuḍin
-find_not_found=Ulac tawinest
+## Print
 
-# Error panel labels
-error_more_info=Ugar n telɣut
-error_less_info=Drus n isalen
-error_close=Mdel
-# LOCALIZATION NOTE (error_version_info): "{{version}}" and "{{build}}" will be
-# replaced by the PDF.JS version and build ID.
-error_version_info=PDF.js v{{version}} (build: {{build}})
-# LOCALIZATION NOTE (error_message): "{{message}}" will be replaced by an
-# english string describing the error.
-error_message=Izen: {{message}}
-# LOCALIZATION NOTE (error_stack): "{{stack}}" will be replaced with a stack
-# trace.
-error_stack=Tanebdant: {{stack}}
-# LOCALIZATION NOTE (error_file): "{{file}}" will be replaced with a filename
-error_file=Afaylu: {{file}}
-# LOCALIZATION NOTE (error_line): "{{line}}" will be replaced with a line number
-error_line=Izirig: {{line}}
-rendering_error=Teḍra-d tuccḍa deg uskan n usebter.
+pdfjs-print-progress-message = Aheggi i usiggez n isemli…
+# Variables:
+#   $progress (Number) - percent value
+pdfjs-print-progress-percent = { $progress }%
+pdfjs-print-progress-close-button = Sefsex
+pdfjs-printing-not-supported = Ɣuṛ-k: Asiggez ur ittusefrak ara yakan imaṛṛa deg iminig-a.
+pdfjs-printing-not-ready = Ɣuṛ-k: Afaylu PDF ur d-yuli ara imeṛṛa akken ad ittusiggez.
 
-# Predefined zoom values
-page_scale_width=Tehri n usebter
-page_scale_fit=Asebter imaṛṛa
-page_scale_auto=Asemɣeṛ/Asemẓi awurman
-page_scale_actual=Teɣzi tilawt
-# LOCALIZATION NOTE (page_scale_percent): "{{scale}}" will be replaced by a
-# numerical scale value.
-page_scale_percent={{scale}}%
+## Tooltips and alt text for side panel toolbar buttons
 
-# Loading indicator messages
-loading_error_indicator=Error
+pdfjs-toggle-sidebar-button =
+    .title = Sken/Fer agalis adisan
+pdfjs-toggle-sidebar-notification-button =
+    .title = Ffer/Sekn agalis adisan (isemli yegber aɣawas/ticeqqufin yeddan/tissiwin)
+pdfjs-toggle-sidebar-button-label = Sken/Fer agalis adisan
+pdfjs-document-outline-button =
+    .title = Sken isemli (Senned snat tikal i wesemɣer/Afneẓ n iferdisen meṛṛa)
+pdfjs-document-outline-button-label = Isɣalen n isebtar
+pdfjs-attachments-button =
+    .title = Sken ticeqqufin yeddan
+pdfjs-attachments-button-label = Ticeqqufin yeddan
+pdfjs-layers-button =
+    .title = Skeen tissiwin (sit sin yiberdan i uwennez n meṛṛa tissiwin ɣer waddad amezwer)
+pdfjs-layers-button-label = Tissiwin
+pdfjs-thumbs-button =
+    .title = Sken tanfult.
+pdfjs-thumbs-button-label = Tinfulin
+pdfjs-current-outline-item-button =
+    .title = Af-d aferdis n uɣawas amiran
+pdfjs-current-outline-item-button-label = Aferdis n uɣawas amiran
+pdfjs-findbar-button =
+    .title = Nadi deg isemli
+pdfjs-findbar-button-label = Nadi
+pdfjs-additional-layers = Tissiwin-nniḍen
 
-# Loading indicator messages
-loading=Asali…
-loading_error=Teḍra-d tuccḍa deg alluy n PDF:
-invalid_file_error=Afaylu PDF arameɣtu neɣ yexṣeṛ.
-missing_file_error=Ulac afaylu PDF.
-unexpected_response_error=Aqeddac yerra-d yir tiririt ur nettwaṛǧi ara.
+## Thumbnails panel item (tooltip and alt text for images)
 
-# LOCALIZATION NOTE (annotation_date_string): "{{date}}" and "{{time}}" will be
-# replaced by the modification date, and time, of the annotation.
-annotation_date_string={{date}}, {{time}}
+# Variables:
+#   $page (Number) - the page number
+pdfjs-thumb-page-title =
+    .title = Asebter { $page }
+# Variables:
+#   $page (Number) - the page number
+pdfjs-thumb-page-canvas =
+    .aria-label = Tanfult n usebter { $page }
 
-# LOCALIZATION NOTE (text_annotation_type.alt): This is used as a tooltip.
-# "{{type}}" will be replaced with an annotation type from a list defined in
-# the PDF spec (32000-1:2008 Table 169 – Annotation types).
+## Find panel button title and messages
+
+pdfjs-find-input =
+    .title = Nadi
+    .placeholder = Nadi deg isemli…
+pdfjs-find-previous-button =
+    .title = Aff-d tamseḍriwt n twinest n deffir
+pdfjs-find-previous-button-label = Azewwar
+pdfjs-find-next-button =
+    .title = Aff-d timseḍriwt n twinest d-iteddun
+pdfjs-find-next-button-label = Ddu ɣer zdat
+pdfjs-find-highlight-checkbox = Err izirig imaṛṛa
+pdfjs-find-match-case-checkbox-label = Qadeṛ amasal n isekkilen
+pdfjs-find-match-diacritics-checkbox-label = Qadeṛ ifeskilen
+pdfjs-find-entire-word-checkbox-label = Awalen iččuranen
+pdfjs-find-reached-top = Yabbeḍ s afella n usebter, tuɣalin s wadda
+pdfjs-find-reached-bottom = Tebḍeḍ s adda n usebter, tuɣalin s afella
+# Variables:
+#   $current (Number) - the index of the currently active find result
+#   $total (Number) - the total number of matches in the document
+pdfjs-find-match-count =
+    { $total ->
+        [one] Timeḍriwt { $current } ɣef { $total }
+       *[other] Timeḍriwin { $current } ɣef { $total }
+    }
+# Variables:
+#   $limit (Number) - the maximum number of matches
+pdfjs-find-match-count-limit =
+    { $limit ->
+        [one] Ugar n { $limit } umṣada
+       *[other] Ugar n { $limit } yimṣadayen
+    }
+pdfjs-find-not-found = Ulac tawinest
+
+## Predefined zoom values
+
+pdfjs-page-scale-width = Tehri n usebter
+pdfjs-page-scale-fit = Asebter imaṛṛa
+pdfjs-page-scale-auto = Asemɣeṛ/Asemẓi awurman
+pdfjs-page-scale-actual = Teɣzi tilawt
+# Variables:
+#   $scale (Number) - percent value for page scale
+pdfjs-page-scale-percent = { $scale }%
+
+## PDF page
+
+# Variables:
+#   $page (Number) - the page number
+pdfjs-page-landmark =
+    .aria-label = Asebter { $page }
+
+## Loading indicator messages
+
+pdfjs-loading-error = Teḍra-d tuccḍa deg alluy n PDF:
+pdfjs-invalid-file-error = Afaylu PDF arameɣtu neɣ yexṣeṛ.
+pdfjs-missing-file-error = Ulac afaylu PDF.
+pdfjs-unexpected-response-error = Aqeddac yerra-d yir tiririt ur nettwaṛǧi ara.
+pdfjs-rendering-error = Teḍra-d tuccḍa deg uskan n usebter.
+
+## Annotations
+
+# Variables:
+#   $date (Date) - the modification date of the annotation
+#   $time (Time) - the modification time of the annotation
+pdfjs-annotation-date-string = { $date }, { $time }
+# .alt: This is used as a tooltip.
+# Variables:
+#   $type (String) - an annotation type from a list defined in the PDF spec
+# (32000-1:2008 Table 169 – Annotation types).
 # Some common types are e.g.: "Check", "Text", "Comment", "Note"
-text_annotation_type.alt=[Tabzimt {{type}}]
-password_label=Sekcem awal uffir akken ad ldiḍ afaylu-yagi PDF
-password_invalid=Awal uffir mačči d ameɣtu, Ɛreḍ tikelt-nniḍen.
-password_ok=IH
-password_cancel=Sefsex
+pdfjs-text-annotation-type =
+    .alt = [Tabzimt { $type }]
 
-printing_not_supported=Ɣuṛ-k: Asiggez ur ittusefrak ara yakan imaṛṛa deg iminig-a.
-printing_not_ready=Ɣuṛ-k: Afaylu PDF ur d-yuli ara imeṛṛa akken ad ittusiggez.
-web_fonts_disabled=Tisefsiyin web ttwassensent; D awezɣi useqdec n tsefsiyin yettwarnan ɣer PDF.
+## Password
+
+pdfjs-password-label = Sekcem awal uffir akken ad ldiḍ afaylu-yagi PDF
+pdfjs-password-invalid = Awal uffir mačči d ameɣtu, Ɛreḍ tikelt-nniḍen.
+pdfjs-password-ok-button = IH
+pdfjs-password-cancel-button = Sefsex
+pdfjs-web-fonts-disabled = Tisefsiyin web ttwassensent; D awezɣi useqdec n tsefsiyin yettwarnan ɣer PDF.
+
+## Editing
+
+pdfjs-editor-free-text-button =
+    .title = Aḍris
+pdfjs-editor-free-text-button-label = Aḍris
+pdfjs-editor-ink-button =
+    .title = Suneɣ
+pdfjs-editor-ink-button-label = Suneɣ
+pdfjs-editor-stamp-button =
+    .title = Rnu neɣ ẓreg tugniwin
+pdfjs-editor-stamp-button-label = Rnu neɣ ẓreg tugniwin
+pdfjs-editor-remove-button =
+    .title = Kkes
+# Editor Parameters
+pdfjs-editor-free-text-color-input = Initen
+pdfjs-editor-free-text-size-input = Teɣzi
+pdfjs-editor-ink-color-input = Ini
+pdfjs-editor-ink-thickness-input = Tuzert
+pdfjs-editor-ink-opacity-input = Tebrek
+pdfjs-editor-stamp-add-image-button =
+    .title = Rnu tawlaft
+pdfjs-editor-stamp-add-image-button-label = Rnu tawlaft
+pdfjs-free-text =
+    .aria-label = Amaẓrag n uḍris
+pdfjs-free-text-default-content = Bdu tira...
+pdfjs-ink =
+    .aria-label = Amaẓrag n usuneɣ
+pdfjs-ink-canvas =
+    .aria-label = Tugna yettwarnan sɣur useqdac
+
+## Alt-text dialog
+
+# Alternative text (alt text) helps when people can't see the image.
+pdfjs-editor-alt-text-button-label = Aḍris amaskal
+pdfjs-editor-alt-text-edit-button-label = Ẓreg aḍris amaskal
+pdfjs-editor-alt-text-dialog-label = Fren taxtirt
+pdfjs-editor-alt-text-add-description-label = Rnu aglam
+pdfjs-editor-alt-text-mark-decorative-label = Creḍ d adlag
+pdfjs-editor-alt-text-cancel-button = Sefsex
+pdfjs-editor-alt-text-save-button = Sekles
+pdfjs-editor-alt-text-decorative-tooltip = Yettwacreḍ d adlag
+
+## Editor resizers
+## This is used in an aria label to help to understand the role of the resizer.
+

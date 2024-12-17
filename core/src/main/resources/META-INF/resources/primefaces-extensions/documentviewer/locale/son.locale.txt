@@ -1,179 +1,206 @@
-# Copyright 2012 Mozilla Foundation
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
-# Main toolbar buttons (tooltips and alt text for images)
-previous.title=Moo bisante
-previous_label=Bisante
-next.title=Jinehere moo
-next_label=Jine
-
-# LOCALIZATION NOTE (page.title): The tooltip for the pageNumber input.
-page.title=Moo
-# LOCALIZATION NOTE (of_pages): "{{pagesCount}}" will be replaced by a number
-# representing the total number of pages in the document.
-of_pages={{pagesCount}} ra
-# LOCALIZATION NOTE (page_of_pages): "{{pageNumber}}" and "{{pagesCount}}"
-# will be replaced by a number representing the currently visible page,
-# respectively a number representing the total number of pages in the document.
-page_of_pages=({{pageNumber}} ka hun {{pagesCount}}) ra
-
-zoom_out.title=Nakasandi
-zoom_out_label=Nakasandi
-zoom_in.title=Bebbeerandi
-zoom_in_label=Bebbeerandi
-zoom.title=Bebbeerandi
-presentation_mode.title=Bere cebeyan alhaali
-presentation_mode_label=Cebeyan alhaali
-open_file.title=Tuku feeri
-open_file_label=Feeri
-print.title=Kar
-print_label=Kar
-download.title=Zumandi
-download_label=Zumandi
-bookmark.title=Sohõ gunarro (bere wala feeri zanfun taaga ra)
-bookmark_label=Sohõ gunaroo
-
-# Secondary toolbar and context menu
-tools.title=Goyjinawey
-tools_label=Goyjinawey
-first_page.title=Koy moo jinaa ga
-first_page.label=Koy moo jinaa ga
-first_page_label=Koy moo jinaa ga
-last_page.title=Koy moo koraa ga
-last_page.label=Koy moo koraa ga
-last_page_label=Koy moo koraa ga
-page_rotate_cw.title=Kuubi kanbe guma here
-page_rotate_cw.label=Kuubi kanbe guma here
-page_rotate_cw_label=Kuubi kanbe guma here
-page_rotate_ccw.title=Kuubi kanbe wowa here
-page_rotate_ccw.label=Kuubi kanbe wowa here
-page_rotate_ccw_label=Kuubi kanbe wowa here
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 
-# Document properties dialog box
-document_properties.title=Takadda mayrawey…
-document_properties_label=Takadda mayrawey…
-document_properties_file_name=Tuku maa:
-document_properties_file_size=Tuku adadu:
-# LOCALIZATION NOTE (document_properties_kb): "{{size_kb}}" and "{{size_b}}"
-# will be replaced by the PDF file size in kilobytes, respectively in bytes.
-document_properties_kb=KB {{size_kb}} (cebsu-ize {{size_b}})
-# LOCALIZATION NOTE (document_properties_mb): "{{size_mb}}" and "{{size_b}}"
-# will be replaced by the PDF file size in megabytes, respectively in bytes.
-document_properties_mb=MB {{size_mb}} (cebsu-ize {{size_b}})
-document_properties_title=Tiiramaa:
-document_properties_author=Hantumkaw:
-document_properties_subject=Dalil:
-document_properties_keywords=Kufalkalimawey:
-document_properties_creation_date=Teeyan han:
-document_properties_modification_date=Barmayan han:
-# LOCALIZATION NOTE (document_properties_date_string): "{{date}}" and "{{time}}"
-# will be replaced by the creation/modification date, and time, of the PDF file.
-document_properties_date_string={{date}}, {{time}}
-document_properties_creator=Teekaw:
-document_properties_producer=PDF berandikaw:
-document_properties_version=PDF dumi:
-document_properties_page_count=Moo hinna:
-document_properties_close=Daabu
+## Main toolbar buttons (tooltips and alt text for images)
 
-print_progress_message=Goo ma takaddaa soolu k'a kar se…
-# LOCALIZATION NOTE (print_progress_percent): "{{progress}}" will be replaced by
-# a numerical per cent value.
-print_progress_percent={{progress}}%
-print_progress_close=Naŋ
+pdfjs-previous-button =
+    .title = Moo bisante
+pdfjs-previous-button-label = Bisante
+pdfjs-next-button =
+    .title = Jinehere moo
+pdfjs-next-button-label = Jine
+# .title: Tooltip for the pageNumber input.
+pdfjs-page-input =
+    .title = Moo
+# Variables:
+#   $pagesCount (Number) - the total number of pages in the document
+# This string follows an input field with the number of the page currently displayed.
+pdfjs-of-pages = { $pagesCount } ra
+# Variables:
+#   $pageNumber (Number) - the currently visible page
+#   $pagesCount (Number) - the total number of pages in the document
+pdfjs-page-of-pages = ({ $pageNumber } ka hun { $pagesCount }) ra
+pdfjs-zoom-out-button =
+    .title = Nakasandi
+pdfjs-zoom-out-button-label = Nakasandi
+pdfjs-zoom-in-button =
+    .title = Bebbeerandi
+pdfjs-zoom-in-button-label = Bebbeerandi
+pdfjs-zoom-select =
+    .title = Bebbeerandi
+pdfjs-presentation-mode-button =
+    .title = Bere cebeyan alhaali
+pdfjs-presentation-mode-button-label = Cebeyan alhaali
+pdfjs-open-file-button =
+    .title = Tuku feeri
+pdfjs-open-file-button-label = Feeri
+pdfjs-print-button =
+    .title = Kar
+pdfjs-print-button-label = Kar
 
-# Tooltips and alt text for side panel toolbar buttons
-# (the _label strings are alt text for the buttons, the .title strings are
-# tooltips)
-toggle_sidebar.title=Kanjari ceraw zuu
-toggle_sidebar_notification.title=Kanjari ceraw-zuu (takaddaa goo nda filla-boŋ/hangandiyaŋ)
-toggle_sidebar_label=Kanjari ceraw zuu
-document_outline.title=Takaddaa korfur alhaaloo cebe (naagu cee hinka ka haya-izey kul hayandi/kankamandi)
-document_outline_label=Takadda filla-boŋ
-attachments.title=Hangarey cebe
-attachments_label=Hangarey
-thumbs.title=Kabeboy biyey cebe
-thumbs_label=Kabeboy biyey
-findbar.title=Ceeci takaddaa ra
-findbar_label=Ceeci
+##  Secondary toolbar and context menu
 
-# Thumbnails panel item (tooltip and alt text for images)
-# LOCALIZATION NOTE (thumb_page_title): "{{page}}" will be replaced by the page
-# number.
-thumb_page_title={{page}} moo
-# LOCALIZATION NOTE (thumb_page_canvas): "{{page}}" will be replaced by the page
-# number.
-thumb_page_canvas=Kabeboy bii {{page}} moo še
+pdfjs-tools-button =
+    .title = Goyjinawey
+pdfjs-tools-button-label = Goyjinawey
+pdfjs-first-page-button =
+    .title = Koy moo jinaa ga
+pdfjs-first-page-button-label = Koy moo jinaa ga
+pdfjs-last-page-button =
+    .title = Koy moo koraa ga
+pdfjs-last-page-button-label = Koy moo koraa ga
+pdfjs-page-rotate-cw-button =
+    .title = Kuubi kanbe guma here
+pdfjs-page-rotate-cw-button-label = Kuubi kanbe guma here
+pdfjs-page-rotate-ccw-button =
+    .title = Kuubi kanbe wowa here
+pdfjs-page-rotate-ccw-button-label = Kuubi kanbe wowa here
 
-# Find panel button title and messages
-find_input.title=Ceeci
-find_input.placeholder=Ceeci takaddaa ra…
-find_previous.title=Kalimaɲaŋoo bangayri bisantaa ceeci
-find_previous_label=Bisante
-find_next.title=Kalimaɲaŋoo hiino bangayroo ceeci
-find_next_label=Jine
-find_highlight=Ikul šilbay
-find_match_case_label=Harfu-beeriyan hawgay
-find_reached_top=A too moŋoo boŋoo, koy jine ka šinitin nda cewoo
-find_reached_bottom=A too moɲoo cewoo, koy jine šintioo ga
-find_not_found=Kalimaɲaa mana duwandi
+## Document properties dialog
 
-# Error panel labels
-error_more_info=Alhabar tontoni
-error_less_info=Alhabar tontoni
-error_close=Daabu
-# LOCALIZATION NOTE (error_version_info): "{{version}}" and "{{build}}" will be
-# replaced by the PDF.JS version and build ID.
-error_version_info=PDF.js v{{version}} (build: {{build}})
-# LOCALIZATION NOTE (error_message): "{{message}}" will be replaced by an
-# english string describing the error.
-error_message=Alhabar: {{message}}
-# LOCALIZATION NOTE (error_stack): "{{stack}}" will be replaced with a stack
-# trace.
-error_stack=Dekeri: {{stack}}
-# LOCALIZATION NOTE (error_file): "{{file}}" will be replaced with a filename
-error_file=Tuku: {{file}}
-# LOCALIZATION NOTE (error_line): "{{line}}" will be replaced with a line number
-error_line=Žeeri: {{line}}
-rendering_error=Firka bangay kaŋ moɲoo goo ma willandi.
+pdfjs-document-properties-button =
+    .title = Takadda mayrawey…
+pdfjs-document-properties-button-label = Takadda mayrawey…
+pdfjs-document-properties-file-name = Tuku maa:
+pdfjs-document-properties-file-size = Tuku adadu:
+# Variables:
+#   $size_kb (Number) - the PDF file size in kilobytes
+#   $size_b (Number) - the PDF file size in bytes
+pdfjs-document-properties-kb = KB { $size_kb } (cebsu-ize { $size_b })
+# Variables:
+#   $size_mb (Number) - the PDF file size in megabytes
+#   $size_b (Number) - the PDF file size in bytes
+pdfjs-document-properties-mb = MB { $size_mb } (cebsu-ize { $size_b })
+pdfjs-document-properties-title = Tiiramaa:
+pdfjs-document-properties-author = Hantumkaw:
+pdfjs-document-properties-subject = Dalil:
+pdfjs-document-properties-keywords = Kufalkalimawey:
+pdfjs-document-properties-creation-date = Teeyan han:
+pdfjs-document-properties-modification-date = Barmayan han:
+# Variables:
+#   $date (Date) - the creation/modification date of the PDF file
+#   $time (Time) - the creation/modification time of the PDF file
+pdfjs-document-properties-date-string = { $date }, { $time }
+pdfjs-document-properties-creator = Teekaw:
+pdfjs-document-properties-producer = PDF berandikaw:
+pdfjs-document-properties-version = PDF dumi:
+pdfjs-document-properties-page-count = Moo hinna:
 
-# Predefined zoom values
-page_scale_width=Mooo hayyan
-page_scale_fit=Moo sawayan
-page_scale_auto=Boŋše azzaati barmayyan
-page_scale_actual=Adadu cimi
-# LOCALIZATION NOTE (page_scale_percent): "{{scale}}" will be replaced by a
-# numerical scale value.
-page_scale_percent={{scale}}%
+## Variables:
+##   $width (Number) - the width of the (current) page
+##   $height (Number) - the height of the (current) page
+##   $unit (String) - the unit of measurement of the (current) page
+##   $name (String) - the name of the (current) page
+##   $orientation (String) - the orientation of the (current) page
 
-# Loading indicator messages
-loading_error_indicator=Firka
-loading_error=Firka bangay kaŋ PDF goo ma zumandi.
-invalid_file_error=PDF tuku laala wala laybante.
-missing_file_error=PDF tuku kumante.
-unexpected_response_error=Manti feršikaw tuuruyan maatante.
 
-# LOCALIZATION NOTE (text_annotation_type.alt): This is used as a tooltip.
-# "{{type}}" will be replaced with an annotation type from a list defined in
-# the PDF spec (32000-1:2008 Table 169 – Annotation types).
+##
+
+pdfjs-document-properties-close-button = Daabu
+
+## Print
+
+pdfjs-print-progress-message = Goo ma takaddaa soolu k'a kar se…
+# Variables:
+#   $progress (Number) - percent value
+pdfjs-print-progress-percent = { $progress }%
+pdfjs-print-progress-close-button = Naŋ
+pdfjs-printing-not-supported = Yaamar: Karyan ši tee ka timme nda ceecikaa woo.
+pdfjs-printing-not-ready = Yaamar: PDF ši zunbu ka timme karyan še.
+
+## Tooltips and alt text for side panel toolbar buttons
+
+pdfjs-toggle-sidebar-button =
+    .title = Kanjari ceraw zuu
+pdfjs-toggle-sidebar-button-label = Kanjari ceraw zuu
+pdfjs-document-outline-button =
+    .title = Takaddaa korfur alhaaloo cebe (naagu cee hinka ka haya-izey kul hayandi/kankamandi)
+pdfjs-document-outline-button-label = Takadda filla-boŋ
+pdfjs-attachments-button =
+    .title = Hangarey cebe
+pdfjs-attachments-button-label = Hangarey
+pdfjs-thumbs-button =
+    .title = Kabeboy biyey cebe
+pdfjs-thumbs-button-label = Kabeboy biyey
+pdfjs-findbar-button =
+    .title = Ceeci takaddaa ra
+pdfjs-findbar-button-label = Ceeci
+
+## Thumbnails panel item (tooltip and alt text for images)
+
+# Variables:
+#   $page (Number) - the page number
+pdfjs-thumb-page-title =
+    .title = { $page } moo
+# Variables:
+#   $page (Number) - the page number
+pdfjs-thumb-page-canvas =
+    .aria-label = Kabeboy bii { $page } moo še
+
+## Find panel button title and messages
+
+pdfjs-find-input =
+    .title = Ceeci
+    .placeholder = Ceeci takaddaa ra…
+pdfjs-find-previous-button =
+    .title = Kalimaɲaŋoo bangayri bisantaa ceeci
+pdfjs-find-previous-button-label = Bisante
+pdfjs-find-next-button =
+    .title = Kalimaɲaŋoo hiino bangayroo ceeci
+pdfjs-find-next-button-label = Jine
+pdfjs-find-highlight-checkbox = Ikul šilbay
+pdfjs-find-match-case-checkbox-label = Harfu-beeriyan hawgay
+pdfjs-find-reached-top = A too moŋoo boŋoo, koy jine ka šinitin nda cewoo
+pdfjs-find-reached-bottom = A too moɲoo cewoo, koy jine šintioo ga
+pdfjs-find-not-found = Kalimaɲaa mana duwandi
+
+## Predefined zoom values
+
+pdfjs-page-scale-width = Mooo hayyan
+pdfjs-page-scale-fit = Moo sawayan
+pdfjs-page-scale-auto = Boŋše azzaati barmayyan
+pdfjs-page-scale-actual = Adadu cimi
+# Variables:
+#   $scale (Number) - percent value for page scale
+pdfjs-page-scale-percent = { $scale }%
+
+## PDF page
+
+
+## Loading indicator messages
+
+pdfjs-loading-error = Firka bangay kaŋ PDF goo ma zumandi.
+pdfjs-invalid-file-error = PDF tuku laala wala laybante.
+pdfjs-missing-file-error = PDF tuku kumante.
+pdfjs-unexpected-response-error = Manti feršikaw tuuruyan maatante.
+pdfjs-rendering-error = Firka bangay kaŋ moɲoo goo ma willandi.
+
+## Annotations
+
+# .alt: This is used as a tooltip.
+# Variables:
+#   $type (String) - an annotation type from a list defined in the PDF spec
+# (32000-1:2008 Table 169 – Annotation types).
 # Some common types are e.g.: "Check", "Text", "Comment", "Note"
-text_annotation_type.alt={{type}} maasa-caw]
-password_label=Šennikufal dam ka PDF tukoo woo feeri.
-password_invalid=Šennikufal laalo. Ceeci koyne taare.
-password_ok=Ayyo
-password_cancel=Naŋ
+pdfjs-text-annotation-type =
+    .alt = { $type } maasa-caw]
 
-printing_not_supported=Yaamar: Karyan ši tee ka timme nda ceecikaa woo.
-printing_not_ready=Yaamar: PDF ši zunbu ka timme karyan še.
-web_fonts_disabled=Interneti šigirawey kay: ši hin ka goy nda PDF šigira hurantey.
+## Password
+
+pdfjs-password-label = Šennikufal dam ka PDF tukoo woo feeri.
+pdfjs-password-invalid = Šennikufal laalo. Ceeci koyne taare.
+pdfjs-password-ok-button = Ayyo
+pdfjs-password-cancel-button = Naŋ
+pdfjs-web-fonts-disabled = Interneti šigirawey kay: ši hin ka goy nda PDF šigira hurantey.
+
+## Editing
+
+
+## Alt-text dialog
+
+
+## Editor resizers
+## This is used in an aria label to help to understand the role of the resizer.
+
