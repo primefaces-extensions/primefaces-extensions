@@ -4,7 +4,7 @@
  * @author Jasper de Vries jepsar@gmail.com
  * @since 7.0
  */
-PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
+PrimeFaces.widget.ExtInputPhone = class extends PrimeFaces.widget.BaseWidget {
 
     /**
      * Initializes the widget.
@@ -12,45 +12,45 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
      * @param {object}
      *            cfg The widget configuration.
      */
-    init: function (cfg) {
-        this._super(cfg);
+    init(cfg) {
+        super.init(cfg);
         this.disabled = cfg.disabled;
 
         this.bindInputs();
         this.bindComponent();
         this.bindEvents();
-    },
+    }
 
     /**
      * @override
      * @inheritdoc
      * @param {PrimeFaces.PartialWidgetCfg<TCfg>} cfg
      */
-    refresh: function(cfg) {
+    refresh(cfg) {
         this._remove();
-        this._super(cfg);
-    },
+        super.refresh(cfg);
+    }
 
     /**
      * @override
      * @inheritdoc
      */
-    destroy: function() {
-        this._super();
+    destroy() {
+        super.destroy();
         this._remove();
-    },
+    }
 
     /**
      * Clean up this widget and remove elements from DOM.
      * @private
      */
-    _remove: function() {
+    _remove() {
         if (this.iti) {
             this.currentCountry = this.inputIso2Jq.val();
             this.iti.destroy();
             this.iti = null;
         }
-    },
+    }
 
     /**
      * Binds the input elements to jQuery objects and sets up metadata.
@@ -58,7 +58,7 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
      * This method initializes jQuery objects for the input elements based on their IDs.
      * It also assigns data for PrimeFaces metadata to the main input element.
      */
-    bindInputs: function () {
+    bindInputs() {
         // JQuery inputs
         this.inputJq = $(this.jqId + '_input');
         this.input = this.inputJq[0];
@@ -70,7 +70,7 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
 
         // now add visual effects to inputs
         this.bindVisualEffects();
-    },
+    }
 
     /**
      * Binds and initializes the component.
@@ -78,7 +78,7 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
      * This method sets the initial country configuration if it's defined.
      * It then creates and initializes the international telephone input component.
      */
-    bindComponent: function () {
+    bindComponent() {
         // #1623 Initial country can be set back accidentally to original if AJAX validation issue
         if (this.currentCountry) {
             this.cfg.initialCountry = this.currentCountry;
@@ -86,14 +86,14 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
 
         // component creation
         this.iti = intlTelInput(this.input, this.cfg);
-    },
+    }
 
     /**
      * Renders the disabled state for the input elements.
      * If the component is marked as disabled, it disables the relevant input elements
      * and adds a CSS class to indicate the disabled state.
      */
-    bindVisualEffects: function () {
+    bindVisualEffects() {
         // visual effects
         PrimeFaces.skinInput(this.inputJq);
 
@@ -103,9 +103,9 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
             this.inputIso2Jq.attr("disabled", "disabled");
             this.inputHiddenJq.attr("disabled", "disabled");
         }
-    },
+    }
 
-    bindEvents: function () {
+    bindEvents() {
         let $this = this;
 
         this.input.addEventListener('countrychange', function () {
@@ -147,14 +147,14 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
                 return false;
             }
         });
-    },
+    }
 
     /**
      * Get the current number in the given format.
      */
-    getNumber: function () {
+    getNumber() {
         return this.iti ? this.iti.getNumber() : '';
-    },
+    }
 
     /**
      * Insert a number, and update the selected flag accordingly. Note that if
@@ -164,18 +164,18 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
      * @param number
      *            The value to set
      */
-    setNumber: function (number) {
+    setNumber(number) {
         if (this.iti) {
             this.iti.setNumber(number);
         }
-    },
+    }
 
     /**
      * Get the country data for the currently selected flag.
      */
-    getCountry: function () {
+    getCountry() {
         return this.iti ? this.iti.getSelectedCountryData() : '';
-    },
+    }
 
     /**
      * Change the country selection (e.g. when the user is entering their
@@ -184,11 +184,11 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
      * @param country
      *            The country code
      */
-    setCountry: function (country) {
+    setCountry(country) {
         if (this.iti) {
             this.iti.setCountry(country);
         }
-    },
+    }
 
     /**
      * Change the placeholderNumberType option.
@@ -196,67 +196,67 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
      * @param type
      *            the new type like "FIXED_LINE"
      */
-    setPlaceholderNumberType: function (type) {
+    setPlaceholderNumberType(type) {
         if (this.iti) {
             this.iti.setPlaceholderNumberType(type);
         }
-    },
+    }
 
     /**
      * Check if the current number is possible.
      *
      * @return true if valid, false if not
      */
-    isPossibleNumber: function () {
+    isPossibleNumber() {
         if (this.iti) {
             return this.iti.isValidNumber(false);
         }
-    },
+    }
 
     /**
      * Validate the current number.
      *
      * @return true if valid, false if not
      */
-    isValidNumber: function () {
+    isValidNumber() {
         if (this.iti) {
             return this.iti.isValidNumberPrecise();
         }
-    },
+    }
 
     /**
      * Get more information about a validation error. Can look up the error code
      * in utils.js.
      */
-    getValidationError: function () {
+    getValidationError() {
         return this.iti ? this.iti.getValidationError() : 0;
-    },
+    }
 
     /**
      * Focus the component by focusing on the correct input box.
      */
-    focus: function () {
+    focus() {
         this.inputJq.focus();
-    },
+    }
 
     /**
      * Enable the input
      */
-    enable: function () {
+    enable() {
         PrimeFaces.utils.enableInputWidget(this.inputJq);
         PrimeFaces.utils.enableInputWidget(this.inputIso2Jq);
         PrimeFaces.utils.enableInputWidget(this.inputHiddenJq);
         this.disabled = false;
-    },
+    }
 
     /**
      * Disable the input
      */
-    disable: function () {
+    disable() {
         PrimeFaces.utils.disableInputWidget(this.inputJq);
         PrimeFaces.utils.disableInputWidget(this.inputIso2Jq);
         PrimeFaces.utils.disableInputWidget(this.inputHiddenJq);
         this.disabled = true;
     }
 
-});
+};

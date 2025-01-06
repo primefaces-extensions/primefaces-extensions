@@ -3,7 +3,7 @@
  *
  * @author Thomas Andraschko
  */
-PrimeFaces.widget.ExtCodeMirror = PrimeFaces.widget.DeferredWidget.extend({
+PrimeFaces.widget.ExtCodeMirror = class extends PrimeFaces.widget.DeferredWidget {
 
     /**
      * Initializes the widget.
@@ -11,8 +11,8 @@ PrimeFaces.widget.ExtCodeMirror = PrimeFaces.widget.DeferredWidget.extend({
      * @param {object}
      *        cfg The widget configuration.
      */
-    init: function (cfg) {
-        this._super(cfg);
+    init(cfg) {
+        super.init(cfg);
 
         // remove old instance if available
         if (this.jq.next().hasClass('CodeMirror')) {
@@ -22,9 +22,9 @@ PrimeFaces.widget.ExtCodeMirror = PrimeFaces.widget.DeferredWidget.extend({
         this.options = this.cfg;
 
         this.renderDeferred();
-    },
+    }
 
-    _render: function () {
+    _render() {
         var $this = this;
         this.instance = CodeMirror.fromTextArea(this.jq[0], this.options);
         this.instance.widgetInstance = this;
@@ -62,9 +62,9 @@ PrimeFaces.widget.ExtCodeMirror = PrimeFaces.widget.DeferredWidget.extend({
                 $this.scrollInfo = cMirror.getScrollInfo();
             }
         });
-    },
+    }
 
-    complete: function () {
+    complete() {
         this.suggestions = null;
         this.token = null;
 
@@ -124,9 +124,9 @@ PrimeFaces.widget.ExtCodeMirror = PrimeFaces.widget.DeferredWidget.extend({
 
         this.token = token;
         this.search(token.string, contextString, cursor.line, cursor.ch);
-    },
+    }
 
-    search: function (value, context, line, column) {
+    search(value, context, line, column) {
         // lazy get parent form
         if (!this.form) {
             this.form = this.jq.closest("form");
@@ -203,7 +203,7 @@ PrimeFaces.widget.ExtCodeMirror = PrimeFaces.widget.DeferredWidget.extend({
         }];
 
         PrimeFaces.ajax.AjaxRequest(options);
-    },
+    }
 
     /**
      * This method fires an event if the behavior was defined.
@@ -212,31 +212,31 @@ PrimeFaces.widget.ExtCodeMirror = PrimeFaces.widget.DeferredWidget.extend({
      *        eventName The name of the event.
      * @private
      */
-    fireEvent: function (eventName) {
+    fireEvent(eventName) {
         this.callBehavior(eventName);
-    },
+    }
 
     /**
      * Returns the CodeMirror instance.
      */
-    getCodeMirrorInstance: function () {
+    getCodeMirrorInstance() {
         return this.instance;
-    },
+    }
 
     /**
      * Disables this input so that the user cannot enter a value anymore.
      */
-    disable: function () {
+    disable() {
         PrimeFaces.utils.disableInputWidget(this.jq);
-    },
+    }
 
     /**
      * Enables this input so that the user can enter a value.
      */
-    enable: function () {
+    enable() {
         PrimeFaces.utils.enableInputWidget(this.jq);
     }
-});
+};
 
 PrimeFaces.widget.ExtCodeMirror.getSuggestions = function (editor) {
     return {

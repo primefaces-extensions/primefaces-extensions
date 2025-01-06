@@ -4,7 +4,7 @@
  * @author jxmai
  * @since 6.3
  */
-PrimeFaces.widget.ExtOrgChart = PrimeFaces.widget.BaseWidget.extend({
+PrimeFaces.widget.ExtOrgChart = class extends PrimeFaces.widget.BaseWidget {
 
     /**
      * Initializes the widget.
@@ -12,8 +12,8 @@ PrimeFaces.widget.ExtOrgChart = PrimeFaces.widget.BaseWidget.extend({
      * @param {object}
      *        cfg The widget configuration.
      */
-    init: function (cfg) {
-        this._super(cfg);
+    init(cfg) {
+        super.init(cfg);
         this.id = cfg.id;
 
         // user extension to configure plugin
@@ -32,9 +32,9 @@ PrimeFaces.widget.ExtOrgChart = PrimeFaces.widget.BaseWidget.extend({
         this.orgchart = this.jq.orgchart(opts);
 
         this._bindEvents();
-    },
+    }
 
-    _bindEvents: function () {
+    _bindEvents() {
         var $this = this;
 
         this.jq.on('click', '.node', function () {
@@ -71,4 +71,4 @@ PrimeFaces.widget.ExtOrgChart = PrimeFaces.widget.BaseWidget.extend({
 
         });
     }
-});
+};

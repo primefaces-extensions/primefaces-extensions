@@ -5,10 +5,10 @@
  * @author Jasper de Vries jepsar@gmail.com
  * @since 10.0
  */
-PrimeFaces.widget.ExtCodeScanner = PrimeFaces.widget.BaseWidget.extend({
+PrimeFaces.widget.ExtCodeScanner = class extends PrimeFaces.widget.BaseWidget {
 
-    init: function (cfg) {
-        this._super(cfg);
+    init(cfg) {
+        super.init(cfg);
         this.id = cfg.id;
         this.cfg = cfg;
 
@@ -28,9 +28,9 @@ PrimeFaces.widget.ExtCodeScanner = PrimeFaces.widget.BaseWidget.extend({
         if (cfg.autoStart) {
             this.start();
         }
-    },
+    }
 
-    start: function() {
+    start() {
         var $this = this;
         function handleResult(result, err) {
             if (result) {
@@ -62,26 +62,26 @@ PrimeFaces.widget.ExtCodeScanner = PrimeFaces.widget.BaseWidget.extend({
             }
         }
         this.codeReader.decodeFromVideoDevice(this.cfg.deviceId, this.video, handleResult);
-    },
+    }
 
-    stop: function() {
+    stop() {
         this.codeReader.reset();
-    },
+    }
 
     // @override
-    refresh: function (cfg) {
+    refresh(cfg) {
         if (this.codeReader) {
             this.codeReader.reset();
         }
-        this._super(cfg);
-    },
+        super.refresh(cfg);
+    }
 
     // @override
-    destroy: function () {
-        this._super();
+    destroy() {
+        super.destroy();
         if (this.codeReader) {
             this.codeReader.reset();
         }
     }
 
-});
+};
