@@ -4,10 +4,10 @@
  * @author Melloware
  * @since 11..3
  */
-PrimeFaces.widget.ImageZoom = PrimeFaces.widget.BaseWidget.extend({
+PrimeFaces.widget.ImageZoom = class extends PrimeFaces.widget.BaseWidget {
 
-    init: function (cfg) {
-        this._super(cfg);
+    init(cfg) {
+        super.init(cfg);
 
         // default background to theme background if not user defined
         if (!this.cfg.background) {
@@ -21,57 +21,57 @@ PrimeFaces.widget.ImageZoom = PrimeFaces.widget.BaseWidget.extend({
         }
 
         this.zoom = mediumZoom(selector, this.cfg);
-    },
+    }
 
     /**
      * @override
      * @inheritdoc
      * @param {PrimeFaces.PartialWidgetCfg<TCfg>} cfg
      */
-    refresh: function (cfg) {
+    refresh(cfg) {
         this._cleanup();
-        this._super(cfg);
-    },
+        super.refresh(cfg);
+    }
 
     /**
      * @override
      * @inheritdoc
      */
-    destroy: function () {
-        this._super();
+    destroy() {
+        super.destroy();
         this._cleanup();
-    },
+    }
 
     /**
      * Clean up this widget and remove elements from DOM.
      * @private
      */
-    _cleanup: function () {
+    _cleanup() {
         this.zoom.detach();// detach all images
         this.zoom = null;
-    },
+    }
 
     /**
      * Opens the zoom when closed / dismisses the zoom when opened, and returns a promise resolving with the zoom.
      */
-    toggle: function () {
+    toggle() {
         this.zoom.toggle();
-    },
+    }
 
     /**
      * Opens the zoom and returns a promise resolving with the zoom.
      * Emits an event open on animation start and opened when completed.
      */
-    show: function () {
+    show() {
         this.zoom.open();
-    },
+    }
 
     /**
      * Closes the zoom and returns a promise resolving with the zoom.
      * Emits an event close on animation start and closed when completed.
      */
-    hide: function () {
+    hide() {
         this.zoom.close();
     }
 
-});
+};

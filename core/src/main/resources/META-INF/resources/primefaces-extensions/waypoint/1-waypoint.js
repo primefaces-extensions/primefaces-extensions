@@ -3,7 +3,7 @@
  *
  * @author Oleg Varaksin
  */
-PrimeFaces.widget.ExtWaypoint = PrimeFaces.widget.BaseWidget.extend({
+PrimeFaces.widget.ExtWaypoint = class extends PrimeFaces.widget.BaseWidget {
 
     /**
      * Initializes the widget.
@@ -11,8 +11,8 @@ PrimeFaces.widget.ExtWaypoint = PrimeFaces.widget.BaseWidget.extend({
      * @param {object}
      *        cfg The widget configuration.
      */
-    init: function (cfg) {
-        this._super(cfg);
+    init(cfg) {
+        super.init(cfg);
         this.cfg = cfg;
         this.id = cfg.id;
         this.target = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.jq, this.cfg.target);
@@ -25,53 +25,53 @@ PrimeFaces.widget.ExtWaypoint = PrimeFaces.widget.BaseWidget.extend({
         }
 
         this.destroy().create();
-    },
+    }
 
     /**
      * Unbinds all event handlers and unregisters the waypoint(s) associated
      * with these elements.
      */
-    destroy: function () {
+    destroy() {
         this.target.waypoint('destroy');
         return this;
-    },
+    }
 
     /**
      * Temporarily disables the waypoint callback function from firing. The
      * waypoint can be re-enabled by calling enable.
      */
-    disable: function () {
+    disable() {
         this.target.waypoint('disable');
         return this;
-    },
+    }
 
     /**
      * Re-enables a previously disabled waypoint.
      */
-    enable: function () {
+    enable() {
         this.target.waypoint('enable');
         return this;
-    },
+    }
 
     /**
      * Creates the waypoint(s) again with the same handlers as for init. This
      * method can be called after .destroy().
      */
-    create: function () {
+    create() {
         var _self = this;
         this.target.waypoint(function (direction) {
             _self.reached(direction, this);
         }, this.cfg);
-    },
+    }
 
     /**
      * Recalculates all waypoint positions.
      */
-    refresh: function () {
+    refresh() {
         $.waypoints('refresh');
-    },
+    }
 
-    reached: function (dir, way) {
+    reached(dir, way) {
         if (this.hasBehavior('reached')) {
             var options = {
                 params: [{
@@ -87,4 +87,4 @@ PrimeFaces.widget.ExtWaypoint = PrimeFaces.widget.BaseWidget.extend({
             this.callBehavior('reached', options);
         }
     }
-});
+};
