@@ -1,261 +1,394 @@
-# Copyright 2012 Mozilla Foundation
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-# Main toolbar buttons (tooltips and alt text for images)
-previous.title=Prejšnja stran
-previous_label=Nazaj
-next.title=Naslednja stran
-next_label=Naprej
 
-# LOCALIZATION NOTE (page.title): The tooltip for the pageNumber input.
-page.title=Stran
-# LOCALIZATION NOTE (of_pages): "{{pagesCount}}" will be replaced by a number
-# representing the total number of pages in the document.
-of_pages=od {{pagesCount}}
-# LOCALIZATION NOTE (page_of_pages): "{{pageNumber}}" and "{{pagesCount}}"
-# will be replaced by a number representing the currently visible page,
-# respectively a number representing the total number of pages in the document.
-page_of_pages=({{pageNumber}} od {{pagesCount}})
+## Main toolbar buttons (tooltips and alt text for images)
 
-zoom_out.title=Pomanjšaj
-zoom_out_label=Pomanjšaj
-zoom_in.title=Povečaj
-zoom_in_label=Povečaj
-zoom.title=Povečava
-presentation_mode.title=Preklopi v način predstavitve
-presentation_mode_label=Način predstavitve
-open_file.title=Odpri datoteko
-open_file_label=Odpri
-print.title=Natisni
-print_label=Natisni
-download.title=Prenesi
-download_label=Prenesi
-bookmark.title=Trenutni pogled (kopiraj ali odpri v novem oknu)
-bookmark_label=Trenutni pogled
+pdfjs-previous-button =
+    .title = Prejšnja stran
+pdfjs-previous-button-label = Nazaj
+pdfjs-next-button =
+    .title = Naslednja stran
+pdfjs-next-button-label = Naprej
+# .title: Tooltip for the pageNumber input.
+pdfjs-page-input =
+    .title = Stran
+# Variables:
+#   $pagesCount (Number) - the total number of pages in the document
+# This string follows an input field with the number of the page currently displayed.
+pdfjs-of-pages = od { $pagesCount }
+# Variables:
+#   $pageNumber (Number) - the currently visible page
+#   $pagesCount (Number) - the total number of pages in the document
+pdfjs-page-of-pages = ({ $pageNumber } od { $pagesCount })
+pdfjs-zoom-out-button =
+    .title = Pomanjšaj
+pdfjs-zoom-out-button-label = Pomanjšaj
+pdfjs-zoom-in-button =
+    .title = Povečaj
+pdfjs-zoom-in-button-label = Povečaj
+pdfjs-zoom-select =
+    .title = Povečava
+pdfjs-presentation-mode-button =
+    .title = Preklopi v način predstavitve
+pdfjs-presentation-mode-button-label = Način predstavitve
+pdfjs-open-file-button =
+    .title = Odpri datoteko
+pdfjs-open-file-button-label = Odpri
+pdfjs-print-button =
+    .title = Natisni
+pdfjs-print-button-label = Natisni
+pdfjs-save-button =
+    .title = Shrani
+pdfjs-save-button-label = Shrani
+# Used in Firefox for Android as a tooltip for the download button (“download” is a verb).
+pdfjs-download-button =
+    .title = Prenesi
+# Used in Firefox for Android as a label for the download button (“download” is a verb).
+# Length of the translation matters since we are in a mobile context, with limited screen estate.
+pdfjs-download-button-label = Prenesi
+pdfjs-bookmark-button =
+    .title = Trenutna stran (prikaži URL, ki vodi do trenutne strani)
+pdfjs-bookmark-button-label = Na trenutno stran
 
-# Secondary toolbar and context menu
-tools.title=Orodja
-tools_label=Orodja
-first_page.title=Pojdi na prvo stran
-first_page.label=Pojdi na prvo stran
-first_page_label=Pojdi na prvo stran
-last_page.title=Pojdi na zadnjo stran
-last_page.label=Pojdi na zadnjo stran
-last_page_label=Pojdi na zadnjo stran
-page_rotate_cw.title=Zavrti v smeri urnega kazalca
-page_rotate_cw.label=Zavrti v smeri urnega kazalca
-page_rotate_cw_label=Zavrti v smeri urnega kazalca
-page_rotate_ccw.title=Zavrti v nasprotni smeri urnega kazalca
-page_rotate_ccw.label=Zavrti v nasprotni smeri urnega kazalca
-page_rotate_ccw_label=Zavrti v nasprotni smeri urnega kazalca
+##  Secondary toolbar and context menu
 
-cursor_text_select_tool.title=Omogoči orodje za izbor besedila
-cursor_text_select_tool_label=Orodje za izbor besedila
-cursor_hand_tool.title=Omogoči roko
-cursor_hand_tool_label=Roka
+pdfjs-tools-button =
+    .title = Orodja
+pdfjs-tools-button-label = Orodja
+pdfjs-first-page-button =
+    .title = Pojdi na prvo stran
+pdfjs-first-page-button-label = Pojdi na prvo stran
+pdfjs-last-page-button =
+    .title = Pojdi na zadnjo stran
+pdfjs-last-page-button-label = Pojdi na zadnjo stran
+pdfjs-page-rotate-cw-button =
+    .title = Zavrti v smeri urnega kazalca
+pdfjs-page-rotate-cw-button-label = Zavrti v smeri urnega kazalca
+pdfjs-page-rotate-ccw-button =
+    .title = Zavrti v nasprotni smeri urnega kazalca
+pdfjs-page-rotate-ccw-button-label = Zavrti v nasprotni smeri urnega kazalca
+pdfjs-cursor-text-select-tool-button =
+    .title = Omogoči orodje za izbor besedila
+pdfjs-cursor-text-select-tool-button-label = Orodje za izbor besedila
+pdfjs-cursor-hand-tool-button =
+    .title = Omogoči roko
+pdfjs-cursor-hand-tool-button-label = Roka
+pdfjs-scroll-page-button =
+    .title = Uporabi drsenje po strani
+pdfjs-scroll-page-button-label = Drsenje po strani
+pdfjs-scroll-vertical-button =
+    .title = Uporabi navpično drsenje
+pdfjs-scroll-vertical-button-label = Navpično drsenje
+pdfjs-scroll-horizontal-button =
+    .title = Uporabi vodoravno drsenje
+pdfjs-scroll-horizontal-button-label = Vodoravno drsenje
+pdfjs-scroll-wrapped-button =
+    .title = Uporabi ovito drsenje
+pdfjs-scroll-wrapped-button-label = Ovito drsenje
+pdfjs-spread-none-button =
+    .title = Ne združuj razponov strani
+pdfjs-spread-none-button-label = Brez razponov
+pdfjs-spread-odd-button =
+    .title = Združuj razpone strani z začetkom pri lihih straneh
+pdfjs-spread-odd-button-label = Lihi razponi
+pdfjs-spread-even-button =
+    .title = Združuj razpone strani z začetkom pri sodih straneh
+pdfjs-spread-even-button-label = Sodi razponi
 
-scroll_vertical.title=Uporabi navpično drsenje
-scroll_vertical_label=Navpično drsenje
-scroll_horizontal.title=Uporabi vodoravno drsenje
-scroll_horizontal_label=Vodoravno drsenje
-scroll_wrapped.title=Uporabi ovito drsenje
-scroll_wrapped_label=Ovito drsenje
+## Document properties dialog
 
-spread_none.title=Ne združuj razponov strani
-spread_none_label=Brez razponov
-spread_odd.title=Združuj razpone strani z začetkom pri lihih straneh
-spread_odd_label=Lihi razponi
-spread_even.title=Združuj razpone strani z začetkom pri sodih straneh
-spread_even_label=Sodi razponi
+pdfjs-document-properties-button =
+    .title = Lastnosti dokumenta …
+pdfjs-document-properties-button-label = Lastnosti dokumenta …
+pdfjs-document-properties-file-name = Ime datoteke:
+pdfjs-document-properties-file-size = Velikost datoteke:
+# Variables:
+#   $size_kb (Number) - the PDF file size in kilobytes
+#   $size_b (Number) - the PDF file size in bytes
+pdfjs-document-properties-kb = { $size_kb } KB ({ $size_b } bajtov)
+# Variables:
+#   $size_mb (Number) - the PDF file size in megabytes
+#   $size_b (Number) - the PDF file size in bytes
+pdfjs-document-properties-mb = { $size_mb } MB ({ $size_b } bajtov)
+pdfjs-document-properties-title = Ime:
+pdfjs-document-properties-author = Avtor:
+pdfjs-document-properties-subject = Tema:
+pdfjs-document-properties-keywords = Ključne besede:
+pdfjs-document-properties-creation-date = Datum nastanka:
+pdfjs-document-properties-modification-date = Datum spremembe:
+# Variables:
+#   $date (Date) - the creation/modification date of the PDF file
+#   $time (Time) - the creation/modification time of the PDF file
+pdfjs-document-properties-date-string = { $date }, { $time }
+pdfjs-document-properties-creator = Ustvaril:
+pdfjs-document-properties-producer = Izdelovalec PDF:
+pdfjs-document-properties-version = Različica PDF:
+pdfjs-document-properties-page-count = Število strani:
+pdfjs-document-properties-page-size = Velikost strani:
+pdfjs-document-properties-page-size-unit-inches = palcev
+pdfjs-document-properties-page-size-unit-millimeters = mm
+pdfjs-document-properties-page-size-orientation-portrait = pokončno
+pdfjs-document-properties-page-size-orientation-landscape = ležeče
+pdfjs-document-properties-page-size-name-a-three = A3
+pdfjs-document-properties-page-size-name-a-four = A4
+pdfjs-document-properties-page-size-name-letter = Pismo
+pdfjs-document-properties-page-size-name-legal = Pravno
 
-# Document properties dialog box
-document_properties.title=Lastnosti dokumenta …
-document_properties_label=Lastnosti dokumenta …
-document_properties_file_name=Ime datoteke:
-document_properties_file_size=Velikost datoteke:
-# LOCALIZATION NOTE (document_properties_kb): "{{size_kb}}" and "{{size_b}}"
-# will be replaced by the PDF file size in kilobytes, respectively in bytes.
-document_properties_kb={{size_kb}} KB ({{size_b}} bajtov)
-# LOCALIZATION NOTE (document_properties_mb): "{{size_mb}}" and "{{size_b}}"
-# will be replaced by the PDF file size in megabytes, respectively in bytes.
-document_properties_mb={{size_mb}} MB ({{size_b}} bajtov)
-document_properties_title=Ime:
-document_properties_author=Avtor:
-document_properties_subject=Tema:
-document_properties_keywords=Ključne besede:
-document_properties_creation_date=Datum nastanka:
-document_properties_modification_date=Datum spremembe:
-# LOCALIZATION NOTE (document_properties_date_string): "{{date}}" and "{{time}}"
-# will be replaced by the creation/modification date, and time, of the PDF file.
-document_properties_date_string={{date}}, {{time}}
-document_properties_creator=Ustvaril:
-document_properties_producer=Izdelovalec PDF:
-document_properties_version=Različica PDF:
-document_properties_page_count=Število strani:
-document_properties_page_size=Velikost strani:
-document_properties_page_size_unit_inches=palcev
-document_properties_page_size_unit_millimeters=mm
-document_properties_page_size_orientation_portrait=pokončno
-document_properties_page_size_orientation_landscape=ležeče
-document_properties_page_size_name_a3=A3
-document_properties_page_size_name_a4=A4
-document_properties_page_size_name_letter=Pismo
-document_properties_page_size_name_legal=Pravno
-# LOCALIZATION NOTE (document_properties_page_size_dimension_string):
-# "{{width}}", "{{height}}", {{unit}}, and {{orientation}} will be replaced by
-# the size, respectively their unit of measurement and orientation, of the (current) page.
-document_properties_page_size_dimension_string={{width}} × {{height}} {{unit}} ({{orientation}})
-# LOCALIZATION NOTE (document_properties_page_size_dimension_name_string):
-# "{{width}}", "{{height}}", {{unit}}, {{name}}, and {{orientation}} will be replaced by
-# the size, respectively their unit of measurement, name, and orientation, of the (current) page.
-document_properties_page_size_dimension_name_string={{width}} × {{height}} {{unit}} ({{name}}, {{orientation}})
-# LOCALIZATION NOTE (document_properties_linearized): The linearization status of
-# the document; usually called "Fast Web View" in English locales of Adobe software.
-document_properties_linearized=Hitri spletni ogled:
-document_properties_linearized_yes=Da
-document_properties_linearized_no=Ne
-document_properties_close=Zapri
+## Variables:
+##   $width (Number) - the width of the (current) page
+##   $height (Number) - the height of the (current) page
+##   $unit (String) - the unit of measurement of the (current) page
+##   $name (String) - the name of the (current) page
+##   $orientation (String) - the orientation of the (current) page
 
-print_progress_message=Priprava dokumenta na tiskanje …
-# LOCALIZATION NOTE (print_progress_percent): "{{progress}}" will be replaced by
-# a numerical per cent value.
-print_progress_percent={{progress}} %
-print_progress_close=Prekliči
+pdfjs-document-properties-page-size-dimension-string = { $width } × { $height } { $unit } ({ $orientation })
+pdfjs-document-properties-page-size-dimension-name-string = { $width } × { $height } { $unit } ({ $name }, { $orientation })
 
-# Tooltips and alt text for side panel toolbar buttons
-# (the _label strings are alt text for the buttons, the .title strings are
-# tooltips)
-toggle_sidebar.title=Preklopi stransko vrstico
-toggle_sidebar_notification.title=Preklopi stransko vrstico (dokument vsebuje oris/priponke)
-toggle_sidebar_notification2.title=Preklopi stransko vrstico (dokument vsebuje oris/priponke/plasti)
-toggle_sidebar_label=Preklopi stransko vrstico
-document_outline.title=Prikaži oris dokumenta (dvokliknite za razširitev/strnitev vseh predmetov)
-document_outline_label=Oris dokumenta
-attachments.title=Prikaži priponke
-attachments_label=Priponke
-layers.title=Prikaži plasti (dvokliknite za ponastavitev vseh plasti na privzeto stanje)
-layers_label=Plasti
-thumbs.title=Prikaži sličice
-thumbs_label=Sličice
-current_outline_item.title=Najdi trenutni predmet orisa
-current_outline_item_label=Trenutni predmet orisa
-findbar.title=Iskanje po dokumentu
-findbar_label=Najdi
+##
 
-additional_layers=Dodatne plasti
-# LOCALIZATION NOTE (page_canvas): "{{page}}" will be replaced by the page number.
-page_canvas=Stran {{page}}
-# LOCALIZATION NOTE (page_landmark): "{{page}}" will be replaced by the page number.
-page_landmark=Stran {{page}}
-# Thumbnails panel item (tooltip and alt text for images)
-# LOCALIZATION NOTE (thumb_page_title): "{{page}}" will be replaced by the page
-# number.
-thumb_page_title=Stran {{page}}
-# LOCALIZATION NOTE (thumb_page_canvas): "{{page}}" will be replaced by the page
-# number.
-thumb_page_canvas=Sličica strani {{page}}
+# The linearization status of the document; usually called "Fast Web View" in
+# English locales of Adobe software.
+pdfjs-document-properties-linearized = Hitri spletni ogled:
+pdfjs-document-properties-linearized-yes = Da
+pdfjs-document-properties-linearized-no = Ne
+pdfjs-document-properties-close-button = Zapri
 
-# Find panel button title and messages
-find_input.title=Najdi
-find_input.placeholder=Najdi v dokumentu …
-find_previous.title=Najdi prejšnjo ponovitev iskanega
-find_previous_label=Najdi nazaj
-find_next.title=Najdi naslednjo ponovitev iskanega
-find_next_label=Najdi naprej
-find_highlight=Označi vse
-find_match_case_label=Razlikuj velike/male črke
-find_entire_word_label=Cele besede
-find_reached_top=Dosežen začetek dokumenta iz smeri konca
-find_reached_bottom=Doseženo konec dokumenta iz smeri začetka
-# LOCALIZATION NOTE (find_match_count): The supported plural forms are
-# [one|two|few|many|other], with [other] as the default value.
-# "{{current}}" and "{{total}}" will be replaced by a number representing the
-# index of the currently active find result, respectively a number representing
-# the total number of matches in the document.
-find_match_count={[ plural(total) ]}
-find_match_count[one]=Zadetek {{current}} od {{total}}
-find_match_count[two]=Zadetek {{current}} od {{total}}
-find_match_count[few]=Zadetek {{current}} od {{total}}
-find_match_count[many]=Zadetek {{current}} od {{total}}
-find_match_count[other]=Zadetek {{current}} od {{total}}
-# LOCALIZATION NOTE (find_match_count_limit): The supported plural forms are
-# [zero|one|two|few|many|other], with [other] as the default value.
-# "{{limit}}" will be replaced by a numerical value.
-find_match_count_limit={[ plural(limit) ]}
-find_match_count_limit[zero]=Več kot {{limit}} zadetkov
-find_match_count_limit[one]=Več kot {{limit}} zadetek
-find_match_count_limit[two]=Več kot {{limit}} zadetka
-find_match_count_limit[few]=Več kot {{limit}} zadetki
-find_match_count_limit[many]=Več kot {{limit}} zadetkov
-find_match_count_limit[other]=Več kot {{limit}} zadetkov
-find_not_found=Iskanega ni mogoče najti
+## Print
 
-# Error panel labels
-error_more_info=Več informacij
-error_less_info=Manj informacij
-error_close=Zapri
-# LOCALIZATION NOTE (error_version_info): "{{version}}" and "{{build}}" will be
-# replaced by the PDF.JS version and build ID.
-error_version_info=PDF.js r{{version}} (graditev: {{build}})
-# LOCALIZATION NOTE (error_message): "{{message}}" will be replaced by an
-# english string describing the error.
-error_message=Sporočilo: {{message}}
-# LOCALIZATION NOTE (error_stack): "{{stack}}" will be replaced with a stack
-# trace.
-error_stack=Sklad: {{stack}}
-# LOCALIZATION NOTE (error_file): "{{file}}" will be replaced with a filename
-error_file=Datoteka: {{file}}
-# LOCALIZATION NOTE (error_line): "{{line}}" will be replaced with a line number
-error_line=Vrstica: {{line}}
-rendering_error=Med pripravljanjem strani je prišlo do napake!
+pdfjs-print-progress-message = Priprava dokumenta na tiskanje …
+# Variables:
+#   $progress (Number) - percent value
+pdfjs-print-progress-percent = { $progress } %
+pdfjs-print-progress-close-button = Prekliči
+pdfjs-printing-not-supported = Opozorilo: ta brskalnik ne podpira vseh možnosti tiskanja.
+pdfjs-printing-not-ready = Opozorilo: PDF ni v celoti naložen za tiskanje.
 
-# Predefined zoom values
-page_scale_width=Širina strani
-page_scale_fit=Prilagodi stran
-page_scale_auto=Samodejno
-page_scale_actual=Dejanska velikost
-# LOCALIZATION NOTE (page_scale_percent): "{{scale}}" will be replaced by a
-# numerical scale value.
-page_scale_percent={{scale}} %
+## Tooltips and alt text for side panel toolbar buttons
 
-# Loading indicator messages
-loading_error_indicator=Napaka
+pdfjs-toggle-sidebar-button =
+    .title = Preklopi stransko vrstico
+pdfjs-toggle-sidebar-notification-button =
+    .title = Preklopi stransko vrstico (dokument vsebuje oris/priponke/plasti)
+pdfjs-toggle-sidebar-button-label = Preklopi stransko vrstico
+pdfjs-document-outline-button =
+    .title = Prikaži oris dokumenta (dvokliknite za razširitev/strnitev vseh predmetov)
+pdfjs-document-outline-button-label = Oris dokumenta
+pdfjs-attachments-button =
+    .title = Prikaži priponke
+pdfjs-attachments-button-label = Priponke
+pdfjs-layers-button =
+    .title = Prikaži plasti (dvokliknite za ponastavitev vseh plasti na privzeto stanje)
+pdfjs-layers-button-label = Plasti
+pdfjs-thumbs-button =
+    .title = Prikaži sličice
+pdfjs-thumbs-button-label = Sličice
+pdfjs-current-outline-item-button =
+    .title = Najdi trenutni predmet orisa
+pdfjs-current-outline-item-button-label = Trenutni predmet orisa
+pdfjs-findbar-button =
+    .title = Iskanje po dokumentu
+pdfjs-findbar-button-label = Najdi
+pdfjs-additional-layers = Dodatne plasti
 
-# Loading indicator messages
-loading=Nalaganje …
-loading_error=Med nalaganjem datoteke PDF je prišlo do napake.
-invalid_file_error=Neveljavna ali pokvarjena datoteka PDF.
-missing_file_error=Ni datoteke PDF.
-unexpected_response_error=Nepričakovan odgovor strežnika.
+## Thumbnails panel item (tooltip and alt text for images)
 
-# LOCALIZATION NOTE (annotation_date_string): "{{date}}" and "{{time}}" will be
-# replaced by the modification date, and time, of the annotation.
-annotation_date_string={{date}}, {{time}}
+# Variables:
+#   $page (Number) - the page number
+pdfjs-thumb-page-title =
+    .title = Stran { $page }
+# Variables:
+#   $page (Number) - the page number
+pdfjs-thumb-page-canvas =
+    .aria-label = Sličica strani { $page }
 
-# LOCALIZATION NOTE (text_annotation_type.alt): This is used as a tooltip.
-# "{{type}}" will be replaced with an annotation type from a list defined in
-# the PDF spec (32000-1:2008 Table 169 – Annotation types).
+## Find panel button title and messages
+
+pdfjs-find-input =
+    .title = Najdi
+    .placeholder = Najdi v dokumentu …
+pdfjs-find-previous-button =
+    .title = Najdi prejšnjo ponovitev iskanega
+pdfjs-find-previous-button-label = Najdi nazaj
+pdfjs-find-next-button =
+    .title = Najdi naslednjo ponovitev iskanega
+pdfjs-find-next-button-label = Najdi naprej
+pdfjs-find-highlight-checkbox = Označi vse
+pdfjs-find-match-case-checkbox-label = Razlikuj velike/male črke
+pdfjs-find-match-diacritics-checkbox-label = Razlikuj diakritične znake
+pdfjs-find-entire-word-checkbox-label = Cele besede
+pdfjs-find-reached-top = Dosežen začetek dokumenta iz smeri konca
+pdfjs-find-reached-bottom = Doseženo konec dokumenta iz smeri začetka
+# Variables:
+#   $current (Number) - the index of the currently active find result
+#   $total (Number) - the total number of matches in the document
+pdfjs-find-match-count =
+    { $total ->
+        [one] Zadetek { $current } od { $total }
+        [two] Zadetek { $current } od { $total }
+        [few] Zadetek { $current } od { $total }
+       *[other] Zadetek { $current } od { $total }
+    }
+# Variables:
+#   $limit (Number) - the maximum number of matches
+pdfjs-find-match-count-limit =
+    { $limit ->
+        [one] Več kot { $limit } zadetek
+        [two] Več kot { $limit } zadetka
+        [few] Več kot { $limit } zadetki
+       *[other] Več kot { $limit } zadetkov
+    }
+pdfjs-find-not-found = Iskanega ni mogoče najti
+
+## Predefined zoom values
+
+pdfjs-page-scale-width = Širina strani
+pdfjs-page-scale-fit = Prilagodi stran
+pdfjs-page-scale-auto = Samodejno
+pdfjs-page-scale-actual = Dejanska velikost
+# Variables:
+#   $scale (Number) - percent value for page scale
+pdfjs-page-scale-percent = { $scale } %
+
+## PDF page
+
+# Variables:
+#   $page (Number) - the page number
+pdfjs-page-landmark =
+    .aria-label = Stran { $page }
+
+## Loading indicator messages
+
+pdfjs-loading-error = Med nalaganjem datoteke PDF je prišlo do napake.
+pdfjs-invalid-file-error = Neveljavna ali pokvarjena datoteka PDF.
+pdfjs-missing-file-error = Ni datoteke PDF.
+pdfjs-unexpected-response-error = Nepričakovan odgovor strežnika.
+pdfjs-rendering-error = Med pripravljanjem strani je prišlo do napake!
+
+## Annotations
+
+# Variables:
+#   $date (Date) - the modification date of the annotation
+#   $time (Time) - the modification time of the annotation
+pdfjs-annotation-date-string = { $date }, { $time }
+# .alt: This is used as a tooltip.
+# Variables:
+#   $type (String) - an annotation type from a list defined in the PDF spec
+# (32000-1:2008 Table 169 – Annotation types).
 # Some common types are e.g.: "Check", "Text", "Comment", "Note"
-text_annotation_type.alt=[Opomba vrste {{type}}]
-password_label=Vnesite geslo za odpiranje te datoteke PDF.
-password_invalid=Neveljavno geslo. Poskusite znova.
-password_ok=V redu
-password_cancel=Prekliči
+pdfjs-text-annotation-type =
+    .alt = [Opomba vrste { $type }]
 
-printing_not_supported=Opozorilo: ta brskalnik ne podpira vseh možnosti tiskanja.
-printing_not_ready=Opozorilo: PDF ni v celoti naložen za tiskanje.
-web_fonts_disabled=Spletne pisave so onemogočene: vgradnih pisav za PDF ni mogoče uporabiti.
-# LOCALIZATION NOTE (unsupported_feature_signatures): Should contain the same
-# exact string as in the `chrome.properties` file.
-unsupported_feature_signatures=Ta dokument PDF vsebuje digitalne podpise. Preverjanje veljavnosti podpisov ni podprto.
+## Password
+
+pdfjs-password-label = Vnesite geslo za odpiranje te datoteke PDF.
+pdfjs-password-invalid = Neveljavno geslo. Poskusite znova.
+pdfjs-password-ok-button = V redu
+pdfjs-password-cancel-button = Prekliči
+pdfjs-web-fonts-disabled = Spletne pisave so onemogočene: vgradnih pisav za PDF ni mogoče uporabiti.
+
+## Editing
+
+pdfjs-editor-free-text-button =
+    .title = Besedilo
+pdfjs-editor-free-text-button-label = Besedilo
+pdfjs-editor-ink-button =
+    .title = Riši
+pdfjs-editor-ink-button-label = Riši
+pdfjs-editor-stamp-button =
+    .title = Dodajanje ali urejanje slik
+pdfjs-editor-stamp-button-label = Dodajanje ali urejanje slik
+pdfjs-editor-highlight-button =
+    .title = Označevalnik
+pdfjs-editor-highlight-button-label = Označevalnik
+
+## Remove button for the various kind of editor.
+
+pdfjs-editor-remove-ink-button =
+    .title = Odstrani risbo
+pdfjs-editor-remove-freetext-button =
+    .title = Odstrani besedilo
+pdfjs-editor-remove-stamp-button =
+    .title = Odstrani sliko
+pdfjs-editor-remove-highlight-button =
+    .title = Odstrani označbo
+
+##
+
+# Editor Parameters
+pdfjs-editor-free-text-color-input = Barva
+pdfjs-editor-free-text-size-input = Velikost
+pdfjs-editor-ink-color-input = Barva
+pdfjs-editor-ink-thickness-input = Debelina
+pdfjs-editor-ink-opacity-input = Neprosojnost
+pdfjs-editor-stamp-add-image-button =
+    .title = Dodaj sliko
+pdfjs-editor-stamp-add-image-button-label = Dodaj sliko
+# This refers to the thickness of the line used for free highlighting (not bound to text)
+pdfjs-editor-free-highlight-thickness-input = Debelina
+pdfjs-editor-free-highlight-thickness-title =
+    .title = Spremeni debelino pri označevanju nebesedilnih elementov
+pdfjs-free-text =
+    .aria-label = Urejevalnik besedila
+pdfjs-free-text-default-content = Začnite tipkati …
+pdfjs-ink =
+    .aria-label = Urejevalnik risanja
+pdfjs-ink-canvas =
+    .aria-label = Uporabnikova slika
+
+## Alt-text dialog
+
+# Alternative text (alt text) helps when people can't see the image.
+pdfjs-editor-alt-text-button-label = Nadomestno besedilo
+pdfjs-editor-alt-text-edit-button-label = Uredi nadomestno besedilo
+pdfjs-editor-alt-text-dialog-label = Izberite možnost
+pdfjs-editor-alt-text-dialog-description = Nadomestno besedilo se prikaže tistim, ki ne vidijo slike, ali če se ta ne naloži.
+pdfjs-editor-alt-text-add-description-label = Dodaj opis
+pdfjs-editor-alt-text-add-description-description = Poskušajte v enem ali dveh stavkih opisati motiv, okolje ali dejanja.
+pdfjs-editor-alt-text-mark-decorative-label = Označi kot okrasno
+pdfjs-editor-alt-text-mark-decorative-description = Uporablja se za slike, ki služijo samo okrasu, na primer obrobe ali vodne žige.
+pdfjs-editor-alt-text-cancel-button = Prekliči
+pdfjs-editor-alt-text-save-button = Shrani
+pdfjs-editor-alt-text-decorative-tooltip = Označeno kot okrasno
+# .placeholder: This is a placeholder for the alt text input area
+pdfjs-editor-alt-text-textarea =
+    .placeholder = Na primer: "Mladenič sedi za mizo pri jedi"
+
+## Editor resizers
+## This is used in an aria label to help to understand the role of the resizer.
+
+pdfjs-editor-resizer-label-top-left = Zgornji levi kot – spremeni velikost
+pdfjs-editor-resizer-label-top-middle = Zgoraj na sredini – spremeni velikost
+pdfjs-editor-resizer-label-top-right = Zgornji desni kot – spremeni velikost
+pdfjs-editor-resizer-label-middle-right = Desno na sredini – spremeni velikost
+pdfjs-editor-resizer-label-bottom-right = Spodnji desni kot – spremeni velikost
+pdfjs-editor-resizer-label-bottom-middle = Spodaj na sredini – spremeni velikost
+pdfjs-editor-resizer-label-bottom-left = Spodnji levi kot – spremeni velikost
+pdfjs-editor-resizer-label-middle-left = Levo na sredini – spremeni velikost
+
+## Color picker
+
+# This means "Color used to highlight text"
+pdfjs-editor-highlight-colorpicker-label = Barva označbe
+pdfjs-editor-colorpicker-button =
+    .title = Spremeni barvo
+pdfjs-editor-colorpicker-dropdown =
+    .aria-label = Izbira barve
+pdfjs-editor-colorpicker-yellow =
+    .title = Rumena
+pdfjs-editor-colorpicker-green =
+    .title = Zelena
+pdfjs-editor-colorpicker-blue =
+    .title = Modra
+pdfjs-editor-colorpicker-pink =
+    .title = Roza
+pdfjs-editor-colorpicker-red =
+    .title = Rdeča
+
+## Show all highlights
+## This is a toggle button to show/hide all the highlights.
+
+pdfjs-editor-highlight-show-all-button-label = Prikaži vse
+pdfjs-editor-highlight-show-all-button =
+    .title = Prikaži vse

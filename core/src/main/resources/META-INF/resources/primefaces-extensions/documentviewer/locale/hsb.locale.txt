@@ -1,261 +1,406 @@
-# Copyright 2012 Mozilla Foundation
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-# Main toolbar buttons (tooltips and alt text for images)
-previous.title=Předchadna strona
-previous_label=Wróćo
-next.title=Přichodna strona
-next_label=Dale
 
-# LOCALIZATION NOTE (page.title): The tooltip for the pageNumber input.
-page.title=Strona
-# LOCALIZATION NOTE (of_pages): "{{pagesCount}}" will be replaced by a number
-# representing the total number of pages in the document.
-of_pages=z {{pagesCount}}
-# LOCALIZATION NOTE (page_of_pages): "{{pageNumber}}" and "{{pagesCount}}"
-# will be replaced by a number representing the currently visible page,
-# respectively a number representing the total number of pages in the document.
-page_of_pages=({{pageNumber}} z {{pagesCount}})
+## Main toolbar buttons (tooltips and alt text for images)
 
-zoom_out.title=Pomjeńšić
-zoom_out_label=Pomjeńšić
-zoom_in.title=Powjetšić
-zoom_in_label=Powjetšić
-zoom.title=Skalowanje
-presentation_mode.title=Do prezentaciskeho modusa přeńć
-presentation_mode_label=Prezentaciski modus
-open_file.title=Dataju wočinić
-open_file_label=Wočinić
-print.title=Ćišćeć
-print_label=Ćišćeć
-download.title=Sćahnyć
-download_label=Sćahnyć
-bookmark.title=Aktualny napohlad (kopěrować abo w nowym woknje wočinić)
-bookmark_label=Aktualny napohlad
+pdfjs-previous-button =
+    .title = Předchadna strona
+pdfjs-previous-button-label = Wróćo
+pdfjs-next-button =
+    .title = Přichodna strona
+pdfjs-next-button-label = Dale
+# .title: Tooltip for the pageNumber input.
+pdfjs-page-input =
+    .title = Strona
+# Variables:
+#   $pagesCount (Number) - the total number of pages in the document
+# This string follows an input field with the number of the page currently displayed.
+pdfjs-of-pages = z { $pagesCount }
+# Variables:
+#   $pageNumber (Number) - the currently visible page
+#   $pagesCount (Number) - the total number of pages in the document
+pdfjs-page-of-pages = ({ $pageNumber } z { $pagesCount })
+pdfjs-zoom-out-button =
+    .title = Pomjeńšić
+pdfjs-zoom-out-button-label = Pomjeńšić
+pdfjs-zoom-in-button =
+    .title = Powjetšić
+pdfjs-zoom-in-button-label = Powjetšić
+pdfjs-zoom-select =
+    .title = Skalowanje
+pdfjs-presentation-mode-button =
+    .title = Do prezentaciskeho modusa přeńć
+pdfjs-presentation-mode-button-label = Prezentaciski modus
+pdfjs-open-file-button =
+    .title = Dataju wočinić
+pdfjs-open-file-button-label = Wočinić
+pdfjs-print-button =
+    .title = Ćišćeć
+pdfjs-print-button-label = Ćišćeć
+pdfjs-save-button =
+    .title = Składować
+pdfjs-save-button-label = Składować
+# Used in Firefox for Android as a tooltip for the download button (“download” is a verb).
+pdfjs-download-button =
+    .title = Sćahnyć
+# Used in Firefox for Android as a label for the download button (“download” is a verb).
+# Length of the translation matters since we are in a mobile context, with limited screen estate.
+pdfjs-download-button-label = Sćahnyć
+pdfjs-bookmark-button =
+    .title = Aktualna strona (URL z aktualneje strony pokazać)
+pdfjs-bookmark-button-label = Aktualna strona
+# Used in Firefox for Android.
+pdfjs-open-in-app-button =
+    .title = W nałoženju wočinić
+# Used in Firefox for Android.
+# Length of the translation matters since we are in a mobile context, with limited screen estate.
+pdfjs-open-in-app-button-label = W nałoženju wočinić
 
-# Secondary toolbar and context menu
-tools.title=Nastroje
-tools_label=Nastroje
-first_page.title=K prěnjej stronje
-first_page.label=K prěnjej stronje
-first_page_label=K prěnjej stronje
-last_page.title=K poslednjej stronje
-last_page.label=K poslednjej stronje
-last_page_label=K poslednjej stronje
-page_rotate_cw.title=K směrej časnika wjerćeć
-page_rotate_cw.label=K směrej časnika wjerćeć
-page_rotate_cw_label=K směrej časnika wjerćeć
-page_rotate_ccw.title=Přećiwo směrej časnika wjerćeć
-page_rotate_ccw.label=Přećiwo směrej časnika wjerćeć
-page_rotate_ccw_label=Přećiwo směrej časnika wjerćeć
+##  Secondary toolbar and context menu
 
-cursor_text_select_tool.title=Nastroj za wuběranje teksta zmóžnić
-cursor_text_select_tool_label=Nastroj za wuběranje teksta
-cursor_hand_tool.title=Ručny nastroj zmóžnić
-cursor_hand_tool_label=Ručny nastroj
+pdfjs-tools-button =
+    .title = Nastroje
+pdfjs-tools-button-label = Nastroje
+pdfjs-first-page-button =
+    .title = K prěnjej stronje
+pdfjs-first-page-button-label = K prěnjej stronje
+pdfjs-last-page-button =
+    .title = K poslednjej stronje
+pdfjs-last-page-button-label = K poslednjej stronje
+pdfjs-page-rotate-cw-button =
+    .title = K směrej časnika wjerćeć
+pdfjs-page-rotate-cw-button-label = K směrej časnika wjerćeć
+pdfjs-page-rotate-ccw-button =
+    .title = Přećiwo směrej časnika wjerćeć
+pdfjs-page-rotate-ccw-button-label = Přećiwo směrej časnika wjerćeć
+pdfjs-cursor-text-select-tool-button =
+    .title = Nastroj za wuběranje teksta zmóžnić
+pdfjs-cursor-text-select-tool-button-label = Nastroj za wuběranje teksta
+pdfjs-cursor-hand-tool-button =
+    .title = Ručny nastroj zmóžnić
+pdfjs-cursor-hand-tool-button-label = Ručny nastroj
+pdfjs-scroll-page-button =
+    .title = Kulenje strony wužiwać
+pdfjs-scroll-page-button-label = Kulenje strony
+pdfjs-scroll-vertical-button =
+    .title = Wertikalne suwanje wužiwać
+pdfjs-scroll-vertical-button-label = Wertikalne suwanje
+pdfjs-scroll-horizontal-button =
+    .title = Horicontalne suwanje wužiwać
+pdfjs-scroll-horizontal-button-label = Horicontalne suwanje
+pdfjs-scroll-wrapped-button =
+    .title = Postupne suwanje wužiwać
+pdfjs-scroll-wrapped-button-label = Postupne suwanje
+pdfjs-spread-none-button =
+    .title = Strony njezwjazać
+pdfjs-spread-none-button-label = Žana dwójna strona
+pdfjs-spread-odd-button =
+    .title = Strony započinajo z njerunymi stronami zwjazać
+pdfjs-spread-odd-button-label = Njerune strony
+pdfjs-spread-even-button =
+    .title = Strony započinajo z runymi stronami zwjazać
+pdfjs-spread-even-button-label = Rune strony
 
-scroll_vertical.title=Wertikalne suwanje wužiwać
-scroll_vertical_label=Wertikalnje suwanje
-scroll_horizontal.title=Horicontalne suwanje wužiwać
-scroll_horizontal_label=Horicontalne suwanje
-scroll_wrapped.title=Postupne suwanje wužiwać
-scroll_wrapped_label=Postupne suwanje
+## Document properties dialog
 
-spread_none.title=Strony njezwjazać
-spread_none_label=Žana dwójna strona
-spread_odd.title=Strony započinajo z njerunymi stronami zwjazać
-spread_odd_label=Njerune strony
-spread_even.title=Strony započinajo z runymi stronami zwjazać
-spread_even_label=Rune strony
+pdfjs-document-properties-button =
+    .title = Dokumentowe kajkosće…
+pdfjs-document-properties-button-label = Dokumentowe kajkosće…
+pdfjs-document-properties-file-name = Mjeno dataje:
+pdfjs-document-properties-file-size = Wulkosć dataje:
+# Variables:
+#   $size_kb (Number) - the PDF file size in kilobytes
+#   $size_b (Number) - the PDF file size in bytes
+pdfjs-document-properties-kb = { $size_kb } KB ({ $size_b } bajtow)
+# Variables:
+#   $size_mb (Number) - the PDF file size in megabytes
+#   $size_b (Number) - the PDF file size in bytes
+pdfjs-document-properties-mb = { $size_mb } MB ({ $size_b } bajtow)
+pdfjs-document-properties-title = Titul:
+pdfjs-document-properties-author = Awtor:
+pdfjs-document-properties-subject = Předmjet:
+pdfjs-document-properties-keywords = Klučowe słowa:
+pdfjs-document-properties-creation-date = Datum wutworjenja:
+pdfjs-document-properties-modification-date = Datum změny:
+# Variables:
+#   $date (Date) - the creation/modification date of the PDF file
+#   $time (Time) - the creation/modification time of the PDF file
+pdfjs-document-properties-date-string = { $date }, { $time }
+pdfjs-document-properties-creator = Awtor:
+pdfjs-document-properties-producer = PDF-zhotowjer:
+pdfjs-document-properties-version = PDF-wersija:
+pdfjs-document-properties-page-count = Ličba stronow:
+pdfjs-document-properties-page-size = Wulkosć strony:
+pdfjs-document-properties-page-size-unit-inches = cól
+pdfjs-document-properties-page-size-unit-millimeters = mm
+pdfjs-document-properties-page-size-orientation-portrait = wysoki format
+pdfjs-document-properties-page-size-orientation-landscape = prěčny format
+pdfjs-document-properties-page-size-name-a-three = A3
+pdfjs-document-properties-page-size-name-a-four = A4
+pdfjs-document-properties-page-size-name-letter = Letter
+pdfjs-document-properties-page-size-name-legal = Legal
 
-# Document properties dialog box
-document_properties.title=Dokumentowe kajkosće…
-document_properties_label=Dokumentowe kajkosće…
-document_properties_file_name=Mjeno dataje:
-document_properties_file_size=Wulkosć dataje:
-# LOCALIZATION NOTE (document_properties_kb): "{{size_kb}}" and "{{size_b}}"
-# will be replaced by the PDF file size in kilobytes, respectively in bytes.
-document_properties_kb={{size_kb}} KB ({{size_b}} bajtow)
-# LOCALIZATION NOTE (document_properties_mb): "{{size_mb}}" and "{{size_b}}"
-# will be replaced by the PDF file size in megabytes, respectively in bytes.
-document_properties_mb={{size_mb}} MB ({{size_b}} bajtow)
-document_properties_title=Titul:
-document_properties_author=Awtor:
-document_properties_subject=Předmjet:
-document_properties_keywords=Klučowe słowa:
-document_properties_creation_date=Datum wutworjenja:
-document_properties_modification_date=Datum změny:
-# LOCALIZATION NOTE (document_properties_date_string): "{{date}}" and "{{time}}"
-# will be replaced by the creation/modification date, and time, of the PDF file.
-document_properties_date_string={{date}}, {{time}}
-document_properties_creator=Awtor:
-document_properties_producer=PDF-zhotowjer:
-document_properties_version=PDF-wersija:
-document_properties_page_count=Ličba stronow:
-document_properties_page_size=Wulkosć strony:
-document_properties_page_size_unit_inches=cól
-document_properties_page_size_unit_millimeters=mm
-document_properties_page_size_orientation_portrait=wysoki format
-document_properties_page_size_orientation_landscape=prěčny format
-document_properties_page_size_name_a3=A3
-document_properties_page_size_name_a4=A4
-document_properties_page_size_name_letter=Letter
-document_properties_page_size_name_legal=Legal
-# LOCALIZATION NOTE (document_properties_page_size_dimension_string):
-# "{{width}}", "{{height}}", {{unit}}, and {{orientation}} will be replaced by
-# the size, respectively their unit of measurement and orientation, of the (current) page.
-document_properties_page_size_dimension_string={{width}} × {{height}} {{unit}} ({{orientation}})
-# LOCALIZATION NOTE (document_properties_page_size_dimension_name_string):
-# "{{width}}", "{{height}}", {{unit}}, {{name}}, and {{orientation}} will be replaced by
-# the size, respectively their unit of measurement, name, and orientation, of the (current) page.
-document_properties_page_size_dimension_name_string={{width}} × {{height}} {{unit}} ({{name}}, {{orientation}})
-# LOCALIZATION NOTE (document_properties_linearized): The linearization status of
-# the document; usually called "Fast Web View" in English locales of Adobe software.
-document_properties_linearized=Fast Web View:
-document_properties_linearized_yes=Haj
-document_properties_linearized_no=Ně
-document_properties_close=Začinić
+## Variables:
+##   $width (Number) - the width of the (current) page
+##   $height (Number) - the height of the (current) page
+##   $unit (String) - the unit of measurement of the (current) page
+##   $name (String) - the name of the (current) page
+##   $orientation (String) - the orientation of the (current) page
 
-print_progress_message=Dokument so za ćišćenje přihotuje…
-# LOCALIZATION NOTE (print_progress_percent): "{{progress}}" will be replaced by
-# a numerical per cent value.
-print_progress_percent={{progress}}%
-print_progress_close=Přetorhnyć
+pdfjs-document-properties-page-size-dimension-string = { $width } × { $height } { $unit } ({ $orientation })
+pdfjs-document-properties-page-size-dimension-name-string = { $width } × { $height } { $unit } ({ $name }, { $orientation })
 
-# Tooltips and alt text for side panel toolbar buttons
-# (the _label strings are alt text for the buttons, the .title strings are
-# tooltips)
-toggle_sidebar.title=Bóčnicu pokazać/schować
-toggle_sidebar_notification.title=Bóčnicu přepinać (dokument wobsahuje wobrys/přiwěški)
-toggle_sidebar_notification2.title=Bóčnicu přepinać (dokument rozrjad/přiwěški/woršty wobsahuje)
-toggle_sidebar_label=Bóčnicu pokazać/schować
-document_outline.title=Dokumentowy naćisk pokazać (dwójne kliknjenje, zo bychu so wšě zapiski pokazali/schowali)
-document_outline_label=Dokumentowa struktura
-attachments.title=Přiwěški pokazać
-attachments_label=Přiwěški
-layers.title=Woršty pokazać (klikńće dwójce, zo byšće wšě woršty na standardny staw wróćo stajił)
-layers_label=Woršty
-thumbs.title=Miniatury pokazać
-thumbs_label=Miniatury
-current_outline_item.title=Aktualny rozrjadowy zapisk pytać
-current_outline_item_label=Aktualny rozrjadowy zapisk
-findbar.title=W dokumenće pytać
-findbar_label=Pytać
+##
 
-additional_layers=Dalše woršty
-# LOCALIZATION NOTE (page_canvas): "{{page}}" will be replaced by the page number.
-page_canvas=Strona {{page}}
-# LOCALIZATION NOTE (page_landmark): "{{page}}" will be replaced by the page number.
-page_landmark=Strona {{page}}
-# Thumbnails panel item (tooltip and alt text for images)
-# LOCALIZATION NOTE (thumb_page_title): "{{page}}" will be replaced by the page
-# number.
-thumb_page_title=Strona {{page}}
-# LOCALIZATION NOTE (thumb_page_canvas): "{{page}}" will be replaced by the page
-# number.
-thumb_page_canvas=Miniatura strony {{page}}
+# The linearization status of the document; usually called "Fast Web View" in
+# English locales of Adobe software.
+pdfjs-document-properties-linearized = Fast Web View:
+pdfjs-document-properties-linearized-yes = Haj
+pdfjs-document-properties-linearized-no = Ně
+pdfjs-document-properties-close-button = Začinić
 
-# Find panel button title and messages
-find_input.title=Pytać
-find_input.placeholder=W dokumenće pytać…
-find_previous.title=Předchadne wustupowanje pytanskeho wuraza pytać
-find_previous_label=Wróćo
-find_next.title=Přichodne wustupowanje pytanskeho wuraza pytać
-find_next_label=Dale
-find_highlight=Wšě wuzběhnyć
-find_match_case_label=Wulkopisanje wobkedźbować
-find_entire_word_label=Cyłe słowa
-find_reached_top=Spočatk dokumenta docpěty, pokročuje so z kóncom
-find_reached_bottom=Kónc dokument docpěty, pokročuje so ze spočatkom
-# LOCALIZATION NOTE (find_match_count): The supported plural forms are
-# [one|two|few|many|other], with [other] as the default value.
-# "{{current}}" and "{{total}}" will be replaced by a number representing the
-# index of the currently active find result, respectively a number representing
-# the total number of matches in the document.
-find_match_count={[ plural(total) ]}
-find_match_count[one]={{current}} z {{total}} wotpowědnika
-find_match_count[two]={{current}} z {{total}} wotpowědnikow
-find_match_count[few]={{current}} z {{total}} wotpowědnikow
-find_match_count[many]={{current}} z {{total}} wotpowědnikow
-find_match_count[other]={{current}} z {{total}} wotpowědnikow
-# LOCALIZATION NOTE (find_match_count_limit): The supported plural forms are
-# [zero|one|two|few|many|other], with [other] as the default value.
-# "{{limit}}" will be replaced by a numerical value.
-find_match_count_limit={[ plural(limit) ]}
-find_match_count_limit[zero]=Wjace hač {{limit}} wotpowědnikow
-find_match_count_limit[one]=Wjace hač {{limit}} wotpowědnik
-find_match_count_limit[two]=Wjace hač {{limit}} wotpowědnikaj
-find_match_count_limit[few]=Wjace hač {{limit}} wotpowědniki
-find_match_count_limit[many]=Wjace hač {{limit}} wotpowědnikow
-find_match_count_limit[other]=Wjace hač {{limit}} wotpowědnikow
-find_not_found=Pytanski wuraz njeje so namakał
+## Print
 
-# Error panel labels
-error_more_info=Wjace informacijow
-error_less_info=Mjenje informacijow
-error_close=Začinić
-# LOCALIZATION NOTE (error_version_info): "{{version}}" and "{{build}}" will be
-# replaced by the PDF.JS version and build ID.
-error_version_info=PDF.js v{{version}} (build: {{build}})
-# LOCALIZATION NOTE (error_message): "{{message}}" will be replaced by an
-# english string describing the error.
-error_message=Zdźělenka: {{message}}
-# LOCALIZATION NOTE (error_stack): "{{stack}}" will be replaced with a stack
-# trace.
-error_stack=Lisćina zawołanjow: {{stack}}
-# LOCALIZATION NOTE (error_file): "{{file}}" will be replaced with a filename
-error_file=Dataja: {{file}}
-# LOCALIZATION NOTE (error_line): "{{line}}" will be replaced with a line number
-error_line=Linka: {{line}}
-rendering_error=Při zwobraznjenju strony je zmylk wustupił.
+pdfjs-print-progress-message = Dokument so za ćišćenje přihotuje…
+# Variables:
+#   $progress (Number) - percent value
+pdfjs-print-progress-percent = { $progress }%
+pdfjs-print-progress-close-button = Přetorhnyć
+pdfjs-printing-not-supported = Warnowanje: Ćišćenje so přez tutón wobhladowak połnje njepodpěruje.
+pdfjs-printing-not-ready = Warnowanje: PDF njeje so za ćišćenje dospołnje začitał.
 
-# Predefined zoom values
-page_scale_width=Šěrokosć strony
-page_scale_fit=Wulkosć strony
-page_scale_auto=Awtomatiske skalowanje
-page_scale_actual=Aktualna wulkosć
-# LOCALIZATION NOTE (page_scale_percent): "{{scale}}" will be replaced by a
-# numerical scale value.
-page_scale_percent={{scale}}%
+## Tooltips and alt text for side panel toolbar buttons
 
-# Loading indicator messages
-loading_error_indicator=Zmylk
+pdfjs-toggle-sidebar-button =
+    .title = Bóčnicu pokazać/schować
+pdfjs-toggle-sidebar-notification-button =
+    .title = Bóčnicu přepinać (dokument rozrjad/přiwěški/woršty wobsahuje)
+pdfjs-toggle-sidebar-button-label = Bóčnicu pokazać/schować
+pdfjs-document-outline-button =
+    .title = Dokumentowy naćisk pokazać (dwójne kliknjenje, zo bychu so wšě zapiski pokazali/schowali)
+pdfjs-document-outline-button-label = Dokumentowa struktura
+pdfjs-attachments-button =
+    .title = Přiwěški pokazać
+pdfjs-attachments-button-label = Přiwěški
+pdfjs-layers-button =
+    .title = Woršty pokazać (klikńće dwójce, zo byšće wšě woršty na standardny staw wróćo stajił)
+pdfjs-layers-button-label = Woršty
+pdfjs-thumbs-button =
+    .title = Miniatury pokazać
+pdfjs-thumbs-button-label = Miniatury
+pdfjs-current-outline-item-button =
+    .title = Aktualny rozrjadowy zapisk pytać
+pdfjs-current-outline-item-button-label = Aktualny rozrjadowy zapisk
+pdfjs-findbar-button =
+    .title = W dokumenće pytać
+pdfjs-findbar-button-label = Pytać
+pdfjs-additional-layers = Dalše woršty
 
-# Loading indicator messages
-loading=Začituje so…
-loading_error=Při začitowanju PDF je zmylk wustupił.
-invalid_file_error=Njepłaćiwa abo wobškodźena PDF-dataja.
-missing_file_error=Falowaca PDF-dataja.
-unexpected_response_error=Njewočakowana serwerowa wotmołwa.
+## Thumbnails panel item (tooltip and alt text for images)
 
-# LOCALIZATION NOTE (annotation_date_string): "{{date}}" and "{{time}}" will be
-# replaced by the modification date, and time, of the annotation.
-annotation_date_string={{date}}, {{time}}
+# Variables:
+#   $page (Number) - the page number
+pdfjs-thumb-page-title =
+    .title = Strona { $page }
+# Variables:
+#   $page (Number) - the page number
+pdfjs-thumb-page-canvas =
+    .aria-label = Miniatura strony { $page }
 
-# LOCALIZATION NOTE (text_annotation_type.alt): This is used as a tooltip.
-# "{{type}}" will be replaced with an annotation type from a list defined in
-# the PDF spec (32000-1:2008 Table 169 – Annotation types).
+## Find panel button title and messages
+
+pdfjs-find-input =
+    .title = Pytać
+    .placeholder = W dokumenće pytać…
+pdfjs-find-previous-button =
+    .title = Předchadne wustupowanje pytanskeho wuraza pytać
+pdfjs-find-previous-button-label = Wróćo
+pdfjs-find-next-button =
+    .title = Přichodne wustupowanje pytanskeho wuraza pytać
+pdfjs-find-next-button-label = Dale
+pdfjs-find-highlight-checkbox = Wšě wuzběhnyć
+pdfjs-find-match-case-checkbox-label = Wulkopisanje wobkedźbować
+pdfjs-find-match-diacritics-checkbox-label = Diakritiske znamješka wužiwać
+pdfjs-find-entire-word-checkbox-label = Cyłe słowa
+pdfjs-find-reached-top = Spočatk dokumenta docpěty, pokročuje so z kóncom
+pdfjs-find-reached-bottom = Kónc dokument docpěty, pokročuje so ze spočatkom
+# Variables:
+#   $current (Number) - the index of the currently active find result
+#   $total (Number) - the total number of matches in the document
+pdfjs-find-match-count =
+    { $total ->
+        [one] { $current } z { $total } wotpowědnika
+        [two] { $current } z { $total } wotpowědnikow
+        [few] { $current } z { $total } wotpowědnikow
+       *[other] { $current } z { $total } wotpowědnikow
+    }
+# Variables:
+#   $limit (Number) - the maximum number of matches
+pdfjs-find-match-count-limit =
+    { $limit ->
+        [one] Wyše { $limit } wotpowědnik
+        [two] Wyše { $limit } wotpowědnikaj
+        [few] Wyše { $limit } wotpowědniki
+       *[other] Wyše { $limit } wotpowědnikow
+    }
+pdfjs-find-not-found = Pytanski wuraz njeje so namakał
+
+## Predefined zoom values
+
+pdfjs-page-scale-width = Šěrokosć strony
+pdfjs-page-scale-fit = Wulkosć strony
+pdfjs-page-scale-auto = Awtomatiske skalowanje
+pdfjs-page-scale-actual = Aktualna wulkosć
+# Variables:
+#   $scale (Number) - percent value for page scale
+pdfjs-page-scale-percent = { $scale }%
+
+## PDF page
+
+# Variables:
+#   $page (Number) - the page number
+pdfjs-page-landmark =
+    .aria-label = Strona { $page }
+
+## Loading indicator messages
+
+pdfjs-loading-error = Při začitowanju PDF je zmylk wustupił.
+pdfjs-invalid-file-error = Njepłaćiwa abo wobškodźena PDF-dataja.
+pdfjs-missing-file-error = Falowaca PDF-dataja.
+pdfjs-unexpected-response-error = Njewočakowana serwerowa wotmołwa.
+pdfjs-rendering-error = Při zwobraznjenju strony je zmylk wustupił.
+
+## Annotations
+
+# Variables:
+#   $date (Date) - the modification date of the annotation
+#   $time (Time) - the modification time of the annotation
+pdfjs-annotation-date-string = { $date }, { $time }
+# .alt: This is used as a tooltip.
+# Variables:
+#   $type (String) - an annotation type from a list defined in the PDF spec
+# (32000-1:2008 Table 169 – Annotation types).
 # Some common types are e.g.: "Check", "Text", "Comment", "Note"
-text_annotation_type.alt=[Typ přispomnjenki: {{type}}]
-password_label=Zapodajće hesło, zo byšće PDF-dataju wočinił.
-password_invalid=Njepłaćiwe hesło. Prošu spytajće hišće raz.
-password_ok=W porjadku
-password_cancel=Přetorhnyć
+pdfjs-text-annotation-type =
+    .alt = [Typ přispomnjenki: { $type }]
 
-printing_not_supported=Warnowanje: Ćišćenje so přez tutón wobhladowak połnje njepodpěruje.
-printing_not_ready=Warnowanje: PDF njeje so za ćišćenje dospołnje začitał.
-web_fonts_disabled=Webpisma su znjemóžnjene: njeje móžno, zasadźene PDF-pisma wužiwać.
-# LOCALIZATION NOTE (unsupported_feature_signatures): Should contain the same
-# exact string as in the `chrome.properties` file.
-unsupported_feature_signatures=Tutón PDF-dokument digitalne signatury wobsahuje. Přepruwowanje signaturow so njepodpěruje.
+## Password
+
+pdfjs-password-label = Zapodajće hesło, zo byšće PDF-dataju wočinił.
+pdfjs-password-invalid = Njepłaćiwe hesło. Prošu spytajće hišće raz.
+pdfjs-password-ok-button = W porjadku
+pdfjs-password-cancel-button = Přetorhnyć
+pdfjs-web-fonts-disabled = Webpisma su znjemóžnjene: njeje móžno, zasadźene PDF-pisma wužiwać.
+
+## Editing
+
+pdfjs-editor-free-text-button =
+    .title = Tekst
+pdfjs-editor-free-text-button-label = Tekst
+pdfjs-editor-ink-button =
+    .title = Rysować
+pdfjs-editor-ink-button-label = Rysować
+pdfjs-editor-stamp-button =
+    .title = Wobrazy přidać abo wobdźěłać
+pdfjs-editor-stamp-button-label = Wobrazy přidać abo wobdźěłać
+pdfjs-editor-highlight-button =
+    .title = Wuzběhnyć
+pdfjs-editor-highlight-button-label = Wuzběhnyć
+pdfjs-highlight-floating-button =
+    .title = Wuzběhnyć
+pdfjs-highlight-floating-button1 =
+    .title = Wuzběhnjenje
+    .aria-label = Wuzběhnjenje
+pdfjs-highlight-floating-button-label = Wuzběhnjenje
+
+## Remove button for the various kind of editor.
+
+pdfjs-editor-remove-ink-button =
+    .title = Rysowanku wotstronić
+pdfjs-editor-remove-freetext-button =
+    .title = Tekst wotstronić
+pdfjs-editor-remove-stamp-button =
+    .title = Wobraz wotstronić
+pdfjs-editor-remove-highlight-button =
+    .title = Wuzběhnjenje wotstronić
+
+##
+
+# Editor Parameters
+pdfjs-editor-free-text-color-input = Barba
+pdfjs-editor-free-text-size-input = Wulkosć
+pdfjs-editor-ink-color-input = Barba
+pdfjs-editor-ink-thickness-input = Tołstosć
+pdfjs-editor-ink-opacity-input = Opacita
+pdfjs-editor-stamp-add-image-button =
+    .title = Wobraz přidać
+pdfjs-editor-stamp-add-image-button-label = Wobraz přidać
+# This refers to the thickness of the line used for free highlighting (not bound to text)
+pdfjs-editor-free-highlight-thickness-input = Tołstosć
+pdfjs-editor-free-highlight-thickness-title =
+    .title = Tołstosć změnić, hdyž so zapiski wuzběhuja, kotrež tekst njejsu
+pdfjs-free-text =
+    .aria-label = Tekstowy editor
+pdfjs-free-text-default-content = Započńće pisać…
+pdfjs-ink =
+    .aria-label = Rysowanski editor
+pdfjs-ink-canvas =
+    .aria-label = Wobraz wutworjeny wot wužiwarja
+
+## Alt-text dialog
+
+# Alternative text (alt text) helps when people can't see the image.
+pdfjs-editor-alt-text-button-label = Alternatiwny tekst
+pdfjs-editor-alt-text-edit-button-label = Alternatiwny tekst wobdźěłać
+pdfjs-editor-alt-text-dialog-label = Nastajenje wubrać
+pdfjs-editor-alt-text-dialog-description = Alternatiwny tekst pomha, hdyž ludźo njemóža wobraz widźeć abo hdyž so wobraz njezačita.
+pdfjs-editor-alt-text-add-description-label = Wopisanje přidać
+pdfjs-editor-alt-text-add-description-description = Pisajće 1 sadu abo 2 sadźe, kotrejž temu, nastajenje abo akcije wopisujetej.
+pdfjs-editor-alt-text-mark-decorative-label = Jako dekoratiwny markěrować
+pdfjs-editor-alt-text-mark-decorative-description = To so za pyšace wobrazy wužiwa, na přikład ramiki abo wodowe znamjenja.
+pdfjs-editor-alt-text-cancel-button = Přetorhnyć
+pdfjs-editor-alt-text-save-button = Składować
+pdfjs-editor-alt-text-decorative-tooltip = Jako dekoratiwny markěrowany
+# .placeholder: This is a placeholder for the alt text input area
+pdfjs-editor-alt-text-textarea =
+    .placeholder = Na přikład, „Młody muž za blidom sedźi, zo by jědź jědł“
+
+## Editor resizers
+## This is used in an aria label to help to understand the role of the resizer.
+
+pdfjs-editor-resizer-label-top-left = Horjeka nalěwo – wulkosć změnić
+pdfjs-editor-resizer-label-top-middle = Horjeka wosrjedź – wulkosć změnić
+pdfjs-editor-resizer-label-top-right = Horjeka naprawo – wulkosć změnić
+pdfjs-editor-resizer-label-middle-right = Wosrjedź naprawo – wulkosć změnić
+pdfjs-editor-resizer-label-bottom-right = Deleka naprawo – wulkosć změnić
+pdfjs-editor-resizer-label-bottom-middle = Deleka wosrjedź – wulkosć změnić
+pdfjs-editor-resizer-label-bottom-left = Deleka nalěwo – wulkosć změnić
+pdfjs-editor-resizer-label-middle-left = Wosrjedź nalěwo – wulkosć změnić
+
+## Color picker
+
+# This means "Color used to highlight text"
+pdfjs-editor-highlight-colorpicker-label = Barba wuzběhnjenja
+pdfjs-editor-colorpicker-button =
+    .title = Barbu změnić
+pdfjs-editor-colorpicker-dropdown =
+    .aria-label = Wuběr barbow
+pdfjs-editor-colorpicker-yellow =
+    .title = Žołty
+pdfjs-editor-colorpicker-green =
+    .title = Zeleny
+pdfjs-editor-colorpicker-blue =
+    .title = Módry
+pdfjs-editor-colorpicker-pink =
+    .title = Pink
+pdfjs-editor-colorpicker-red =
+    .title = Čerwjeny
+
+## Show all highlights
+## This is a toggle button to show/hide all the highlights.
+
+pdfjs-editor-highlight-show-all-button-label = Wšě pokazać
+pdfjs-editor-highlight-show-all-button =
+    .title = Wšě pokazać

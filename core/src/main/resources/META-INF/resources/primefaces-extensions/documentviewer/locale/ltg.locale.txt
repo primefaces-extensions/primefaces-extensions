@@ -1,219 +1,246 @@
-# Copyright 2012 Mozilla Foundation
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-# Main toolbar buttons (tooltips and alt text for images)
-previous.title=Īprīkšejā lopa
-previous_label=Īprīkšejā
-next.title=Nuokomuo lopa
-next_label=Nuokomuo
 
-# LOCALIZATION NOTE (page.title): The tooltip for the pageNumber input.
-page.title=Lopa
-# LOCALIZATION NOTE (of_pages): "{{pagesCount}}" will be replaced by a number
-# representing the total number of pages in the document.
-of_pages=nu {{pagesCount}}
-# LOCALIZATION NOTE (page_of_pages): "{{pageNumber}}" and "{{pagesCount}}"
-# will be replaced by a number representing the currently visible page,
-# respectively a number representing the total number of pages in the document.
-page_of_pages=({{pageNumber}} nu {{pagesCount}})
+## Main toolbar buttons (tooltips and alt text for images)
 
-zoom_out.title=Attuolynuot 
-zoom_out_label=Attuolynuot
-zoom_in.title=Pītuvynuot
-zoom_in_label=Pītuvynuot
-zoom.title=Palelynuojums
-presentation_mode.title=Puorslēgtīs iz Prezentacejis režymu
-presentation_mode_label=Prezentacejis režyms
-open_file.title=Attaiseit failu
-open_file_label=Attaiseit
-print.title=Drukuošona
-print_label=Drukōt
-download.title=Lejupīluode
-download_label=Lejupīluodeit
-bookmark.title=Pošreizejais skots (kopēt voi attaiseit jaunā lūgā)
-bookmark_label=Pošreizejais skots
+pdfjs-previous-button =
+    .title = Īprīkšejā lopa
+pdfjs-previous-button-label = Īprīkšejā
+pdfjs-next-button =
+    .title = Nuokomuo lopa
+pdfjs-next-button-label = Nuokomuo
+# .title: Tooltip for the pageNumber input.
+pdfjs-page-input =
+    .title = Lopa
+# Variables:
+#   $pagesCount (Number) - the total number of pages in the document
+# This string follows an input field with the number of the page currently displayed.
+pdfjs-of-pages = nu { $pagesCount }
+# Variables:
+#   $pageNumber (Number) - the currently visible page
+#   $pagesCount (Number) - the total number of pages in the document
+pdfjs-page-of-pages = ({ $pageNumber } nu { $pagesCount })
+pdfjs-zoom-out-button =
+    .title = Attuolynuot
+pdfjs-zoom-out-button-label = Attuolynuot
+pdfjs-zoom-in-button =
+    .title = Pītuvynuot
+pdfjs-zoom-in-button-label = Pītuvynuot
+pdfjs-zoom-select =
+    .title = Palelynuojums
+pdfjs-presentation-mode-button =
+    .title = Puorslēgtīs iz Prezentacejis režymu
+pdfjs-presentation-mode-button-label = Prezentacejis režyms
+pdfjs-open-file-button =
+    .title = Attaiseit failu
+pdfjs-open-file-button-label = Attaiseit
+pdfjs-print-button =
+    .title = Drukuošona
+pdfjs-print-button-label = Drukōt
 
-# Secondary toolbar and context menu
-tools.title=Reiki
-tools_label=Reiki
-first_page.title=Īt iz pyrmū lopu
-first_page.label=Īt iz pyrmū lopu
-first_page_label=Īt iz pyrmū lopu
-last_page.title=Īt iz piedejū lopu
-last_page.label=Īt iz piedejū lopu
-last_page_label=Īt iz piedejū lopu
-page_rotate_cw.title=Pagrīzt pa pulksteni
-page_rotate_cw.label=Pagrīzt pa pulksteni
-page_rotate_cw_label=Pagrīzt pa pulksteni
-page_rotate_ccw.title=Pagrīzt pret pulksteni
-page_rotate_ccw.label=Pagrīzt pret pulksteni
-page_rotate_ccw_label=Pagrīzt pret pulksteni
+##  Secondary toolbar and context menu
 
-cursor_text_select_tool.title=Aktivizēt teksta izvieles reiku
-cursor_text_select_tool_label=Teksta izvieles reiks
-cursor_hand_tool.title=Aktivēt rūkys reiku
-cursor_hand_tool_label=Rūkys reiks
+pdfjs-tools-button =
+    .title = Reiki
+pdfjs-tools-button-label = Reiki
+pdfjs-first-page-button =
+    .title = Īt iz pyrmū lopu
+pdfjs-first-page-button-label = Īt iz pyrmū lopu
+pdfjs-last-page-button =
+    .title = Īt iz piedejū lopu
+pdfjs-last-page-button-label = Īt iz piedejū lopu
+pdfjs-page-rotate-cw-button =
+    .title = Pagrīzt pa pulksteni
+pdfjs-page-rotate-cw-button-label = Pagrīzt pa pulksteni
+pdfjs-page-rotate-ccw-button =
+    .title = Pagrīzt pret pulksteni
+pdfjs-page-rotate-ccw-button-label = Pagrīzt pret pulksteni
+pdfjs-cursor-text-select-tool-button =
+    .title = Aktivizēt teksta izvieles reiku
+pdfjs-cursor-text-select-tool-button-label = Teksta izvieles reiks
+pdfjs-cursor-hand-tool-button =
+    .title = Aktivēt rūkys reiku
+pdfjs-cursor-hand-tool-button-label = Rūkys reiks
+pdfjs-scroll-vertical-button =
+    .title = Izmontōt vertikalū ritinōšonu
+pdfjs-scroll-vertical-button-label = Vertikalō ritinōšona
+pdfjs-scroll-horizontal-button =
+    .title = Izmontōt horizontalū ritinōšonu
+pdfjs-scroll-horizontal-button-label = Horizontalō ritinōšona
+pdfjs-scroll-wrapped-button =
+    .title = Izmontōt mārūgojamū ritinōšonu
+pdfjs-scroll-wrapped-button-label = Mārūgojamō ritinōšona
+pdfjs-spread-none-button =
+    .title = Naizmontōt lopu atvāruma režimu
+pdfjs-spread-none-button-label = Bez atvārumim
+pdfjs-spread-odd-button =
+    .title = Izmontōt lopu atvārumus sōkut nu napōra numeru lopom
+pdfjs-spread-odd-button-label = Napōra lopys pa kreisi
+pdfjs-spread-even-button =
+    .title = Izmontōt lopu atvārumus sōkut nu pōra numeru lopom
+pdfjs-spread-even-button-label = Pōra lopys pa kreisi
 
-scroll_vertical.title=Izmontōt vertikalū ritinōšonu
-scroll_vertical_label=Vertikalō ritinōšona
-scroll_horizontal.title=Izmontōt horizontalū ritinōšonu
-scroll_horizontal_label=Horizontalō ritinōšona
-scroll_wrapped.title=Izmontōt mārūgojamū ritinōšonu
-scroll_wrapped_label=Mārūgojamō ritinōšona
+## Document properties dialog
 
-spread_none.title=Naizmontōt lopu atvāruma režimu
-spread_none_label=Bez atvārumim
-spread_odd.title=Izmontōt lopu atvārumus sōkut nu napōra numeru lopom
-spread_odd_label=Napōra lopys pa kreisi
-spread_even.title=Izmontōt lopu atvārumus sōkut nu pōra numeru lopom
-spread_even_label=Pōra lopys pa kreisi
+pdfjs-document-properties-button =
+    .title = Dokumenta īstatiejumi…
+pdfjs-document-properties-button-label = Dokumenta īstatiejumi…
+pdfjs-document-properties-file-name = Faila nūsaukums:
+pdfjs-document-properties-file-size = Faila izmārs:
+# Variables:
+#   $size_kb (Number) - the PDF file size in kilobytes
+#   $size_b (Number) - the PDF file size in bytes
+pdfjs-document-properties-kb = { $size_kb } KB ({ $size_b } biti)
+# Variables:
+#   $size_mb (Number) - the PDF file size in megabytes
+#   $size_b (Number) - the PDF file size in bytes
+pdfjs-document-properties-mb = { $size_mb } MB ({ $size_b } biti)
+pdfjs-document-properties-title = Nūsaukums:
+pdfjs-document-properties-author = Autors:
+pdfjs-document-properties-subject = Tema:
+pdfjs-document-properties-keywords = Atslāgi vuordi:
+pdfjs-document-properties-creation-date = Izveides datums:
+pdfjs-document-properties-modification-date = lobuošonys datums:
+# Variables:
+#   $date (Date) - the creation/modification date of the PDF file
+#   $time (Time) - the creation/modification time of the PDF file
+pdfjs-document-properties-date-string = { $date }, { $time }
+pdfjs-document-properties-creator = Radeituojs:
+pdfjs-document-properties-producer = PDF producents:
+pdfjs-document-properties-version = PDF verseja:
+pdfjs-document-properties-page-count = Lopu skaits:
+pdfjs-document-properties-page-size = Lopas izmārs:
+pdfjs-document-properties-page-size-unit-inches = collas
+pdfjs-document-properties-page-size-unit-millimeters = mm
+pdfjs-document-properties-page-size-orientation-portrait = portreta orientaceja
+pdfjs-document-properties-page-size-orientation-landscape = ainovys orientaceja
+pdfjs-document-properties-page-size-name-a-three = A3
+pdfjs-document-properties-page-size-name-a-four = A4
+pdfjs-document-properties-page-size-name-letter = Letter
+pdfjs-document-properties-page-size-name-legal = Legal
 
-# Document properties dialog box
-document_properties.title=Dokumenta īstatiejumi…
-document_properties_label=Dokumenta īstatiejumi…
-document_properties_file_name=Faila nūsaukums:
-document_properties_file_size=Faila izmārs:
-# LOCALIZATION NOTE (document_properties_kb): "{{size_kb}}" and "{{size_b}}"
-# will be replaced by the PDF file size in kilobytes, respectively in bytes.
-document_properties_kb={{size_kb}} KB ({{size_b}} biti)
-# LOCALIZATION NOTE (document_properties_mb): "{{size_mb}}" and "{{size_b}}"
-# will be replaced by the PDF file size in megabytes, respectively in bytes.
-document_properties_mb={{size_mb}} MB ({{size_b}} biti)
-document_properties_title=Nūsaukums:
-document_properties_author=Autors:
-document_properties_subject=Tema:
-document_properties_keywords=Atslāgi vuordi:
-document_properties_creation_date=Izveides datums:
-document_properties_modification_date=lobuošonys datums:
-# LOCALIZATION NOTE (document_properties_date_string): "{{date}}" and "{{time}}"
-# will be replaced by the creation/modification date, and time, of the PDF file.
-document_properties_date_string={{date}}, {{time}}
-document_properties_creator=Radeituojs:
-document_properties_producer=PDF producents:
-document_properties_version=PDF verseja:
-document_properties_page_count=Lopu skaits:
-document_properties_page_size=Lopas izmārs:
-document_properties_page_size_unit_inches=collas
-document_properties_page_size_unit_millimeters=mm
-document_properties_page_size_orientation_portrait=portreta orientaceja
-document_properties_page_size_orientation_landscape=ainovys orientaceja
-document_properties_page_size_name_a3=A3
-document_properties_page_size_name_a4=A4
-document_properties_page_size_name_letter=Letter
-document_properties_page_size_name_legal=Legal
-# LOCALIZATION NOTE (document_properties_page_size_dimension_string):
-# "{{width}}", "{{height}}", {{unit}}, and {{orientation}} will be replaced by
-# the size, respectively their unit of measurement and orientation, of the (current) page.
-document_properties_page_size_dimension_string={{width}} × {{height}} {{unit}} ({{orientation}})
-# LOCALIZATION NOTE (document_properties_page_size_dimension_name_string):
-# "{{width}}", "{{height}}", {{unit}}, {{name}}, and {{orientation}} will be replaced by
-# the size, respectively their unit of measurement, name, and orientation, of the (current) page.
-document_properties_page_size_dimension_name_string={{width}} × {{height}} {{unit}} ({{name}}, {{orientation}})
-# LOCALIZATION NOTE (document_properties_linearized): The linearization status of
-# the document; usually called "Fast Web View" in English locales of Adobe software.
-document_properties_linearized=Fast Web View:
-document_properties_linearized_yes=Jā
-document_properties_linearized_no=Nā
-document_properties_close=Aiztaiseit
+## Variables:
+##   $width (Number) - the width of the (current) page
+##   $height (Number) - the height of the (current) page
+##   $unit (String) - the unit of measurement of the (current) page
+##   $name (String) - the name of the (current) page
+##   $orientation (String) - the orientation of the (current) page
 
-print_progress_message=Preparing document for printing…
-# LOCALIZATION NOTE (print_progress_percent): "{{progress}}" will be replaced by
-# a numerical per cent value.
-print_progress_percent={{progress}}%
-print_progress_close=Atceļt
+pdfjs-document-properties-page-size-dimension-string = { $width } × { $height } { $unit } ({ $orientation })
+pdfjs-document-properties-page-size-dimension-name-string = { $width } × { $height } { $unit } ({ $name }, { $orientation })
 
-# Tooltips and alt text for side panel toolbar buttons
-# (the _label strings are alt text for the buttons, the .title strings are
-# tooltips)
-toggle_sidebar.title=Puorslēgt suonu jūslu
-toggle_sidebar_notification.title=Toggle Sidebar (document contains outline/attachments)
-toggle_sidebar_label=Puorslēgt suonu jūslu
-document_outline.title=Show Document Outline (double-click to expand/collapse all items)
-document_outline_label=Dokumenta saturs
-attachments.title=Show Attachments
-attachments_label=Attachments
-thumbs.title=Paruodeit seiktālus
-thumbs_label=Seiktāli
-findbar.title=Mekleit dokumentā
-findbar_label=Mekleit
+##
 
-# Thumbnails panel item (tooltip and alt text for images)
-# LOCALIZATION NOTE (thumb_page_title): "{{page}}" will be replaced by the page
-# number.
-thumb_page_title=Lopa {{page}}
-# LOCALIZATION NOTE (thumb_page_canvas): "{{page}}" will be replaced by the page
-# number.
-thumb_page_canvas=Lopys {{page}} seiktāls
+# The linearization status of the document; usually called "Fast Web View" in
+# English locales of Adobe software.
+pdfjs-document-properties-linearized = Fast Web View:
+pdfjs-document-properties-linearized-yes = Jā
+pdfjs-document-properties-linearized-no = Nā
+pdfjs-document-properties-close-button = Aiztaiseit
 
-# Find panel button title and messages
-find_input.title=Mekleit
-find_input.placeholder=Mekleit dokumentā…
-find_previous.title=Atrast īprīkšejū
-find_previous_label=Īprīkšejā
-find_next.title=Atrast nuokamū
-find_next_label=Nuokomuo
-find_highlight=Īkruosuot vysys
-find_match_case_label=Lelū, mozū burtu jiuteigs
-find_reached_top=Sasnīgts dokumenta suokums, turpynojom nu beigom
-find_reached_bottom=Sasnīgtys dokumenta beigys, turpynojom nu suokuma
-find_not_found=Frāze nav atrosta
+## Print
 
-# Error panel labels
-error_more_info=Vairuok informacejis
-error_less_info=mozuok informacejis
-error_close=Close
-# LOCALIZATION NOTE (error_version_info): "{{version}}" and "{{build}}" will be
-# replaced by the PDF.JS version and build ID.
-error_version_info=PDF.js v{{version}} (build: {{build}})
-# LOCALIZATION NOTE (error_message): "{{message}}" will be replaced by an
-# english string describing the error.
-error_message=Ziņuojums: {{message}}
-# LOCALIZATION NOTE (error_stack): "{{stack}}" will be replaced with a stack
-# trace.
-error_stack=Steks: {{stack}}
-# LOCALIZATION NOTE (error_file): "{{file}}" will be replaced with a filename
-error_file=File: {{file}}
-# LOCALIZATION NOTE (error_line): "{{line}}" will be replaced with a line number
-error_line=Ryndeņa: {{line}}
-rendering_error=Attālojūt lopu rodās klaida
+pdfjs-print-progress-message = Preparing document for printing…
+# Variables:
+#   $progress (Number) - percent value
+pdfjs-print-progress-percent = { $progress }%
+pdfjs-print-progress-close-button = Atceļt
+pdfjs-printing-not-supported = Uzmaneibu: Drukuošona nu itei puorlūka dorbojās tikai daleji.
+pdfjs-printing-not-ready = Uzmaneibu: PDF nav pilneibā īluodeits drukuošonai.
 
-# Predefined zoom values
-page_scale_width=Lopys plotumā
-page_scale_fit=Ītylpynūt lopu
-page_scale_auto=Automatiskais izmārs
-page_scale_actual=Patīsais izmārs
-# LOCALIZATION NOTE (page_scale_percent): "{{scale}}" will be replaced by a
-# numerical scale value.
-page_scale_percent={{scale}}%
+## Tooltips and alt text for side panel toolbar buttons
 
-# Loading indicator messages
-loading_error_indicator=Klaida
-loading_error=Īluodejūt PDF nūtyka klaida.
-invalid_file_error=Nadereigs voi būjuots PDF fails.
-missing_file_error=PDF fails nav atrosts.
-unexpected_response_error=Unexpected server response.
+pdfjs-toggle-sidebar-button =
+    .title = Puorslēgt suonu jūslu
+pdfjs-toggle-sidebar-button-label = Puorslēgt suonu jūslu
+pdfjs-document-outline-button =
+    .title = Show Document Outline (double-click to expand/collapse all items)
+pdfjs-document-outline-button-label = Dokumenta saturs
+pdfjs-attachments-button =
+    .title = Show Attachments
+pdfjs-attachments-button-label = Attachments
+pdfjs-thumbs-button =
+    .title = Paruodeit seiktālus
+pdfjs-thumbs-button-label = Seiktāli
+pdfjs-findbar-button =
+    .title = Mekleit dokumentā
+pdfjs-findbar-button-label = Mekleit
 
-# LOCALIZATION NOTE (text_annotation_type.alt): This is used as a tooltip.
-# "{{type}}" will be replaced with an annotation type from a list defined in
-# the PDF spec (32000-1:2008 Table 169 – Annotation types).
+## Thumbnails panel item (tooltip and alt text for images)
+
+# Variables:
+#   $page (Number) - the page number
+pdfjs-thumb-page-title =
+    .title = Lopa { $page }
+# Variables:
+#   $page (Number) - the page number
+pdfjs-thumb-page-canvas =
+    .aria-label = Lopys { $page } seiktāls
+
+## Find panel button title and messages
+
+pdfjs-find-input =
+    .title = Mekleit
+    .placeholder = Mekleit dokumentā…
+pdfjs-find-previous-button =
+    .title = Atrast īprīkšejū
+pdfjs-find-previous-button-label = Īprīkšejā
+pdfjs-find-next-button =
+    .title = Atrast nuokamū
+pdfjs-find-next-button-label = Nuokomuo
+pdfjs-find-highlight-checkbox = Īkruosuot vysys
+pdfjs-find-match-case-checkbox-label = Lelū, mozū burtu jiuteigs
+pdfjs-find-reached-top = Sasnīgts dokumenta suokums, turpynojom nu beigom
+pdfjs-find-reached-bottom = Sasnīgtys dokumenta beigys, turpynojom nu suokuma
+pdfjs-find-not-found = Frāze nav atrosta
+
+## Predefined zoom values
+
+pdfjs-page-scale-width = Lopys plotumā
+pdfjs-page-scale-fit = Ītylpynūt lopu
+pdfjs-page-scale-auto = Automatiskais izmārs
+pdfjs-page-scale-actual = Patīsais izmārs
+# Variables:
+#   $scale (Number) - percent value for page scale
+pdfjs-page-scale-percent = { $scale }%
+
+## PDF page
+
+
+## Loading indicator messages
+
+pdfjs-loading-error = Īluodejūt PDF nūtyka klaida.
+pdfjs-invalid-file-error = Nadereigs voi būjuots PDF fails.
+pdfjs-missing-file-error = PDF fails nav atrosts.
+pdfjs-unexpected-response-error = Unexpected server response.
+pdfjs-rendering-error = Attālojūt lopu rodās klaida
+
+## Annotations
+
+# .alt: This is used as a tooltip.
+# Variables:
+#   $type (String) - an annotation type from a list defined in the PDF spec
+# (32000-1:2008 Table 169 – Annotation types).
 # Some common types are e.g.: "Check", "Text", "Comment", "Note"
-text_annotation_type.alt=[{{type}} Annotation]
-password_label=Īvodit paroli, kab attaiseitu PDF failu.
-password_invalid=Napareiza parole, raugit vēļreiz.
-password_ok=Labi
-password_cancel=Atceļt
+pdfjs-text-annotation-type =
+    .alt = [{ $type } Annotation]
 
-printing_not_supported=Uzmaneibu: Drukuošona nu itei puorlūka dorbojās tikai daleji.
-printing_not_ready=Uzmaneibu: PDF nav pilneibā īluodeits drukuošonai.
-web_fonts_disabled=Šķārsteikla fonti nav aktivizāti: Navar īgult PDF fontus.
+## Password
+
+pdfjs-password-label = Īvodit paroli, kab attaiseitu PDF failu.
+pdfjs-password-invalid = Napareiza parole, raugit vēļreiz.
+pdfjs-password-ok-button = Labi
+pdfjs-password-cancel-button = Atceļt
+pdfjs-web-fonts-disabled = Šķārsteikla fonti nav aktivizāti: Navar īgult PDF fontus.
+
+## Editing
+
+
+## Alt-text dialog
+
+
+## Editor resizers
+## This is used in an aria label to help to understand the role of the resizer.
+
