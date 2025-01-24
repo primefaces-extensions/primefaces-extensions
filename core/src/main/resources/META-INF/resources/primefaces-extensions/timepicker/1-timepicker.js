@@ -21,63 +21,11 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
         // configure localized text
         this.cfg = PrimeFacesExt.configureLocale('TimePicker', cfg);
 
-        if (this.cfg.showPeriod) {
-            this.amHours = {};
-            this.pmHours = {};
-            var i, prev, next;
-
-            if (this.cfg.hours.starts <= 11) {
-                // fill AM hours
-                var hoursEnds = Math.min(11, this.cfg.hours.ends);
-                for (i = this.cfg.hours.starts; i <= hoursEnds; i++) {
-                    prev = null;
-                    next = null;
-                    if (i == this.cfg.hours.starts) {
-                        prev = null;
-                    } else {
-                        prev = i - 1;
-                        if (prev == 0) {
-                            prev = 12;
-                        }
-                    }
-
-                    if (i == hoursEnds) {
-                        next = null;
-                    } else {
-                        next = i + 1;
-                    }
-
-                    this.amHours[i == 0 ? 12 : i] = {'prev': prev, 'next': next};
-                }
-            }
-
-            if (this.cfg.hours.ends >= 12) {
-                // fill PM hours
-                for (i = 12; i <= this.cfg.hours.ends; i++) {
-                    prev = null;
-                    next = null;
-                    if (i == 12) {
-                        prev = null;
-                    } else {
-                        prev = i - 1;
-                        if (prev != 12) {
-                            prev = prev - 12;
-                        }
-                    }
-
-                    if (i < this.cfg.hours.ends) {
-                        next = i - 11;
-                    } else {
-                        next = null;
-                    }
-
-                    this.pmHours[i > 12 ? i - 12 : i] = {'prev': prev, 'next': next};
-                }
-            }
-        }
+        // configure for showPeriod
+        this.setupPeriod();
 
         // for internal use
-        var $this = this;
+        let $this = this;
 
         // extend configuration
         if (this.cfg.modeInline) {
@@ -131,12 +79,69 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
         this.originalValue = this.jq.val();
     },
 
+    setupPeriod: function() {
+        if (this.cfg.showPeriod) {
+            this.amHours = {};
+            this.pmHours = {};
+            let i, prev, next;
+
+            if (this.cfg.hours.starts <= 11) {
+                // fill AM hours
+                let hoursEnds = Math.min(11, this.cfg.hours.ends);
+                for (i = this.cfg.hours.starts; i <= hoursEnds; i++) {
+                    prev = null;
+                    next = null;
+                    if (i === this.cfg.hours.starts) {
+                        prev = null;
+                    } else {
+                        prev = i - 1;
+                        if (prev === 0) {
+                            prev = 12;
+                        }
+                    }
+
+                    if (i === hoursEnds) {
+                        next = null;
+                    } else {
+                        next = i + 1;
+                    }
+
+                    this.amHours[i === 0 ? 12 : i] = {'prev': prev, 'next': next};
+                }
+            }
+
+            if (this.cfg.hours.ends >= 12) {
+                // fill PM hours
+                for (i = 12; i <= this.cfg.hours.ends; i++) {
+                    prev = null;
+                    next = null;
+                    if (i === 12) {
+                        prev = null;
+                    } else {
+                        prev = i - 1;
+                        if (prev !== 12) {
+                            prev = prev - 12;
+                        }
+                    }
+
+                    if (i < this.cfg.hours.ends) {
+                        next = i - 11;
+                    } else {
+                        next = null;
+                    }
+
+                    this.pmHours[i > 12 ? i - 12 : i] = {'prev': prev, 'next': next};
+                }
+            }
+        }
+    },
+
     /**
      * Sets up the event listeners that only need to be set up once.
      * @private
      */
     bindConstantEvents: function () {
-        var $this = this;
+        let $this = this;
 
         PrimeFaces.utils.registerResizeHandler(this, 'resize.' + this.id + '_hide', $this.panel, function () {
             $this.hide();
@@ -148,13 +153,13 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
     },
 
     enableInput: function () {
-        var $this = this;
+        let $this = this;
 
         PrimeFaces.skinInput(this.jq);
 
         this.jq.on({
             keydown: function (e) {
-                var keyCode = $.ui.keyCode;
+                let keyCode = $.ui.keyCode;
 
                 switch (e.which) {
                     case keyCode.UP:
@@ -188,7 +193,7 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
     },
 
     enableSpinner: function () {
-        var $this = this;
+        let $this = this;
 
         $(this.jqId).children('.ui-spinner-button')
             .removeClass('ui-state-disabled')
@@ -212,10 +217,10 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
                     if (e.which !== 1) {
                         return;
                     }
-                    var el = $(this);
+                    let el = $(this);
                     el.addClass('ui-state-active');
 
-                    var dir = el.hasClass('ui-spinner-up') ? 1 : -1;
+                    let dir = el.hasClass('ui-spinner-up') ? 1 : -1;
                     $this.spin(dir);
 
                     $this.spinnerInterval = setInterval(function () {
@@ -235,30 +240,30 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
     },
 
     spin: function (dir) {
-        var time = this.jq.val();
+        let time = this.jq.val();
         if (!time) {
             // if the value is empty, set 00:00 and process with spinning
             time = '00' + this.cfg.timeSeparator + '00';
             this.jq.val(time);
         }
 
-        var newTime = null;
-        var hours = null;
-        var minutes = null;
-        var objHours, strHours, strMinutes, result, prevHours;
-        var isAmPmChanged = false;
+        let newTime = null;
+        let hours = null;
+        let minutes = null;
+        let objHours, strHours, strMinutes, result, prevHours;
+        let isAmPmChanged = false;
 
         if (this.cfg.showHours && this.cfg.showMinutes) {
             // extract hours and minutes
             result = time.match(new RegExp('^(\\d{2})' + this.cfg.timeSeparator + '(\\d{2})((?:\\s*)|(?:\\s{1}.*))$'));
             if (result && result.length >= 3) {
-                if (result[1].charAt(0) == '0') {
+                if (result[1].charAt(0) === '0') {
                     hours = parseInt(result[1].charAt(1));
                 } else {
                     hours = parseInt(result[1]);
                 }
 
-                if (result[2].charAt(0) == '0') {
+                if (result[2].charAt(0) === '0') {
                     minutes = parseInt(result[2].charAt(1));
                 } else {
                     minutes = parseInt(result[2]);
@@ -270,7 +275,7 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
             }
 
             // increment / decrement minutes and hours
-            if (dir == 1) {
+            if (dir === 1) {
                 minutes = minutes + this.cfg.minutes.interval;
                 minutes = Math.floor(minutes / this.cfg.minutes.interval) * this.cfg.minutes.interval;
             } else {
@@ -300,7 +305,7 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
             // only hours
             result = time.match(new RegExp('^(\\d{2})((?:\\s*)|(?:\\s{1}.*))$'));
             if (result && result.length >= 2) {
-                if (result[1].charAt(0) == '0') {
+                if (result[1].charAt(0) === '0') {
                     hours = parseInt(result[1].charAt(1));
                 } else {
                     hours = parseInt(result[1]);
@@ -312,7 +317,7 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
             }
 
             // increment / decrement hours
-            if (dir == 1) {
+            if (dir === 1) {
                 objHours = this.increaseHour(hours, this.isAm(time));
                 hours = objHours['newHour'];
                 isAmPmChanged = objHours['isAmPmChanged'];
@@ -329,9 +334,9 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
 
         } else if (!this.cfg.showHours && this.cfg.showMinutes) {
             // only minutes
-            result = time.match(new RegExp('^(\\d{2})(?:\\s*)$'));
+            result = time.match(new RegExp('^(\\d{2})\\s*$'));
             if (result && result.length >= 2) {
-                if (result[1].charAt(0) == '0') {
+                if (result[1].charAt(0) === '0') {
                     minutes = parseInt(result[1].charAt(1));
                 } else {
                     minutes = parseInt(result[1]);
@@ -343,7 +348,7 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
             }
 
             // increment / decrement minutes and hours
-            if (dir == 1) {
+            if (dir === 1) {
                 minutes = minutes + this.cfg.minutes.interval;
                 minutes = Math.floor(minutes / this.cfg.minutes.interval) * this.cfg.minutes.interval;
             } else {
@@ -381,17 +386,17 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
     },
 
     isAm: function (time) {
-        var am = this.cfg.amPmText[0];
-        return (time && time.indexOf(am) != -1);
+        let am = this.cfg.amPmText[0];
+        return (time && time.indexOf(am) !== -1);
     },
 
     adjustAmPm: function (time, isAmPmChanged) {
         if (isAmPmChanged) {
-            var am = this.cfg.amPmText[0];
-            var pm = this.cfg.amPmText[1];
-            if (time.indexOf(am) != -1) {
+            let am = this.cfg.amPmText[0];
+            let pm = this.cfg.amPmText[1];
+            if (time.indexOf(am) !== -1) {
                 return time.replace(am, pm);
-            } else if (time.indexOf(pm) != -1) {
+            } else if (time.indexOf(pm) !== -1) {
                 return time.replace(pm, am);
             }
         }
@@ -400,11 +405,11 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
     },
 
     increaseHour: function (hour, isAm) {
-        var newHour;
-        var isAmPmChanged = false;
+        let newHour;
+        let isAmPmChanged = false;
 
         if (this.cfg.showPeriod) {
-            var timeObj, curTimeObj, curHour;
+            let timeObj, curTimeObj, curHour;
             if (isAm) {
                 timeObj = this.amHours[hour];
                 if (timeObj && timeObj.next) {
@@ -445,11 +450,11 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
     },
 
     decreaseHour: function (hour, isAm) {
-        var newHour;
-        var isAmPmChanged = false;
+        let newHour;
+        let isAmPmChanged = false;
 
         if (this.cfg.showPeriod) {
-            var timeObj, curTimeObj, curHour;
+            let timeObj, curTimeObj, curHour;
             if (isAm) {
                 timeObj = this.amHours[hour];
                 if (timeObj && timeObj.prev) {
@@ -559,7 +564,7 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
         this.jq.fgtimepicker('hide');
     },
 
-    reset: function (cfg) {
+    reset: function () {
         this.jq.val(this.originalValue);
     }
 });
@@ -582,7 +587,7 @@ PrimeFacesExt.locales.TimePicker['en_UK'] = PrimeFacesExt.locales.TimePicker['en
 (function () {
     $.fgtimepicker._adjustZIndex = function (input) {
         input = input.target || input;
-        var inst = $.fgtimepicker._getInst(input);
+        let inst = $.fgtimepicker._getInst(input);
         inst.tpDiv.css('zIndex', PrimeFaces.nextZindex());
     };
 })();

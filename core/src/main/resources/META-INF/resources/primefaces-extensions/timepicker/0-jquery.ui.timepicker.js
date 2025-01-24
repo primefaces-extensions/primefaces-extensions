@@ -363,18 +363,24 @@
             $.fgtimepicker._setTimeFromField(inst);
 
             // calculate default position
-            if ($.fgtimepicker._inDialog) {
-                input.value = '';
-            } // hide cursor
             if (!$.fgtimepicker._pos) { // position below input
                 $.fgtimepicker._pos = $.fgtimepicker._findPos(input);
                 $.fgtimepicker._pos[1] += input.offsetHeight; // add the height
             }
+
+            // START PFE: Custom fix to check for PF Dialog
             var isFixed = false;
             $(input).parents().each(function () {
-                isFixed |= $(this).css('position') == 'fixed';
-                return !isFixed;
+                var $el = $(this);
+                if ($el.hasClass('ui-dialog')) {
+                    return false; // Exit early if `ui-dialog` class is found
+                }
+                if ($el.css('position') === 'fixed') {
+                    isFixed = true; // Set isFixed to true if position is fixed
+                    return false;   // Exit the loop
+                }
             });
+            // END PFE: Custom fix to check for PF Dialog
 
             var offset = {left: $.fgtimepicker._pos[0], top: $.fgtimepicker._pos[1]};
 
@@ -1070,13 +1076,6 @@
                 this._timepickerShowing = false;
 
                 this._lastInput = null;
-                if (this._inDialog) {
-                    this._dialogInput.css({position: 'absolute', left: '0', top: '-100px'});
-                    if ($.blockUI) {
-                        $.unblockUI();
-                        $('body').append(this.tpDiv);
-                    }
-                }
                 this._inDialog = false;
 
                 var onClose = this._get(inst, 'onClose');
