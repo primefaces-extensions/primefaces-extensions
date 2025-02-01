@@ -109,7 +109,7 @@ public class LightSwitch extends UIComponentBase implements Widget, ClientBehavi
     }
 
     public String getLight() {
-        return (String) getStateHelper().eval(PropertyKeys.light, "saga");
+        return (String) getStateHelper().eval(PropertyKeys.light, "saga-blue");
     }
 
     public void setLight(final String light) {
@@ -117,7 +117,7 @@ public class LightSwitch extends UIComponentBase implements Widget, ClientBehavi
     }
 
     public String getDark() {
-        return (String) getStateHelper().eval(PropertyKeys.dark, "arya");
+        return (String) getStateHelper().eval(PropertyKeys.dark, "arya-blue");
     }
 
     public void setDark(final String dark) {

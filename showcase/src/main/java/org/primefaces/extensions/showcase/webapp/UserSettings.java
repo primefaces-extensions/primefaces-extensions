@@ -47,7 +47,7 @@ public class UserSettings implements Serializable {
     private String currentThemeName;
 
     public UserSettings() {
-        setCurrentThemeByName("saga");
+        setCurrentThemeByName("saga-blue");
         availableThemes = AvailableThemes.getInstance().getThemes();
     }
 
