@@ -51,8 +51,11 @@ public class ThemeAccentColorResource extends ResourceWrapper {
         // @formatter:off
         // colors ? 0: main, 1: hover, 2: active, 3: focus outline, 4: text
         ACCENT_COLORS.put("primefaces-arya", Arrays.asList("#90caf9", "#6bb8f7", "#45a6f5", "#b1dafb", "rgba(255,255,255,.87)"));
+        ACCENT_COLORS.put("primefaces-arya-blue", Arrays.asList("#90caf9", "#6bb8f7", "#45a6f5", "#b1dafb", "rgba(255,255,255,.87)"));
         ACCENT_COLORS.put("primefaces-saga", Arrays.asList("#2196f3", "#0d89ec", "#0b7ad1", "#a6d5fa", "#495057"));
+        ACCENT_COLORS.put("primefaces-saga-blue", Arrays.asList("#2196f3", "#0d89ec", "#0b7ad1", "#a6d5fa", "#495057"));
         ACCENT_COLORS.put("primefaces-vela", Arrays.asList("#90caf9", "#6bb8f7", "#45a6f5", "#b1dafb", "rgba(255,255,255,.87)"));
+        ACCENT_COLORS.put("primefaces-vela-blue", Arrays.asList("#90caf9", "#6bb8f7", "#45a6f5", "#b1dafb", "rgba(255,255,255,.87)"));
         // @formatter:on
     }
 
