@@ -115,6 +115,9 @@ PrimeFaces.widget.ExtSunEditor = PrimeFaces.widget.DeferredWidget.extend({
 
         // check if being used in dialog
         this.setupDialogSupport();
+
+        // #1845: add marker interface so DefaultCommand is ignored as detected as PF TextEditor
+        $('.sun-editor .se-wrapper-wysiwyg').addClass('ql-editor');
     },
 
     // @override
