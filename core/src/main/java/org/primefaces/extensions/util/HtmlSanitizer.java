@@ -34,7 +34,7 @@ public class HtmlSanitizer {
                 .allowUrlProtocols("data", "http", "https")
                 .allowElements("img", "figure")
                 .allowAttributes("src")
-                .matching(Pattern.compile("^(data:image/(gif|png|jpeg|webp|svg)[,;]|http|https|//).+", Pattern.CASE_INSENSITIVE))
+                .matching(Pattern.compile("^(?!javascript:|ftp:|file:|blob:|mailto:).*", Pattern.CASE_INSENSITIVE))
                 .onElements("img")
                 .allowAttributes(
                             "data-rotate",
