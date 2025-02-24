@@ -111,7 +111,7 @@
         <jakarta-faces.version>2.3.21</jakarta-faces.version>
         <libphonenumber.version>8.13.55</libphonenumber.version>
         <morphia.version>2.4.14</morphia.version>
-        <junit.version>5.11.4</junit.version>
+        <junit.version>5.12.0</junit.version>
         <primefaces.core.version>15.0.0</primefaces.core.version>
         <primefaces.optimizer.version>2.6.5</primefaces.optimizer.version>
         <withoutCompress>true</withoutCompress>
