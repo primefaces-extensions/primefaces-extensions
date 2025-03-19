@@ -32,9 +32,6 @@ public final class Constants {
 
     public static final String LIBRARY = "primefaces-extensions";
 
-    public static final String EXTENSION_CSS = ".css";
-    public static final String EXTENSION_JS = ".js";
-
     /**
      * Avoid instantiation.
      */
