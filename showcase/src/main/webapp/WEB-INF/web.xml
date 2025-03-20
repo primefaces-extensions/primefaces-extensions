@@ -121,6 +121,11 @@
         <param-name>primefaces.CSP_POLICY</param-name>
         <param-value>frame-ancestors 'none'; script-src 'self' blob: https: *.googleapis.com 'unsafe-hashes' 'sha256-kbHtQyYDQKz4SWMQ8OHVol3EC0t3tHEJFPCSwNG9NxQ='</param-value>
     </context-param>
+    <!-- set the small responsive breakpoint for many PF components -->
+    <context-param>
+        <param-name>primefaces.RESPONSIVE_BREAKPOINT</param-name>
+        <param-value>576</param-value>
+    </context-param>
 
     <!-- Context parameters - OmniFaces -->
     <context-param>
