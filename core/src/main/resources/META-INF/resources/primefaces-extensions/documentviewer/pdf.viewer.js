@@ -14153,6 +14153,11 @@ class CanvasGraphics {
     const patternFill = current.patternFill && !font.missingFile;
     const patternStroke = current.patternStroke && !font.missingFile;
     let path;
+
+    // PrimeFaces (#1864), bugfix when you have embedded and not embedded fonts inside the same pdf.
+    // Normally pdf.js is able to handle this, but not in our case with the displaying iframe
+    font.disableFontFace = !font.missingFile || font.mimetype;
+
     if (font.disableFontFace || isAddToPathSet || patternFill || patternStroke) {
       path = font.getPathGenerator(this.commonObjs, character);
     }
