@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.primefaces.extensions</groupId>
     <artifactId>primefaces-extensions-parent</artifactId>
-    <version>15.0.3-SNAPSHOT</version>
+    <version>15.0.3</version>
     <packaging>pom</packaging>
     <name>PrimeFaces Extensions Parent</name>
     <description>
@@ -112,7 +112,7 @@
         <libphonenumber.version>9.0.2</libphonenumber.version>
         <morphia.version>2.4.15</morphia.version>
         <junit.version>5.12.1</junit.version>
-        <primefaces.core.version>15.0.2</primefaces.core.version>
+        <primefaces.core.version>15.0.3</primefaces.core.version>
         <primefaces.optimizer.version>2.6.5</primefaces.optimizer.version>
         <withoutCompress>true</withoutCompress>
     </properties>
