@@ -177,6 +177,8 @@ See https://github.com/adobe-type-tools/cmap-resources
   --undo-button-bg-color-hover:rgb(21 20 26 / 0.14);
   --undo-button-bg-color-active:rgb(21 20 26 / 0.21);
 
+  --undo-button-border:1px solid #0060df;
+
   --undo-button-fg-color:var(--message-bar-fg-color);
   --undo-button-fg-color-hover:var(--undo-button-fg-color);
   --undo-button-fg-color-active:var(--undo-button-fg-color);
@@ -194,6 +196,8 @@ See https://github.com/adobe-type-tools/cmap-resources
     --undo-button-bg-color:rgb(255 255 255 / 0.08);
     --undo-button-bg-color-hover:rgb(255 255 255 / 0.14);
     --undo-button-bg-color-active:rgb(255 255 255 / 0.21);
+
+    --undo-button-border:1px solid #0df;
 }
   }
 
@@ -207,6 +211,8 @@ See https://github.com/adobe-type-tools/cmap-resources
     --undo-button-bg-color:rgb(255 255 255 / 0.08);
     --undo-button-bg-color-hover:rgb(255 255 255 / 0.14);
     --undo-button-bg-color-active:rgb(255 255 255 / 0.21);
+
+    --undo-button-border:1px solid #0df;
 }
 
 @media screen and (forced-colors: active){
@@ -225,6 +231,8 @@ See https://github.com/adobe-type-tools/cmap-resources
     --undo-button-fg-color:ButtonFace;
     --undo-button-fg-color-hover:SelectedItemText;
     --undo-button-fg-color-active:SelectedItemText;
+
+    --undo-button-border:none;
 }
   }
 
@@ -254,7 +262,7 @@ See https://github.com/adobe-type-tools/cmap-resources
     font-weight:590;
     line-height:19.5px;
     color:var(--undo-button-fg-color);
-    border:none;
+    border:var(--undo-button-border);
     padding:4px 16px;
     margin-inline-start:8px;
     height:32px;
@@ -1975,6 +1983,8 @@ See https://github.com/adobe-type-tools/cmap-resources
   --tab-bg-active-color:var(--tab-bg);
   --tab-bg-active-hover-color:var(--bg-hover);
   --tab-bg-hover:var(--bg-hover);
+  --tab-panel-border:none;
+  --tab-panel-border-radius:4px;
   --tab-text-color:var(--primary-color);
   --tab-text-active-color:var(--tab-top-line-active-color);
   --tab-text-active-hover-color:var(--tab-text-hover-color);
@@ -2057,6 +2067,8 @@ See https://github.com/adobe-type-tools/cmap-resources
     --tab-bg:var(--bg);
     --tab-bg-active-color:SelectedItem;
     --tab-bg-active-hover-color:SelectedItem;
+    --tab-panel-border:1px solid ButtonText;
+    --tab-panel-border-radius:8px;
     --tab-text-color:ButtonText;
     --tab-text-active-color:HighlightText;
     --tab-text-active-hover-color:HighlightText;
@@ -2173,7 +2185,8 @@ See https://github.com/adobe-type-tools/cmap-resources
         width:100%;
         height:220px;
         background-color:var(--signature-bg);
-        border-radius:4px;
+        border:var(--tab-panel-border);
+        border-radius:var(--tab-panel-border-radius);
       }
 
 :is(:is(:is(#addSignatureDialog .mainContainer) #addSignatureActionContainer) > [role="tabpanel"])  > svg{
@@ -2198,6 +2211,7 @@ See https://github.com/adobe-type-tools/cmap-resources
             text-align:center;
             color:var(--signature-color);
             background-color:transparent;
+            border-radius:var(--tab-panel-border-radius);
 
             font-family:"Brush script", "Apple Chancery", "Segoe script", "Freestyle Script", "Palace Script MT", "Brush Script MT", TK, cursive, serif;
             font-size:44px;
@@ -2249,7 +2263,7 @@ See https://github.com/adobe-type-tools/cmap-resources
           }
 
 #addSignatureDrawContainer:is(:is(:is(#addSignatureDialog .mainContainer) #addSignatureActionContainer) > [role="tabpanel"])  > svg{
-            stroke:var(--primary-color);
+            stroke:var(--signature-color);
             fill:none;
             stroke-opacity:1;
             stroke-linecap:round;
@@ -2321,7 +2335,7 @@ See https://github.com/adobe-type-tools/cmap-resources
 #addSignatureImageContainer:is(:is(:is(#addSignatureDialog .mainContainer) #addSignatureActionContainer) > [role="tabpanel"])  > svg{
             stroke:none;
             stroke-width:0;
-            fill:var(--primary-color);
+            fill:var(--signature-color);
             fill-opacity:1;
           }
 
@@ -2386,6 +2400,10 @@ See https://github.com/adobe-type-tools/cmap-resources
             gap:4px;
             flex:1 0 0;
           }
+
+:is(:is(:is(:is(:is(#addSignatureDialog .mainContainer) #addSignatureActionContainer) #addSignatureControls) #horizontalContainer) #addSignatureDescriptionContainer):has(input:disabled) > label{
+              opacity:0.4;
+            }
 
 :is(:is(:is(:is(:is(#addSignatureDialog .mainContainer) #addSignatureActionContainer) #addSignatureControls) #horizontalContainer) #addSignatureDescriptionContainer)  > label{
               width:auto;

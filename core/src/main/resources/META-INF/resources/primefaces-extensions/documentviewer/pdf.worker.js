@@ -209,6 +209,58 @@ module.exports = function (record, fn, ITERATOR_INSTEAD_OF_RECORD) {
 
 /***/ }),
 
+/***/ 531:
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+
+var $ = __webpack_require__(6518);
+var call = __webpack_require__(9565);
+var aCallable = __webpack_require__(9306);
+var anObject = __webpack_require__(8551);
+var getIteratorDirect = __webpack_require__(1767);
+var getIteratorFlattenable = __webpack_require__(8646);
+var createIteratorProxy = __webpack_require__(9462);
+var iteratorClose = __webpack_require__(9539);
+var IS_PURE = __webpack_require__(6395);
+
+var IteratorProxy = createIteratorProxy(function () {
+  var iterator = this.iterator;
+  var mapper = this.mapper;
+  var result, inner;
+
+  while (true) {
+    if (inner = this.inner) try {
+      result = anObject(call(inner.next, inner.iterator));
+      if (!result.done) return result.value;
+      this.inner = null;
+    } catch (error) { iteratorClose(iterator, 'throw', error); }
+
+    result = anObject(call(this.next, iterator));
+
+    if (this.done = !!result.done) return;
+
+    try {
+      this.inner = getIteratorFlattenable(mapper(result.value, this.counter++), false);
+    } catch (error) { iteratorClose(iterator, 'throw', error); }
+  }
+});
+
+// `Iterator.prototype.flatMap` method
+// https://tc39.es/ecma262/#sec-iterator.prototype.flatmap
+$({ target: 'Iterator', proto: true, real: true, forced: IS_PURE }, {
+  flatMap: function flatMap(mapper) {
+    anObject(this);
+    aCallable(mapper);
+    return new IteratorProxy(getIteratorDirect(this), {
+      mapper: mapper,
+      inner: null
+    });
+  }
+});
+
+
+/***/ }),
+
 /***/ 616:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -3659,10 +3711,10 @@ var SHARED = '__core-js_shared__';
 var store = module.exports = globalThis[SHARED] || defineGlobalProperty(SHARED, {});
 
 (store.versions || (store.versions = [])).push({
-  version: '3.40.0',
+  version: '3.41.0',
   mode: IS_PURE ? 'pure' : 'global',
   copyright: '© 2014-2025 Denis Pushkarev (zloirock.ru)',
-  license: 'https://github.com/zloirock/core-js/blob/v3.40.0/LICENSE',
+  license: 'https://github.com/zloirock/core-js/blob/v3.41.0/LICENSE',
   source: 'https://github.com/zloirock/core-js'
 });
 
@@ -4207,6 +4259,24 @@ var isCallable = __webpack_require__(4901);
 var WeakMap = globalThis.WeakMap;
 
 module.exports = isCallable(WeakMap) && /native code/.test(String(WeakMap));
+
+
+/***/ }),
+
+/***/ 8646:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+
+var call = __webpack_require__(9565);
+var anObject = __webpack_require__(8551);
+var getIteratorDirect = __webpack_require__(1767);
+var getIteratorMethod = __webpack_require__(851);
+
+module.exports = function (obj, stringHandling) {
+  if (!stringHandling || typeof obj !== 'string') anObject(obj);
+  var method = getIteratorMethod(obj);
+  return getIteratorDirect(anObject(method !== undefined ? call(method, obj) : obj));
+};
 
 
 /***/ }),
@@ -5204,6 +5274,8 @@ var esnext_uint8_array_to_base64 = __webpack_require__(9631);
 var esnext_uint8_array_to_hex = __webpack_require__(5623);
 // EXTERNAL MODULE: ./node_modules/core-js/modules/web.self.js
 var web_self = __webpack_require__(3611);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.iterator.reduce.js
+var es_iterator_reduce = __webpack_require__(8237);
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.promise.try.js
 var es_promise_try = __webpack_require__(1689);
 // EXTERNAL MODULE: ./node_modules/core-js/modules/esnext.uint8-array.from-base64.js
@@ -5213,6 +5285,8 @@ var web_dom_exception_stack = __webpack_require__(4979);
 // EXTERNAL MODULE: ./node_modules/core-js/modules/web.url.parse.js
 var web_url_parse = __webpack_require__(5781);
 ;// ./src/shared/util.js
+
+
 
 
 
@@ -5500,6 +5574,12 @@ const OPS = {
   setStrokeTransparent: 92,
   setFillTransparent: 93
 };
+const DrawOPS = {
+  moveTo: 0,
+  lineTo: 1,
+  curveTo: 2,
+  closePath: 3
+};
 const PasswordResponses = {
   NEED_PASSWORD: 1,
   INCORRECT_PASSWORD: 2
@@ -5714,50 +5794,6 @@ class Util {
   static makeHexColor(r, g, b) {
     return `#${hexNumbers[r]}${hexNumbers[g]}${hexNumbers[b]}`;
   }
-  static scaleMinMax(transform, minMax) {
-    let temp;
-    if (transform[0]) {
-      if (transform[0] < 0) {
-        temp = minMax[0];
-        minMax[0] = minMax[2];
-        minMax[2] = temp;
-      }
-      minMax[0] *= transform[0];
-      minMax[2] *= transform[0];
-      if (transform[3] < 0) {
-        temp = minMax[1];
-        minMax[1] = minMax[3];
-        minMax[3] = temp;
-      }
-      minMax[1] *= transform[3];
-      minMax[3] *= transform[3];
-    } else {
-      temp = minMax[0];
-      minMax[0] = minMax[1];
-      minMax[1] = temp;
-      temp = minMax[2];
-      minMax[2] = minMax[3];
-      minMax[3] = temp;
-      if (transform[1] < 0) {
-        temp = minMax[1];
-        minMax[1] = minMax[3];
-        minMax[3] = temp;
-      }
-      minMax[1] *= transform[1];
-      minMax[3] *= transform[1];
-      if (transform[2] < 0) {
-        temp = minMax[0];
-        minMax[0] = minMax[2];
-        minMax[2] = temp;
-      }
-      minMax[0] *= transform[2];
-      minMax[2] *= transform[2];
-    }
-    minMax[0] += transform[4];
-    minMax[1] += transform[5];
-    minMax[2] += transform[4];
-    minMax[3] += transform[5];
-  }
   static transform(m1, m2) {
     return [m1[0] * m2[0] + m1[2] * m2[1], m1[1] * m2[0] + m1[3] * m2[1], m1[0] * m2[2] + m1[2] * m2[3], m1[1] * m2[2] + m1[3] * m2[3], m1[0] * m2[4] + m1[2] * m2[5] + m1[4], m1[1] * m2[4] + m1[3] * m2[5] + m1[5]];
   }
@@ -5820,6 +5856,18 @@ class Util {
     }
     return [xLow, yLow, xHigh, yHigh];
   }
+  static pointBoundingBox(x, y, minMax) {
+    minMax[0] = Math.min(minMax[0], x);
+    minMax[1] = Math.min(minMax[1], y);
+    minMax[2] = Math.max(minMax[2], x);
+    minMax[3] = Math.max(minMax[3], y);
+  }
+  static rectBoundingBox(x0, y0, x1, y1, minMax) {
+    minMax[0] = Math.min(minMax[0], x0, x1);
+    minMax[1] = Math.min(minMax[1], y0, y1);
+    minMax[2] = Math.max(minMax[2], x0, x1);
+    minMax[3] = Math.max(minMax[3], y0, y1);
+  }
   static #getExtremumOnCurve(x0, x1, x2, x3, y0, y1, y2, y3, t, minMax) {
     if (t <= 0 || t >= 1) {
       return;
@@ -5851,17 +5899,12 @@ class Util {
     this.#getExtremumOnCurve(x0, x1, x2, x3, y0, y1, y2, y3, (-b - sqrtDelta) / a2, minMax);
   }
   static bezierBoundingBox(x0, y0, x1, y1, x2, y2, x3, y3, minMax) {
-    if (minMax) {
-      minMax[0] = Math.min(minMax[0], x0, x3);
-      minMax[1] = Math.min(minMax[1], y0, y3);
-      minMax[2] = Math.max(minMax[2], x0, x3);
-      minMax[3] = Math.max(minMax[3], y0, y3);
-    } else {
-      minMax = [Math.min(x0, x3), Math.min(y0, y3), Math.max(x0, x3), Math.max(y0, y3)];
-    }
+    minMax[0] = Math.min(minMax[0], x0, x3);
+    minMax[1] = Math.min(minMax[1], y0, y3);
+    minMax[2] = Math.max(minMax[2], x0, x3);
+    minMax[3] = Math.max(minMax[3], y0, y3);
     this.#getExtremum(x0, x1, x2, x3, y0, y1, y2, y3, 3 * (-x0 + 3 * (x1 - x2) + x3), 6 * (x0 - 2 * x1 + x2), 3 * (x1 - x0), minMax);
     this.#getExtremum(x0, x1, x2, x3, y0, y1, y2, y3, 3 * (-y0 + 3 * (y1 - y2) + y3), 6 * (y0 - 2 * y1 + y2), 3 * (y1 - y0), minMax);
-    return minMax;
   }
 }
 const PDFStringTranslateTable = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x2d8, 0x2c7, 0x2c6, 0x2d9, 0x2dd, 0x2db, 0x2da, 0x2dc, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x2022, 0x2020, 0x2021, 0x2026, 0x2014, 0x2013, 0x192, 0x2044, 0x2039, 0x203a, 0x2212, 0x2030, 0x201e, 0x201c, 0x201d, 0x2018, 0x2019, 0x201a, 0x2122, 0xfb01, 0xfb02, 0x141, 0x152, 0x160, 0x178, 0x17d, 0x131, 0x142, 0x153, 0x161, 0x17e, 0, 0x20ac];
@@ -6015,6 +6058,33 @@ function fromBase64Util(str) {
     return Uint8Array.fromBase64(str);
   }
   return stringToBytes(atob(str));
+}
+if (typeof Math.sumPrecise !== "function") {
+  Math.sumPrecise = function (numbers) {
+    return numbers.reduce((a, b) => a + b, 0);
+  };
+}
+if (typeof AbortSignal.any !== "function") {
+  AbortSignal.any = function (iterable) {
+    const ac = new AbortController();
+    const {
+      signal
+    } = ac;
+    for (const s of iterable) {
+      if (s.aborted) {
+        ac.abort(s.reason);
+        return signal;
+      }
+    }
+    for (const s of iterable) {
+      s.addEventListener("abort", () => {
+        ac.abort(s.reason);
+      }, {
+        signal
+      });
+    }
+    return signal;
+  };
 }
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.iterator.every.js
@@ -7801,6 +7871,13 @@ class LabCS extends ColorSpace {
 
 
 
+function fetchSync(url) {
+  const xhr = new XMLHttpRequest();
+  xhr.open("GET", url, false);
+  xhr.responseType = "arraybuffer";
+  xhr.send(null);
+  return xhr.response;
+}
 class IccColorSpace extends ColorSpace {
   #transformer;
   #convertPixel;
@@ -7874,43 +7951,47 @@ class IccColorSpace extends ColorSpace {
   static get isUsable() {
     let isUsable = false;
     if (this.#useWasm) {
-      try {
-        this._module = QCMS._module = this.#load();
-        isUsable = !!this._module;
-      } catch (e) {
-        warn(`ICCBased color space: "${e}".`);
+      if (this.#wasmUrl) {
+        try {
+          // PrimeFaces
+          const url = this.#wasmUrl.replace("[filename]", "qcms_bg.wasm");
+          this._module = QCMS._module = initSync({
+            module: fetchSync(url)
+          });
+          isUsable = !!this._module;
+        } catch (e) {
+          warn(`ICCBased color space: "${e}".`);
+        }
+      } else {
+        warn("No ICC color space support due to missing `wasmUrl` API option");
       }
     }
     return shadow(this, "isUsable", isUsable);
-  }
-  static #load() {
-    const filename = "qcms_bg.wasm";
-    const xhr = new XMLHttpRequest();
-    // PrimeFaces
-    const url = this.#wasmUrl.replace("[filename]", filename);
-    xhr.open("GET", url, false);
-    xhr.responseType = "arraybuffer";
-    xhr.send(null);
-    return initSync({
-      module: xhr.response
-    });
   }
 }
 class CmykICCBasedCS extends IccColorSpace {
   static #iccUrl;
   constructor() {
-    const filename = "CGATS001Compat-v2-micro.icc";
-	const url = CmykICCBasedCS.#iccUrl.replace("[filename]", filename);
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", url, false);
-    xhr.responseType = "arraybuffer";
-    xhr.send(null);
-    super(new Uint8Array(xhr.response), "DeviceCMYK", 4);
+    // PrimeFaces
+    const url = CmykICCBasedCS.#iccUrl.replace("[filename]", "CGATS001Compat-v2-micro.icc");
+    const iccProfile = new Uint8Array(fetchSync(url));
+    super(iccProfile, "DeviceCMYK", 4);
   }
   static setOptions({
     iccUrl
   }) {
     this.#iccUrl = iccUrl;
+  }
+  static get isUsable() {
+    let isUsable = false;
+    if (IccColorSpace.isUsable) {
+      if (this.#iccUrl) {
+        isUsable = true;
+      } else {
+        warn("No CMYK ICC profile support due to missing `iccUrl` API option");
+      }
+    }
+    return shadow(this, "isUsable", isUsable);
   }
 }
 
@@ -9302,7 +9383,7 @@ class ColorSpaceUtils {
     return shadow(this, "rgba", new DeviceRgbaCS());
   }
   static get cmyk() {
-    if (IccColorSpace.isUsable) {
+    if (CmykICCBasedCS.isUsable) {
       try {
         return shadow(this, "cmyk", new CmykICCBasedCS());
       } catch {
@@ -9314,6 +9395,7 @@ class ColorSpaceUtils {
 }
 
 ;// ./src/core/jpg.js
+
 
 
 
@@ -10380,6 +10462,11 @@ class JpegImage {
   }
   _convertCmykToRgba(data) {
     ColorSpaceUtils.cmyk.getRgbBuffer(data, 0, data.length / 4, data, 0, 8, 1);
+    if (ColorSpaceUtils.cmyk instanceof DeviceCmykCS) {
+      for (let i = 3, ii = data.length; i < ii; i += 4) {
+        data[i] = 255;
+      }
+    }
     return data;
   }
   getData({
@@ -11216,7 +11303,10 @@ class JpxImage {
 	const path = this.#wasmUrl.replace("[filename]", "openjpeg_nowasm_fallback.js");
     let instance = null;
     try {
-      const mod = await import(/*webpackIgnore: true*/path);
+      const mod = await import(
+      /*webpackIgnore: true*/
+      /*@vite-ignore*/
+      path);
       instance = mod.default();
     } catch (e) {
       warn(`JpxImage#getJsModule: ${e}`);
@@ -11330,8 +11420,6 @@ class JpxImage {
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.iterator.find.js
 var es_iterator_find = __webpack_require__(116);
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.iterator.reduce.js
-var es_iterator_reduce = __webpack_require__(8237);
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.regexp.flags.js
 var es_regexp_flags = __webpack_require__(9479);
 ;// ./src/core/binary_cmap.js
@@ -23797,6 +23885,7 @@ const getSupplementalGlyphMapForCalibri = getLookupTableFactory(function (t) {
   t[896] = 91;
   t[897] = 93;
   t[923] = 64;
+  t[940] = 163;
   t[1004] = 48;
   t[1005] = 49;
   t[1006] = 50;
@@ -27881,10 +27970,7 @@ class GlyfTable {
     }
   }
   getSize() {
-    return this.glyphs.reduce((a, g) => {
-      const size = g.getSize();
-      return a + (size + 3 & ~3);
-    }, 0);
+    return Math.sumPrecise(this.glyphs.map(g => g.getSize() + 3 & ~3));
   }
   write() {
     const totalSize = this.getSize();
@@ -27959,7 +28045,7 @@ class Glyph {
     if (!this.header) {
       return 0;
     }
-    const size = this.simple ? this.simple.getSize() : this.composites.reduce((a, c) => a + c.getSize(), 0);
+    const size = this.simple ? this.simple.getSize() : Math.sumPrecise(this.composites.map(c => c.getSize()));
     return this.header.getSize() + size;
   }
   write(pos, buf) {
@@ -34367,11 +34453,6 @@ function findUnequal(arr, start, value) {
   }
   return j;
 }
-function setValues(arr, start, end, value) {
-  for (let j = start; j < end; ++j) {
-    arr[j] = value;
-  }
-}
 function reverseValues(arr, start, end) {
   for (let i = start, j = end - 1; i < j; ++i, --j) {
     const temp = arr[i];
@@ -34525,7 +34606,7 @@ function bidi(str, startLevel = -1, vertical = false) {
         after = "R";
       }
       if (before === after) {
-        setValues(types, i, end, before);
+        types.fill(before, i, end);
       }
       i = end - 1;
     }
@@ -35486,6 +35567,12 @@ class OperatorList {
           const arg = argsArray[i][0];
           if (!arg.cached && arg.data?.buffer instanceof ArrayBuffer) {
             transfers.push(arg.data.buffer);
+          }
+          break;
+        case OPS.constructPath:
+          const [, [data], minMax] = argsArray[i];
+          if (data) {
+            transfers.push(data.buffer, minMax.buffer);
           }
           break;
       }
@@ -36626,7 +36713,7 @@ class PartialEvaluator {
     }
     let data;
     if (this.options.useWorkerFetch) {
-      // PrimeFaces
+	  // PrimeFaces
       const url = this.options.cMapUrl.replace("[filename]", name+".bcmap");
       data = {
         cMapData: await fetchBinaryData(url),
@@ -36654,7 +36741,7 @@ class PartialEvaluator {
     let data;
     try {
       if (this.options.useWorkerFetch) {
-        // PrimeFaces
+		// PrimeFaces
         const url = this.options.standardFontDataUrl.replace("[filename]", filename);
         data = await fetchBinaryData(url);
       } else {
@@ -36761,7 +36848,7 @@ class PartialEvaluator {
       optionalContent = await this.parseMarkedContentProps(dict.get("OC"), resources);
     }
     const imageMask = dict.get("IM", "ImageMask") || false;
-    let imgData, args;
+    let imgData, fn, args;
     if (imageMask) {
       const interpolate = dict.get("I", "Interpolate");
       const bitStrideLength = w + 7 >> 3;
@@ -36777,11 +36864,12 @@ class PartialEvaluator {
           interpolate
         });
         imgData.cached = !!cacheKey;
+        fn = OPS.paintImageMaskXObject;
         args = [imgData];
-        operatorList.addImageOps(OPS.paintImageMaskXObject, args, optionalContent);
+        operatorList.addImageOps(fn, args, optionalContent);
         if (cacheKey) {
           const cacheData = {
-            fn: OPS.paintImageMaskXObject,
+            fn,
             args,
             optionalContent
           };
@@ -36802,11 +36890,13 @@ class PartialEvaluator {
         isOffscreenCanvasSupported: this.options.isOffscreenCanvasSupported
       });
       if (imgData.isSingleOpaquePixel) {
-        operatorList.addImageOps(OPS.paintSolidColorImageMask, [], optionalContent);
+        fn = OPS.paintSolidColorImageMask;
+        args = [];
+        operatorList.addImageOps(fn, args, optionalContent);
         if (cacheKey) {
           const cacheData = {
-            fn: OPS.paintSolidColorImageMask,
-            args: [],
+            fn,
+            args,
             optionalContent
           };
           localImageCache.set(cacheKey, imageRef, cacheData);
@@ -36820,6 +36910,7 @@ class PartialEvaluator {
       operatorList.addDependency(objId);
       imgData.dataLen = imgData.bitmap ? imgData.width * imgData.height * 4 : imgData.data.length;
       this._sendImgData(objId, imgData);
+      fn = OPS.paintImageMaskXObject;
       args = [{
         data: objId,
         width: imgData.width,
@@ -36827,11 +36918,11 @@ class PartialEvaluator {
         interpolate: imgData.interpolate,
         count: 1
       }];
-      operatorList.addImageOps(OPS.paintImageMaskXObject, args, optionalContent);
+      operatorList.addImageOps(fn, args, optionalContent);
       if (cacheKey) {
         const cacheData = {
           objId,
-          fn: OPS.paintImageMaskXObject,
+          fn,
           args,
           optionalContent
         };
@@ -36879,13 +36970,14 @@ class PartialEvaluator {
       }
     }
     operatorList.addDependency(objId);
+    fn = OPS.paintImageXObject;
     args = [objId, w, h];
-    operatorList.addImageOps(OPS.paintImageXObject, args, optionalContent, hasMask);
+    operatorList.addImageOps(fn, args, optionalContent, hasMask);
     if (cacheGlobally) {
       if (this.globalImageCache.hasDecodeFailed(imageRef)) {
         this.globalImageCache.setData(imageRef, {
           objId,
-          fn: OPS.paintImageXObject,
+          fn,
           args,
           optionalContent,
           hasMask,
@@ -36901,7 +36993,7 @@ class PartialEvaluator {
         if (localLength) {
           this.globalImageCache.setData(imageRef, {
             objId,
-            fn: OPS.paintImageXObject,
+            fn,
             args,
             optionalContent,
             hasMask,
@@ -36938,7 +37030,7 @@ class PartialEvaluator {
     if (cacheKey) {
       const cacheData = {
         objId,
-        fn: OPS.paintImageXObject,
+        fn,
         args,
         optionalContent,
         hasMask
@@ -36949,7 +37041,7 @@ class PartialEvaluator {
         if (cacheGlobally) {
           this.globalImageCache.setData(imageRef, {
             objId,
-            fn: OPS.paintImageXObject,
+            fn,
             args,
             optionalContent,
             hasMask,
@@ -36977,7 +37069,9 @@ class PartialEvaluator {
       }
       smaskOptions.transferMap = transferMap;
     }
-    return this.buildFormXObject(resources, smaskContent, smaskOptions, operatorList, task, stateManager.state.clone(), localColorSpaceCache);
+    return this.buildFormXObject(resources, smaskContent, smaskOptions, operatorList, task, stateManager.state.clone({
+      newPath: true
+    }), localColorSpaceCache);
   }
   handleTransferFunction(tr) {
     let transferArray;
@@ -37285,57 +37379,80 @@ class PartialEvaluator {
     });
     return promise;
   }
-  buildPath(operatorList, fn, args, parsingText = false) {
-    const lastIndex = operatorList.length - 1;
-    if (!args) {
-      args = [];
-    }
-    if (lastIndex < 0 || operatorList.fnArray[lastIndex] !== OPS.constructPath) {
-      if (parsingText) {
-        warn(`Encountered path operator "${fn}" inside of a text object.`);
-        operatorList.addOp(OPS.save, null);
-      }
-      let minMax;
-      switch (fn) {
-        case OPS.rectangle:
-          const x = args[0] + args[2];
-          const y = args[1] + args[3];
-          minMax = [Math.min(args[0], x), Math.min(args[1], y), Math.max(args[0], x), Math.max(args[1], y)];
+  buildPath(fn, args, state) {
+    const {
+      pathMinMax: minMax,
+      pathBuffer
+    } = state;
+    switch (fn | 0) {
+      case OPS.rectangle:
+        {
+          const x = state.currentPointX = args[0];
+          const y = state.currentPointY = args[1];
+          const width = args[2];
+          const height = args[3];
+          const xw = x + width;
+          const yh = y + height;
+          if (width === 0 || height === 0) {
+            pathBuffer.push(DrawOPS.moveTo, x, y, DrawOPS.lineTo, xw, yh, DrawOPS.closePath);
+          } else {
+            pathBuffer.push(DrawOPS.moveTo, x, y, DrawOPS.lineTo, xw, y, DrawOPS.lineTo, xw, yh, DrawOPS.lineTo, x, yh, DrawOPS.closePath);
+          }
+          Util.rectBoundingBox(x, y, xw, yh, minMax);
           break;
-        case OPS.moveTo:
-        case OPS.lineTo:
-          minMax = [args[0], args[1], args[0], args[1]];
+        }
+      case OPS.moveTo:
+        {
+          const x = state.currentPointX = args[0];
+          const y = state.currentPointY = args[1];
+          pathBuffer.push(DrawOPS.moveTo, x, y);
+          Util.pointBoundingBox(x, y, minMax);
           break;
-        default:
-          minMax = [Infinity, Infinity, -Infinity, -Infinity];
+        }
+      case OPS.lineTo:
+        {
+          const x = state.currentPointX = args[0];
+          const y = state.currentPointY = args[1];
+          pathBuffer.push(DrawOPS.lineTo, x, y);
+          Util.pointBoundingBox(x, y, minMax);
           break;
-      }
-      operatorList.addOp(OPS.constructPath, [[fn], args, minMax]);
-      if (parsingText) {
-        operatorList.addOp(OPS.restore, null);
-      }
-    } else {
-      const opArgs = operatorList.argsArray[lastIndex];
-      opArgs[0].push(fn);
-      opArgs[1].push(...args);
-      const minMax = opArgs[2];
-      switch (fn) {
-        case OPS.rectangle:
-          const x = args[0] + args[2];
-          const y = args[1] + args[3];
-          minMax[0] = Math.min(minMax[0], args[0], x);
-          minMax[1] = Math.min(minMax[1], args[1], y);
-          minMax[2] = Math.max(minMax[2], args[0], x);
-          minMax[3] = Math.max(minMax[3], args[1], y);
+        }
+      case OPS.curveTo:
+        {
+          const startX = state.currentPointX;
+          const startY = state.currentPointY;
+          const [x1, y1, x2, y2, x, y] = args;
+          state.currentPointX = x;
+          state.currentPointY = y;
+          pathBuffer.push(DrawOPS.curveTo, x1, y1, x2, y2, x, y);
+          Util.bezierBoundingBox(startX, startY, x1, y1, x2, y2, x, y, minMax);
           break;
-        case OPS.moveTo:
-        case OPS.lineTo:
-          minMax[0] = Math.min(minMax[0], args[0]);
-          minMax[1] = Math.min(minMax[1], args[1]);
-          minMax[2] = Math.max(minMax[2], args[0]);
-          minMax[3] = Math.max(minMax[3], args[1]);
+        }
+      case OPS.curveTo2:
+        {
+          const startX = state.currentPointX;
+          const startY = state.currentPointY;
+          const [x1, y1, x, y] = args;
+          state.currentPointX = x;
+          state.currentPointY = y;
+          pathBuffer.push(DrawOPS.curveTo, startX, startY, x1, y1, x, y);
+          Util.bezierBoundingBox(startX, startY, startX, startY, x1, y1, x, y, minMax);
           break;
-      }
+        }
+      case OPS.curveTo3:
+        {
+          const startX = state.currentPointX;
+          const startY = state.currentPointY;
+          const [x1, y1, x, y] = args;
+          state.currentPointX = x;
+          state.currentPointY = y;
+          pathBuffer.push(DrawOPS.curveTo, x1, y1, x, y, x, y);
+          Util.bezierBoundingBox(startX, startY, x1, y1, x, y, x, y, minMax);
+          break;
+        }
+      case OPS.closePath:
+        pathBuffer.push(DrawOPS.closePath);
+        break;
     }
   }
   _getColorSpace(cs, resources, localColorSpaceCache) {
@@ -37541,7 +37658,6 @@ class PartialEvaluator {
     }
     const self = this;
     const xref = this.xref;
-    let parsingText = false;
     const localImageCache = new LocalImageCache();
     const localColorSpaceCache = new LocalColorSpaceCache();
     const localGStateCache = new LocalGStateCache();
@@ -37620,7 +37736,9 @@ class PartialEvaluator {
               }
               if (type.name === "Form") {
                 stateManager.save();
-                self.buildFormXObject(resources, xobj, null, operatorList, task, stateManager.state.clone(), localColorSpaceCache).then(function () {
+                self.buildFormXObject(resources, xobj, null, operatorList, task, stateManager.state.clone({
+                  newPath: true
+                }), localColorSpaceCache).then(function () {
                   stateManager.restore();
                   resolveXObject();
                 }, rejectXObject);
@@ -37659,12 +37777,6 @@ class PartialEvaluator {
               operatorList.addOp(OPS.setFont, [loadedName, fontSize]);
             }));
             return;
-          case OPS.beginText:
-            parsingText = true;
-            break;
-          case OPS.endText:
-            parsingText = false;
-            break;
           case OPS.endInlineImage:
             const cacheKey = args[0].cacheKey;
             if (cacheKey) {
@@ -37928,8 +38040,36 @@ class PartialEvaluator {
           case OPS.curveTo3:
           case OPS.closePath:
           case OPS.rectangle:
-            self.buildPath(operatorList, fn, args, parsingText);
+            self.buildPath(fn, args, stateManager.state);
             continue;
+          case OPS.stroke:
+          case OPS.closeStroke:
+          case OPS.fill:
+          case OPS.eoFill:
+          case OPS.fillStroke:
+          case OPS.eoFillStroke:
+          case OPS.closeFillStroke:
+          case OPS.closeEOFillStroke:
+          case OPS.endPath:
+            {
+              const {
+                state: {
+                  pathBuffer,
+                  pathMinMax
+                }
+              } = stateManager;
+              if (fn === OPS.closeStroke || fn === OPS.closeFillStroke || fn === OPS.closeEOFillStroke) {
+                pathBuffer.push(DrawOPS.closePath);
+              }
+              if (pathBuffer.length === 0) {
+                operatorList.addOp(OPS.constructPath, [fn, [null], null]);
+              } else {
+                operatorList.addOp(OPS.constructPath, [fn, [new Float32Array(pathBuffer)], pathMinMax.slice()]);
+                pathBuffer.length = 0;
+                pathMinMax.set([Infinity, Infinity, -Infinity, -Infinity], 0);
+              }
+              continue;
+            }
           case OPS.markPoint:
           case OPS.markPointProps:
           case OPS.beginCompat:
@@ -39730,7 +39870,8 @@ class TranslatedFont {
       operatorList.fnArray.splice(0, 1);
       operatorList.argsArray.splice(0, 1);
     } else if (fontBBoxSize === 0 || Math.round(charBBoxSize / fontBBoxSize) >= 10) {
-      this.#computeCharBBox(charBBox);
+      this._bbox ??= [Infinity, Infinity, -Infinity, -Infinity];
+      Util.rectBoundingBox(...charBBox, this._bbox);
     }
     let i = 0,
       ii = operatorList.length;
@@ -39788,18 +39929,12 @@ class TranslatedFont {
       switch (operatorList.fnArray[i]) {
         case OPS.constructPath:
           const minMax = operatorList.argsArray[i][2];
-          this.#computeCharBBox(minMax);
+          this._bbox ??= [Infinity, Infinity, -Infinity, -Infinity];
+          Util.rectBoundingBox(...minMax, this._bbox);
           break;
       }
       i++;
     }
-  }
-  #computeCharBBox(bbox) {
-    this._bbox ||= [Infinity, Infinity, -Infinity, -Infinity];
-    this._bbox[0] = Math.min(this._bbox[0], bbox[0]);
-    this._bbox[1] = Math.min(this._bbox[1], bbox[1]);
-    this._bbox[2] = Math.max(this._bbox[2], bbox[2]);
-    this._bbox[3] = Math.max(this._bbox[3], bbox[3]);
   }
 }
 class StateManager {
@@ -39886,6 +40021,9 @@ class EvalState {
     this._fillColorSpace = this._strokeColorSpace = ColorSpaceUtils.gray;
     this.patternFillColorSpace = null;
     this.patternStrokeColorSpace = null;
+    this.currentPointX = this.currentPointY = 0;
+    this.pathMinMax = new Float32Array([Infinity, Infinity, -Infinity, -Infinity]);
+    this.pathBuffer = [];
   }
   get fillColorSpace() {
     return this._fillColorSpace;
@@ -39899,8 +40037,15 @@ class EvalState {
   set strokeColorSpace(colorSpace) {
     this._strokeColorSpace = this.patternStrokeColorSpace = colorSpace;
   }
-  clone() {
-    return Object.create(this);
+  clone({
+    newPath = false
+  } = {}) {
+    const clone = Object.create(this);
+    if (newPath) {
+      clone.pathBuffer = [];
+      clone.pathMinMax = new Float32Array([Infinity, Infinity, -Infinity, -Infinity]);
+    }
+    return clone;
   }
 }
 class EvaluatorPreprocessor {
@@ -41532,7 +41677,8 @@ const StructElementType = {
   ELEMENT: 5
 };
 class StructTreeRoot {
-  constructor(rootDict, rootRef) {
+  constructor(xref, rootDict, rootRef) {
+    this.xref = xref;
     this.dict = rootDict;
     this.ref = rootRef instanceof Ref ? rootRef : null;
     this.roleMap = new Map();
@@ -41647,7 +41793,6 @@ class StructTreeRoot {
   }
   async canUpdateStructTree({
     pdfManager,
-    xref,
     newAnnotationsByPage
   }) {
     if (!this.ref) {
@@ -41669,7 +41814,7 @@ class StructTreeRoot {
       warn("Cannot update the struct tree: nums isn't an array.");
       return false;
     }
-    const numberTree = new NumberTree(parentTree, xref);
+    const numberTree = new NumberTree(parentTree, this.xref);
     for (const pageIndex of newAnnotationsByPage.keys()) {
       const {
         pageDict
@@ -41690,7 +41835,7 @@ class StructTreeRoot {
       } = await pdfManager.getPage(pageIndex);
       StructTreeRoot.#collectParents({
         elements,
-        xref: this.dict.xref,
+        xref: this.xref,
         pageDict,
         numberTree
       });
@@ -41719,9 +41864,11 @@ class StructTreeRoot {
     pdfManager,
     changes
   }) {
-    const xref = this.dict.xref;
+    const {
+      ref: structTreeRootRef,
+      xref
+    } = this;
     const structTreeRoot = this.dict.clone();
-    const structTreeRootRef = this.ref;
     const cache = new RefSetCache();
     cache.put(structTreeRootRef, structTreeRoot);
     let parentTreeRef = structTreeRoot.getRaw("ParentTree");
@@ -41987,6 +42134,7 @@ class StructTreeRoot {
 class StructElementNode {
   constructor(tree, dict) {
     this.tree = tree;
+    this.xref = tree.xref;
     this.dict = dict;
     this.kids = [];
     this.parseKids();
@@ -41997,10 +42145,7 @@ class StructElementNode {
     const {
       root
     } = this.tree;
-    if (root.roleMap.has(name)) {
-      return root.roleMap.get(name);
-    }
-    return name;
+    return root.roleMap.get(name) ?? name;
   }
   parseKids() {
     let pageObjId = null;
@@ -42011,7 +42156,7 @@ class StructElementNode {
     const kids = this.dict.get("K");
     if (Array.isArray(kids)) {
       for (const kid of kids) {
-        const element = this.parseKid(pageObjId, kid);
+        const element = this.parseKid(pageObjId, this.xref.fetchIfRef(kid));
         if (element) {
           this.kids.push(element);
         }
@@ -42034,37 +42179,31 @@ class StructElementNode {
         pageObjId
       });
     }
-    let kidDict = null;
-    if (kid instanceof Ref) {
-      kidDict = this.dict.xref.fetch(kid);
-    } else if (kid instanceof Dict) {
-      kidDict = kid;
-    }
-    if (!kidDict) {
+    if (!(kid instanceof Dict)) {
       return null;
     }
-    const pageRef = kidDict.getRaw("Pg");
+    const pageRef = kid.getRaw("Pg");
     if (pageRef instanceof Ref) {
       pageObjId = pageRef.toString();
     }
-    const type = kidDict.get("Type") instanceof Name ? kidDict.get("Type").name : null;
+    const type = kid.get("Type") instanceof Name ? kid.get("Type").name : null;
     if (type === "MCR") {
       if (this.tree.pageDict.objId !== pageObjId) {
         return null;
       }
-      const kidRef = kidDict.getRaw("Stm");
+      const kidRef = kid.getRaw("Stm");
       return new StructElement({
         type: StructElementType.STREAM_CONTENT,
         refObjId: kidRef instanceof Ref ? kidRef.toString() : null,
         pageObjId,
-        mcid: kidDict.get("MCID")
+        mcid: kid.get("MCID")
       });
     }
     if (type === "OBJR") {
       if (this.tree.pageDict.objId !== pageObjId) {
         return null;
       }
-      const kidRef = kidDict.getRaw("Obj");
+      const kidRef = kid.getRaw("Obj");
       return new StructElement({
         type: StructElementType.OBJECT,
         refObjId: kidRef instanceof Ref ? kidRef.toString() : null,
@@ -42073,7 +42212,7 @@ class StructElementNode {
     }
     return new StructElement({
       type: StructElementType.ELEMENT,
-      dict: kidDict
+      dict: kid
     });
   }
 }
@@ -42096,7 +42235,8 @@ class StructElement {
 class StructTreePage {
   constructor(structTreeRoot, pageDict) {
     this.root = structTreeRoot;
-    this.rootDict = structTreeRoot ? structTreeRoot.dict : null;
+    this.xref = structTreeRoot?.xref ?? null;
+    this.rootDict = structTreeRoot?.dict ?? null;
     this.pageDict = pageDict;
     this.nodes = [];
   }
@@ -42113,7 +42253,7 @@ class StructTreePage {
       return null;
     }
     const map = new Map();
-    const numberTree = new NumberTree(parentTree, this.rootDict.xref);
+    const numberTree = new NumberTree(parentTree, this.xref);
     for (const [elemId] of ids) {
       const obj = numberTree.getRaw(elemId);
       if (obj instanceof Ref) {
@@ -42136,13 +42276,13 @@ class StructTreePage {
       return;
     }
     const map = new Map();
-    const numberTree = new NumberTree(parentTree, this.rootDict.xref);
+    const numberTree = new NumberTree(parentTree, this.xref);
     if (Number.isInteger(id)) {
       const parentArray = numberTree.get(id);
       if (Array.isArray(parentArray)) {
         for (const ref of parentArray) {
           if (ref instanceof Ref) {
-            this.addNode(this.rootDict.xref.fetch(ref), map);
+            this.addNode(this.xref.fetch(ref), map);
           }
         }
       }
@@ -42153,7 +42293,7 @@ class StructTreePage {
     for (const [elemId, type] of ids) {
       const obj = numberTree.get(elemId);
       if (obj) {
-        const elem = this.addNode(this.rootDict.xref.fetchIfRef(obj), map);
+        const elem = this.addNode(this.xref.fetchIfRef(obj), map);
         if (elem?.kids?.length === 1 && elem.kids[0].type === StructElementType.OBJECT) {
           elem.kids[0].type = type;
         }
@@ -42477,7 +42617,7 @@ class Catalog {
   get structTreeRoot() {
     let structTree = null;
     try {
-      structTree = this._readStructTreeRoot();
+      structTree = this.#readStructTreeRoot();
     } catch (ex) {
       if (ex instanceof MissingDataException) {
         throw ex;
@@ -42486,13 +42626,13 @@ class Catalog {
     }
     return shadow(this, "structTreeRoot", structTree);
   }
-  _readStructTreeRoot() {
+  #readStructTreeRoot() {
     const rawObj = this._catDict.getRaw("StructTreeRoot");
     const obj = this.xref.fetchIfRef(rawObj);
     if (!(obj instanceof Dict)) {
       return null;
     }
-    const root = new StructTreeRoot(obj, rawObj);
+    const root = new StructTreeRoot(this.xref, obj, rawObj);
     root.init();
     return root;
   }
@@ -43887,6 +44027,8 @@ const $toString = Symbol();
 const $toStyle = Symbol();
 const $uid = Symbol("uid");
 
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.iterator.flat-map.js
+var es_iterator_flat_map = __webpack_require__(531);
 ;// ./src/core/xfa/namespaces.js
 const $buildXFAObject = Symbol();
 const NamespaceIds = {
@@ -44053,7 +44195,7 @@ function getRatio(data) {
       den: 1
     };
   }
-  const ratio = data.trim().split(/\s*:\s*/).map(x => parseFloat(x)).filter(x => !isNaN(x));
+  const ratio = data.split(":", 2).map(x => parseFloat(x.trim())).filter(x => !isNaN(x));
   if (ratio.length === 1) {
     ratio.push(1);
   }
@@ -44087,7 +44229,7 @@ function getColor(data, def = [0, 0, 0]) {
       b
     };
   }
-  const color = data.trim().split(/\s*,\s*/).map(c => MathClamp(parseInt(c.trim(), 10), 0, 255)).map(c => isNaN(c) ? 0 : c);
+  const color = data.split(",", 3).map(c => MathClamp(parseInt(c.trim(), 10), 0, 255)).map(c => isNaN(c) ? 0 : c);
   if (color.length < 3) {
     return {
       r,
@@ -44112,7 +44254,7 @@ function getBBox(data) {
       height: def
     };
   }
-  const bbox = data.trim().split(/\s*,\s*/).map(m => getMeasurement(m, "-1"));
+  const bbox = data.split(",", 4).map(m => getMeasurement(m.trim(), "-1"));
   if (bbox.length < 4 || bbox[2] < 0 || bbox[3] < 0) {
     return {
       x: def,
@@ -45594,7 +45736,6 @@ class Option10 extends IntegerObject {
 
 
 
-
 function measureToString(m) {
   if (typeof m === "string") {
     return "0px";
@@ -45646,10 +45787,10 @@ const converters = {
       const colSpan = node.colSpan;
       let w;
       if (colSpan === -1) {
-        w = extra.columnWidths.slice(extra.currentColumn).reduce((a, x) => a + x, 0);
+        w = Math.sumPrecise(extra.columnWidths.slice(extra.currentColumn));
         extra.currentColumn = 0;
       } else {
-        w = extra.columnWidths.slice(extra.currentColumn, extra.currentColumn + colSpan).reduce((a, x) => a + x, 0);
+        w = Math.sumPrecise(extra.columnWidths.slice(extra.currentColumn, extra.currentColumn + colSpan));
         extra.currentColumn = (extra.currentColumn + node.colSpan) % extra.columnWidths.length;
       }
       if (!isNaN(w)) {
@@ -45847,9 +45988,9 @@ function fixDimensions(node) {
     const colSpan = node.colSpan;
     let width;
     if (colSpan === -1) {
-      width = extra.columnWidths.slice(extra.currentColumn).reduce((a, w) => a + w, 0);
+      width = Math.sumPrecise(extra.columnWidths.slice(extra.currentColumn));
     } else {
-      width = extra.columnWidths.slice(extra.currentColumn, extra.currentColumn + colSpan).reduce((a, w) => a + w, 0);
+      width = Math.sumPrecise(extra.columnWidths.slice(extra.currentColumn, extra.currentColumn + colSpan));
     }
     if (!isNaN(width)) {
       node.w = width;
@@ -45860,7 +46001,7 @@ function fixDimensions(node) {
   }
   if (node.layout === "table") {
     if (node.w === "" && Array.isArray(node.columnWidths)) {
-      node.w = node.columnWidths.reduce((a, x) => a + x, 0);
+      node.w = Math.sumPrecise(node.columnWidths);
     }
   }
 }
@@ -46097,8 +46238,6 @@ function fixURL(str) {
 
 
 
-
-
 function createLine(node, children) {
   return {
     name: "div",
@@ -46212,7 +46351,7 @@ function getAvailableSpace(node) {
       };
     case "rl-row":
     case "row":
-      const width = node[$extra].columnWidths.slice(node[$extra].currentColumn).reduce((a, x) => a + x);
+      const width = Math.sumPrecise(node[$extra].columnWidths.slice(node[$extra].currentColumn));
       return {
         width,
         height: availableSpace.height - marginH
@@ -50567,12 +50706,7 @@ class Text extends ContentObject {
   }
   [$getExtra]() {
     if (typeof this[$content] === "string") {
-      return this[$content].split(/[\u2029\u2028\n]/).reduce((acc, line) => {
-        if (line) {
-          acc.push(line);
-        }
-        return acc;
-      }, []).join("\n");
+      return this[$content].split(/[\u2029\u2028\n]/).filter(line => !!line).join("\n");
     }
     return this[$content][$text]();
   }
@@ -50582,15 +50716,12 @@ class Text extends ContentObject {
       if (this[$content].includes("\u2029")) {
         html.name = "div";
         html.children = [];
-        this[$content].split("\u2029").map(para => para.split(/[\u2028\n]/).reduce((acc, line) => {
-          acc.push({
-            name: "span",
-            value: line
-          }, {
-            name: "br"
-          });
-          return acc;
-        }, [])).forEach(lines => {
+        this[$content].split("\u2029").map(para => para.split(/[\u2028\n]/).flatMap(line => [{
+          name: "span",
+          value: line
+        }, {
+          name: "br"
+        }])).forEach(lines => {
           html.children.push({
             name: "p",
             children: lines
@@ -52466,7 +52597,7 @@ class Range extends ContentObject {
     super(CONFIG_NS_ID, "range");
   }
   [$finalize]() {
-    this[$content] = this[$content].trim().split(/\s*,\s*/, 2).map(range => range.split("-").map(x => parseInt(x.trim(), 10))).filter(range => range.every(x => !isNaN(x))).map(range => {
+    this[$content] = this[$content].split(",", 2).map(range => range.split("-").map(x => parseInt(x.trim(), 10))).filter(range => range.every(x => !isNaN(x))).map(range => {
       if (range.length === 1) {
         range.push(range[0]);
       }
@@ -52702,7 +52833,7 @@ class Window extends ContentObject {
     super(CONFIG_NS_ID, "window");
   }
   [$finalize]() {
-    const pair = this[$content].trim().split(/\s*,\s*/, 2).map(x => parseInt(x, 10));
+    const pair = this[$content].split(",", 2).map(x => parseInt(x.trim(), 10));
     if (pair.some(x => isNaN(x))) {
       this[$content] = [0, 0];
       return;
@@ -53768,7 +53899,7 @@ function checkStyle(node) {
   if (!node.style) {
     return "";
   }
-  return node.style.trim().split(/\s*;\s*/).filter(s => !!s).map(s => s.split(/\s*:\s*/, 2)).filter(([key, value]) => {
+  return node.style.split(";").filter(s => !!s.trim()).map(s => s.split(":", 2).map(t => t.trim())).filter(([key, value]) => {
     if (key === "font-family") {
       node[$globalData].usedTypefaces.add(value);
     }
@@ -54598,7 +54729,6 @@ class XFAFactory {
 }
 
 ;// ./src/core/annotation.js
-
 
 
 
@@ -55626,10 +55756,7 @@ class MarkupAnnotation extends Annotation {
     fillAlpha,
     pointsCallback
   }) {
-    let minX = Number.MAX_VALUE;
-    let minY = Number.MAX_VALUE;
-    let maxX = Number.MIN_VALUE;
-    let maxY = Number.MIN_VALUE;
+    const bbox = this.data.rect = [Infinity, Infinity, -Infinity, -Infinity];
     const buffer = ["q"];
     if (extra) {
       buffer.push(extra);
@@ -55642,11 +55769,8 @@ class MarkupAnnotation extends Annotation {
     }
     const pointsArray = this.data.quadPoints || Float32Array.from([this.rectangle[0], this.rectangle[3], this.rectangle[2], this.rectangle[3], this.rectangle[0], this.rectangle[1], this.rectangle[2], this.rectangle[1]]);
     for (let i = 0, ii = pointsArray.length; i < ii; i += 8) {
-      const [mX, MX, mY, MY] = pointsCallback(buffer, pointsArray.subarray(i, i + 8));
-      minX = Math.min(minX, mX);
-      maxX = Math.max(maxX, MX);
-      minY = Math.min(minY, mY);
-      maxY = Math.max(maxY, MY);
+      const points = pointsCallback(buffer, pointsArray.subarray(i, i + 8));
+      Util.rectBoundingBox(...points, bbox);
     }
     buffer.push("Q");
     const formDict = new Dict(xref);
@@ -55672,7 +55796,6 @@ class MarkupAnnotation extends Annotation {
     resources.set("XObject", formDict);
     const appearanceDict = new Dict(xref);
     appearanceDict.set("Resources", resources);
-    const bbox = this.data.rect = [minX, minY, maxX, maxY];
     appearanceDict.set("BBox", bbox);
     this.appearance = new StringStream("/GS0 gs /Fm0 Do");
     this.appearance.dict = appearanceDict;
@@ -56162,7 +56285,7 @@ class WidgetAnnotation extends Annotation {
     return initialState.font;
   }
   _getTextWidth(text, font) {
-    return font.charsToGlyphs(text).reduce((width, glyph) => width + glyph.width, 0) / 1000;
+    return Math.sumPrecise(font.charsToGlyphs(text).map(g => g.width)) / 1000;
   }
   _computeFontSize(height, width, text, font, lineCount) {
     let {
@@ -57334,7 +57457,7 @@ class LineAnnotation extends MarkupAnnotation {
         fillAlpha,
         pointsCallback: (buffer, points) => {
           buffer.push(`${lineCoordinates[0]} ${lineCoordinates[1]} m`, `${lineCoordinates[2]} ${lineCoordinates[3]} l`, "S");
-          return [points[0] - borderWidth, points[2] + borderWidth, points[7] - borderWidth, points[3] + borderWidth];
+          return [points[0] - borderWidth, points[7] - borderWidth, points[2] + borderWidth, points[3] + borderWidth];
         }
       });
     }
@@ -57377,7 +57500,7 @@ class SquareAnnotation extends MarkupAnnotation {
           } else {
             buffer.push("S");
           }
-          return [points[0], points[2], points[7], points[3]];
+          return [points[0], points[7], points[2], points[3]];
         }
       });
     }
@@ -57423,7 +57546,7 @@ class CircleAnnotation extends MarkupAnnotation {
           } else {
             buffer.push("S");
           }
-          return [points[0], points[2], points[7], points[3]];
+          return [points[0], points[7], points[2], points[3]];
         }
       });
     }
@@ -57456,10 +57579,7 @@ class PolylineAnnotation extends MarkupAnnotation {
         borderAdjust = 2 * borderWidth;
       const bbox = [Infinity, Infinity, -Infinity, -Infinity];
       for (let i = 0, ii = vertices.length; i < ii; i += 2) {
-        bbox[0] = Math.min(bbox[0], vertices[i] - borderAdjust);
-        bbox[1] = Math.min(bbox[1], vertices[i + 1] - borderAdjust);
-        bbox[2] = Math.max(bbox[2], vertices[i] + borderAdjust);
-        bbox[3] = Math.max(bbox[3], vertices[i + 1] + borderAdjust);
+        Util.rectBoundingBox(vertices[i] - borderAdjust, vertices[i + 1] - borderAdjust, vertices[i] + borderAdjust, vertices[i + 1] + borderAdjust, bbox);
       }
       if (!Util.intersect(this.rectangle, bbox)) {
         this.rectangle = bbox;
@@ -57474,7 +57594,7 @@ class PolylineAnnotation extends MarkupAnnotation {
             buffer.push(`${vertices[i]} ${vertices[i + 1]} ${i === 0 ? "m" : "l"}`);
           }
           buffer.push("S");
-          return [points[0], points[2], points[7], points[3]];
+          return [points[0], points[7], points[2], points[3]];
         }
       });
     }
@@ -57533,10 +57653,7 @@ class InkAnnotation extends MarkupAnnotation {
       const bbox = [Infinity, Infinity, -Infinity, -Infinity];
       for (const inkList of this.data.inkLists) {
         for (let i = 0, ii = inkList.length; i < ii; i += 2) {
-          bbox[0] = Math.min(bbox[0], inkList[i] - borderAdjust);
-          bbox[1] = Math.min(bbox[1], inkList[i + 1] - borderAdjust);
-          bbox[2] = Math.max(bbox[2], inkList[i] + borderAdjust);
-          bbox[3] = Math.max(bbox[3], inkList[i + 1] + borderAdjust);
+          Util.rectBoundingBox(inkList[i] - borderAdjust, inkList[i + 1] - borderAdjust, inkList[i] + borderAdjust, inkList[i + 1] + borderAdjust, bbox);
         }
       }
       if (!Util.intersect(this.rectangle, bbox)) {
@@ -57554,7 +57671,7 @@ class InkAnnotation extends MarkupAnnotation {
             }
             buffer.push("S");
           }
-          return [points[0], points[2], points[7], points[3]];
+          return [points[0], points[7], points[2], points[3]];
         }
       });
     }
@@ -57723,7 +57840,7 @@ class HighlightAnnotation extends MarkupAnnotation {
           fillAlpha,
           pointsCallback: (buffer, points) => {
             buffer.push(`${points[0]} ${points[1]} m`, `${points[2]} ${points[3]} l`, `${points[6]} ${points[7]} l`, `${points[4]} ${points[5]} l`, "f");
-            return [points[0], points[2], points[7], points[3]];
+            return [points[0], points[7], points[2], points[3]];
           }
         });
       }
@@ -57828,7 +57945,7 @@ class UnderlineAnnotation extends MarkupAnnotation {
           strokeAlpha,
           pointsCallback: (buffer, points) => {
             buffer.push(`${points[4]} ${points[5] + 1.3} m`, `${points[6]} ${points[7] + 1.3} l`, "S");
-            return [points[0], points[2], points[7], points[3]];
+            return [points[0], points[7], points[2], points[3]];
           }
         });
       }
@@ -57868,7 +57985,7 @@ class SquigglyAnnotation extends MarkupAnnotation {
               buffer.push(`${x} ${y + shift} l`);
             } while (x < xEnd);
             buffer.push("S");
-            return [points[4], xEnd, y - 2 * dy, y + 2 * dy];
+            return [points[4], y - 2 * dy, xEnd, y + 2 * dy];
           }
         });
       }
@@ -57897,7 +58014,7 @@ class StrikeOutAnnotation extends MarkupAnnotation {
           strokeAlpha,
           pointsCallback: (buffer, points) => {
             buffer.push(`${(points[0] + points[4]) / 2} ` + `${(points[1] + points[5]) / 2} m`, `${(points[2] + points[6]) / 2} ` + `${(points[3] + points[7]) / 2} l`, "S");
-            return [points[0], points[2], points[7], points[3]];
+            return [points[0], points[7], points[2], points[3]];
           }
         });
       }
@@ -58703,7 +58820,6 @@ class DecryptStream extends DecodeStream {
 
 
 
-
 class ARCFourCipher {
   constructor(key) {
     this.a = 0;
@@ -59159,7 +59275,7 @@ class PDF20 extends PDFBase {
       }
       const cipher = new AES128Cipher(k.subarray(0, 16));
       e = cipher.encrypt(k1, k.subarray(16, 32));
-      const remainder = e.slice(0, 16).reduce((a, b) => a + b, 0) % 3;
+      const remainder = Math.sumPrecise(e.slice(0, 16)) % 3;
       if (remainder === 0) {
         k = calculateSHA256(e, 0, e.length);
       } else if (remainder === 1) {
@@ -60406,16 +60522,15 @@ class Page {
     }
     throw reason;
   }
-  getContentStream() {
-    return this.pdfManager.ensure(this, "content").then(content => {
-      if (content instanceof BaseStream) {
-        return content;
-      }
-      if (Array.isArray(content)) {
-        return new StreamsSequenceStream(content, this._onSubStreamError.bind(this));
-      }
-      return new NullStream();
-    });
+  async getContentStream() {
+    const content = await this.pdfManager.ensure(this, "content");
+    if (content instanceof BaseStream) {
+      return content;
+    }
+    if (Array.isArray(content)) {
+      return new StreamsSequenceStream(content, this._onSubStreamError.bind(this));
+    }
+    return new NullStream();
   }
   get xfaData() {
     return shadow(this, "xfaData", this.xfaFactory ? {
@@ -60496,7 +60611,7 @@ class Page {
       });
     }
   }
-  save(handler, task, annotationStorage, changes) {
+  async save(handler, task, annotationStorage, changes) {
     const partialEvaluator = new PartialEvaluator({
       xref: this.xref,
       handler,
@@ -60510,25 +60625,22 @@ class Page {
       systemFontCache: this.systemFontCache,
       options: this.evaluatorOptions
     });
-    return this._parsedAnnotations.then(function (annotations) {
-      const promises = [];
-      for (const annotation of annotations) {
-        promises.push(annotation.save(partialEvaluator, task, annotationStorage, changes).catch(function (reason) {
-          warn("save - ignoring annotation data during " + `"${task.name}" task: "${reason}".`);
-          return null;
-        }));
-      }
-      return Promise.all(promises);
-    });
+    const annotations = await this._parsedAnnotations;
+    const promises = [];
+    for (const annotation of annotations) {
+      promises.push(annotation.save(partialEvaluator, task, annotationStorage, changes).catch(function (reason) {
+        warn("save - ignoring annotation data during " + `"${task.name}" task: "${reason}".`);
+        return null;
+      }));
+    }
+    return Promise.all(promises);
   }
-  loadResources(keys) {
-    this.resourcesPromise ||= this.pdfManager.ensure(this, "resources");
-    return this.resourcesPromise.then(() => {
-      const objectLoader = new ObjectLoader(this.resources, keys, this.xref);
-      return objectLoader.load();
-    });
+  async loadResources(keys) {
+    await (this.resourcesPromise ??= this.pdfManager.ensure(this, "resources"));
+    const objectLoader = new ObjectLoader(this.resources, keys, this.xref);
+    await objectLoader.load();
   }
-  getOperatorList({
+  async getOperatorList({
     handler,
     sink,
     task,
@@ -60593,81 +60705,80 @@ class Page {
         return AnnotationFactory.printNewAnnotations(annotationGlobals, partialEvaluator, task, newAnnots, imagePromises);
       });
     }
-    const pageListPromise = Promise.all([contentStreamPromise, resourcesPromise]).then(([contentStream]) => {
+    const pageListPromise = Promise.all([contentStreamPromise, resourcesPromise]).then(async ([contentStream]) => {
       const opList = new OperatorList(intent, sink);
       handler.send("StartRenderPage", {
         transparency: partialEvaluator.hasBlendModes(this.resources, this.nonBlendModesSet),
         pageIndex: this.pageIndex,
         cacheKey
       });
-      return partialEvaluator.getOperatorList({
+      await partialEvaluator.getOperatorList({
         stream: contentStream,
         task,
         resources: this.resources,
         operatorList: opList
-      }).then(() => opList);
+      });
+      return opList;
     });
-    return Promise.all([pageListPromise, this._parsedAnnotations, newAnnotationsPromise]).then(function ([pageOpList, annotations, newAnnotations]) {
-      if (newAnnotations) {
-        annotations = annotations.filter(a => !(a.ref && deletedAnnotations.has(a.ref)));
-        for (let i = 0, ii = newAnnotations.length; i < ii; i++) {
-          const newAnnotation = newAnnotations[i];
-          if (newAnnotation.refToReplace) {
-            const j = annotations.findIndex(a => a.ref && isRefsEqual(a.ref, newAnnotation.refToReplace));
-            if (j >= 0) {
-              annotations.splice(j, 1, newAnnotation);
-              newAnnotations.splice(i--, 1);
-              ii--;
-            }
+    let [pageOpList, annotations, newAnnotations] = await Promise.all([pageListPromise, this._parsedAnnotations, newAnnotationsPromise]);
+    if (newAnnotations) {
+      annotations = annotations.filter(a => !(a.ref && deletedAnnotations.has(a.ref)));
+      for (let i = 0, ii = newAnnotations.length; i < ii; i++) {
+        const newAnnotation = newAnnotations[i];
+        if (newAnnotation.refToReplace) {
+          const j = annotations.findIndex(a => a.ref && isRefsEqual(a.ref, newAnnotation.refToReplace));
+          if (j >= 0) {
+            annotations.splice(j, 1, newAnnotation);
+            newAnnotations.splice(i--, 1);
+            ii--;
           }
         }
-        annotations = annotations.concat(newAnnotations);
       }
-      if (annotations.length === 0 || intent & RenderingIntentFlag.ANNOTATIONS_DISABLE) {
-        pageOpList.flush(true);
-        return {
-          length: pageOpList.totalLength
-        };
+      annotations = annotations.concat(newAnnotations);
+    }
+    if (annotations.length === 0 || intent & RenderingIntentFlag.ANNOTATIONS_DISABLE) {
+      pageOpList.flush(true);
+      return {
+        length: pageOpList.totalLength
+      };
+    }
+    const renderForms = !!(intent & RenderingIntentFlag.ANNOTATIONS_FORMS),
+      isEditing = !!(intent & RenderingIntentFlag.IS_EDITING),
+      intentAny = !!(intent & RenderingIntentFlag.ANY),
+      intentDisplay = !!(intent & RenderingIntentFlag.DISPLAY),
+      intentPrint = !!(intent & RenderingIntentFlag.PRINT);
+    const opListPromises = [];
+    for (const annotation of annotations) {
+      if (intentAny || intentDisplay && annotation.mustBeViewed(annotationStorage, renderForms) && annotation.mustBeViewedWhenEditing(isEditing, modifiedIds) || intentPrint && annotation.mustBePrinted(annotationStorage)) {
+        opListPromises.push(annotation.getOperatorList(partialEvaluator, task, intent, annotationStorage).catch(function (reason) {
+          warn("getOperatorList - ignoring annotation data during " + `"${task.name}" task: "${reason}".`);
+          return {
+            opList: null,
+            separateForm: false,
+            separateCanvas: false
+          };
+        }));
       }
-      const renderForms = !!(intent & RenderingIntentFlag.ANNOTATIONS_FORMS),
-        isEditing = !!(intent & RenderingIntentFlag.IS_EDITING),
-        intentAny = !!(intent & RenderingIntentFlag.ANY),
-        intentDisplay = !!(intent & RenderingIntentFlag.DISPLAY),
-        intentPrint = !!(intent & RenderingIntentFlag.PRINT);
-      const opListPromises = [];
-      for (const annotation of annotations) {
-        if (intentAny || intentDisplay && annotation.mustBeViewed(annotationStorage, renderForms) && annotation.mustBeViewedWhenEditing(isEditing, modifiedIds) || intentPrint && annotation.mustBePrinted(annotationStorage)) {
-          opListPromises.push(annotation.getOperatorList(partialEvaluator, task, intent, annotationStorage).catch(function (reason) {
-            warn("getOperatorList - ignoring annotation data during " + `"${task.name}" task: "${reason}".`);
-            return {
-              opList: null,
-              separateForm: false,
-              separateCanvas: false
-            };
-          }));
-        }
-      }
-      return Promise.all(opListPromises).then(function (opLists) {
-        let form = false,
-          canvas = false;
-        for (const {
-          opList,
-          separateForm,
-          separateCanvas
-        } of opLists) {
-          pageOpList.addOpList(opList);
-          form ||= separateForm;
-          canvas ||= separateCanvas;
-        }
-        pageOpList.flush(true, {
-          form,
-          canvas
-        });
-        return {
-          length: pageOpList.totalLength
-        };
-      });
+    }
+    const opLists = await Promise.all(opListPromises);
+    let form = false,
+      canvas = false;
+    for (const {
+      opList,
+      separateForm,
+      separateCanvas
+    } of opLists) {
+      pageOpList.addOpList(opList);
+      form ||= separateForm;
+      canvas ||= separateCanvas;
+    }
+    pageOpList.flush(true, {
+      form,
+      canvas
     });
+    return {
+      length: pageOpList.totalLength
+    };
   }
   async extractTextContent({
     handler,
@@ -62238,7 +62349,6 @@ class MessageHandler {
 
 
 
-
 async function writeObject(ref, obj, buffer, {
   encrypt = null
 }) {
@@ -62355,26 +62465,23 @@ function writeInt(number, size, offset, buffer) {
   return offset + size;
 }
 function writeString(string, offset, buffer) {
-  for (let i = 0, len = string.length; i < len; i++) {
+  const ii = string.length;
+  for (let i = 0; i < ii; i++) {
     buffer[offset + i] = string.charCodeAt(i) & 0xff;
   }
+  return offset + ii;
 }
 function computeMD5(filesize, xrefInfo) {
   const time = Math.floor(Date.now() / 1000);
   const filename = xrefInfo.filename || "";
-  const md5Buffer = [time.toString(), filename, filesize.toString()];
-  let md5BufferLen = md5Buffer.reduce((a, str) => a + str.length, 0);
-  for (const value of Object.values(xrefInfo.info)) {
-    md5Buffer.push(value);
-    md5BufferLen += value.length;
-  }
+  const md5Buffer = [time.toString(), filename, filesize.toString(), ...Object.values(xrefInfo.info)];
+  const md5BufferLen = Math.sumPrecise(md5Buffer.map(str => str.length));
   const array = new Uint8Array(md5BufferLen);
   let offset = 0;
   for (const str of md5Buffer) {
-    writeString(str, offset, array);
-    offset += str.length;
+    offset = writeString(str, offset, array);
   }
-  return bytesToString(calculateMD5(array));
+  return bytesToString(calculateMD5(array, 0, array.length));
 }
 function writeXFADataForAcroform(str, changes) {
   const xml = new SimpleXMLParser({
@@ -62518,7 +62625,7 @@ async function getXRefStreamTable(xrefInfo, baseOffset, newRefs, newXref, buffer
   const sizes = [1, offsetSize, maxGenSize];
   newXref.set("W", sizes);
   computeIDs(baseOffset, xrefInfo, newXref);
-  const structSize = sizes.reduce((a, x) => a + x, 0);
+  const structSize = Math.sumPrecise(sizes);
   const data = new Uint8Array(structSize * xrefTableData.length);
   const stream = new Stream(data);
   stream.dict = newXref;
@@ -62631,13 +62738,12 @@ async function incrementalUpdate({
     }
   }
   await (useXrefStream ? getXRefStreamTable(xrefInfo, baseOffset, newRefs, newXref, buffer) : getXRefTable(xrefInfo, baseOffset, newRefs, newXref, buffer));
-  const totalLength = buffer.reduce((a, str) => a + str.length, originalData.length);
+  const totalLength = originalData.length + Math.sumPrecise(buffer.map(str => str.length));
   const array = new Uint8Array(totalLength);
   array.set(originalData);
   let offset = originalData.length;
   for (const str of buffer) {
-    writeString(str, offset, array);
-    offset += str.length;
+    offset = writeString(str, offset, array);
   }
   return array;
 }
@@ -62835,7 +62941,7 @@ class WorkerMessageHandler {
       docId,
       apiVersion
     } = docParams;
-    const workerVersion = "5.0.375";
+    const workerVersion = "5.1.91";
     if (apiVersion !== workerVersion) {
       throw new Error(`The API version "${apiVersion}" does not match ` + `the Worker version "${workerVersion}".`);
     }
@@ -63148,7 +63254,6 @@ class WorkerMessageHandler {
           }
         } else if (await _structTreeRoot.canUpdateStructTree({
           pdfManager,
-          xref,
           newAnnotationsByPage
         })) {
           structTreeRoot = _structTreeRoot;
@@ -63368,8 +63473,8 @@ class WorkerMessageHandler {
 
 ;// ./src/pdf.worker.js
 
-const pdfjsVersion = "5.0.375";
-const pdfjsBuild = "23972e194";
+const pdfjsVersion = "5.1.91";
+const pdfjsBuild = "45cbe8bb0";
 
 var __webpack_exports__WorkerMessageHandler = __webpack_exports__.WorkerMessageHandler;
 export { __webpack_exports__WorkerMessageHandler as WorkerMessageHandler };
