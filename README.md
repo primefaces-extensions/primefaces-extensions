@@ -15,7 +15,7 @@
 This is an overview page, please visit [primefaces-extensions.github.io](http://primefaces-extensions.github.io/) or the [showcase](https://www.primefaces.org/showcase-ext/) for more information.
 
 ## Versioning
-
+***
 There are multiple versions available please check which one for your PrimeFaces release version.
 
 | Version | Explanation |
@@ -29,7 +29,7 @@ There are multiple versions available please check which one for your PrimeFaces
 | ![8.x](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions?versionPrefix=8.0&color=cyan) | PrimeFaces 8.0 |
 
 ## Maven
-
+***
 ### Release (javax)
 
 ```xml
@@ -79,7 +79,7 @@ There are multiple versions available please check which one for your PrimeFaces
 ```
 
 ## Namespaces
-
+***
 The PrimeFaces Extensions namespace is necessary to add PrimeFaces Extensions components to your pages.
 
 ```xml
@@ -87,16 +87,16 @@ xmlns:pe="http://primefaces.org/ui/extensions"
 ```
 
 ## Getting Started
-
+***
 Please refer to the [Getting Started Guide](https://github.com/primefaces-extensions/primefaces-extensions.github.com/wiki/Getting-Started) to see what you need
 to get started and any optional libraries.
 
 ## Migration Guide
-
+***
 Please refer to the [Migration Guide](https://github.com/primefaces-extensions/primefaces-extensions.github.com/wiki/Migration-Guide).
 
 ## Demo
-
+***
 Please refer to the Showcase submodule in order to see the full usage of the components. Simply do the following to run the Showcase:
 
 ```sh
@@ -107,25 +107,23 @@ mvn clean jetty:run
 Then open your web browser to http://localhost:8080/showcase-ext/
 
 ## Issues
-
+***
 Please report all issues [here](https://github.com/primefaces-extensions/primefaces-extensions/issues).
 
 ## Releasing
-
+***
 - Run `mvn versions:set -DgenerateBackupPoms=false -DnewVersion=8.0.2` to update all modules versions
 - Commit and push the changes to GitHub
 - In GitHub create a new Release titled `8.0.2` to tag this release
 - Run `mvn clean deploy -Prelease` to push to Maven Central
 
 ## License
-
+***
 Licensed under the [MIT](https://en.wikipedia.org/wiki/MIT_License) license.
 
 `SPDX-License-Identifier: MIT`
 
-### Acknowledgements
+### Powered by
 ***
-We would like to thank JetBrains for providing us with an open source license to the IntelliJ IDEA - the best Java and polyglot IDE.
-
-![IntelliJ IDEA logo](https://resources.jetbrains.com/storage/products/company/brand/logos/IntelliJ_IDEA.png)
+[![IntelliJ IDEA logo.](https://resources.jetbrains.com/storage/products/company/brand/logos/IntelliJ_IDEA.svg)](https://jb.gg/OpenSourceSupport)
 
