@@ -123,7 +123,9 @@ Licensed under the [MIT](https://en.wikipedia.org/wiki/MIT_License) license.
 
 `SPDX-License-Identifier: MIT`
 
-### Thanks JetBrains!
+### Acknowledgements
 ***
+We would like to thank JetBrains for providing us with an open source license to the IntelliJ IDEA - the best Java and polyglot IDE.
+
 ![IntelliJ IDEA logo](https://resources.jetbrains.com/storage/products/company/brand/logos/IntelliJ_IDEA.png)
 
