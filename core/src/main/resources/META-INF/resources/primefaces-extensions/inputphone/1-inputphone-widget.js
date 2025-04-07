@@ -14,40 +14,105 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
      */
     init: function (cfg) {
         this._super(cfg);
-        this.id = cfg.id;
-        this.cfg = cfg;
         this.disabled = cfg.disabled;
 
+        this.bindInputs();
+        this.bindComponent();
+        this.bindEvents();
+    },
+
+    /**
+     * @override
+     * @inheritdoc
+     * @param {PrimeFaces.PartialWidgetCfg<TCfg>} cfg
+     */
+    refresh: function(cfg) {
+        this._remove();
+        this._super(cfg);
+    },
+
+    /**
+     * @override
+     * @inheritdoc
+     */
+    destroy: function() {
+        this._super();
+        this._remove();
+    },
+
+    /**
+     * Clean up this widget and remove elements from DOM.
+     * @private
+     */
+    _remove: function() {
+        if (this.iti) {
+            this.currentCountry = this.inputIso2Jq.val();
+            this.iti.destroy();
+            this.iti = null;
+        }
+    },
+
+    /**
+     * Binds the input elements to jQuery objects and sets up metadata.
+     *
+     * This method initializes jQuery objects for the input elements based on their IDs.
+     * It also assigns data for PrimeFaces metadata to the main input element.
+     */
+    bindInputs: function () {
         // JQuery inputs
         this.inputJq = $(this.jqId + '_input');
+        this.input = this.inputJq[0];
         this.inputIso2Jq = $(this.jqId + '_iso2');
+        this.inputHiddenJq = $(this.jqId + '_hidden');
 
         // pfs metadata
         this.inputJq.data(PrimeFaces.CLIENT_ID_DATA, this.id);
 
-        // style disabled if necessary
+        // now add visual effects to inputs
+        this.bindVisualEffects();
+    },
+
+    /**
+     * Binds and initializes the component.
+     *
+     * This method sets the initial country configuration if it's defined.
+     * It then creates and initializes the international telephone input component.
+     */
+    bindComponent: function () {
+        // #1623 Initial country can be set back accidentally to original if AJAX validation issue
+        if (this.currentCountry) {
+            this.cfg.initialCountry = this.currentCountry;
+        }
+
+        // component creation
+        this.iti = intlTelInput(this.input, this.cfg);
+    },
+
+    /**
+     * Renders the disabled state for the input elements.
+     * If the component is marked as disabled, it disables the relevant input elements
+     * and adds a CSS class to indicate the disabled state.
+     */
+    bindVisualEffects: function () {
+        // visual effects
+        PrimeFaces.skinInput(this.inputJq);
+
         if (this.disabled) {
             this.inputJq.attr("disabled", "disabled");
             this.inputJq.addClass("ui-state-disabled");
             this.inputIso2Jq.attr("disabled", "disabled");
+            this.inputHiddenJq.attr("disabled", "disabled");
         }
-
-        // visual effects
-        PrimeFaces.skinInput(this.inputJq);
-
-        // component creation
-        this.input = this.inputJq[0];
-        this.iti = intlTelInput(this.input, cfg);
-
-        this.bindEvents();
     },
 
     bindEvents: function () {
-        var $this = this;
+        let $this = this;
 
         this.input.addEventListener('countrychange', function () {
-            var country = $this.iti.getSelectedCountryData();
+            let country = $this.getCountry();
+            let phoneNumber = $this.getNumber();
             $this.inputIso2Jq.val(country.iso2);
+            $this.inputHiddenJq.val(phoneNumber);
             if ($this.hasBehavior('countrySelect')) {
                 var ext = {
                     params: [{
@@ -64,16 +129,31 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
                 $this.callBehavior('countrySelect', ext);
             }
         });
+
+        // get the current attached events if using CSP
+        let events = this.inputJq[0] ? $._data(this.inputJq[0], "events") : null;
+
+        // use DOM if non-CSP and JQ event if CSP
+        let originalOninput = this.inputJq.prop('oninput');
+        if (!originalOninput && events && events.input) {
+            originalOninput = events.input[0].handler;
+        }
+
+        this.inputJq.prop('oninput', null).off('input').on('input', function (e) {
+            let oldVal = $this.inputHiddenJq.val();
+            $this.inputHiddenJq.val($this.getNumber());
+            if (originalOninput && originalOninput.call(this, e) === false) {
+                $this.inputHiddenJq.val(oldVal);
+                return false;
+            }
+        });
     },
 
     /**
      * Get the current number in the given format.
      */
     getNumber: function () {
-        if (this.iti) {
-            return this.iti.getNumber();
-        }
-        return '';
+        return this.iti ? this.iti.getNumber() : '';
     },
 
     /**
@@ -94,10 +174,7 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
      * Get the country data for the currently selected flag.
      */
     getCountry: function () {
-        if (this.iti) {
-            return this.iti.getSelectedCountryData();
-        }
-        return '';
+        return this.iti ? this.iti.getSelectedCountryData() : '';
     },
 
     /**
@@ -132,7 +209,7 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
      */
     isPossibleNumber: function () {
         if (this.iti) {
-            return this.iti.isValidNumber();
+            return this.iti.isValidNumber(false);
         }
     },
 
@@ -152,10 +229,7 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
      * in utils.js.
      */
     getValidationError: function () {
-        if (this.iti) {
-            return this.iti.getValidationError();
-        }
-        return 0;
+        return this.iti ? this.iti.getValidationError() : 0;
     },
 
     /**
@@ -171,6 +245,7 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
     enable: function () {
         PrimeFaces.utils.enableInputWidget(this.inputJq);
         PrimeFaces.utils.enableInputWidget(this.inputIso2Jq);
+        PrimeFaces.utils.enableInputWidget(this.inputHiddenJq);
         this.disabled = false;
     },
 
@@ -180,23 +255,8 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
     disable: function () {
         PrimeFaces.utils.disableInputWidget(this.inputJq);
         PrimeFaces.utils.disableInputWidget(this.inputIso2Jq);
+        PrimeFaces.utils.disableInputWidget(this.inputHiddenJq);
         this.disabled = true;
-    },
-
-    // @override
-    refresh: function (cfg) {
-        if (this.iti) {
-            this.iti.destroy();
-        }
-        this._super(cfg);
-    },
-
-    // @override
-    destroy: function () {
-        this._super();
-        if (this.iti) {
-            this.iti.destroy();
-        }
     }
 
 });
