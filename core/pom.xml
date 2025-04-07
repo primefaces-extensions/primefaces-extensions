@@ -98,6 +98,7 @@
                 <filtering>true</filtering>
                 <excludes>
                     <!-- Only for having @types during development -->
+					<exclude>**/documentviewer/**</exclude>
                     <exclude>**/node_modules/**</exclude>
                     <exclude>**/patches/**</exclude>
                     <exclude>**/jsconfig.json</exclude>
