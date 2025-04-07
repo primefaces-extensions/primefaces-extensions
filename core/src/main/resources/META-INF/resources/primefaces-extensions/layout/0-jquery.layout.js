@@ -3931,7 +3931,7 @@
 
                         $R
                             // add or remove event
-                            [enable ? "on" : "off"](evtName + '.' + sID, slideOpen)
+                            [enable ? "on" : "off"](evtName + '.' + sID, open)
                             // set the appropriate cursor & title/tip
                             .css("cursor", enable ? o.sliderCursor : "default")
                             .attr("title", enable ? o.tips.Slide : "")
