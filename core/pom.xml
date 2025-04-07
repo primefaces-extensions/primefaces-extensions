@@ -98,7 +98,7 @@
                 <filtering>true</filtering>
                 <excludes>
                     <!-- Only for having @types during development -->
-					<exclude>**/documentviewer/**</exclude>
+                    <exclude>**/documentviewer/**</exclude>
                     <exclude>**/node_modules/**</exclude>
                     <exclude>**/patches/**</exclude>
                     <exclude>**/jsconfig.json</exclude>
@@ -171,7 +171,7 @@
                                 <include>fuzzysearch/**</include>
                                 <include>imageareaselect/**</include>
                                 <include>imagezoom/**</include>
-								<include>inputphone/1-inputphone-widget.js</include>
+                                <include>inputphone/1-inputphone-widget.js</include>
                                 <include>layout/**</include>
                                 <include>legend/**</include>
                                 <include>qrcode/**</include>
@@ -272,7 +272,7 @@
                                 </aggregation>
                             </aggregations>
                         </resourcesSet>
-						<resourcesSet>
+                        <resourcesSet>
                             <includes>
                                 <include>inputphone/0-intlTelInput.min.js</include>
                                 <include>inputphone/inputphone.js</include>
