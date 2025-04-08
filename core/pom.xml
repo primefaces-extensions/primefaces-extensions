@@ -98,6 +98,9 @@
                 <filtering>true</filtering>
                 <excludes>
                     <!-- Only for having @types during development -->
+                    <exclude>**/documentviewer/**</exclude>
+                    <exclude>**/keynote/theme/fonts/**</exclude>
+                    <exclude>**/codescanner/**</exclude>
                     <exclude>**/node_modules/**</exclude>
                     <exclude>**/patches/**</exclude>
                     <exclude>**/jsconfig.json</exclude>
@@ -170,6 +173,7 @@
                                 <include>fuzzysearch/**</include>
                                 <include>imageareaselect/**</include>
                                 <include>imagezoom/**</include>
+                                <include>inputphone/1-inputphone-widget.js</include>
                                 <include>layout/**</include>
                                 <include>legend/**</include>
                                 <include>qrcode/**</include>
@@ -254,6 +258,32 @@
                                     <inputDir>${resources.dir.compressed}</inputDir>
                                     <outputFile>${resources.dir.compressed}/inputphone/inputphone.js</outputFile>
                                     <withoutCompress>${withoutCompress}</withoutCompress>
+                                </aggregation>
+                            </aggregations>
+                        </resourcesSet>
+                        <resourcesSet>
+                            <includes>
+                                <include>inputphone/intlTelInput.css</include>
+                                <include>inputphone/inputphone.css</include>
+                            </includes>
+                            <aggregations>
+                                <aggregation>
+                                    <inputDir>${resources.dir.compressed}</inputDir>
+                                    <outputFile>${resources.dir.compressed}/inputphone/inputphone.css</outputFile>
+                                    <withoutCompress>${withoutCompress}</withoutCompress>
+                                </aggregation>
+                            </aggregations>
+                        </resourcesSet>
+                        <resourcesSet>
+                            <includes>
+                                <include>inputphone/0-intlTelInput.min.js</include>
+                                <include>inputphone/inputphone.js</include>
+                            </includes>
+                            <aggregations>
+                                <aggregation>
+                                    <inputDir>${resources.dir.compressed}</inputDir>
+                                    <outputFile>${resources.dir.compressed}/inputphone/inputphone.js</outputFile>
+                                    <withoutCompress>true</withoutCompress>
                                 </aggregation>
                             </aggregations>
                         </resourcesSet>

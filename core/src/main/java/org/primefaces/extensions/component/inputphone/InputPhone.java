@@ -23,6 +23,7 @@ package org.primefaces.extensions.component.inputphone;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import javax.faces.application.ResourceDependency;
@@ -61,39 +62,34 @@ public class InputPhone extends AbstractPrimeHtmlInputText implements Widget, In
     public static final String STYLE_CLASS = "ui-inputphone ui-widget";
     public static final String EVENT_COUNTRY_SELECT = "countrySelect";
     public static final String COUNTRY_AUTO = "auto";
+    public static final String INPUT_SUFFIX = "_input";
 
-    private static final Collection<String> EVENT_NAMES = LangUtils
-                .unmodifiableList("blur", "change", "valueChange", "select", "click", "dblclick", "focus", "keydown", "keypress", "keyup", "mousedown",
-                            "mousemove", "mouseout", "mouseover", "mouseup", "wheel", "cut", "copy", "paste", "contextmenu", "input", "invalid", "reset",
-                            "search", "drag", "dragend", "dragenter", "dragleave", "dragover", "dragstart", "drop", "scroll", EVENT_COUNTRY_SELECT);
-
-    private static final Collection<String> UNOBSTRUSIVE_EVENT_NAMES = LangUtils.unmodifiableList(EVENT_COUNTRY_SELECT);
+    private static final List<String> UNOBSTRUSIVE_EVENT_NAMES = LangUtils.unmodifiableList(EVENT_COUNTRY_SELECT);
+    private static final Collection<String> EVENT_NAMES = LangUtils.concat(AbstractPrimeHtmlInputText.EVENT_NAMES, UNOBSTRUSIVE_EVENT_NAMES);
 
     // @formatter:off
     @SuppressWarnings("java:S115")
     public enum PropertyKeys {
-        placeholder,
-        widgetVar,
-        type,
-        dir,
         allowDropdown,
         autoHideDialCode,
         autoPlaceholder,
         excludeCountries,
         fixDropdownWidth,
-        formatOnDisplay,
         formatAsYouType,
+        formatOnDisplay,
+        geoIpLookup,
         initialCountry,
+        inputStyle,
+        inputStyleClass,
+        localizedCountries,
         nationalMode,
         onlyCountries,
+        placeholder,
         placeholderNumberType,
         preferredCountries,
         separateDialCode,
-        inputStyle,
-        inputStyleClass,
-        geoIpLookup,
-        localizedCountries,
-        countrySearch
+        type,
+        widgetVar
     }
 
     @SuppressWarnings("java:S115")
@@ -128,18 +124,13 @@ public class InputPhone extends AbstractPrimeHtmlInputText implements Widget, In
     }
 
     @Override
-    public String getDefaultEventName() {
-        return EVENT_COUNTRY_SELECT;
-    }
-
-    @Override
     public String getInputClientId() {
-        return getClientId() + "_input";
+        return getClientId() + INPUT_SUFFIX;
     }
 
     @Override
     public String getValidatableInputClientId() {
-        return getClientId() + "_input";
+        return getClientId() + INPUT_SUFFIX;
     }
 
     @Override
@@ -150,15 +141,6 @@ public class InputPhone extends AbstractPrimeHtmlInputText implements Widget, In
     @Override
     public void setLabelledBy(final String labelledBy) {
         getStateHelper().put("labelledby", labelledBy);
-    }
-
-    public void setDir(final String _dir) {
-        getStateHelper().put(PropertyKeys.dir, _dir);
-    }
-
-    @Override
-    public String getDir() {
-        return (String) getStateHelper().eval(PropertyKeys.dir, "ltr");
     }
 
     public String getPlaceholder() {
@@ -327,18 +309,6 @@ public class InputPhone extends AbstractPrimeHtmlInputText implements Widget, In
 
     public void setLocalizedCountries(final Object localizedCountries) {
         getStateHelper().put(PropertyKeys.localizedCountries, localizedCountries);
-    }
-
-    public boolean isCountrySearch() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.countrySearch, true);
-    }
-
-    public void setCountrySearch(final boolean countrySearch) {
-        getStateHelper().put(PropertyKeys.countrySearch, countrySearch);
-    }
-
-    public boolean isUtilsScriptRequired() {
-        return !AutoPlaceholder.off.name().equals(getAutoPlaceholder()) || isFormatOnDisplay() || isFormatAsYouType();
     }
 
     @Override

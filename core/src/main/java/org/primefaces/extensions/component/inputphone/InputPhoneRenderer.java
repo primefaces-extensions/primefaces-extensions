@@ -21,6 +21,8 @@
  */
 package org.primefaces.extensions.component.inputphone;
 
+import static org.primefaces.extensions.component.inputphone.InputPhone.EVENT_COUNTRY_SELECT;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
@@ -55,7 +57,8 @@ import org.primefaces.util.WidgetBuilder;
 public class InputPhoneRenderer extends InputRenderer {
 
     private static final Logger LOGGER = Logger.getLogger(InputPhoneRenderer.class.getName());
-    private static final String HIDDEN_ID = "_iso2";
+    private static final String HIDDEN_ID = "_hidden";
+    private static final String ISO2_ID = "_iso2";
 
     @Override
     public void decode(final FacesContext context, final UIComponent component) {
@@ -67,7 +70,7 @@ public class InputPhoneRenderer extends InputRenderer {
 
         decodeBehaviors(context, inputPhone);
 
-        final String inputId = inputPhone.getClientId(context) + "_input";
+        final String inputId = inputPhone.getClientId(context) + HIDDEN_ID;
         final String submittedValue = context.getExternalContext().getRequestParameterMap().get(inputId);
 
         if (submittedValue != null) {
@@ -105,20 +108,28 @@ public class InputPhoneRenderer extends InputRenderer {
         }
 
         String country = context.getExternalContext().getRequestParameterMap()
-                    .get(inputPhone.getClientId() + HIDDEN_ID);
+                    .get(inputPhone.getClientId() + ISO2_ID);
         if (country == null || InputPhone.COUNTRY_AUTO.equals(country)) {
             country = Constants.EMPTY_STRING;
         }
         else {
             inputPhone.setInitialCountry(country);
         }
-        if (PrimeExtensionsEnvironment.getCurrentInstance(context).isLibphonenumberAvailable()) {
+        if (needsValidation(context)
+                    && PrimeExtensionsEnvironment.getCurrentInstance(context).isLibphonenumberAvailable()) {
             PhoneNumberUtilWrapper.validate(value, country.toUpperCase(), inputPhone.getValidatorMessage());
         }
         else {
             LOGGER.warning("Libphonenumber not available, unable to validate!");
         }
         return value;
+    }
+
+    protected boolean needsValidation(final FacesContext context) {
+        final String eventName = context.getExternalContext()
+                    .getRequestParameterMap()
+                    .get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+        return !EVENT_COUNTRY_SELECT.equals(eventName);
     }
 
     protected void encodeMarkup(final FacesContext context, final InputPhone inputPhone, final String valueToRender)
@@ -132,15 +143,15 @@ public class InputPhoneRenderer extends InputRenderer {
 
         writer.startElement("span", inputPhone);
         writer.writeAttribute("id", clientId, null);
-        writer.writeAttribute("dir", ComponentUtils.isRTL(context, inputPhone) ? "rtl" : "ltr", null);
         writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
 
         if (inputPhone.getStyle() != null) {
             writer.writeAttribute(Attrs.STYLE, inputPhone.getStyle(), Attrs.STYLE);
         }
 
+        renderRTLDirection(context, inputPhone);
         encodeInput(context, inputPhone, clientId, valueToRender);
-        encodeHiddenInput(context, inputPhone, clientId);
+        encodeHiddenInputs(context, inputPhone, clientId, valueToRender);
 
         writer.endElement("span");
     }
@@ -150,7 +161,7 @@ public class InputPhoneRenderer extends InputRenderer {
                 throws IOException {
 
         final ResponseWriter writer = context.getResponseWriter();
-        final String inputId = clientId + "_input";
+        final String inputId = clientId + InputPhone.INPUT_SUFFIX;
         final String inputStyle = inputPhone.getInputStyle();
         final String styleClass = createStyleClass(inputPhone, "inputStyleClass", InputText.STYLE_CLASS);
 
@@ -173,9 +184,10 @@ public class InputPhoneRenderer extends InputRenderer {
         writer.endElement("input");
     }
 
-    protected void encodeHiddenInput(final FacesContext context, final InputPhone inputPhone, final String clientId)
+    protected void encodeHiddenInputs(final FacesContext context, final InputPhone inputPhone, final String clientId, final String valueToRender)
                 throws IOException {
-        renderHiddenInput(context, clientId + HIDDEN_ID, inputPhone.getInitialCountry(), inputPhone.isDisabled());
+        renderHiddenInput(context, clientId + ISO2_ID, inputPhone.getInitialCountry(), inputPhone.isDisabled());
+        renderHiddenInput(context, clientId + HIDDEN_ID, valueToRender, inputPhone.isDisabled());
     }
 
     protected void encodeScript(final FacesContext context, final InputPhone inputPhone) throws IOException {
@@ -188,8 +200,7 @@ public class InputPhoneRenderer extends InputRenderer {
         wb.attr("formatOnDisplay", inputPhone.isFormatOnDisplay(), true);
         wb.attr("formatAsYouType", inputPhone.isFormatAsYouType(), true);
         wb.attr("nationalMode", inputPhone.isNationalMode(), true);
-        wb.attr("countrySearch", inputPhone.isCountrySearch(), true);
-        wb.attr("showSelectedDialCode", inputPhone.isSeparateDialCode(), false);
+        wb.attr("separateDialCode", inputPhone.isSeparateDialCode(), false);
         if (inputPhone.getAutoPlaceholderEnum() != InputPhone.AutoPlaceholder.polite) {
             wb.attr("autoPlaceholder", inputPhone.getAutoPlaceholder());
         }
@@ -206,15 +217,13 @@ public class InputPhoneRenderer extends InputRenderer {
         if (inputPhone.getPlaceholderNumberTypeEnum() != InputPhone.PlaceholderNumberType.mobile) {
             wb.attr("placeholderNumberType", inputPhone.getPlaceholderNumberType().toUpperCase());
         }
-        encodeCountries(wb, "preferredCountries", inputPhone.getPreferredCountries());
+        encodeCountries(wb, "countryOrder", inputPhone.getPreferredCountries());
 
-        if (inputPhone.isUtilsScriptRequired()) {
-            wb.attr("utilsScript",
-                        context.getApplication()
-                                    .getResourceHandler()
-                                    .createResource("inputphone/utils.js", "primefaces-extensions")
-                                    .getRequestPath());
-        }
+        wb.attr("utilsScript",
+                    context.getApplication()
+                                .getResourceHandler()
+                                .createResource("inputphone/utils.js", org.primefaces.extensions.util.Constants.LIBRARY)
+                                .getRequestPath());
         if (inputPhone.getLocalizedCountries() != null) {
             wb.nativeAttr("i18n", objectToJsonString(inputPhone.getLocalizedCountries()));
         }
@@ -232,6 +241,7 @@ public class InputPhoneRenderer extends InputRenderer {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private Collection<String> toCollection(final Object object) {
         if (object instanceof String) {
             final String string = ((String) object).replace(' ', ',').toLowerCase();
@@ -240,11 +250,12 @@ public class InputPhoneRenderer extends InputRenderer {
         return (Collection<String>) object;
     }
 
+    @SuppressWarnings("unchecked")
     private String objectToJsonString(final Object object) {
         if (object == null || object instanceof String) {
             return (String) object;
         }
-        Map<String, String> map = (Map) object;
+        Map<String, String> map = (Map<String, String>) object;
         JSONObject jsonObj = new JSONObject();
         map.entrySet().forEach(entry -> jsonObj.put(entry.getKey(), entry.getValue()));
         return jsonObj.toString();
