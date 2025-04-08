@@ -367,6 +367,7 @@ public class SheetRenderer extends CoreRenderer {
                     break;
                 case "autocomplete":
                     options.appendProperty("strict", Boolean.toString(column.isAutoCompleteStrict()), false);
+                    options.appendProperty("filter", Boolean.toString(column.isAutoCompleteFilter()), false);
                     options.appendProperty("allowInvalid", Boolean.toString(column.isAutoCompleteAllowInvalid()),
                                 false);
                     options.appendProperty("trimDropdown", Boolean.toString(column.isAutoCompleteTrimDropdown()),
