@@ -96,7 +96,7 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
         dateFormat,
 
         /**
-         * JSON config for coltype="date". DatePicker additional options (see https://github.com/dbushell/Pikaday#configuration)
+         * JSON config for coltype="date". DatePicker additional options (see <a href="https://github.com/dbushell/Pikaday#configuration">...</a>)
          */
         datePickerConfig,
 
@@ -109,6 +109,11 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
          * If true, the autocomplete cells will only accept values that are defined in the source array. Default true.
          */
         autoCompleteStrict,
+
+        /**
+         * If true, the autocomplete allows filtering if false it makes it a dropdown. Default true.
+         */
+        autoCompleteFilter,
 
         /**
          * If true, allows manual input of value that does not exist in the source. In this case, the field background highlight becomes red and the selection
@@ -241,7 +246,7 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
      * @return true if read only, otherwise false
      */
     public boolean isReadOnly() {
-        return Boolean.valueOf(getStateHelper().eval(PropertyKeys.readOnly, Boolean.FALSE).toString());
+        return Boolean.parseBoolean(getStateHelper().eval(PropertyKeys.readOnly, Boolean.FALSE).toString());
     }
 
     /**
@@ -259,7 +264,7 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
      * @return true if read only, otherwise false
      */
     public boolean isReadonlyCell() {
-        return Boolean.valueOf(getStateHelper().eval(PropertyKeys.readonlyCell, Boolean.FALSE).toString());
+        return Boolean.parseBoolean(getStateHelper().eval(PropertyKeys.readonlyCell, Boolean.FALSE).toString());
     }
 
     /**
@@ -301,7 +306,7 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
     }
 
     public boolean isAutoCompleteAllowInvalid() {
-        return Boolean.valueOf(getStateHelper().eval(PropertyKeys.autoCompleteAllowInvalid, Boolean.FALSE).toString());
+        return Boolean.parseBoolean(getStateHelper().eval(PropertyKeys.autoCompleteAllowInvalid, Boolean.FALSE).toString());
     }
 
     public void setAutoCompleteAllowInvalid(final boolean value) {
@@ -309,15 +314,23 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
     }
 
     public boolean isAutoCompleteStrict() {
-        return Boolean.valueOf(getStateHelper().eval(PropertyKeys.autoCompleteStrict, Boolean.TRUE).toString());
+        return Boolean.parseBoolean(getStateHelper().eval(PropertyKeys.autoCompleteStrict, Boolean.TRUE).toString());
     }
 
     public void setAutoCompleteStrict(final boolean value) {
         getStateHelper().put(PropertyKeys.autoCompleteStrict, value);
     }
 
+    public boolean isAutoCompleteFilter() {
+        return Boolean.parseBoolean(getStateHelper().eval(PropertyKeys.autoCompleteFilter, Boolean.TRUE).toString());
+    }
+
+    public void setAutoCompleteFilter(final boolean value) {
+        getStateHelper().put(PropertyKeys.autoCompleteFilter, value);
+    }
+
     public boolean isAutoCompleteTrimDropdown() {
-        return Boolean.valueOf(getStateHelper().eval(PropertyKeys.autoCompleteTrimDropdown, Boolean.TRUE).toString());
+        return Boolean.parseBoolean(getStateHelper().eval(PropertyKeys.autoCompleteTrimDropdown, Boolean.TRUE).toString());
     }
 
     public void setAutoCompleteTrimDropdown(final boolean value) {
@@ -409,7 +422,7 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
     }
 
     public boolean isVisible() {
-        return Boolean.valueOf(getStateHelper().eval(PropertyKeys.visible, Boolean.TRUE).toString());
+        return Boolean.parseBoolean(getStateHelper().eval(PropertyKeys.visible, Boolean.TRUE).toString());
     }
 
     public void setWordWrap(final boolean value) {
@@ -417,7 +430,7 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
     }
 
     public Boolean isWordWrap() {
-        return Boolean.valueOf(getStateHelper().eval(PropertyKeys.wordWrap, Boolean.TRUE).toString());
+        return Boolean.parseBoolean(getStateHelper().eval(PropertyKeys.wordWrap, Boolean.TRUE).toString());
     }
 
     public void setTrimWhitespace(final boolean value) {
@@ -425,7 +438,7 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
     }
 
     public Boolean isTrimWhitespace() {
-        return Boolean.valueOf(getStateHelper().eval(PropertyKeys.trimWhitespace, Boolean.TRUE).toString());
+        return Boolean.parseBoolean(getStateHelper().eval(PropertyKeys.trimWhitespace, Boolean.TRUE).toString());
     }
 
     /**

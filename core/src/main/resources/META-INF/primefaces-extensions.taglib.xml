@@ -8358,6 +8358,14 @@
         </attribute>
         <attribute>
             <description>
+                <![CDATA[Boolean value if true, the autocomplete allows filtering if false it makes it a dropdown. Default true.]]>
+            </description>
+            <name>autoCompleteFilter</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
                 <![CDATA[Boolean value If true, allows manual input of value that does not exist in the source. In this case, the field background highlight becomes red and the selection advances to the next cell.]]>
             </description>
             <name>autoCompleteAllowInvalid</name>
