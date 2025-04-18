@@ -109,6 +109,13 @@
                     <exclude>**/package-lock.json</exclude>
                 </excludes>
             </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <includes>
+                    <include>**/documentviewer/**</include>
+                </includes>
+            </resource>
         </resources>
         <plugins>
             <plugin>
