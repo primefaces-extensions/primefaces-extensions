@@ -99,7 +99,7 @@
                 <filtering>true</filtering>
                 <excludes>
                     <!-- Only for having @types during development -->
-					<exclude>**/documentviewer/**</exclude>
+                    <exclude>**/documentviewer/**</exclude>
                     <exclude>**/keynote/theme/fonts/**</exclude>
                     <exclude>**/codescanner/**</exclude>
                     <exclude>**/node_modules/**</exclude>
@@ -109,6 +109,13 @@
                     <exclude>**/package.json</exclude>
                     <exclude>**/package-lock.json</exclude>
                 </excludes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <includes>
+                    <include>**/documentviewer/**</include>
+                </includes>
             </resource>
         </resources>
         <plugins>
