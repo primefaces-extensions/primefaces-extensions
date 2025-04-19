@@ -48,8 +48,8 @@ import org.primefaces.util.Constants;
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
-@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
-@ResourceDependency(library = "primefaces-extensions", name = "tristatemanycheckbox/tristatemanycheckbox.js")
+@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "primefaces-extensions.js")
+@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "tristatemanycheckbox/tristatemanycheckbox.js")
 public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widget {
 
     public static final String UI_ICON = "ui-icon ";

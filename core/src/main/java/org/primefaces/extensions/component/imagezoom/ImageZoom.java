@@ -25,6 +25,7 @@ import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
 
 import org.primefaces.component.api.Widget;
+import org.primefaces.extensions.util.Constants;
 
 /**
  * Component class for the <code>ImageZoom</code> component.
@@ -35,9 +36,9 @@ import org.primefaces.component.api.Widget;
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
-@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
-@ResourceDependency(library = "primefaces-extensions", name = "imagezoom/imagezoom.js")
-@ResourceDependency(library = "primefaces-extensions", name = "imagezoom/imagezoom.css")
+@ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.js")
+@ResourceDependency(library = Constants.LIBRARY, name = "imagezoom/imagezoom.js")
+@ResourceDependency(library = Constants.LIBRARY, name = "imagezoom/imagezoom.css")
 public class ImageZoom extends UIComponentBase implements Widget {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.ImageZoom";

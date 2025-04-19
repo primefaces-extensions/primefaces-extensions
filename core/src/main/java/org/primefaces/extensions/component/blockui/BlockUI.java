@@ -25,6 +25,7 @@ import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
 
 import org.primefaces.component.api.Widget;
+import org.primefaces.extensions.util.Constants;
 
 /**
  * <code>BlockUI</code> component.
@@ -37,9 +38,9 @@ import org.primefaces.component.api.Widget;
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
-@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
-@ResourceDependency(library = "primefaces-extensions", name = "blockui/blockui.css")
-@ResourceDependency(library = "primefaces-extensions", name = "blockui/blockui.js")
+@ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.js")
+@ResourceDependency(library = Constants.LIBRARY, name = "blockui/blockui.css")
+@ResourceDependency(library = Constants.LIBRARY, name = "blockui/blockui.js")
 public class BlockUI extends UIComponentBase implements Widget {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.BlockUI";

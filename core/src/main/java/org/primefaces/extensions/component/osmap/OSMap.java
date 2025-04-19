@@ -38,10 +38,10 @@ import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
 import org.primefaces.util.MapBuilder;
 
-@ResourceDependency(library = "primefaces-extensions", name = "leaflet/leaflet.css")
-@ResourceDependency(library = "primefaces-extensions", name = "leaflet/leaflet.js")
-@ResourceDependency(library = "primefaces-extensions", name = "osmap/osmap.js")
-@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
+@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "leaflet/leaflet.css")
+@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "leaflet/leaflet.js")
+@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "osmap/osmap.js")
+@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "primefaces-extensions.js")
 public class OSMap extends OSMapBase {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.OSMap";

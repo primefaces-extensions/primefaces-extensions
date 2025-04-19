@@ -27,6 +27,8 @@ import java.util.Map;
 import javax.faces.application.ResourceDependency;
 import javax.faces.event.BehaviorEvent;
 
+import org.primefaces.extensions.util.Constants;
+
 /**
  * Component for the Monaco code diff editor JavaScript library .This is the framed monaco editor that creates a new instance in a separate iframe to allow for
  * better scoping, i.e. loading types etc. without affecting other editors. There is also an inline widget when this scoping is not required as iframes create
@@ -38,9 +40,9 @@ import javax.faces.event.BehaviorEvent;
 @SuppressWarnings("java:S110")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
-@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
-@ResourceDependency(library = "primefaces-extensions", name = "monacoeditor/widget-framed.js")
-@ResourceDependency(library = "primefaces-extensions", name = "monacoeditor/monacoeditor.css")
+@ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.js")
+@ResourceDependency(library = Constants.LIBRARY, name = "monacoeditor/widget-framed.js")
+@ResourceDependency(library = Constants.LIBRARY, name = "monacoeditor/monacoeditor.css")
 public class MonacoDiffEditorFramed extends MonacoDiffEditorBase {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.MonacoDiffEditorFramed";

@@ -55,9 +55,9 @@ import org.primefaces.util.LocaleUtils;
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
-@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
-@ResourceDependency(library = "primefaces-extensions", name = "timepicker/timepicker.css")
-@ResourceDependency(library = "primefaces-extensions", name = "timepicker/timepicker.js")
+@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "primefaces-extensions.js")
+@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "timepicker/timepicker.css")
+@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "timepicker/timepicker.js")
 public class TimePicker extends AbstractPrimeHtmlInputText implements Widget, InputHolder {
 
     public static final String CONTAINER_CLASS = "pe-timepicker ui-widget ui-corner-all";

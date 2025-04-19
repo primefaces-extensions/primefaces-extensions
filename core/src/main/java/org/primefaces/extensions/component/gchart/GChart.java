@@ -41,9 +41,9 @@ import org.primefaces.util.Constants;
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
-@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
-@ResourceDependency(library = "primefaces-extensions", name = "gchart/gchart.css")
-@ResourceDependency(library = "primefaces-extensions", name = "gchart/gchart.js")
+@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "primefaces-extensions.js")
+@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "gchart/gchart.css")
+@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "gchart/gchart.js")
 public class GChart extends UIOutput implements Widget, ClientBehaviorHolder {
 
     public static final String API_KEY = "primefaces.GOOGLE_MAPS_API_KEY";

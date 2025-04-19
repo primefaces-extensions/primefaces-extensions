@@ -26,6 +26,7 @@ import javax.faces.component.FacesComponent;
 import javax.faces.component.UIComponentBase;
 
 import org.primefaces.component.api.Widget;
+import org.primefaces.extensions.util.Constants;
 
 /**
  * <code>Session</code> component.
@@ -38,7 +39,7 @@ import org.primefaces.component.api.Widget;
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
-@ResourceDependency(library = "primefaces-extensions", name = "session/session.js")
+@ResourceDependency(library = Constants.LIBRARY, name = "session/session.js")
 public class Session extends UIComponentBase implements Widget {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Session";

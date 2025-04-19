@@ -46,8 +46,8 @@ import org.primefaces.util.LangUtils;
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
-@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
-@ResourceDependency(library = "primefaces-extensions", name = "lightswitch/lightswitch.js")
+@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "primefaces-extensions.js")
+@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "lightswitch/lightswitch.js")
 public class LightSwitch extends UIComponentBase implements Widget, ClientBehaviorHolder, MixedClientBehaviorHolder {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.LightSwitch";

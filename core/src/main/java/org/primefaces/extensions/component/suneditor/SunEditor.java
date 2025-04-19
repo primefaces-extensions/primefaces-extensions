@@ -29,6 +29,7 @@ import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.extensions.component.base.AbstractEditorInputTextArea;
+import org.primefaces.extensions.util.Constants;
 import org.primefaces.util.LangUtils;
 import org.primefaces.util.LocaleUtils;
 
@@ -42,9 +43,9 @@ import org.primefaces.util.LocaleUtils;
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
-@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
-@ResourceDependency(library = "primefaces-extensions", name = "suneditor/suneditor.css")
-@ResourceDependency(library = "primefaces-extensions", name = "suneditor/suneditor.js")
+@ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.js")
+@ResourceDependency(library = Constants.LIBRARY, name = "suneditor/suneditor.css")
+@ResourceDependency(library = Constants.LIBRARY, name = "suneditor/suneditor.js")
 public class SunEditor extends AbstractEditorInputTextArea implements ClientBehaviorHolder {
     public static final String EDITOR_CLASS = "ui-suneditor";
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.SunEditor";

@@ -46,7 +46,7 @@ import org.primefaces.util.MapBuilder;
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = "primefaces", name = "components.js")
-@ResourceDependency(library = "primefaces-extensions", name = "fuzzysearch/fuzzysearch.js")
+@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "fuzzysearch/fuzzysearch.js")
 public class FuzzySearch extends FuzzySearchBase {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.FuzzySearch";
