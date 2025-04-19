@@ -46,9 +46,9 @@ import org.primefaces.util.Constants;
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
-@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
-@ResourceDependency(library = "primefaces-extensions", name = "echarts/echarts.js")
-@ResourceDependency(library = "primefaces-extensions", name = "speedtest/speedtest.js")
+@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "primefaces-extensions.js")
+@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "echarts/echarts.js")
+@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "speedtest/speedtest.js")
 public class Speedtest extends UIComponentBase implements ClientBehaviorHolder, Widget {
 
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";

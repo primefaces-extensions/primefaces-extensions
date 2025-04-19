@@ -47,7 +47,7 @@ import org.primefaces.util.LangUtils;
  * @version $Revision$
  * @since 0.2
  */
-@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css")
+@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "primefaces-extensions.css")
 public class MasterDetail extends UIComponentBase {
 
     public static final String CONTEXT_VALUE_VALUE_EXPRESSION = "mdContextValueVE";

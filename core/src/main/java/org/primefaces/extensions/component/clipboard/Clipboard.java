@@ -48,7 +48,7 @@ import org.primefaces.util.Constants;
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
-@ResourceDependency(library = "primefaces-extensions", name = "clipboard/clipboard.js")
+@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "clipboard/clipboard.js")
 public class Clipboard extends UIComponentBase implements ClientBehaviorHolder, Widget {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Clipboard";

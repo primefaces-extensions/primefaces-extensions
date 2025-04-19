@@ -25,6 +25,7 @@ import javax.faces.application.ResourceDependency;
 
 import org.primefaces.behavior.base.AbstractBehavior;
 import org.primefaces.behavior.base.BehaviorAttribute;
+import org.primefaces.extensions.util.Constants;
 
 /**
  * Client Behavior class for the <code>Javascript</code> behavior.
@@ -36,7 +37,7 @@ import org.primefaces.behavior.base.BehaviorAttribute;
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
-@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
+@ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.js")
 public class JavascriptBehavior extends AbstractBehavior {
 
     public static final String BEHAVIOR_ID = "org.primefaces.extensions.behavior.JavascriptBehavior";

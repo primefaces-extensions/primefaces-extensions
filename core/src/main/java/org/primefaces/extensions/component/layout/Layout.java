@@ -54,9 +54,9 @@ import org.primefaces.util.LangUtils;
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
-@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
-@ResourceDependency(library = "primefaces-extensions", name = "layout/layout.css")
-@ResourceDependency(library = "primefaces-extensions", name = "layout/layout.js")
+@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "primefaces-extensions.js")
+@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "layout/layout.css")
+@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "layout/layout.js")
 public class Layout extends UIComponentBase implements Widget, ClientBehaviorHolder {
 
     public static final String POSITION_SEPARATOR = "_";

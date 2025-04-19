@@ -40,6 +40,7 @@ import org.primefaces.extensions.component.base.AbstractDynamicData;
 import org.primefaces.extensions.model.common.KeyData;
 import org.primefaces.extensions.model.dynaform.DynaFormControl;
 import org.primefaces.extensions.model.dynaform.DynaFormModel;
+import org.primefaces.extensions.util.Constants;
 
 /**
  * <code>DynaForm</code> component.
@@ -51,9 +52,9 @@ import org.primefaces.extensions.model.dynaform.DynaFormModel;
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
-@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
-@ResourceDependency(library = "primefaces-extensions", name = "dynaform/dynaform.css")
-@ResourceDependency(library = "primefaces-extensions", name = "dynaform/dynaform.js")
+@ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.js")
+@ResourceDependency(library = Constants.LIBRARY, name = "dynaform/dynaform.css")
+@ResourceDependency(library = Constants.LIBRARY, name = "dynaform/dynaform.js")
 public class DynaForm extends AbstractDynamicData implements Widget {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.DynaForm";

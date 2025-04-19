@@ -25,6 +25,7 @@ import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
 
 import org.primefaces.component.api.Widget;
+import org.primefaces.extensions.util.Constants;
 
 /**
  * <code>CreditCard</code> component.
@@ -36,8 +37,8 @@ import org.primefaces.component.api.Widget;
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
-@ResourceDependency(library = "primefaces-extensions", name = "creditcard/creditcard.css")
-@ResourceDependency(library = "primefaces-extensions", name = "creditcard/creditcard.js")
+@ResourceDependency(library = Constants.LIBRARY, name = "creditcard/creditcard.css")
+@ResourceDependency(library = Constants.LIBRARY, name = "creditcard/creditcard.js")
 public class CreditCard extends UIComponentBase implements Widget {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.CreditCard";

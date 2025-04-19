@@ -27,6 +27,8 @@ import java.util.Map;
 import javax.faces.application.ResourceDependency;
 import javax.faces.event.BehaviorEvent;
 
+import org.primefaces.extensions.util.Constants;
+
 /**
  * Component for the Monaco diff code editor JavaScript library. This is the inline monaco editor that creates a new instance in a textarea element on the same
  * page. There is also framed version available that creates an editor in an iframe for better scoping.
@@ -37,9 +39,9 @@ import javax.faces.event.BehaviorEvent;
 @SuppressWarnings("java:S110")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
-@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
-@ResourceDependency(library = "primefaces-extensions", name = "monacoeditor/widget-inline.js")
-@ResourceDependency(library = "primefaces-extensions", name = "monacoeditor/monacoeditor.css")
+@ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.js")
+@ResourceDependency(library = Constants.LIBRARY, name = "monacoeditor/widget-inline.js")
+@ResourceDependency(library = Constants.LIBRARY, name = "monacoeditor/monacoeditor.css")
 public class MonacoDiffEditorInline extends MonacoDiffEditorBase {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.MonacoDiffEditorInline";
