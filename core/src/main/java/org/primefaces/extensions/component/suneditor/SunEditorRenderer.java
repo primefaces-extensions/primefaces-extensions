@@ -23,10 +23,12 @@ package org.primefaces.extensions.component.suneditor;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
@@ -132,18 +134,16 @@ public class SunEditorRenderer extends InputRenderer {
         // Regex to match font-family declarations with any font name inside &#39;...&#39;
         String regex = "font-family:\\s*&#39;([^&#]+)&#39;";
         Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(valueToRender);
+        StringBuffer result = new StringBuffer(valueToRender);
 
-        // StringBuilder for efficient string manipulation
-        StringBuilder result = new StringBuilder();
-
+        Matcher matcher = pattern.matcher(result);
         while (matcher.find()) {
             // Extract the font name inside &#39;...&#39;
             String fontName = matcher.group(1);
 
             // Capitalize each word in the font name separately
             String correctedFont = Arrays.stream(fontName.split("\\s+")) // Split by space
-                        .map(LangUtils::capitalize) // Capitalize each word
+                        .map(SunEditorRenderer::capitalize) // Capitalize each word
                         .collect(Collectors.joining(" ")); // Join back with spaces
 
             if (correctedFont.endsWith(" Ms")) {
@@ -154,11 +154,9 @@ public class SunEditorRenderer extends InputRenderer {
             }
 
             // Replace the matched pattern with the corrected font-family declaration
-            matcher.appendReplacement(result, "font-family: " + correctedFont);
+            result.replace(matcher.start(), matcher.end(), "font-family: " + correctedFont);
+            matcher = pattern.matcher(result);
         }
-
-        // Append any remaining part of the input string
-        matcher.appendTail(result);
 
         return result.toString();
     }
@@ -234,5 +232,18 @@ public class SunEditorRenderer extends InputRenderer {
             }
         }
         return result;
+    }
+
+    /**
+     * Capitalizes the first character of the given string.
+     *
+     * @param name The string to capitalize.
+     * @return The capitalized string if the input is not blank; otherwise, returns the input string unchanged.
+     */
+    public static String capitalize(String name) {
+        if (LangUtils.isBlank(name)) {
+            return name;
+        }
+        return name.substring(0, 1).toUpperCase(Locale.ENGLISH) + name.substring(1);
     }
 }
