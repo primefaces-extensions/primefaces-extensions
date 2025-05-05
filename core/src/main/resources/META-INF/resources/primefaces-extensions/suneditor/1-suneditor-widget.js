@@ -113,7 +113,7 @@ PrimeFaces.widget.ExtSunEditor = PrimeFaces.widget.DeferredWidget.extend({
             $this.callBehavior('save')
         };
 
-        // check if being used in dialog
+        // check if being used in a dialog/sidebar
         this.setupDialogSupport();
 
         // #1845: add marker interface so DefaultCommand is ignored as detected as PF TextEditor
@@ -148,7 +148,7 @@ PrimeFaces.widget.ExtSunEditor = PrimeFaces.widget.DeferredWidget.extend({
      * @private
      */
     setupDialogSupport: function () {
-        const dlg = this.input[0].closest('.ui-dialog');
+        const dlg = this.input[0].closest('.ui-dialog, .ui-sidebar');
         if (dlg) {
             const dialog = $(dlg);
             dialog.find('.sun-editor .se-toolbar').zIndex(9999);
@@ -176,7 +176,7 @@ PrimeFaces.widget.ExtSunEditor = PrimeFaces.widget.DeferredWidget.extend({
                 language = window.SUNEDITOR_LANG[splitLocale[1]];
             }
         }
-        // if all else fails default to US English
+        // if all else fails, default to US English
         if (!language) {
             language = window.SUNEDITOR_LANG['en'];
         }
