@@ -22,8 +22,11 @@
 package org.primefaces.extensions.component.suneditor;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
@@ -36,6 +39,7 @@ import org.primefaces.extensions.util.HtmlSanitizer;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.HTML;
+import org.primefaces.util.LangUtils;
 import org.primefaces.util.WidgetBuilder;
 
 /**
@@ -97,11 +101,66 @@ public class SunEditorRenderer extends InputRenderer {
 
         String valueToRender = sanitizeHtml(context, editor, ComponentUtils.getValueToRender(context, editor));
         if (valueToRender != null) {
+
+            // #1886 bug in sanitizer for font-family that has to be fixed
+            if (editor.isSecure()) {
+                valueToRender = fixFontFamily(valueToRender);
+            }
             // #1639 do not escape as its already been sanitized above, and we want to keep exact formatting
             writer.writeText(valueToRender, "value");
         }
 
         writer.endElement("textarea");
+    }
+
+    /**
+     * DIRTY HACK: Fixes the font-family declaration in the given HTML/CSS string by replacing any font name enclosed in `&#39;...&#39;` with its properly
+     * capitalized version.
+     * <p>
+     * Example:
+     *
+     * <pre>
+     * Input:  font-family:&#39;courier new&#39;
+     * Output: font-family: Courier New
+     * </pre>
+     *
+     * @param valueToRender the input string containing font-family declarations
+     * @return the modified string with font names properly capitalized and single quotes replaced
+     * @see <a href="https://github.com/OWASP/java-html-sanitizer/issues/232">OWASP Bug #232</a>
+     */
+    protected String fixFontFamily(String valueToRender) {
+        // Regex to match font-family declarations with any font name inside &#39;...&#39;
+        String regex = "font-family:\\s*&#39;([^&#]+)&#39;";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(valueToRender);
+
+        // StringBuilder for efficient string manipulation
+        StringBuilder result = new StringBuilder();
+
+        while (matcher.find()) {
+            // Extract the font name inside &#39;...&#39;
+            String fontName = matcher.group(1);
+
+            // Capitalize each word in the font name separately
+            String correctedFont = Arrays.stream(fontName.split("\\s+")) // Split by space
+                        .map(LangUtils::capitalize) // Capitalize each word
+                        .collect(Collectors.joining(" ")); // Join back with spaces
+
+            if (correctedFont.endsWith(" Ms")) {
+                correctedFont = correctedFont.replace(" Ms", " MS");
+            }
+            if ("tahoma".equalsIgnoreCase(correctedFont)) {
+                correctedFont = correctedFont.replace("Tahoma", "tahoma");
+            }
+
+            // Replace the matched pattern with the corrected font-family declaration
+            matcher.appendReplacement(result, "font-family: " + correctedFont);
+        }
+
+        // Append any remaining part of the input string
+        matcher.appendTail(result);
+
+        return result.toString();
     }
 
     protected void encodeScript(final FacesContext context, final SunEditor editor) throws IOException {
