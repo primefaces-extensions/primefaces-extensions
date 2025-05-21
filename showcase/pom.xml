@@ -26,7 +26,7 @@
         <owb.version>2.0.27</owb.version>
         <jetty.version>9.4.56.v20240826</jetty.version>
         <omnifaces.version>3.14.6</omnifaces.version>
-        <hibernate-validator.version>7.0.5.Final</hibernate-validator.version>
+        <hibernate-validator.version>9.0.0.Final</hibernate-validator.version>
         <font-awesome.version>6.4.0</font-awesome.version>
     </properties>
     <dependencies>
