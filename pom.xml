@@ -242,66 +242,11 @@
                     <jreleaser>
                         <release>
                             <github>
-                                <tagName>{{projectVersion}}</tagName>
                                 <releaseName>{{projectVersion}}</releaseName>
                                 <overwrite>true</overwrite>
-                                <changelog>
-                                    <formatted>ALWAYS</formatted>
-                                    <format>- {{commitShortHash}} {{commitTitle}}</format>
-                                    <preset>conventional-commits</preset>
-                                    <categories>
-                                        <category>
-                                            <title>Breaking Changes 💥</title>
-                                            <labels>
-                                                <label>breaking-change</label>
-                                            </labels>
-                                        </category>
-                                        <category>
-                                            <title>Security 🔒</title>
-                                            <labels>
-                                                <label>:lock: security</label>
-                                            </labels>
-                                        </category>
-                                        <category>
-                                            <title>Performance⚡</title>
-                                            <labels>
-                                                <label>:zap: performance</label>
-                                            </labels>
-                                        </category>
-                                        <category>
-                                            <title>New Features &amp; Enhancements 🎉</title>
-                                            <labels>
-                                                <label>new feature</label>
-                                                <label>enhancement</label>
-                                            </labels>
-                                        </category>
-                                        <category>
-                                            <title>Accessibility ♿</title>
-                                            <labels>
-                                                <label>accessibility</label>
-                                            </labels>
-                                        </category>
-                                        <category>
-                                            <title>Defects 🐞</title>
-                                            <labels>
-                                                <label>:lady_beetle: defect</label>
-                                            </labels>
-                                        </category>
-                                        <category>
-                                            <title>Dependencies 👒</title>
-                                            <labels>
-                                                <label>dependencies</label>
-                                            </labels>
-                                        </category>
-                                    </categories>
-                                    <contributors>
-                                        <format>- {{contributorName}}</format>
-                                    </contributors>
-                                    <hide>
-                                        <categories>merge</categories>
-                                        <contributors>GitHub,dependabot</contributors>
-                                    </hide>
-                                </changelog>
+                                <releaseNotes>
+                                    <enabled>true</enabled>
+                                </releaseNotes>
                             </github>
                         </release>
                         <signing>
