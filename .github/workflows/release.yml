@@ -15,6 +15,7 @@ on:
 env:
   JAVA_VERSION: '11'
   JAVA_DISTRO: 'temurin'
+  BRANCH: 'master'
 
 jobs:
   release:
@@ -46,7 +47,7 @@ jobs:
           git add pom.xml "**/pom.xml"
           git commit -m "Release version ${{ github.event.inputs.version }}"
           git tag -a "v${{ github.event.inputs.version }}" -m "Release version ${{ github.event.inputs.version }}"
-          git push origin master
+          git push origin "${{ env.BRANCH }}"
           git push origin "v${{ github.event.inputs.version }}"
 
       - name: Build
@@ -68,4 +69,4 @@ jobs:
           mvn versions:set -DgenerateBackupPoms=false -DnewVersion=${{ github.event.inputs.next_version }}
           git add pom.xml "**/pom.xml"
           git commit -m "Prepare for next development version"
-          git push origin master
+          git push origin "${{ env.BRANCH }}"
