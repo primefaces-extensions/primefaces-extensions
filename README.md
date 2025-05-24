@@ -56,28 +56,6 @@ There are multiple versions available please check which one for your PrimeFaces
 </dependency>
 ```
 
-### Snapshots
-
-```xml
-<repository>
-    <id>sonatype-snapshots</id>
-    <name>Sonatype Snapshot Repository</name>
-    <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
-    <releases>
-        <enabled>false</enabled>
-    </releases>
-    <snapshots>
-        <enabled>true</enabled>
-    </snapshots>
-</repository>
-
-<dependency>
-   <groupId>org.primefaces.extensions</groupId>
-   <artifactId>primefaces-extensions</artifactId>
-   <version>${primefaces-extensions.version}</version>
-</dependency>
-```
-
 ## Namespaces
 
 The PrimeFaces Extensions namespace is necessary to add PrimeFaces Extensions components to your pages.
@@ -112,10 +90,18 @@ Please report all issues [here](https://github.com/primefaces-extensions/primefa
 
 ## Releasing
 
-- Run `mvn versions:set -DgenerateBackupPoms=false -DnewVersion=8.0.2` to update all modules versions
-- Commit and push the changes to GitHub
-- In GitHub create a new Release titled `8.0.2` to tag this release
-- Run `mvn clean deploy -Prelease` to push to Maven Central
+1. Go to the `Actions` tab in GitHub
+2. Select the "Release" workflow
+3. Click "Run workflow"
+4. You will be prompted for:
+   - Branch (default to `master`)
+   - Version to release (e.g. 8.0.2)
+   - Next development version (e.g. 8.0.3-SNAPSHOT)
+5. The workflow will automatically:
+   - Set the release version in all pom.xml files
+   - Create and push a release tag
+   - Build and deploy artifacts to Maven Central
+   - Update version to the next development version
 
 ## License
 
