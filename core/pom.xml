@@ -115,6 +115,7 @@
                 <filtering>false</filtering>
                 <includes>
                     <include>**/documentviewer/**</include>
+                    <include>**/codescanner/**</include>
                 </includes>
             </resource>
         </resources>
