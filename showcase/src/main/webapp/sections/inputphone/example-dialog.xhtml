@@ -1,0 +1,28 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <!-- EXAMPLE-SOURCE-START -->
+    <p:growl id="growl" keepAlive="true">
+        <p:autoUpdate/>
+    </p:growl>
+
+    <h:panelGrid columns="6" id="pnlDetails" styleClass="p-4" >
+        <p:commandButton value="Open Dialog" type="button" icon="pi pi-external-link" onclick="PF('dlg').show()"/>
+    </h:panelGrid>
+
+    <p:dialog header="InputPhone" widgetVar="dlg" minHeight="40" width="60vw" showEffect="fade" closable="true" closeOnEscape="true" modal="true">
+        <pe:inputPhone id="txtPhone"
+                       initialCountry="us"
+                       value="#{basicInputPhoneController.phoneNumber}"
+                       formatOnDisplay="true"
+                       dir="ltr">
+            <p:ajax event="countrySelect" listener="#{basicInputPhoneController.onCountrySelect}" />
+        </pe:inputPhone>
+    </p:dialog>
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>
