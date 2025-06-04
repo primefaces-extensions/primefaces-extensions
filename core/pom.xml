@@ -232,7 +232,7 @@
                         </resourcesSet>
                         <resourcesSet>
                             <includes>
-                                <include>inputphone/0-intlTelInput.min.js</include>
+                                <include>inputphone/0-intlTelInputWithUtils.min.js</include>
                                 <include>inputphone/inputphone.js</include>
                             </includes>
                             <aggregations>

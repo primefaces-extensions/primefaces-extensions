@@ -172,7 +172,12 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
      * Get the current number in the given format.
      */
     getNumber: function () {
-        return this.iti ? this.iti.getNumber() : '';
+        if (!this.iti) {
+            return '';
+        }
+        const phoneNumber = this.iti.getNumber() || '';
+        const extension = this.iti.getExtension();
+        return extension ? `${phoneNumber} x${extension}` : phoneNumber;
     },
 
     /**

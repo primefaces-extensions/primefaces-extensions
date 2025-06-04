@@ -218,12 +218,6 @@ public class InputPhoneRenderer extends InputRenderer {
             wb.attr("placeholderNumberType", inputPhone.getPlaceholderNumberType().toUpperCase());
         }
         encodeCountries(wb, "countryOrder", inputPhone.getPreferredCountries());
-
-        wb.attr("utilsScript",
-                    context.getApplication()
-                                .getResourceHandler()
-                                .createResource("inputphone/utils.js", org.primefaces.extensions.util.Constants.LIBRARY)
-                                .getRequestPath());
         if (inputPhone.getLocalizedCountries() != null) {
             wb.nativeAttr("i18n", objectToJsonString(inputPhone.getLocalizedCountries()));
         }

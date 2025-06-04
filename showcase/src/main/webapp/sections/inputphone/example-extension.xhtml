@@ -13,9 +13,10 @@
                    initialCountry="us"
                    value="#{basicInputPhoneController.phoneNumber}"
                    formatOnDisplay="true"
-                   autoPlaceholder="aggressive"
+                   formatAsYouType="false"
+                   autoPlaceholder="off"
+                   placeholder="(201) 566-1711 x9876"
                    dir="ltr">
-        <p:ajax event="countrySelect" listener="#{basicInputPhoneController.onCountrySelect}" />
     </pe:inputPhone>
     <p:commandButton value="Submit" update="txtPhone" actionListener="#{basicInputPhoneController.submit}" styleClass="ml-2" />
 <!-- EXAMPLE-SOURCE-END -->
