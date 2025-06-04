@@ -26,3 +26,7 @@
 .ui-fluid div.iti {
     width: 100%;
 }
+
+.iti__search-input {
+  padding: 9px 12px;
+}
