@@ -25,8 +25,10 @@ import java.io.IOException;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.context.ResponseWriter;
 
 import org.primefaces.expression.SearchExpressionUtils;
+import org.primefaces.extensions.util.Attrs;
 import org.primefaces.extensions.util.ExtLangUtils;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.WidgetBuilder;
@@ -47,7 +49,18 @@ public class ClipboardRenderer extends CoreRenderer {
     @Override
     public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
         final Clipboard clipboard = (Clipboard) component;
+        encodeMarkup(context, clipboard);
         encodeScript(context, clipboard);
+    }
+
+    private void encodeMarkup(FacesContext context, final Clipboard clipboard) throws IOException {
+        final ResponseWriter writer = context.getResponseWriter();
+        final String clientId = clipboard.getClientId();
+        writer.startElement("div", clipboard);
+        writer.writeAttribute("id", clientId, null);
+        writer.writeAttribute(Attrs.CLASS, "p-clipboard", null);
+        writer.writeAttribute(Attrs.STYLE, "display:none", null);
+        writer.endElement("div");
     }
 
     private void encodeScript(final FacesContext context, final Clipboard clipboard) throws IOException {
