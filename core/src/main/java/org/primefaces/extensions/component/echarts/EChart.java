@@ -40,7 +40,7 @@ import org.primefaces.util.MapBuilder;
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = "primefaces", name = "components.js")
-@ResourceDependency(library = Constants.LIBRARY, name = "echarts/echarts.js")
+@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "echarts/echarts.js")
 public class EChart extends EChartBase {
     private static final String DEFAULT_EVENT = "itemSelect";
 
