@@ -147,7 +147,7 @@
     </context-param>
 
     <listener>
-        <listener-class>org.apache.webbeans.servlet.WebBeansConfigurationListener</listener-class>
+        <listener-class>${cdi-listener}</listener-class>
     </listener>
     <listener>
         <listener-class>${jsf-listener}</listener-class>
@@ -191,6 +191,10 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.xhtml</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.jsf</url-pattern>
     </servlet-mapping>
 
@@ -201,7 +205,7 @@
 
     <!-- Welcome files -->
     <welcome-file-list>
-        <welcome-file>index.html</welcome-file>
+        <welcome-file>index.xhtml</welcome-file>
     </welcome-file-list>
 
     <mime-mapping>

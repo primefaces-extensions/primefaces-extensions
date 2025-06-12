@@ -1,0 +1,9 @@
+services:
+  webapp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: primefaces-extensions-showcase-webapp
+    restart: always
+    ports:
+      - "8080:8080"
