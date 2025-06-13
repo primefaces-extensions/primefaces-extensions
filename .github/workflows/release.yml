@@ -15,7 +15,7 @@ on:
 env:
   JAVA_VERSION: '11'
   JAVA_DISTRO: 'temurin'
-  BRANCH: 'master'
+  BRANCH: '15.0.x'
 
 jobs:
   release:
