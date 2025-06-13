@@ -2,14 +2,14 @@
  * PrimeFaces Extensions ClockPicker Widget.
  *
  */
-PrimeFaces.widget.ExtClockPicker = PrimeFaces.widget.BaseWidget.extend({
+PrimeFaces.widget.ExtClockPicker = class extends PrimeFaces.widget.BaseWidget {
     /**
      * Initializes the widget.
      *
      * @param {object} cfg The widget configuration.
      */
-    init: function (cfg) {
-        this._super(cfg);
+    init(cfg) {
+        super.init(cfg);
         this.id = cfg.id;
         this.jqId = PrimeFaces.escapeClientId(cfg.id);
         this.container = $(this.jqId);
@@ -31,49 +31,49 @@ PrimeFaces.widget.ExtClockPicker = PrimeFaces.widget.BaseWidget.extend({
         // pfs metadata
         this.jq.data(PrimeFaces.CLIENT_ID_DATA, this.id);
         this.originalValue = this.input.val();
-    },
+    }
 
     // @override
-    refresh: function (cfg) {
+    refresh(cfg) {
         // Destroy previous instance
         this.remove();
         // Reinitialize with new configuration
-        this._super(cfg);
-    },
+        super.refresh(cfg);
+    }
 
     // @override
-    destroy: function () {
-        this._super();
+    destroy() {
+        super.destroy();
         this.remove();
-    },
+    }
 
     /**
      * Sets up support for using the overlay color picker within an overlay dialog.
      * @private
      */
-    setupDialogSupport: function() {
+    setupDialogSupport() {
         var dialog = this.input[0].closest('.ui-dialog');
         if (dialog) {
             this.cfg.appendTo = $(PrimeFaces.escapeClientId(dialog.id));
         }
-    },
+    }
 
     /**
      * Creates the clock picker and sets up events.
      * @returns {JQuery} the clock picker
      * @private
      */
-    createClockPicker: function () {
+    createClockPicker() {
         this.clockpicker = this.container.clockpicker(this.cfg);
         this.bindConstantEvents();
         return this.clockpicker;
-    },
+    }
 
     /**
      * Sets up the event listeners that only need to be set up once.
      * @private
      */
-    bindConstantEvents: function () {
+    bindConstantEvents() {
         let $this = this;
 
         PrimeFaces.utils.registerResizeHandler(this, 'resize.' + this.id + '_hide', undefined, function () {
@@ -83,48 +83,48 @@ PrimeFaces.widget.ExtClockPicker = PrimeFaces.widget.BaseWidget.extend({
         PrimeFaces.utils.registerScrollHandler(this, 'scroll.' + this.id + '_hide', function () {
             $this.hide();
         });
-    },
+    }
 
     /**
      * Hides the clockpicker if it exists.
      */
-    hide: function () {
+    hide() {
         if (this.container) {
             this.container.clockpicker("hide");
         }
-    },
+    }
 
     /**
      * Shows the clockpicker if it exists.
      */
-    show: function () {
+    show() {
         if (this.container) {
             this.container.clockpicker("show");
         }
-    },
+    }
     /**
      * Removes the clockpicker and its event listeners if it exists.
      */
-    remove: function () {
+    remove() {
         if (this.container) {
             this.container.clockpicker("remove");
         }
         this.clockpicker = null;
-    },
+    }
 
     /**
      * Disables this input so that the user cannot enter a value anymore.
      */
-    disable: function() {
+    disable() {
         this.remove();
         PrimeFaces.utils.disableInputWidget(this.container, this.input);
-    },
+    }
 
     /**
      * Enables this input so that the user can enter a value.
      */
-    enable: function() {
+    enable() {
         PrimeFaces.utils.enableInputWidget(this.container, this.input);
         this.clockpicker = this.createClockPicker();
     }
-});
+};

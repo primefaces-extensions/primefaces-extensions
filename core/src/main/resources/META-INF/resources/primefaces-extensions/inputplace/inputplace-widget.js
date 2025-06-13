@@ -22,15 +22,15 @@
  * @prop {string} cfg.restrictCountries The array of countries to constrain results from
  * @prop {string} cfg.restrictTypes The array of types to constrain results from
  */
-PrimeFaces.widget.ExtInputPlace = PrimeFaces.widget.BaseWidget.extend({
+PrimeFaces.widget.ExtInputPlace = class extends PrimeFaces.widget.BaseWidget {
 
     /**
      * @override
      * @inheritdoc
      * @param {PrimeFaces.PartialWidgetCfg<TCfg>} cfg
      */
-    init: function (cfg) {
-        this._super(cfg);
+    init(cfg) {
+        super.init(cfg);
 
         // add styling
         PrimeFaces.skinInput(this.jq);
@@ -49,12 +49,12 @@ PrimeFaces.widget.ExtInputPlace = PrimeFaces.widget.BaseWidget.extend({
             // leave the field a plain old input text
             PrimeFaces.debug("InputPlace is not configured for Google or Azure");
         }
-    },
+    }
 
     /**
      * Configures the input to be a Google Places AutoComplete.
      */
-    configureExtender: function () {
+    configureExtender() {
         let extender = this.cfg.extender;
         if (extender) {
             if (typeof extender === "function") {
@@ -63,13 +63,13 @@ PrimeFaces.widget.ExtInputPlace = PrimeFaces.widget.BaseWidget.extend({
                 PrimeFaces.error("Extender value is not a javascript function!");
             }
         }
-    },
+    }
 
     /**
      * Configure Azure to use jQuery Autocomplete to bind to input element.
      * @private
      */
-    configureAzure: function () {
+    configureAzure() {
         const $this = this;
 
         if (!this.cfg.apiKey) {
@@ -153,12 +153,12 @@ PrimeFaces.widget.ExtInputPlace = PrimeFaces.widget.BaseWidget.extend({
         });
 
         this.bindAzureEvents();
-    },
+    }
 
     /**
      * Bind the AJAX and client side events for when a place has changed.
      */
-    bindAzureEvents: function () {
+    bindAzureEvents() {
         let $this = this;
 
         PrimeFaces.utils.registerResizeHandler(this, 'resize.' + this.id + '_hide', this.jq, function () {
@@ -282,14 +282,14 @@ PrimeFaces.widget.ExtInputPlace = PrimeFaces.widget.BaseWidget.extend({
             // Update input field value and maintain focus
             PrimeFaces.queueTask(() => $(this).val(address.freeformAddress).focus(), 0);
         });
-    },
+    }
 
     /**
      * Because Google prefers you load the script async and deferred we need to wait until it is ready.
      * @private
      * @param {string} url the URL to call Microsoft Azure Maps
      */
-    processAzureRequest: function (url) {
+    processAzureRequest(url) {
         return new Promise((resolve, reject) => {
             fetch(url, {
                 method: 'GET',
@@ -305,13 +305,13 @@ PrimeFaces.widget.ExtInputPlace = PrimeFaces.widget.BaseWidget.extend({
                 reject(error);
             });
         });
-    },
+    }
 
     /**
      * Because Google prefers you load the script async and deferred we need to wait until it is ready.
      * @private
      */
-    configureGoogle: function () {
+    configureGoogle() {
         let $this = this;
         let mapWaitCount = 0;
         let mapWaitMax = 5;
@@ -329,12 +329,12 @@ PrimeFaces.widget.ExtInputPlace = PrimeFaces.widget.BaseWidget.extend({
         }
 
         loadScript();
-    },
+    }
 
     /**
      * Configures the input to be a Google Places AutoComplete.
      */
-    initializeGoogleInput: function () {
+    initializeGoogleInput() {
         const input = this.jq[0];
         const options = {
             fields: ["address_components", "geometry", "formatted_address", "place_id", "types", "name"],
@@ -360,12 +360,12 @@ PrimeFaces.widget.ExtInputPlace = PrimeFaces.widget.BaseWidget.extend({
         this.addDestroyListener(() => {
             PrimeFaces.debug("Google does not have any way to destroy the AutoComplete!");
         });
-    },
+    }
 
     /**
      * Bind the AJAX and client side events for when a place has changed.
      */
-    bindGoogleEvents: function () {
+    bindGoogleEvents() {
         let $this = this;
         this.autocomplete.addListener("place_changed", () => {
             const place = $this.autocomplete.getPlace();
@@ -494,27 +494,27 @@ PrimeFaces.widget.ExtInputPlace = PrimeFaces.widget.BaseWidget.extend({
                 $this.callBehavior('placeChanged', ext);
             }
         });
-    },
+    }
 
     /**
      * Returns the current Google Places instance.
      * @return {google.maps.places.Place} The current map place.
      */
-    getPlace: function () {
+    getPlace() {
         return this.currentPlace;
-    },
+    }
 
     /**
      * Disables this input so that the user cannot enter a value anymore.
      */
-    disable: function () {
+    disable() {
         PrimeFaces.utils.disableInputWidget(this.jq);
-    },
+    }
 
     /**
      * Enables this input so that the user can enter a value.
      */
-    enable: function () {
+    enable() {
         PrimeFaces.utils.enableInputWidget(this.jq);
     }
-});
+};

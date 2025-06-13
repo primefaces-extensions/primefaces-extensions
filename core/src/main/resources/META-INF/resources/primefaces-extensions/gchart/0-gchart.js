@@ -4,12 +4,12 @@
  * @author f.strazzullo
  * @author Melloware
  */
-PrimeFaces.widget.ExtGChart = PrimeFaces.widget.BaseWidget.extend({
-    init : function(cfg) {
+PrimeFaces.widget.ExtGChart = class extends PrimeFaces.widget.BaseWidget {
+    init(cfg) {
 
         var that = this;
 
-        this._super(cfg);
+        super.init(cfg);
         this.chart = cfg.chart ? JSON.parse(cfg.chart) : {
             data : [],
             options : {},
@@ -48,9 +48,9 @@ PrimeFaces.widget.ExtGChart = PrimeFaces.widget.BaseWidget.extend({
                 PrimeFaces.error("Extender value is not a javascript function!");
             }
         }
-    },
+    }
 
-    draw : function() {
+    draw() {
 
         var dataTable = google.visualization.arrayToDataTable(this.data);
 
@@ -79,4 +79,4 @@ PrimeFaces.widget.ExtGChart = PrimeFaces.widget.BaseWidget.extend({
 
     }
 
-});
+};

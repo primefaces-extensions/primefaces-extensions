@@ -3,15 +3,15 @@
  *
  * @author Oleg Varaksin
  */
-PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
+PrimeFaces.widget.ExtTimePicker = class extends PrimeFaces.widget.BaseWidget {
 
     /**
      * Initializes the widget.
      *
      * @param {object} cfg The widget configuration.
      */
-    init: function (cfg) {
-        this._super(cfg);
+    init(cfg) {
+        super.init(cfg);
         this.id = cfg.id;
         this.jqId = PrimeFaces.escapeClientId(cfg.id);
         this.container = $(this.jqId);
@@ -77,7 +77,7 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
         // pfs metadata
         $(this.jqId + '_input').data(PrimeFaces.CLIENT_ID_DATA, this.id);
         this.originalValue = this.jq.val();
-    },
+    }
 
     setupPeriod: function() {
         if (this.cfg.showPeriod) {
@@ -140,7 +140,7 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
      * Sets up the event listeners that only need to be set up once.
      * @private
      */
-    bindConstantEvents: function () {
+    bindConstantEvents() {
         let $this = this;
 
         PrimeFaces.utils.registerResizeHandler(this, 'resize.' + this.id + '_hide', $this.panel, function () {
@@ -150,9 +150,9 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
         PrimeFaces.utils.registerScrollHandler(this, 'scroll.' + this.id + '_hide', function () {
             $this.hide();
         });
-    },
+    }
 
-    enableInput: function () {
+    enableInput() {
         let $this = this;
 
         PrimeFaces.skinInput(this.jq);
@@ -190,9 +190,9 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
                 }
             }
         });
-    },
+    }
 
-    enableSpinner: function () {
+    enableSpinner() {
         let $this = this;
 
         $(this.jqId).children('.ui-spinner-button')
@@ -230,16 +230,16 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
                     e.preventDefault();
                 }
             });
-    },
+    }
 
-    disableSpinner: function () {
+    disableSpinner() {
         $(this.jqId).children('.ui-spinner-button')
             .removeClass('ui-state-hover ui-state-active')
             .addClass('ui-state-disabled')
             .off();
-    },
+    }
 
-    spin: function (dir) {
+    spin(dir) {
         let time = this.jq.val();
         if (!time) {
             // if the value is empty, set 00:00 and process with spinning
@@ -371,26 +371,26 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
             this.jq.val(newTime);
             this.jq.attr('aria-valuenow', newTime);
         }
-    },
+    }
 
-    onbeforeShow: function () {
+    onbeforeShow() {
         this.callBehavior('beforeShow');
-    },
+    }
 
-    onclose: function () {
+    onclose() {
         this.callBehavior('close');
-    },
+    }
 
-    ontimeSelect: function () {
+    ontimeSelect() {
         this.callBehavior('timeSelect');
-    },
+    }
 
-    isAm: function (time) {
+    isAm(time) {
         let am = this.cfg.amPmText[0];
         return (time && time.indexOf(am) !== -1);
-    },
+    }
 
-    adjustAmPm: function (time, isAmPmChanged) {
+    adjustAmPm(time, isAmPmChanged) {
         if (isAmPmChanged) {
             let am = this.cfg.amPmText[0];
             let pm = this.cfg.amPmText[1];
@@ -402,9 +402,9 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
         }
 
         return time;
-    },
+    }
 
-    increaseHour: function (hour, isAm) {
+    increaseHour(hour, isAm) {
         let newHour;
         let isAmPmChanged = false;
 
@@ -447,9 +447,9 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
         }
 
         return {'newHour': newHour, 'isAmPmChanged': isAmPmChanged};
-    },
+    }
 
-    decreaseHour: function (hour, isAm) {
+    decreaseHour(hour, isAm) {
         let newHour;
         let isAmPmChanged = false;
 
@@ -492,38 +492,38 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
         }
 
         return {'newHour': newHour, 'isAmPmChanged': isAmPmChanged};
-    },
+    }
 
     // Exposed public methods
 
-    setTime: function (time) {
+    setTime(time) {
         this.jq.fgtimepicker('setTime', time);
-    },
+    }
 
-    setMinTime: function (hour, minute) {
+    setMinTime(hour, minute) {
         this.jq.fgtimepicker('option', {minTime: {hour: hour, minute: minute}});
-    },
+    }
 
-    setMaxTime: function (hour, minute) {
+    setMaxTime(hour, minute) {
         this.jq.fgtimepicker('option', {maxTime: {hour: hour, minute: minute}});
-    },
+    }
 
-    getTime: function () {
+    getTime() {
         return this.jq.fgtimepicker('getTime');
-    },
+    }
 
-    getHours: function () {
+    getHours() {
         return this.jq.fgtimepicker('getHour');
-    },
+    }
 
-    getMinutes: function () {
+    getMinutes() {
         return this.jq.fgtimepicker('getMinute');
-    },
+    }
 
     /**
      * Disables this input so that the user cannot enter a value anymore.
      */
-    disable: function () {
+    disable() {
         this.jq.fgtimepicker('disable');
 
         if (!this.cfg.modeInline) {
@@ -533,12 +533,12 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
         if (this.cfg.modeSpinner) {
             this.disableSpinner();
         }
-    },
+    }
 
     /**
      * Enables this input so that the user can enter a value.
      */
-    enable: function () {
+    enable() {
         this.jq.fgtimepicker('enable');
 
         if (!this.cfg.modeInline) {
@@ -548,26 +548,26 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
         if (this.cfg.modeSpinner) {
             this.enableSpinner();
         }
-    },
+    }
 
     /**
      * Brings up the overlay panel with the available selectable options.
      */
-    show: function () {
+    show() {
         this.jq.fgtimepicker('show');
-    },
+    }
 
     /**
      * Hides the overlay panel with the available selectable options.
      */
-    hide: function () {
+    hide() {
         this.jq.fgtimepicker('hide');
-    },
+    }
 
-    reset: function () {
+    reset(cfg) {
         this.jq.val(this.originalValue);
     }
-});
+};
 
 // default i18n
 

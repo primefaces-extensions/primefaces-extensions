@@ -5,17 +5,21 @@
  * @author Mark Lassiter
  * @since 6.2
  */
-PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
-
-    // flag tracking whether an update ajax event needs fired
-    // after a select cell
-    updated: false,
-    // flag tracking whether a filter event needs fired after a focusin
-    filterChanged: false,
+PrimeFaces.widget.ExtSheet = class extends PrimeFaces.widget.DeferredWidget {
 
     // initialize the component
-    init: function (cfg) {
-        this._super(cfg);
+    init(cfg) {
+        super.init(cfg);
+        /**
+         * Flag tracking whether or not an update ajax event needs fired after a select cell
+         * @type {boolean}
+         */
+        this.updated = false;
+        /**
+         * Flag tracking whether or not a filter event needs fired after a focusing.
+         * @type {boolean}
+         */
+        this.filterChanged = false;
         // store off jquery wrappers
         this.sheetDiv = $(this.jqId);
         this.tableDiv = $(this.jqId + '_tbl');
@@ -38,11 +42,11 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
         }
 
         this.renderDeferred();
-    },
+    }
 
-    _render: function () {
-        let $this = this;
-        let options = {
+    _render() {
+        var $this = this;
+        var options = {
             data: $this.cfg.data,
             colHeaders: $this.cfg.colHeaders,
             rowHeaders: $this.cfg.rowHeaders,
@@ -323,10 +327,10 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
             let sel = JSON.parse(selval);
             $this.ht.selectCell(sel[0], sel[1], sel[2], sel[3], true);
         }
-    },
+    }
 
-    _defaultCellRenderer: function (instance, td, row, col, prop, value, cellProperties) {
-        let styleClass = '';
+    _defaultCellRenderer(instance, td, row, col, prop, value, cellProperties) {
+        var styleClass = '';
         // append row style (if we have one)
         let rowClass = this.cfg.rowStyles[row];
         if (rowClass) {
@@ -351,28 +355,28 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
             styleClass = styleClass.concat(' ui-datatable-even');
         }
         td.className = td.className.concat(' ').concat(styleClass);
-    },
+    }
 
     //@Override
-    refresh: function (cfg) {
+    refresh(cfg) {
         // clean up HT memory
         if (this.ht) {
             this.ht.destroy();
             this.ht = null;
         }
 
-        this._super(cfg);
-    },
+        super.refresh(cfg);
+    }
 
     //@Override
-    destroy: function () {
-        this._super();
+    destroy() {
+        super.destroy();
 
         // clean up HT memory
         if (this.ht) {
             this.ht.destroy();
         }
-    },
+    }
 
     /**
      * Updates the row with the new data value
@@ -382,7 +386,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
      * @param styles the JSON cell style updates
      * @param readOnlyCells the JSON cell read only updates
      */
-    updateData: function (rowIndex, data, styles, readOnlyCells) {
+    updateData(rowIndex, data, styles, readOnlyCells) {
         // merge the new styles in
         $.extend(this.cfg.styles, styles);
         //merge the new readonly cells in
@@ -392,21 +396,21 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
         if (rowIndex <= this.cfg.rowKeys.length) {
             this.cfg.data[rowIndex] = data;
         }
-    },
+    }
 
     // fired when a filter input is edited. firenow indicates the filter
     // event should be fired immediately (select)
-    filterchange: function (sheet, col, v, firenow) {
+    filterchange(sheet, col, v, firenow) {
         $(sheet.jqId + '_filter_' + col).val(v);
         sheet.filterChanged = true;
 
         if (firenow) {
             sheet.filter();
         }
-    },
+    }
 
     // fired when a sortable column is clicked
-    sortClick: function (sheet, e, col) {
+    sortClick(sheet, e, col) {
         if ($(e.target).is(':not(th,span,div)'))
             return;
         let sc = sheet.sortByInput.val();
@@ -422,19 +426,19 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
         sheet.ht.deselectCell();
 
         sheet.callBehavior('sort');
-    },
+    }
 
     // eat enter keys for filter inputs so they do not submit form
-    filterKeyDown: function (sheet, e) {
+    filterKeyDown(sheet, e) {
         e.stopImmediatePropagation();
         let key = e.which, keyCode = $.ui.keyCode;
         if (key === keyCode.ENTER) {
             e.preventDefault();
         }
-    },
+    }
 
     // again, eat enter key. but also fire filter event on enter
-    filterKeyUp: function (sheet, e) {
+    filterKeyUp(sheet, e) {
         e.stopImmediatePropagation();
         let key = e.which, keyCode = $.ui.keyCode;
         if (key === keyCode.ENTER) {
@@ -446,16 +450,16 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
             sheet.filter();
             e.preventDefault();
         }
-    },
+    }
 
     // to alleviate focus issues focus on mouse over
-    filterMouseOver: function (sheet, e) {
+    filterMouseOver(sheet, e) {
         $(e.target).focus();
-    },
+    }
 
     // keep track of focused filter input. if previous filter altered,
     // fire filter event
-    filterFocusIn: function (sheet, inp) {
+    filterFocusIn(sheet, inp) {
         // if this call is the result of jQuery setFocus, exit
         if (sheet.focusing)
             return;
@@ -471,78 +475,79 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
             $(inp).focus();
             sheet.focusing = false;
         }, 150);
-    },
+    }
 
     // remove focused filter tracking when tabbing off
-    filterFocusOut: function (sheet, inp) {
+    filterFocusOut(sheet, inp) {
         // if this call is the result of jQuery setFocus, exit
         if (sheet.focusing)
             return;
 
         sheet.filter();
-    },
+    }
 
     // clear currently stored input and deltas
-    clearDataInput: function () {
+    clearDataInput() {
         this.cfg.delta = {};
         this.dataInput.val('');
-    },
+    }
 
     // clear all the filters
-    clearFilters: function () {
+    clearFilters() {
         $("input[id^='" + this.id + "_filter_']").val("");
         this.filterChanged = true;
         this.filter();
-    },
+    }
 
     // tell handstontable to repaint itself
-    redraw: function () {
+    redraw() {
         if (this.ht) {
             this.ht.render();
         }
-    },
+    }
 
     // #741 focus the handsontable https://stackoverflow.com/questions/11007947/how-to-onload-set-focus-to-jquery-handsontable
-    focus: function () {
+    focus() {
         if (this.ht) {
             this.ht.selectCell(0, 0);
         }
-    },
+    }
 
     // run filtering if it has changed
-    filter: function () {
+    filter() {
         if (this.filterChanged && this.hasBehavior('filter')) {
             this.filterChanged = false;
             this.callBehavior('filter');
         }
-    },
+    }
 
     // Remove the row from the sheet
-    removeRow: function (index) {
+    removeRow(index) {
         if (this.ht) {
             this.ht.alter('remove_row', index);
         }
-    },
+    }
 
-    focusFirstError: function () {
-        let errors = this.tableDiv.find('.ui-message-error');
+    focusFirstError() {
+        var errors = this.tableDiv.find('.ui-message-error');
         if (errors.length > 0) {
             let firstError = errors.first();
             let col = firstError.index() - 1;
             let row = firstError.parent().index();
             this.ht.selectCell(row, col);
         }
-    },
+    }
 
     // method to prevent selection of cells on column header click
-    handleHotBeforeOnCellMouseDown: function (event, coords, element) {
+    handleHotBeforeOnCellMouseDown(event, coords, element) {
         if (coords.row < 0) {
             event.stopImmediatePropagation();
         }
-    },
+    }
 
-    handleHotBeforeKeyDown: function (e) {
-        let selectedLast = this.getSelectedLast();
+    handleHotBeforeKeyDown(e) {
+        var selectedLast = this.getSelectedLast();
+
         if (!selectedLast) {
             return;
         }
@@ -624,4 +629,6 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
             }
         }
     }
-});
+
+};
+

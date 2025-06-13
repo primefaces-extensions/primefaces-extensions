@@ -4,7 +4,7 @@
  * @author Melloware mellowaredev@gmail.com
  * @since 6.1
  */
-PrimeFaces.widget.ExtClipboard = PrimeFaces.widget.BaseWidget.extend({
+PrimeFaces.widget.ExtClipboard = class extends PrimeFaces.widget.BaseWidget {
 
     /**
      * Initializes the widget.
@@ -12,43 +12,43 @@ PrimeFaces.widget.ExtClipboard = PrimeFaces.widget.BaseWidget.extend({
      * @param {object}
      *        cfg The widget configuration.
      */
-    init : function(cfg) {
-        this._super(cfg);
+    init(cfg) {
+        super.init(cfg);
         this.id = cfg.id;
         this.cfg = cfg;
         this.trigger = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.jq, this.cfg.trigger);
 
         this._applyClipboard(this.trigger, cfg);
-    },
+    }
 
     /**
      * @override
      * @inheritdoc
      * @param {PrimeFaces.PartialWidgetCfg<TCfg>} cfg
      */
-    refresh: function(cfg) {
+    refresh(cfg) {
         this._remove();
-        this._super(cfg);
-    },
+        super.refresh(cfg);
+    }
 
     /**
      * @override
      * @inheritdoc
      */
-    destroy: function() {
-        this._super();
+    destroy() {
+        super.destroy();
         this._remove();
-    },
+    }
 
     /**
      * Clean up this widget and remove elements from DOM.
      * @private
      */
-    _remove: function() {
+    _remove() {
         if (this.clipboard) {
             this.clipboard.destroy();
         }
-    },
+    }
 
     /**
      * Applies the Clipboard to the given jQuery selector object. Delete
@@ -60,7 +60,7 @@ PrimeFaces.widget.ExtClipboard = PrimeFaces.widget.BaseWidget.extend({
      *        cfg The widget configuration.
      * @private
      */
-    _applyClipboard : function(_trigger, cfg) {
+    _applyClipboard(_trigger, cfg) {
         this.trigger = _trigger;
 
         // destroy the old Clipboard
@@ -96,14 +96,14 @@ PrimeFaces.widget.ExtClipboard = PrimeFaces.widget.BaseWidget.extend({
 
         // bind "success", "error" events
         this._bindEvents();
-    },
+    }
 
     /**
      * Binds all events to p:ajax events and javascript callbacks
      * 
      * @private
      */
-    _bindEvents : function() {
+    _bindEvents() {
         var $this = this;
 
         this.clipboard.on('success', function(e) {
@@ -143,4 +143,4 @@ PrimeFaces.widget.ExtClipboard = PrimeFaces.widget.BaseWidget.extend({
             }
         });
     }
-});
+};

@@ -3,7 +3,7 @@
  * 
  * @author Oleg Varaksin
  */
-PrimeFaces.widget.ExtFluidGrid = PrimeFaces.widget.DeferredWidget.extend({
+PrimeFaces.widget.ExtFluidGrid = class extends PrimeFaces.widget.DeferredWidget {
 
     /**
      * Initializes the widget.
@@ -11,8 +11,8 @@ PrimeFaces.widget.ExtFluidGrid = PrimeFaces.widget.DeferredWidget.extend({
      * @param {object}
      *        cfg The widget configuration.
      */
-    init : function(cfg) {
-        this._super(cfg);
+    init(cfg) {
+        super.init(cfg);
         this.cfg = cfg;
         this.id = cfg.id;
 
@@ -25,12 +25,12 @@ PrimeFaces.widget.ExtFluidGrid = PrimeFaces.widget.DeferredWidget.extend({
         }
 
         this.renderDeferred();
-    },
+    }
 
     /**
      * Creates this widget with all initialization steps.
      */
-    _render : function() {
+    _render() {
         this.$container = $(PrimeFaces.escapeClientId(this.id));
 
         if (this.cfg.opts.hasImages) {
@@ -62,12 +62,12 @@ PrimeFaces.widget.ExtFluidGrid = PrimeFaces.widget.DeferredWidget.extend({
                 this.$container.masonry();
             }, this));
         }
-    },
+    }
 
     /**
      * Binds events.
      */
-    bindEvents : function() {
+    bindEvents() {
         if (this.getBehavior("layoutComplete")) {
             this.$container.masonry('off', 'layoutComplete');
             this.$container.masonry('on', 'layoutComplete', $.proxy(function() {
@@ -82,7 +82,7 @@ PrimeFaces.widget.ExtFluidGrid = PrimeFaces.widget.DeferredWidget.extend({
                 behavior.call(this, options);
             }, this));
         }
-    },
+    }
 
     /**
      * Gets behavior callback by name or null.
@@ -91,67 +91,67 @@ PrimeFaces.widget.ExtFluidGrid = PrimeFaces.widget.DeferredWidget.extend({
      *        behavior name
      * @return {Function}
      */
-    getBehavior : function(name) {
+    getBehavior(name) {
         return this.cfg.behaviors ? this.cfg.behaviors[name] : null;
-    },
+    }
 
-    addItems : function(elements) {
+    addItems(elements) {
         this.$container.masonry('addItems', elements);
-    },
+    }
 
-    appended : function(elements) {
+    appended(elements) {
         this.$container.masonry('appended', elements);
-    },
+    }
 
-    prepended : function(elements) {
+    prepended(elements) {
         this.$container.masonry('prepended', elements);
-    },
+    }
 
-    bindResize : function() {
+    bindResize() {
         this.$container.masonry('bindResize');
-    },
+    }
 
-    unbindResize : function() {
+    unbindResize() {
         this.$container.masonry('unbindResize');
-    },
+    }
 
-    destroy : function() {
+    destroy() {
         this.$container.masonry('destroy');
-    },
+    }
 
-    getItemElements : function() {
+    getItemElements() {
         return this.$container.masonry('getItemElements');
-    },
+    }
 
-    hide : function() {
+    hide() {
         this.$container.masonry('hide');
-    },
+    }
 
-    layout : function() {
+    layout() {
         this.$container.masonry();
-    },
+    }
 
-    layoutItems : function(items, isStill) {
+    layoutItems(items, isStill) {
         this.$container.masonry('layoutItems', items, isStill);
-    },
+    }
 
-    reloadItems : function() {
+    reloadItems() {
         this.$container.masonry('reloadItems');
-    },
+    }
 
-    remove : function(elements) {
+    remove(elements) {
         this.$container.masonry('remove', elements);
-    },
+    }
 
-    reveal : function(items) {
+    reveal(items) {
         this.$container.masonry('reveal', items);
-    },
+    }
 
-    stamp : function(elements) {
+    stamp(elements) {
         this.$container.masonry('stamp', elements);
-    },
+    }
 
-    unstamp : function(elements) {
+    unstamp(elements) {
         this.$container.masonry('unstamp', elements);
     }
-});
+};

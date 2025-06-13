@@ -1,15 +1,15 @@
 /**
  * PrimeFaces Extensions BlockUI Widget.
  */
-PrimeFaces.widget.ExtBlockUI = PrimeFaces.widget.BaseWidget.extend({
+PrimeFaces.widget.ExtBlockUI = class extends PrimeFaces.widget.BaseWidget {
 
     /**
      * Initializes the widget.
      *
      * @param {object} cfg The widget configuration.
      */
-    init: function(cfg) {
-        this._super(cfg);
+    init(cfg) {
+        super.init(cfg);
 
         this.source = cfg.source;
         this.target = cfg.target;
@@ -34,38 +34,38 @@ PrimeFaces.widget.ExtBlockUI = PrimeFaces.widget.BaseWidget.extend({
         // global settings
         $.blockUI.defaults.theme = true;
         $.blockUI.defaults.ignoreIfBlocked = true;
-    },
+    }
 
     /**
      * @override
      * @inheritdoc
      * @param {PrimeFaces.PartialWidgetCfg<TCfg>} cfg
      */
-    refresh: function(cfg) {
+    refresh(cfg) {
         this._remove();
-        this._super(cfg);
-    },
+        super.refresh(cfg);
+    }
 
     /**
      * @override
      * @inheritdoc
      */
-    destroy: function() {
-        this._super();
+    destroy() {
+        super.destroy();
         this._remove();
-    },
+    }
 
     /**
      * Clean up this widget and remove elements from DOM.
      * @private
      */
-    _remove: function() {
+    _remove() {
         this.unblock();
         $(document).off('pfAjaxSend.' + this.id + ' pfAjaxUpdated.' + this.id + ' pfAjaxComplete.' + this.id);
-    },
+    }
 
     /* public access */
-    setupAjaxHandlers: function() {
+    setupAjaxHandlers() {
         let $this = this;
         let $document = $(document);
 
@@ -88,9 +88,9 @@ PrimeFaces.widget.ExtBlockUI = PrimeFaces.widget.BaseWidget.extend({
                 $this.unblock();
             }
         });
-    },
+    }
 
-    block: function() {
+    block() {
         let opt;
 
         if (this.target) {
@@ -125,9 +125,9 @@ PrimeFaces.widget.ExtBlockUI = PrimeFaces.widget.BaseWidget.extend({
                 $.blockUI();
             }
         }
-    },
+    }
 
-    unblock: function() {
+    unblock() {
         if (this.target) {
             let targetEl = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.jq, this.target);
 
@@ -152,11 +152,11 @@ PrimeFaces.widget.ExtBlockUI = PrimeFaces.widget.BaseWidget.extend({
         } else {
             $.unblockUI();
         }
-    },
+    }
 
     /* private access */
 
-    getOptions: function() {
+    getOptions() {
         let opt = null;
 
         if (this.contentId != null) {
@@ -188,9 +188,9 @@ PrimeFaces.widget.ExtBlockUI = PrimeFaces.widget.BaseWidget.extend({
         }
 
         return opt;
-    },
+    }
 
-    isAppropriateEvent: function(source, settings) {
+    isAppropriateEvent(source, settings) {
         if (typeof settings === 'undefined' || settings == null || settings.source == null ||
             typeof settings.data === 'undefined' || settings.data == null) {
             return false;
@@ -225,4 +225,4 @@ PrimeFaces.widget.ExtBlockUI = PrimeFaces.widget.BaseWidget.extend({
 
         return false;
     }
-});
+};
