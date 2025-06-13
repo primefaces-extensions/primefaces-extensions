@@ -18,15 +18,15 @@ This is an overview page, please visit [primefaces-extensions.github.io](http://
 
 There are multiple versions available please check which one for your PrimeFaces release version.
 
-| Version | Explanation |
-| --- | --- |
-| ![15.x](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions?versionPrefix=15.0&color=cyan) | PrimeFaces 15.0.0 |
-| ![14.x](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions?versionPrefix=14.0&color=cyan) | PrimeFaces 14.0.0 |
-| ![13.x](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions?versionPrefix=13.0&color=cyan) | PrimeFaces 13.0.0 |
-| ![12.x](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions?versionPrefix=12.0&color=cyan) | PrimeFaces 12.0.0 |
-| ![11.x](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions?versionPrefix=11.0&color=cyan) | PrimeFaces 11.0.0 |
-| ![10.x](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions?versionPrefix=10.0&color=cyan) | PrimeFaces 10.0.0 |
-| ![8.x](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions?versionPrefix=8.0&color=cyan) | PrimeFaces 8.0 |
+| Version | Explanation | Showcase |
+| --- | --- | --- |
+| ![15.x](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions?versionPrefix=15.0&color=cyan) | PrimeFaces 15.0.0 | [HTTPS](https://primefaces-extensions-showcase-55pq8.ondigitalocean.app/) |
+| ![14.x](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions?versionPrefix=14.0&color=cyan) | PrimeFaces 14.0.0 | |
+| ![13.x](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions?versionPrefix=13.0&color=cyan) | PrimeFaces 13.0.0 | |
+| ![12.x](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions?versionPrefix=12.0&color=cyan) | PrimeFaces 12.0.0 | |
+| ![11.x](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions?versionPrefix=11.0&color=cyan) | PrimeFaces 11.0.0 | |
+| ![10.x](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions?versionPrefix=10.0&color=cyan) | PrimeFaces 10.0.0 | |
+| ![8.x](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions?versionPrefix=8.0&color=cyan) | PrimeFaces 8.0 | |
 
 ## Maven
 
