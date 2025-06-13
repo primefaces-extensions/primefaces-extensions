@@ -6,7 +6,7 @@ on:
       - '**/**.md'
     branches:
       - master
-      - 15.X
+      - 15.0.x
   workflow_dispatch:
 
 jobs:
@@ -42,6 +42,6 @@ jobs:
         uses: digitalocean/app_action/deploy@v2
         with:
           project_id: 39fd6fe0-e781-4d85-824e-c20c56dfbdc6
-          app_name: primefaces-extensions-showcase
+          app_name: primefaces15-extensions-showcase
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
           
