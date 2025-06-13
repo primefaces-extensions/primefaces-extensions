@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2024 PrimeFaces Extensions
+ * Copyright (c) 2011-2025 PrimeFaces Extensions
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -46,8 +46,8 @@ import org.primefaces.util.LangUtils;
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
-@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
-@ResourceDependency(library = "primefaces-extensions", name = "lightswitch/lightswitch.js")
+@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "primefaces-extensions.js")
+@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "lightswitch/lightswitch.js")
 public class LightSwitch extends UIComponentBase implements Widget, ClientBehaviorHolder, MixedClientBehaviorHolder {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.LightSwitch";
@@ -109,7 +109,7 @@ public class LightSwitch extends UIComponentBase implements Widget, ClientBehavi
     }
 
     public String getLight() {
-        return (String) getStateHelper().eval(PropertyKeys.light, "saga");
+        return (String) getStateHelper().eval(PropertyKeys.light, "saga-blue");
     }
 
     public void setLight(final String light) {
@@ -117,7 +117,7 @@ public class LightSwitch extends UIComponentBase implements Widget, ClientBehavi
     }
 
     public String getDark() {
-        return (String) getStateHelper().eval(PropertyKeys.dark, "arya");
+        return (String) getStateHelper().eval(PropertyKeys.dark, "arya-blue");
     }
 
     public void setDark(final String dark) {

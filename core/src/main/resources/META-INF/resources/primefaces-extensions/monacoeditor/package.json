@@ -1,9 +1,9 @@
 {
   "devDependencies": {
     "@types/jquery": "^3.5.32",
-    "@types/node": "^22.10.2",
+    "@types/node": "^24.0.1",
     "monaco-editor": "^0.52.2",
-    "typescript": "^5.7.2"
+    "typescript": "^5.8.3"
   },
   "scripts": {
     "verify": "tsc --noEmit",

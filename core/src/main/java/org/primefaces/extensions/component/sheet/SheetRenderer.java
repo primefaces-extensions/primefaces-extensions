@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2024 PrimeFaces Extensions
+ * Copyright (c) 2011-2025 PrimeFaces Extensions
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -367,6 +367,7 @@ public class SheetRenderer extends CoreRenderer {
                     break;
                 case "autocomplete":
                     options.appendProperty("strict", Boolean.toString(column.isAutoCompleteStrict()), false);
+                    options.appendProperty("filter", Boolean.toString(column.isAutoCompleteFilter()), false);
                     options.appendProperty("allowInvalid", Boolean.toString(column.isAutoCompleteAllowInvalid()),
                                 false);
                     options.appendProperty("trimDropdown", Boolean.toString(column.isAutoCompleteTrimDropdown()),

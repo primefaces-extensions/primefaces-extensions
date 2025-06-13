@@ -12,21 +12,21 @@
 [![Stackoverflow](https://img.shields.io/badge/StackOverflow-primefaces-chocolate.svg)](https://stackoverflow.com/questions/tagged/primefaces-extensions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-This is an overview page, please visit [primefaces-extensions.github.io](http://primefaces-extensions.github.io/) or the [showcase](https://www.primefaces.org/showcase-ext/) for more information.
+This is an overview page, please visit [primefaces-extensions.github.io](http://primefaces-extensions.github.io/) or the [showcase](https://primefaces-extensions-showcase-55pq8.ondigitalocean.app/) for more information.
 
 ## Versioning
 
 There are multiple versions available please check which one for your PrimeFaces release version.
 
-| Version | Explanation |
-| --- | --- |
-| ![8.x](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions?versionPrefix=8.0&color=cyan) | PrimeFaces 8.0 |
-| ![10.x](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions?versionPrefix=10.0&color=cyan) | PrimeFaces 10.0.0 |
-| ![11.x](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions?versionPrefix=11.0&color=cyan) | PrimeFaces 11.0.0 |
-| ![12.x](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions?versionPrefix=12.0&color=cyan) | PrimeFaces 12.0.0 |
-| ![13.x](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions?versionPrefix=13.0&color=cyan) | PrimeFaces 13.0.0 |
-| ![14.x](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions?versionPrefix=14.0&color=cyan) | PrimeFaces 14.0.0 |
-| ![15.x](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions?versionPrefix=15.0&color=cyan) | PrimeFaces 15.0.0 |
+| Version | Explanation | Showcase |
+| --- | --- | --- |
+| ![15.x](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions?versionPrefix=15.0&color=cyan) | PrimeFaces 15.0.0 | [HTTPS](https://primefaces-extensions-showcase-55pq8.ondigitalocean.app/) |
+| ![14.x](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions?versionPrefix=14.0&color=cyan) | PrimeFaces 14.0.0 | |
+| ![13.x](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions?versionPrefix=13.0&color=cyan) | PrimeFaces 13.0.0 | |
+| ![12.x](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions?versionPrefix=12.0&color=cyan) | PrimeFaces 12.0.0 | |
+| ![11.x](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions?versionPrefix=11.0&color=cyan) | PrimeFaces 11.0.0 | |
+| ![10.x](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions?versionPrefix=10.0&color=cyan) | PrimeFaces 10.0.0 | |
+| ![8.x](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions?versionPrefix=8.0&color=cyan) | PrimeFaces 8.0 | |
 
 ## Maven
 
@@ -56,28 +56,6 @@ There are multiple versions available please check which one for your PrimeFaces
 </dependency>
 ```
 
-### Snapshots
-
-```xml
-<repository>
-    <id>sonatype-snapshots</id>
-    <name>Sonatype Snapshot Repository</name>
-    <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
-    <releases>
-        <enabled>false</enabled>
-    </releases>
-    <snapshots>
-        <enabled>true</enabled>
-    </snapshots>
-</repository>
-
-<dependency>
-   <groupId>org.primefaces.extensions</groupId>
-   <artifactId>primefaces-extensions</artifactId>
-   <version>${primefaces-extensions.version}</version>
-</dependency>
-```
-
 ## Namespaces
 
 The PrimeFaces Extensions namespace is necessary to add PrimeFaces Extensions components to your pages.
@@ -92,7 +70,7 @@ Please refer to the [Getting Started Guide](https://github.com/primefaces-extens
 to get started and any optional libraries.
 
 ## Migration Guide
-
+***
 Please refer to the [Migration Guide](https://github.com/primefaces-extensions/primefaces-extensions.github.com/wiki/Migration-Guide).
 
 ## Demo
@@ -112,14 +90,26 @@ Please report all issues [here](https://github.com/primefaces-extensions/primefa
 
 ## Releasing
 
-- Run `mvn versions:set -DgenerateBackupPoms=false -DnewVersion=8.0.2` to update all modules versions
-- Commit and push the changes to GitHub
-- In GitHub create a new Release titled `8.0.2` to tag this release
-- Run `mvn clean deploy -Prelease` to push to Maven Central
+1. Go to the `Actions` tab in GitHub
+2. Select the "Release" workflow
+3. Click "Run workflow"
+4. You will be prompted for:
+   - Branch (default to `master`)
+   - Version to release (e.g. 8.0.2)
+   - Next development version (e.g. 8.0.3-SNAPSHOT)
+5. The workflow will automatically:
+   - Set the release version in all pom.xml files
+   - Create and push a release tag
+   - Build and deploy artifacts to Maven Central
+   - Update version to the next development version
 
 ## License
 
 Licensed under the [MIT](https://en.wikipedia.org/wiki/MIT_License) license.
 
 `SPDX-License-Identifier: MIT`
+
+## Powered by
+
+[![IntelliJ IDEA logo.](https://resources.jetbrains.com/storage/products/company/brand/logos/IntelliJ_IDEA.svg)](https://jb.gg/OpenSourceSupport)
 

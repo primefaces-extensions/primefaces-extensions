@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2024 PrimeFaces Extensions
+ * Copyright (c) 2011-2025 PrimeFaces Extensions
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -26,33 +26,63 @@ import javax.faces.application.ResourceHandler;
 import javax.faces.application.ResourceHandlerWrapper;
 
 /**
- * This resource handler replaces the accent color of the Arya, Saga and Vela themes with variables. Variables are named themeX, theme is the lower case theme
- * name, X is the index number of the color.
+ * A custom ResourceHandler that processes PrimeFaces theme CSS files to support dynamic accent colors. This handler specifically targets the Arya, Saga and
+ * Vela themes, replacing their hardcoded accent colors with CSS variables. The variables follow the naming convention 'theme{X}', where: - 'theme' is the
+ * lowercase theme name (e.g., arya, saga, vela) - 'X' is the index number of the color in the theme's palette
  *
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
  * @since 10.0.1
  */
-public class ThemeAccentColorResourceHandler extends ResourceHandlerWrapper {
+public class ThemeModificationResourceHandler extends ResourceHandlerWrapper {
 
+    /**
+     * The standard CSS resource name for PrimeFaces themes.
+     */
     protected static final String RESOURCE_NAME = "theme.css";
+
+    /**
+     * The library name prefix that identifies PrimeFaces theme resources.
+     */
     protected static final String LIBRARY_PREFIX = "primefaces-";
 
-    public ThemeAccentColorResourceHandler(final ResourceHandler wrapped) {
+    /**
+     * Constructs a new ThemeModificationResourceHandler.
+     *
+     * @param wrapped The underlying ResourceHandler being wrapped
+     */
+    public ThemeModificationResourceHandler(final ResourceHandler wrapped) {
         super(wrapped);
     }
 
+    /**
+     * Determines if a resource is a PrimeFaces theme CSS file that should be processed.
+     * 
+     * @param resourceName The name of the resource being requested
+     * @param libraryName The library name of the resource
+     * @return true if the resource is a PrimeFaces theme CSS file, false otherwise
+     */
     protected boolean isPrimeFacesTheme(final String resourceName, final String libraryName) {
         return libraryName != null
                     && libraryName.startsWith(LIBRARY_PREFIX)
                     && RESOURCE_NAME.equals(resourceName);
     }
 
+    /**
+     * Creates a resource instance, wrapping PrimeFaces theme CSS resources with a ThemeModificationResource for processing. Non-theme resources are passed
+     * through to the wrapped handler unchanged.
+     *
+     * @param resourceName The name of the resource to create
+     * @param libraryName The library name of the resource
+     * @return A Resource instance, either wrapped for theme processing or passed through
+     */
     @Override
     public Resource createResource(final String resourceName, final String libraryName) {
         if (isPrimeFacesTheme(resourceName, libraryName)) {
-            return new ThemeAccentColorResource(super.createResource(resourceName, libraryName));
+            // Wrap PrimeFaces theme resources with our custom processor
+            return new ThemeModificationResource(super.createResource(resourceName, libraryName));
         }
         else {
+            // Pass through non-theme resources unchanged
             return getWrapped().createResource(resourceName, libraryName);
         }
     }

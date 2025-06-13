@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2024 PrimeFaces Extensions
+ * Copyright (c) 2011-2025 PrimeFaces Extensions
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -49,7 +49,7 @@ import org.primefaces.util.LangUtils;
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
-@ResourceDependency(library = "primefaces-extensions", name = "codescanner/codescanner.js")
+@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "codescanner/codescanner.js")
 public class CodeScanner extends UIComponentBase implements Widget, ClientBehaviorHolder, MixedClientBehaviorHolder {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.CodeScanner";

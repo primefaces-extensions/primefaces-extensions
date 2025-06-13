@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2024 PrimeFaces Extensions
+ * Copyright (c) 2011-2025 PrimeFaces Extensions
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -47,7 +47,7 @@ public class UserSettings implements Serializable {
     private String currentThemeName;
 
     public UserSettings() {
-        setCurrentThemeByName("saga");
+        setCurrentThemeByName("saga-blue");
         availableThemes = AvailableThemes.getInstance().getThemes();
     }
 

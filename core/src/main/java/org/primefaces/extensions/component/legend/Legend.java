@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2024 PrimeFaces Extensions
+ * Copyright (c) 2011-2025 PrimeFaces Extensions
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +27,7 @@ import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
 
 import org.primefaces.component.api.Widget;
+import org.primefaces.extensions.util.Constants;
 
 /**
  * <code>Legend</code> component.
@@ -38,8 +39,8 @@ import org.primefaces.component.api.Widget;
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
-@ResourceDependency(library = "primefaces-extensions", name = "legend/legend.css")
-@ResourceDependency(library = "primefaces-extensions", name = "legend/legend.js")
+@ResourceDependency(library = Constants.LIBRARY, name = "legend/legend.css")
+@ResourceDependency(library = Constants.LIBRARY, name = "legend/legend.js")
 public class Legend extends UIComponentBase implements Widget {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Legend";

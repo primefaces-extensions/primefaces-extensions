@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2024 PrimeFaces Extensions
+ * Copyright (c) 2011-2025 PrimeFaces Extensions
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -34,7 +34,7 @@ public class HtmlSanitizer {
                 .allowUrlProtocols("data", "http", "https")
                 .allowElements("img", "figure")
                 .allowAttributes("src")
-                .matching(Pattern.compile("^(data:image/(gif|png|jpeg|webp|svg)[,;]|http|https|//).+", Pattern.CASE_INSENSITIVE))
+                .matching(Pattern.compile("^(?!javascript:|ftp:|file:|blob:|mailto:).*", Pattern.CASE_INSENSITIVE))
                 .onElements("img")
                 .allowAttributes(
                             "data-rotate",

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2024 PrimeFaces Extensions
+ * Copyright (c) 2011-2025 PrimeFaces Extensions
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -29,14 +29,15 @@ import javax.faces.context.FacesContext;
 import org.primefaces.component.api.AbstractPrimeHtmlInputText;
 import org.primefaces.component.api.InputHolder;
 import org.primefaces.component.api.Widget;
+import org.primefaces.extensions.util.Constants;
 import org.primefaces.util.LocaleUtils;
 
 @ResourceDependency(library = "primefaces", name = "components.css")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
-@ResourceDependency(library = "primefaces-extensions", name = "clockpicker/clockpicker.css")
-@ResourceDependency(library = "primefaces-extensions", name = "clockpicker/clockpicker.js")
+@ResourceDependency(library = Constants.LIBRARY, name = "clockpicker/clockpicker.css")
+@ResourceDependency(library = Constants.LIBRARY, name = "clockpicker/clockpicker.js")
 public class ClockPicker extends AbstractPrimeHtmlInputText implements Widget, InputHolder {
     public static final String CONTAINER_CLASS = "pe-clockpicker ui-widget ui-corner-all clockpicker";
     public static final String BUTTON_TRIGGER_CLASS = "pe-clockpicker-trigger ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only input-group-addon";

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2024 PrimeFaces Extensions
+ * Copyright (c) 2011-2025 PrimeFaces Extensions
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -31,9 +31,6 @@ package org.primefaces.extensions.util;
 public final class Constants {
 
     public static final String LIBRARY = "primefaces-extensions";
-
-    public static final String EXTENSION_CSS = ".css";
-    public static final String EXTENSION_JS = ".js";
 
     /**
      * Avoid instantiation.

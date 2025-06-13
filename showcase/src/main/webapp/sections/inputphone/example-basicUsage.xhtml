@@ -13,6 +13,7 @@
                    initialCountry="us"
                    value="#{basicInputPhoneController.phoneNumber}"
                    formatOnDisplay="true"
+                   autoPlaceholder="aggressive"
                    dir="ltr">
         <p:ajax event="countrySelect" listener="#{basicInputPhoneController.onCountrySelect}" />
     </pe:inputPhone>

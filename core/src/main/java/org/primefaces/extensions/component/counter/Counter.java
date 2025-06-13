@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2024 PrimeFaces Extensions
+ * Copyright (c) 2011-2025 PrimeFaces Extensions
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -47,7 +47,7 @@ import org.primefaces.util.MapBuilder;
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = "primefaces", name = "components.js")
-@ResourceDependency(library = "primefaces-extensions", name = "counter/counter.js")
+@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "counter/counter.js")
 public class Counter extends CounterBase {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Counter";

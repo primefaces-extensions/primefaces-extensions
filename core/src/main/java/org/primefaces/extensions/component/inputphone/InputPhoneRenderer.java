@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2024 PrimeFaces Extensions
+ * Copyright (c) 2011-2025 PrimeFaces Extensions
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -218,12 +218,6 @@ public class InputPhoneRenderer extends InputRenderer {
             wb.attr("placeholderNumberType", inputPhone.getPlaceholderNumberType().toUpperCase());
         }
         encodeCountries(wb, "countryOrder", inputPhone.getPreferredCountries());
-
-        wb.attr("utilsScript",
-                    context.getApplication()
-                                .getResourceHandler()
-                                .createResource("inputphone/utils.js", org.primefaces.extensions.util.Constants.LIBRARY)
-                                .getRequestPath());
         if (inputPhone.getLocalizedCountries() != null) {
             wb.nativeAttr("i18n", objectToJsonString(inputPhone.getLocalizedCountries()));
         }

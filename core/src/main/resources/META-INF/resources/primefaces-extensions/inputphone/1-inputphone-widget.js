@@ -84,6 +84,9 @@ PrimeFaces.widget.ExtInputPhone = class extends PrimeFaces.widget.BaseWidget {
             this.cfg.initialCountry = this.currentCountry;
         }
 
+        // if inside dialog we have to attach to dialog
+        this.setupDialogSupport();
+
         // component creation
         this.iti = intlTelInput(this.input, this.cfg);
     }
@@ -150,10 +153,31 @@ PrimeFaces.widget.ExtInputPhone = class extends PrimeFaces.widget.BaseWidget {
     }
 
     /**
+     * Sets up support for using the input phone within an overlay dialog.
+     * @private
+     */
+    setupDialogSupport: function () {
+        const dlg = this.input.closest('.ui-dialog, .ui-sidebar');
+        if (dlg) {
+            this.cfg.dropdownContainer = dlg;
+
+            const dialog = $(dlg);
+            $(this.input).on('open:countrydropdown', function () {
+                dialog.find('.iti__dropdown-content').zIndex(PrimeFaces.nextZindex());
+            });
+        }
+    },
+
+    /**
      * Get the current number in the given format.
      */
     getNumber() {
-        return this.iti ? this.iti.getNumber() : '';
+         if (!this.iti) {
+            return '';
+        }
+        const phoneNumber = this.iti.getNumber() || '';
+        const extension = this.iti.getExtension();
+        return extension ? `${phoneNumber} x${extension}` : phoneNumber;
     }
 
     /**

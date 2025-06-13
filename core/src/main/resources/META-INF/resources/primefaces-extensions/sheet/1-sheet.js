@@ -32,7 +32,7 @@ PrimeFaces.widget.ExtSheet = class extends PrimeFaces.widget.DeferredWidget {
         this.focusing = false;
 
         // user extension to configure handsontable
-        var extender = this.cfg.extender
+        let extender = this.cfg.extender
         if (extender) {
             if (typeof extender === "function") {
                 extender.call(this);
@@ -61,7 +61,7 @@ PrimeFaces.widget.ExtSheet = class extends PrimeFaces.widget.DeferredWidget {
                 col: 1
             },
             textCellRenderer: function (instance, td, row, col, prop, value, cellProperties) {
-                var doc = new DOMParser().parseFromString(value, "text/html");
+                let doc = new DOMParser().parseFromString(value, "text/html");
                 value = doc.documentElement.textContent || value;
                 Handsontable.renderers.HtmlRenderer.apply(this, arguments);
                 $this._defaultCellRenderer(instance, td, row, col, prop, value, cellProperties);
@@ -95,11 +95,11 @@ PrimeFaces.widget.ExtSheet = class extends PrimeFaces.widget.DeferredWidget {
                 $this._defaultCellRenderer(instance, td, row, col, prop, value, cellProperties);
             },
             cells: function (row, col, prop) {
-                var cp = {};
+                let cp = {};
                 if (col < 0) {
                     return cp;
                 }
-                var column = $this.cfg.columns[col];
+                let column = $this.cfg.columns[col];
                 if (column.type === 'password') {
                     cp.renderer = this.passwordCellRenderer;
                 } else if (column.type === 'numeric') {
@@ -117,7 +117,7 @@ PrimeFaces.widget.ExtSheet = class extends PrimeFaces.widget.DeferredWidget {
                 } else {
                     cp.renderer = this.textCellRenderer;
                 }
-                var readonlyCell = $this.cfg.readOnlyCells['r' + row + '_c' + col];
+                let readonlyCell = $this.cfg.readOnlyCells['r' + row + '_c' + col];
                 if (readonlyCell) {
                     cp.readOnly = true;
                 }
@@ -127,16 +127,16 @@ PrimeFaces.widget.ExtSheet = class extends PrimeFaces.widget.DeferredWidget {
                 if (source === 'loadData') {
                     return;
                 }
-                // var change = changes[0]; // [row, prop, oldVal, newVal]
-                var isChanged = false;
-                var cellType = 'normal';
-                for (var i = 0; i < change.length; i++) {
-                    var oldValue = change[i][2];
-                    var newValue = change[i][3];
+                // let change = changes[0]; // [row, prop, oldVal, newVal]
+                let isChanged = false;
+                let cellType = 'normal';
+                for (let i = 0; i < change.length; i++) {
+                    let oldValue = change[i][2];
+                    let newValue = change[i][3];
                     if (oldValue === newValue)
                         continue;
-                    var row = change[i][0];
-                    var col = change[i][1];
+                    let row = change[i][0];
+                    let col = change[i][1];
                     change[i].push($this.cfg.rowKeys[row]);
                     $this.cfg.delta['r' + row + '_c' + col] = change[i];
                     isChanged = true;
@@ -154,7 +154,7 @@ PrimeFaces.widget.ExtSheet = class extends PrimeFaces.widget.DeferredWidget {
                 }
             },
             afterSelectionEnd: function (r, c, r2, c2) {
-                var selected = this.getSelected() || [];
+                let selected = this.getSelected() || [];
                 $this.selectionInput.val(JSON.stringify(selected));
                 if ($this.updated) {
                     $this.updated = false;
@@ -164,7 +164,7 @@ PrimeFaces.widget.ExtSheet = class extends PrimeFaces.widget.DeferredWidget {
                 }
             },
             afterOnCellMouseDown: function (event, coords, TD) {
-                var sel = [coords.row, coords.col, coords.row, coords.col];
+                let sel = [coords.row, coords.col, coords.row, coords.col];
                 $this.selectionInput.val(JSON.stringify(sel));
 
                 // only fire event if row is -1 which means its a header
@@ -185,7 +185,7 @@ PrimeFaces.widget.ExtSheet = class extends PrimeFaces.widget.DeferredWidget {
             },
             afterListen: function () {
                 // turn off the keyboard trap while sheet has keyboard control
-                var tabIndex = $this.keyboardTrap.attr("tabindex");
+                let tabIndex = $this.keyboardTrap.attr("tabindex");
                 if (tabIndex) {
                     $this.keyboardTrap.attr("tabindex", "-1").data("tabindex", tabIndex);
                 }
@@ -193,25 +193,25 @@ PrimeFaces.widget.ExtSheet = class extends PrimeFaces.widget.DeferredWidget {
             afterUnlisten: function () {
                 // turn on the keyboard trap once sheet no longer has keyboard control
                 PrimeFaces.queueTask(() => {
-                    var tabIndex = $this.keyboardTrap.data("tabindex");
+                    let tabIndex = $this.keyboardTrap.data("tabindex");
                     if (tabIndex) {
                         $this.keyboardTrap.attr("tabindex", tabIndex).data("tabindex", "");
                     }
                 }, 250)
             },
             afterGetColHeader: function (col, TH) {
-                var header = $(TH);
+                let header = $(TH);
 
                 // remove all current events
                 header.off();
 
                 // handle sorting
-                var sortable = $this.cfg.sortable[col];
+                let sortable = $this.cfg.sortable[col];
                 if (sortable) {
                     header.find('.relative .ui-sortable-column-icon').remove();
-                    var sortCol = $this.sortByInput.val();
-                    var sortOrder = $this.sortOrderInput.val();
-                    var iconclass = 'ui-sortable-column-icon ui-icon ui-icon ui-icon-carat-2-n-s ';
+                    let sortCol = $this.sortByInput.val();
+                    let sortOrder = $this.sortOrderInput.val();
+                    let iconclass = 'ui-sortable-column-icon ui-icon ui-icon ui-icon-carat-2-n-s ';
                     if (sortCol == col) {
                         iconclass = iconclass
                             + (sortOrder == 'ascending' ? 'ui-icon-triangle-1-n' : 'ui-icon-triangle-1-s');
@@ -229,11 +229,11 @@ PrimeFaces.widget.ExtSheet = class extends PrimeFaces.widget.DeferredWidget {
                 }
 
                 // handle filtering
-                var f = $this.cfg.filters[col];
+                let f = $this.cfg.filters[col];
                 if (typeof (f) != "undefined" && f != 'false') {
                     header.addClass('ui-filter-column');
                     header.find('.handson-filter').remove();
-                    var v = $($this.jqId + '_filter_' + col).val();
+                    let v = $($this.jqId + '_filter_' + col).val();
                     if (f == 'true') {
                         header
                             .append(
@@ -256,8 +256,8 @@ PrimeFaces.widget.ExtSheet = class extends PrimeFaces.widget.DeferredWidget {
                         header
                             .append(
                                 '<span class="handson-filter"><select class="ui-column-filter ui-widget ui-state-default ui-corner-left" ></select></span>');
-                        var selectInput = header.find('select');
-                        for (var i = 0; i < f.length; i++) {
+                        let selectInput = header.find('select');
+                        for (let i = 0; i < f.length; i++) {
                             selectInput.append('<option value="' + f[i].value + '"'
                                 + (f[i].value == v ? ' selected="selected"' : '') + '>' + f[i].label
                                 + '</option>');
@@ -279,7 +279,7 @@ PrimeFaces.widget.ExtSheet = class extends PrimeFaces.widget.DeferredWidget {
         };
 
         // make a copy of the configuration
-        var configuration = $.extend(true, {}, $this.cfg);
+        let configuration = $.extend(true, {}, $this.cfg);
 
         // remove any properties we don't want in the options
         delete configuration["readOnlyCells"];
@@ -317,14 +317,14 @@ PrimeFaces.widget.ExtSheet = class extends PrimeFaces.widget.DeferredWidget {
 
         // Check if data exist. If not insert No Records Found message
         if (options.data.length === 0) {
-            var colspan = options.columns.length;
+            let colspan = options.columns.length;
             colspan++;
             $this.tableDiv.find('.emptyRows').find('tbody').html("<tr><td colspan='" + colspan + "'>" + $this.cfg.emptyMessage + "</td></tr>")
         }
 
-        var selval = $this.selectionInput.val();
+        let selval = $this.selectionInput.val();
         if (selval && selval.length > 0) {
-            var sel = JSON.parse(selval);
+            let sel = JSON.parse(selval);
             $this.ht.selectCell(sel[0], sel[1], sel[2], sel[3], true);
         }
     }
@@ -332,17 +332,17 @@ PrimeFaces.widget.ExtSheet = class extends PrimeFaces.widget.DeferredWidget {
     _defaultCellRenderer(instance, td, row, col, prop, value, cellProperties) {
         var styleClass = '';
         // append row style (if we have one)
-        var rowClass = this.cfg.rowStyles[row];
+        let rowClass = this.cfg.rowStyles[row];
         if (rowClass) {
             styleClass = rowClass;
         }
         // append cell style (if we have one)
-        var cellClass = this.cfg.styles['r' + row + '_c' + col];
+        let cellClass = this.cfg.styles['r' + row + '_c' + col];
         if (cellClass) {
             styleClass = styleClass.concat(' ').concat(cellClass);
         }
         // check for errors
-        var invalidMessage = this.cfg.errors[this.cfg.rowKeys[row] + '_c' + col];
+        let invalidMessage = this.cfg.errors[this.cfg.rowKeys[row] + '_c' + col];
         if (invalidMessage) {
             styleClass = styleClass.concat(' ui-message-error');
             td.innerHTML = "<span class='ui-sheet-error' title='" + invalidMessage
@@ -413,9 +413,9 @@ PrimeFaces.widget.ExtSheet = class extends PrimeFaces.widget.DeferredWidget {
     sortClick(sheet, e, col) {
         if ($(e.target).is(':not(th,span,div)'))
             return;
-        var sc = sheet.sortByInput.val();
+        let sc = sheet.sortByInput.val();
         if (col == sc) {
-            var so = sheet.sortOrderInput.val();
+            let so = sheet.sortOrderInput.val();
             sheet.sortOrderInput.val((so == 'ascending' ? 'descending' : 'ascending'));
         } else {
             sheet.sortOrderInput.val('ascending');
@@ -431,7 +431,7 @@ PrimeFaces.widget.ExtSheet = class extends PrimeFaces.widget.DeferredWidget {
     // eat enter keys for filter inputs so they do not submit form
     filterKeyDown(sheet, e) {
         e.stopImmediatePropagation();
-        var key = e.which, keyCode = $.ui.keyCode;
+        let key = e.which, keyCode = $.ui.keyCode;
         if (key === keyCode.ENTER) {
             e.preventDefault();
         }
@@ -440,7 +440,7 @@ PrimeFaces.widget.ExtSheet = class extends PrimeFaces.widget.DeferredWidget {
     // again, eat enter key. but also fire filter event on enter
     filterKeyUp(sheet, e) {
         e.stopImmediatePropagation();
-        var key = e.which, keyCode = $.ui.keyCode;
+        let key = e.which, keyCode = $.ui.keyCode;
         if (key === keyCode.ENTER) {
             // destroy editor to avoid posting request after resort
             sheet.ht.destroyEditor(true);
@@ -531,9 +531,9 @@ PrimeFaces.widget.ExtSheet = class extends PrimeFaces.widget.DeferredWidget {
     focusFirstError() {
         var errors = this.tableDiv.find('.ui-message-error');
         if (errors.length > 0) {
-            var firstError = errors.first();
-            var col = firstError.index() - 1;
-            var row = firstError.parent().index();
+            let firstError = errors.first();
+            let col = firstError.index() - 1;
+            let row = firstError.parent().index();
             this.ht.selectCell(row, col);
         }
     }
@@ -547,21 +547,22 @@ PrimeFaces.widget.ExtSheet = class extends PrimeFaces.widget.DeferredWidget {
 
     handleHotBeforeKeyDown(e) {
         var selectedLast = this.getSelectedLast();
+
         if (!selectedLast) {
             return;
         }
-        var row = selectedLast[0];
-        var col = selectedLast[1];
-        var celltype = this.getCellMeta(row, col).type;
+        let row = selectedLast[0];
+        let col = selectedLast[1];
+        let celltype = this.getCellMeta(row, col).type;
 
-        var evt = e || window.event; // IE support
-        var key = evt.charCode || evt.keyCode || 0;
-        var shiftDown = e.shiftKey;
+        let evt = e || window.event; // IE support
+        let key = evt.charCode || evt.keyCode || 0;
+        let shiftDown = e.shiftKey;
 
         // #740 tab on last cell should focus this next component
         if (this.allowTabOffSheet && key == 9) {
-            var lastRow = this.countRows() - 1;
-            var lastCol = this.countCols() - 1;
+            let lastRow = this.countRows() - 1;
+            let lastCol = this.countCols() - 1;
             if ((!shiftDown && row === lastRow && col === lastCol)
                 || (shiftDown && row === 0 && col === 0)) {
                 e.stopImmediatePropagation();
@@ -569,16 +570,16 @@ PrimeFaces.widget.ExtSheet = class extends PrimeFaces.widget.DeferredWidget {
                 this.deselectCell();
 
                 //add all elements we want to include in our selection
-                var focusableElements = 'a:not([disabled]), button:not([disabled]), input[type=text]:not([disabled]):not([hidden]):not([aria-hidden="true"]), [tabindex]:not([disabled]):not([tabindex="-1"]):not([aria-hidden="true"])';
+                let focusableElements = 'a:not([disabled]), button:not([disabled]), input[type=text]:not([disabled]):not([hidden]):not([aria-hidden="true"]), [tabindex]:not([disabled]):not([tabindex="-1"]):not([aria-hidden="true"])';
                 if (document.activeElement && document.activeElement.form) {
-                    var focusable = Array.prototype.filter.call(document.activeElement.form.querySelectorAll(focusableElements),
+                    let focusable = Array.prototype.filter.call(document.activeElement.form.querySelectorAll(focusableElements),
                         function (element) {
                             //check for visibility while always include the current activeElement
                             return element.offsetWidth > 0 || element.offsetHeight > 0 || element === document.activeElement
                         });
-                    var index = focusable.indexOf(document.activeElement);
+                    let index = focusable.indexOf(document.activeElement);
                     if (index > -1) {
-                        var nextElement = focusable[index + 1] || focusable[0];
+                        let nextElement = focusable[index + 1] || focusable[0];
                         nextElement.focus();
                     }
                 }
@@ -594,7 +595,7 @@ PrimeFaces.widget.ExtSheet = class extends PrimeFaces.widget.DeferredWidget {
             }
 
             // #739 allow navigation
-            var ctrlDown = evt.ctrlKey || evt.metaKey; // Mac support
+            let ctrlDown = evt.ctrlKey || evt.metaKey; // Mac support
             if (shiftDown || ctrlDown) {
                 // navigation keys
                 if (key == 9 || (key >= 35 && key <= 40)) {
@@ -603,7 +604,7 @@ PrimeFaces.widget.ExtSheet = class extends PrimeFaces.widget.DeferredWidget {
             }
 
             // check for cut and paste
-            var isClipboard = false;
+            let isClipboard = false;
             // Check for Alt+Gr (http://en.wikipedia.org/wiki/AltGr_key)
             if (ctrlDown && evt.altKey) isClipboard = false;
             // Check for ctrl+c, v and x
@@ -615,7 +616,7 @@ PrimeFaces.widget.ExtSheet = class extends PrimeFaces.widget.DeferredWidget {
             // allow backspace, tab, delete, enter, arrows, numbers and keypad numbers
             // ONLY home, end, F5, F12, minus (-), period (.)
             // console.log('Key: ' + key + ' Shift: ' + e.shiftKey + ' Clipboard: ' + isClipboard);
-            var isNumeric = ((key == 8) || (key == 9) || (key == 13)
+            let isNumeric = ((key == 8) || (key == 9) || (key == 13)
                 || (key == 46) || (key == 110) || (key == 116)
                 || (key == 123) || (key == 188) || (key == 189)
                 || (key == 190) || ((key >= 35) && (key <= 40))
@@ -628,4 +629,6 @@ PrimeFaces.widget.ExtSheet = class extends PrimeFaces.widget.DeferredWidget {
             }
         }
     }
+
 };
+

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2024 PrimeFaces Extensions
+ * Copyright (c) 2011-2025 PrimeFaces Extensions
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -48,8 +48,8 @@ import org.primefaces.util.Constants;
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
-@ResourceDependency(library = "primefaces-extensions", name = "slideout/slideout.css")
-@ResourceDependency(library = "primefaces-extensions", name = "slideout/slideout.js")
+@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "slideout/slideout.css")
+@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "slideout/slideout.js")
 public class SlideOut extends UIComponentBase implements ClientBehaviorHolder, Widget {
 
     public static final String HANDLE_CLASS = "ui-slideout-handle ui-slideouttab-handle-rounded";
