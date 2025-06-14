@@ -28,8 +28,8 @@ import java.time.Month;
 import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
 
-import javax.faces.view.ViewScoped;
-import javax.inject.Named;
+import jakarta.faces.view.ViewScoped;
+import jakarta.inject.Named;
 
 /**
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;

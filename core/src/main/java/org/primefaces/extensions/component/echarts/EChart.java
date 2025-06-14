@@ -24,12 +24,12 @@ package org.primefaces.extensions.component.echarts;
 import java.util.Collection;
 import java.util.Map;
 
-import javax.faces.application.ResourceDependency;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.faces.event.AjaxBehaviorEvent;
-import javax.faces.event.BehaviorEvent;
-import javax.faces.event.FacesEvent;
+import jakarta.faces.application.ResourceDependency;
+import jakarta.faces.context.ExternalContext;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.event.AjaxBehaviorEvent;
+import jakarta.faces.event.BehaviorEvent;
+import jakarta.faces.event.FacesEvent;
 
 import org.primefaces.event.ItemSelectEvent;
 import org.primefaces.extensions.event.EChartEvent;

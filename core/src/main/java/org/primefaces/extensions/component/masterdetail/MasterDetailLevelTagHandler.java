@@ -21,9 +21,9 @@
  */
 package org.primefaces.extensions.component.masterdetail;
 
-import javax.faces.view.facelets.ComponentConfig;
-import javax.faces.view.facelets.ComponentHandler;
-import javax.faces.view.facelets.TagAttribute;
+import jakarta.faces.view.facelets.ComponentConfig;
+import jakarta.faces.view.facelets.ComponentHandler;
+import jakarta.faces.view.facelets.TagAttribute;
 
 /**
  * {@link ComponentHandler} for the <code>MasterDetailLevel</code>.

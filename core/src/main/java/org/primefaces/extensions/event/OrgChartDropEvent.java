@@ -21,9 +21,9 @@
  */
 package org.primefaces.extensions.event;
 
-import javax.faces.component.UIComponent;
-import javax.faces.component.behavior.Behavior;
-import javax.faces.event.AjaxBehaviorEvent;
+import jakarta.faces.component.UIComponent;
+import jakarta.faces.component.behavior.Behavior;
+import jakarta.faces.event.AjaxBehaviorEvent;
 
 import org.primefaces.shaded.json.JSONObject;
 

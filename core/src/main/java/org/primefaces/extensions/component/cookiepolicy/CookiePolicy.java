@@ -21,11 +21,11 @@
  */
 package org.primefaces.extensions.component.cookiepolicy;
 
-import javax.faces.component.UIComponentBase;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.faces.component.UIComponentBase;
+import jakarta.faces.context.ExternalContext;
+import jakarta.faces.context.FacesContext;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.primefaces.util.LangUtils;
 

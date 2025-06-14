@@ -23,9 +23,9 @@ package org.primefaces.extensions.component.documentviewer;
 
 import java.util.Locale;
 
-import javax.faces.application.ResourceDependency;
-import javax.faces.component.UIGraphic;
-import javax.faces.context.FacesContext;
+import jakarta.faces.application.ResourceDependency;
+import jakarta.faces.component.UIGraphic;
+import jakarta.faces.context.FacesContext;
 
 import org.primefaces.extensions.util.Constants;
 import org.primefaces.util.LocaleUtils;

@@ -23,26 +23,26 @@ package org.primefaces.extensions.component.base;
 
 import java.util.Map;
 
-import javax.faces.FacesException;
-import javax.faces.application.Application;
-import javax.faces.application.FacesMessage;
-import javax.faces.component.ContextCallback;
-import javax.faces.component.EditableValueHolder;
-import javax.faces.component.NamingContainer;
-import javax.faces.component.UIComponent;
-import javax.faces.component.UIComponentBase;
-import javax.faces.component.UINamingContainer;
-import javax.faces.component.UIViewRoot;
-import javax.faces.component.UniqueIdVendor;
-import javax.faces.component.visit.VisitCallback;
-import javax.faces.component.visit.VisitContext;
-import javax.faces.component.visit.VisitResult;
-import javax.faces.context.FacesContext;
-import javax.faces.event.FacesEvent;
-import javax.faces.event.PhaseId;
-import javax.faces.event.PostValidateEvent;
-import javax.faces.event.PreValidateEvent;
-import javax.faces.render.Renderer;
+import jakarta.faces.FacesException;
+import jakarta.faces.application.Application;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.component.ContextCallback;
+import jakarta.faces.component.EditableValueHolder;
+import jakarta.faces.component.NamingContainer;
+import jakarta.faces.component.UIComponent;
+import jakarta.faces.component.UIComponentBase;
+import jakarta.faces.component.UINamingContainer;
+import jakarta.faces.component.UIViewRoot;
+import jakarta.faces.component.UniqueIdVendor;
+import jakarta.faces.component.visit.VisitCallback;
+import jakarta.faces.component.visit.VisitContext;
+import jakarta.faces.component.visit.VisitResult;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.event.FacesEvent;
+import jakarta.faces.event.PhaseId;
+import jakarta.faces.event.PostValidateEvent;
+import jakarta.faces.event.PreValidateEvent;
+import jakarta.faces.render.Renderer;
 
 import org.primefaces.component.api.UITabPanel;
 import org.primefaces.extensions.event.EventDataWrapper;
@@ -341,7 +341,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
         if (isNested == null) {
             UIComponent parent = this;
             while (null != (parent = parent.getParent())) {
-                if (parent instanceof javax.faces.component.UIData ||
+                if (parent instanceof jakarta.faces.component.UIData ||
                             parent.getClass().getName().endsWith("UIRepeat") ||
                             parent instanceof UITabPanel && ((UITabPanel) parent).isRepeating() ||
                             parent instanceof AbstractDynamicData) {

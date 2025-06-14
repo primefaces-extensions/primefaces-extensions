@@ -24,8 +24,8 @@ package org.primefaces.extensions.component.remotecommand;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import javax.el.MethodExpression;
-import javax.faces.view.facelets.*;
+import jakarta.el.MethodExpression;
+import jakarta.faces.view.facelets.*;
 
 import org.primefaces.extensions.component.parameters.MethodParameter;
 import org.primefaces.extensions.component.parameters.MethodSignatureTagHandler;

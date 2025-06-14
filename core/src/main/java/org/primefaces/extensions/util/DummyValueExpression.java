@@ -21,8 +21,8 @@
  */
 package org.primefaces.extensions.util;
 
-import javax.el.ELContext;
-import javax.el.ValueExpression;
+import jakarta.el.ELContext;
+import jakarta.el.ValueExpression;
 
 /**
  * Dummy {@link ValueExpression} which just provides the type.

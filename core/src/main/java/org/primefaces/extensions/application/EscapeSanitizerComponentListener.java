@@ -21,13 +21,13 @@
  */
 package org.primefaces.extensions.application;
 
-import javax.faces.component.UIComponent;
-import javax.faces.component.html.HtmlBody;
-import javax.faces.component.html.HtmlOutputText;
-import javax.faces.context.FacesContext;
-import javax.faces.event.AbortProcessingException;
-import javax.faces.event.SystemEvent;
-import javax.faces.event.SystemEventListener;
+import jakarta.faces.component.UIComponent;
+import jakarta.faces.component.html.HtmlBody;
+import jakarta.faces.component.html.HtmlOutputText;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.event.AbortProcessingException;
+import jakarta.faces.event.SystemEvent;
+import jakarta.faces.event.SystemEventListener;
 
 import org.primefaces.component.outputlabel.OutputLabel;
 import org.primefaces.extensions.util.HtmlSanitizer;

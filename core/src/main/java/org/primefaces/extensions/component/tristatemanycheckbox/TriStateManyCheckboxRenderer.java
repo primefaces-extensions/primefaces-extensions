@@ -25,15 +25,15 @@ import java.io.IOException;
 import java.util.*;
 import java.util.Map.Entry;
 
-import javax.faces.FacesException;
-import javax.faces.component.UIComponent;
-import javax.faces.component.UIInput;
-import javax.faces.component.UINamingContainer;
-import javax.faces.component.UISelectMany;
-import javax.faces.context.FacesContext;
-import javax.faces.context.ResponseWriter;
-import javax.faces.convert.Converter;
-import javax.faces.model.SelectItem;
+import jakarta.faces.FacesException;
+import jakarta.faces.component.UIComponent;
+import jakarta.faces.component.UIInput;
+import jakarta.faces.component.UINamingContainer;
+import jakarta.faces.component.UISelectMany;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.context.ResponseWriter;
+import jakarta.faces.convert.Converter;
+import jakarta.faces.model.SelectItem;
 
 import org.primefaces.component.selectmanycheckbox.SelectManyCheckbox;
 import org.primefaces.extensions.util.Attrs;
@@ -130,7 +130,7 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
         final ResponseWriter writer = context.getResponseWriter();
         final List<SelectItem> selectItems = getSelectItems(context, checkbox);
         final Converter<Object> converter = checkbox.getConverter();
-        Map<String, Object> values = getValues(checkbox);
+        Map<String, Object> values = (Map<String, Object>) getValues(checkbox);
         final Map<String, Object> submittedMap = getSubmittedFromComp(checkbox);
         final String layout = checkbox.getLayout();
         final boolean pageDirection = layout != null && "pageDirection".equals(layout);
@@ -337,16 +337,14 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
     }
 
     @Override
-    protected Map getValues(final UIComponent component) {
-        final UISelectMany selectMany = (UISelectMany) component;
-        final Object value = selectMany.getValue();
+    protected Object getValues(UISelectMany component) {
+        final Object value = component.getValue();
 
         if (value == null) {
             return null;
         }
         else if (value instanceof Map) {
-            // it should be a Map instance for <ItemStringValue,Value>
-            return (Map) value;
+            return value;
         }
         else {
             throw new FacesException("Value of '" + component.getClientId() + "'must be a Map instance");

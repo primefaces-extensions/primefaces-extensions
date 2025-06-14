@@ -91,18 +91,18 @@
         <project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
         <main.basedir>${project.basedir}</main.basedir>
         <jsf.stage>Development</jsf.stage>
-        <apache-faces.version>2.3.11</apache-faces.version>
+        <apache-faces.version>4.0.3</apache-faces.version>
         <commonmark.version>0.24.0</commonmark.version>
         <commons-collections.version>4.5.0</commons-collections.version>
         <commons-fileupload.version>1.6.0</commons-fileupload.version>
         <commons-io.version>2.19.0</commons-io.version>
         <commons-lang3.version>3.17.0</commons-lang3.version>
         <gson.version>2.13.1</gson.version>
-        <jakarta-faces.version>2.3.21</jakarta-faces.version>
+        <jakarta-faces.version>4.0.11</jakarta-faces.version>
         <libphonenumber.version>9.0.7</libphonenumber.version>
         <morphia.version>2.5.0</morphia.version>
         <junit.version>5.13.1</junit.version>
-        <primefaces.core.version>15.0.5</primefaces.core.version>
+        <primefaces.core.version>16.0.0-SNAPSHOT</primefaces.core.version>
         <primefaces.optimizer.version>2.6.5</primefaces.optimizer.version>
         <withoutCompress>true</withoutCompress>
     </properties>
@@ -146,6 +146,11 @@
                 <version>${commons-lang3.version}</version>
             </dependency>
             <!-- Java API's -->
+			<dependency>
+                <groupId>org.apache.tomee</groupId>
+                <artifactId>jakartaee-api</artifactId>
+                <version>10.0</version>
+            </dependency>
             <dependency>
                 <groupId>org.glassfish</groupId>
                 <artifactId>jakarta.faces</artifactId>
@@ -153,27 +158,9 @@
                 <scope>provided</scope>
             </dependency>
             <dependency>
-                <groupId>javax.el</groupId>
-                <artifactId>el-api</artifactId>
-                <version>2.2</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>javax.annotation</groupId>
-                <artifactId>jsr250-api</artifactId>
-                <version>1.0</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>javax.servlet-api</artifactId>
-                <version>4.0.1</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>jstl</artifactId>
-                <version>1.2</version>
+                <groupId>jakarta.servlet</groupId>
+                <artifactId>jakarta.servlet-api</artifactId>
+                <version>6.0.0</version>
                 <scope>provided</scope>
             </dependency>
             <!-- GSON -->
@@ -461,7 +448,7 @@
                     <configuration>
                         <java>
                             <importOrder>
-                                <order>java,javax,org,com,</order>
+                                <order>java,jakarta,javax,org,com,</order>
                             </importOrder>
                             <eclipse>
                                 <file>${main.basedir}/src/conf/eclipse-pfe-formatter.xml</file>

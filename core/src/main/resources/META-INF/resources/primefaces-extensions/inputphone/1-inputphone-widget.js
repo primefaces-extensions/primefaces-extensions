@@ -156,7 +156,7 @@ PrimeFaces.widget.ExtInputPhone = class extends PrimeFaces.widget.BaseWidget {
      * Sets up support for using the input phone within an overlay dialog.
      * @private
      */
-    setupDialogSupport: function () {
+    setupDialogSupport() {
         const dlg = this.input.closest('.ui-dialog, .ui-sidebar');
         if (dlg) {
             this.cfg.dropdownContainer = dlg;
@@ -166,7 +166,7 @@ PrimeFaces.widget.ExtInputPhone = class extends PrimeFaces.widget.BaseWidget {
                 dialog.find('.iti__dropdown-content').zIndex(PrimeFaces.nextZindex());
             });
         }
-    },
+    }
 
     /**
      * Get the current number in the given format.

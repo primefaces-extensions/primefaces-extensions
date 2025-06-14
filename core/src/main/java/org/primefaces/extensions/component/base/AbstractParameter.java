@@ -21,7 +21,7 @@
  */
 package org.primefaces.extensions.component.base;
 
-import javax.faces.component.UIOutput;
+import jakarta.faces.component.UIOutput;
 
 /**
  * Abstract base class for <b>parameters</b>.

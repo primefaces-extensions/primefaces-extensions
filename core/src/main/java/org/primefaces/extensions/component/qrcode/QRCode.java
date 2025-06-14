@@ -21,8 +21,8 @@
  */
 package org.primefaces.extensions.component.qrcode;
 
-import javax.faces.application.ResourceDependency;
-import javax.faces.component.UIOutput;
+import jakarta.faces.application.ResourceDependency;
+import jakarta.faces.component.UIOutput;
 
 import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.util.Constants;

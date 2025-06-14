@@ -21,7 +21,7 @@
  */
 package org.primefaces.extensions.component.markdowneditor;
 
-import javax.faces.application.ResourceDependency;
+import jakarta.faces.application.ResourceDependency;
 
 import org.primefaces.extensions.component.base.AbstractEditorInputTextArea;
 import org.primefaces.extensions.util.Constants;

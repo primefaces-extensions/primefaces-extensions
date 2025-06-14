@@ -21,8 +21,8 @@
  */
 package org.primefaces.extensions.showcase.controller.masterdetail;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Named;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Named;
 
 import org.primefaces.extensions.component.masterdetail.SelectLevelEvent;
 

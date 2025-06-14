@@ -21,9 +21,9 @@
  */
 package org.primefaces.extensions.application;
 
-import javax.faces.application.Resource;
-import javax.faces.application.ResourceHandler;
-import javax.faces.application.ResourceHandlerWrapper;
+import jakarta.faces.application.Resource;
+import jakarta.faces.application.ResourceHandler;
+import jakarta.faces.application.ResourceHandlerWrapper;
 
 /**
  * A custom ResourceHandler that processes PrimeFaces theme CSS files to support dynamic accent colors. This handler specifically targets the Arya, Saga and

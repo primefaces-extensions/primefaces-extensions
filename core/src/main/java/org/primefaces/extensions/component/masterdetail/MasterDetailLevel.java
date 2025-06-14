@@ -21,7 +21,7 @@
  */
 package org.primefaces.extensions.component.masterdetail;
 
-import javax.faces.component.UIComponentBase;
+import jakarta.faces.component.UIComponentBase;
 
 /**
  * <code>MasterDetailLevel</code> component.

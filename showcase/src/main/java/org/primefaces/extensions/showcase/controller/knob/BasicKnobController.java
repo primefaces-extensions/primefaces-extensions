@@ -23,9 +23,9 @@ package org.primefaces.extensions.showcase.controller.knob;
 
 import java.io.Serializable;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.inject.Named;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
+import jakarta.inject.Named;
 
 @Named
 public class BasicKnobController implements Serializable {

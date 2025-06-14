@@ -24,7 +24,7 @@ package org.primefaces.extensions.showcase.model.dynaform;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.faces.model.SelectItem;
+import jakarta.faces.model.SelectItem;
 
 /**
  * FormField

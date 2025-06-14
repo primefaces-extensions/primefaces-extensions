@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_1.xsd"
-         version="3.1">
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+         version="6.0">
 
     <description>PrimeFaces Extensions Showcase</description>
 
-    <!-- Load custom tag into JSF web application -->
+    <!-- Load custom tag into Faces web application -->
     <context-param>
-        <param-name>javax.faces.FACELETS_LIBRARIES</param-name>
+        <param-name>jakarta.faces.FACELETS_LIBRARIES</param-name>
         <param-value>/WEB-INF/showcase.taglib.xml</param-value>
     </context-param>
 
-    <!-- Context parameters - JSF -->
+    <!-- Context parameters - Faces -->
     <context-param>
-        <param-name>javax.faces.PROJECT_STAGE</param-name>
-        <param-value>${jsf.stage}</param-value>
+        <param-name>jakarta.faces.PROJECT_STAGE</param-name>
+        <param-value>${faces.project.stage}</param-value>
     </context-param>
     <context-param>
-        <param-name>javax.faces.FACELETS_REFRESH_PERIOD</param-name>
+        <param-name>jakarta.faces.FACELETS_REFRESH_PERIOD</param-name>
         <param-value>-1</param-value>
     </context-param>
     <context-param>
-        <param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
+        <param-name>jakarta.faces.FACELETS_SKIP_COMMENTS</param-name>
         <param-value>true</param-value>
     </context-param>
     <context-param>
-        <param-name>javax.faces.VALIDATE_EMPTY_FIELDS</param-name>
+        <param-name>jakarta.faces.VALIDATE_EMPTY_FIELDS</param-name>
         <param-value>true</param-value>
     </context-param>
     <context-param>
-        <param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
+        <param-name>jakarta.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
         <param-value>true</param-value>
     </context-param>
     <context-param>
-        <param-name>javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL</param-name>
+        <param-name>jakarta.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL</param-name>
         <param-value>true</param-value>
     </context-param>
     <context-param>
-        <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+        <param-name>jakarta.faces.STATE_SAVING_METHOD</param-name>
         <param-value>server</param-value>
     </context-param>
 
@@ -140,17 +140,17 @@
         </param-value>
     </context-param>
 
-    <!-- Enable PostConstruct on JSF ManagedBeans on Jetty -->
+    <!-- Enable PostConstruct on Faces ManagedBeans on Jetty -->
     <context-param>
         <param-name>org.apache.myfaces.config.annotation.LifecycleProvider</param-name>
         <param-value>org.apache.myfaces.config.annotation.NoInjectionAnnotationLifecycleProvider</param-value>
     </context-param>
 
     <listener>
-        <listener-class>${cdi-listener}</listener-class>
+        <listener-class>org.primefaces.extensions.showcase.util.NoOpServletContextListener</listener-class>
     </listener>
     <listener>
-        <listener-class>${jsf-listener}</listener-class>
+        <listener-class>org.apache.myfaces.webapp.StartupServletContextListener</listener-class>
     </listener>
 
     <!-- UTF-8 Encoding filter over the default ISO-8859-1. -->
@@ -165,11 +165,11 @@
 
     <!-- Apply GZIP compression on responses whenever applicable -->
     <filter>
-        <filter-name>GzipResponseFilter</filter-name>
-        <filter-class>org.omnifaces.filter.GzipResponseFilter</filter-class>
+        <filter-name>CompressedResponseFilter</filter-name>
+        <filter-class>org.omnifaces.filter.CompressedResponseFilter</filter-class>
     </filter>
     <filter-mapping>
-        <filter-name>GzipResponseFilter</filter-name>
+        <filter-name>CompressedResponseFilter</filter-name>
         <servlet-name>Faces Servlet</servlet-name>
     </filter-mapping>
 
@@ -186,7 +186,7 @@
     <!-- Faces Servlet -->
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
-        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <servlet-class>jakarta.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
@@ -246,7 +246,7 @@
         <location>/views/error/throwable.jsf</location>
     </error-page>
     <error-page>
-        <exception-type>javax.faces.application.ViewExpiredException</exception-type>
+        <exception-type>jakarta.faces.application.ViewExpiredException</exception-type>
         <location>/views/error/viewExpired.jsf</location>
     </error-page>
 </web-app>

@@ -1,9 +1,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:pe="http://primefaces.org/ui/extensions">
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="primefaces"
+      xmlns:pe="primefaces.extensions">
 <ui:composition template="/templates/masterLayout.xhtml">
     <ui:define name="resources-app">
         <ui:include src="/sections/shared/resources-app.xhtml"/>
@@ -35,7 +35,7 @@
                 <p:menuitem value="Functions, Utils" styleClass="#{navigationContext.getMenuitemStyleClass('utils')}"
                             icon="#{technicalInfo.getMenuitemIconStyleClass('utils')}"
                             onclick="Showcase.selectComponentLink(this)" ajax="false" url="#{request.contextPath}/views/utils.jsf"/>
-                <p:separator/>
+                <p:divider/>
                 <p:menuitem value="BlockUI" styleClass="#{navigationContext.getMenuitemStyleClass('blockUI')}"
                             icon="#{technicalInfo.getMenuitemIconStyleClass('blockUI')}"
                             onclick="Showcase.selectComponentLink(this)" ajax="false" url="#{request.contextPath}/views/blockUI.jsf"/>

@@ -26,9 +26,9 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Named;
+import jakarta.annotation.PostConstruct;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Named;
 
 import org.primefaces.extensions.component.gchart.model.GChartModel;
 import org.primefaces.extensions.component.gchart.model.GChartModelBuilder;

@@ -29,11 +29,11 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import javax.faces.FacesException;
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.context.ResponseWriter;
-import javax.faces.convert.Converter;
+import jakarta.faces.FacesException;
+import jakarta.faces.component.UIComponent;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.context.ResponseWriter;
+import jakarta.faces.convert.Converter;
 
 import org.primefaces.component.inputtext.InputText;
 import org.primefaces.extensions.config.PrimeExtensionsEnvironment;

@@ -25,16 +25,16 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import javax.el.ELContext;
-import javax.el.ValueExpression;
-import javax.faces.FacesException;
-import javax.faces.component.UIComponent;
-import javax.faces.component.UIForm;
-import javax.faces.context.FacesContext;
-import javax.faces.context.ResponseWriter;
-import javax.faces.convert.Converter;
-import javax.faces.event.ActionEvent;
-import javax.faces.event.PhaseId;
+import jakarta.el.ELContext;
+import jakarta.el.ValueExpression;
+import jakarta.faces.FacesException;
+import jakarta.faces.component.UIComponent;
+import jakarta.faces.component.UIForm;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.context.ResponseWriter;
+import jakarta.faces.convert.Converter;
+import jakarta.faces.event.ActionEvent;
+import jakarta.faces.event.PhaseId;
 
 import org.primefaces.extensions.component.base.AbstractParameter;
 import org.primefaces.extensions.component.parameters.AssignableParameter;

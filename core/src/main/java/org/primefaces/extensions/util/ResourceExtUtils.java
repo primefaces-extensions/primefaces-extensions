@@ -21,10 +21,10 @@
  */
 package org.primefaces.extensions.util;
 
-import javax.faces.component.UIComponent;
-import javax.faces.component.UIOutput;
-import javax.faces.component.UIViewRoot;
-import javax.faces.context.FacesContext;
+import jakarta.faces.component.UIComponent;
+import jakarta.faces.component.UIOutput;
+import jakarta.faces.component.UIViewRoot;
+import jakarta.faces.context.FacesContext;
 
 import org.primefaces.config.PrimeEnvironment;
 import org.primefaces.context.PrimeApplicationContext;
@@ -61,10 +61,10 @@ import org.primefaces.context.PrimeApplicationContext;
 public class ResourceExtUtils {
 
     /** Renderer type for CSS stylesheet resources in JSF. */
-    public static final String RENDERER_TYPE_CSS = "javax.faces.resource.Stylesheet";
+    public static final String RENDERER_TYPE_CSS = "jakarta.faces.resource.Stylesheet";
 
     /** Renderer type for JavaScript resources in JSF. */
-    public static final String RENDERER_TYPE_JS = "javax.faces.resource.Script";
+    public static final String RENDERER_TYPE_JS = "jakarta.faces.resource.Script";
 
     /** MyFaces specific attribute key for resource dependency unique ID handling. */
     private static final String MYFACES_RESOURCE_DEPENDENCY_UNIQUE_ID = "oam.view.resourceDependencyUniqueId";

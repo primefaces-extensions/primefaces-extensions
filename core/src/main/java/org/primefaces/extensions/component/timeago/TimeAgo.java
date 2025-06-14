@@ -31,9 +31,9 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import javax.faces.application.ResourceDependency;
-import javax.faces.component.UIComponentBase;
-import javax.faces.context.FacesContext;
+import jakarta.faces.application.ResourceDependency;
+import jakarta.faces.component.UIComponentBase;
+import jakarta.faces.context.FacesContext;
 
 import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.util.Constants;

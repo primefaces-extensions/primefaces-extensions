@@ -21,10 +21,10 @@
  */
 package org.primefaces.extensions.application;
 
-import javax.faces.FacesException;
-import javax.faces.context.FacesContext;
-import javax.faces.context.FacesContextFactory;
-import javax.faces.lifecycle.Lifecycle;
+import jakarta.faces.FacesException;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.context.FacesContextFactory;
+import jakarta.faces.lifecycle.Lifecycle;
 
 /**
  * JSF generates all script tags with 'type="text/javascript"' which throws HTML5 validation warnings.

@@ -24,10 +24,10 @@ package org.primefaces.extensions.showcase.webapp;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
-import javax.faces.FacesException;
-import javax.inject.Named;
+import jakarta.annotation.PostConstruct;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.faces.FacesException;
+import jakarta.inject.Named;
 
 import org.primefaces.extensions.showcase.model.system.DocuAttribute;
 import org.primefaces.extensions.showcase.model.system.DocuEvent;

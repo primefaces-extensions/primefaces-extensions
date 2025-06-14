@@ -23,9 +23,9 @@ package org.primefaces.extensions.showcase.controller.osmap;
 
 import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Named;
+import jakarta.annotation.PostConstruct;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Named;
 
 import org.primefaces.model.map.Circle;
 import org.primefaces.model.map.DefaultMapModel;

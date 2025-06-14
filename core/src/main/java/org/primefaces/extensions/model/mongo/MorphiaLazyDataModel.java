@@ -33,8 +33,8 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
 
-import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.convert.Converter;
 
 import org.primefaces.context.PrimeApplicationContext;
 import org.primefaces.model.FilterMeta;

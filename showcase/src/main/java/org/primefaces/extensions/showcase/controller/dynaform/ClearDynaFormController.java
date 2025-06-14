@@ -24,11 +24,11 @@ package org.primefaces.extensions.showcase.controller.dynaform;
 import java.io.*;
 import java.util.*;
 
-import javax.annotation.*;
-import javax.faces.component.visit.*;
-import javax.faces.context.*;
-import javax.faces.view.*;
-import javax.inject.*;
+import jakarta.annotation.*;
+import jakarta.faces.component.visit.*;
+import jakarta.faces.context.*;
+import jakarta.faces.view.*;
+import jakarta.inject.*;
 
 import org.primefaces.extensions.component.dynaform.*;
 import org.primefaces.extensions.model.dynaform.*;

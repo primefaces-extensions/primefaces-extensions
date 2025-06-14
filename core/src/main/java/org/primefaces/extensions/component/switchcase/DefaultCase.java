@@ -21,7 +21,7 @@
  */
 package org.primefaces.extensions.component.switchcase;
 
-import javax.faces.component.UINamingContainer;
+import jakarta.faces.component.UINamingContainer;
 
 /**
  * Component class for the <code>DefaultCase</code> component.

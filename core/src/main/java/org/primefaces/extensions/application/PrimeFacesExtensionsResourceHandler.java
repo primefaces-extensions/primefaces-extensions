@@ -23,9 +23,9 @@ package org.primefaces.extensions.application;
 
 import java.util.Locale;
 
-import javax.faces.application.Resource;
-import javax.faces.application.ResourceHandler;
-import javax.faces.application.ResourceHandlerWrapper;
+import jakarta.faces.application.Resource;
+import jakarta.faces.application.ResourceHandler;
+import jakarta.faces.application.ResourceHandlerWrapper;
 
 /**
  * {@link ResourceHandlerWrapper} which wraps PrimeFaces Extensions resources and appends the version of PrimeFaces Extensions in the

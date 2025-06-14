@@ -1,6 +1,6 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui"
-                xmlns:pe="http://primefaces.org/ui/extensions" xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="jakarta.faces.html"
+                xmlns:ui="jakarta.faces.facelets" xmlns:p="primefaces"
+                xmlns:pe="primefaces.extensions" xmlns:f="jakarta.faces.core">
 
     <p:growl id="growl" showDetail="true" showSummary="true">
         <p:autoUpdate/>
@@ -33,21 +33,21 @@
         <pe:sheetcolumn headerText="Required" value="#{row.hostName}" colWidth="140"
                         required="true" requiredMessage="This field is required!"/>
         <pe:sheetcolumn id="colBigDecimal" headerText="BigDecimal(1-10)" value="#{row.purchasePrice}" colWidth="100" styleClass="htRight">
-            <f:converter converterId="javax.faces.BigDecimal"/>
+            <f:converter converterId="jakarta.faces.BigDecimal"/>
             <f:validateDoubleRange minimum="1.7" maximum="10.5" for="sheet"/>
         </pe:sheetcolumn>
         <pe:sheetcolumn headerText="Integer" value="#{row.value1}" colWidth="100" styleClass="htRight" onvalidate="numeric">
-            <f:converter converterId="javax.faces.Integer"/>
+            <f:converter converterId="jakarta.faces.Integer"/>
         </pe:sheetcolumn>
         <pe:sheetcolumn headerText="Regex" value="#{row.value2}" colWidth="100" styleClass="htRight" onvalidate="myRegex">
-            <f:converter converterId="javax.faces.Integer"/>
+            <f:converter converterId="jakarta.faces.Integer"/>
         </pe:sheetcolumn>
         <pe:sheetcolumn headerText="JS Exactly 6" value="#{row.value3}" colWidth="100" styleClass="htRight" onvalidate="validateEquals6">
-            <f:converter converterId="javax.faces.Integer"/>
+            <f:converter converterId="jakarta.faces.Integer"/>
         </pe:sheetcolumn>
         <pe:sheetcolumn headerText="Faces Exactly 5" value="#{row.value4}" colWidth="100" styleClass="htRight"
                         validator="#{sheetAjaxController.validateExactly5}">
-            <f:converter converterId="javax.faces.Integer"/>
+            <f:converter converterId="jakarta.faces.Integer"/>
         </pe:sheetcolumn>
         <f:facet name="footer">
             <h:outputText value="#{sheetAjaxController.assets.size()} Records"/>

@@ -21,10 +21,10 @@
  */
 package org.primefaces.extensions.util.visitcallback;
 
-import javax.faces.component.UIComponent;
-import javax.faces.component.visit.VisitCallback;
-import javax.faces.component.visit.VisitContext;
-import javax.faces.component.visit.VisitResult;
+import jakarta.faces.component.UIComponent;
+import jakarta.faces.component.visit.VisitCallback;
+import jakarta.faces.component.visit.VisitContext;
+import jakarta.faces.component.visit.VisitResult;
 
 /**
  * Visit callback to call any "task executor" implementing {@link VisitTaskExecutor} while traversing the component tree. It can be used from outside (see the

@@ -25,12 +25,12 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
-import javax.faces.FacesException;
-import javax.faces.application.Resource;
-import javax.faces.component.UIComponent;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.faces.context.ResponseWriter;
+import jakarta.faces.FacesException;
+import jakarta.faces.application.Resource;
+import jakarta.faces.component.UIComponent;
+import jakarta.faces.context.ExternalContext;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.context.ResponseWriter;
 
 import org.primefaces.extensions.model.keynote.KeynoteItem;
 import org.primefaces.extensions.util.Attrs;

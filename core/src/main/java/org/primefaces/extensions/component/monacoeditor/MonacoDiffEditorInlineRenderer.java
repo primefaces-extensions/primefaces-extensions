@@ -23,8 +23,8 @@ package org.primefaces.extensions.component.monacoeditor;
 
 import java.io.IOException;
 
-import javax.faces.context.FacesContext;
-import javax.faces.context.ResponseWriter;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.context.ResponseWriter;
 
 import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.util.WidgetBuilder;

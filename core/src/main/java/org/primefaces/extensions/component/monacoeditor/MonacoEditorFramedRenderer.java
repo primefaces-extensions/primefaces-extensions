@@ -24,8 +24,8 @@ package org.primefaces.extensions.component.monacoeditor;
 import java.io.IOException;
 import java.util.Map;
 
-import javax.faces.context.FacesContext;
-import javax.faces.context.ResponseWriter;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.context.ResponseWriter;
 
 import org.primefaces.shaded.json.JSONWriter;
 import org.primefaces.util.WidgetBuilder;

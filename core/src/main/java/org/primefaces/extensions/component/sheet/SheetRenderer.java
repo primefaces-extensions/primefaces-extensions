@@ -28,14 +28,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.faces.FacesException;
-import javax.faces.component.UIComponent;
-import javax.faces.component.behavior.ClientBehavior;
-import javax.faces.component.behavior.ClientBehaviorContext;
-import javax.faces.component.behavior.ClientBehaviorHolder;
-import javax.faces.context.FacesContext;
-import javax.faces.context.ResponseWriter;
-import javax.faces.model.SelectItem;
+import jakarta.faces.FacesException;
+import jakarta.faces.component.UIComponent;
+import jakarta.faces.component.behavior.ClientBehavior;
+import jakarta.faces.component.behavior.ClientBehaviorContext;
+import jakarta.faces.component.behavior.ClientBehaviorHolder;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.context.ResponseWriter;
+import jakarta.faces.model.SelectItem;
 
 import org.primefaces.behavior.ajax.AjaxBehavior;
 import org.primefaces.extensions.util.Attrs;
@@ -838,7 +838,7 @@ public class SheetRenderer extends CoreRenderer {
 
         // get the parameter map and the behaviorEvent fired
         final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-        final String behaviorEvent = params.get("javax.faces.behavior.event");
+        final String behaviorEvent = params.get("jakarta.faces.behavior.event");
 
         // if no event, done
         if (behaviorEvent == null) {
@@ -852,7 +852,7 @@ public class SheetRenderer extends CoreRenderer {
         }
 
         // decode event if we are the source
-        final String behaviorSource = params.get("javax.faces.source");
+        final String behaviorSource = params.get("jakarta.faces.source");
         final String clientId = component.getClientId();
         if (clientId.equals(behaviorSource)) {
             for (final ClientBehavior behavior : behaviorsForEvent) {

@@ -79,7 +79,7 @@ PrimeFaces.widget.ExtTimePicker = class extends PrimeFaces.widget.BaseWidget {
         this.originalValue = this.jq.val();
     }
 
-    setupPeriod: function() {
+    setupPeriod() {
         if (this.cfg.showPeriod) {
             this.amHours = {};
             this.pmHours = {};
@@ -134,7 +134,7 @@ PrimeFaces.widget.ExtTimePicker = class extends PrimeFaces.widget.BaseWidget {
                 }
             }
         }
-    },
+    }
 
     /**
      * Sets up the event listeners that only need to be set up once.

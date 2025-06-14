@@ -23,16 +23,16 @@ package org.primefaces.extensions.component.masterdetail;
 
 import java.util.Map;
 
-import javax.el.MethodExpression;
-import javax.el.ValueExpression;
-import javax.faces.FacesException;
-import javax.faces.application.ResourceDependency;
-import javax.faces.component.UIComponent;
-import javax.faces.component.UIComponentBase;
-import javax.faces.context.FacesContext;
-import javax.faces.context.PartialViewContext;
-import javax.faces.event.ComponentSystemEvent;
-import javax.faces.event.PostRestoreStateEvent;
+import jakarta.el.MethodExpression;
+import jakarta.el.ValueExpression;
+import jakarta.faces.FacesException;
+import jakarta.faces.application.ResourceDependency;
+import jakarta.faces.component.UIComponent;
+import jakarta.faces.component.UIComponentBase;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.context.PartialViewContext;
+import jakarta.faces.event.ComponentSystemEvent;
+import jakarta.faces.event.PostRestoreStateEvent;
 
 import org.primefaces.component.breadcrumb.BreadCrumb;
 import org.primefaces.model.menu.DefaultMenuItem;

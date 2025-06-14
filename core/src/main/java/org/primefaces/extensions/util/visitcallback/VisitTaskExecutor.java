@@ -21,8 +21,8 @@
  */
 package org.primefaces.extensions.util.visitcallback;
 
-import javax.faces.component.UIComponent;
-import javax.faces.component.visit.VisitResult;
+import jakarta.faces.component.UIComponent;
+import jakarta.faces.component.visit.VisitResult;
 
 /**
  * Interface for all executor classes which are called by visit callbacks. It can be used from outside (see the showcase).

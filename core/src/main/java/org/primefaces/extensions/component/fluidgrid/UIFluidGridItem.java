@@ -21,7 +21,7 @@
  */
 package org.primefaces.extensions.component.fluidgrid;
 
-import javax.faces.component.UIComponentBase;
+import jakarta.faces.component.UIComponentBase;
 
 import org.primefaces.extensions.model.fluidgrid.FluidGridItem;
 

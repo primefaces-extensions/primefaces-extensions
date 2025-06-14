@@ -21,9 +21,9 @@
  */
 package org.primefaces.extensions.behavior.javascript;
 
-import javax.faces.view.BehaviorHolderAttachedObjectHandler;
-import javax.faces.view.facelets.BehaviorConfig;
-import javax.faces.view.facelets.TagHandler;
+import jakarta.faces.view.BehaviorHolderAttachedObjectHandler;
+import jakarta.faces.view.facelets.BehaviorConfig;
+import jakarta.faces.view.facelets.TagHandler;
 
 import org.primefaces.behavior.base.AbstractBehaviorHandler;
 
