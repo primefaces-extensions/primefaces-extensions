@@ -21,8 +21,8 @@
  */
 package org.primefaces.extensions.component.fuzzysearch;
 
-import javax.faces.component.UISelectOne;
-import javax.faces.component.behavior.ClientBehaviorHolder;
+import jakarta.faces.component.UISelectOne;
+import jakarta.faces.component.behavior.ClientBehaviorHolder;
 
 import org.primefaces.component.api.PrimeClientBehaviorHolder;
 import org.primefaces.component.api.Widget;

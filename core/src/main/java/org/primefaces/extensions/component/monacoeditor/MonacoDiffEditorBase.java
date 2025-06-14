@@ -24,9 +24,9 @@ package org.primefaces.extensions.component.monacoeditor;
 import java.util.Collection;
 import java.util.Map;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.faces.event.BehaviorEvent;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.event.BehaviorEvent;
 
 import org.primefaces.util.MapBuilder;
 import org.primefaces.util.MessageFactory;

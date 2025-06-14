@@ -35,17 +35,17 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import javax.el.ELContext;
-import javax.el.ValueExpression;
-import javax.faces.FacesException;
-import javax.faces.application.FacesMessage;
-import javax.faces.application.ResourceDependency;
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
-import javax.faces.convert.ConverterException;
-import javax.faces.event.AjaxBehaviorEvent;
-import javax.faces.event.FacesEvent;
+import jakarta.el.ELContext;
+import jakarta.el.ValueExpression;
+import jakarta.faces.FacesException;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.application.ResourceDependency;
+import jakarta.faces.component.UIComponent;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.convert.Converter;
+import jakarta.faces.convert.ConverterException;
+import jakarta.faces.event.AjaxBehaviorEvent;
+import jakarta.faces.event.FacesEvent;
 
 import org.primefaces.PrimeFaces;
 import org.primefaces.extensions.event.SheetEvent;
@@ -375,7 +375,7 @@ public class Sheet extends SheetBase {
         }
 
         final SheetColumn column = getColumns().get(col);
-        final Converter<Object> converter = ComponentUtils.getConverter(context, column);
+        final Converter converter = ComponentUtils.getConverter(context, column);
         if (converter == null) {
             return value.toString();
         }
@@ -689,7 +689,7 @@ public class Sheet extends SheetBase {
 
             // attempt to convert new value from string to correct object type
             // based on column converter. Use PF util as helper
-            final Converter<Object> converter = ComponentUtils.getConverter(context, column);
+            final Converter<?> converter = ComponentUtils.getConverter(context, column);
 
             // assume string value if converter not found
             Object newValueObj = newValue;

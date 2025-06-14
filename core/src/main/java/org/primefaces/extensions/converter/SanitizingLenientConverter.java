@@ -21,7 +21,7 @@
  */
 package org.primefaces.extensions.converter;
 
-import javax.faces.convert.FacesConverter;
+import jakarta.faces.convert.FacesConverter;
 
 import org.owasp.html.PolicyFactory;
 import org.primefaces.extensions.util.HtmlSanitizer;

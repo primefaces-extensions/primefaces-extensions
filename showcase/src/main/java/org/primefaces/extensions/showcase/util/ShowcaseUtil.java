@@ -23,7 +23,7 @@ package org.primefaces.extensions.showcase.util;
 
 import java.io.InputStream;
 
-import javax.faces.context.FacesContext;
+import jakarta.faces.context.FacesContext;
 
 import org.apache.commons.lang3.StringUtils;
 

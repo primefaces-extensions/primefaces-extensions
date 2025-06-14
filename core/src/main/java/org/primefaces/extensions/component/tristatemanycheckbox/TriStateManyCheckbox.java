@@ -25,13 +25,13 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.application.ResourceDependency;
-import javax.faces.component.UISelectMany;
-import javax.faces.component.html.HtmlSelectManyCheckbox;
-import javax.faces.context.FacesContext;
-import javax.faces.validator.Validator;
-import javax.faces.validator.ValidatorException;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.application.ResourceDependency;
+import jakarta.faces.component.UISelectMany;
+import jakarta.faces.component.html.HtmlSelectManyCheckbox;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.validator.Validator;
+import jakarta.faces.validator.ValidatorException;
 
 import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.util.MessageFactory;

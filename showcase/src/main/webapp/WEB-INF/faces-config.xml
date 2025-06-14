@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
-<faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+<faces-config xmlns="https://jakarta.ee/xml/ns/jakartaee"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
-              version="2.2">
+              xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-facesconfig_4_0.xsd"
+              version="4.0">
 
     <name>showcase</name>
 
@@ -21,8 +21,8 @@
         <resource-handler>org.omnifaces.resourcehandler.CDNResourceHandler</resource-handler>
         <system-event-listener>
             <system-event-listener-class>org.primefaces.extensions.application.PrimeFacesScriptProcessor</system-event-listener-class>
-            <system-event-class>javax.faces.event.PostAddToViewEvent</system-event-class>
-            <source-class>javax.faces.component.UIViewRoot</source-class>
+            <system-event-class>jakarta.faces.event.PostAddToViewEvent</system-event-class>
+            <source-class>jakarta.faces.component.UIViewRoot</source-class>
         </system-event-listener>
     </application>
 
@@ -42,8 +42,8 @@
 
     <render-kit>
         <renderer>
-            <component-family>javax.faces.Output</component-family>
-            <renderer-type>javax.faces.Head</renderer-type>
+            <component-family>jakarta.faces.Output</component-family>
+            <renderer-type>jakarta.faces.Head</renderer-type>
             <renderer-class>org.apache.myfaces.renderkit.html.HtmlHeadRenderer</renderer-class>
         </renderer>
     </render-kit>

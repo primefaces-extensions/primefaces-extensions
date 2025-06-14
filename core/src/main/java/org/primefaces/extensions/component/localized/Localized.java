@@ -23,8 +23,8 @@ package org.primefaces.extensions.component.localized;
 
 import java.util.Locale;
 
-import javax.faces.component.UIComponentBase;
-import javax.faces.context.FacesContext;
+import jakarta.faces.component.UIComponentBase;
+import jakarta.faces.context.FacesContext;
 
 import org.primefaces.util.LocaleUtils;
 

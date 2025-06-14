@@ -27,17 +27,17 @@ import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.faces.FacesException;
-import javax.faces.application.ProjectStage;
-import javax.faces.component.UIViewRoot;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.faces.event.AbortProcessingException;
-import javax.faces.event.SystemEvent;
-import javax.faces.event.SystemEventListener;
-import javax.faces.lifecycle.ClientWindow;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.faces.FacesException;
+import jakarta.faces.application.ProjectStage;
+import jakarta.faces.component.UIViewRoot;
+import jakarta.faces.context.ExternalContext;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.event.AbortProcessingException;
+import jakarta.faces.event.SystemEvent;
+import jakarta.faces.event.SystemEventListener;
+import jakarta.faces.lifecycle.ClientWindow;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.primefaces.clientwindow.PrimeClientWindow;
 import org.primefaces.clientwindow.PrimeClientWindowUtils;
@@ -53,7 +53,7 @@ import org.primefaces.util.LocaleUtils;
  * PrimeFaces components have been processed. This is thus an ideal moment to add the PrimeFaces.settings script as a component resource, as intended by
  * PrimeFaces. This listener handles:
  * <ul>
- * <li>Adding validation resources (moment.js, validation.bv.js)</li>
+ * <li>Adding validation resources (moment.js)</li>
  * <li>Adding locale resources for client-side localization (locale-xx.js)</li>
  * <li>Encoding PrimeFaces settings (locale, viewId, contextPath, etc)</li>
  * <li>Encoding initialization scripts</li>
@@ -137,11 +137,6 @@ public class PrimeFacesScriptProcessor implements SystemEventListener {
         if (configuration.isClientSideValidationEnabled()) {
             // moment is needed for Date validation
             ResourceExtUtils.addJavascriptResource(context, Constants.LIBRARY, "moment/moment.js");
-
-            // BV CSV is optional and must be enabled by config
-            if (configuration.isBeanValidationEnabled()) {
-                ResourceExtUtils.addJavascriptResource(context, Constants.LIBRARY, "validation/validation.bv.js");
-            }
         }
     }
 

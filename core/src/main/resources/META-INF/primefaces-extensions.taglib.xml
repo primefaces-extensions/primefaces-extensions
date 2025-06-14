@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<facelet-taglib xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+<facelet-taglib xmlns="https://jakarta.ee/xml/ns/jakartaee"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facelettaglibrary_2_3.xsd"
-    version="2.3">
+    xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-facelettaglibrary_4_0.xsd"
+    version="4.0">
 
     <description>PrimeFaces Extensions UI components.</description>
     <namespace>http://primefaces.org/ui/extensions</namespace>
@@ -157,7 +157,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -252,16 +252,16 @@
         <description>
             <![CDATA[A JSF component that wraps the JavaScript libary <a href="https://microsoft.github.io/monaco-editor/">Monaco Editor</a>.
             This component renders the editor directly into the host page without an iframe. Available client behavior events: <ul>
-            <li>blur - fired when the editor loses focus (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onDidBlurEditorWidget">IStandaloneCodeEditor#onDidBlurEditorWidget</a>.</li>
-            <li>change - fired if the content has been changed (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidchangemodelcontent">IStandaloneCodeEditor#onDidChangeModelContent</a>.</li>
-            <li>focus - fired when the editor gets focus (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidfocuseditorwidget">IStandaloneCodeEditor#onDidFocusEditorWidget</a>.</li>,
-            <li>initialized - fired when the editor has become ready (javax.faces.event.AjaxBehaviorEvent). That is, after required resources have been downloaded and the editor was fully created and can now be interacted with by the user.</li>
-            <li>keydown - fired when a key was pressed down on the editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onkeydown">IStandaloneCodeEditor#onKeyDown</a>.</li>,
-            <li>keyup - fired when a key was released on the editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onkeyup">IStandaloneCodeEditor#onKeyUp</a>.</li>,
-            <li>mousedown - fired when a mouse button was pressed down on the editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmousedown">IStandaloneCodeEditor#onMouseDown</a>.</li>,
-            <li>mousemove - fired when the mouse was moved over the editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmousemove">IStandaloneCodeEditor#onMouseMove</a>.</li>,
-            <li>mouseup - fired when a mouse button was released down on the editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmouseup">IStandaloneCodeEditor#onMouseUp</a>.</li>,
-            <li>paste - fired when the text was pasted into the editor (javax.faces.event.AjaxBehaviorEvent),</li>,
+            <li>blur - fired when the editor loses focus (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onDidBlurEditorWidget">IStandaloneCodeEditor#onDidBlurEditorWidget</a>.</li>
+            <li>change - fired if the content has been changed (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidchangemodelcontent">IStandaloneCodeEditor#onDidChangeModelContent</a>.</li>
+            <li>focus - fired when the editor gets focus (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidfocuseditorwidget">IStandaloneCodeEditor#onDidFocusEditorWidget</a>.</li>,
+            <li>initialized - fired when the editor has become ready (jakarta.faces.event.AjaxBehaviorEvent). That is, after required resources have been downloaded and the editor was fully created and can now be interacted with by the user.</li>
+            <li>keydown - fired when a key was pressed down on the editor (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onkeydown">IStandaloneCodeEditor#onKeyDown</a>.</li>,
+            <li>keyup - fired when a key was released on the editor (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onkeyup">IStandaloneCodeEditor#onKeyUp</a>.</li>,
+            <li>mousedown - fired when a mouse button was pressed down on the editor (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmousedown">IStandaloneCodeEditor#onMouseDown</a>.</li>,
+            <li>mousemove - fired when the mouse was moved over the editor (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmousemove">IStandaloneCodeEditor#onMouseMove</a>.</li>,
+            <li>mouseup - fired when a mouse button was released down on the editor (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmouseup">IStandaloneCodeEditor#onMouseUp</a>.</li>,
+            <li>paste - fired when the text was pasted into the editor (jakarta.faces.event.AjaxBehaviorEvent),</li>,
             </ul>]]>
         </description>
         <tag-name>monacoEditor</tag-name>
@@ -308,7 +308,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -369,7 +369,7 @@
             </description>
             <name>converter</name>
             <required>false</required>
-            <type>javax.faces.convert.Converter</type>
+            <type>jakarta.faces.convert.Converter</type>
         </attribute>
         <attribute>
             <description>
@@ -409,7 +409,7 @@
             </description>
             <name>validator</name>
             <required>false</required>
-            <type>javax.faces.validator.Validator</type>
+            <type>jakarta.faces.validator.Validator</type>
         </attribute>
         <attribute>
             <description>
@@ -661,16 +661,16 @@
             in the iframe -- the method parameters are sent via <code>postMessage</code>. Note, however, that this does not work for methods
             that takes a non-data object as a parameter or return such an object (i.e. an object that cannot be structurally cloned). Available
             client behavior events: <ul>
-            <li>blur - fired when the editor loses focus (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidblureditorwidget">IStandaloneCodeEditor#onDidBlurEditorWidget</a>.</li>
-            <li>change - fired if the content has been changed (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidchangemodelcontent">IStandaloneCodeEditor#onDidChangeModelContent</a>.</li>
-            <li>focus - fired when the editor gets focus (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidfocuseditorwidget">IStandaloneCodeEditor#onDidFocusEditorWidget</a>.</li>,
-            <li>initialized - fired when the editor has become ready (javax.faces.event.AjaxBehaviorEvent). That is, after required resources have been downloaded and the editor was fully created and can now be interacted with by the user.</li>
-            <li>keydown - fired when a key was pressed down on the editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onkeydown">IStandaloneCodeEditor#onKeyDown</a>.</li>,
-            <li>keyup - fired when a key was released on the editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onkeyup">IStandaloneCodeEditor#onKeyUp</a>.</li>,
-            <li>mousedown - fired when a mouse button was pressed down on the editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmousedown">IStandaloneCodeEditor#onMouseDown</a>.</li>,
-            <li>mousemove - fired when the mouse was moved over the editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmousemove">IStandaloneCodeEditor#onMouseMove</a>.</li>,
-            <li>mouseup - fired when a mouse button was released down on the editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmouseup">IStandaloneCodeEditor#onMouseUp</a>.</li>,
-            <li>paste - fired when the text was pasted into the editor (javax.faces.event.AjaxBehaviorEvent),</li>,
+            <li>blur - fired when the editor loses focus (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidblureditorwidget">IStandaloneCodeEditor#onDidBlurEditorWidget</a>.</li>
+            <li>change - fired if the content has been changed (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidchangemodelcontent">IStandaloneCodeEditor#onDidChangeModelContent</a>.</li>
+            <li>focus - fired when the editor gets focus (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidfocuseditorwidget">IStandaloneCodeEditor#onDidFocusEditorWidget</a>.</li>,
+            <li>initialized - fired when the editor has become ready (jakarta.faces.event.AjaxBehaviorEvent). That is, after required resources have been downloaded and the editor was fully created and can now be interacted with by the user.</li>
+            <li>keydown - fired when a key was pressed down on the editor (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onkeydown">IStandaloneCodeEditor#onKeyDown</a>.</li>,
+            <li>keyup - fired when a key was released on the editor (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onkeyup">IStandaloneCodeEditor#onKeyUp</a>.</li>,
+            <li>mousedown - fired when a mouse button was pressed down on the editor (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmousedown">IStandaloneCodeEditor#onMouseDown</a>.</li>,
+            <li>mousemove - fired when the mouse was moved over the editor (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmousemove">IStandaloneCodeEditor#onMouseMove</a>.</li>,
+            <li>mouseup - fired when a mouse button was released down on the editor (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmouseup">IStandaloneCodeEditor#onMouseUp</a>.</li>,
+            <li>paste - fired when the text was pasted into the editor (jakarta.faces.event.AjaxBehaviorEvent),</li>,
             </ul>]]>
         </description>
         <tag-name>monacoEditorFramed</tag-name>
@@ -717,7 +717,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -778,7 +778,7 @@
             </description>
             <name>converter</name>
             <required>false</required>
-            <type>javax.faces.convert.Converter</type>
+            <type>jakarta.faces.convert.Converter</type>
         </attribute>
         <attribute>
             <description>
@@ -818,7 +818,7 @@
             </description>
             <name>validator</name>
             <required>false</required>
-            <type>javax.faces.validator.Validator</type>
+            <type>jakarta.faces.validator.Validator</type>
         </attribute>
         <attribute>
             <description>
@@ -1071,25 +1071,25 @@
         <description>
             <![CDATA[A JSF component that wraps the JavaScript libary <a href="https://microsoft.github.io/monaco-editor/">Monaco Editor</a>.
             This component renders the diff editor directly into the host page without an iframe. Available client behavior events: <ul>
-            <li>initialized - fired when the editor has become ready (javax.faces.event.AjaxBehaviorEvent). That is, after required resources have been downloaded and the editor was fully created and can now be interacted with by the user.</li>
-            <li>originalBlur - fired when the original editor loses focus (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidblureditorwidget">IStandaloneCodeEditor#onDidBlurEditorWidget</a>.</li>
-            <li>originalChange - fired if the content of the original editor has been changed (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidchangemodelcontent">IStandaloneCodeEditor#onDidChangeModelContent</a>.</li>
-            <li>originalFocus - fired when the original editor gets focus (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidfocuseditorwidget">IStandaloneCodeEditor#onDidFocusEditorWidget</a>.</li>,
-            <li>originalKeydown - fired when a key was pressed down on the original editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onkeydown">IStandaloneCodeEditor#onKeyDown</a>.</li>,
-            <li>originalKeyup - fired when a key was released on the original editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onkeyup">IStandaloneCodeEditor#onKeyUp</a>.</li>,
-            <li>originalMousedown - fired when a mouse button was pressed down on the original editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmousedown">IStandaloneCodeEditor#onMouseDown</a>.</li>,
-            <li>originalMousemove - fired when the mouse was moved over the original editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmousemove">IStandaloneCodeEditor#onMouseMove</a>.</li>,
-            <li>originalMouseup - fired when a mouse button was released down on the original editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmouseup">IStandaloneCodeEditor#onMouseUp</a>.</li>,
-            <li>originalPaste - fired when the text was pasted into the original editor (javax.faces.event.AjaxBehaviorEvent),</li>,
-            <li>blur - fired when the modified editor loses focus (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidblureditorwidget">IStandaloneCodeEditor#onDidBlurEditorWidget</a>.</li>
-            <li>change - fired if the content of the modified editor has been changed (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidchangemodelcontent">IStandaloneCodeEditor#onDidChangeModelContent</a>.</li>
-            <li>focus - fired when the modified editor gets focus (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidfocuseditorwidget">IStandaloneCodeEditor#onDidFocusEditorWidget</a>.</li>,
-            <li>keydown - fired when a key was pressed down on the modified editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onkeydown">IStandaloneCodeEditor#onKeyDown</a>.</li>,
-            <li>keyup - fired when a key was released on the modified editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onkeyup">IStandaloneCodeEditor#onKeyUp</a>.</li>,
-            <li>mousedown - fired when a mouse button was pressed down on the modified editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmousedown">IStandaloneCodeEditor#onMouseDown</a>.</li>,
-            <li>mousemove - fired when the mouse was moved over the modified editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmousemove">IStandaloneCodeEditor#onMouseMove</a>.</li>,
-            <li>mouseup - fired when a mouse button was released down on the modified editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmouseup">IStandaloneCodeEditor#onMouseUp</a>.</li>,
-            <li>paste - fired when the text was pasted into the modified editor (javax.faces.event.AjaxBehaviorEvent),</li>,
+            <li>initialized - fired when the editor has become ready (jakarta.faces.event.AjaxBehaviorEvent). That is, after required resources have been downloaded and the editor was fully created and can now be interacted with by the user.</li>
+            <li>originalBlur - fired when the original editor loses focus (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidblureditorwidget">IStandaloneCodeEditor#onDidBlurEditorWidget</a>.</li>
+            <li>originalChange - fired if the content of the original editor has been changed (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidchangemodelcontent">IStandaloneCodeEditor#onDidChangeModelContent</a>.</li>
+            <li>originalFocus - fired when the original editor gets focus (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidfocuseditorwidget">IStandaloneCodeEditor#onDidFocusEditorWidget</a>.</li>,
+            <li>originalKeydown - fired when a key was pressed down on the original editor (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onkeydown">IStandaloneCodeEditor#onKeyDown</a>.</li>,
+            <li>originalKeyup - fired when a key was released on the original editor (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onkeyup">IStandaloneCodeEditor#onKeyUp</a>.</li>,
+            <li>originalMousedown - fired when a mouse button was pressed down on the original editor (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmousedown">IStandaloneCodeEditor#onMouseDown</a>.</li>,
+            <li>originalMousemove - fired when the mouse was moved over the original editor (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmousemove">IStandaloneCodeEditor#onMouseMove</a>.</li>,
+            <li>originalMouseup - fired when a mouse button was released down on the original editor (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmouseup">IStandaloneCodeEditor#onMouseUp</a>.</li>,
+            <li>originalPaste - fired when the text was pasted into the original editor (jakarta.faces.event.AjaxBehaviorEvent),</li>,
+            <li>blur - fired when the modified editor loses focus (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidblureditorwidget">IStandaloneCodeEditor#onDidBlurEditorWidget</a>.</li>
+            <li>change - fired if the content of the modified editor has been changed (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidchangemodelcontent">IStandaloneCodeEditor#onDidChangeModelContent</a>.</li>
+            <li>focus - fired when the modified editor gets focus (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidfocuseditorwidget">IStandaloneCodeEditor#onDidFocusEditorWidget</a>.</li>,
+            <li>keydown - fired when a key was pressed down on the modified editor (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onkeydown">IStandaloneCodeEditor#onKeyDown</a>.</li>,
+            <li>keyup - fired when a key was released on the modified editor (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onkeyup">IStandaloneCodeEditor#onKeyUp</a>.</li>,
+            <li>mousedown - fired when a mouse button was pressed down on the modified editor (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmousedown">IStandaloneCodeEditor#onMouseDown</a>.</li>,
+            <li>mousemove - fired when the mouse was moved over the modified editor (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmousemove">IStandaloneCodeEditor#onMouseMove</a>.</li>,
+            <li>mouseup - fired when a mouse button was released down on the modified editor (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmouseup">IStandaloneCodeEditor#onMouseUp</a>.</li>,
+            <li>paste - fired when the text was pasted into the modified editor (jakarta.faces.event.AjaxBehaviorEvent),</li>,
             </ul>]]>
         </description>
         <tag-name>monacoDiffEditor</tag-name>
@@ -1136,7 +1136,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -1217,7 +1217,7 @@
             </description>
             <name>converter</name>
             <required>false</required>
-            <type>javax.faces.convert.Converter</type>
+            <type>jakarta.faces.convert.Converter</type>
         </attribute>
         <attribute>
             <description>
@@ -1265,7 +1265,7 @@
             </description>
             <name>validator</name>
             <required>false</required>
-            <type>javax.faces.validator.Validator</type>
+            <type>jakarta.faces.validator.Validator</type>
         </attribute>
         <attribute>
             <description>
@@ -1651,25 +1651,25 @@
             in the iframe -- the method parameters are sent via <code>postMessage</code>. Note, however, that this does not work for methods
             that takes a non-data object as a parameter or return such an object (i.e. an object that cannot be structurally cloned). Available
             client behavior events: <ul>
-            <li>initialized - fired when the editor has become ready (javax.faces.event.AjaxBehaviorEvent). That is, after required resources have been downloaded and the editor was fully created and can now be interacted with by the user.</li>
-            <li>originalBlur - fired when the original editor loses focus (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidblureditorwidget">IStandaloneCodeEditor#onDidBlurEditorWidget</a>.</li>
-            <li>originalChange - fired if the content of the original editor has been changed (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidchangemodelcontent">IStandaloneCodeEditor#onDidChangeModelContent</a>.</li>
-            <li>originalFocus - fired when the original editor gets focus (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidfocuseditorwidget">IStandaloneCodeEditor#onDidFocusEditorWidget</a>.</li>,
-            <li>originalKeydown - fired when a key was pressed down on the original editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onkeydown">IStandaloneCodeEditor#onKeyDown</a>.</li>,
-            <li>originalKeyup - fired when a key was released on the original editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onkeyup">IStandaloneCodeEditor#onKeyUp</a>.</li>,
-            <li>originalMousedown - fired when a mouse button was pressed down on the original editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmousedown">IStandaloneCodeEditor#onMouseDown</a>.</li>,
-            <li>originalMousemove - fired when the mouse was moved over the original editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmousemove">IStandaloneCodeEditor#onMouseMove</a>.</li>,
-            <li>originalMouseup - fired when a mouse button was released down on the original editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmouseup">IStandaloneCodeEditor#onMouseUp</a>.</li>,
-            <li>originalPaste - fired when the text was pasted into the original editor (javax.faces.event.AjaxBehaviorEvent),</li>,
-            <li>blur - fired when the modified editor loses focus (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidblureditorwidget">IStandaloneCodeEditor#onDidBlurEditorWidget</a>.</li>
-            <li>change - fired if the content of the modified editor has been changed (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidchangemodelcontent">IStandaloneCodeEditor#onDidChangeModelContent</a>.</li>
-            <li>focus - fired when the modified editor gets focus (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidfocuseditorwidget">IStandaloneCodeEditor#onDidFocusEditorWidget</a>.</li>,
-            <li>keydown - fired when a key was pressed down on the modified editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onkeydown">IStandaloneCodeEditor#onKeyDown</a>.</li>,
-            <li>keyup - fired when a key was released on the modified editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onkeyup">IStandaloneCodeEditor#onKeyUp</a>.</li>,
-            <li>mousedown - fired when a mouse button was pressed down on the modified editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmousedown">IStandaloneCodeEditor#onMouseDown</a>.</li>,
-            <li>mousemove - fired when the mouse was moved over the modified editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmousemove">IStandaloneCodeEditor#onMouseMove</a>.</li>,
-            <li>mouseup - fired when a mouse button was released down on the modified editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmouseup">IStandaloneCodeEditor#onMouseUp</a>.</li>,
-            <li>paste - fired when the text was pasted into the modified editor (javax.faces.event.AjaxBehaviorEvent),</li>,
+            <li>initialized - fired when the editor has become ready (jakarta.faces.event.AjaxBehaviorEvent). That is, after required resources have been downloaded and the editor was fully created and can now be interacted with by the user.</li>
+            <li>originalBlur - fired when the original editor loses focus (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidblureditorwidget">IStandaloneCodeEditor#onDidBlurEditorWidget</a>.</li>
+            <li>originalChange - fired if the content of the original editor has been changed (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidchangemodelcontent">IStandaloneCodeEditor#onDidChangeModelContent</a>.</li>
+            <li>originalFocus - fired when the original editor gets focus (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidfocuseditorwidget">IStandaloneCodeEditor#onDidFocusEditorWidget</a>.</li>,
+            <li>originalKeydown - fired when a key was pressed down on the original editor (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onkeydown">IStandaloneCodeEditor#onKeyDown</a>.</li>,
+            <li>originalKeyup - fired when a key was released on the original editor (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onkeyup">IStandaloneCodeEditor#onKeyUp</a>.</li>,
+            <li>originalMousedown - fired when a mouse button was pressed down on the original editor (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmousedown">IStandaloneCodeEditor#onMouseDown</a>.</li>,
+            <li>originalMousemove - fired when the mouse was moved over the original editor (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmousemove">IStandaloneCodeEditor#onMouseMove</a>.</li>,
+            <li>originalMouseup - fired when a mouse button was released down on the original editor (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmouseup">IStandaloneCodeEditor#onMouseUp</a>.</li>,
+            <li>originalPaste - fired when the text was pasted into the original editor (jakarta.faces.event.AjaxBehaviorEvent),</li>,
+            <li>blur - fired when the modified editor loses focus (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidblureditorwidget">IStandaloneCodeEditor#onDidBlurEditorWidget</a>.</li>
+            <li>change - fired if the content of the modified editor has been changed (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidchangemodelcontent">IStandaloneCodeEditor#onDidChangeModelContent</a>.</li>
+            <li>focus - fired when the modified editor gets focus (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidfocuseditorwidget">IStandaloneCodeEditor#onDidFocusEditorWidget</a>.</li>,
+            <li>keydown - fired when a key was pressed down on the modified editor (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onkeydown">IStandaloneCodeEditor#onKeyDown</a>.</li>,
+            <li>keyup - fired when a key was released on the modified editor (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onkeyup">IStandaloneCodeEditor#onKeyUp</a>.</li>,
+            <li>mousedown - fired when a mouse button was pressed down on the modified editor (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmousedown">IStandaloneCodeEditor#onMouseDown</a>.</li>,
+            <li>mousemove - fired when the mouse was moved over the modified editor (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmousemove">IStandaloneCodeEditor#onMouseMove</a>.</li>,
+            <li>mouseup - fired when a mouse button was released down on the modified editor (jakarta.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmouseup">IStandaloneCodeEditor#onMouseUp</a>.</li>,
+            <li>paste - fired when the text was pasted into the modified editor (jakarta.faces.event.AjaxBehaviorEvent),</li>,
             </ul>]]>
         </description>
         <tag-name>monacoDiffEditorFramed</tag-name>
@@ -1716,7 +1716,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -1797,7 +1797,7 @@
             </description>
             <name>converter</name>
             <required>false</required>
-            <type>javax.faces.convert.Converter</type>
+            <type>jakarta.faces.convert.Converter</type>
         </attribute>
         <attribute>
             <description>
@@ -1853,7 +1853,7 @@
             </description>
             <name>validator</name>
             <required>false</required>
-            <type>javax.faces.validator.Validator</type>
+            <type>jakarta.faces.validator.Validator</type>
         </attribute>
         <attribute>
             <description>
@@ -2267,7 +2267,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -2328,7 +2328,7 @@
     </tag>
     <tag>
         <description>
-            <![CDATA[NOTICE: You must also include the org.primefaces.extensions.resources-codemirror:*.jar artifact. Client behavior events: change - fired every time the content of the editor is changed (javax.faces.event.AjaxBehaviorEvent), highlightComplete - fired whenever the editor's content has been fully highlighted (javax.faces.event.AjaxBehaviorEvent), focus - fired when the editor gets focus (javax.faces.event.AjaxBehaviorEvent), blur - fired when the editor loses focus (javax.faces.event.AjaxBehaviorEvent).]]>
+            <![CDATA[NOTICE: You must also include the org.primefaces.extensions.resources-codemirror:*.jar artifact. Client behavior events: change - fired every time the content of the editor is changed (jakarta.faces.event.AjaxBehaviorEvent), highlightComplete - fired whenever the editor's content has been fully highlighted (jakarta.faces.event.AjaxBehaviorEvent), focus - fired when the editor gets focus (jakarta.faces.event.AjaxBehaviorEvent), blur - fired when the editor loses focus (jakarta.faces.event.AjaxBehaviorEvent).]]>
         </description>
         <tag-name>codeMirror</tag-name>
         <component>
@@ -2358,7 +2358,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -2630,7 +2630,7 @@
             </description>
             <name>completeMethod</name>
             <required>false</required>
-            <type>javax.el.MethodExpression</type>
+            <type>jakarta.el.MethodExpression</type>
         </attribute>
         <attribute>
             <description>
@@ -2814,7 +2814,7 @@
             </description>
             <name>converter</name>
             <required>false</required>
-            <type>javax.faces.convert.Converter</type>
+            <type>jakarta.faces.convert.Converter</type>
         </attribute>
         <attribute>
             <description>
@@ -2910,7 +2910,7 @@
             </description>
             <name>validator</name>
             <required>false</required>
-            <type>javax.faces.validator.Validator</type>
+            <type>jakarta.faces.validator.Validator</type>
         </attribute>
         <attribute>
             <description>
@@ -2918,7 +2918,7 @@
             </description>
             <name>valueChangeListener</name>
             <required>false</required>
-            <type>javax.faces.event.ValueChangeListener</type>
+            <type>jakarta.faces.event.ValueChangeListener</type>
         </attribute>
     </tag>
     <tag>
@@ -3146,7 +3146,7 @@
             </description>
             <name>formatting</name>
             <required>false</required>
-            <type>javax.lang.Boolean</type>
+            <type>jakarta.lang.Boolean</type>
         </attribute>
         <attribute>
             <description>
@@ -3228,7 +3228,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIOutput</type>
+            <type>jakarta.faces.component.UIOutput</type>
         </attribute>
         <attribute>
             <description>
@@ -3341,7 +3341,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIOutput</type>
+            <type>jakarta.faces.component.UIOutput</type>
         </attribute>
         <attribute>
             <description>
@@ -3407,7 +3407,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIOutput</type>
+            <type>jakarta.faces.component.UIOutput</type>
         </attribute>
         <attribute>
             <description>
@@ -3560,7 +3560,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIOutput</type>
+            <type>jakarta.faces.component.UIOutput</type>
         </attribute>
         <attribute>
             <description>
@@ -3608,7 +3608,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -3649,7 +3649,7 @@
             </description>
             <name>validator</name>
             <required>false</required>
-            <type>javax.faces.validator.Validator</type>
+            <type>jakarta.faces.validator.Validator</type>
         </attribute>
         <attribute>
             <description>
@@ -3657,7 +3657,7 @@
             </description>
             <name>valueChangeListener</name>
             <required>false</required>
-            <type>javax.faces.event.ValueChangeListener</type>
+            <type>jakarta.faces.event.ValueChangeListener</type>
         </attribute>
         <attribute>
             <description>
@@ -3815,7 +3815,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIOutput</type>
+            <type>jakarta.faces.component.UIOutput</type>
         </attribute>
         <attribute>
             <description>
@@ -3865,7 +3865,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -4059,7 +4059,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -4109,7 +4109,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -4207,7 +4207,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -4290,7 +4290,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -4306,7 +4306,7 @@
             </description>
             <name>actionListener</name>
             <required>false</required>
-            <type>javax.faces.event.ActionListener</type>
+            <type>jakarta.faces.event.ActionListener</type>
         </attribute>
         <attribute>
             <description>
@@ -4314,7 +4314,7 @@
             </description>
             <name>action</name>
             <required>false</required>
-            <type>javax.el.MethodExpression</type>
+            <type>jakarta.el.MethodExpression</type>
         </attribute>
         <attribute>
             <description>
@@ -4468,7 +4468,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -4484,7 +4484,7 @@
             </description>
             <name>assignTo</name>
             <required>true</required>
-            <type>javax.el.ValueExpression</type>
+            <type>jakarta.el.ValueExpression</type>
         </attribute>
         <attribute>
             <description>
@@ -4492,7 +4492,7 @@
             </description>
             <name>converter</name>
             <required>false</required>
-            <type>javax.faces.convert.Converter</type>
+            <type>jakarta.faces.convert.Converter</type>
         </attribute>
     </tag>
     <tag>
@@ -4517,7 +4517,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -4533,7 +4533,7 @@
             </description>
             <name>converter</name>
             <required>false</required>
-            <type>javax.faces.convert.Converter</type>
+            <type>jakarta.faces.convert.Converter</type>
         </attribute>
     </tag>
     <tag>
@@ -4582,7 +4582,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -4598,7 +4598,7 @@
             </description>
             <name>converter</name>
             <required>false</required>
-            <type>javax.faces.convert.Converter</type>
+            <type>jakarta.faces.convert.Converter</type>
         </attribute>
         <attribute>
             <description>
@@ -4800,7 +4800,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -4930,7 +4930,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -5173,7 +5173,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -5197,7 +5197,7 @@
             </description>
             <name>selectLevelListener</name>
             <required>false</required>
-            <type>javax.el.MethodExpression</type>
+            <type>jakarta.el.MethodExpression</type>
         </attribute>
         <attribute>
             <description>
@@ -5279,7 +5279,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -5334,7 +5334,7 @@
             </description>
             <name>listener</name>
             <required>false</required>
-            <type>javax.el.MethodExpression</type>
+            <type>jakarta.el.MethodExpression</type>
         </attribute>
         <attribute>
             <description>
@@ -5408,7 +5408,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -5562,7 +5562,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -5594,7 +5594,7 @@
             </description>
             <name>validator</name>
             <required>false</required>
-            <type>javax.faces.validator.Validator</type>
+            <type>jakarta.faces.validator.Validator</type>
         </attribute>
         <attribute>
             <description>
@@ -5602,7 +5602,7 @@
             </description>
             <name>valueChangeListener</name>
             <required>false</required>
-            <type>javax.faces.event.ValueChangeListener</type>
+            <type>jakarta.faces.event.ValueChangeListener</type>
         </attribute>
         <attribute>
             <description>
@@ -6188,7 +6188,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -6228,7 +6228,7 @@
             </description>
             <name>validator</name>
             <required>false</required>
-            <type>javax.faces.validator.Validator</type>
+            <type>jakarta.faces.validator.Validator</type>
         </attribute>
         <attribute>
             <description>
@@ -6236,7 +6236,7 @@
             </description>
             <name>valueChangeListener</name>
             <required>false</required>
-            <type>javax.faces.event.ValueChangeListener</type>
+            <type>jakarta.faces.event.ValueChangeListener</type>
         </attribute>
         <attribute>
             <description>
@@ -6406,7 +6406,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -6503,7 +6503,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -6536,7 +6536,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -6585,7 +6585,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -6627,7 +6627,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -6835,7 +6835,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -6997,7 +6997,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -7104,7 +7104,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -7168,7 +7168,7 @@
             </description>
             <name>listener</name>
             <required>false</required>
-            <type>javax.el.MethodExpression</type>
+            <type>jakarta.el.MethodExpression</type>
         </attribute>
         <attribute>
             <description>
@@ -7379,7 +7379,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -7613,7 +7613,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -7735,7 +7735,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -8056,7 +8056,7 @@
             </description>
             <name>validator</name>
             <required>false</required>
-            <type>javax.faces.validator.Validator</type>
+            <type>jakarta.faces.validator.Validator</type>
         </attribute>
         <attribute>
             <description>
@@ -8080,7 +8080,7 @@
             </description>
             <name>valueChangeListener</name>
             <required>false</required>
-            <type>javax.faces.event.ValueChangeListener</type>
+            <type>jakarta.faces.event.ValueChangeListener</type>
         </attribute>
         <attribute>
             <description>
@@ -8217,7 +8217,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -8474,7 +8474,7 @@
             </description>
             <name>validator</name>
             <required>false</required>
-            <type>javax.faces.validator.Validator</type>
+            <type>jakarta.faces.validator.Validator</type>
         </attribute>
         <attribute>
             <description>
@@ -8498,7 +8498,7 @@
             </description>
             <name>valueChangeListener</name>
             <required>false</required>
-            <type>javax.faces.event.ValueChangeListener</type>
+            <type>jakarta.faces.event.ValueChangeListener</type>
         </attribute>
         <attribute>
             <description>
@@ -8556,7 +8556,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -8767,7 +8767,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -8808,7 +8808,7 @@
             </description>
             <name>validator</name>
             <required>false</required>
-            <type>javax.faces.validator.Validator</type>
+            <type>jakarta.faces.validator.Validator</type>
         </attribute>
         <attribute>
             <description>
@@ -8816,7 +8816,7 @@
             </description>
             <name>valueChangeListener</name>
             <required>false</required>
-            <type>javax.faces.event.ValueChangeListener</type>
+            <type>jakarta.faces.event.ValueChangeListener</type>
         </attribute>
         <attribute>
             <description>
@@ -9300,7 +9300,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -9341,7 +9341,7 @@
             </description>
             <name>validator</name>
             <required>false</required>
-            <type>javax.faces.validator.Validator</type>
+            <type>jakarta.faces.validator.Validator</type>
         </attribute>
         <attribute>
             <description>
@@ -9349,7 +9349,7 @@
             </description>
             <name>valueChangeListener</name>
             <required>false</required>
-            <type>javax.faces.event.ValueChangeListener</type>
+            <type>jakarta.faces.event.ValueChangeListener</type>
         </attribute>
         <attribute>
             <description>
@@ -9955,7 +9955,7 @@ See showcase for an example. Default null.]]>
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -10197,7 +10197,7 @@ See showcase for an example. Default null.]]>
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIOutput</type>
+            <type>jakarta.faces.component.UIOutput</type>
         </attribute>
         <attribute>
             <description>
@@ -10360,7 +10360,7 @@ See showcase for an example. Default null.]]>
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -10444,7 +10444,7 @@ See showcase for an example. Default null.]]>
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -10576,7 +10576,7 @@ See showcase for an example. Default null.]]>
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -10773,21 +10773,21 @@ See showcase for an example. Default null.]]>
         <description>
             <![CDATA[SunEditor component, wysiwyg html editor in js.
             Client behavior events:
-            change - on change (javax.faces.event.AjaxBehaviorEvent),
-            scroll - on scroll (javax.faces.event.AjaxBehaviorEvent),
-            mousedown - on mouseDown (javax.faces.event.AjaxBehaviorEvent),
-            click - on click (javax.faces.event.AjaxBehaviorEvent),
-            input - on input (javax.faces.event.AjaxBehaviorEvent),
-            keydown - on keyDown (javax.faces.event.AjaxBehaviorEvent),
-            keyup - on keyUp (javax.faces.event.AjaxBehaviorEvent),
-            focus - on focus (javax.faces.event.AjaxBehaviorEvent),
-            blur - on blur (javax.faces.event.AjaxBehaviorEvent),
-            paste - on paste (javax.faces.event.AjaxBehaviorEvent),
-            copy - on copy (javax.faces.event.AjaxBehaviorEvent),
-            cut - on cut (javax.faces.event.AjaxBehaviorEvent),
-            drop - on drop (javax.faces.event.AjaxBehaviorEvent),
-            save - on save (javax.faces.event.AjaxBehaviorEvent).
-            initialize - when editor is initialized (javax.faces.event.AjaxBehaviorEvent).]]></description>
+            change - on change (jakarta.faces.event.AjaxBehaviorEvent),
+            scroll - on scroll (jakarta.faces.event.AjaxBehaviorEvent),
+            mousedown - on mouseDown (jakarta.faces.event.AjaxBehaviorEvent),
+            click - on click (jakarta.faces.event.AjaxBehaviorEvent),
+            input - on input (jakarta.faces.event.AjaxBehaviorEvent),
+            keydown - on keyDown (jakarta.faces.event.AjaxBehaviorEvent),
+            keyup - on keyUp (jakarta.faces.event.AjaxBehaviorEvent),
+            focus - on focus (jakarta.faces.event.AjaxBehaviorEvent),
+            blur - on blur (jakarta.faces.event.AjaxBehaviorEvent),
+            paste - on paste (jakarta.faces.event.AjaxBehaviorEvent),
+            copy - on copy (jakarta.faces.event.AjaxBehaviorEvent),
+            cut - on cut (jakarta.faces.event.AjaxBehaviorEvent),
+            drop - on drop (jakarta.faces.event.AjaxBehaviorEvent),
+            save - on save (jakarta.faces.event.AjaxBehaviorEvent).
+            initialize - when editor is initialized (jakarta.faces.event.AjaxBehaviorEvent).]]></description>
         <tag-name>sunEditor</tag-name>
         <component>
             <component-type>org.primefaces.extensions.component.SunEditor</component-type>
@@ -10812,7 +10812,7 @@ See showcase for an example. Default null.]]>
                 <![CDATA[An EL expression referring to a server side UIComponent instance in a backing bean.]]></description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -10959,7 +10959,7 @@ See showcase for an example. Default null.]]>
                 <![CDATA[A method expression referring to a method validationg the input.]]></description>
             <name>validator</name>
             <required>false</required>
-            <type>javax.faces.validator.Validator</type>
+            <type>jakarta.faces.validator.Validator</type>
         </attribute>
         <attribute>
             <description>
@@ -11052,7 +11052,7 @@ See showcase for an example. Default null.]]>
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -11093,7 +11093,7 @@ See showcase for an example. Default null.]]>
             </description>
             <name>validator</name>
             <required>false</required>
-            <type>javax.faces.validator.Validator</type>
+            <type>jakarta.faces.validator.Validator</type>
         </attribute>
         <attribute>
             <description>
@@ -11101,7 +11101,7 @@ See showcase for an example. Default null.]]>
             </description>
             <name>valueChangeListener</name>
             <required>false</required>
-            <type>javax.faces.event.ValueChangeListener</type>
+            <type>jakarta.faces.event.ValueChangeListener</type>
         </attribute>
         <attribute>
             <description>
@@ -11765,7 +11765,7 @@ See showcase for an example. Default null.]]>
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -11848,7 +11848,7 @@ See showcase for an example. Default null.]]>
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -11865,7 +11865,7 @@ See showcase for an example. Default null.]]>
             </description>
             <name>converter</name>
             <required>false</required>
-            <type>javax.faces.convert.Converter</type>
+            <type>jakarta.faces.convert.Converter</type>
         </attribute>
         <attribute>
             <description>
@@ -11889,7 +11889,7 @@ See showcase for an example. Default null.]]>
             </description>
             <name>validator</name>
             <required>false</required>
-            <type>javax.faces.validator.Validator</type>
+            <type>jakarta.faces.validator.Validator</type>
         </attribute>
         <attribute>
             <description>
@@ -11897,7 +11897,7 @@ See showcase for an example. Default null.]]>
             </description>
             <name>valueChangeListener</name>
             <required>false</required>
-            <type>javax.faces.event.ValueChangeListener</type>
+            <type>jakarta.faces.event.ValueChangeListener</type>
         </attribute>
         <attribute>
             <description>
@@ -12379,7 +12379,7 @@ See showcase for an example. Default null.]]>
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -12396,7 +12396,7 @@ See showcase for an example. Default null.]]>
             </description>
             <name>converter</name>
             <required>false</required>
-            <type>javax.faces.convert.Converter</type>
+            <type>jakarta.faces.convert.Converter</type>
         </attribute>
         <attribute>
             <description>
@@ -12420,7 +12420,7 @@ See showcase for an example. Default null.]]>
             </description>
             <name>validator</name>
             <required>false</required>
-            <type>javax.faces.validator.Validator</type>
+            <type>jakarta.faces.validator.Validator</type>
         </attribute>
         <attribute>
             <description>
@@ -12428,7 +12428,7 @@ See showcase for an example. Default null.]]>
             </description>
             <name>valueChangeListener</name>
             <required>false</required>
-            <type>javax.faces.event.ValueChangeListener</type>
+            <type>jakarta.faces.event.ValueChangeListener</type>
         </attribute>
         <attribute>
             <description>

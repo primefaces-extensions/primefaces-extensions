@@ -1,10 +1,10 @@
 <ui:composition
         xmlns="http://www.w3.org/1999/xhtml"
-        xmlns:h="http://xmlns.jcp.org/jsf/html"
-        xmlns:f="http://xmlns.jcp.org/jsf/core"
-        xmlns:p="http://primefaces.org/ui"
-        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-        xmlns:pe="http://primefaces.org/ui/extensions">
+        xmlns:h="jakarta.faces.html"
+        xmlns:f="jakarta.faces.core"
+        xmlns:p="primefaces"
+        xmlns:ui="jakarta.faces.facelets"
+        xmlns:pe="primefaces.extensions">
 
 <!-- EXAMPLE-SOURCE-START -->
 <p:growl id="growl" showDetail="true" />
@@ -18,7 +18,7 @@
     <p:ajax update="swichWrapper" process="@this" />
 </p:selectOneMenu>
 
-<p:separator />
+<p:divider />
 
 <p:outputPanel id="swichWrapper">
     <pe:switch id="switch" value="#{switchController.value}">

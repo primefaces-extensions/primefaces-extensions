@@ -23,9 +23,9 @@ package org.primefaces.extensions.component.codemirror;
 
 import java.util.List;
 
-import javax.faces.view.facelets.ComponentConfig;
-import javax.faces.view.facelets.ComponentHandler;
-import javax.faces.view.facelets.MetaRuleset;
+import jakarta.faces.view.facelets.ComponentConfig;
+import jakarta.faces.view.facelets.ComponentHandler;
+import jakarta.faces.view.facelets.MetaRuleset;
 
 import org.primefaces.extensions.event.CompleteEvent;
 import org.primefaces.facelets.MethodRule;

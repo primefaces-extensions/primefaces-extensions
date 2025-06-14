@@ -21,8 +21,8 @@
  */
 package org.primefaces.extensions.util;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.convert.ConverterException;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.convert.ConverterException;
 
 import org.primefaces.util.LangUtils;
 

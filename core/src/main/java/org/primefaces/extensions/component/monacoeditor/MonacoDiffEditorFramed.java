@@ -24,8 +24,8 @@ package org.primefaces.extensions.component.monacoeditor;
 import java.util.Collection;
 import java.util.Map;
 
-import javax.faces.application.ResourceDependency;
-import javax.faces.event.BehaviorEvent;
+import jakarta.faces.application.ResourceDependency;
+import jakarta.faces.event.BehaviorEvent;
 
 import org.primefaces.extensions.util.Constants;
 

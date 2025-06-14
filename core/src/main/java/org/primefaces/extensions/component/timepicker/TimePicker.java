@@ -28,11 +28,11 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.faces.application.ResourceDependency;
-import javax.faces.context.FacesContext;
-import javax.faces.event.AjaxBehaviorEvent;
-import javax.faces.event.FacesEvent;
-import javax.faces.event.PhaseId;
+import jakarta.faces.application.ResourceDependency;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.event.AjaxBehaviorEvent;
+import jakarta.faces.event.FacesEvent;
+import jakarta.faces.event.PhaseId;
 
 import org.primefaces.component.api.AbstractPrimeHtmlInputText;
 import org.primefaces.component.api.InputHolder;
@@ -70,7 +70,7 @@ public class TimePicker extends AbstractPrimeHtmlInputText implements Widget, In
     public static final String BUTTON_TRIGGER_ICON_CLASS = "ui-button-icon-left ui-icon ui-icon-clock";
     public static final String BUTTON_TRIGGER_TEXT_CLASS = "ui-button-text";
 
-    public static final String TIME_MESSAGE_KEY = "javax.faces.converter.DateTimeConverter.TIME";
+    public static final String TIME_MESSAGE_KEY = "jakarta.faces.converter.DateTimeConverter.TIME";
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.TimePicker";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
     public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.TimePickerRenderer";

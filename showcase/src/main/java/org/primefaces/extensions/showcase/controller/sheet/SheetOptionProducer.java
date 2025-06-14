@@ -23,10 +23,10 @@ package org.primefaces.extensions.showcase.controller.sheet;
 
 import java.util.*;
 
-import javax.annotation.*;
-import javax.enterprise.context.*;
-import javax.faces.model.*;
-import javax.inject.*;
+import jakarta.annotation.*;
+import jakarta.enterprise.context.*;
+import jakarta.faces.model.*;
+import jakarta.inject.*;
 
 import org.primefaces.extensions.showcase.model.sheet.*;
 

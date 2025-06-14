@@ -24,9 +24,9 @@ package org.primefaces.extensions.component.suneditor;
 import java.util.Collection;
 import java.util.Locale;
 
-import javax.faces.application.ResourceDependency;
-import javax.faces.component.behavior.ClientBehaviorHolder;
-import javax.faces.context.FacesContext;
+import jakarta.faces.application.ResourceDependency;
+import jakarta.faces.component.behavior.ClientBehaviorHolder;
+import jakarta.faces.context.FacesContext;
 
 import org.primefaces.extensions.component.base.AbstractEditorInputTextArea;
 import org.primefaces.extensions.util.Constants;

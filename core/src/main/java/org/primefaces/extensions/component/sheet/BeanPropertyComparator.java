@@ -25,9 +25,9 @@ import java.text.Collator;
 import java.util.Comparator;
 import java.util.Locale;
 
-import javax.el.ValueExpression;
-import javax.faces.FacesException;
-import javax.faces.context.FacesContext;
+import jakarta.el.ValueExpression;
+import jakarta.faces.FacesException;
+import jakarta.faces.context.FacesContext;
 
 import org.primefaces.model.SortMeta;
 

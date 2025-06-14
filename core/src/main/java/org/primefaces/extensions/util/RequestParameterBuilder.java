@@ -24,8 +24,8 @@ package org.primefaces.extensions.util;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.faces.context.FacesContext;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.primefaces.extensions.converter.JsonConverter;
 import org.primefaces.extensions.converter.JsonExposeAwareConverter;

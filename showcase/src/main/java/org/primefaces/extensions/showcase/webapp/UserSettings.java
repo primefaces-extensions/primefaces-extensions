@@ -24,8 +24,9 @@ package org.primefaces.extensions.showcase.webapp;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.enterprise.context.SessionScoped;
-import javax.inject.Named;
+import jakarta.annotation.PostConstruct;
+import jakarta.enterprise.context.SessionScoped;
+import jakarta.inject.Named;
 
 import org.primefaces.extensions.showcase.model.system.AvailableThemes;
 import org.primefaces.extensions.showcase.model.system.Theme;
@@ -46,7 +47,8 @@ public class UserSettings implements Serializable {
     private Theme currentTheme;
     private String currentThemeName;
 
-    public UserSettings() {
+    @PostConstruct
+    public void init() {
         setCurrentThemeByName("saga-blue");
         availableThemes = AvailableThemes.getInstance().getThemes();
     }

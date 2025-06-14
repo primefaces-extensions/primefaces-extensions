@@ -24,8 +24,8 @@ package org.primefaces.extensions.application;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.faces.event.SystemEvent;
-import javax.faces.event.SystemEventListener;
+import jakarta.faces.event.SystemEvent;
+import jakarta.faces.event.SystemEventListener;
 
 /**
  * {@link SystemEventListener} which displays the PrimeFaces Extensions version on startup.

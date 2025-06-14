@@ -21,9 +21,9 @@
  */
 package org.primefaces.extensions.component.session;
 
-import javax.faces.application.ResourceDependency;
-import javax.faces.component.FacesComponent;
-import javax.faces.component.UIComponentBase;
+import jakarta.faces.application.ResourceDependency;
+import jakarta.faces.component.FacesComponent;
+import jakarta.faces.component.UIComponentBase;
 
 import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.util.Constants;
@@ -35,7 +35,7 @@ import org.primefaces.extensions.util.Constants;
  * @since 12.0.4
  */
 @FacesComponent(Session.COMPONENT_TYPE)
-@ResourceDependency(library = "javax.faces", name = "jsf.js")
+@ResourceDependency(library = "jakarta.faces", name = "jsf.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")

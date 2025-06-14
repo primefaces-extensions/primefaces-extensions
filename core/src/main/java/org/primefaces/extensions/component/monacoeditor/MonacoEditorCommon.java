@@ -24,9 +24,9 @@ package org.primefaces.extensions.component.monacoeditor;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.faces.component.behavior.ClientBehaviorHolder;
-import javax.faces.component.html.HtmlInputTextarea;
-import javax.faces.context.FacesContext;
+import jakarta.faces.component.behavior.ClientBehaviorHolder;
+import jakarta.faces.component.html.HtmlInputTextarea;
+import jakarta.faces.context.FacesContext;
 
 import org.primefaces.component.api.PrimeClientBehaviorHolder;
 import org.primefaces.component.api.Widget;

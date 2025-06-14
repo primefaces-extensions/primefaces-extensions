@@ -1,9 +1,9 @@
 <ui:composition
         xmlns="http://www.w3.org/1999/xhtml"
-        xmlns:h="http://xmlns.jcp.org/jsf/html"
-        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-        xmlns:p="http://primefaces.org/ui"
-        xmlns:pe="http://primefaces.org/ui/extensions">
+        xmlns:h="jakarta.faces.html"
+        xmlns:ui="jakarta.faces.facelets"
+        xmlns:p="primefaces"
+        xmlns:pe="primefaces.extensions">
 <!-- EXAMPLE-SOURCE-START -->
 
 <h:panelGroup id="wrapper" layout="block">
@@ -93,7 +93,7 @@
     </p:dialog>
 
     <h:panelGroup id="footer" layout="block">
-        <p:separator/>
+        <p:divider/>
         Copyright, PrimeFaces Extensions, 2013.
         
         <pe:waypoint id="waypoint" widgetVar="waypointWidget"

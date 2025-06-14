@@ -21,7 +21,7 @@
  */
 package org.primefaces.extensions.component.parameters;
 
-import javax.el.ValueExpression;
+import jakarta.el.ValueExpression;
 
 import org.primefaces.extensions.component.base.AbstractParameter;
 

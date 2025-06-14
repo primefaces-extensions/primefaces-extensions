@@ -24,15 +24,15 @@ package org.primefaces.extensions.component.masterdetail;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.component.EditableValueHolder;
-import javax.faces.component.UIComponent;
-import javax.faces.component.visit.VisitCallback;
-import javax.faces.component.visit.VisitContext;
-import javax.faces.component.visit.VisitResult;
+import jakarta.faces.component.EditableValueHolder;
+import jakarta.faces.component.UIComponent;
+import jakarta.faces.component.visit.VisitCallback;
+import jakarta.faces.component.visit.VisitContext;
+import jakarta.faces.component.visit.VisitResult;
 
 /**
  * Callback calling while MasterDetailLevel's subtree is visiting. The aim of this callback is gathering of all components implementing
- * {@link javax.faces.component.EditableValueHolder} below the subtree.
+ * {@link jakarta.faces.component.EditableValueHolder} below the subtree.
  *
  * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$

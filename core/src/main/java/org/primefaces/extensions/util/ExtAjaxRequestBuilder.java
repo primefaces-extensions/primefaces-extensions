@@ -23,7 +23,7 @@ package org.primefaces.extensions.util;
 
 import java.util.List;
 
-import javax.faces.context.FacesContext;
+import jakarta.faces.context.FacesContext;
 
 import org.primefaces.extensions.component.base.AbstractParameter;
 

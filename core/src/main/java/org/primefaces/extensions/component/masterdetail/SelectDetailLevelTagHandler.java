@@ -24,15 +24,15 @@ package org.primefaces.extensions.component.masterdetail;
 import java.util.*;
 import java.util.Map.Entry;
 
-import javax.el.MethodExpression;
-import javax.el.ValueExpression;
-import javax.faces.FacesException;
-import javax.faces.component.ActionSource;
-import javax.faces.component.UIComponent;
-import javax.faces.component.behavior.ClientBehavior;
-import javax.faces.component.behavior.ClientBehaviorHolder;
-import javax.faces.event.PreRenderComponentEvent;
-import javax.faces.view.facelets.*;
+import jakarta.el.MethodExpression;
+import jakarta.el.ValueExpression;
+import jakarta.faces.FacesException;
+import jakarta.faces.component.ActionSource;
+import jakarta.faces.component.UIComponent;
+import jakarta.faces.component.behavior.ClientBehavior;
+import jakarta.faces.component.behavior.ClientBehaviorHolder;
+import jakarta.faces.event.PreRenderComponentEvent;
+import jakarta.faces.view.facelets.*;
 
 import org.primefaces.component.api.AjaxSource;
 import org.primefaces.extensions.util.ExtLangUtils;
@@ -148,8 +148,8 @@ public class SelectDetailLevelTagHandler extends TagHandler {
                             ((org.primefaces.behavior.ajax.AjaxBehavior) clientBehavior).addAjaxBehaviorListener(
                                         new SelectDetailLevelListener(me));
                         }
-                        else if (clientBehavior instanceof javax.faces.component.behavior.AjaxBehavior) {
-                            ((javax.faces.component.behavior.AjaxBehavior) clientBehavior).addAjaxBehaviorListener(
+                        else if (clientBehavior instanceof jakarta.faces.component.behavior.AjaxBehavior) {
+                            ((jakarta.faces.component.behavior.AjaxBehavior) clientBehavior).addAjaxBehaviorListener(
                                         new SelectDetailLevelListener(me));
                         }
                     }
@@ -171,7 +171,7 @@ public class SelectDetailLevelTagHandler extends TagHandler {
             if (!behaviors.isEmpty()) {
                 for (final List<ClientBehavior> listBehaviors : behaviors) {
                     for (final ClientBehavior clientBehavior : listBehaviors) {
-                        if (clientBehavior instanceof javax.faces.component.behavior.AjaxBehavior
+                        if (clientBehavior instanceof jakarta.faces.component.behavior.AjaxBehavior
                                     || clientBehavior instanceof org.primefaces.behavior.ajax.AjaxBehavior) {
                             return true;
                         }

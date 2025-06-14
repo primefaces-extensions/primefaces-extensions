@@ -21,7 +21,7 @@
  */
 package org.primefaces.extensions.component.head;
 
-import javax.faces.component.UIOutput;
+import jakarta.faces.component.UIOutput;
 
 /**
  * Component class for the <code>ExtHead</code> component.

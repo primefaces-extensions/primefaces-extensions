@@ -23,7 +23,7 @@ package org.primefaces.extensions.showcase.webapp;
 
 import java.io.IOException;
 
-import javax.servlet.*;
+import jakarta.servlet.*;
 
 /**
  * Filter that sets the character encoding to be used in parsing the incoming request, either unconditionally or only if the client did not specify a character

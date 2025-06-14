@@ -21,12 +21,12 @@
  */
 package org.primefaces.extensions.showcase.util;
 
-import javax.el.ELContext;
-import javax.faces.FacesException;
-import javax.faces.context.FacesContext;
+import jakarta.el.ELContext;
+import jakarta.faces.FacesException;
+import jakarta.faces.context.FacesContext;
 
 /**
- * Accessor for objects stored in several scopes via faces context {@link javax.faces.context.FacesContext}.
+ * Accessor for objects stored in several scopes via faces context {@link jakarta.faces.context.FacesContext}.
  *
  * @author ova / last modified by $Author$
  * @version $Revision$

@@ -26,7 +26,7 @@ import java.util.Objects;
 import org.primefaces.component.api.SavedState;
 
 /**
- * Keeps state of a component implementing {@link javax.faces.component.EditableValueHolder}. This class is used in
+ * Keeps state of a component implementing {@link jakarta.faces.component.EditableValueHolder}. This class is used in
  * {@link org.primefaces.extensions.component.base.AbstractDynamicData}.
  *
  * @author Oleg Varaksin / last modified by $Author$

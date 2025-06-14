@@ -23,10 +23,10 @@ package org.primefaces.extensions.component.timer;
 
 import java.util.Locale;
 
-import javax.el.MethodExpression;
-import javax.faces.application.ResourceDependency;
-import javax.faces.component.UIComponentBase;
-import javax.faces.context.FacesContext;
+import jakarta.el.MethodExpression;
+import jakarta.faces.application.ResourceDependency;
+import jakarta.faces.component.UIComponentBase;
+import jakarta.faces.context.FacesContext;
 
 import org.primefaces.component.api.AjaxSource;
 import org.primefaces.component.api.Widget;
@@ -392,7 +392,7 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
     }
 
     @Override
-    public void broadcast(final javax.faces.event.FacesEvent event) {
+    public void broadcast(final jakarta.faces.event.FacesEvent event) {
         super.broadcast(event); // backward compatibility
 
         final FacesContext facesContext = getFacesContext();

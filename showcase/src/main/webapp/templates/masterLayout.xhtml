@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:pe="http://primefaces.org/ui/extensions"
+      xmlns:f="jakarta.faces.core"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="primefaces"
+      xmlns:pe="primefaces.extensions"
       lang="en">
 <f:view contentType="text/html" locale="en">
     <ui:insert name="metadata"/>
@@ -41,7 +41,7 @@
             </pe:lightSwitch>
         </h:form>
 
-        <p:ajaxExceptionHandler type="javax.faces.application.ViewExpiredException"
+        <p:ajaxExceptionHandler type="jakarta.faces.application.ViewExpiredException"
                                 update="expDialog"
                                 onexception="PF('exceptionDialog').show();"/>
 
