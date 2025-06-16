@@ -24,7 +24,7 @@
         <primefaces-extensions.updated-components>inputPhone;monacoEditor</primefaces-extensions.updated-components>
         <primefaces-extensions.deprecated-components/>
         <jetty.version>12.0.22</jetty.version>
-        <hibernate-validator.version>8.0.2.Final</hibernate-validator.version>
+        <hibernate-validator.version>9.0.1.Final</hibernate-validator.version>
         <font-awesome.version>6.4.0</font-awesome.version>
     </properties>
     <dependencies>
