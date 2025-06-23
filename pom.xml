@@ -92,7 +92,7 @@
         <main.basedir>${project.basedir}</main.basedir>
         <jsf.stage>Development</jsf.stage>
         <apache-faces.version>4.0.3</apache-faces.version>
-        <commonmark.version>0.24.0</commonmark.version>
+        <commonmark.version>0.25.0</commonmark.version>
         <commons-collections.version>4.5.0</commons-collections.version>
         <commons-fileupload.version>1.6.0</commons-fileupload.version>
         <commons-io.version>2.19.0</commons-io.version>
