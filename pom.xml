@@ -460,8 +460,9 @@
                     <version>2.44.5</version>
                     <configuration>
                         <java>
+                            <removeUnusedImports />
                             <importOrder>
-                                <order>java,javax,org,com,</order>
+                                <order>java,javax,jakarta,org,com,</order>
                             </importOrder>
                             <eclipse>
                                 <file>${main.basedir}/src/conf/eclipse-pfe-formatter.xml</file>
