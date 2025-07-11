@@ -477,6 +477,32 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>rename-xml-file</id>
+                        <phase>process-resources</phase>
+                        <configuration>
+                            <target>
+                                <copy file="${project.build.directory}/classes/META-INF/primefaces-extensions.taglib.xml" tofile="${project.build.directory}/classes/META-INF/primefaces-extensions.urn.taglib.xml"/>
+                                <!-- Modify the copied file -->
+                                <replace file="${project.build.directory}/classes/META-INF/primefaces-extensions.urn.taglib.xml">
+                                    <replacefilter token="http://primefaces.org/ui/extensions" value="primefaces.extensions"/>
+                                    <replacefilter token="http://xmlns.jcp.org/xml/ns/javaee/web-facelettaglibrary_2_3.xsd" value="https://jakarta.ee/xml/ns/jakartaee/web-facelettaglibrary_4_0.xsd"/>
+                                    <replacefilter token="http://xmlns.jcp.org/xml/ns/javaee" value="https://jakarta.ee/xml/ns/jakartaee"/>
+                                    <replacefilter token="version=&quot;2.3&quot;" value="version=&quot;4.0&quot;"/>
+                                </replace>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <!-- Check monaco editor widget types -->
             <plugin>
                 <groupId>com.github.eirslett</groupId>
