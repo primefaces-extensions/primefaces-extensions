@@ -32,7 +32,6 @@ import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.component.behavior.ClientBehavior;
 import javax.faces.component.behavior.ClientBehaviorContext;
-import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.model.SelectItem;
@@ -820,48 +819,6 @@ public class SheetRenderer extends CoreRenderer {
     }
 
     /**
-     * Decodes client behaviors (ajax events).
-     *
-     * @param context the FacesContext
-     * @param component the Component being decodes
-     */
-    @Override
-    protected void decodeBehaviors(final FacesContext context, final UIComponent component) {
-
-        // get current behaviors
-        final Map<String, List<ClientBehavior>> behaviors = ((ClientBehaviorHolder) component).getClientBehaviors();
-
-        // if empty, done
-        if (behaviors.isEmpty()) {
-            return;
-        }
-
-        // get the parameter map and the behaviorEvent fired
-        final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-        final String behaviorEvent = params.get("javax.faces.behavior.event");
-
-        // if no event, done
-        if (behaviorEvent == null) {
-            return;
-        }
-
-        // get behaviors for the event
-        final List<ClientBehavior> behaviorsForEvent = behaviors.get(behaviorEvent);
-        if (behaviorsForEvent == null || behaviorsForEvent.isEmpty()) {
-            return;
-        }
-
-        // decode event if we are the source
-        final String behaviorSource = params.get("javax.faces.source");
-        final String clientId = component.getClientId();
-        if (clientId.equals(behaviorSource)) {
-            for (final ClientBehavior behavior : behaviorsForEvent) {
-                behavior.decode(context, component);
-            }
-        }
-    }
-
-    /**
      * Decodes the user Selection JSON data
      */
     private void decodeSelection(final Sheet sheet, final String jsonSelection) {
@@ -892,10 +849,10 @@ public class SheetRenderer extends CoreRenderer {
 
     private void updateSheetSelection(final Sheet sheet, final JSONArray array) throws JSONException {
         // data comes in: [ [row, col, oldValue, newValue] ... ]
-        sheet.setSelectedRow(array.getInt(0));
-        sheet.setSelectedColumn(sheet.getMappedColumn(array.getInt(1)));
-        sheet.setSelectedLastRow(array.getInt(2));
-        sheet.setSelectedLastColumn(array.getInt(3));
+        sheet.setSelectedRow(array.optInt(0, -1));
+        sheet.setSelectedColumn(sheet.getMappedColumn(array.optInt(1, -1)));
+        sheet.setSelectedLastRow(array.optInt(2, sheet.getSelectedRow()));
+        sheet.setSelectedLastColumn(array.optInt(3, sheet.getSelectedColumn()));
     }
 
     /**
