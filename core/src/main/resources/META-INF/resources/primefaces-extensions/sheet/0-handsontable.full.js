@@ -68254,17 +68254,15 @@ function (_BasePlugin) {
   }, {
     key: "checkIfColumnHeader",
     value: function checkIfColumnHeader(element) {
-      if (element !== this.hot.rootElement) {
-        var parent = element.parentNode;
-
-        if (parent.tagName === 'THEAD') {
-          return true;
-        }
-
-        return this.checkIfColumnHeader(parent);
+      if (!element || element === this.hot.rootElement || !element.parentNode) {
+        return false;
       }
 
-      return false;
+      if (element.parentNode.tagName === 'THEAD') {
+        return true;
+      }
+
+      return this.checkIfColumnHeader(element.parentNode);
     }
     /**
      * Gets the TH element from the provided element.
