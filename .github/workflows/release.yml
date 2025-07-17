@@ -89,7 +89,7 @@ jobs:
           fi
 
       - name: Build
-        run: mvn -Prelease
+        run: mvn -Ppublication
         
       - name: Release
         env:
