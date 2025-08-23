@@ -64,7 +64,7 @@ public class HtmlSanitizer {
     private static final PolicyFactory HTML_LINKS_SANITIZER = Sanitizers.LINKS
                 .and(new HtmlPolicyBuilder()
                             .allowElements("a")
-                            .allowAttributes("target")
+                            .allowAttributes("id", "target", "style", "class")
                             .onElements("a")
                             .toFactory());
 
