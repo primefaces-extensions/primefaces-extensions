@@ -102,7 +102,7 @@
         <libphonenumber.version>9.0.7</libphonenumber.version>
         <morphia.version>2.5.0</morphia.version>
         <junit.version>5.13.1</junit.version>
-        <primefaces.core.version>15.0.6</primefaces.core.version>
+        <primefaces.core.version>15.0.7</primefaces.core.version>
         <primefaces.optimizer.version>2.6.5</primefaces.optimizer.version>
         <withoutCompress>true</withoutCompress>
     </properties>
