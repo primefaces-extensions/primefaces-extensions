@@ -35,7 +35,7 @@ public abstract class OSMapBase extends UIComponentBase implements Widget, Clien
 
     public enum PropertyKeys {
 
-        widgetVar, model, style, styleClass, center, zoom, zoomControl, attribution, tileUrl, draggable, onPointClick, scrollWheel
+        widgetVar, model, style, styleClass, center, zoom, zoomControl, attribution, tileUrl, draggable, onPointClick, scrollWheel, fullScreen
     }
 
     public OSMapBase() {
@@ -141,5 +141,13 @@ public abstract class OSMapBase extends UIComponentBase implements Widget, Clien
 
     public void setScrollWheel(boolean scrollWheel) {
         getStateHelper().put(PropertyKeys.scrollWheel, scrollWheel);
+    }
+
+    public boolean isFullScreen() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.fullScreen, true);
+    }
+
+    public void setFullScreen(boolean fullScreen) {
+        getStateHelper().put(PropertyKeys.fullScreen, fullScreen);
     }
 }

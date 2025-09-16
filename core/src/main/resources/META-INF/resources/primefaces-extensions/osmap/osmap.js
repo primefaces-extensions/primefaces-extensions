@@ -8,6 +8,11 @@ PrimeFaces.widget.OSMap = class extends PrimeFaces.widget.BaseWidget {
 
         this.cfg.tile.addTo( this.cfg.map );
 
+        // add full screen
+        if (this.cfg.fullScreen) {
+            this.cfg.map.addControl( L.control.fullscreen());
+        }
+
         //conf markers
         if(this.cfg.markers) {
             this.configureMarkers();
