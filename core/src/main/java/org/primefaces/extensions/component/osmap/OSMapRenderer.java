@@ -93,6 +93,10 @@ public class OSMapRenderer extends CoreRenderer {
 
         encodeOverlays(context, map);
 
+        if (map.isFullScreen()) {
+            encodeFullScreen(context, map);
+        }
+
         // Client events
         if (map.getOnPointClick() != null) {
             wb.callback("onPointClick", "function(event)", map.getOnPointClick() + ";");
@@ -101,6 +105,11 @@ public class OSMapRenderer extends CoreRenderer {
         encodeClientBehaviors(context, map);
 
         wb.finish();
+    }
+
+    protected void encodeFullScreen(FacesContext context, OSMap map) throws IOException {
+        ResponseWriter writer = context.getResponseWriter();
+        writer.write(",fullScreen: " + map.isFullScreen());
     }
 
     protected void encodeOverlays(FacesContext context, OSMap map) throws IOException {

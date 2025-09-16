@@ -40,6 +40,8 @@ import org.primefaces.util.MapBuilder;
 
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "leaflet/leaflet.css")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "leaflet/leaflet.js")
+@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "leaflet/leaflet.fullscreen.css")
+@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "leaflet/leaflet.fullscreen.min.js")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "osmap/osmap.js")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "primefaces-extensions.js")
 public class OSMap extends OSMapBase {
