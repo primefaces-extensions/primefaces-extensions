@@ -21,6 +21,8 @@
  */
 package org.primefaces.extensions.application;
 
+import java.util.Objects;
+
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.component.html.HtmlBody;
 import jakarta.faces.component.html.HtmlOutputText;
@@ -83,8 +85,8 @@ public class EscapeSanitizerComponentListener implements SystemEventListener {
      * @param component The root UI component to inspect and sanitize.
      */
     private void checkComponents(UIComponent component) {
-        if (component == null) {
-            return; // Safety check for null input
+        if (component == null || !component.isRendered()) {
+            return;
         }
 
         boolean shouldSanitize = false;
@@ -109,7 +111,10 @@ public class EscapeSanitizerComponentListener implements SystemEventListener {
 
         // Apply sanitization if needed
         if (shouldSanitize) {
-            component.getAttributes().put("value", sanitizeHtml(value));
+            final String sanitizedValue = sanitizeHtml(value);
+            if (!Objects.equals(sanitizedValue, value)) {
+                component.getAttributes().put("value", sanitizeHtml(value));
+            }
         }
 
         // Recursively check all child components
