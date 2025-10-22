@@ -74,7 +74,7 @@ public class OSMapRenderer extends CoreRenderer {
         wb.attr("center", map.getCenter());
         wb.nativeAttr("map",
                     "L.map('" + map.getClientId() + "_map', { dragging: " + map.isDraggable() + ", zoomControl: " + map.isZoomControl() + ", scrollWheelZoom: "
-                                + map.isScrollWheel() + " } ).setView(['"
+                                + map.isScrollWheel() + ", loadingControl: " + map.isLoadingControl() + " } ).setView(['"
                                 + parts[0].trim() + "', '"
                                 + parts[1].trim() + "'], " + map.getZoom() + ")");
 
