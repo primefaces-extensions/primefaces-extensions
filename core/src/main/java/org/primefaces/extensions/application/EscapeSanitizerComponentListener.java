@@ -85,7 +85,7 @@ public class EscapeSanitizerComponentListener implements SystemEventListener {
      * @param component The root UI component to inspect and sanitize.
      */
     private void checkComponents(UIComponent component) {
-        if (component == null || !component.isRendered()) {
+        if (component == null) {
             return;
         }
 
