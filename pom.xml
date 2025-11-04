@@ -103,7 +103,7 @@
         <morphia.version>2.5.1</morphia.version>
         <junit.version>5.13.4</junit.version>
         <primefaces.core.version>16.0.0-SNAPSHOT</primefaces.core.version>
-        <primefaces.optimizer.version>2.6.6</primefaces.optimizer.version>
+        <primefaces.optimizer.version>2.7.5</primefaces.optimizer.version>
         <withoutCompress>true</withoutCompress>
     </properties>
     <dependencyManagement>
