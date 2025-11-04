@@ -23,7 +23,7 @@
                 </p:ajaxStatus>
 
                 <h:panelGrid columns="2" columnClasses="themeText,themeSelect">
-                    <h:outputText value="Theme"/>
+                    <p:outputLabel for="themeSelectMenu" value="Theme"/>
                     <p:selectOneMenu id="themeSelectMenu" value="#{userSettings.currentTheme}" var="theme" effect="drop"
                                      converter="themeConverter">
                         <p:ajax process="@this" onstart="PrimeFacesExt.changeTheme($('#themeSelectMenu_label').text());" update="@obs(eventTheme)"/>
@@ -34,12 +34,12 @@
                     </p:selectOneMenu>
                 </h:panelGrid>
 
-                <p:link href="http://primefaces-extensions.github.com/" target="_blank" id="homepage-link" title="Homepage"/>
+                <p:button href="https://primefaces-extensions.github.io/" target="_blank" title="Homepage" icon="pi pi-home" styleClass="ui-button-flat"/>
 
-                <p:link href="https://github.com/primefaces-extensions" target="_blank" id="github-link" title="GitHub"/>
+                <p:button href="https://github.com/primefaces-extensions" target="_blank" title="GitHub" icon="pi pi-github" styleClass="ui-button-flat"/>
 
-                <p:link href="https://github.com/primefaces-extensions/primefaces-extensions.github.com/issues" target="_blank" id="issues-link"
-                        title="Issue Tracking"/>
+                <p:button href="https://github.com/primefaces-extensions/primefaces-extensions/issues" target="_blank" title="Issue Tracking"
+                          icon="pi pi-exclamation-triangle" styleClass="ui-button-flat"/>
 
             </h:panelGrid>
         </p:panelGrid>
