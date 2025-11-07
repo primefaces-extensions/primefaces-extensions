@@ -99,7 +99,7 @@
         <commons-lang3.version>3.19.0</commons-lang3.version>
         <gson.version>2.13.2</gson.version>
         <jakarta-faces.version>4.0.12</jakarta-faces.version>
-        <libphonenumber.version>9.0.17</libphonenumber.version>
+        <libphonenumber.version>9.0.18</libphonenumber.version>
         <morphia.version>2.5.1</morphia.version>
         <junit.version>5.13.4</junit.version>
         <primefaces.core.version>16.0.0-SNAPSHOT</primefaces.core.version>
