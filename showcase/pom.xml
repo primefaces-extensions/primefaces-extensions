@@ -343,7 +343,7 @@
             </activation>
             <properties>
                 <jakarta.version>11.0.0</jakarta.version>
-                <hibernate-validator.version>9.0.1.Final</hibernate-validator.version>
+                <hibernate-validator.version>9.1.0.Final</hibernate-validator.version>
                 <myfaces.version>4.1.1</myfaces.version>
                 <omnifaces.version>5.0-M5</omnifaces.version>
                 <resteasy.version>7.0.0.Final</resteasy.version>
