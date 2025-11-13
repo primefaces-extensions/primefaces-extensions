@@ -23,7 +23,7 @@
         <primefaces-extensions.new-components>echart;osmap</primefaces-extensions.new-components>
         <primefaces-extensions.updated-components>inputPhone;monacoEditor</primefaces-extensions.updated-components>
         <primefaces-extensions.deprecated-components/>
-        <jetty.version>12.1.3</jetty.version>
+        <jetty.version>12.1.4</jetty.version>
         <font-awesome.version>7.0.1</font-awesome.version>
     </properties>
     <dependencies>
