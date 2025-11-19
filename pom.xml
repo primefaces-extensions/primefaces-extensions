@@ -489,8 +489,8 @@
                     <artifactId>frontend-maven-plugin</artifactId>
                     <version>1.15.4</version>
                     <configuration>
-                        <nodeVersion>v20.14.0</nodeVersion>
-                        <npmVersion>10.7.0</npmVersion>
+                        <nodeVersion>v24.11.1</nodeVersion>
+                        <npmVersion>11.6.2</npmVersion>
                         <installDirectory>${main.basedir}/target/node</installDirectory>
                     </configuration>
                 </plugin>
