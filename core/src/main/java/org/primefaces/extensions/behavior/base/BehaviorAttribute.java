@@ -19,30 +19,24 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package org.primefaces.extensions.behavior.javascript;
+package org.primefaces.extensions.behavior.base;
 
-import jakarta.faces.view.BehaviorHolderAttachedObjectHandler;
-import jakarta.faces.view.facelets.BehaviorConfig;
-import jakarta.faces.view.facelets.TagHandler;
+public interface BehaviorAttribute {
 
-import org.primefaces.extensions.behavior.base.AbstractBehaviorHandler;
+    /**
+     * Holds the type which ought to be passed to
+     * {@link jakarta.faces.view.facelets.TagAttribute#getObject(jakarta.faces.view.facelets.FaceletContext, java.lang.Class) } when creating the behavior.
+     * 
+     * @return the expectedType the expected object type
+     */
+    Class<?> getExpectedType();
 
-/**
- * {@link BehaviorHolderAttachedObjectHandler} and {@link TagHandler} implementation for the {@link JavascriptBehavior}.
- *
- * @author Thomas Andraschko / last modified by $Author$
- * @version $Revision$
- * @since 0.2
- */
-public class JavascriptBehaviorHandler extends AbstractBehaviorHandler<JavascriptBehavior> {
-
-    public JavascriptBehaviorHandler(final BehaviorConfig config) {
-        super(config);
+    /**
+     * Gets name of tag attribute
+     * 
+     * @return name of tag attribute
+     */
+    default String getName() {
+        return toString();
     }
-
-    @Override
-    public String getBehaviorId() {
-        return JavascriptBehavior.BEHAVIOR_ID;
-    }
-
 }

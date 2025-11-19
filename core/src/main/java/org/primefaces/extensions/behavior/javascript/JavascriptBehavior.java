@@ -23,8 +23,8 @@ package org.primefaces.extensions.behavior.javascript;
 
 import jakarta.faces.application.ResourceDependency;
 
-import org.primefaces.behavior.base.AbstractBehavior;
-import org.primefaces.behavior.base.BehaviorAttribute;
+import org.primefaces.extensions.behavior.base.AbstractBehavior;
+import org.primefaces.extensions.behavior.base.BehaviorAttribute;
 import org.primefaces.extensions.util.Constants;
 
 /**
