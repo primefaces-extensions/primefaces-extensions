@@ -155,6 +155,11 @@ public class Sheet extends SheetBase {
         return EVENT_CHANGE;
     }
 
+    @Override
+    public String getWidgetVar() {
+        return (String) getStateHelper().eval("widgetVar", resolveWidgetVar());
+    }
+
     /**
      * {@inheritDoc}
      */

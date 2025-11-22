@@ -55,6 +55,11 @@ public class Session extends UIComponentBase implements Widget {
         onexpire, onexpired, reactionPeriod, multiWindowSupport
     }
 
+    @Override
+    public String getWidgetVar() {
+        return (String) getStateHelper().eval("widgetVar", resolveWidgetVar());
+    }
+
     public String getOnexpire() {
         return (String) getStateHelper().eval(PropertyKeys.onexpire);
     }

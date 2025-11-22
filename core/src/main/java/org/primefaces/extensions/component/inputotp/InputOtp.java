@@ -189,6 +189,11 @@ public class InputOtp extends AbstractPrimeHtmlInputText implements Widget, Inpu
     }
 
     @Override
+    public String getWidgetVar() {
+        return (String) getStateHelper().eval("widgetVar", resolveWidgetVar());
+    }
+
+    @Override
     protected void validateValue(FacesContext context, Object newValue) {
         super.validateValue(context, newValue);
         if (!isValid()) {

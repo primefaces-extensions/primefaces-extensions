@@ -133,7 +133,7 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
         Map<String, Object> values = (Map<String, Object>) getValues(checkbox);
         final Map<String, Object> submittedMap = getSubmittedFromComp(checkbox);
         final String layout = checkbox.getLayout();
-        final boolean pageDirection = layout != null && "pageDirection".equals(layout);
+        final boolean pageDirection = "pageDirection".equals(layout);
 
         if (submittedMap != null) {
             values = submittedMap;

@@ -83,6 +83,11 @@ public class Legend extends UIComponentBase implements Widget {
         return COMPONENT_FAMILY;
     }
 
+    @Override
+    public String getWidgetVar() {
+        return (String) getStateHelper().eval("widgetVar", resolveWidgetVar());
+    }
+
     public String getLayout() {
         return (String) getStateHelper().eval(PropertyKeys.layout, "vertical");
     }
