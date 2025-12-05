@@ -61,8 +61,14 @@ There are multiple versions available please check which one for your PrimeFaces
 
 The PrimeFaces Extensions namespace is necessary to add PrimeFaces Extensions components to your pages.
 
+**Faces 2.3**
 ```xml
 xmlns:pe="http://primefaces.org/ui/extensions"
+```
+
+**Faces 4.0+**
+```xml
+xmlns:pe="primefaces.extensions"
 ```
 
 ## Getting Started
