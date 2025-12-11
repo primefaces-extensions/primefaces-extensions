@@ -346,7 +346,7 @@
                 <hibernate-validator.version>9.1.0.Final</hibernate-validator.version>
                 <myfaces.version>4.1.2</myfaces.version>
                 <omnifaces.version>5.0-M6</omnifaces.version>
-                <resteasy.version>7.0.0.Final</resteasy.version>
+                <resteasy.version>7.0.1.Final</resteasy.version>
                 <weld.version>6.0.3.Final</weld.version>
             </properties>
         </profile>
