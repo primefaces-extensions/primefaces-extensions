@@ -85,6 +85,7 @@ public class DynaFormRenderer extends CoreRenderer {
 
     public static final String BUTTON_BAR_ROLE = "toolbar";
     public static final String GRID_CELL_ROLE = "gridcell";
+    public static final String PRESENTATION_ROLE = "presentation";
 
     private static final String[] EMPTY_COLUMN_CLASSES = new String[] {Constants.EMPTY_STRING, Constants.EMPTY_STRING};
 
@@ -224,7 +225,7 @@ public class DynaFormRenderer extends CoreRenderer {
                 writer.writeAttribute(Attrs.STYLE, "display:none;", null);
             }
 
-            writer.writeAttribute("role", "row", null);
+            writer.writeAttribute("role", getRoleAttribute(dynaForm), null);
 
             final List<AbstractDynaFormElement> elements = dynaFormRow.getElements();
             final int size = elements.size();
@@ -251,7 +252,7 @@ public class DynaFormRenderer extends CoreRenderer {
                 }
 
                 if (element instanceof DynaFormLabel) {
-                    renderLabel(writer, labelCommonClass, (DynaFormLabel) element, styleClass);
+                    renderLabel(writer, labelCommonClass, (DynaFormLabel) element, styleClass, dynaForm);
                 }
                 else if (element instanceof DynaFormControl) {
                     renderControl(fc, dynaForm, writer, controlCommonClass, (DynaFormControl) element, styleClass);
@@ -274,7 +275,7 @@ public class DynaFormRenderer extends CoreRenderer {
                 throws IOException {
 
         writer.writeAttribute(Attrs.CLASS, styleClass, null);
-        writer.writeAttribute("role", GRID_CELL_ROLE, null);
+        writer.writeAttribute("role", getRoleAttribute(dynaForm), null);
 
         encodeMarkup(fc, dynaForm, element.getModel(), true);
     }
@@ -296,19 +297,19 @@ public class DynaFormRenderer extends CoreRenderer {
         }
 
         writer.writeAttribute(Attrs.CLASS, (styleClass + " " + controlCommonClass).trim(), null);
-        writer.writeAttribute("role", GRID_CELL_ROLE, null);
+        writer.writeAttribute("role", getRoleAttribute(dynaForm), null);
 
         cell.encodeAll(fc);
     }
 
     protected void renderLabel(final ResponseWriter writer, final String labelCommonClass,
-                final DynaFormLabel element, final String styleClass) throws IOException {
+                final DynaFormLabel element, final String styleClass, final DynaForm dynaForm) throws IOException {
 
         writer.writeAttribute(Attrs.CLASS, (styleClass
                     + " " + LABEL_CLASS
                     + " " + ExtLangUtils.defaultString(element.getStyleClass())
                     + " " + labelCommonClass).trim(), null);
-        writer.writeAttribute("role", GRID_CELL_ROLE, null);
+        writer.writeAttribute("role", getRoleAttribute(dynaForm), null);
 
         writer.startElement(Attrs.LABEL, null);
         if (!element.isTargetValid()) {
@@ -376,7 +377,7 @@ public class DynaFormRenderer extends CoreRenderer {
                 }
 
                 writer.startElement("td", null);
-                writer.writeAttribute("role", GRID_CELL_ROLE, null);
+                writer.writeAttribute("role", getRoleAttribute(dynaForm), null);
                 writer.writeAttribute(Attrs.CLASS, columnClass, null);
                 column.encodeAll(fc);
                 writer.endElement("td");
@@ -456,6 +457,20 @@ public class DynaFormRenderer extends CoreRenderer {
         }
 
         return totalColspan;
+    }
+
+    protected String getRoleAttribute(DynaForm dynaForm) {
+        if (isPresentation(dynaForm)) {
+            return null;
+        }
+        else {
+            return "row";
+        }
+    }
+
+    protected boolean isPresentation(DynaForm dynaForm) {
+        Object roleAttr = dynaForm.getPassThroughAttributes().get("role");
+        return roleAttr != null && (PRESENTATION_ROLE.equalsIgnoreCase(roleAttr.toString()));
     }
 
     @Override
