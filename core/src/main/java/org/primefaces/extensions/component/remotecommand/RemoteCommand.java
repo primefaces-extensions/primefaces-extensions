@@ -37,7 +37,7 @@ import jakarta.faces.event.FacesEvent;
 import jakarta.faces.event.FacesListener;
 
 import org.primefaces.component.api.AjaxSource;
-import org.primefaces.extensions.component.base.AbstractParameter;
+import org.primefaces.extensions.component.api.AbstractParameter;
 import org.primefaces.extensions.component.parameters.AssignableParameter;
 import org.primefaces.extensions.component.parameters.MethodParameter;
 import org.primefaces.extensions.util.Constants;

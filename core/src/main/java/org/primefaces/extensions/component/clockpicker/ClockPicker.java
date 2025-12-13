@@ -26,9 +26,9 @@ import java.util.Locale;
 import jakarta.faces.application.ResourceDependency;
 import jakarta.faces.context.FacesContext;
 
-import org.primefaces.component.api.AbstractPrimeHtmlInputText;
 import org.primefaces.component.api.InputHolder;
 import org.primefaces.component.api.Widget;
+import org.primefaces.extensions.component.api.AbstractPrimeHtmlInputText;
 import org.primefaces.extensions.util.Constants;
 import org.primefaces.util.LocaleUtils;
 
@@ -100,6 +100,16 @@ public class ClockPicker extends AbstractPrimeHtmlInputText implements Widget, I
     @Override
     public void setLabelledBy(String labelledBy) {
         getStateHelper().put("labelledby", labelledBy);
+    }
+
+    @Override
+    public String getAriaDescribedBy() {
+        return (String) getStateHelper().get("ariaDescribedBy");
+    }
+
+    @Override
+    public void setAriaDescribedBy(String ariaDescribedBy) {
+        getStateHelper().put("ariaDescribedBy", ariaDescribedBy);
     }
     
     public String getWidgetVar() {

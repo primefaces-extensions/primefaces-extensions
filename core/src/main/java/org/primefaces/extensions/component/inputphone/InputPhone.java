@@ -31,12 +31,12 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.event.AjaxBehaviorEvent;
 import jakarta.faces.event.FacesEvent;
 
-import org.primefaces.component.api.AbstractPrimeHtmlInputText;
 import org.primefaces.component.api.InputHolder;
 import org.primefaces.component.api.MixedClientBehaviorHolder;
 import org.primefaces.component.api.RTLAware;
 import org.primefaces.component.api.Widget;
 import org.primefaces.event.SelectEvent;
+import org.primefaces.extensions.component.api.AbstractPrimeHtmlInputText;
 import org.primefaces.extensions.model.inputphone.Country;
 import org.primefaces.util.Constants;
 import org.primefaces.util.LangUtils;
@@ -141,6 +141,16 @@ public class InputPhone extends AbstractPrimeHtmlInputText implements Widget, In
     @Override
     public void setLabelledBy(final String labelledBy) {
         getStateHelper().put("labelledby", labelledBy);
+    }
+
+    @Override
+    public String getAriaDescribedBy() {
+        return (String) getStateHelper().get("ariaDescribedBy");
+    }
+
+    @Override
+    public void setAriaDescribedBy(String ariaDescribedBy) {
+        getStateHelper().put("ariaDescribedBy", ariaDescribedBy);
     }
 
     public String getPlaceholder() {

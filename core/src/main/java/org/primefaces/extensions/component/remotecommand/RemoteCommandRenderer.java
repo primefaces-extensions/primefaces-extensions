@@ -36,7 +36,7 @@ import jakarta.faces.convert.Converter;
 import jakarta.faces.event.ActionEvent;
 import jakarta.faces.event.PhaseId;
 
-import org.primefaces.extensions.component.base.AbstractParameter;
+import org.primefaces.extensions.component.api.AbstractParameter;
 import org.primefaces.extensions.component.parameters.AssignableParameter;
 import org.primefaces.extensions.util.ExtAjaxRequestBuilder;
 import org.primefaces.renderkit.CoreRenderer;

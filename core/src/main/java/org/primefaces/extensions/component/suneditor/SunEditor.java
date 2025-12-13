@@ -28,7 +28,7 @@ import jakarta.faces.application.ResourceDependency;
 import jakarta.faces.component.behavior.ClientBehaviorHolder;
 import jakarta.faces.context.FacesContext;
 
-import org.primefaces.extensions.component.base.AbstractEditorInputTextArea;
+import org.primefaces.extensions.component.api.AbstractEditorInputTextArea;
 import org.primefaces.extensions.util.Constants;
 import org.primefaces.util.LangUtils;
 import org.primefaces.util.LocaleUtils;

@@ -25,7 +25,7 @@ import java.util.List;
 
 import jakarta.faces.context.FacesContext;
 
-import org.primefaces.extensions.component.base.AbstractParameter;
+import org.primefaces.extensions.component.api.AbstractParameter;
 
 /**
  * Extended {@link org.primefaces.util.AjaxRequestBuilder}.

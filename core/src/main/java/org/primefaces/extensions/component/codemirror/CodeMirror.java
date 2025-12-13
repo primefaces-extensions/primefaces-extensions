@@ -31,8 +31,8 @@ import jakarta.faces.component.behavior.ClientBehaviorHolder;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.event.FacesEvent;
 
-import org.primefaces.component.api.AbstractPrimeHtmlInputTextArea;
 import org.primefaces.component.api.Widget;
+import org.primefaces.extensions.component.api.AbstractPrimeHtmlInputTextArea;
 import org.primefaces.extensions.event.CompleteEvent;
 import org.primefaces.extensions.util.Constants;
 import org.primefaces.util.LangUtils;

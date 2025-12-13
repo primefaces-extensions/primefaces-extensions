@@ -26,7 +26,7 @@ import java.util.Map;
 import jakarta.el.ValueExpression;
 import jakarta.faces.component.UIComponent;
 
-import org.primefaces.extensions.component.base.AbstractParameter;
+import org.primefaces.extensions.component.api.AbstractParameter;
 import org.primefaces.extensions.util.DummyValueExpression;
 
 /**
