@@ -30,11 +30,11 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.event.AjaxBehaviorEvent;
 import jakarta.faces.event.FacesEvent;
 
-import org.primefaces.component.api.AbstractPrimeHtmlInputText;
 import org.primefaces.component.api.MixedClientBehaviorHolder;
 import org.primefaces.component.api.RTLAware;
 import org.primefaces.component.api.Widget;
 import org.primefaces.event.SelectEvent;
+import org.primefaces.extensions.component.api.AbstractPrimeHtmlInputText;
 import org.primefaces.extensions.model.inputplace.Place;
 import org.primefaces.extensions.util.Constants;
 import org.primefaces.util.LangUtils;

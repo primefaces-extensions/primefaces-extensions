@@ -34,9 +34,9 @@ import jakarta.faces.event.AjaxBehaviorEvent;
 import jakarta.faces.event.FacesEvent;
 import jakarta.faces.event.PhaseId;
 
-import org.primefaces.component.api.AbstractPrimeHtmlInputText;
 import org.primefaces.component.api.InputHolder;
 import org.primefaces.component.api.Widget;
+import org.primefaces.extensions.component.api.AbstractPrimeHtmlInputText;
 import org.primefaces.extensions.event.BeforeShowEvent;
 import org.primefaces.extensions.event.CloseEvent;
 import org.primefaces.extensions.event.TimeSelectEvent;
@@ -143,6 +143,16 @@ public class TimePicker extends AbstractPrimeHtmlInputText implements Widget, In
     @Override
     public void setLabelledBy(String labelledBy) {
         getStateHelper().put("labelledby", labelledBy);
+    }
+
+    @Override
+    public String getAriaDescribedBy() {
+        return (String) getStateHelper().get("ariaDescribedBy");
+    }
+
+    @Override
+    public void setAriaDescribedBy(String ariaDescribedBy) {
+        getStateHelper().put("ariaDescribedBy", ariaDescribedBy);
     }
 
     public String getWidgetVar() {

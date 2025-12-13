@@ -23,7 +23,7 @@ package org.primefaces.extensions.component.parameters;
 
 import jakarta.el.ValueExpression;
 
-import org.primefaces.extensions.component.base.AbstractParameter;
+import org.primefaces.extensions.component.api.AbstractParameter;
 
 /**
  * Component class for the <code>AssignableParameter</code> component.

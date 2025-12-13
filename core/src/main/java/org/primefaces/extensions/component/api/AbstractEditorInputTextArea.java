@@ -19,14 +19,13 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package org.primefaces.extensions.component.base;
+package org.primefaces.extensions.component.api;
 
 import java.util.logging.Logger;
 
 import jakarta.faces.FacesException;
 import jakarta.faces.context.FacesContext;
 
-import org.primefaces.component.api.AbstractPrimeHtmlInputTextArea;
 import org.primefaces.component.api.RTLAware;
 import org.primefaces.component.api.Widget;
 import org.primefaces.context.PrimeApplicationContext;

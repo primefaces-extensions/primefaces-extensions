@@ -29,11 +29,11 @@ import jakarta.faces.application.ResourceDependency;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.convert.NumberConverter;
 
-import org.primefaces.component.api.AbstractPrimeHtmlInputText;
 import org.primefaces.component.api.InputHolder;
 import org.primefaces.component.api.RTLAware;
 import org.primefaces.component.api.Widget;
 import org.primefaces.component.inputtext.InputText;
+import org.primefaces.extensions.component.api.AbstractPrimeHtmlInputText;
 import org.primefaces.extensions.component.inputphone.InputPhone;
 import org.primefaces.extensions.util.Constants;
 import org.primefaces.extensions.util.ExtLangUtils;
@@ -117,6 +117,16 @@ public class InputOtp extends AbstractPrimeHtmlInputText implements Widget, Inpu
     @Override
     public void setLabelledBy(final String labelledBy) {
         getStateHelper().put("labelledby", labelledBy);
+    }
+
+    @Override
+    public String getAriaDescribedBy() {
+        return (String) getStateHelper().get("ariaDescribedBy");
+    }
+
+    @Override
+    public void setAriaDescribedBy(String ariaDescribedBy) {
+        getStateHelper().put("ariaDescribedBy", ariaDescribedBy);
     }
 
     public String getPlaceholder() {

@@ -37,7 +37,7 @@ import jakarta.faces.event.FacesEvent;
 import jakarta.faces.event.PhaseId;
 
 import org.primefaces.component.api.Widget;
-import org.primefaces.extensions.component.base.AbstractDynamicData;
+import org.primefaces.extensions.component.api.AbstractDynamicData;
 import org.primefaces.extensions.event.LayoutCompleteEvent;
 import org.primefaces.extensions.model.common.KeyData;
 import org.primefaces.extensions.model.fluidgrid.FluidGridItem;

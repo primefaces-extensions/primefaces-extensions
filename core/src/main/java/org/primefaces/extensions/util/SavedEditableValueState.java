@@ -24,10 +24,10 @@ package org.primefaces.extensions.util;
 import java.util.Objects;
 
 import org.primefaces.component.api.SavedState;
+import org.primefaces.extensions.component.api.AbstractDynamicData;
 
 /**
- * Keeps state of a component implementing {@link jakarta.faces.component.EditableValueHolder}. This class is used in
- * {@link org.primefaces.extensions.component.base.AbstractDynamicData}.
+ * Keeps state of a component implementing {@link jakarta.faces.component.EditableValueHolder}. This class is used in {@link AbstractDynamicData}.
  *
  * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
