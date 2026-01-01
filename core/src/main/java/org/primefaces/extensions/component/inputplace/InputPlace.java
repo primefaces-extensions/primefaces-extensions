@@ -30,6 +30,7 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.event.AjaxBehaviorEvent;
 import jakarta.faces.event.FacesEvent;
 
+import org.primefaces.cdk.api.PrimeClientBehaviorEventKeys;
 import org.primefaces.component.api.MixedClientBehaviorHolder;
 import org.primefaces.component.api.RTLAware;
 import org.primefaces.component.api.Widget;
@@ -88,8 +89,9 @@ public class InputPlace extends AbstractPrimeHtmlInputText implements Widget, Mi
     }
 
     @Override
-    public Collection<String> getUnobstrusiveEventNames() {
-        return UNOBSTRUSIVE_EVENT_NAMES;
+    public Collection<PrimeClientBehaviorEventKeys> getUnobstrusiveClientBehaviorEventKeys() {
+        // TODO replace UNOBSTRUSIVE_EVENT_NAMES
+        return List.of();
     }
 
     public String getPlaceholder() {

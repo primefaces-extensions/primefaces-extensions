@@ -22,6 +22,7 @@
 package org.primefaces.extensions.component.codescanner;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import jakarta.faces.application.ResourceDependency;
@@ -31,6 +32,7 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.event.AjaxBehaviorEvent;
 import jakarta.faces.event.FacesEvent;
 
+import org.primefaces.cdk.api.PrimeClientBehaviorEventKeys;
 import org.primefaces.component.api.MixedClientBehaviorHolder;
 import org.primefaces.component.api.Widget;
 import org.primefaces.event.SelectEvent;
@@ -109,6 +111,21 @@ public class CodeScanner extends UIComponentBase implements Widget, ClientBehavi
     @Override
     public String getDefaultEventName() {
         return EVENT_CODE_SCANNED;
+    }
+
+    @Override
+    public Collection<String> getEventNames() {
+        return EVENT_NAMES;
+    }
+
+    public Collection<String> getUnobstrusiveEventNames() {
+        return getEventNames();
+    }
+
+    @Override
+    public Collection<PrimeClientBehaviorEventKeys> getUnobstrusiveClientBehaviorEventKeys() {
+        // TODO replace UNOBSTRUSIVE_EVENT_NAMES
+        return List.of();
     }
 
     public String getWidgetVar() {
@@ -209,16 +226,6 @@ public class CodeScanner extends UIComponentBase implements Widget, ClientBehavi
 
     public void setFor(String aFor) {
         getStateHelper().put(PropertyKeys.forVal, aFor);
-    }
-
-    @Override
-    public Collection<String> getEventNames() {
-        return EVENT_NAMES;
-    }
-
-    @Override
-    public Collection<String> getUnobstrusiveEventNames() {
-        return getEventNames();
     }
 
     @Override

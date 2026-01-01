@@ -22,6 +22,7 @@
 package org.primefaces.extensions.component.lightswitch;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import jakarta.faces.application.ResourceDependency;
@@ -31,6 +32,7 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.event.AjaxBehaviorEvent;
 import jakarta.faces.event.FacesEvent;
 
+import org.primefaces.cdk.api.PrimeClientBehaviorEventKeys;
 import org.primefaces.component.api.MixedClientBehaviorHolder;
 import org.primefaces.component.api.Widget;
 import org.primefaces.event.SelectEvent;
@@ -88,6 +90,21 @@ public class LightSwitch extends UIComponentBase implements Widget, ClientBehavi
         return EVENT_SWITCH;
     }
 
+    @Override
+    public Collection<String> getEventNames() {
+        return EVENT_NAMES;
+    }
+
+    public Collection<String> getUnobstrusiveEventNames() {
+        return getEventNames();
+    }
+
+    @Override
+    public Collection<PrimeClientBehaviorEventKeys> getUnobstrusiveClientBehaviorEventKeys() {
+        // TODO replace UNOBSTRUSIVE_EVENT_NAMES
+        return List.of();
+    }
+
     public String getWidgetVar() {
         return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
     }
@@ -130,16 +147,6 @@ public class LightSwitch extends UIComponentBase implements Widget, ClientBehavi
 
     public void setAutomatic(final boolean automatic) {
         getStateHelper().put(PropertyKeys.automatic, automatic);
-    }
-
-    @Override
-    public Collection<String> getEventNames() {
-        return EVENT_NAMES;
-    }
-
-    @Override
-    public Collection<String> getUnobstrusiveEventNames() {
-        return getEventNames();
     }
 
     @Override

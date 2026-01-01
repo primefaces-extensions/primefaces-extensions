@@ -31,6 +31,7 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.event.AjaxBehaviorEvent;
 import jakarta.faces.event.FacesEvent;
 
+import org.primefaces.cdk.api.PrimeClientBehaviorEventKeys;
 import org.primefaces.component.api.InputHolder;
 import org.primefaces.component.api.MixedClientBehaviorHolder;
 import org.primefaces.component.api.RTLAware;
@@ -121,6 +122,21 @@ public class InputPhone extends AbstractPrimeHtmlInputText implements Widget, In
     @Override
     public String getFamily() {
         return COMPONENT_FAMILY;
+    }
+
+    @Override
+    public Collection<String> getEventNames() {
+        return EVENT_NAMES;
+    }
+
+    public Collection<String> getUnobstrusiveEventNames() {
+        return UNOBSTRUSIVE_EVENT_NAMES;
+    }
+
+    @Override
+    public Collection<PrimeClientBehaviorEventKeys> getUnobstrusiveClientBehaviorEventKeys() {
+        // TODO replace UNOBSTRUSIVE_EVENT_NAMES
+        return List.of();
     }
 
     @Override
@@ -319,16 +335,6 @@ public class InputPhone extends AbstractPrimeHtmlInputText implements Widget, In
 
     public void setLocalizedCountries(final Object localizedCountries) {
         getStateHelper().put(PropertyKeys.localizedCountries, localizedCountries);
-    }
-
-    @Override
-    public Collection<String> getEventNames() {
-        return EVENT_NAMES;
-    }
-
-    @Override
-    public Collection<String> getUnobstrusiveEventNames() {
-        return UNOBSTRUSIVE_EVENT_NAMES;
     }
 
     @Override
