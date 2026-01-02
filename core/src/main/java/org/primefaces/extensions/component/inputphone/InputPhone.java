@@ -129,12 +129,8 @@ public class InputPhone extends AbstractPrimeHtmlInputText implements Widget, In
         return EVENT_NAMES;
     }
 
-    public Collection<String> getUnobstrusiveEventNames() {
-        return UNOBSTRUSIVE_EVENT_NAMES;
-    }
-
     @Override
-    public Collection<PrimeClientBehaviorEventKeys> getUnobstrusiveClientBehaviorEventKeys() {
+    public Collection<PrimeClientBehaviorEventKeys> getUnobtrusiveClientBehaviorEventKeys() {
         // TODO replace UNOBSTRUSIVE_EVENT_NAMES
         return List.of();
     }

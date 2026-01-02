@@ -89,7 +89,7 @@ public class InputPlace extends AbstractPrimeHtmlInputText implements Widget, Mi
     }
 
     @Override
-    public Collection<PrimeClientBehaviorEventKeys> getUnobstrusiveClientBehaviorEventKeys() {
+    public Collection<PrimeClientBehaviorEventKeys> getUnobtrusiveClientBehaviorEventKeys() {
         // TODO replace UNOBSTRUSIVE_EVENT_NAMES
         return List.of();
     }

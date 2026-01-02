@@ -90,7 +90,7 @@ public class JavascriptBehaviorRenderer extends ClientBehaviorRenderer {
 
         ClientBehaviorRenderingMode renderingMode = getClientBehaviorRenderingMode(behaviorContext);
 
-        if (ClientBehaviorRenderingMode.UNOBSTRUSIVE.equals(renderingMode)) {
+        if (ClientBehaviorRenderingMode.UNOBTRUSIVE.equals(renderingMode)) {
             script.append("},ext);");
         }
         else {

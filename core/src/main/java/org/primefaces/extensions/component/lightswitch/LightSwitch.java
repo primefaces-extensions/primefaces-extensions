@@ -95,12 +95,13 @@ public class LightSwitch extends UIComponentBase implements Widget, ClientBehavi
         return EVENT_NAMES;
     }
 
+    // TODO: remove
     public Collection<String> getUnobstrusiveEventNames() {
         return getEventNames();
     }
 
     @Override
-    public Collection<PrimeClientBehaviorEventKeys> getUnobstrusiveClientBehaviorEventKeys() {
+    public Collection<PrimeClientBehaviorEventKeys> getUnobtrusiveClientBehaviorEventKeys() {
         // TODO replace UNOBSTRUSIVE_EVENT_NAMES
         return List.of();
     }
