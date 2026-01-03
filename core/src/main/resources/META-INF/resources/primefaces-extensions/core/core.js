@@ -13,7 +13,7 @@ PrimeFacesExt = {
         var themeLink = PrimeFaces.getThemeLink();
         if (!themeLink || themeLink.length === 0) {
             var ext = PrimeFacesExt.getResourceUrlExtension();
-            var href = PrimeFaces.settings.contextPath + '/javax.faces.resource/theme.css.' + ext + '?ln=primefaces-' + theme + '&' + PrimeFacesExt.VERSION;
+            var href = PrimeFaces.settings.contextPath + '/' + PrimeFaces.RESOURCE_IDENTIFIER +'/theme.css.' + ext + '?ln=primefaces-' + theme + '&' + PrimeFacesExt.VERSION;
             $('body').append('<link rel="stylesheet" type="text/css" href="' + href + '" />');
         } else {
             PrimeFaces.changeTheme(theme);
