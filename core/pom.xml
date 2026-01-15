@@ -191,7 +191,6 @@
                                 <include>layout/**</include>
                                 <include>legend/**</include>
                                 <include>markdowneditor/1-markdowneditor-widget.js</include>
-                                <include>orgchart/**</include>
                                 <include>osmap/**</include>
                                 <include>qrcode/**</include>
                                 <include>sheet/**</include>
@@ -221,6 +220,7 @@
                                 <include>codescanner/**</include>
                                 <include>markdowneditor/**</include>
                                 <include>suneditor/**</include>
+                                <include>orgchart/**</include>
                             </includes>
                             <aggregations>
                                 <aggregation>
