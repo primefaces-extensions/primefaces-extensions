@@ -29,6 +29,18 @@ PrimeFaces.widget.ExtOrgChart = class extends PrimeFaces.widget.BaseWidget {
         var opts = $.extend(true, {}, cfg);
         opts['data'] = JSON.parse(opts['data']);
 
+        // Map parentNodeSymbol to icons.parentNode
+        if (opts.parentNodeSymbol) {
+            opts.icons = opts.icons || {};
+            opts.icons.parentNode = opts.parentNodeSymbol;
+            // Set theme based on icon prefix
+            if (opts.parentNodeSymbol.startsWith('fa-')) {
+                opts.icons.theme = 'fa';
+            } else if (opts.parentNodeSymbol.startsWith('oci-')) {
+                opts.icons.theme = 'oci';
+            }
+        }
+
         this.orgchart = this.jq.orgchart(opts);
 
         this._bindEvents();
