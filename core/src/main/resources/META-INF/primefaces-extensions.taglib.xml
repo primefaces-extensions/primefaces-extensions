@@ -3109,6 +3109,96 @@
     </tag>
     <tag>
         <description>
+            <![CDATA[MarkText highlights search terms within specified containers using mark.js.]]>
+        </description>
+        <tag-name>markText</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.MarkText</component-type>
+            <renderer-type>org.primefaces.extensions.component.MarkTextRenderer</renderer-type>
+        </component>
+        <attribute>
+            <description>
+                <![CDATA[Unique identifier of the component in a namingContainer.]]>
+            </description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when Set false component will not be rendered.]]>
+            </description>
+            <name>rendered</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Name of the client side widget.]]>
+            </description>
+            <name>widgetVar</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Style of the main container element. Default value is null.]]>
+            </description>
+            <name>style</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Style class of the main container element. Default value is null.]]>
+            </description>
+            <name>styleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The search term to highlight.]]>
+            </description>
+            <name>value</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Search expression for the container to search in.]]>
+            </description>
+            <name>for</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Whether to perform case-sensitive search. Default is false.]]>
+            </description>
+            <name>caseSensitive</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Whether to search for separate words only. Default is true.]]>
+            </description>
+            <name>separateWordSearch</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Accuracy level for matching. Can be 'partially', 'complementary', or 'exactly'. Default is 'partially'.]]>
+            </description>
+            <name>accuracy</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+    <tag>
+        <description>
             <![CDATA[CreditCard will take any card form and make it the best part of the checkout process.]]>
         </description>
         <tag-name>creditCard</tag-name>
