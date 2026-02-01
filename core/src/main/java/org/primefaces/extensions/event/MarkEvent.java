@@ -30,7 +30,7 @@ import org.primefaces.event.AbstractAjaxBehaviorEvent;
  * <code>MarkEvent</code> component.
  *
  * @author jxmai
- * @since 16.0.0
+ * @since 15.0.13
  */
 public class MarkEvent extends AbstractAjaxBehaviorEvent {
 

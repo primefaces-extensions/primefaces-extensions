@@ -1,7 +1,7 @@
 /**
  * PrimeFaces Extensions MarkText Widget
  *
- * @since 16.0.0
+ * @since 15.0.13
  */
 PrimeFaces.widget.ExtMarkText = class extends PrimeFaces.widget.BaseWidget {
 

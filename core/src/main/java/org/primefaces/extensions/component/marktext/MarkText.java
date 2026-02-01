@@ -38,7 +38,7 @@ import org.primefaces.util.MapBuilder;
  * <code>MarkText</code> component.
  *
  * @author jxmai
- * @since 16.0.0
+ * @since 15.0.13
  */
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")

@@ -35,7 +35,7 @@ import org.primefaces.util.WidgetBuilder;
  * <code>MarkText</code> component.
  *
  * @author jxmai
- * @since 16.0.0
+ * @since 15.0.13
  */
 public class MarkTextRenderer extends CoreRenderer {
 

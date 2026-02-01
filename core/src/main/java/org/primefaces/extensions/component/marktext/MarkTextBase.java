@@ -31,7 +31,7 @@ import org.primefaces.component.api.Widget;
  * <code>MarkText</code> component.
  *
  * @author jxmai
- * @since 16.0.0
+ * @since 15.0.13
  */
 public abstract class MarkTextBase extends UIComponentBase implements Widget, ClientBehaviorHolder, PrimeClientBehaviorHolder {
 
