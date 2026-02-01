@@ -3182,7 +3182,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Whether to search for separate words only. Default is false.]]>
+                <![CDATA[Whether to search for separate words only. Default is true.]]>
             </description>
             <name>separateWordSearch</name>
             <required>false</required>
