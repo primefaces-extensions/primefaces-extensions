@@ -188,6 +188,7 @@
                                 <include>inputplace/**</include>
                                 <include>layout/**</include>
                                 <include>legend/**</include>
+                                <include>mark/**</include>
                                 <include>markdowneditor/1-markdowneditor-widget.js</include>
                                 <include>osmap/**</include>
                                 <include>qrcode/**</include>
