@@ -1,0 +1,27 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets">
+<ui:composition template="/templates/showcaseLayout.xhtml">
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="MarkText"/>
+        </f:facet>
+        <h:panelGroup layout="block" styleClass="centerContent">
+            MarkText highlights search terms within specified containers using mark.js.
+            <p/>
+            Based on <h:outputLink id="lnkMarkText" value="https://markjs.io/">mark.js</h:outputLink> by Julien Royer.
+            <p/>
+            <h:graphicImage library="images" name="marktext.gif" alt="MarkText"/>
+        </h:panelGroup>
+    </ui:define>
+    <ui:define name="useCases">
+        <ui:include src="/sections/marktext/useCasesChoice.xhtml"/>
+    </ui:define>
+    <ui:define name="docuTable">
+        <ui:include src="/sections/shared/documentation.xhtml">
+            <ui:param name="tagName" value="markText"/>
+        </ui:include>
+    </ui:define>
+</ui:composition>
+</html>
