@@ -20,7 +20,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <main.basedir>${project.parent.basedir}</main.basedir>
         <primefaces-extensions.core.version>${project.version}</primefaces-extensions.core.version>
-        <primefaces-extensions.new-components>echart;osmap</primefaces-extensions.new-components>
+        <primefaces-extensions.new-components>echart;osmap;marktext</primefaces-extensions.new-components>
         <primefaces-extensions.updated-components>inputPhone;monacoEditor</primefaces-extensions.updated-components>
         <primefaces-extensions.deprecated-components/>
         <jetty.version>12.1.5</jetty.version>
