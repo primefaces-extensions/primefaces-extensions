@@ -258,6 +258,10 @@
         <component-type>org.primefaces.extensions.component.OSMap</component-type>
         <component-class>org.primefaces.extensions.component.osmap.OSMap</component-class>
     </component>
+    <component>
+        <component-type>org.primefaces.extensions.component.MarkText</component-type>
+        <component-class>org.primefaces.extensions.component.marktext.MarkText</component-class>
+    </component>
 
     <converter>
         <converter-id>org.primefaces.extensions.converter.JsonConverter</converter-id>
@@ -521,6 +525,11 @@
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.OSMapRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.osmap.OSMapRenderer</renderer-class>
+        </renderer>
+        <renderer>
+            <component-family>org.primefaces.extensions.component</component-family>
+            <renderer-type>org.primefaces.extensions.component.MarkTextRenderer</renderer-type>
+            <renderer-class>org.primefaces.extensions.component.marktext.MarkTextRenderer</renderer-class>
         </renderer>
 
         <client-behavior-renderer>

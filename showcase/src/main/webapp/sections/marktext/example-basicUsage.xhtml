@@ -1,0 +1,39 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="jakarta.faces.html"
+        xmlns:ui="jakarta.faces.facelets"
+        xmlns:p="primefaces"
+        xmlns:pe="primefaces.extensions">
+
+    <p:messages id="messages" showSummary="true" showDetail="true">
+        <p:autoUpdate/>
+    </p:messages>
+
+    <style>
+        .marktext-highlight {
+            background-color: yellow !important;
+            color: black !important;
+        }
+        mark {
+            background-color: yellow !important;
+            color: black !important;
+        }
+    </style>
+
+    <!-- EXAMPLE-SOURCE-START -->
+    <h:panelGrid columns="3">
+        <h:outputText value="Search term:"/>
+        <p:inputText id="searchInput" value="#{markTextController.searchTerm}" placeholder="Enter search term">
+             <p:ajax event="keyup" delay="500" update="searchContainer markText"/>
+        </p:inputText>
+        <p:commandButton value="Highlight" update="searchContainer markText" icon="pi pi-search"/>
+    </h:panelGrid>
+
+    <p:panel id="searchContainer" header="Searchable Content" style="margin-top: 20px">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p>PrimeFaces Extensions provides additional components for PrimeFaces. MarkText is a new component that highlights search terms within specified containers using mark.js.</p>
+    </p:panel>
+
+    <pe:markText id="markText" for="searchContainer" value="#{markTextController.searchTerm}" styleClass="marktext-highlight"/>
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>
