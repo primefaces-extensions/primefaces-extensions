@@ -21,8 +21,8 @@
  */
 package org.primefaces.extensions.event;
 
-import jakarta.faces.component.UIComponent;
-import jakarta.faces.component.behavior.Behavior;
+import javax.faces.component.UIComponent;
+import javax.faces.component.behavior.Behavior;
 
 import org.primefaces.event.AbstractAjaxBehaviorEvent;
 

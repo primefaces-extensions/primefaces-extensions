@@ -24,11 +24,11 @@ package org.primefaces.extensions.component.marktext;
 import java.util.Collection;
 import java.util.Map;
 
-import jakarta.faces.application.ResourceDependency;
-import jakarta.faces.context.FacesContext;
-import jakarta.faces.event.AjaxBehaviorEvent;
-import jakarta.faces.event.BehaviorEvent;
-import jakarta.faces.event.FacesEvent;
+import javax.faces.application.ResourceDependency;
+import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.BehaviorEvent;
+import javax.faces.event.FacesEvent;
 
 import org.primefaces.extensions.event.MarkEvent;
 import org.primefaces.extensions.util.Constants;
