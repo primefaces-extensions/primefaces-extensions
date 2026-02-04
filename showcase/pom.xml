@@ -21,7 +21,7 @@
         <main.basedir>${project.parent.basedir}</main.basedir>
         <primefaces-extensions.core.version>${project.version}</primefaces-extensions.core.version>
         <primefaces-extensions.new-components>echart;osmap;marktext</primefaces-extensions.new-components>
-        <primefaces-extensions.updated-components>inputPhone;monacoEditor</primefaces-extensions.updated-components>
+        <primefaces-extensions.updated-components>inputPhone;monacoEditor;orgchart</primefaces-extensions.updated-components>
         <primefaces-extensions.deprecated-components/>
         <jetty.version>12.1.6</jetty.version>
         <font-awesome.version>7.1.0</font-awesome.version>
