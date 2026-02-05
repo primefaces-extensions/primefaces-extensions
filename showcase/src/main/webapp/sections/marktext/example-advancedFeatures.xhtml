@@ -1,0 +1,48 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="jakarta.faces.html"
+        xmlns:ui="jakarta.faces.facelets"
+        xmlns:p="primefaces"
+        xmlns:pe="primefaces.extensions">
+
+    <p:messages id="messages" showSummary="true" showDetail="true">
+        <p:autoUpdate/>
+    </p:messages>
+
+    <style>
+        .marktext-highlight {
+            background-color: yellow !important;
+            color: black !important;
+        }
+        .custom-highlight {
+            background-color: lightgreen !important;
+            color: darkgreen !important;
+            font-weight: bold;
+        }
+        mark {
+            background-color: yellow !important;
+            color: black !important;
+        }
+    </style>
+
+    <!-- EXAMPLE-SOURCE-START -->
+    <h:panelGrid columns="5">
+        <h:outputText value="Search term 1:"/>
+        <p:inputText id="searchInput1" value="#{markTextController.searchTerm}" placeholder="Enter first search term">
+             <p:ajax event="keyup" delay="500" update="advancedPanel markText1 markText2"/>
+        </p:inputText>
+        <h:outputText value="Search term 2:"/>
+        <p:inputText id="searchInput2" value="#{markTextController.searchTerm2}" placeholder="Enter second search term">
+             <p:ajax event="keyup" delay="500" update="advancedPanel markText1 markText2"/>
+        </p:inputText>
+        <p:commandButton value="Highlight" update="advancedPanel markText1 markText2" icon="pi pi-search"/>
+    </h:panelGrid>
+
+    <p:panel id="advancedPanel" header="Advanced Features - Multiple Terms with Custom Styles and Combined Properties">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </p:panel>
+
+    <pe:markText id="markText1" for="advancedPanel" value="#{markTextController.searchTerm}" styleClass="marktext-highlight" caseSensitive="false" separateWordSearch="true" accuracy="partially"/>
+    <pe:markText id="markText2" for="advancedPanel" value="#{markTextController.searchTerm2}" styleClass="#{markTextController.customStyleClass}" caseSensitive="true" separateWordSearch="false" accuracy="exactly"/>
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

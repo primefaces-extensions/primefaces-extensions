@@ -1,0 +1,37 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:showcase="primefaces.extensions.showcase">
+<ui:composition template="/templates/showcaseLayout.xhtml">
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="MarkText - Advanced Features"/>
+        </f:facet>
+        <h:panelGroup layout="block" styleClass="centerContent">
+            Demonstrates advanced features like multiple search terms, custom styles, and combined properties.
+        </h:panelGroup>
+
+        <h:panelGroup layout="block" styleClass="centerExample">
+            <ui:include src="/sections/marktext/example-advancedFeatures.xhtml"/>
+        </h:panelGroup>
+
+        <ui:decorate template="/templates/twoTabsDecorator.xhtml">
+            <ui:define name="contentTab1">
+                ${showcase:getFileContent('/sections/marktext/example-advancedFeatures.xhtml')}
+            </ui:define>
+            <ui:define name="contentTab2">
+                ${showcase:getFileContent('/org/primefaces/extensions/showcase/controller/MarkTextController.java')}
+            </ui:define>
+        </ui:decorate>
+    </ui:define>
+    <ui:define name="useCases">
+        <ui:include src="/sections/marktext/useCasesChoice.xhtml"/>
+    </ui:define>
+    <ui:define name="docuTable">
+        <ui:include src="/sections/shared/documentation.xhtml">
+            <ui:param name="tagName" value="markText"/>
+        </ui:include>
+    </ui:define>
+</ui:composition>
+</html>

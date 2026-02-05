@@ -39,12 +39,62 @@ public class MarkTextController implements Serializable {
 
     private String searchTerm = "ipsum";
 
+    private String searchTerm2 = "dolor";
+
+    private String customStyleClass = "custom-highlight";
+
+    private String searchTermCaseSensitivity = "Ut";
+
+    private String searchTermSeparateWord = "search is there";
+
+    private String searchTermAccuracy = "am";
+
     public String getSearchTerm() {
         return searchTerm;
     }
 
     public void setSearchTerm(String searchTerm) {
         this.searchTerm = searchTerm;
+    }
+
+    public String getSearchTerm2() {
+        return searchTerm2;
+    }
+
+    public void setSearchTerm2(String searchTerm2) {
+        this.searchTerm2 = searchTerm2;
+    }
+
+    public String getCustomStyleClass() {
+        return customStyleClass;
+    }
+
+    public void setCustomStyleClass(String customStyleClass) {
+        this.customStyleClass = customStyleClass;
+    }
+
+    public String getSearchTermCaseSensitivity() {
+        return searchTermCaseSensitivity;
+    }
+
+    public void setSearchTermCaseSensitivity(String searchTermCaseSensitivity) {
+        this.searchTermCaseSensitivity = searchTermCaseSensitivity;
+    }
+
+    public String getSearchTermSeparateWord() {
+        return searchTermSeparateWord;
+    }
+
+    public void setSearchTermSeparateWord(String searchTermSeparateWord) {
+        this.searchTermSeparateWord = searchTermSeparateWord;
+    }
+
+    public String getSearchTermAccuracy() {
+        return searchTermAccuracy;
+    }
+
+    public void setSearchTermAccuracy(String searchTermAccuracy) {
+        this.searchTermAccuracy = searchTermAccuracy;
     }
 
     public void updateSearch() {
