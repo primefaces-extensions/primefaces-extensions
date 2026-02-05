@@ -1,0 +1,37 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:showcase="primefaces.extensions.showcase">
+<ui:composition template="/templates/showcaseLayout.xhtml">
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="MarkText - Case Sensitivity"/>
+        </f:facet>
+        <h:panelGroup layout="block" styleClass="centerContent">
+            Demonstrates the caseSensitive property. When set to true, search is case-sensitive; when false, it is case-insensitive.
+        </h:panelGroup>
+
+        <h:panelGroup layout="block" styleClass="centerExample">
+            <ui:include src="/sections/marktext/example-caseSensitivity.xhtml"/>
+        </h:panelGroup>
+
+        <ui:decorate template="/templates/twoTabsDecorator.xhtml">
+            <ui:define name="contentTab1">
+                ${showcase:getFileContent('/sections/marktext/example-caseSensitivity.xhtml')}
+            </ui:define>
+            <ui:define name="contentTab2">
+                ${showcase:getFileContent('/org/primefaces/extensions/showcase/controller/MarkTextController.java')}
+            </ui:define>
+        </ui:decorate>
+    </ui:define>
+    <ui:define name="useCases">
+        <ui:include src="/sections/marktext/useCasesChoice.xhtml"/>
+    </ui:define>
+    <ui:define name="docuTable">
+        <ui:include src="/sections/shared/documentation.xhtml">
+            <ui:param name="tagName" value="markText"/>
+        </ui:include>
+    </ui:define>
+</ui:composition>
+</html>

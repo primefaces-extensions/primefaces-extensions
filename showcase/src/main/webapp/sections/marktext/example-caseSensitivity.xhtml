@@ -1,0 +1,45 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="jakarta.faces.html"
+        xmlns:ui="jakarta.faces.facelets"
+        xmlns:p="primefaces"
+        xmlns:pe="primefaces.extensions">
+
+    <p:messages id="messages" showSummary="true" showDetail="true">
+        <p:autoUpdate/>
+    </p:messages>
+
+    <style>
+        .marktext-highlight {
+            background-color: yellow !important;
+            color: black !important;
+        }
+        mark {
+            background-color: yellow !important;
+            color: black !important;
+        }
+    </style>
+
+    <!-- EXAMPLE-SOURCE-START -->
+    <h:panelGrid columns="3">
+        <h:outputText value="Search term:"/>
+        <p:inputText id="searchInput" value="#{markTextController.searchTermCaseSensitivity}" placeholder="Enter search term">
+             <p:ajax event="keyup" delay="500" update="caseSensitivePanel caseInsensitivePanel markTextCaseSensitive markTextCaseInsensitive"/>
+        </p:inputText>
+        <p:commandButton value="Highlight" update="caseSensitivePanel caseInsensitivePanel markTextCaseSensitive markTextCaseInsensitive" icon="pi pi-search"/>
+    </h:panelGrid>
+
+    <h:panelGrid columns="2" style="width: 100%">
+        <p:panel id="caseSensitivePanel" header="Case Sensitive (caseSensitive=true)" style="margin-right: 10px">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </p:panel>
+
+        <p:panel id="caseInsensitivePanel" header="Case Insensitive (caseSensitive=false)">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </p:panel>
+    </h:panelGrid>
+
+    <pe:markText id="markTextCaseSensitive" for="caseSensitivePanel" value="#{markTextController.searchTermCaseSensitivity}" styleClass="marktext-highlight" caseSensitive="true"/>
+    <pe:markText id="markTextCaseInsensitive" for="caseInsensitivePanel" value="#{markTextController.searchTermCaseSensitivity}" styleClass="marktext-highlight" caseSensitive="false"/>
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>
