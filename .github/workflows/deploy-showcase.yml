@@ -22,6 +22,19 @@ jobs:
           distribution: 'temurin'
           java-version: 21
           cache: 'maven'
+      - name: Cache Maven packages
+        uses: actions/cache@v5
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-v3-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-v3
+      - name: Checkout PrimeFaces
+        uses: actions/checkout@v6
+        with:
+          repository: primefaces/primefaces
+          path: primefaces
+      - name: Build PrimeFaces
+        run: cd primefaces && mvn -U install -Pquick && cd ..
       - name: Build
         run: mvn clean install -T1C -Pminify --batch-mode --show-version
       - name: Build Showcase
