@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.component.marktext;
 
+import jakarta.el.MethodExpression;
 import jakarta.faces.component.UIComponentBase;
 import jakarta.faces.component.behavior.ClientBehaviorHolder;
 
@@ -49,7 +50,8 @@ public abstract class MarkTextBase extends UIComponentBase implements Widget, Cl
         forValue,
         caseSensitive,
         separateWordSearch,
-        accuracy
+        accuracy,
+        actionListener
         //@formatter:on
     }
 
@@ -124,5 +126,13 @@ public abstract class MarkTextBase extends UIComponentBase implements Widget, Cl
 
     public void setAccuracy(final String accuracy) {
         getStateHelper().put(PropertyKeys.accuracy, accuracy);
+    }
+
+    public MethodExpression getActionListener() {
+        return (MethodExpression) getStateHelper().get(PropertyKeys.actionListener);
+    }
+
+    public void setActionListener(final MethodExpression actionListener) {
+        getStateHelper().put(PropertyKeys.actionListener, actionListener);
     }
 }

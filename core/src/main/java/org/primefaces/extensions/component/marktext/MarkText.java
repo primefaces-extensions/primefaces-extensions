@@ -22,6 +22,7 @@
 package org.primefaces.extensions.component.marktext;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import jakarta.faces.application.ResourceDependency;
@@ -31,8 +32,12 @@ import jakarta.faces.event.BehaviorEvent;
 import jakarta.faces.event.FacesEvent;
 
 import org.primefaces.extensions.event.MarkEvent;
+import org.primefaces.extensions.model.marktext.MarkPosition;
 import org.primefaces.extensions.util.Constants;
 import org.primefaces.util.MapBuilder;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 /**
  * <code>MarkText</code> component.
@@ -84,8 +89,17 @@ public class MarkText extends MarkTextBase {
             final String eventName = params.get(org.primefaces.util.Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
 
             if (DEFAULT_EVENT.equals(eventName)) {
-                final String value = params.get(getClientId(context) + "_value");
-                final MarkEvent markEvent = new MarkEvent(this, behaviorEvent.getBehavior(), value);
+                final String clientId = getClientId(context);
+                final String value = params.get(clientId + "_value");
+                final String matchedTermsJson = params.get(clientId + "_matchedTerms");
+                final String positionsJson = params.get(clientId + "_positions");
+
+                List<String> matchedTerms = new Gson().fromJson(matchedTermsJson, new TypeToken<List<String>>() {
+                }.getType());
+                List<MarkPosition> positions = new Gson().fromJson(positionsJson, new TypeToken<List<MarkPosition>>() {
+                }.getType());
+
+                final MarkEvent markEvent = new MarkEvent(this, behaviorEvent.getBehavior(), value, matchedTerms, positions);
                 markEvent.setPhaseId(event.getPhaseId());
                 super.queueEvent(markEvent);
             }

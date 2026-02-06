@@ -21,10 +21,13 @@
  */
 package org.primefaces.extensions.event;
 
+import java.util.List;
+
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.component.behavior.Behavior;
 
 import org.primefaces.event.AbstractAjaxBehaviorEvent;
+import org.primefaces.extensions.model.marktext.MarkPosition;
 
 /**
  * <code>MarkEvent</code> component.
@@ -37,13 +40,25 @@ public class MarkEvent extends AbstractAjaxBehaviorEvent {
     private static final long serialVersionUID = 1L;
 
     private final String value;
+    private final List<String> matchedTerms;
+    private final List<MarkPosition> positions;
 
-    public MarkEvent(UIComponent component, Behavior behavior, String value) {
+    public MarkEvent(UIComponent component, Behavior behavior, String value, List<String> matchedTerms, List<MarkPosition> positions) {
         super(component, behavior);
         this.value = value;
+        this.matchedTerms = matchedTerms;
+        this.positions = positions;
     }
 
     public String getValue() {
         return value;
+    }
+
+    public List<String> getMatchedTerms() {
+        return matchedTerms;
+    }
+
+    public List<MarkPosition> getPositions() {
+        return positions;
     }
 }

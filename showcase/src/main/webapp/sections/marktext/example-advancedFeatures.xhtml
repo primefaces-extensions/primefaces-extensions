@@ -39,10 +39,12 @@
     </h:panelGrid>
 
     <p:panel id="advancedPanel" header="Advanced Features - Multiple Terms with Custom Styles and Combined Properties">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <h:panelGroup id="advancedContent" layout="block">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </h:panelGroup>
     </p:panel>
 
-    <pe:markText id="markText1" for="advancedPanel" value="#{markTextController.searchTerm}" styleClass="marktext-highlight" caseSensitive="false" separateWordSearch="true" accuracy="partially"/>
-    <pe:markText id="markText2" for="advancedPanel" value="#{markTextController.searchTerm2}" styleClass="#{markTextController.customStyleClass}" caseSensitive="true" separateWordSearch="false" accuracy="exactly"/>
+    <pe:markText id="markText1" for="advancedContent" value="#{markTextController.searchTerm}" styleClass="marktext-highlight" caseSensitive="false" separateWordSearch="true" accuracy="partially"/>
+    <pe:markText id="markText2" for="advancedContent" value="#{markTextController.searchTerm2}" styleClass="#{markTextController.customStyleClass}" caseSensitive="true" separateWordSearch="false" accuracy="exactly"/>
     <!-- EXAMPLE-SOURCE-END -->
 </ui:composition>
