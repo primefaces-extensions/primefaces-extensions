@@ -1,0 +1,18 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="jakarta.faces.html"
+    xmlns:ui="jakarta.faces.facelets" xmlns:p="primefaces"
+    xmlns:pe="primefaces.extensions" xmlns:f="jakarta.faces.core">
+
+    <p:growl id="growl" showDetail="true" showSummary="true">
+        <p:autoUpdate />
+    </p:growl>
+
+<!-- EXAMPLE-SOURCE-START -->
+    <pe:kanban id="kanban"
+                widgetVar="kanbanWidget"
+                value="#{kanbanController.columns}"
+                draggable="true"
+                style="height:400px">
+        <p:ajax event="drop" listener="#{kanbanController.onDrop}" update="growl" />
+    </pe:kanban>
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

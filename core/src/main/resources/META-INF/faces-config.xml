@@ -211,6 +211,10 @@
         <component-class>org.primefaces.extensions.component.keynote.UIKeynoteItem</component-class>
     </component>
     <component>
+        <component-type>org.primefaces.extensions.component.Kanban</component-type>
+        <component-class>org.primefaces.extensions.component.kanban.Kanban</component-class>
+    </component>
+    <component>
         <component-type>org.primefaces.extensions.component.TimeAgo</component-type>
         <component-class>org.primefaces.extensions.component.timeago.TimeAgo</component-class>
     </component>
@@ -460,6 +464,11 @@
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.KeynoteItemRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.keynote.KeynoteItemRenderer</renderer-class>
+        </renderer>
+        <renderer>
+            <component-family>org.primefaces.extensions.component</component-family>
+            <renderer-type>org.primefaces.extensions.component.kanban.KanbanRenderer</renderer-type>
+            <renderer-class>org.primefaces.extensions.component.kanban.KanbanRenderer</renderer-class>
         </renderer>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>
