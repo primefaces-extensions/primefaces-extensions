@@ -68,7 +68,6 @@ public class Kanban extends UIComponentBase implements Widget, ClientBehaviorHol
         style, //
         styleClass, //
         draggable, //
-        dropEl, //
         addItemButton, //
         extender
     }
@@ -174,14 +173,6 @@ public class Kanban extends UIComponentBase implements Widget, ClientBehaviorHol
 
     public void setDraggable(final Boolean draggable) {
         getStateHelper().put(PropertyKeys.draggable, draggable);
-    }
-
-    public String getDropEl() {
-        return (String) getStateHelper().eval(PropertyKeys.dropEl, ".kanban-item");
-    }
-
-    public void setDropEl(final String dropEl) {
-        getStateHelper().put(PropertyKeys.dropEl, dropEl);
     }
 
     public Boolean getAddItemButton() {

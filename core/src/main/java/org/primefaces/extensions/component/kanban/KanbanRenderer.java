@@ -96,7 +96,6 @@ public class KanbanRenderer extends CoreRenderer {
 
         wb.init("ExtKanban", kanban);
         wb.attr("draggable", kanban.getDraggable());
-        wb.attr("dropEl", kanban.getDropEl());
         wb.attr("addItemButton", kanban.getAddItemButton());
         wb.nativeAttr("extender", kanban.getExtender());
         wb.attr("boards", data, true);

@@ -10502,14 +10502,6 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[CSS selector for draggable element. Default is '.kanban-item'.]]>
-            </description>
-            <name>dropEl</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
                 <![CDATA[Enable add item button on each board. Default is false.]]>
             </description>
             <name>addItemButton</name>
