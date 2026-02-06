@@ -50,22 +50,52 @@ PrimeFaces.widget.ExtMarkText = class extends PrimeFaces.widget.BaseWidget {
      */
     _initMark() {
         if (this.value && this.forValue) {
+            var $this = this;
             var selector = this.forValue;
             var targetElement = null;
-            
+
             try {
                 targetElement = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.jq, selector);
             } catch (e) {
                 // Fallback to direct ID selection if SearchExpressionFacade fails
                 targetElement = $(PrimeFaces.escapeClientId(selector));
             }
-            
+
             if (targetElement && targetElement.length > 0) {
+                var matchedTerms = [];
+                var positions = [];
+
                 var options = {
                     caseSensitive: this.caseSensitive,
                     separateWordSearch: this.separateWordSearch,
                     accuracy: this.accuracy,
-                    className: this.cfg.className
+                    className: this.cfg.className,
+                    each: function(element) {
+                        var term = $(element).text();
+                        if (matchedTerms.indexOf(term) === -1) {
+                            matchedTerms.push(term);
+                        }
+
+                        var range = document.createRange();
+                        range.selectNodeContents(targetElement[0]);
+                        range.setEndBefore(element);
+                        var start = range.toString().length;
+
+                        var $mark = $(element);
+                        var nearestParentWithId = $mark.closest('[id]');
+                        var nodeId = nearestParentWithId.length ? nearestParentWithId.attr('id') : null;
+
+                        positions.push({
+                            term: term,
+                            start: start,
+                            length: term.length,
+                            element: element.outerHTML,
+                            nodeId: nodeId
+                        });
+                    },
+                    done: function(totalMatches) {
+                        $this.jq.trigger('marktext.mark', [matchedTerms, positions]);
+                    }
                 };
 
                 this.markInstance = new Mark(targetElement[0]);
@@ -81,14 +111,19 @@ PrimeFaces.widget.ExtMarkText = class extends PrimeFaces.widget.BaseWidget {
     _bindEvents() {
         var $this = this;
 
-        if (this.cfg.behaviors) {
-            var markBehavior = this.cfg.behaviors['mark'];
-            if (markBehavior) {
-                this.jq.on('mark', function(e) {
-                    markBehavior.call($this, e);
-                });
+        this.jq.on('marktext.mark', function(e, matchedTerms, positions) {
+            if ($this.hasBehavior('mark')) {
+                var ext = {
+                    params: [
+                        { name: $this.id + '_value', value: $this.value },
+                        { name: $this.id + '_matchedTerms', value: JSON.stringify(matchedTerms) },
+                        { name: $this.id + '_positions', value: JSON.stringify(positions) }
+                    ]
+                };
+
+                $this.callBehavior('mark', ext);
             }
-        }
+        });
     }
 
     /**

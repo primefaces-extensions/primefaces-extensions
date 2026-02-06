@@ -72,6 +72,7 @@ public class MarkTextRenderer extends CoreRenderer {
         wb.attr("separateWordSearch", markText.getSeparateWordSearch());
         wb.attr("accuracy", markText.getAccuracy());
         wb.attr("className", markText.getStyleClass());
+        wb.attr("hasActionListener", markText.getActionListener() != null);
 
         encodeClientBehaviors(context, markText);
 
