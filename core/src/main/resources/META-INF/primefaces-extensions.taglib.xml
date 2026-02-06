@@ -3202,7 +3202,7 @@
             </description>
             <name>actionListener</name>
             <required>false</required>
-            <method-signature>void actionListener(jakarta.faces.event.ActionEvent)</method-signature>
+            <method-signature>void actionListener(org.primefaces.extensions.event.MarkEvent)</method-signature>
         </attribute>
     </tag>
     <tag>
