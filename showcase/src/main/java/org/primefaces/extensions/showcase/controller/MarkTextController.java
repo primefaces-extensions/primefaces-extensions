@@ -22,9 +22,17 @@
 package org.primefaces.extensions.showcase.controller;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+
+import org.primefaces.extensions.event.MarkEvent;
+import org.primefaces.extensions.model.marktext.MarkPosition;
 
 /**
  * MarkText Controller.
@@ -48,6 +56,25 @@ public class MarkTextController implements Serializable {
     private String searchTermSeparateWord = "search is there";
 
     private String searchTermAccuracy = "am";
+
+    private String searchTermUpdate = "lorem";
+
+    private String replaceTerm = "ipsum";
+
+    private String processedText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                + " Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+                + " Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+                + " Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                + "\n\nPrimeFaces Extensions provides additional components for PrimeFaces."
+                + " MarkText is a new component that highlights search terms within specified containers using mark.js.";
+
+    private List<String> lastMatchedTerms = new ArrayList<>();
+
+    private List<MarkPosition> lastPositions = new ArrayList<>();
+
+    private String lastMatchedTermsJson;
+
+    private String lastPositionsJson;
 
     public String getSearchTerm() {
         return searchTerm;
@@ -97,7 +124,73 @@ public class MarkTextController implements Serializable {
         this.searchTermAccuracy = searchTermAccuracy;
     }
 
-    public void updateSearch() {
-        // Update the mark when search term changes
+    public String getSearchTermUpdate() {
+        return searchTermUpdate;
+    }
+
+    public void setSearchTermUpdate(String searchTermUpdate) {
+        this.searchTermUpdate = searchTermUpdate;
+    }
+
+    public String getReplaceTerm() {
+        return replaceTerm;
+    }
+
+    public void setReplaceTerm(String replaceTerm) {
+        this.replaceTerm = replaceTerm;
+    }
+
+    public String getProcessedText() {
+        return processedText;
+    }
+
+    public void setProcessedText(String processedText) {
+        this.processedText = processedText;
+    }
+
+    public List<String> getLastMatchedTerms() {
+        return lastMatchedTerms;
+    }
+
+    public List<MarkPosition> getLastPositions() {
+        return lastPositions;
+    }
+
+    public void onHighlight(MarkEvent event) {
+        this.lastMatchedTerms = event.getMatchedTerms();
+        this.lastPositions = event.getPositions();
+
+        this.lastMatchedTermsJson = lastMatchedTerms.toString();
+        this.lastPositionsJson = lastPositions.stream()
+                    .map(MarkPosition::toString)
+                    .collect(Collectors.joining(", "));
+
+        FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Mark Event Triggered",
+                                "Found " + lastMatchedTerms.size() + " matched terms and " + lastPositions.size() + " positions."));
+    }
+
+    public String getProcessedTextFirstPart() {
+        return processedText.split("\n\n")[0];
+    }
+
+    public String getProcessedTextSecondPart() {
+        return processedText.split("\n\n")[1];
+    }
+
+    public String getLastMatchedTermsJson() {
+        return lastMatchedTermsJson;
+    }
+
+    public void setLastMatchedTermsJson(String lastMatchedTermsJson) {
+        this.lastMatchedTermsJson = lastMatchedTermsJson;
+    }
+
+    public String getLastPositionsJson() {
+        return lastPositionsJson;
+    }
+
+    public void setLastPositionsJson(String lastPositionsJson) {
+        this.lastPositionsJson = lastPositionsJson;
     }
 }

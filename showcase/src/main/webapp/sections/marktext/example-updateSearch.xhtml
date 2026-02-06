@@ -1,0 +1,47 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="jakarta.faces.html"
+        xmlns:ui="jakarta.faces.facelets"
+        xmlns:p="primefaces"
+        xmlns:pe="primefaces.extensions">
+
+    <p:messages id="messages" showSummary="true" showDetail="true">
+        <p:autoUpdate/>
+    </p:messages>
+
+    <style>
+        .marktext-highlight {
+            background-color: yellow !important;
+            color: black !important;
+        }
+        mark {
+            background-color: yellow !important;
+            color: black !important;
+        }
+    </style>
+
+    <!-- EXAMPLE-SOURCE-START -->
+    <h:panelGrid columns="2">
+        <h:outputText value="Search term:"/>
+        <p:inputText id="searchInput" value="#{markTextController.searchTermUpdate}" placeholder="Enter search term">
+            <p:ajax event="keyup" delay="300" update="markText" process="@this"/>
+        </p:inputText>
+    </h:panelGrid>
+
+    <p:panel id="searchContainer" header="Searchable Content" style="margin-top: 20px">
+        <p>#{markTextController.processedTextFirstPart}</p>
+        <p>#{markTextController.processedTextSecondPart}</p>
+    </p:panel>
+
+    <p:panel id="backendDataPanel" header="Backend Data from ActionListener" style="margin-top: 20px">
+        <h:outputText value="Last Matched Terms: #{empty markTextController.lastMatchedTerms ? 'No data received yet' : markTextController.lastMatchedTerms}" />
+        <br/>
+        <h:outputText value="Last Positions: #{empty markTextController.lastPositions ? 'No data received yet' : markTextController.lastPositions}" />
+    </p:panel>
+
+    <pe:markText id="markText" for="searchContainer" value="#{markTextController.searchTermUpdate}" 
+                 styleClass="marktext-highlight" caseSensitive="false">
+        <p:ajax event="mark" listener="#{markTextController.onHighlight}" update="backendDataPanel messages" />
+    </pe:markText>
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>
