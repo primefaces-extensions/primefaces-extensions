@@ -10429,6 +10429,105 @@ See showcase for an example. Default null.]]>
 
     <tag>
         <description>
+            <![CDATA[Kanban board component for visualizing workflow and managing tasks with drag-and-drop functionality.]]>
+        </description>
+        <tag-name>kanban</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.Kanban</component-type>
+            <renderer-type>org.primefaces.extensions.component.kanban.KanbanRenderer</renderer-type>
+        </component>
+        <attribute>
+            <description>
+                <![CDATA[Unique identifier of the component in a namingContainer.]]>
+            </description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+            </description>
+            <name>rendered</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[An EL expression referring to a server side UIComponent instance in a backing bean.]]>
+            </description>
+            <name>binding</name>
+            <required>false</required>
+            <type>jakarta.faces.component.UIComponent</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Name of the client side widget.]]>
+            </description>
+            <name>widgetVar</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[List of KanbanColumn objects representing the kanban board columns and items.]]>
+            </description>
+            <name>value</name>
+            <required>true</required>
+            <type>java.util.List</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Inline CSS style of the component.]]>
+            </description>
+            <name>style</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Style class of the component.]]>
+            </description>
+            <name>styleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Enable drag-and-drop functionality. Default is true.]]>
+            </description>
+            <name>draggable</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[CSS selector for draggable element. Default is '.kanban-item'.]]>
+            </description>
+            <name>dropEl</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Enable add item button on each board. Default is false.]]>
+            </description>
+            <name>addItemButton</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[JavaScript function to extend the widget configuration.]]>
+            </description>
+            <name>extender</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+
+    <tag>
+        <description>
             <![CDATA[TimeAgo renders automatically updating fuzzy timestamps.]]>
         </description>
         <tag-name>timeAgo</tag-name>
