@@ -344,6 +344,9 @@
 	}
 
 	function extractDigits(inputString) {
+		if (!inputString) {
+			return '';
+		}
 		// Use regular expression to match and capture digits
 		var matches = inputString.match(/\d+/g);
 
