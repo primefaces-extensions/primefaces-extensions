@@ -1,0 +1,111 @@
+/*
+ * Kanban Board CSS
+ * Based on jKanban concept
+ * Copyright (c) 2011-2025 PrimeFaces Extensions
+ */
+
+.kanban-container {
+    display: flex;
+    overflow-x: auto;
+    padding: 20px;
+    gap: 20px;
+}
+
+.kanban-board {
+    background-color: #e2e4e6;
+    border-radius: 3px;
+    min-width: 272px;
+    max-width: 272px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.kanban-board-header {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: transparent;
+}
+
+.kanban-drag {
+    min-height: 20px;
+    padding: 5px;
+}
+
+.kanban-item {
+    background-color: #fff;
+    border-radius: 3px;
+    box-shadow: 0 1px 0 rgba(9, 30, 66, 0.25);
+    cursor: pointer;
+    margin-bottom: 8px;
+    padding: 10px;
+    transition: background-color 0.3s;
+}
+
+.kanban-item:hover {
+    background-color: #f4f5f7;
+}
+
+.kanban-item-title {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.kanban-item-description {
+    font-size: 12px;
+    color: #5e6c84;
+    margin-top: 5px;
+}
+
+.kanban-item.gu-mirror {
+    opacity: 0.8;
+    cursor: move;
+}
+
+.kanban-item.gu-transit {
+    opacity: 0.5;
+}
+
+.kanban-board button {
+    background-color: transparent;
+    border: none;
+    color: #5e6c84;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 8px;
+    text-align: left;
+    width: 100%;
+    border-radius: 3px;
+    transition: background-color 0.3s;
+}
+
+.kanban-board button:hover {
+    background-color: rgba(9, 30, 66, 0.08);
+}
+
+/* Dragging styles */
+.gu-mirror {
+    position: fixed !important;
+    margin: 0 !important;
+    z-index: 9999 !important;
+    opacity: 0.8;
+    list-style-type: none;
+}
+
+.gu-hide {
+    display: none !important;
+}
+
+.gu-unselectable {
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+}
+
+.gu-transit {
+    opacity: 0.2;
+}
