@@ -90,8 +90,8 @@ public class SheetController implements Serializable {
                 final AssetType type) {
         for (int i = 0; i < count; i++) {
             final Asset asset = new Asset();
-            asset.setAssetId(RandomUtils.nextLong());
-            asset.setActive(RandomUtils.nextBoolean());
+            asset.setAssetId(RandomUtils.secure().randomLong());
+            asset.setActive(RandomUtils.secure().randomBoolean());
             asset.setPlatform(platform);
             asset.setPlatformArch(arch);
             asset.setHostName(type.toString().toLowerCase() + i + ".example.lan");
@@ -99,10 +99,10 @@ public class SheetController implements Serializable {
             asset.setIcon("<i class='fas fa-info-circle' style='color:cornflowerblue' />");
             asset.setPurchaseDate(new Date());
             asset.setPurchaseTime(new Date());
-            asset.setValue1(RandomUtils.nextInt(1, 1000));
+            asset.setValue1(RandomUtils.secure().randomInt(1, 1000));
             asset.setPassword(RandomStringUtils.randomAlphabetic(6));
             asset.setPurchasePrice(
-                        BigDecimal.valueOf(RandomUtils.nextDouble(1.11, 999.99) * (RandomUtils.nextBoolean() ? -1 : 1))
+                        BigDecimal.valueOf(RandomUtils.secure().randomDouble(1.11, 999.99) * (RandomUtils.secure().randomBoolean() ? -1 : 1))
                                     .setScale(2, RoundingMode.HALF_UP));
             getAssets().add(asset);
         }
