@@ -35,7 +35,7 @@ import jakarta.faces.event.ActionEvent;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.primefaces.extensions.event.BeforeShowEvent;
 import org.primefaces.extensions.event.CloseEvent;
 import org.primefaces.extensions.event.TimeSelectEvent;
@@ -163,7 +163,7 @@ public class TimePickerController implements Serializable {
     }
 
     public void changeLocale(final ActionEvent ae) {
-        if (StringUtils.equalsIgnoreCase(locale, "pt_BR")) {
+        if (Strings.CI.equals(locale, "pt_BR")) {
             locale = "en_US";
         }
         else {
