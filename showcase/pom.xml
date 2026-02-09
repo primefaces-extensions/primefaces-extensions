@@ -246,6 +246,12 @@
                                     <includes>
                                         <include>**/*.css</include>
                                         <include>**/*.js</include>
+                                        <include>**/*.png</include>
+                                        <include>**/*.jpg</include>
+                                        <include>**/*.jpeg</include>
+                                        <include>**/*.gif</include>
+                                        <include>**/*.ico</include>
+                                        <include>**/*.bmp</include>
                                     </includes>
                                 </resource>
                             </resources>
