@@ -100,7 +100,7 @@ public class SheetController implements Serializable {
             asset.setPurchaseDate(new Date());
             asset.setPurchaseTime(new Date());
             asset.setValue1(RandomUtils.secure().randomInt(1, 1000));
-            asset.setPassword(RandomStringUtils.randomAlphabetic(6));
+            asset.setPassword(RandomStringUtils.secure().nextAlphabetic(6));
             asset.setPurchasePrice(
                         BigDecimal.valueOf(RandomUtils.secure().randomDouble(1.11, 999.99) * (RandomUtils.secure().randomBoolean() ? -1 : 1))
                                     .setScale(2, RoundingMode.HALF_UP));

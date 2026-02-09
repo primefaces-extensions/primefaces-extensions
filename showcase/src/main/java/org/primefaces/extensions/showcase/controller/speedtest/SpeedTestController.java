@@ -59,7 +59,7 @@ public class SpeedTestController implements Serializable {
     private String generatePayloadFile() {
         // Generate random test string
         final Integer size2Generate = ONEMB * sizeInMB;
-        return RandomStringUtils.randomAlphanumeric(size2Generate);
+        return RandomStringUtils.secure().nextAlphanumeric(size2Generate);
     }
 
     public void downloadPayloadFile() {
