@@ -28,7 +28,7 @@ import jakarta.faces.event.AjaxBehaviorEvent;
 /**
  * Event for Kanban drag-and-drop operations.
  *
- * @author @jxmai / last modified by $Author$
+ * @author @jxmai
  * @version $Revision$
  * @since 16.0.0
  */

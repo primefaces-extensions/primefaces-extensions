@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * Model class for a Kanban column.
  *
- * @author @jxmai / last modified by $Author$
+ * @author @jxmai
  * @version $Revision$
  * @since 16.0.0
  */

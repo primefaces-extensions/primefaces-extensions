@@ -35,7 +35,7 @@ import org.primefaces.extensions.model.kanban.KanbanItem;
 /**
  * Test for Kanban model classes.
  *
- * @author @jxmai / last modified by $Author$
+ * @author @jxmai
  * @version $Revision$
  * @since 16.0.0
  */

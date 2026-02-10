@@ -40,7 +40,7 @@ import org.primefaces.util.Constants;
 /**
  * <code>Kanban</code> component.
  *
- * @author @jxmai / last modified by Melloware
+ * @author @jxmai
  * @version $Revision$
  * @since 16.0.0
  */

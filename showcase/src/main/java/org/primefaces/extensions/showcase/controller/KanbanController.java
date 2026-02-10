@@ -38,7 +38,7 @@ import org.primefaces.extensions.model.kanban.KanbanItem;
 /**
  * KanbanController
  *
- * @author @jxmai / Melloware
+ * @author @jxmai
  * @since 16.0.0
  */
 @Named
