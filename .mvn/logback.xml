@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- Suppress CycloneDX schema validation warnings -->
+    <!-- See: https://github.com/CycloneDX/cyclonedx-maven-plugin/issues/564 -->
+    <!-- See: https://github.com/CycloneDX/cyclonedx-core-java/issues/280 -->
+    <logger name="com.networknt.schema" level="ERROR"/>
+</configuration>
