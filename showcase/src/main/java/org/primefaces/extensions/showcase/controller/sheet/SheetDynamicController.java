@@ -55,12 +55,12 @@ public class SheetDynamicController implements Serializable {
     private void addRows(final int count) {
         for (int i = 0; i < count; i++) {
             final DynaSheetRow row = new DynaSheetRow();
-            row.setId(RandomUtils.nextLong());
+            row.setId(RandomUtils.secure().randomLong());
             row.setReadOnly(false);
             final Integer hourOfDay = Integer.valueOf(i);
             hoursOfDay.add(hourOfDay);
             for (int j = 0; j < count; j++) {
-                row.getCells().add(DynaSheetCell.create(Integer.valueOf(j), RandomUtils.nextInt(1, 1000)));
+                row.getCells().add(DynaSheetCell.create(Integer.valueOf(j), RandomUtils.secure().randomInt(1, 1000)));
             }
             getSheetRows().add(row);
         }
