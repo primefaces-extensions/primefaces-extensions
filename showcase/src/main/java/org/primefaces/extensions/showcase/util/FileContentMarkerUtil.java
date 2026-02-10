@@ -47,11 +47,11 @@ public class FileContentMarkerUtil {
 
     public static String readFileContent(final String fileName, final InputStream is) {
         try {
-            if (StringUtils.endsWithIgnoreCase(fileName, ".java")) {
+            if (Strings.CI.endsWith(fileName, ".java")) {
                 return readFileContent(is, JAVA_SETTINGS);
             }
 
-            if (StringUtils.endsWithIgnoreCase(fileName, ".xhtml")) {
+            if (Strings.CI.endsWith(fileName, ".xhtml")) {
                 return readFileContent(is, XHTML_SETTINGS);
             }
 
@@ -130,7 +130,7 @@ public class FileContentMarkerUtil {
                 continue;
             }
 
-            if (StringUtils.contains(line, marker)) {
+            if (Strings.CS.contains(line, marker)) {
                 return true;
             }
         }
