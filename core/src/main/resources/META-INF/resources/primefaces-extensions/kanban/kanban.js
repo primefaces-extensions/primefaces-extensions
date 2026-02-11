@@ -247,13 +247,13 @@
  * PrimeFaces Extensions Kanban Widget
  */
 if (PrimeFaces.widget) {
-    PrimeFaces.widget.ExtKanban = PrimeFaces.widget.BaseWidget.extend({
+    PrimeFaces.widget.ExtKanban = class extends PrimeFaces.widget.BaseWidget {
 
-        init: function(cfg) {
-            this._super(cfg);
+        init(cfg) {
+            super.init(cfg);
             this.cfg = cfg;
             this.id = cfg.id;
-            this.boards = cfg.boards ? JSON.parse(cfg.boards) : [];
+            this.boards = typeof cfg.boards === 'string' ? JSON.parse(cfg.boards) : (cfg.boards || []);
 
             var $this = this;
 
@@ -272,9 +272,9 @@ if (PrimeFaces.widget) {
             if (this.cfg.extender) {
                 this.cfg.extender.call(this);
             }
-        },
+        }
 
-        onDrop: function(itemId, sourceColumnId, targetColumnId, newPosition) {
+        onDrop(itemId, sourceColumnId, targetColumnId, newPosition) {
             var $this = this;
             var options = {
                 source: this.id,
@@ -291,5 +291,5 @@ if (PrimeFaces.widget) {
                 this.callBehavior('drop', options);
             }
         }
-    });
+    };
 }
