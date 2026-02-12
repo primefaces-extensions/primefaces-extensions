@@ -41,7 +41,6 @@ import org.primefaces.util.Constants;
  * <code>Kanban</code> component.
  *
  * @author @jxmai
- * @version $Revision$
  * @since 16.0.0
  */
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
