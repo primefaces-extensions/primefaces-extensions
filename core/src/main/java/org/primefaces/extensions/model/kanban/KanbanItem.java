@@ -27,7 +27,6 @@ import java.io.Serializable;
  * Model class for a Kanban item.
  *
  * @author @jxmai
- * @version $Revision$
  * @since 16.0.0
  */
 public class KanbanItem implements Serializable {
