@@ -29,7 +29,6 @@ import java.util.List;
  * Model class for a Kanban column.
  *
  * @author @jxmai
- * @version $Revision$
  * @since 16.0.0
  */
 public class KanbanColumn implements Serializable {
