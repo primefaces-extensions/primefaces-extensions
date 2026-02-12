@@ -51,7 +51,7 @@ import org.primefaces.util.Constants;
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "kanban/kanban.js")
 public class Kanban extends UIComponentBase implements Widget, ClientBehaviorHolder {
 
-    public static final String STYLE_CLASS = "ui-kanban ";
+    public static final String STYLE_CLASS = "ui-kanban";
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Kanban";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
