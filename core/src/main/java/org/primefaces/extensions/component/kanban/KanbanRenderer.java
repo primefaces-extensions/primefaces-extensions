@@ -42,7 +42,6 @@ import org.primefaces.util.WidgetBuilder;
  * Renderer for the <code>Kanban</code> component.
  *
  * @author @jxmai
- * @version $Revision$
  * @since 16.0.0
  */
 public class KanbanRenderer extends CoreRenderer {
