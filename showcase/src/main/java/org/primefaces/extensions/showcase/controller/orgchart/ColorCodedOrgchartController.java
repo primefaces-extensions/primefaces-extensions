@@ -23,8 +23,8 @@ package org.primefaces.extensions.showcase.controller.orgchart;
 
 import java.io.Serializable;
 
-import jakarta.faces.view.ViewScoped;
-import jakarta.inject.Named;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 import org.primefaces.extensions.component.orgchart.DefaultOrgChartNode;
 import org.primefaces.extensions.component.orgchart.OrgChartNode;
