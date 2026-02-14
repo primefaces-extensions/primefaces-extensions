@@ -5,6 +5,7 @@
     <h:form id="colorForm">
         <p:growl id="growl" showDetail="true" showSummary="true" />
 
+<!-- EXAMPLE-SOURCE-START -->
         <style type="text/css">
             .orgchart .gold-level .title { background-color: #DAA520; }
             .orgchart .gold-level .content { border-color: #DAA520; }
@@ -18,7 +19,6 @@
             .orgchart .purple-level .content { border-color: #8B008B; }
         </style>
 
-<!-- EXAMPLE-SOURCE-START -->
         <pe:orgchart id="orgChart"
                      widgetVar="colorWidget"
                      value="#{colorCodedOrgchartController.colorCodedChart}"
