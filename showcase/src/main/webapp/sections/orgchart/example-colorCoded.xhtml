@@ -1,0 +1,44 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="jakarta.faces.html"
+    xmlns:ui="jakarta.faces.facelets" xmlns:p="primefaces"
+    xmlns:pe="primefaces.extensions" xmlns:f="jakarta.faces.core">
+
+    <h:form id="colorForm">
+        <p:growl id="growl" showDetail="true" showSummary="true" />
+
+        <style type="text/css">
+            .orgchart .gold-level .title { background-color: #DAA520; }
+            .orgchart .gold-level .content { border-color: #DAA520; }
+            .orgchart .green-level .title { background-color: #228B22; }
+            .orgchart .green-level .content { border-color: #228B22; }
+            .orgchart .blue-level .title { background-color: #4169E1; }
+            .orgchart .blue-level .content { border-color: #4169E1; }
+            .orgchart .red-level .title { background-color: #DC143C; }
+            .orgchart .red-level .content { border-color: #DC143C; }
+            .orgchart .purple-level .title { background-color: #8B008B; }
+            .orgchart .purple-level .content { border-color: #8B008B; }
+        </style>
+
+<!-- EXAMPLE-SOURCE-START -->
+        <pe:orgchart id="orgChart"
+                    widgetVar="colorWidget"
+                    value="#{orgchartController.colorCodedChart}"
+                    nodeId="id"
+                    nodeContent="title"
+                    nodeTitle="name"
+                    style="height:400px">
+        </pe:orgchart>
+<!-- EXAMPLE-SOURCE-END -->
+
+        <p:panel header="How it works" style="margin-top:10px">
+            <p>Each node has a <strong>className</strong> property that adds CSS classes to the node.
+            Use these classes to style different types of nodes (e.g., by department, role, or status).</p>
+            <ul>
+                <li><span style="color:#DAA520">■</span> gold-level - Executive Team</li>
+                <li><span style="color:#228B22">■</span> green-level - Middle Management</li>
+                <li><span style="color:#4169E1">■</span> blue-level - Tech Staff</li>
+                <li><span style="color:#DC143C">■</span> red-level - Sales Staff</li>
+                <li><span style="color:#8B008B">■</span> purple-level - Support Staff</li>
+            </ul>
+        </p:panel>
+    </h:form>
+</ui:composition>

@@ -90,4 +90,28 @@ public class OrgchartController implements Serializable {
         this.direction = direction;
     }
 
+    public OrgChartNode getColorCodedChart() {
+        DefaultOrgChartNode root = new DefaultOrgChartNode("1", "Leadership", "Executive Team");
+        root.setClassName("gold-level");
+
+        DefaultOrgChartNode mgmt = new DefaultOrgChartNode("2", "Management", "Middle Management");
+        mgmt.setClassName("green-level");
+
+        DefaultOrgChartNode staff1 = new DefaultOrgChartNode("3", "Engineering", "Tech Staff");
+        staff1.setClassName("blue-level");
+
+        DefaultOrgChartNode staff2 = new DefaultOrgChartNode("4", "Sales", "Sales Staff");
+        staff2.setClassName("red-level");
+
+        DefaultOrgChartNode staff3 = new DefaultOrgChartNode("5", "Support", "Support Staff");
+        staff3.setClassName("purple-level");
+
+        mgmt.addChild(staff1);
+        mgmt.addChild(staff2);
+        mgmt.addChild(staff3);
+        root.addChild(mgmt);
+
+        return root;
+    }
+
 }
