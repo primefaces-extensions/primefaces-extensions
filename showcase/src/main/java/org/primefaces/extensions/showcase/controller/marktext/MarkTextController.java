@@ -19,7 +19,7 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package org.primefaces.extensions.showcase.controller;
+package org.primefaces.extensions.showcase.controller.marktext;
 
 import java.io.Serializable;
 import java.util.ArrayList;
