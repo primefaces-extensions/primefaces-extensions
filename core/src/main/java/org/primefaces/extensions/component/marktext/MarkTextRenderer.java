@@ -31,6 +31,8 @@ import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.WidgetBuilder;
 
+import com.google.gson.Gson;
+
 /**
  * <code>MarkText</code> component.
  *
@@ -73,6 +75,9 @@ public class MarkTextRenderer extends CoreRenderer {
         wb.attr("accuracy", markText.getAccuracy());
         wb.attr("className", markText.getStyleClass());
         wb.attr("hasActionListener", markText.getActionListener() != null);
+        if (markText.getSynonyms() != null) {
+            wb.nativeAttr("synonyms", new Gson().toJson(markText.getSynonyms()));
+        }
 
         encodeClientBehaviors(context, markText);
 

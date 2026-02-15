@@ -1,0 +1,40 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <p:messages id="messages" showSummary="true" showDetail="true">
+        <p:autoUpdate/>
+    </p:messages>
+
+    <style>
+        .marktext-highlight {
+            background-color: yellow !important;
+            color: black !important;
+        }
+        mark {
+            background-color: yellow !important;
+            color: black !important;
+        }
+    </style>
+
+    <!-- EXAMPLE-SOURCE-START -->
+    <h:panelGrid columns="3">
+        <h:outputText value="Search term:"/>
+        <p:inputText id="searchInput" value="#{synonymsMarkTextController.searchTerm}" placeholder="Enter search term">
+             <p:ajax event="keyup" delay="500" update="searchContainer markText"/>
+        </p:inputText>
+        <p:commandButton value="Highlight" update="searchContainer markText" icon="pi pi-search"/>
+    </h:panelGrid>
+
+    <p:panel id="searchContainer" header="Searchable Content" style="margin-top: 20px">
+        <h:panelGroup id="searchContent" layout="block">
+            #{synonymsMarkTextController.processedText}
+        </h:panelGroup>
+    </p:panel>
+
+    <pe:markText id="markText" for="searchContent" value="#{synonymsMarkTextController.searchTerm}" synonyms="#{synonymsMarkTextController.synonyms}" styleClass="marktext-highlight" actionListener="#{synonymsMarkTextController.onHighlight}"/>
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>
