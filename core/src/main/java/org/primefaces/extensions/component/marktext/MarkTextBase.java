@@ -51,7 +51,8 @@ public abstract class MarkTextBase extends UIComponentBase implements Widget, Cl
         caseSensitive,
         separateWordSearch,
         accuracy,
-        actionListener
+        actionListener,
+        synonyms
         //@formatter:on
     }
 
@@ -134,5 +135,13 @@ public abstract class MarkTextBase extends UIComponentBase implements Widget, Cl
 
     public void setActionListener(final MethodExpression actionListener) {
         getStateHelper().put(PropertyKeys.actionListener, actionListener);
+    }
+
+    public Object getSynonyms() {
+        return getStateHelper().eval(PropertyKeys.synonyms, null);
+    }
+
+    public void setSynonyms(final Object synonyms) {
+        getStateHelper().put(PropertyKeys.synonyms, synonyms);
     }
 }
