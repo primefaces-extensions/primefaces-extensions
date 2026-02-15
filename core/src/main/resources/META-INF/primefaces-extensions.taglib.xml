@@ -3198,6 +3198,14 @@
         </attribute>
         <attribute>
             <description>
+                <![CDATA[Synonyms to search for. Can be a Map or a JSON string.]]>
+            </description>
+            <name>synonyms</name>
+            <required>false</required>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>
                 <![CDATA[Method expression for action listener called when highlighting occurs.]]>
             </description>
             <name>actionListener</name>

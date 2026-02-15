@@ -2,26 +2,28 @@
       xmlns:h="jakarta.faces.html"
       xmlns:f="jakarta.faces.core"
       xmlns:ui="jakarta.faces.facelets"
-      xmlns:showcase="primefaces.extensions.showcase">
+      xmlns:showcase="primefaces.extensions.showcase"
+      xmlns:pe="primefaces.extensions">
 <ui:composition template="/templates/showcaseLayout.xhtml">
     <ui:define name="centerContent">
         <f:facet name="header">
-            <h:outputText value="MarkText - Case Sensitivity"/>
+            <h:outputText value="MarkText - Synonyms"/>
         </f:facet>
         <h:panelGroup layout="block" styleClass="centerContent">
-            Demonstrates the caseSensitive property. When set to true, search is case-sensitive; when false, it is case-insensitive.
+            Demonstrates the synonyms property, which allows highlighting synonymous terms bidirectionally. 
+            For example, searching for "one" will also highlight "1", and vice versa, based on the provided synonyms map.
         </h:panelGroup>
 
         <h:panelGroup layout="block" styleClass="centerExample">
-            <ui:include src="/sections/marktext/example-caseSensitivity.xhtml"/>
+            <ui:include src="/sections/marktext/example-synonyms.xhtml"/>
         </h:panelGroup>
 
         <ui:decorate template="/templates/twoTabsDecorator.xhtml">
             <ui:define name="contentTab1">
-                ${showcase:getFileContent('/sections/marktext/example-caseSensitivity.xhtml')}
+                ${showcase:getFileContent('/sections/marktext/example-synonyms.xhtml')}
             </ui:define>
             <ui:define name="contentTab2">
-                ${showcase:getFileContent('/org/primefaces/extensions/showcase/controller/marktext/MarkTextController.java')}
+                ${showcase:getFileContent('/org/primefaces/extensions/showcase/controller/marktext/SynonymsMarkTextController.java')}
             </ui:define>
         </ui:decorate>
     </ui:define>

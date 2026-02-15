@@ -50,7 +50,6 @@ import com.google.gson.reflect.TypeToken;
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = "primefaces", name = "components.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "mark/mark.js")
-@ResourceDependency(library = Constants.LIBRARY, name = "mark/marktext.js")
 public class MarkText extends MarkTextBase {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.MarkText";
