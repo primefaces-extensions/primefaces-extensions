@@ -3206,6 +3206,14 @@
         </attribute>
         <attribute>
             <description>
+                <![CDATA[Whether to highlight text that spans across multiple HTML elements. Default is false.]]>
+            </description>
+            <name>acrossElements</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
                 <![CDATA[Method expression for action listener called when highlighting occurs.]]>
             </description>
             <name>actionListener</name>

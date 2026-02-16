@@ -52,7 +52,8 @@ public abstract class MarkTextBase extends UIComponentBase implements Widget, Cl
         separateWordSearch,
         accuracy,
         actionListener,
-        synonyms
+        synonyms,
+        acrossElements
         //@formatter:on
     }
 
@@ -143,5 +144,13 @@ public abstract class MarkTextBase extends UIComponentBase implements Widget, Cl
 
     public void setSynonyms(final Object synonyms) {
         getStateHelper().put(PropertyKeys.synonyms, synonyms);
+    }
+
+    public Boolean getAcrossElements() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.acrossElements, false);
+    }
+
+    public void setAcrossElements(final Boolean acrossElements) {
+        getStateHelper().put(PropertyKeys.acrossElements, acrossElements);
     }
 }
