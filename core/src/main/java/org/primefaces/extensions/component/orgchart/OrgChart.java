@@ -56,7 +56,7 @@ public class OrgChart extends OrgChartBaseImpl {
 
     @Override
     public void processDecodes(final FacesContext fc) {
-        if (isSelfRequest(fc)) {
+        if (isAjaxRequestSource(fc)) {
             decode(fc);
         }
         else {
@@ -68,7 +68,7 @@ public class OrgChart extends OrgChartBaseImpl {
     public void queueEvent(final FacesEvent event) {
         final FacesContext fc = FacesContext.getCurrentInstance();
 
-        if (isSelfRequest(fc) && event instanceof AjaxBehaviorEvent) {
+        if (isAjaxRequestSource(fc) && event instanceof AjaxBehaviorEvent) {
             final Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
             final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
             final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
@@ -104,11 +104,5 @@ public class OrgChart extends OrgChartBaseImpl {
         else {
             super.queueEvent(event);
         }
-    }
-
-    private boolean isSelfRequest(final FacesContext context) {
-        return getClientId(context)
-                    .equals(context.getExternalContext().getRequestParameterMap().get(
-                                Constants.RequestParams.PARTIAL_SOURCE_PARAM));
     }
 }
