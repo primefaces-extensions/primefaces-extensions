@@ -23,8 +23,8 @@ package org.primefaces.extensions.showcase.controller.marktext;
 
 import java.io.Serializable;
 
-import jakarta.faces.view.ViewScoped;
-import jakarta.inject.Named;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 /**
  * Across Elements MarkText Controller.
