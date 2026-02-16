@@ -1,0 +1,58 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <p:messages id="messages" showSummary="true" showDetail="true">
+        <p:autoUpdate/>
+    </p:messages>
+
+    <style>
+        .marktext-highlight {
+            background-color: yellow !important;
+            color: black !important;
+        }
+        mark {
+            background-color: yellow !important;
+            color: black !important;
+        }
+    </style>
+
+    <!-- EXAMPLE-SOURCE-START -->
+    <h:panelGrid columns="4">
+        <h:outputText value="Search term:"/>
+        <p:inputText id="searchInput" value="#{acrossElementsMarkTextController.searchTermAcrossElements}" placeholder="Enter search term">
+             <p:ajax event="keyup" delay="500" update="searchContainer markText"/>
+        </p:inputText>
+        <h:outputText value="Across Elements:"/>
+        <p:selectBooleanCheckbox value="#{acrossElementsMarkTextController.acrossElements}">
+            <p:ajax update="searchContainer markText"/>
+        </p:selectBooleanCheckbox>
+        <p:commandButton value="Highlight" update="searchContainer markText" icon="pi pi-search"/>
+    </h:panelGrid>
+
+    <p:panel id="searchContainer" header="Searchable Content with Spanning Elements" style="margin-top: 20px">
+        <h:panelGroup id="searchContent" layout="block">
+            <p>
+                This example demonstrates how <code>acrossElements="true"</code> works. 
+                By default, <code>separateWordSearch</code> is <code>true</code>, which means "PrimeFaces Extensions" would be found as two separate words.
+                However, in this example, we have set <code>separateWordSearch="false"</code> to search for the <strong>exact phrase</strong>.
+            </p>
+            <p>
+                Try searching for "<strong>PrimeFaces Extensions</strong>". 
+                Below, it is rendered as <code>&lt;strong&gt;PrimeFaces&lt;/strong&gt; &lt;em&gt;Extensions&lt;/em&gt;</code>.
+                Without <code>acrossElements="true"</code>, this would not be found as an exact phrase because it is split across two HTML nodes.
+            </p>
+            <hr/>
+            <p><strong>PrimeFaces</strong> <em>Extensions</em> provides additional components for PrimeFaces.</p>
+            <p>The <strong>MarkText</strong> component uses the <em>mark.js library</em> to highlight search terms.</p>
+            <p>With <code>acrossElements</code> enabled, phrases like <strong>across</strong> elements can be highlighted even if they are split by tags.</p>
+        </h:panelGroup>
+    </p:panel>
+
+    <pe:markText id="markText" for="searchContent" value="#{acrossElementsMarkTextController.searchTermAcrossElements}" 
+                 styleClass="marktext-highlight" acrossElements="#{acrossElementsMarkTextController.acrossElements}" separateWordSearch="false"/>
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>
