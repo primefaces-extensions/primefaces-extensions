@@ -27,6 +27,7 @@ import org.primefaces.cdk.api.FacesBehaviorEvent;
 import org.primefaces.cdk.api.FacesBehaviorEvents;
 import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
+import org.primefaces.component.api.StyleAware;
 import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.OrgChartClickEvent;
 import org.primefaces.extensions.event.OrgChartDropEvent;
@@ -43,7 +44,7 @@ import org.primefaces.extensions.event.OrgChartDropEvent;
                         defaultEvent = true),
             @FacesBehaviorEvent(name = "drop", event = OrgChartDropEvent.class, description = "Fires when a node is dropped after dragging.")
 })
-public abstract class OrgChartBase extends UIData implements Widget {
+public abstract class OrgChartBase extends UIData implements Widget, StyleAware {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.OrgChart";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -109,12 +110,6 @@ public abstract class OrgChartBase extends UIData implements Widget {
 
     @Property(description = "The node title property name.", defaultValue = "name")
     public abstract String getNodeTitle();
-
-    @Property(description = "Inline style of the component.")
-    public abstract String getStyle();
-
-    @Property(description = "Style class of the component.")
-    public abstract String getStyleClass();
 
     @Property(description = "Name of javascript function to extend the widget.")
     public abstract String getExtender();
