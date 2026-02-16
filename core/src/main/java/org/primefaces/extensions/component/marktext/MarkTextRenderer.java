@@ -73,6 +73,7 @@ public class MarkTextRenderer extends CoreRenderer {
         wb.attr("caseSensitive", markText.getCaseSensitive());
         wb.attr("separateWordSearch", markText.getSeparateWordSearch());
         wb.attr("accuracy", markText.getAccuracy());
+        wb.attr("acrossElements", markText.getAcrossElements());
         wb.attr("className", markText.getStyleClass());
         wb.attr("hasActionListener", markText.getActionListener() != null);
         if (markText.getSynonyms() != null) {

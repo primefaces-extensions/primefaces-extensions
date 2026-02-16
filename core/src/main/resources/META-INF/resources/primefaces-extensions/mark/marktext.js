@@ -19,6 +19,7 @@ PrimeFaces.widget.ExtMarkText = class extends PrimeFaces.widget.BaseWidget {
         this.separateWordSearch = cfg.separateWordSearch;
         this.accuracy = cfg.accuracy;
         this.synonyms = cfg.synonyms ? (typeof cfg.synonyms === 'string' ? JSON.parse(cfg.synonyms) : cfg.synonyms) : {};
+        this.acrossElements = cfg.acrossElements !== undefined ? cfg.acrossElements : false;
 
         this.markInstance = null;
 
@@ -72,6 +73,7 @@ PrimeFaces.widget.ExtMarkText = class extends PrimeFaces.widget.BaseWidget {
                     accuracy: this.accuracy,
                     className: this.cfg.className,
                     synonyms: this.synonyms,
+                    acrossElements: this.acrossElements,
                     each: function(element) {
                         var term = $(element).text();
                         if (matchedTerms.indexOf(term) === -1) {
