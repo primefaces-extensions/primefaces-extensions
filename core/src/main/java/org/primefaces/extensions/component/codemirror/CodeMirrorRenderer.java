@@ -30,6 +30,7 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
 import jakarta.faces.convert.Converter;
 import jakarta.faces.event.PhaseId;
+import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.extensions.event.CompleteEvent;
@@ -46,21 +47,20 @@ import org.primefaces.util.WidgetBuilder;
  * @version $Revision$
  * @since 0.3
  */
-public class CodeMirrorRenderer extends InputRenderer {
+@FacesRenderer(rendererType = CodeMirror.DEFAULT_RENDERER, componentFamily = CodeMirror.COMPONENT_FAMILY)
+public class CodeMirrorRenderer extends InputRenderer<CodeMirror> {
 
     @Override
-    public void decode(final FacesContext facesContext, final UIComponent component) {
-        final CodeMirror codeMirror = (CodeMirror) component;
-
-        if (!shouldDecode(codeMirror)) {
+    public void decode(final FacesContext facesContext, final CodeMirror component) {
+        if (!shouldDecode(component)) {
             return;
         }
 
         // set value
-        final String clientId = codeMirror.getClientId(facesContext);
+        final String clientId = component.getClientId(facesContext);
         final Map<String, String> params = facesContext.getExternalContext().getRequestParameterMap();
         if (params.containsKey(clientId)) {
-            codeMirror.setSubmittedValue(params.get(clientId));
+            component.setSubmittedValue(params.get(clientId));
         }
 
         // decode behaviors
@@ -74,25 +74,23 @@ public class CodeMirrorRenderer extends InputRenderer {
             final int column = Integer.parseInt(params.get(clientId + "_column"));
 
             final CompleteEvent autoCompleteEvent = new CompleteEvent(
-                        codeMirror, token, context, line, column);
+                        component, token, context, line, column);
             autoCompleteEvent.setPhaseId(PhaseId.APPLY_REQUEST_VALUES);
-            codeMirror.queueEvent(autoCompleteEvent);
+            component.queueEvent(autoCompleteEvent);
         }
     }
 
     @Override
-    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-        final CodeMirror codeMirror = (CodeMirror) component;
-
+    public void encodeEnd(final FacesContext context, final CodeMirror component) throws IOException {
         final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-        final String token = params.get(codeMirror.getClientId(context) + "_token");
+        final String token = params.get(component.getClientId(context) + "_token");
 
         if (token != null) {
-            encodeSuggestions(context, codeMirror, codeMirror.getSuggestions());
+            encodeSuggestions(context, component, component.getSuggestions());
         }
         else {
-            encodeMarkup(context, codeMirror);
-            encodeScript(context, codeMirror);
+            encodeMarkup(context, component);
+            encodeScript(context, component);
         }
     }
 

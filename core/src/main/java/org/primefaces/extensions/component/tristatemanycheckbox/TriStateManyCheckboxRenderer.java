@@ -33,6 +33,7 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
 import jakarta.faces.convert.Converter;
 import jakarta.faces.model.SelectItem;
+import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.component.selectmanycheckbox.SelectManyCheckbox;
 import org.primefaces.extensions.util.Attrs;
@@ -49,6 +50,7 @@ import org.primefaces.util.WidgetBuilder;
  * @version $Revision$
  * @since 0.3
  */
+@FacesRenderer(rendererType = TriStateManyCheckbox.DEFAULT_RENDERER, componentFamily = TriStateManyCheckbox.COMPONENT_FAMILY)
 public class TriStateManyCheckboxRenderer extends SelectManyRenderer<TriStateManyCheckbox> {
 
     @Override
@@ -334,7 +336,7 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer<TriStateMan
     }
 
     @Override
-    protected Object getValues(TriStateManyCheckbox component) {
+    protected Object getValues(final TriStateManyCheckbox component) {
         final Object value = component.getValue();
 
         if (value == null) {

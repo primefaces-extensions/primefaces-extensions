@@ -26,20 +26,31 @@ import java.util.logging.Logger;
 import jakarta.faces.FacesException;
 import jakarta.faces.context.FacesContext;
 
-import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
-import org.primefaces.component.api.AbstractPrimeHtmlInputTextArea;
-import org.primefaces.component.api.Widget;
 import org.primefaces.context.PrimeApplicationContext;
 import org.primefaces.extensions.util.HtmlSanitizer;
 
 /**
- * Abstract Editor for SunEditor and Markdown Editor.
+ * Interface for components that support HTML sanitization features and security options. Provides properties and default utility methods for configuring and
+ * enforcing HTML sanitization on user-provided content, including configuration for what HTML elements and features are allowed.
+ * <p>
+ * Implementations can use {@link #checkSecurity(FacesContext)} to ensure the sanitizer library is available, and {@link #sanitizeHtml(FacesContext, String)} to
+ * sanitize HTML input according to the component's configuration.
+ * </p>
+ * <h2>Example Usage</h2>
+ * 
+ * <pre>{@code
+ * public class MyEditor extends UIInput implements SanitizerAware {
+ *     // Implement the abstract property methods.
+ * }
+ * }</pre>
+ *
+ * @author PrimeFaces Extensions Team
+ * @since 16.0.0
  */
-@FacesComponentBase
-public abstract class AbstractEditorInputTextArea extends AbstractPrimeHtmlInputTextArea implements Widget {
 
-    private static final Logger LOGGER = Logger.getLogger(AbstractEditorInputTextArea.class.getName());
+public interface SanitizerAware {
+    static final Logger LOGGER = Logger.getLogger(SanitizerAware.class.getName());
 
     @Property(description = "Secure the component with the HTML Sanitizer library on the classpath.", defaultValue = "true")
     public abstract boolean isSecure();
@@ -77,7 +88,7 @@ public abstract class AbstractEditorInputTextArea extends AbstractPrimeHtmlInput
      *
      * @param context the FacesContext
      */
-    public void checkSecurity(FacesContext context) {
+    default void checkSecurity(FacesContext context) {
         boolean sanitizerAvailable = PrimeApplicationContext.getCurrentInstance(context).getEnvironment()
                     .isHtmlSanitizerAvailable();
         if (this.isSecure() && !sanitizerAvailable) {
@@ -95,7 +106,7 @@ public abstract class AbstractEditorInputTextArea extends AbstractPrimeHtmlInput
      * @param value the value to sanitize
      * @return the sanitized value
      */
-    public String sanitizeHtml(FacesContext context, String value) {
+    default String sanitizeHtml(FacesContext context, String value) {
         String result = value;
         if (this.isSecure()
                     && PrimeApplicationContext.getCurrentInstance(context).getEnvironment().isHtmlSanitizerAvailable()) {

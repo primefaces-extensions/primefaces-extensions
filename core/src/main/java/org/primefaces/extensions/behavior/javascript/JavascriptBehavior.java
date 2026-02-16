@@ -22,9 +22,9 @@
 package org.primefaces.extensions.behavior.javascript;
 
 import jakarta.faces.application.ResourceDependency;
+import jakarta.faces.component.behavior.FacesBehavior;
 
-import org.primefaces.extensions.behavior.base.AbstractBehavior;
-import org.primefaces.extensions.behavior.base.BehaviorAttribute;
+import org.primefaces.cdk.api.FacesBehaviorInfo;
 import org.primefaces.extensions.util.Constants;
 
 /**
@@ -34,57 +34,20 @@ import org.primefaces.extensions.util.Constants;
  * @version $Revision$
  * @since 0.2
  */
+@FacesBehavior(JavascriptBehavior.BEHAVIOR_ID)
+@FacesBehaviorInfo(description = "Behavior to intercept a Javascript event to prevent the AJAX from firing.")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.js")
-public class JavascriptBehavior extends AbstractBehavior {
+public class JavascriptBehavior extends JavascriptBehaviorBaseImpl {
 
     public static final String BEHAVIOR_ID = "org.primefaces.extensions.behavior.JavascriptBehavior";
     private static final String DEFAULT_RENDERER = "org.primefaces.extensions.behavior.JavascriptBehaviorRenderer";
 
-    @SuppressWarnings("java:S115")
-    public enum PropertyKeys implements BehaviorAttribute {
-
-        disabled(Boolean.class), execute(String.class);
-
-        private final Class<?> expectedType;
-
-        PropertyKeys(Class<?> expectedType) {
-            this.expectedType = expectedType;
-        }
-
-        @Override
-        public Class<?> getExpectedType() {
-            return expectedType;
-        }
-
-    }
-
     @Override
     public String getRendererType() {
         return DEFAULT_RENDERER;
-    }
-
-    @Override
-    protected BehaviorAttribute[] getAllAttributes() {
-        return PropertyKeys.values();
-    }
-
-    public final String getExecute() {
-        return (String) getStateHelper().eval(PropertyKeys.execute, null);
-    }
-
-    public void setExecute(final String execute) {
-        getStateHelper().put(PropertyKeys.execute, execute);
-    }
-
-    public boolean isDisabled() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.disabled, Boolean.FALSE);
-    }
-
-    public void setDisabled(boolean disabled) {
-        getStateHelper().put(PropertyKeys.disabled, disabled);
     }
 
 }

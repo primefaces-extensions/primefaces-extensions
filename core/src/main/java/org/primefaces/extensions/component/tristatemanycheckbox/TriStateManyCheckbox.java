@@ -27,15 +27,15 @@ import java.util.Map;
 
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.application.ResourceDependency;
+import jakarta.faces.component.FacesComponent;
 import jakarta.faces.component.UISelectMany;
-import jakarta.faces.component.html.HtmlSelectManyCheckbox;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.validator.Validator;
 import jakarta.faces.validator.ValidatorException;
 
-import org.primefaces.component.api.Widget;
+import org.primefaces.cdk.api.FacesComponentInfo;
+import org.primefaces.extensions.util.Constants;
 import org.primefaces.extensions.util.MessageFactory;
-import org.primefaces.util.Constants;
 
 /**
  * TriStateManyCheckbox
@@ -44,115 +44,17 @@ import org.primefaces.util.Constants;
  * @version $Revision$
  * @since 0.3
  */
+@FacesComponent(value = TriStateManyCheckbox.COMPONENT_TYPE, namespace = TriStateManyCheckbox.COMPONENT_FAMILY)
+@FacesComponentInfo(description = "Tri-State multiple checkbox component.")
 @ResourceDependency(library = "primefaces", name = "components.css")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
-@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "primefaces-extensions.js")
-@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "tristatemanycheckbox/tristatemanycheckbox.js")
-public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widget {
+@ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.js")
+@ResourceDependency(library = Constants.LIBRARY, name = "tristatemanycheckbox/tristatemanycheckbox.js")
+public class TriStateManyCheckbox extends TriStateManyCheckboxBaseImpl {
 
     public static final String UI_ICON = "ui-icon ";
-
-    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.TriStateManyCheckbox";
-    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-    private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.";
-
-    /**
-     * PropertyKeys
-     *
-     * @author Oleg Varaksin / last modified by $Author$
-     * @version $Revision$
-     */
-    @SuppressWarnings("java:S115")
-    protected enum PropertyKeys {
-
-        //@formatter:off CHECKSTYLE:OFF
-        widgetVar,
-        layout,
-        stateOneIcon,
-        stateTwoIcon,
-        stateThreeIcon,
-        stateOneTitle,
-        stateTwoTitle,
-        stateThreeTitle
-        //@formatter:on CHECKSTYLE:ON
-    }
-
-    public TriStateManyCheckbox() {
-        setRendererType(DEFAULT_RENDERER);
-    }
-
-    @Override
-    public String getFamily() {
-        return COMPONENT_FAMILY;
-    }
-
-    public String getWidgetVar() {
-        return (String) getStateHelper().eval(TriStateManyCheckbox.PropertyKeys.widgetVar, null);
-    }
-
-    public void setWidgetVar(final String widgetVar) {
-        getStateHelper().put(TriStateManyCheckbox.PropertyKeys.widgetVar, widgetVar);
-    }
-
-    @Override
-    public String getLayout() {
-        return (String) getStateHelper().eval(TriStateManyCheckbox.PropertyKeys.layout, null);
-    }
-
-    @Override
-    public void setLayout(final String layout) {
-        getStateHelper().put(TriStateManyCheckbox.PropertyKeys.layout, layout);
-    }
-
-    public String getStateOneIcon() {
-        return (String) getStateHelper().eval(TriStateManyCheckbox.PropertyKeys.stateOneIcon, null);
-    }
-
-    public void setStateOneIcon(final String stateOneIcon) {
-        getStateHelper().put(TriStateManyCheckbox.PropertyKeys.stateOneIcon, stateOneIcon);
-    }
-
-    public String getStateTwoIcon() {
-        return (String) getStateHelper().eval(TriStateManyCheckbox.PropertyKeys.stateTwoIcon, null);
-    }
-
-    public void setStateTwoIcon(final String stateTwoIcon) {
-        getStateHelper().put(TriStateManyCheckbox.PropertyKeys.stateTwoIcon, stateTwoIcon);
-    }
-
-    public String getStateThreeIcon() {
-        return (String) getStateHelper().eval(TriStateManyCheckbox.PropertyKeys.stateThreeIcon, null);
-    }
-
-    public void setStateThreeIcon(final String stateThreeIcon) {
-        getStateHelper().put(TriStateManyCheckbox.PropertyKeys.stateThreeIcon, stateThreeIcon);
-    }
-
-    public String getStateOneTitle() {
-        return (String) getStateHelper().eval(TriStateManyCheckbox.PropertyKeys.stateOneTitle, Constants.EMPTY_STRING);
-    }
-
-    public void setStateOneTitle(final String stateOneTitle) {
-        getStateHelper().put(TriStateManyCheckbox.PropertyKeys.stateOneTitle, stateOneTitle);
-    }
-
-    public String getStateTwoTitle() {
-        return (String) getStateHelper().eval(TriStateManyCheckbox.PropertyKeys.stateTwoTitle, Constants.EMPTY_STRING);
-    }
-
-    public void setStateTwoTitle(final String stateTwoTitle) {
-        getStateHelper().put(TriStateManyCheckbox.PropertyKeys.stateTwoTitle, stateTwoTitle);
-    }
-
-    public String getStateThreeTitle() {
-        return (String) getStateHelper().eval(TriStateManyCheckbox.PropertyKeys.stateThreeTitle, Constants.EMPTY_STRING);
-    }
-
-    public void setStateThreeTitle(final String stateThreeTitle) {
-        getStateHelper().put(TriStateManyCheckbox.PropertyKeys.stateThreeTitle, stateThreeTitle);
-    }
 
     @Override
     protected void validateValue(final FacesContext context, final Object value) {

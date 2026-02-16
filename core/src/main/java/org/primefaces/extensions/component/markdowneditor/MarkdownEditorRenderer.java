@@ -28,6 +28,7 @@ import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
 import jakarta.faces.convert.Converter;
+import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.component.inputtextarea.InputTextarea;
 import org.primefaces.renderkit.InputRenderer;
@@ -40,74 +41,72 @@ import org.primefaces.util.WidgetBuilder;
  *
  * @since 14.0.0
  */
-public class MarkdownEditorRenderer extends InputRenderer {
+@FacesRenderer(rendererType = MarkdownEditor.DEFAULT_RENDERER, componentFamily = MarkdownEditor.COMPONENT_FAMILY)
+public class MarkdownEditorRenderer extends InputRenderer<MarkdownEditor> {
 
     @Override
-    public void decode(FacesContext context, UIComponent component) {
-        MarkdownEditor editor = (MarkdownEditor) component;
-
-        if (!shouldDecode(editor)) {
+    public void decode(FacesContext context, MarkdownEditor component) {
+        if (!shouldDecode(component)) {
             return;
         }
 
         // set value
-        String clientId = editor.getClientId(context);
+        String clientId = component.getClientId(context);
         Map<String, String> params = context.getExternalContext().getRequestParameterMap();
         if (params.containsKey(clientId)) {
-            String value = editor.sanitizeHtml(context, params.get(clientId));
-            editor.setSubmittedValue(value);
+            String value = component.sanitizeHtml(context, params.get(clientId));
+            component.setSubmittedValue(value);
         }
 
         // decode behaviors
-        decodeBehaviors(context, editor);
+        decodeBehaviors(context, component);
     }
 
     @Override
-    public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
-        MarkdownEditor editor = (MarkdownEditor) component;
-        editor.checkSecurity(context);
-        encodeMarkup(context, editor);
-        encodeScript(context, editor);
+    public void encodeEnd(FacesContext context, MarkdownEditor component) throws IOException {
+        component.checkSecurity(context);
+        encodeMarkup(context, component);
+        encodeScript(context, component);
     }
 
-    protected void encodeScript(FacesContext context, MarkdownEditor editor) throws IOException {
+    protected void encodeScript(FacesContext context, MarkdownEditor component) throws IOException {
         WidgetBuilder wb = getWidgetBuilder(context);
-        wb.init("ExtMarkdownEditor", editor)
-                    .attr("minHeight", editor.getMinHeight(), "300px")
-                    .attr("maxHeight", editor.getMaxHeight(), null)
-                    .attr("mode", editor.getMode())
-                    .attr("toolbar", editor.getToolbar())
-                    .attr("placeholder", editor.getPlaceholder())
-                    .attr("direction", ComponentUtils.isRTL(context, editor) ? "rtl" : "ltr", "ltr")
-                    .attr("sideBySideFullscreen", editor.getSideBySideFullscreen(), true)
-                    .attr("indentWithTabs", editor.getIndentWithTabs(), true)
-                    .attr("lineNumbers", editor.getLineNumbers(), false)
-                    .attr("promptURLs", editor.getPromptURLs(), false)
-                    .attr("tabSize", editor.getTabSize(), 2)
-                    .nativeAttr("extender", editor.getExtender());
+        wb.init("ExtMarkdownEditor", component)
+                    .attr("minHeight", component.getMinHeight(), "300px")
+                    .attr("maxHeight", component.getMaxHeight(), null)
+                    .attr("mode", component.getMode())
+                    .attr("toolbar", component.getToolbar())
+                    .attr("placeholder", component.getPlaceholder())
+                    .attr("direction", ComponentUtils.isRTL(context, component) ? "rtl" : "ltr", "ltr")
+                    .attr("sideBySideFullscreen", component.isSideBySideFullscreen(), true)
+                    .attr("indentWithTabs", component.isIndentWithTabs(), true)
+                    .attr("lineNumbers", component.isLineNumbers(), false)
+                    .attr("promptURLs", component.isPromptURLs(), false)
+                    .attr("tabSize", component.getTabSize(), 2)
+                    .nativeAttr("extender", component.getExtender());
 
-        encodeClientBehaviors(context, editor);
+        encodeClientBehaviors(context, component);
 
         wb.finish();
     }
 
-    protected void encodeMarkup(FacesContext context, MarkdownEditor editor) throws IOException {
+    protected void encodeMarkup(FacesContext context, MarkdownEditor component) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
-        String clientId = editor.getClientId(context);
+        String clientId = component.getClientId(context);
 
         writer.startElement("textarea", null);
         writer.writeAttribute("id", clientId, null);
         writer.writeAttribute("name", clientId, null);
-        writer.writeAttribute("class", createStyleClass(editor, InputTextarea.STYLE_CLASS), "styleClass");
+        writer.writeAttribute("class", createStyleClass(component, InputTextarea.STYLE_CLASS), "styleClass");
         writer.writeAttribute("style", "display:none", "style");
 
-        renderAccessibilityAttributes(context, editor);
-        renderRTLDirection(context, editor);
-        renderPassThruAttributes(context, editor, HTML.TEXTAREA_ATTRS_WITHOUT_EVENTS);
-        renderDomEvents(context, editor, HTML.INPUT_TEXT_EVENTS);
-        renderValidationMetadata(context, editor);
+        renderAccessibilityAttributes(context, component);
+        renderRTLDirection(context, component);
+        renderPassThruAttributes(context, component, HTML.TEXTAREA_ATTRS_WITHOUT_EVENTS);
+        renderDomEvents(context, component, HTML.INPUT_TEXT_EVENTS);
+        renderValidationMetadata(context, component);
 
-        String valueToRender = ComponentUtils.getValueToRender(context, editor);
+        String valueToRender = ComponentUtils.getValueToRender(context, component);
         if (valueToRender != null) {
             writer.writeText(valueToRender, "value");
         }

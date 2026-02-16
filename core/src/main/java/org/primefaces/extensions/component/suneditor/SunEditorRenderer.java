@@ -32,6 +32,7 @@ import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
 import jakarta.faces.convert.Converter;
+import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.util.ComponentUtils;
@@ -45,22 +46,21 @@ import org.primefaces.util.WidgetBuilder;
  * @author Matthieu Valente
  * @since 12.0.6
  */
-public class SunEditorRenderer extends InputRenderer {
+@FacesRenderer(rendererType = SunEditor.DEFAULT_RENDERER, componentFamily = SunEditor.COMPONENT_FAMILY)
+public class SunEditorRenderer extends InputRenderer<SunEditor> {
 
     @Override
-    public void decode(final FacesContext context, final UIComponent component) {
-        final SunEditor editor = (SunEditor) component;
-
-        if (!shouldDecode(editor)) {
+    public void decode(final FacesContext context, final SunEditor component) {
+        if (!shouldDecode(component)) {
             return;
         }
 
         // set value
-        final String clientId = editor.getClientId(context);
+        final String clientId = component.getClientId(context);
         final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
         if (params.containsKey(clientId)) {
-            String value = editor.sanitizeHtml(context, params.get(clientId));
-            editor.setSubmittedValue(value);
+            String value = component.sanitizeHtml(context, params.get(clientId));
+            component.setSubmittedValue(value);
         }
 
         // decode behaviors
@@ -68,20 +68,19 @@ public class SunEditorRenderer extends InputRenderer {
     }
 
     @Override
-    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-        final SunEditor editor = (SunEditor) component;
-        editor.checkSecurity(context);
-        encodeMarkup(context, editor);
-        encodeScript(context, editor);
+    public void encodeEnd(final FacesContext context, final SunEditor component) throws IOException {
+        component.checkSecurity(context);
+        encodeMarkup(context, component);
+        encodeScript(context, component);
     }
 
-    protected void encodeMarkup(final FacesContext context, final SunEditor editor) throws IOException {
+    protected void encodeMarkup(final FacesContext context, final SunEditor component) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
-        final String clientId = editor.getClientId(context);
-        String style = editor.getStyle();
-        String styleClass = createStyleClass(editor, SunEditor.EDITOR_CLASS);
+        final String clientId = component.getClientId(context);
+        String style = component.getStyle();
+        String styleClass = createStyleClass(component, SunEditor.EDITOR_CLASS);
 
-        writer.startElement("textarea", editor);
+        writer.startElement("textarea", component);
         writer.writeAttribute("id", clientId, null);
         writer.writeAttribute("name", clientId, null);
         writer.writeAttribute("class", styleClass, null);
@@ -89,16 +88,16 @@ public class SunEditorRenderer extends InputRenderer {
             writer.writeAttribute("style", style, null);
         }
 
-        renderAccessibilityAttributes(context, editor);
-        renderPassThruAttributes(context, editor, HTML.TEXTAREA_ATTRS_WITHOUT_EVENTS);
-        renderDomEvents(context, editor, HTML.INPUT_TEXT_EVENTS);
-        renderValidationMetadata(context, editor);
+        renderAccessibilityAttributes(context, component);
+        renderPassThruAttributes(context, component, HTML.TEXTAREA_ATTRS_WITHOUT_EVENTS);
+        renderDomEvents(context, component, HTML.INPUT_TEXT_EVENTS);
+        renderValidationMetadata(context, component);
 
-        String valueToRender = editor.sanitizeHtml(context, ComponentUtils.getValueToRender(context, editor));
+        String valueToRender = component.sanitizeHtml(context, ComponentUtils.getValueToRender(context, component));
         if (valueToRender != null) {
 
             // #1886 bug in sanitizer for font-family that has to be fixed
-            if (editor.isSecure()) {
+            if (component.isSecure()) {
                 valueToRender = fixFontFamily(valueToRender);
             }
             // #1639 do not escape as its already been sanitized above, and we want to keep exact formatting
@@ -158,21 +157,21 @@ public class SunEditorRenderer extends InputRenderer {
         return result.toString();
     }
 
-    protected void encodeScript(final FacesContext context, final SunEditor editor) throws IOException {
+    protected void encodeScript(final FacesContext context, final SunEditor component) throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context);
-        wb.init("ExtSunEditor", editor)
-                    .attr("width", editor.getWidth())
-                    .attr("height", editor.getHeight())
-                    .attr("mode", editor.getMode(), "classic")
-                    .attr("rtl", ComponentUtils.isRTL(context, editor), false)
-                    .attr("locale", editor.calculateLocale().toString())
-                    .attr("readOnly", editor.isReadonly(), false)
-                    .attr("disabled", editor.isDisabled(), false)
-                    .attr("strictMode", editor.isStrictMode(), true)
-                    .attr("toolbar", editor.getToolbar())
-                    .nativeAttr("extender", editor.getExtender());
+        wb.init("ExtSunEditor", component)
+                    .attr("width", component.getWidth())
+                    .attr("height", component.getHeight())
+                    .attr("mode", component.getMode(), "classic")
+                    .attr("rtl", ComponentUtils.isRTL(context, component), false)
+                    .attr("locale", component.calculateLocale().toString())
+                    .attr("readOnly", component.isReadonly(), false)
+                    .attr("disabled", component.isDisabled(), false)
+                    .attr("strictMode", component.isStrictMode(), true)
+                    .attr("toolbar", component.getToolbar())
+                    .nativeAttr("extender", component.getExtender());
 
-        encodeClientBehaviors(context, editor);
+        encodeClientBehaviors(context, component);
         wb.finish();
     }
 
