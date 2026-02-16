@@ -21,16 +21,14 @@
  */
 package org.primefaces.extensions.component.suneditor;
 
-import java.util.Collection;
 import java.util.Locale;
 
 import jakarta.faces.application.ResourceDependency;
-import jakarta.faces.component.behavior.ClientBehaviorHolder;
+import jakarta.faces.component.FacesComponent;
 import jakarta.faces.context.FacesContext;
 
-import org.primefaces.extensions.component.api.AbstractEditorInputTextArea;
+import org.primefaces.cdk.api.FacesComponentInfo;
 import org.primefaces.extensions.util.Constants;
-import org.primefaces.util.LangUtils;
 import org.primefaces.util.LocaleUtils;
 
 /**
@@ -39,93 +37,19 @@ import org.primefaces.util.LocaleUtils;
  * @author Matthieu Valente
  * @since 12.0.6
  */
-
+@FacesComponent(value = SunEditor.COMPONENT_TYPE, namespace = SunEditor.COMPONENT_FAMILY)
+@FacesComponentInfo(description = "SunEditor WYSIWYG editor component.")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "suneditor/suneditor.css")
 @ResourceDependency(library = Constants.LIBRARY, name = "suneditor/suneditor.js")
-public class SunEditor extends AbstractEditorInputTextArea implements ClientBehaviorHolder {
+public class SunEditor extends SunEditorBaseImpl {
+
     public static final String EDITOR_CLASS = "ui-suneditor";
-    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.SunEditor";
-    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-    private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.SunEditorRenderer";
-
-    private static final Collection<String> EVENT_NAMES = LangUtils.unmodifiableList("change", "scroll", "mousedown", "click", "input", "keydown", "keyup",
-                "focus", "blur", "paste", "copy", "cut", "drop", "save", "initialize");
-
-    @SuppressWarnings("java:S115")
-    protected enum PropertyKeys {
-        // @formatter:off
-        width,
-        height,
-        mode,
-        locale,
-        strictMode
-        // @formatter:on
-    }
 
     private Locale appropriateLocale;
-
-    public SunEditor() {
-        setRendererType(DEFAULT_RENDERER);
-    }
-
-    @Override
-    public Collection<String> getEventNames() {
-        return EVENT_NAMES;
-    }
-
-    @Override
-    public String getDefaultEventName() {
-        return "change";
-    }
-
-    @Override
-    public String getFamily() {
-        return COMPONENT_FAMILY;
-    }
-
-    public String getWidth() {
-        return (String) getStateHelper().eval(PropertyKeys.width, "100%");
-    }
-
-    public void setWidth(String width) {
-        getStateHelper().put(PropertyKeys.width, width);
-    }
-
-    public String getHeight() {
-        return (String) getStateHelper().eval(PropertyKeys.height, "auto");
-    }
-
-    public void setHeight(String height) {
-        getStateHelper().put(PropertyKeys.height, height);
-    }
-
-    public String getMode() {
-        return (String) getStateHelper().eval(PropertyKeys.mode, "classic");
-    }
-
-    public void setMode(String mode) {
-        getStateHelper().put(PropertyKeys.mode, mode);
-    }
-
-    public Object getLocale() {
-        return getStateHelper().eval(PropertyKeys.locale, null);
-    }
-
-    public void setLocale(final Object locale) {
-        getStateHelper().put(PropertyKeys.locale, locale);
-    }
-
-    public boolean isStrictMode() {
-        return (boolean) getStateHelper().eval(PropertyKeys.strictMode, true);
-    }
-
-    public void setStrictMode(boolean strictMode) {
-        getStateHelper().put(PropertyKeys.strictMode, strictMode);
-    }
 
     public Locale calculateLocale() {
         if (appropriateLocale == null) {
@@ -136,11 +60,10 @@ public class SunEditor extends AbstractEditorInputTextArea implements ClientBeha
     }
 
     @Override
-    public Object saveState(FacesContext context) {
+    public Object saveState(final FacesContext context) {
         // reset component for MyFaces view pooling
         appropriateLocale = null;
 
         return super.saveState(context);
     }
-
 }

@@ -25,7 +25,7 @@ import jakarta.faces.view.BehaviorHolderAttachedObjectHandler;
 import jakarta.faces.view.facelets.BehaviorConfig;
 import jakarta.faces.view.facelets.TagHandler;
 
-import org.primefaces.extensions.behavior.base.AbstractBehaviorHandler;
+import org.primefaces.cdk.api.behavior.PrimeClientBehaviorHandler;
 
 /**
  * {@link BehaviorHolderAttachedObjectHandler} and {@link TagHandler} implementation for the {@link JavascriptBehavior}.
@@ -34,7 +34,7 @@ import org.primefaces.extensions.behavior.base.AbstractBehaviorHandler;
  * @version $Revision$
  * @since 0.2
  */
-public class JavascriptBehaviorHandler extends AbstractBehaviorHandler<JavascriptBehavior> {
+public class JavascriptBehaviorHandler extends PrimeClientBehaviorHandler<JavascriptBehavior> {
 
     public JavascriptBehaviorHandler(final BehaviorConfig config) {
         super(config);

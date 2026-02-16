@@ -19,24 +19,18 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package org.primefaces.extensions.behavior.base;
+package org.primefaces.extensions.behavior.javascript;
 
-public interface BehaviorAttribute {
+import org.primefaces.cdk.api.FacesBehaviorBase;
+import org.primefaces.cdk.api.Property;
+import org.primefaces.cdk.api.behavior.PrimeClientBehavior;
 
-    /**
-     * Holds the type which ought to be passed to
-     * {@link jakarta.faces.view.facelets.TagAttribute#getObject(jakarta.faces.view.facelets.FaceletContext, java.lang.Class) } when creating the behavior.
-     * 
-     * @return the expectedType the expected object type
-     */
-    Class<?> getExpectedType();
+@FacesBehaviorBase
+public abstract class JavascriptBehaviorBase extends PrimeClientBehavior {
 
-    /**
-     * Gets name of tag attribute
-     * 
-     * @return name of tag attribute
-     */
-    default String getName() {
-        return toString();
-    }
+    @Property(description = "Disables the confirmation behavior.", defaultValue = "false")
+    public abstract boolean isDisabled();
+
+    @Property(description = "The javascript which should be executed.")
+    public abstract String getExecute();
 }

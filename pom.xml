@@ -120,6 +120,12 @@
                 <version>${primefaces.core.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.primefaces</groupId>
+                <artifactId>primefaces-cdk-api</artifactId>
+                <version>${primefaces.core.version}</version>
+                <optional>true</optional>
+            </dependency>
+            <dependency>
                 <groupId>org.primefaces.extensions</groupId>
                 <artifactId>resources-monacoeditor</artifactId>
                 <version>${project.version}</version>
@@ -146,7 +152,7 @@
                 <version>${commons-lang3.version}</version>
             </dependency>
             <!-- Java API's -->
-			<dependency>
+            <dependency>
                 <groupId>org.apache.tomee</groupId>
                 <artifactId>jakartaee-api</artifactId>
                 <version>10.0.1</version>
@@ -212,10 +218,6 @@
     </dependencyManagement>
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-            </plugin>
             <plugin>
                 <groupId>com.diffplug.spotless</groupId>
                 <artifactId>spotless-maven-plugin</artifactId>
@@ -447,7 +449,7 @@
                     <version>2.46.1</version>
                     <configuration>
                         <java>
-                            <removeUnusedImports />
+                            <removeUnusedImports/>
                             <importOrder>
                                 <order>java,jakarta,javax,org,com,</order>
                             </importOrder>
@@ -513,10 +515,6 @@
             <build>
                 <defaultGoal>clean deploy</defaultGoal>
                 <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-checkstyle-plugin</artifactId>
-                    </plugin>
                     <plugin>
                         <groupId>com.diffplug.spotless</groupId>
                         <artifactId>spotless-maven-plugin</artifactId>
