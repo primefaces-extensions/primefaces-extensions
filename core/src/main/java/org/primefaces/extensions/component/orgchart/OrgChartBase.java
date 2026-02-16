@@ -61,9 +61,6 @@ public abstract class OrgChartBase extends UIData implements Widget {
     @Property(description = "The node id property name.", defaultValue = "id")
     public abstract String getNodeId();
 
-    @Property(description = "Name of widget variable in client side to access the widget instance.")
-    public abstract String getWidgetVar();
-
     @Property(description = "The node content property name.", defaultValue = "title")
     public abstract String getNodeContent();
 
