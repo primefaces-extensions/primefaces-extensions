@@ -46,7 +46,7 @@ import org.primefaces.util.WidgetBuilder;
  * @version $Revision$
  * @since 7.0
  */
-public class OrgChartRenderer extends CoreRenderer {
+public class OrgChartRenderer extends CoreRenderer<OrgChart> {
 
     private static final String JSON_CHILDREN = "children";
 
