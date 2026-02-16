@@ -93,7 +93,7 @@ public abstract class OrgChartBase extends UIData implements Widget, StyleAware 
     @Property(description = "Enable dragging nodes on the chart.", defaultValue = "false")
     public abstract Boolean getDraggable();
 
-    @Property(description = "CSS class to apply to the chart container.", defaultValue = "")
+    @Property(description = "CSS class to apply to the chart container.")
     public abstract String getChartClass();
 
     @Property(description = "Enable zooming on the chart.", defaultValue = "false")
