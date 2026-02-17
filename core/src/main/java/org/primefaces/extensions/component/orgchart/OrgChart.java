@@ -32,7 +32,6 @@ import jakarta.faces.event.FacesEvent;
 import org.primefaces.cdk.api.FacesComponentInfo;
 import org.primefaces.extensions.event.OrgChartClickEvent;
 import org.primefaces.extensions.event.OrgChartDropEvent;
-import org.primefaces.util.Constants;
 
 /**
  * <code>orgchart</code> component.
@@ -66,32 +65,24 @@ public class OrgChart extends OrgChartBaseImpl {
 
     @Override
     public void queueEvent(final FacesEvent event) {
-        final FacesContext fc = FacesContext.getCurrentInstance();
+        if (isAjaxBehaviorEventSource(event)) {
+            FacesContext context = event.getFacesContext();
+            Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+            String clientId = getClientId(context);
+            AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
 
-        if (isAjaxRequestSource(fc) && event instanceof AjaxBehaviorEvent) {
-            final Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
-            final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
-            final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
-            final String clientId = getClientId(fc);
-
-            if (OrgChartClickEvent.NAME.equals(eventName)) {
-
+            if (isAjaxBehaviorEvent(event, ClientBehaviorEventKeys.click)) {
                 final String id = params.get(clientId + "_nodeId");
-
                 final String hierarchyStr = params.get(clientId + "_hierarchy");
-
                 final OrgChartClickEvent orgChartClickEvent = new OrgChartClickEvent(this,
                             behaviorEvent.getBehavior(), id, hierarchyStr);
                 orgChartClickEvent.setPhaseId(event.getPhaseId());
                 super.queueEvent(orgChartClickEvent);
             }
-            else if (OrgChartDropEvent.NAME.equals(eventName)) {
+            else if (isAjaxBehaviorEvent(event, ClientBehaviorEventKeys.drop)) {
                 final String hierarchyStr = params.get(clientId + "_hierarchy");
-
                 final String draggedNodeId = params.get(clientId + "_draggedNodeId");
-
                 final String droppedZoneId = params.get(clientId + "_droppedZoneId");
-
                 final OrgChartDropEvent orgChartDropEvent = new OrgChartDropEvent(this,
                             behaviorEvent.getBehavior(), hierarchyStr, draggedNodeId, droppedZoneId);
                 orgChartDropEvent.setPhaseId(event.getPhaseId());

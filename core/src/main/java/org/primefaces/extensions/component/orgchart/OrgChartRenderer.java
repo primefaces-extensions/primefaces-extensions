@@ -50,27 +50,27 @@ public class OrgChartRenderer extends CoreRenderer<OrgChart> {
     private static final String JSON_CHILDREN = "children";
 
     @Override
-    public void encodeEnd(final FacesContext context, final OrgChart orgChart) throws IOException {
-        encodeMarkup(context, orgChart);
-        encodeScript(context, orgChart);
+    public void encodeEnd(final FacesContext context, final OrgChart component) throws IOException {
+        encodeMarkup(context, component);
+        encodeScript(context, component);
     }
 
     @Override
-    public void decode(final FacesContext context, final OrgChart orgChart) {
-        decodeNodeStructure(context, orgChart);
-        decodeBehaviors(context, orgChart);
+    public void decode(final FacesContext context, final OrgChart component) {
+        decodeNodeStructure(context, component);
+        decodeBehaviors(context, component);
     }
 
-    private static void decodeNodeStructure(final FacesContext context, final OrgChart orgChart) {
+    private static void decodeNodeStructure(final FacesContext context, final OrgChart component) {
         final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
 
-        final String hierarchyStr = params.get(orgChart.getClientId() + "_hierarchy");
+        final String hierarchyStr = params.get(component.getClientId() + "_hierarchy");
 
         if (null != hierarchyStr && !hierarchyStr.isEmpty()) {
             final JSONObject hierarchy = new JSONObject(hierarchyStr);
 
-            final ValueExpression ve = orgChart.getValueExpression("value");
-            OrgChartNode root = (OrgChartNode) ve.getValue(context.getELContext());
+            final ValueExpression ve = component.getValueExpression("value");
+            OrgChartNode root = ve.getValue(context.getELContext());
 
             final List<OrgChartNode> orgChartNodes = OrgChartHelper.getAllNodesTraverseFromRoot(root);
 
@@ -114,66 +114,66 @@ public class OrgChartRenderer extends CoreRenderer<OrgChart> {
 
     }
 
-    private void encodeMarkup(final FacesContext context, final OrgChart orgChart) throws IOException {
+    private void encodeMarkup(final FacesContext context, final OrgChart component) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
-        final String clientId = orgChart.getClientId();
-        final String widgetVar = orgChart.resolveWidgetVar();
+        final String clientId = component.getClientId();
+        final String widgetVar = component.resolveWidgetVar();
         final String styleClass = getStyleClassBuilder(context)
                     .add(OrgChart.STYLE_CLASS)
-                    .add(orgChart.getStyleClass())
+                    .add(component.getStyleClass())
                     .build();
 
-        writer.startElement("div", orgChart);
+        writer.startElement("div", component);
         writer.writeAttribute("id", clientId, "id");
         writer.writeAttribute(HTML.WIDGET_VAR, widgetVar, null);
         writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
-        if (orgChart.getStyle() != null) {
-            writer.writeAttribute(Attrs.STYLE, orgChart.getStyle(), Attrs.STYLE);
+        if (component.getStyle() != null) {
+            writer.writeAttribute(Attrs.STYLE, component.getStyle(), Attrs.STYLE);
         }
         writer.endElement("div");
     }
 
-    private void encodeScript(final FacesContext context, final OrgChart orgChart)
+    private void encodeScript(final FacesContext context, final OrgChart component)
                 throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context);
 
         final OrgChartNode orgChartNode;
-        if (orgChart.getValue() == null) {
+        if (component.getValue() == null) {
             throw new FacesException("The value attribute must be OrgChartNode");
         }
         else {
-            if (!(orgChart.getValue() instanceof OrgChartNode)) {
+            if (!(component.getValue() instanceof OrgChartNode)) {
                 throw new FacesException("The value attribute must be OrgChartNode");
             }
             else {
-                orgChartNode = (OrgChartNode) orgChart.getValue();
+                orgChartNode = (OrgChartNode) component.getValue();
             }
         }
 
         final String data = toJSON(orgChartNode, orgChartNode.getChildren()).toString();
 
-        wb.init("ExtOrgChart", orgChart);
-        wb.attr("nodeId", orgChart.getNodeId());
-        wb.attr("nodeContent", orgChart.getNodeContent());
-        wb.attr("direction", orgChart.getDirection());
-        wb.attr("pan", orgChart.getPan());
-        wb.attr("toggleSiblingsResp", orgChart.getToggleSiblingsResp());
-        wb.attr("depth", orgChart.getDepth());
-        wb.attr("exportButton", orgChart.getExportButton());
-        wb.attr("exportFilename", orgChart.getExportFilename());
-        wb.attr("exportFileextension", orgChart.getExportFileextension());
-        wb.attr("parentNodeSymbol", orgChart.getParentNodeSymbol());
-        wb.attr("draggable", orgChart.getDraggable());
-        wb.attr("chartClass", orgChart.getChartClass());
-        wb.attr("zoom", orgChart.getZoom());
-        wb.attr("zoominLimit", orgChart.getZoominLimit());
-        wb.attr("zoomoutLimit", orgChart.getZoomoutLimit());
-        wb.attr("verticalDepth", orgChart.getVerticalDepth());
-        wb.attr("nodeTitle", orgChart.getNodeTitle());
-        wb.nativeAttr("extender", orgChart.getExtender());
+        wb.init("ExtOrgChart", component);
+        wb.attr("nodeId", component.getNodeId());
+        wb.attr("nodeContent", component.getNodeContent());
+        wb.attr("direction", component.getDirection());
+        wb.attr("pan", component.getPan());
+        wb.attr("toggleSiblingsResp", component.getToggleSiblingsResp());
+        wb.attr("depth", component.getDepth());
+        wb.attr("exportButton", component.getExportButton());
+        wb.attr("exportFilename", component.getExportFilename());
+        wb.attr("exportFileextension", component.getExportFileextension());
+        wb.attr("parentNodeSymbol", component.getParentNodeSymbol());
+        wb.attr("draggable", component.getDraggable());
+        wb.attr("chartClass", component.getChartClass());
+        wb.attr("zoom", component.getZoom());
+        wb.attr("zoominLimit", component.getZoominLimit());
+        wb.attr("zoomoutLimit", component.getZoomoutLimit());
+        wb.attr("verticalDepth", component.getVerticalDepth());
+        wb.attr("nodeTitle", component.getNodeTitle());
+        wb.nativeAttr("extender", component.getExtender());
         wb.attr("data", data);
 
-        encodeClientBehaviors(context, orgChart);
+        encodeClientBehaviors(context, component);
         wb.finish();
     }
 
