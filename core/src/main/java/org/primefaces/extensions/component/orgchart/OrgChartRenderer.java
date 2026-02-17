@@ -28,7 +28,6 @@ import java.util.Map;
 
 import jakarta.el.ValueExpression;
 import jakarta.faces.FacesException;
-import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
 
@@ -46,24 +45,20 @@ import org.primefaces.util.WidgetBuilder;
  * @version $Revision$
  * @since 7.0
  */
-public class OrgChartRenderer extends CoreRenderer {
+public class OrgChartRenderer extends CoreRenderer<OrgChart> {
 
     private static final String JSON_CHILDREN = "children";
 
     @Override
-    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-        final OrgChart orgChart = (OrgChart) component;
+    public void encodeEnd(final FacesContext context, final OrgChart orgChart) throws IOException {
         encodeMarkup(context, orgChart);
         encodeScript(context, orgChart);
     }
 
     @Override
-    public void decode(final FacesContext context, final UIComponent component) {
-
-        final OrgChart orgChart = (OrgChart) component;
-
+    public void decode(final FacesContext context, final OrgChart orgChart) {
         decodeNodeStructure(context, orgChart);
-        decodeBehaviors(context, component);
+        decodeBehaviors(context, orgChart);
     }
 
     private static void decodeNodeStructure(final FacesContext context, final OrgChart orgChart) {
