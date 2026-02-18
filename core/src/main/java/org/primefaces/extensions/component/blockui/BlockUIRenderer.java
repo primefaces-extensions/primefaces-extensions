@@ -28,6 +28,7 @@ import jakarta.faces.component.UIComponent;
 import jakarta.faces.component.UINamingContainer;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
+import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.extensions.util.Attrs;
@@ -43,28 +44,27 @@ import org.primefaces.util.WidgetBuilder;
  * @version $Revision$
  * @since 0.2
  */
-public class BlockUIRenderer extends CoreRenderer {
+@FacesRenderer(rendererType = BlockUI.DEFAULT_RENDERER, componentFamily = BlockUI.COMPONENT_FAMILY)
+public class BlockUIRenderer extends CoreRenderer<BlockUI> {
 
     @Override
-    public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
+    public void encodeEnd(final FacesContext fc, final BlockUI component) throws IOException {
         encodeMarkup(fc, component);
         encodeScript(fc, component);
     }
 
-    protected void encodeMarkup(final FacesContext fc, final UIComponent component) throws IOException {
-        final BlockUI blockUI = (BlockUI) component;
-        if (blockUI.getContent() == null && blockUI.getChildCount() > 0) {
+    protected void encodeMarkup(final FacesContext fc, final BlockUI component) throws IOException {
+        if (component.getContent() == null && component.getChildCount() > 0) {
             final ResponseWriter writer = fc.getResponseWriter();
             writer.startElement("div", null);
-            writer.writeAttribute("id", blockUI.getClientId(fc) + "_content", null);
+            writer.writeAttribute("id", component.getClientId(fc) + "_content", null);
             writer.writeAttribute(Attrs.STYLE, "display: none;", null);
             renderChildren(fc, component);
             writer.endElement("div");
         }
     }
 
-    protected void encodeScript(final FacesContext fc, final UIComponent component) throws IOException {
-        final BlockUI blockUI = (BlockUI) component;
+    protected void encodeScript(final FacesContext fc, final BlockUI blockUI) throws IOException {
         final String clientId = blockUI.getClientId(fc);
 
         // get source
@@ -165,7 +165,7 @@ public class BlockUIRenderer extends CoreRenderer {
     }
 
     @Override
-    public void encodeChildren(final FacesContext fc, final UIComponent component) {
+    public void encodeChildren(final FacesContext fc, final BlockUI component) {
         // nothing to do
     }
 }
