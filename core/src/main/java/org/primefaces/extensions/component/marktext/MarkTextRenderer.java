@@ -26,6 +26,7 @@ import java.io.IOException;
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
+import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
@@ -34,60 +35,60 @@ import org.primefaces.util.WidgetBuilder;
 import com.google.gson.Gson;
 
 /**
- * <code>MarkText</code> component.
+ * <code>MarkText</code> component renderer.
  *
  * @author jxmai
  * @since 16.0.0
  */
-public class MarkTextRenderer extends CoreRenderer {
+@FacesRenderer(rendererType = MarkText.DEFAULT_RENDERER, componentFamily = MarkText.COMPONENT_FAMILY)
+public class MarkTextRenderer extends CoreRenderer<MarkText> {
 
     @Override
-    public void decode(final FacesContext context, final UIComponent component) {
+    public void decode(final FacesContext context, final MarkText component) {
         decodeBehaviors(context, component);
     }
 
     @Override
-    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-        final MarkText markText = (MarkText) component;
-        encodeMarkup(context, markText);
-        encodeScript(context, markText);
+    public void encodeEnd(final FacesContext context, final MarkText component) throws IOException {
+        encodeMarkup(context, component);
+        encodeScript(context, component);
     }
 
-    protected void encodeMarkup(final FacesContext context, final MarkText markText) throws IOException {
+    protected void encodeMarkup(final FacesContext context, final MarkText component) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
-        final String clientId = markText.getClientId(context);
+        final String clientId = component.getClientId(context);
 
-        writer.startElement("span", markText);
+        writer.startElement("span", component);
         writer.writeAttribute("id", clientId, "id");
-        writer.writeAttribute(Attrs.STYLE, markText.getStyle(), "style");
-        writer.writeAttribute(Attrs.CLASS, markText.getStyleClass(), Attrs.CLASS);
+        writer.writeAttribute(Attrs.STYLE, component.getStyle(), "style");
+        writer.writeAttribute(Attrs.CLASS, component.getStyleClass(), Attrs.CLASS);
         writer.endElement("span");
     }
 
-    protected void encodeScript(final FacesContext context, final MarkText markText) throws IOException {
+    protected void encodeScript(final FacesContext context, final MarkText component) throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context);
-        wb.init("ExtMarkText", markText);
+        wb.init("ExtMarkText", component);
 
-        wb.attr("value", markText.getValue());
-        wb.attr("forValue", findClientId(context, markText, markText.getFor()));
-        wb.attr("caseSensitive", markText.getCaseSensitive());
-        wb.attr("separateWordSearch", markText.getSeparateWordSearch());
-        wb.attr("accuracy", markText.getAccuracy());
-        wb.attr("acrossElements", markText.getAcrossElements());
-        wb.attr("className", markText.getStyleClass());
-        wb.attr("hasActionListener", markText.getActionListener() != null);
-        if (markText.getSynonyms() != null) {
-            wb.nativeAttr("synonyms", new Gson().toJson(markText.getSynonyms()));
+        wb.attr("value", component.getValue());
+        wb.attr("forValue", findClientId(context, component, component.getFor()));
+        wb.attr("caseSensitive", component.getCaseSensitive());
+        wb.attr("separateWordSearch", component.getSeparateWordSearch());
+        wb.attr("accuracy", component.getAccuracy());
+        wb.attr("acrossElements", component.getAcrossElements());
+        wb.attr("className", component.getStyleClass());
+        wb.attr("hasActionListener", component.getActionListener() != null);
+        if (component.getSynonyms() != null) {
+            wb.nativeAttr("synonyms", new Gson().toJson(component.getSynonyms()));
         }
 
-        encodeClientBehaviors(context, markText);
+        encodeClientBehaviors(context, component);
 
         wb.finish();
     }
 
-    protected String findClientId(final FacesContext context, final MarkText markText, final String forValue) {
+    protected String findClientId(final FacesContext context, final MarkText component, final String forValue) {
         if (forValue != null) {
-            final UIComponent forComponent = markText.findComponent(forValue);
+            final UIComponent forComponent = component.findComponent(forValue);
             if (forComponent != null) {
                 return forComponent.getClientId(context);
             }

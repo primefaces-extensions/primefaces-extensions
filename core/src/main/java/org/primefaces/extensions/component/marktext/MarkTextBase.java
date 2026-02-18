@@ -23,42 +23,34 @@ package org.primefaces.extensions.component.marktext;
 
 import jakarta.el.MethodExpression;
 import jakarta.faces.component.UIComponentBase;
-import jakarta.faces.component.behavior.ClientBehaviorHolder;
 
-import org.primefaces.component.api.PrimeClientBehaviorHolder;
+import org.primefaces.cdk.api.FacesBehaviorEvent;
+import org.primefaces.cdk.api.FacesBehaviorEvents;
+import org.primefaces.cdk.api.FacesComponentBase;
+import org.primefaces.cdk.api.Property;
+import org.primefaces.component.api.StyleAware;
 import org.primefaces.component.api.Widget;
+import org.primefaces.extensions.event.MarkEvent;
 
 /**
- * <code>MarkText</code> component.
+ * <code>MarkText</code> component base class.
  *
  * @author jxmai
  * @since 16.0.0
  */
-public abstract class MarkTextBase extends UIComponentBase implements Widget, ClientBehaviorHolder, PrimeClientBehaviorHolder {
+@FacesComponentBase
+@FacesBehaviorEvents({
+            @FacesBehaviorEvent(name = "mark", event = MarkEvent.class, description = "Fires when text is marked/highlighted.",
+                        defaultEvent = true)
+})
+public abstract class MarkTextBase extends UIComponentBase implements Widget, StyleAware {
 
+    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.MarkText";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-
     public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.MarkTextRenderer";
 
-    @SuppressWarnings("java:S115")
-    protected enum PropertyKeys {
-        //@formatter:off
-        widgetVar,
-        style,
-        styleClass,
-        value,
-        forValue,
-        caseSensitive,
-        separateWordSearch,
-        accuracy,
-        actionListener,
-        synonyms,
-        acrossElements
-        //@formatter:on
-    }
-
     public MarkTextBase() {
-        super.setRendererType(DEFAULT_RENDERER);
+        setRendererType(DEFAULT_RENDERER);
     }
 
     @Override
@@ -66,91 +58,30 @@ public abstract class MarkTextBase extends UIComponentBase implements Widget, Cl
         return COMPONENT_FAMILY;
     }
 
-    public String getWidgetVar() {
-        return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
-    }
+    @Property(description = "Name of the client-side widget.")
+    public abstract String getWidgetVar();
 
-    public void setWidgetVar(final String widgetVar) {
-        getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
-    }
+    @Property(description = "Search terms to highlight. Can be a string or array of strings.")
+    public abstract String getValue();
 
-    public String getStyle() {
-        return (String) getStateHelper().eval(PropertyKeys.style, null);
-    }
+    @Property(description = "Search expression to resolve the target component to search within.")
+    public abstract String getFor();
 
-    public void setStyle(final String style) {
-        getStateHelper().put(PropertyKeys.style, style);
-    }
+    @Property(description = "Whether the search should be case sensitive.", defaultValue = "false")
+    public abstract Boolean getCaseSensitive();
 
-    public String getStyleClass() {
-        return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
-    }
+    @Property(description = "Whether to match each word separately.", defaultValue = "true")
+    public abstract Boolean getSeparateWordSearch();
 
-    public void setStyleClass(final String styleClass) {
-        getStateHelper().put(PropertyKeys.styleClass, styleClass);
-    }
+    @Property(description = "Search accuracy level: 'partially', 'complementarily', or 'exactly'.", defaultValue = "partially")
+    public abstract String getAccuracy();
 
-    public String getValue() {
-        return (String) getStateHelper().eval(PropertyKeys.value, null);
-    }
+    @Property(description = "Server-side listener method for mark events.")
+    public abstract MethodExpression getActionListener();
 
-    public void setValue(final String value) {
-        getStateHelper().put(PropertyKeys.value, value);
-    }
+    @Property(description = "Map of synonyms for term matching.")
+    public abstract Object getSynonyms();
 
-    public String getFor() {
-        return (String) getStateHelper().eval(PropertyKeys.forValue, null);
-    }
-
-    public void setFor(final String forValue) {
-        getStateHelper().put(PropertyKeys.forValue, forValue);
-    }
-
-    public Boolean getCaseSensitive() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.caseSensitive, false);
-    }
-
-    public void setCaseSensitive(final Boolean caseSensitive) {
-        getStateHelper().put(PropertyKeys.caseSensitive, caseSensitive);
-    }
-
-    public Boolean getSeparateWordSearch() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.separateWordSearch, true);
-    }
-
-    public void setSeparateWordSearch(final Boolean separateWordSearch) {
-        getStateHelper().put(PropertyKeys.separateWordSearch, separateWordSearch);
-    }
-
-    public String getAccuracy() {
-        return (String) getStateHelper().eval(PropertyKeys.accuracy, "partially");
-    }
-
-    public void setAccuracy(final String accuracy) {
-        getStateHelper().put(PropertyKeys.accuracy, accuracy);
-    }
-
-    public MethodExpression getActionListener() {
-        return (MethodExpression) getStateHelper().get(PropertyKeys.actionListener);
-    }
-
-    public void setActionListener(final MethodExpression actionListener) {
-        getStateHelper().put(PropertyKeys.actionListener, actionListener);
-    }
-
-    public Object getSynonyms() {
-        return getStateHelper().eval(PropertyKeys.synonyms, null);
-    }
-
-    public void setSynonyms(final Object synonyms) {
-        getStateHelper().put(PropertyKeys.synonyms, synonyms);
-    }
-
-    public Boolean getAcrossElements() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.acrossElements, false);
-    }
-
-    public void setAcrossElements(final Boolean acrossElements) {
-        getStateHelper().put(PropertyKeys.acrossElements, acrossElements);
-    }
+    @Property(description = "Search across element boundaries.", defaultValue = "false")
+    public abstract Boolean getAcrossElements();
 }
