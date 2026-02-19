@@ -21,20 +21,19 @@
  */
 package org.primefaces.extensions.component.marktext;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 import jakarta.faces.application.ResourceDependency;
+import jakarta.faces.component.FacesComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.event.AjaxBehaviorEvent;
-import jakarta.faces.event.BehaviorEvent;
 import jakarta.faces.event.FacesEvent;
 
+import org.primefaces.cdk.api.FacesComponentInfo;
 import org.primefaces.extensions.event.MarkEvent;
 import org.primefaces.extensions.model.marktext.MarkPosition;
 import org.primefaces.extensions.util.Constants;
-import org.primefaces.util.MapBuilder;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -45,50 +44,26 @@ import com.google.gson.reflect.TypeToken;
  * @author jxmai
  * @since 16.0.0
  */
+@FacesComponent(value = MarkText.COMPONENT_TYPE, namespace = MarkText.COMPONENT_FAMILY)
+@FacesComponentInfo(description = "MarkText highlights search terms within specified containers using mark.js.")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = "primefaces", name = "components.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "mark/mark.js")
-public class MarkText extends MarkTextBase {
-
-    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.MarkText";
+public class MarkText extends MarkTextBaseImpl {
 
     public static final String STYLE_CLASS = "ui-marktext";
 
-    private static final String DEFAULT_EVENT = "mark";
-
-    private static final Map<String, Class<? extends BehaviorEvent>> BEHAVIOR_EVENT_MAPPING = MapBuilder.<String, Class<? extends BehaviorEvent>> builder()
-                .put(DEFAULT_EVENT, null)
-                .build();
-
-    private static final Collection<String> EVENT_NAMES = BEHAVIOR_EVENT_MAPPING.keySet();
-
-    @Override
-    public Map<String, Class<? extends BehaviorEvent>> getBehaviorEventMapping() {
-        return BEHAVIOR_EVENT_MAPPING;
-    }
-
-    @Override
-    public Collection<String> getEventNames() {
-        return EVENT_NAMES;
-    }
-
-    @Override
-    public String getDefaultEventName() {
-        return DEFAULT_EVENT;
-    }
-
     @Override
     public void queueEvent(final FacesEvent event) {
-        if (event instanceof AjaxBehaviorEvent) {
-            final FacesContext context = getFacesContext();
-            final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
-            final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-            final String eventName = params.get(org.primefaces.util.Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+        if (isAjaxBehaviorEventSource(event)) {
+            FacesContext context = event.getFacesContext();
+            Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+            String clientId = getClientId(context);
+            AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
 
-            if (DEFAULT_EVENT.equals(eventName)) {
-                final String clientId = getClientId(context);
+            if (isAjaxBehaviorEvent(event, ClientBehaviorEventKeys.mark)) {
                 final String value = params.get(clientId + "_value");
                 final String matchedTermsJson = params.get(clientId + "_matchedTerms");
                 final String positionsJson = params.get(clientId + "_positions");
