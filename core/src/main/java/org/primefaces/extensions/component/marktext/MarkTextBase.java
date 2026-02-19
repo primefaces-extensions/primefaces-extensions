@@ -40,8 +40,7 @@ import org.primefaces.extensions.event.MarkEvent;
  */
 @FacesComponentBase
 @FacesBehaviorEvents({
-            @FacesBehaviorEvent(name = "mark", event = MarkEvent.class, description = "Fires when text is marked/highlighted.",
-                        defaultEvent = true)
+            @FacesBehaviorEvent(name = "mark", event = MarkEvent.class, description = "Fires when text is marked/highlighted.", defaultEvent = true)
 })
 public abstract class MarkTextBase extends UIComponentBase implements Widget, StyleAware {
 
@@ -61,10 +60,10 @@ public abstract class MarkTextBase extends UIComponentBase implements Widget, St
     @Property(description = "Name of the client-side widget.")
     public abstract String getWidgetVar();
 
-    @Property(description = "Search terms to highlight. Can be a string or array of strings.")
+    @Property(description = "Search terms to highlight. Can be a string or array of strings.", required = true)
     public abstract String getValue();
 
-    @Property(description = "Search expression to resolve the target component to search within.")
+    @Property(description = "Search expression to resolve the target component to search within.", required = true)
     public abstract String getFor();
 
     @Property(description = "Whether the search should be case sensitive.", defaultValue = "false")
