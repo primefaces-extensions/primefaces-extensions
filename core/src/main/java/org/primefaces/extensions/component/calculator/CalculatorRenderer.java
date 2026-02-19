@@ -27,6 +27,7 @@ import jakarta.faces.FacesException;
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.component.UIInput;
 import jakarta.faces.context.FacesContext;
+import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.extensions.util.ExtLangUtils;
@@ -40,16 +41,16 @@ import org.primefaces.util.WidgetBuilder;
  * @author Melloware mellowaredev@gmail.com
  * @since 6.1
  */
-public class CalculatorRenderer extends CoreRenderer {
+@FacesRenderer(rendererType = Calculator.DEFAULT_RENDERER, componentFamily = Calculator.COMPONENT_FAMILY)
+public class CalculatorRenderer extends CoreRenderer<Calculator> {
 
     @Override
-    public void decode(final FacesContext context, final UIComponent component) {
+    public void decode(final FacesContext context, final Calculator component) {
         decodeBehaviors(context, component);
     }
 
     @Override
-    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-        final Calculator calculator = (Calculator) component;
+    public void encodeEnd(final FacesContext context, final Calculator calculator) throws IOException {
         encodeScript(context, calculator);
     }
 
@@ -75,15 +76,12 @@ public class CalculatorRenderer extends CoreRenderer {
         wb.attr("calculatorClass", calculator.getStyleClass());
 
         if (calculator.getOnopen() != null) {
-            // Define a callback function before the panel is opened
             wb.callback("onOpen", "function(value, inst)", calculator.getOnopen());
         }
         if (calculator.getOnclose() != null) {
-            // Define a callback function when the panel is closed
             wb.callback("onClose", "function(value, inst)", calculator.getOnclose());
         }
         if (calculator.getOnbutton() != null) {
-            // Define a callback function when a button is activated
             wb.callback("onButton", "function(label, value, inst)", calculator.getOnbutton());
         }
 
@@ -91,5 +89,4 @@ public class CalculatorRenderer extends CoreRenderer {
 
         wb.finish();
     }
-
 }

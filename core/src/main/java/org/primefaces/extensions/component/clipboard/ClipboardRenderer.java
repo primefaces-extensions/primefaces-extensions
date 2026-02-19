@@ -23,8 +23,8 @@ package org.primefaces.extensions.component.clipboard;
 
 import java.io.IOException;
 
-import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
+import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.extensions.util.ExtLangUtils;
@@ -37,16 +37,16 @@ import org.primefaces.util.WidgetBuilder;
  * @author Melloware mellowaredev@gmail.com
  * @since 6.1
  */
-public class ClipboardRenderer extends CoreRenderer {
+@FacesRenderer(rendererType = Clipboard.DEFAULT_RENDERER, componentFamily = Clipboard.COMPONENT_FAMILY)
+public class ClipboardRenderer extends CoreRenderer<Clipboard> {
 
     @Override
-    public void decode(final FacesContext context, final UIComponent component) {
+    public void decode(final FacesContext context, final Clipboard component) {
         decodeBehaviors(context, component);
     }
 
     @Override
-    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-        final Clipboard clipboard = (Clipboard) component;
+    public void encodeEnd(final FacesContext context, final Clipboard clipboard) throws IOException {
         encodeScript(context, clipboard);
     }
 
@@ -66,11 +66,9 @@ public class ClipboardRenderer extends CoreRenderer {
         wb.attr("text", clipboard.getText());
 
         if (clipboard.getOnsuccess() != null) {
-            // Define a callback function if cut/copy succeeds
             wb.callback("onSuccess", "function(e)", clipboard.getOnsuccess());
         }
         if (clipboard.getOnerror() != null) {
-            // Define a callback function if cut/copy fails
             wb.callback("onError", "function(e)", clipboard.getOnerror());
         }
 
@@ -78,5 +76,4 @@ public class ClipboardRenderer extends CoreRenderer {
 
         wb.finish();
     }
-
 }

@@ -34,6 +34,7 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
 import jakarta.faces.convert.Converter;
 import jakarta.faces.convert.ConverterException;
+import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.extensions.util.Attrs;
@@ -42,49 +43,46 @@ import org.primefaces.util.HTML;
 import org.primefaces.util.LangUtils;
 import org.primefaces.util.WidgetBuilder;
 
-public class ClockPickerRenderer extends InputRenderer {
+@FacesRenderer(rendererType = ClockPicker.DEFAULT_RENDERER, componentFamily = ClockPicker.COMPONENT_FAMILY)
+public class ClockPickerRenderer extends InputRenderer<ClockPicker> {
 
     private static final DateTimeFormatter FORMATTER_24_HOUR = DateTimeFormatter.ofPattern("HH:mm");
 
     @Override
-    public void decode(FacesContext context, UIComponent component) {
-
-        final ClockPicker clockPicker = (ClockPicker) component;
-
-        if (clockPicker.isDisabled() || clockPicker.isReadonly()) {
+    public void decode(final FacesContext context, final ClockPicker component) {
+        if (!shouldDecode(component)) {
             return;
         }
-        final String param = clockPicker.getClientId(context) + "_input";
+        final String param = component.getClientId(context) + "_input";
         final String submittedValue = context.getExternalContext().getRequestParameterMap().get(param);
 
         if (null != submittedValue) {
-            clockPicker.setSubmittedValue(submittedValue);
+            component.setSubmittedValue(submittedValue);
         }
         decodeBehaviors(context, component);
     }
 
     @Override
-    public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
-        final ClockPicker clockPicker = (ClockPicker) component;
-        final Locale locale = clockPicker.calculateLocale(context);
+    public void encodeEnd(final FacesContext context, final ClockPicker component) throws IOException {
+        final Locale locale = component.calculateLocale(context);
         final DateFormatSymbols symbols = new DateFormatSymbols(locale);
 
-        final String value = getValueAsString(context, clockPicker);
-        encodeMarkup(context, clockPicker, value, symbols);
-        encodeScript(context, clockPicker, symbols);
+        final String value = getValueAsString(context, component);
+        encodeMarkup(context, component, value, symbols);
+        encodeScript(context, component, symbols);
     }
 
-    private void encodeMarkup(FacesContext context, ClockPicker clockPicker, final String value, DateFormatSymbols symbols) throws IOException {
+    private void encodeMarkup(FacesContext context, ClockPicker component, final String value, DateFormatSymbols symbols) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
-        final String clientId = clockPicker.getClientId();
+        final String clientId = component.getClientId();
         final String inputId = clientId + "_input";
         final String[] ampm = symbols.getAmPmStrings();
-        final int inputSize = clockPicker.isTwelveHour() ? 5 + ampm[0].length() : 5;
+        final int inputSize = component.isTwelveHour() ? 5 + ampm[0].length() : 5;
 
-        writer.startElement("div", clockPicker);
+        writer.startElement("div", component);
         writer.writeAttribute("id", clientId, null);
         String containerClass = ClockPicker.CONTAINER_CLASS;
-        if (clockPicker.isShowOnButton()) {
+        if (component.isShowOnButton()) {
             containerClass += " ui-inputgroup";
         }
         writer.writeAttribute("class", containerClass, null);
@@ -96,25 +94,25 @@ public class ClockPickerRenderer extends InputRenderer {
         writer.writeAttribute("size", inputSize, null);
         writer.writeAttribute("maxlength", inputSize, null);
 
-        final String styleClass = createStyleClass(clockPicker, "ui-inputfield ui-widget ui-state-default ui-corner-all");
+        final String styleClass = createStyleClass(component, "ui-inputfield ui-widget ui-state-default ui-corner-all");
         writer.writeAttribute(Attrs.CLASS, styleClass, null);
 
-        if (clockPicker.getStyle() != null) {
-            writer.writeAttribute(Attrs.STYLE, clockPicker.getStyle(), null);
+        if (component.getStyle() != null) {
+            writer.writeAttribute(Attrs.STYLE, component.getStyle(), null);
         }
 
         if (LangUtils.isNotBlank(value)) {
             writer.writeAttribute("value", value, null);
         }
 
-        renderAccessibilityAttributes(context, clockPicker);
-        renderPassThruAttributes(context, clockPicker, HTML.INPUT_TEXT_ATTRS_WITHOUT_EVENTS);
-        renderDomEvents(context, clockPicker, HTML.INPUT_TEXT_EVENTS);
-        renderValidationMetadata(context, clockPicker);
+        renderAccessibilityAttributes(context, component);
+        renderPassThruAttributes(context, component, HTML.INPUT_TEXT_ATTRS_WITHOUT_EVENTS);
+        renderDomEvents(context, component, HTML.INPUT_TEXT_EVENTS);
+        renderValidationMetadata(context, component);
 
         writer.endElement("input");
 
-        if (clockPicker.isShowOnButton()) {
+        if (component.isShowOnButton()) {
             writer.startElement("button", null);
             writer.writeAttribute(Attrs.CLASS, ClockPicker.BUTTON_TRIGGER_CLASS, null);
             writer.writeAttribute("type", "button", null);
@@ -134,70 +132,70 @@ public class ClockPickerRenderer extends InputRenderer {
         writer.endElement("div");
     }
 
-    private void encodeScript(final FacesContext context, final ClockPicker clockPicker, DateFormatSymbols symbols) throws IOException {
+    private void encodeScript(final FacesContext context, final ClockPicker component, DateFormatSymbols symbols) throws IOException {
         final String[] ampm = symbols.getAmPmStrings();
 
         final WidgetBuilder wb = getWidgetBuilder(context);
-        wb.init("ExtClockPicker", clockPicker);
-        wb.attr("appendTo", SearchExpressionUtils.resolveOptionalClientIdForClientSide(context, clockPicker, clockPicker.getAppendTo()));
-        wb.attr("placement", clockPicker.getPlacement(), "bottom");
-        wb.attr("align", clockPicker.getAlign(), "left");
-        wb.attr("autoclose", clockPicker.isAutoClose(), false);
-        wb.attr("vibrate", clockPicker.getVibrate(), true);
-        wb.attr("twelvehour", clockPicker.isTwelveHour(), false);
+        wb.init("ExtClockPicker", component);
+        wb.attr("appendTo", SearchExpressionUtils.resolveOptionalClientIdForClientSide(context, component, component.getAppendTo()));
+        wb.attr("placement", component.getPlacement(), "bottom");
+        wb.attr("align", component.getAlign(), "left");
+        wb.attr("autoclose", component.isAutoClose(), false);
+        wb.attr("vibrate", component.isVibrate(), true);
+        wb.attr("twelvehour", component.isTwelveHour(), false);
         wb.attr("amtext", ampm[0], "AM");
         wb.attr("pmtext", ampm[1], "PM");
 
-        if (clockPicker.getOnbeforehourselect() != null) {
-            wb.callback("beforeHourSelect", "function()", clockPicker.getOnbeforehourselect());
+        if (component.getOnbeforehourselect() != null) {
+            wb.callback("beforeHourSelect", "function()", component.getOnbeforehourselect());
         }
-        if (clockPicker.getOnbeforedone() != null) {
-            wb.callback("beforeDone", "function()", clockPicker.getOnbeforedone());
+        if (component.getOnbeforedone() != null) {
+            wb.callback("beforeDone", "function()", component.getOnbeforedone());
         }
-        if (clockPicker.getOnbeforeshow() != null) {
-            wb.callback("beforeShow", "function()", clockPicker.getOnbeforeshow());
+        if (component.getOnbeforeshow() != null) {
+            wb.callback("beforeShow", "function()", component.getOnbeforeshow());
         }
-        if (clockPicker.getOnbeforehide() != null) {
-            wb.callback("beforeHide", "function()", clockPicker.getOnbeforehide());
+        if (component.getOnbeforehide() != null) {
+            wb.callback("beforeHide", "function()", component.getOnbeforehide());
         }
-        if (clockPicker.getOnafterhourselect() != null) {
-            wb.callback("afterHourSelect", "function()", clockPicker.getOnafterhourselect());
+        if (component.getOnafterhourselect() != null) {
+            wb.callback("afterHourSelect", "function()", component.getOnafterhourselect());
         }
-        if (clockPicker.getOnafterdone() != null) {
-            wb.callback("afterDone", "function()", clockPicker.getOnafterdone());
+        if (component.getOnafterdone() != null) {
+            wb.callback("afterDone", "function()", component.getOnafterdone());
         }
-        if (clockPicker.getOnaftershow() != null) {
-            wb.callback("afterShow", "function()", clockPicker.getOnaftershow());
+        if (component.getOnaftershow() != null) {
+            wb.callback("afterShow", "function()", component.getOnaftershow());
         }
-        if (clockPicker.getOnafterhide() != null) {
-            wb.callback("afterHide", "function()", clockPicker.getOnafterhide());
+        if (component.getOnafterhide() != null) {
+            wb.callback("afterHide", "function()", component.getOnafterhide());
         }
-        if (clockPicker.getOnafterampmselect() != null) {
-            wb.callback("afterAmPmSelect", "function()", clockPicker.getOnafterampmselect());
+        if (component.getOnafterampmselect() != null) {
+            wb.callback("afterAmPmSelect", "function()", component.getOnafterampmselect());
         }
 
-        encodeClientBehaviors(context, clockPicker);
+        encodeClientBehaviors(context, component);
         wb.finish();
     }
 
-    protected static String getValueAsString(final FacesContext context, final ClockPicker clockPicker) {
-        Object submittedValue = clockPicker.getSubmittedValue();
+    protected static String getValueAsString(final FacesContext context, final ClockPicker component) {
+        Object submittedValue = component.getSubmittedValue();
         if (submittedValue != null) {
             return submittedValue.toString();
         }
 
-        Object value = clockPicker.getValue();
+        Object value = component.getValue();
         if (value == null) {
             return null;
         }
 
         try {
-            if (clockPicker.getConverter() != null) {
-                return clockPicker.getConverter().getAsString(context, clockPicker, value);
+            if (component.getConverter() != null) {
+                return component.getConverter().getAsString(context, component, value);
             }
             else if (value instanceof LocalTime) {
-                return clockPicker.isTwelveHour()
-                            ? ((LocalTime) value).format(DateTimeFormatter.ofPattern("hh:mma").withLocale(clockPicker.calculateLocale(context)))
+                return component.isTwelveHour()
+                            ? ((LocalTime) value).format(DateTimeFormatter.ofPattern("hh:mma").withLocale(component.calculateLocale(context)))
                             : ((LocalTime) value).format(FORMATTER_24_HOUR);
             }
         }
@@ -209,8 +207,8 @@ public class ClockPickerRenderer extends InputRenderer {
     }
 
     @Override
-    public Object getConvertedValue(FacesContext context, UIComponent component,
-                Object value) throws ConverterException {
+    public Object getConvertedValue(final FacesContext context, final UIComponent component,
+                final Object value) throws ConverterException {
         final ClockPicker clockPicker = (ClockPicker) component;
         String submittedValue = Objects.toString(value, null);
 
