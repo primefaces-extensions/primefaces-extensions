@@ -64,7 +64,8 @@ public class InputOtp extends AbstractPrimeHtmlInputText implements Widget, Inpu
     public static final String INPUT_SUFFIX = "_input";
     public static final String HIDDEN_SUFFIX = "_hidden";
 
-    // disabled, readonly, style, styleClass, size, placeholder handled by component renderer
+    // disabled, readonly, style, styleClass, size, placeholder handled by component
+    // renderer
     public static final List<String> INPUT_OTP_ATTRIBUTES_WITHOUT_EVENTS = List.of(
                 "accesskey",
                 "alt",
@@ -110,13 +111,13 @@ public class InputOtp extends AbstractPrimeHtmlInputText implements Widget, Inpu
     }
 
     @Override
-    public String getLabelledBy() {
-        return (String) getStateHelper().get("labelledby");
+    public String getAriaLabelledBy() {
+        return (String) getStateHelper().get("ariaLabelledBy");
     }
 
     @Override
-    public void setLabelledBy(final String labelledBy) {
-        getStateHelper().put("labelledby", labelledBy);
+    public void setAriaLabelledBy(final String ariaLabelledBy) {
+        getStateHelper().put("ariaLabelledBy", ariaLabelledBy);
     }
 
     @Override
