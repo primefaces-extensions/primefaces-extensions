@@ -54,7 +54,8 @@ import org.primefaces.util.LangUtils;
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "inputphone/inputphone.css")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "inputphone/inputphone.js")
-public class InputPhone extends AbstractPrimeHtmlInputText implements Widget, InputHolder, MixedClientBehaviorHolder, RTLAware {
+public class InputPhone extends AbstractPrimeHtmlInputText
+            implements Widget, InputHolder, MixedClientBehaviorHolder, RTLAware {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.InputPhone";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -66,7 +67,8 @@ public class InputPhone extends AbstractPrimeHtmlInputText implements Widget, In
     public static final String INPUT_SUFFIX = "_input";
 
     private static final List<String> UNOBSTRUSIVE_EVENT_NAMES = LangUtils.unmodifiableList(EVENT_COUNTRY_SELECT);
-    private static final Collection<String> EVENT_NAMES = LangUtils.concat(AbstractPrimeHtmlInputText.EVENT_NAMES, UNOBSTRUSIVE_EVENT_NAMES);
+    private static final Collection<String> EVENT_NAMES = LangUtils.concat(AbstractPrimeHtmlInputText.EVENT_NAMES,
+                UNOBSTRUSIVE_EVENT_NAMES);
 
     // @formatter:off
     @SuppressWarnings("java:S115")
@@ -146,13 +148,13 @@ public class InputPhone extends AbstractPrimeHtmlInputText implements Widget, In
     }
 
     @Override
-    public String getLabelledBy() {
-        return (String) getStateHelper().get("labelledby");
+    public String getAriaLabelledBy() {
+        return (String) getStateHelper().get("ariaLabelledBy");
     }
 
     @Override
-    public void setLabelledBy(final String labelledBy) {
-        getStateHelper().put("labelledby", labelledBy);
+    public void setAriaLabelledBy(final String ariaLabelledBy) {
+        getStateHelper().put("ariaLabelledBy", ariaLabelledBy);
     }
 
     @Override
@@ -344,7 +346,8 @@ public class InputPhone extends AbstractPrimeHtmlInputText implements Widget, In
 
             if (EVENT_COUNTRY_SELECT.equals(eventName)) {
                 final Country selectedCountry = getCountry(getClientId(context), params);
-                final SelectEvent<Country> selectEvent = new SelectEvent<>(this, ajaxBehaviorEvent.getBehavior(), selectedCountry);
+                final SelectEvent<Country> selectEvent = new SelectEvent<>(this, ajaxBehaviorEvent.getBehavior(),
+                            selectedCountry);
                 selectEvent.setPhaseId(ajaxBehaviorEvent.getPhaseId());
                 super.queueEvent(selectEvent);
             }

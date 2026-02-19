@@ -77,7 +77,8 @@ public class TimePicker extends AbstractPrimeHtmlInputText implements Widget, In
 
     private static final List<String> UNOBSTRUSIVE_EVENT_NAMES = LangUtils.unmodifiableList(BeforeShowEvent.NAME,
                 TimeSelectEvent.NAME, CloseEvent.NAME);
-    private static final Collection<String> EVENT_NAMES = LangUtils.concat(AbstractPrimeHtmlInputText.EVENT_NAMES, UNOBSTRUSIVE_EVENT_NAMES);
+    private static final Collection<String> EVENT_NAMES = LangUtils.concat(AbstractPrimeHtmlInputText.EVENT_NAMES,
+                UNOBSTRUSIVE_EVENT_NAMES);
 
     private final Map<String, AjaxBehaviorEvent> customEvents = new HashMap<>();
     private Locale appropriateLocale;
@@ -136,13 +137,13 @@ public class TimePicker extends AbstractPrimeHtmlInputText implements Widget, In
     }
 
     @Override
-    public String getLabelledBy() {
-        return (String) getStateHelper().get("labelledby");
+    public String getAriaLabelledBy() {
+        return (String) getStateHelper().get("ariaLabelledBy");
     }
 
     @Override
-    public void setLabelledBy(String labelledBy) {
-        getStateHelper().put("labelledby", labelledBy);
+    public void setAriaLabelledBy(String ariaLabelledBy) {
+        getStateHelper().put("ariaLabelledBy", ariaLabelledBy);
     }
 
     @Override
@@ -437,7 +438,8 @@ public class TimePicker extends AbstractPrimeHtmlInputText implements Widget, In
         if (isValid()) {
             for (final Entry<String, AjaxBehaviorEvent> entry : customEvents.entrySet()) {
                 final AjaxBehaviorEvent behaviorEvent = entry.getValue();
-                final TimeSelectEvent<Object> timeSelectEvent = new TimeSelectEvent<>(this, behaviorEvent.getBehavior(), getValue());
+                final TimeSelectEvent<Object> timeSelectEvent = new TimeSelectEvent<>(this, behaviorEvent.getBehavior(),
+                            getValue());
 
                 if (behaviorEvent.getPhaseId().equals(PhaseId.APPLY_REQUEST_VALUES)) {
                     timeSelectEvent.setPhaseId(PhaseId.PROCESS_VALIDATIONS);

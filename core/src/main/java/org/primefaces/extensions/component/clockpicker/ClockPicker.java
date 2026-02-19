@@ -93,13 +93,13 @@ public class ClockPicker extends AbstractPrimeHtmlInputText implements Widget, I
     }
 
     @Override
-    public String getLabelledBy() {
-        return (String) getStateHelper().get("labelledby");
+    public String getAriaLabelledBy() {
+        return (String) getStateHelper().get("ariaLabelledBy");
     }
 
     @Override
-    public void setLabelledBy(String labelledBy) {
-        getStateHelper().put("labelledby", labelledBy);
+    public void setAriaLabelledBy(String ariaLabelledBy) {
+        getStateHelper().put("ariaLabelledBy", ariaLabelledBy);
     }
 
     @Override
