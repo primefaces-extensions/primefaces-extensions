@@ -21,85 +21,29 @@
  */
 package org.primefaces.extensions.component.echarts;
 
-import java.util.Collection;
 import java.util.Map;
 
 import jakarta.faces.application.ResourceDependency;
-import jakarta.faces.context.ExternalContext;
-import jakarta.faces.context.FacesContext;
+import jakarta.faces.component.FacesComponent;
 import jakarta.faces.event.AjaxBehaviorEvent;
 import jakarta.faces.event.BehaviorEvent;
 import jakarta.faces.event.FacesEvent;
 
-import org.primefaces.event.ItemSelectEvent;
+import org.primefaces.cdk.api.FacesComponentInfo;
 import org.primefaces.extensions.event.EChartEvent;
-import org.primefaces.util.Constants;
-import org.primefaces.util.MapBuilder;
 
+@FacesComponent(value = EChart.COMPONENT_TYPE, namespace = EChart.COMPONENT_FAMILY)
+@FacesComponentInfo(description = "Apache ECharts component using raw JSON model.")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = "primefaces", name = "components.js")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "echarts/echarts.js")
-public class EChart extends EChartBase {
-    private static final String DEFAULT_EVENT = "itemSelect";
-
-    private static final Map<String, Class<? extends BehaviorEvent>> BEHAVIOR_EVENT_MAPPING = MapBuilder.<String, Class<? extends BehaviorEvent>> builder()
-                .put("itemSelect", ItemSelectEvent.class)
-                .build();
-
-    private static final Collection<String> EVENT_NAMES = BEHAVIOR_EVENT_MAPPING.keySet();
-
-    @Override
-    public Map<String, Class<? extends BehaviorEvent>> getBehaviorEventMapping() {
-        return BEHAVIOR_EVENT_MAPPING;
-    }
-
-    @Override
-    public Collection<String> getEventNames() {
-        return EVENT_NAMES;
-    }
-
-    @Override
-    public String getDefaultEventName() {
-        return DEFAULT_EVENT;
-    }
-
-    @Override
-    public void processDecodes(final FacesContext fc) {
-        if (isSelfRequest(fc)) {
-            decode(fc);
-        }
-        else {
-            super.processDecodes(fc);
-        }
-    }
-
-    @Override
-    public void processValidators(final FacesContext fc) {
-        if (!isSelfRequest(fc)) {
-            super.processValidators(fc);
-        }
-    }
-
-    @Override
-    public void processUpdates(final FacesContext fc) {
-        if (!isSelfRequest(fc)) {
-            super.processUpdates(fc);
-        }
-    }
-
-    private boolean isSelfRequest(FacesContext facesContext) {
-        String clientId = getClientId(facesContext);
-        ExternalContext externalContext = facesContext.getExternalContext();
-        Map<String, String> requestParameterMap = externalContext.getRequestParameterMap();
-        String partialSourceParam = requestParameterMap.get(Constants.RequestParams.PARTIAL_SOURCE_PARAM);
-        return clientId.equals(partialSourceParam);
-    }
+public class EChart extends EChartBaseImpl {
 
     @Override
     public void queueEvent(FacesEvent event) {
-        if (isSelfRequest(event.getFacesContext()) && event instanceof AjaxBehaviorEvent) {
+        if (isAjaxBehaviorEvent(event, ClientBehaviorEventKeys.itemSelect)) {
             BehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
             Map<String, String> map = getFacesContext().getExternalContext().getRequestParameterMap();
             String name = map.get("name");
@@ -121,4 +65,5 @@ public class EChart extends EChartBase {
             super.queueEvent(event);
         }
     }
+
 }

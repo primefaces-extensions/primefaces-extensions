@@ -21,16 +21,26 @@
  */
 package org.primefaces.extensions.component.echarts;
 
+import jakarta.faces.component.UIComponent;
 import jakarta.faces.component.UIComponentBase;
-import jakarta.faces.component.behavior.ClientBehaviorHolder;
 
-import org.primefaces.component.api.PrimeClientBehaviorHolder;
+import org.primefaces.cdk.api.FacesBehaviorEvent;
+import org.primefaces.cdk.api.FacesBehaviorEvents;
+import org.primefaces.cdk.api.FacesComponentBase;
+import org.primefaces.cdk.api.Facet;
+import org.primefaces.cdk.api.Property;
+import org.primefaces.component.api.StyleAware;
 import org.primefaces.component.api.Widget;
+import org.primefaces.extensions.event.EChartEvent;
 
-public abstract class EChartBase extends UIComponentBase implements Widget, ClientBehaviorHolder, PrimeClientBehaviorHolder {
+@FacesComponentBase
+@FacesBehaviorEvents({
+            @FacesBehaviorEvent(name = "itemSelect", event = EChartEvent.class, description = "Fires when an item is selected.", defaultEvent = true)
+})
+public abstract class EChartBase extends UIComponentBase implements Widget, StyleAware {
 
+    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.EChart";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-
     public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.EChartRenderer";
 
     public EChartBase() {
@@ -42,55 +52,16 @@ public abstract class EChartBase extends UIComponentBase implements Widget, Clie
         return COMPONENT_FAMILY;
     }
 
-    public enum PropertyKeys {
-        widgetVar, value, extender, style, styleClass, theme
-    }
+    @Facet(description = "Content of the chart.")
+    public abstract UIComponent getValueFacet();
 
-    public String getWidgetVar() {
-        return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
-    }
+    @Property(description = "JSON value of the chart.")
+    public abstract String getValue();
 
-    public void setWidgetVar(String widgetVar) {
-        getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
-    }
+    @Property(description = "Name of javascript function to extend the options of the underlying EChart plugin.")
+    public abstract String getExtender();
 
-    public String getValue() {
-        return (String) getStateHelper().eval(PropertyKeys.value, null);
-    }
+    @Property(description = "The theme to style the chart with. Can be a theme name imported in JS or 'light' or 'dark'.", defaultValue = "default")
+    public abstract String getTheme();
 
-    public void setValue(String value) {
-        getStateHelper().put(PropertyKeys.value, value);
-    }
-
-    public String getStyle() {
-        return (String) getStateHelper().eval(PropertyKeys.style, null);
-    }
-
-    public void setStyle(String style) {
-        getStateHelper().put(PropertyKeys.style, style);
-    }
-
-    public String getStyleClass() {
-        return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
-    }
-
-    public void setStyleClass(String styleClass) {
-        getStateHelper().put(PropertyKeys.styleClass, styleClass);
-    }
-
-    public String getExtender() {
-        return (String) getStateHelper().eval(PropertyKeys.extender, null);
-    }
-
-    public void setExtender(String extender) {
-        getStateHelper().put(PropertyKeys.extender, extender);
-    }
-
-    public String getTheme() {
-        return (String) getStateHelper().eval(PropertyKeys.theme, "default");
-    }
-
-    public void setTheme(String theme) {
-        getStateHelper().put(PropertyKeys.theme, theme);
-    }
 }
