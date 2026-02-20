@@ -34,6 +34,7 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
 import jakarta.faces.convert.Converter;
 import jakarta.faces.convert.ConverterException;
+import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.extensions.util.MessageFactory;
@@ -50,35 +51,34 @@ import org.primefaces.util.WidgetBuilder;
  * @version $Revision$
  * @since 0.3
  */
-public class TimePickerRenderer extends InputRenderer {
+@FacesRenderer(rendererType = TimePicker.DEFAULT_RENDERER, componentFamily = TimePicker.COMPONENT_FAMILY)
+public class TimePickerRenderer extends InputRenderer<TimePicker> {
 
     private static final String BUTTON = "button";
 
     @Override
-    public void decode(final FacesContext fc, final UIComponent component) {
-        final TimePicker timepicker = (TimePicker) component;
+    public void decode(final FacesContext fc, final TimePicker component) {
 
-        if (!shouldDecode(timepicker)) {
+        if (!shouldDecode(component)) {
             return;
         }
 
-        final String param = timepicker.getClientId(fc) + "_input";
+        final String param = component.getClientId(fc) + "_input";
         final String submittedValue = fc.getExternalContext().getRequestParameterMap().get(param);
 
         if (submittedValue != null) {
-            timepicker.setSubmittedValue(submittedValue);
+            component.setSubmittedValue(submittedValue);
         }
 
-        decodeBehaviors(fc, timepicker);
+        decodeBehaviors(fc, component);
     }
 
     @Override
-    public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
-        final TimePicker timepicker = (TimePicker) component;
-        final String value = getValueAsString(fc, timepicker);
+    public void encodeEnd(final FacesContext fc, final TimePicker component) throws IOException {
+        final String value = getValueAsString(fc, component);
 
-        encodeMarkup(fc, timepicker, value);
-        encodeScript(fc, timepicker, value);
+        encodeMarkup(fc, component, value);
+        encodeScript(fc, component, value);
     }
 
     @Override
@@ -122,25 +122,25 @@ public class TimePickerRenderer extends InputRenderer {
         }
     }
 
-    protected void encodeMarkup(final FacesContext fc, final TimePicker timepicker, final String value)
+    protected void encodeMarkup(final FacesContext fc, final TimePicker component, final String value)
                 throws IOException {
         final ResponseWriter writer = fc.getResponseWriter();
-        final String clientId = timepicker.getClientId(fc);
+        final String clientId = component.getClientId(fc);
         final String inputId = clientId + "_input";
 
-        writer.startElement("span", timepicker);
+        writer.startElement("span", component);
         writer.writeAttribute("id", clientId, null);
 
         String containerClass = TimePicker.CONTAINER_CLASS;
-        if (timepicker.isSpinner()) {
+        if (component.isSpinner()) {
             containerClass += " ui-spinner";
         }
-        if (timepicker.isShowOnButton()) {
+        if (component.isShowOnButton()) {
             containerClass += " ui-inputgroup";
         }
         writer.writeAttribute(Attrs.CLASS, containerClass, null);
 
-        if (timepicker.isInline()) {
+        if (component.isInline()) {
             // inline container
             writer.startElement("div", null);
             writer.writeAttribute("id", clientId + "_inline", null);
@@ -150,13 +150,13 @@ public class TimePickerRenderer extends InputRenderer {
         writer.startElement("input", null);
         writer.writeAttribute("id", inputId, null);
         writer.writeAttribute("name", inputId, null);
-        writer.writeAttribute("type", timepicker.isInline() ? "hidden" : "text", null);
-        if (timepicker.getSize() > 0) {
-            writer.writeAttribute("size", timepicker.getSize(), null);
+        writer.writeAttribute("type", component.isInline() ? "hidden" : "text", null);
+        if (component.getSize() > 0) {
+            writer.writeAttribute("size", component.getSize(), null);
         }
         writer.writeAttribute("autocomplete", "off", null);
 
-        if (timepicker.isReadonlyInput()) {
+        if (component.isReadonlyInput()) {
             writer.writeAttribute("readonly", "readonly", null);
         }
 
@@ -164,36 +164,36 @@ public class TimePickerRenderer extends InputRenderer {
             writer.writeAttribute("value", value, null);
         }
 
-        if (!timepicker.isInline()) {
+        if (!component.isInline()) {
             final String styleClass = getStyleClassBuilder(fc)
                         .add(TimePicker.INPUT_CLASS)
-                        .add(timepicker.getStyleClass())
-                        .add(timepicker.isSpinner(), "ui-spinner-input")
-                        .add(timepicker.isShowOnButton(), "ui-inputtext")
-                        .add(!timepicker.isValid(), "ui-state-error")
+                        .add(component.getStyleClass())
+                        .add(component.isSpinner(), "ui-spinner-input")
+                        .add(component.isShowOnButton(), "ui-inputtext")
+                        .add(!component.isValid(), "ui-state-error")
                         .build();
 
             writer.writeAttribute(Attrs.CLASS, styleClass, null);
 
-            if (timepicker.getStyle() != null) {
-                writer.writeAttribute(Attrs.STYLE, timepicker.getStyle(), null);
+            if (component.getStyle() != null) {
+                writer.writeAttribute(Attrs.STYLE, component.getStyle(), null);
             }
         }
 
-        renderAccessibilityAttributes(fc, timepicker);
-        renderPassThruAttributes(fc, timepicker, HTML.INPUT_TEXT_ATTRS_WITHOUT_EVENTS);
-        renderDomEvents(fc, timepicker, HTML.INPUT_TEXT_EVENTS);
-        renderValidationMetadata(fc, timepicker);
+        renderAccessibilityAttributes(fc, component);
+        renderPassThruAttributes(fc, component, HTML.INPUT_TEXT_ATTRS_WITHOUT_EVENTS);
+        renderDomEvents(fc, component, HTML.INPUT_TEXT_EVENTS);
+        renderValidationMetadata(fc, component);
 
         writer.endElement("input");
 
-        if (timepicker.isSpinner()) {
-            final boolean disabled = timepicker.isDisabled() || timepicker.isReadonly();
+        if (component.isSpinner()) {
+            final boolean disabled = component.isDisabled() || component.isReadonly();
             encodeSpinnerButton(fc, TimePicker.UP_BUTTON_CLASS, TimePicker.UP_ICON_CLASS, disabled);
             encodeSpinnerButton(fc, TimePicker.DOWN_BUTTON_CLASS, TimePicker.DOWN_ICON_CLASS, disabled);
         }
 
-        if (timepicker.isShowOnButton()) {
+        if (component.isShowOnButton()) {
             writer.startElement(BUTTON, null);
             writer.writeAttribute(Attrs.CLASS, TimePicker.BUTTON_TRIGGER_CLASS, null);
             writer.writeAttribute("type", BUTTON, null);
@@ -214,63 +214,63 @@ public class TimePickerRenderer extends InputRenderer {
         writer.endElement("span");
     }
 
-    protected void encodeScript(final FacesContext fc, final TimePicker timepicker, final String value)
+    protected void encodeScript(final FacesContext fc, final TimePicker component, final String value)
                 throws IOException {
-        final String clientId = timepicker.getClientId(fc);
+        final String clientId = component.getClientId(fc);
 
         final WidgetBuilder wb = getWidgetBuilder(fc);
-        wb.init("ExtTimePicker", timepicker);
-        wb.attr("timeSeparator", timepicker.getTimeSeparator());
-        wb.attr("myPosition", timepicker.getDialogPosition());
-        wb.attr("atPosition", timepicker.getInputPosition());
-        wb.attr("showPeriod", timepicker.isShowPeriod());
-        wb.attr("showPeriodLabels", timepicker.isShowPeriod());
-        wb.attr("modeInline", timepicker.isInline());
-        wb.attr("modeSpinner", timepicker.isSpinner());
-        wb.nativeAttr("hours", "{starts:" + timepicker.getStartHours() + ",ends:" + timepicker.getEndHours() + "}");
-        wb.nativeAttr("minutes", "{starts:" + timepicker.getStartMinutes() + ",ends:" + timepicker.getEndMinutes()
-                    + ",interval:" + timepicker.getIntervalMinutes() + "}");
-        wb.attr("rows", timepicker.getRows());
-        wb.attr("showHours", timepicker.isShowHours());
-        wb.attr("showMinutes", timepicker.isShowMinutes());
-        wb.attr("showCloseButton", timepicker.isShowCloseButton());
-        wb.attr("showNowButton", timepicker.isShowNowButton());
-        wb.attr("showDeselectButton", timepicker.isShowDeselectButton());
+        wb.init("ExtTimePicker", component);
+        wb.attr("timeSeparator", component.getTimeSeparator());
+        wb.attr("myPosition", component.getDialogPosition());
+        wb.attr("atPosition", component.getInputPosition());
+        wb.attr("showPeriod", component.isShowPeriod());
+        wb.attr("showPeriodLabels", component.isShowPeriod());
+        wb.attr("modeInline", component.isInline());
+        wb.attr("modeSpinner", component.isSpinner());
+        wb.nativeAttr("hours", "{starts:" + component.getStartHours() + ",ends:" + component.getEndHours() + "}");
+        wb.nativeAttr("minutes", "{starts:" + component.getStartMinutes() + ",ends:" + component.getEndMinutes()
+                    + ",interval:" + component.getIntervalMinutes() + "}");
+        wb.attr("rows", component.getRows());
+        wb.attr("showHours", component.isShowHours());
+        wb.attr("showMinutes", component.isShowMinutes());
+        wb.attr("showCloseButton", component.isShowCloseButton());
+        wb.attr("showNowButton", component.isShowNowButton());
+        wb.attr("showDeselectButton", component.isShowDeselectButton());
 
-        if (timepicker.getOnHourShow() != null) {
-            wb.nativeAttr("onHourShow", timepicker.getOnHourShow());
+        if (component.getOnHourShow() != null) {
+            wb.nativeAttr("onHourShow", component.getOnHourShow());
         }
 
-        if (timepicker.getOnMinuteShow() != null) {
-            wb.nativeAttr("onMinuteShow", timepicker.getOnMinuteShow());
+        if (component.getOnMinuteShow() != null) {
+            wb.nativeAttr("onMinuteShow", component.getOnMinuteShow());
         }
 
-        if (timepicker.isShowOnButton()) {
-            wb.attr("showOn", timepicker.getShowOn());
+        if (component.isShowOnButton()) {
+            wb.attr("showOn", component.getShowOn());
             wb.selectorAttr(BUTTON, "#" + clientId + " .pe-timepicker-trigger");
         }
 
-        wb.attr("locale", timepicker.calculateLocale().toString());
-        wb.attr("disabled", timepicker.isDisabled() || timepicker.isReadonly());
+        wb.attr("locale", component.calculateLocale().toString());
+        wb.attr("disabled", component.isDisabled() || component.isReadonly());
 
         if (LangUtils.isBlank(value)) {
             wb.attr("defaultTime", Constants.EMPTY_STRING);
         }
-        else if (timepicker.isInline()) {
+        else if (component.isInline()) {
             wb.attr("defaultTime", value);
         }
 
-        if (timepicker.getMinHour() != null || timepicker.getMinMinute() != null) {
-            wb.nativeAttr("minTime", "{hour:" + timepicker.getMinHour()
-                        + ",minute:" + timepicker.getMinMinute() + "}");
+        if (component.getMinHour() != null || component.getMinMinute() != null) {
+            wb.nativeAttr("minTime", "{hour:" + component.getMinHour()
+                        + ",minute:" + component.getMinMinute() + "}");
         }
 
-        if (timepicker.getMaxHour() != null || timepicker.getMaxMinute() != null) {
-            wb.nativeAttr("maxTime", "{hour:" + timepicker.getMaxHour()
-                        + ",minute:" + timepicker.getMaxMinute() + "}");
+        if (component.getMaxHour() != null || component.getMaxMinute() != null) {
+            wb.nativeAttr("maxTime", "{hour:" + component.getMaxHour()
+                        + ",minute:" + component.getMaxMinute() + "}");
         }
 
-        encodeClientBehaviors(fc, timepicker);
+        encodeClientBehaviors(fc, component);
 
         wb.finish();
     }
@@ -294,60 +294,60 @@ public class TimePickerRenderer extends InputRenderer {
         writer.endElement("a");
     }
 
-    protected String getValueAsString(final FacesContext fc, final TimePicker timepicker) {
-        final Object submittedValue = timepicker.getSubmittedValue();
+    protected String getValueAsString(final FacesContext fc, final TimePicker component) {
+        final Object submittedValue = component.getSubmittedValue();
         if (submittedValue != null) {
             return submittedValue.toString();
         }
 
-        final Object value = timepicker.getValue();
+        final Object value = component.getValue();
         if (value == null) {
             return null;
         }
         else {
-            if (timepicker.getConverter() != null) {
+            if (component.getConverter() != null) {
                 // convert via registered converter
-                return timepicker.getConverter().getAsString(fc, timepicker, value);
+                return component.getConverter().getAsString(fc, component, value);
             }
             else {
                 // use built-in converter
                 if (value instanceof LocalTime) {
-                    final DateTimeFormatter formatter = getDateTimeFormatter(timepicker);
+                    final DateTimeFormatter formatter = getDateTimeFormatter(component);
                     return formatter.format((LocalTime) value);
                 }
                 else {
-                    final SimpleDateFormat formatter = getSimpleDateFormat(timepicker);
+                    final SimpleDateFormat formatter = getSimpleDateFormat(component);
                     return formatter.format(value);
                 }
             }
         }
     }
 
-    protected String getPattern(final TimePicker timepicker) {
-        if (!timepicker.isShowMinutes()) {
-            return timepicker.getTimePatternWithoutMinutes();
+    protected String getPattern(final TimePicker component) {
+        if (!component.isShowMinutes()) {
+            return component.getTimePatternWithoutMinutes();
         }
-        else if (!timepicker.isShowHours()) {
-            return timepicker.getTimePatternWithoutHours();
+        else if (!component.isShowHours()) {
+            return component.getTimePatternWithoutHours();
         }
-        else if (timepicker.isShowPeriod()) {
-            return timepicker.getTimePattern12();
+        else if (component.isShowPeriod()) {
+            return component.getTimePattern12();
         }
         else {
-            return timepicker.getTimePattern24();
+            return component.getTimePattern24();
         }
     }
 
-    protected DateTimeFormatter getDateTimeFormatter(final TimePicker timepicker) {
-        return DateTimeFormatter.ofPattern(getPattern(timepicker), timepicker.calculateLocale());
+    protected DateTimeFormatter getDateTimeFormatter(final TimePicker component) {
+        return DateTimeFormatter.ofPattern(getPattern(component), component.calculateLocale());
     }
 
-    protected SimpleDateFormat getSimpleDateFormat(final TimePicker timepicker) {
-        return new SimpleDateFormat(getPattern(timepicker), timepicker.calculateLocale());
+    protected SimpleDateFormat getSimpleDateFormat(final TimePicker component) {
+        return new SimpleDateFormat(getPattern(component), component.calculateLocale());
     }
 
-    protected Class<?> resolveDateType(final FacesContext context, final TimePicker timePicker) {
-        final ValueExpression ve = timePicker.getValueExpression("value");
+    protected Class<?> resolveDateType(final FacesContext context, final TimePicker component) {
+        final ValueExpression ve = component.getValueExpression("value");
 
         if (ve == null) {
             return null;

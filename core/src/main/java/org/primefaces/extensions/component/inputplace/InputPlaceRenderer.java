@@ -24,9 +24,9 @@ package org.primefaces.extensions.component.inputplace;
 import java.io.IOException;
 import java.util.Locale;
 
-import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
+import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.util.ComponentUtils;
@@ -39,76 +39,75 @@ import org.primefaces.util.WidgetBuilder;
  *
  * @since 14.0.0
  */
-public class InputPlaceRenderer extends InputRenderer {
+@FacesRenderer(rendererType = InputPlace.DEFAULT_RENDERER, componentFamily = InputPlace.COMPONENT_FAMILY)
+public class InputPlaceRenderer extends InputRenderer<InputPlace> {
 
     @Override
-    public void decode(FacesContext context, UIComponent component) {
-        InputPlace inputPlace = (InputPlace) component;
+    public void decode(FacesContext context, InputPlace component) {
 
-        if (!shouldDecode(inputPlace)) {
+        if (!shouldDecode(component)) {
             return;
         }
 
-        decodeBehaviors(context, inputPlace);
+        decodeBehaviors(context, component);
 
-        String clientId = inputPlace.getClientId(context);
+        String clientId = component.getClientId(context);
         String submittedValue = context.getExternalContext().getRequestParameterMap().get(clientId);
 
         if (submittedValue != null) {
-            int maxlength = inputPlace.getMaxlength();
+            int maxlength = component.getMaxlength();
             if (maxlength > 0 && submittedValue.length() > maxlength) {
                 submittedValue = LangUtils.substring(submittedValue, 0, maxlength);
             }
-            inputPlace.setSubmittedValue(submittedValue);
+            component.setSubmittedValue(submittedValue);
         }
     }
 
     @Override
-    public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
-        InputPlace inputPlace = (InputPlace) component;
+    public void encodeEnd(FacesContext context, InputPlace component) throws IOException {
 
-        encodeMarkup(context, inputPlace);
-        encodeScript(context, inputPlace);
+        encodeMarkup(context, component);
+        encodeScript(context, component);
     }
 
-    protected void encodeScript(FacesContext context, InputPlace inputPlace) throws IOException {
+    protected void encodeScript(FacesContext context, InputPlace component) throws IOException {
         WidgetBuilder wb = getWidgetBuilder(context);
-        wb.init("ExtInputPlace", inputPlace)
-                    .attr("apiType", inputPlace.getApiType().toLowerCase(Locale.ROOT))
-                    .attr("apiKey", inputPlace.getApiKey(), null)
-                    .attr("restrictTypes", inputPlace.getRestrictTypes(), null)
-                    .attr("restrictCountries", inputPlace.getRestrictCountries(), null)
-                    .callback("onPlaceChanged", "function(place)", inputPlace.getOnplacechanged());
+        wb.init("ExtInputPlace", component)
+                    .attr("apiType", component.getApiType().toLowerCase(Locale.ROOT))
+                    .attr("apiKey", component.getApiKey(), null)
+                    .attr("restrictTypes", component.getRestrictTypes(), null)
+                    .attr("restrictCountries", component.getRestrictCountries(), null)
+                    .callback("onPlaceChanged", "function(place)", component.getOnplacechanged());
 
-        encodeClientBehaviors(context, inputPlace);
+        encodeClientBehaviors(context, component);
         wb.finish();
     }
 
-    protected void encodeMarkup(FacesContext context, InputPlace inputPlace) throws IOException {
+    protected void encodeMarkup(FacesContext context, InputPlace component) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
-        String clientId = inputPlace.getClientId(context);
+        String clientId = component.getClientId(context);
 
-        writer.startElement("input", inputPlace);
+        writer.startElement("input", component);
         writer.writeAttribute("id", clientId, null);
         writer.writeAttribute("name", clientId, null);
         writer.writeAttribute("type", "text", null);
 
-        String valueToRender = ComponentUtils.getValueToRender(context, inputPlace);
+        String valueToRender = ComponentUtils.getValueToRender(context, component);
         if (valueToRender != null) {
             writer.writeAttribute("value", valueToRender, null);
         }
 
-        if (inputPlace.getStyle() != null) {
-            writer.writeAttribute("style", inputPlace.getStyle(), null);
+        if (component.getStyle() != null) {
+            writer.writeAttribute("style", component.getStyle(), null);
         }
 
-        writer.writeAttribute("class", createStyleClass(inputPlace, InputPlace.STYLE_CLASS), "styleClass");
+        writer.writeAttribute("class", createStyleClass(component, InputPlace.STYLE_CLASS), "styleClass");
 
-        renderAccessibilityAttributes(context, inputPlace);
-        renderRTLDirection(context, inputPlace);
-        renderPassThruAttributes(context, inputPlace, HTML.INPUT_TEXT_ATTRS_WITHOUT_EVENTS);
-        renderDomEvents(context, inputPlace, HTML.INPUT_TEXT_EVENTS);
-        renderValidationMetadata(context, inputPlace);
+        renderAccessibilityAttributes(context, component);
+        renderRTLDirection(context, component);
+        renderPassThruAttributes(context, component, HTML.INPUT_TEXT_ATTRS_WITHOUT_EVENTS);
+        renderDomEvents(context, component, HTML.INPUT_TEXT_EVENTS);
+        renderValidationMetadata(context, component);
 
         writer.endElement("input");
     }
