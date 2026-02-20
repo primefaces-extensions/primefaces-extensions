@@ -19,29 +19,31 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package org.primefaces.extensions.component.creditcard;
+package org.primefaces.extensions.component.cookiepolicy;
 
-import jakarta.faces.application.ResourceDependency;
-import jakarta.faces.component.FacesComponent;
+import jakarta.faces.component.UIComponentBase;
 
-import org.primefaces.cdk.api.FacesComponentInfo;
-import org.primefaces.extensions.util.Constants;
+import org.primefaces.cdk.api.FacesComponentBase;
 
 /**
- * <code>CreditCard</code> component.
+ * <code>CookiePolicy</code> component base class.
  *
- * @author Melloware mellowaredev@gmail.com
- * @since 8.0.1
+ * @author Melloware mellowaredev@gmail.com / Frank Cornelis
+ * @since 11.0.3
  */
-@FacesComponent(value = CreditCard.COMPONENT_TYPE, namespace = CreditCard.COMPONENT_FAMILY)
-@FacesComponentInfo(description = "CreditCard displays a credit card input form with validation and formatting.")
-@ResourceDependency(library = "primefaces", name = "components.css")
-@ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
-@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
-@ResourceDependency(library = "primefaces", name = "core.js")
-@ResourceDependency(library = Constants.LIBRARY, name = "creditcard/creditcard.css")
-@ResourceDependency(library = Constants.LIBRARY, name = "creditcard/creditcard.js")
-public class CreditCard extends CreditCardBaseImpl {
+@FacesComponentBase
+public abstract class CookiePolicyBase extends UIComponentBase {
 
-    public static final String STYLE_CLASS = "ui-credit-card ";
+    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.CookiePolicy";
+    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
+    public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.CookiePolicyRenderer";
+
+    public CookiePolicyBase() {
+        setRendererType(DEFAULT_RENDERER);
+    }
+
+    @Override
+    public String getFamily() {
+        return COMPONENT_FAMILY;
+    }
 }

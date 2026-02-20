@@ -21,20 +21,19 @@
  */
 package org.primefaces.extensions.component.counter;
 
-import java.util.Collection;
 import java.util.Locale;
 import java.util.Map;
 
 import jakarta.faces.application.ResourceDependency;
+import jakarta.faces.component.FacesComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.event.AjaxBehaviorEvent;
-import jakarta.faces.event.BehaviorEvent;
 import jakarta.faces.event.FacesEvent;
 
+import org.primefaces.cdk.api.FacesComponentInfo;
 import org.primefaces.event.SelectEvent;
-import org.primefaces.util.Constants;
+import org.primefaces.extensions.util.Constants;
 import org.primefaces.util.LocaleUtils;
-import org.primefaces.util.MapBuilder;
 
 /**
  * <code>Counter</code> component.
@@ -42,26 +41,17 @@ import org.primefaces.util.MapBuilder;
  * @author https://github.com/aripddev
  * @since 8.0.1
  */
+@FacesComponent(value = Counter.COMPONENT_TYPE, namespace = Counter.COMPONENT_FAMILY)
+@FacesComponentInfo(description = "Counter animates a number from a start value to an end value.")
 @ResourceDependency(library = "primefaces", name = "components.css")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = "primefaces", name = "components.js")
-@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "counter/counter.js")
-public class Counter extends CounterBase {
-
-    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Counter";
+@ResourceDependency(library = Constants.LIBRARY, name = "counter/counter.js")
+public class Counter extends CounterBaseImpl {
 
     public static final String STYLE_CLASS = "ui-counter";
-
-    private static final String DEFAULT_EVENT = "end";
-
-    private static final Map<String, Class<? extends BehaviorEvent>> BEHAVIOR_EVENT_MAPPING = MapBuilder.<String, Class<? extends BehaviorEvent>> builder()
-                .put("start", null)
-                .put(DEFAULT_EVENT, null)
-                .build();
-
-    private static final Collection<String> EVENT_NAMES = BEHAVIOR_EVENT_MAPPING.keySet();
 
     private Locale appropriateLocale;
 
@@ -74,48 +64,27 @@ public class Counter extends CounterBase {
     }
 
     @Override
-    public Map<String, Class<? extends BehaviorEvent>> getBehaviorEventMapping() {
-        return BEHAVIOR_EVENT_MAPPING;
-    }
-
-    @Override
-    public Collection<String> getEventNames() {
-        return EVENT_NAMES;
-    }
-
-    @Override
-    public String getDefaultEventName() {
-        return DEFAULT_EVENT;
-    }
-
-    @Override
     public void queueEvent(final FacesEvent event) {
-        if (event instanceof AjaxBehaviorEvent) {
-            final FacesContext context = getFacesContext();
+        if (isAjaxBehaviorEventSource(event)) {
+            final FacesContext context = event.getFacesContext();
             final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
             final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-            final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+            final String clientId = getClientId(context);
 
-            if ("start".equals(eventName) || DEFAULT_EVENT.equals(eventName)) {
-                final Double value = Double.parseDouble(params.get(getClientId(context) + "_value"));
+            if (isAjaxBehaviorEvent(event, ClientBehaviorEventKeys.start) || isAjaxBehaviorEvent(event, ClientBehaviorEventKeys.end)) {
+                final Double value = Double.parseDouble(params.get(clientId + "_value"));
                 final SelectEvent<Double> selectEvent = new SelectEvent<>(this, behaviorEvent.getBehavior(), value);
                 selectEvent.setPhaseId(event.getPhaseId());
                 super.queueEvent(selectEvent);
-            }
-            else {
-                super.queueEvent(event);
+                return;
             }
         }
-        else {
-            super.queueEvent(event);
-        }
+        super.queueEvent(event);
     }
 
     @Override
-    public Object saveState(FacesContext context) {
-        // reset component for MyFaces view pooling
+    public Object saveState(final FacesContext context) {
         appropriateLocale = null;
-
         return super.saveState(context);
     }
 }

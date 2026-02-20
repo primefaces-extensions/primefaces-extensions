@@ -25,9 +25,9 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.Locale;
 
-import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
+import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
@@ -41,29 +41,28 @@ import org.primefaces.util.WidgetBuilder;
  * @author https://github.com/aripddev
  * @since 8.0.1
  */
-public class CounterRenderer extends CoreRenderer {
+@FacesRenderer(rendererType = Counter.DEFAULT_RENDERER, componentFamily = Counter.COMPONENT_FAMILY)
+public class CounterRenderer extends CoreRenderer<Counter> {
 
     @Override
-    public void decode(final FacesContext context, final UIComponent component) {
+    public void decode(final FacesContext context, final Counter component) {
         decodeBehaviors(context, component);
     }
 
     @Override
-    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-        final Counter counter = (Counter) component;
-
-        encodeMarkup(context, counter);
-        encodeScript(context, counter);
+    public void encodeEnd(final FacesContext context, final Counter component) throws IOException {
+        encodeMarkup(context, component);
+        encodeScript(context, component);
     }
 
-    private void encodeScript(final FacesContext context, final Counter counter) throws IOException {
+    private void encodeScript(final FacesContext context, final Counter component) throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context);
 
-        final Locale locale = counter.calculateLocale();
+        final Locale locale = component.calculateLocale();
         final DecimalFormat formatter = (DecimalFormat) DecimalFormat.getInstance(locale);
 
-        String groupingSeparator = counter.getSeparator();
-        String decimalSeparator = counter.getDecimal();
+        String groupingSeparator = component.getSeparator();
+        String decimalSeparator = component.getDecimal();
         if (LangUtils.isBlank(groupingSeparator)) {
             groupingSeparator = String.valueOf(formatter.getDecimalFormatSymbols().getGroupingSeparator());
         }
@@ -71,47 +70,46 @@ public class CounterRenderer extends CoreRenderer {
             decimalSeparator = String.valueOf(formatter.getDecimalFormatSymbols().getDecimalSeparator());
         }
 
-        wb.init("ExtCounter", counter)
-                    .attr("start", counter.getStart())
-                    .attr("end", counter.getEnd())
-                    .attr("decimals", counter.getDecimals())
-                    .attr("duration", counter.getDuration())
-                    .attr("useGrouping", counter.isUseGrouping())
-                    .attr("useEasing", counter.isUseEasing())
-                    .attr("smartEasingThreshold", counter.getSmartEasingThreshold())
-                    .attr("smartEasingAmount", counter.getSmartEasingAmount())
+        wb.init("ExtCounter", component)
+                    .attr("start", component.getStart())
+                    .attr("end", component.getEnd())
+                    .attr("decimals", component.getDecimals())
+                    .attr("duration", component.getDuration())
+                    .attr("useGrouping", component.isUseGrouping())
+                    .attr("useEasing", component.isUseEasing())
+                    .attr("smartEasingThreshold", component.getSmartEasingThreshold())
+                    .attr("smartEasingAmount", component.getSmartEasingAmount())
                     .attr("separator", groupingSeparator)
                     .attr("decimal", decimalSeparator)
-                    .attr("prefix", counter.getPrefix())
-                    .attr("suffix", counter.getSuffix())
-                    .attr("autoStart", counter.isAutoStart());
+                    .attr("prefix", component.getPrefix())
+                    .attr("suffix", component.getSuffix())
+                    .attr("autoStart", component.isAutoStart());
 
-        if (!LangUtils.isBlank(counter.getOnstart())) {
-            wb.callback("onstart", "function()", counter.getOnstart());
+        if (!LangUtils.isBlank(component.getOnstart())) {
+            wb.callback("onstart", "function()", component.getOnstart());
         }
-        if (!LangUtils.isBlank(counter.getOnend())) {
-            wb.callback("onend", "function()", counter.getOnend());
+        if (!LangUtils.isBlank(component.getOnend())) {
+            wb.callback("onend", "function()", component.getOnend());
         }
 
-        encodeClientBehaviors(context, counter);
+        encodeClientBehaviors(context, component);
 
         wb.finish();
     }
 
-    private void encodeMarkup(final FacesContext context, final Counter counter) throws IOException {
+    private void encodeMarkup(final FacesContext context, final Counter component) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
         final String styleClass = getStyleClassBuilder(context)
                     .add(Counter.STYLE_CLASS)
-                    .add(counter.getStyleClass())
+                    .add(component.getStyleClass())
                     .build();
 
-        writer.startElement("span", counter);
-        writer.writeAttribute("id", counter.getClientId(context), "id");
+        writer.startElement("span", component);
+        writer.writeAttribute("id", component.getClientId(context), "id");
         writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
         writer.writeAttribute(Attrs.STYLE,
-                    (!counter.isVisible() ? "display:none;" : Constants.EMPTY_STRING) + counter.getStyle(),
+                    (!component.isVisible() ? "display:none;" : Constants.EMPTY_STRING) + component.getStyle(),
                     Attrs.STYLE);
         writer.endElement("span");
     }
-
 }

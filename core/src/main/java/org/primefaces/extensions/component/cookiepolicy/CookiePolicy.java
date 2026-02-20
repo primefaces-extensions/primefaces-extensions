@@ -21,12 +21,13 @@
  */
 package org.primefaces.extensions.component.cookiepolicy;
 
-import jakarta.faces.component.UIComponentBase;
+import jakarta.faces.component.FacesComponent;
 import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 
+import org.primefaces.cdk.api.FacesComponentInfo;
 import org.primefaces.util.LangUtils;
 
 /**
@@ -35,19 +36,12 @@ import org.primefaces.util.LangUtils;
  * @author Melloware mellowaredev@gmail.com / Frank Cornelis
  * @since 11.0.3
  */
-public class CookiePolicy extends UIComponentBase {
+@FacesComponent(value = CookiePolicy.COMPONENT_TYPE, namespace = CookiePolicy.COMPONENT_FAMILY)
+@FacesComponentInfo(description = "CookiePolicy conditionally renders its children based on cookie consent.")
+public class CookiePolicy extends CookiePolicyBaseImpl {
 
     public static final String COOKIE_POLICY_COOKIE_NAME = "CookiePolicy";
-
     public static final String COOKIE_POLICY_REQUEST_ATTRIBUTE = CookiePolicy.class.getName() + ".CookiePolicy";
-
-    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.CookiePolicy";
-    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-
-    @Override
-    public String getFamily() {
-        return COMPONENT_FAMILY;
-    }
 
     public boolean hasCookiePolicyCookie(final FacesContext context) {
         final ExternalContext externalContext = context.getExternalContext();
@@ -84,5 +78,4 @@ public class CookiePolicy extends UIComponentBase {
         }
         return policy.contains(cookiePolicy);
     }
-
 }

@@ -33,15 +33,22 @@ import jakarta.faces.view.facelets.TagConfig;
 import jakarta.faces.view.facelets.TagException;
 import jakarta.faces.view.facelets.TagHandler;
 
+import org.primefaces.cdk.api.FacesTagHandler;
+import org.primefaces.cdk.api.Property;
+
 /**
  * <code>CookiePolicy</code> tag handler for saving the user's choice.
  *
  * @author Melloware mellowaredev@gmail.com / Frank Cornelis
  * @since 11.0.3
  */
+@FacesTagHandler("Tag Handler for saving a cookie policy.")
 public class CookiePolicySaveTagHandler extends TagHandler {
 
+    @Property(description = "The cookie policy to be saved.", type = String.class, required = true)
     private final TagAttribute policyAttribute;
+
+    @Property(description = "Retention period in seconds.", type = Integer.class, required = false)
     private final TagAttribute retentionAttribute;
 
     public CookiePolicySaveTagHandler(final TagConfig config) {

@@ -26,9 +26,18 @@ import java.io.IOException;
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
-import jakarta.faces.render.Renderer;
+import jakarta.faces.render.FacesRenderer;
 
-public class CookiePolicyRenderer extends Renderer {
+import org.primefaces.renderkit.CoreRenderer;
+
+/**
+ * Renderer for the {@link CookiePolicy} component.
+ *
+ * @author Melloware mellowaredev@gmail.com / Frank Cornelis
+ * @since 11.0.3
+ */
+@FacesRenderer(rendererType = CookiePolicy.DEFAULT_RENDERER, componentFamily = CookiePolicy.COMPONENT_FAMILY)
+public class CookiePolicyRenderer extends CoreRenderer<CookiePolicy> {
 
     @Override
     public boolean getRendersChildren() {
@@ -36,7 +45,7 @@ public class CookiePolicyRenderer extends Renderer {
     }
 
     @Override
-    public void encodeBegin(FacesContext context, UIComponent component) throws IOException {
+    public void encodeBegin(final FacesContext context, final CookiePolicy component) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
         final String clientId = component.getClientId(context);
         writer.startElement("div", component);
@@ -44,16 +53,14 @@ public class CookiePolicyRenderer extends Renderer {
     }
 
     @Override
-    public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
+    public void encodeEnd(final FacesContext context, final CookiePolicy component) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
         writer.endElement("div");
     }
 
     @Override
-    public void encodeChildren(FacesContext context, UIComponent component) throws IOException {
-        CookiePolicy cookiePolicyComponent = (CookiePolicy) component;
-        boolean cookiePresent = cookiePolicyComponent.hasCookiePolicyCookie(context);
-        if (cookiePresent) {
+    public void encodeChildren(final FacesContext context, final CookiePolicy component) throws IOException {
+        if (component.hasCookiePolicyCookie(context)) {
             return;
         }
         for (UIComponent child : component.getChildren()) {

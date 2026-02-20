@@ -26,6 +26,7 @@ import java.io.IOException;
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
+import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.component.api.InputHolder;
 import org.primefaces.expression.SearchExpressionUtils;
@@ -39,82 +40,82 @@ import org.primefaces.util.WidgetBuilder;
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
  * @since 10.0
  */
-public class CodeScannerRenderer extends CoreRenderer {
+@FacesRenderer(rendererType = CodeScanner.DEFAULT_RENDERER, componentFamily = CodeScanner.COMPONENT_FAMILY)
+public class CodeScannerRenderer extends CoreRenderer<CodeScanner> {
 
     @Override
-    public void decode(final FacesContext context, final UIComponent component) {
+    public void decode(final FacesContext context, final CodeScanner component) {
         decodeBehaviors(context, component);
     }
 
     @Override
-    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-        final CodeScanner codeScanner = (CodeScanner) component;
+    public void encodeEnd(final FacesContext context, final CodeScanner codeScanner) throws IOException {
         encodeMarkup(context, codeScanner);
         encodeScript(context, codeScanner);
     }
 
-    protected void encodeMarkup(final FacesContext context, final CodeScanner codeScanner) throws IOException {
+    protected void encodeMarkup(final FacesContext context, final CodeScanner component) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
-        final String clientId = codeScanner.getClientId(context);
+        final String clientId = component.getClientId(context);
         final String styleClass = getStyleClassBuilder(context)
                     .add(CodeScanner.STYLE_CLASS)
-                    .add(codeScanner.getStyleClass())
+                    .add(component.getStyleClass())
                     .build();
-        writer.startElement("span", codeScanner);
+        writer.startElement("span", component);
         writer.writeAttribute("id", clientId, null);
         writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
 
-        if (codeScanner.getStyle() != null) {
-            writer.writeAttribute(Attrs.STYLE, codeScanner.getStyle(), Attrs.STYLE);
+        if (component.getStyle() != null) {
+            writer.writeAttribute(Attrs.STYLE, component.getStyle(), Attrs.STYLE);
         }
 
-        if (codeScanner.isVideo()) {
-            encodeVideo(context, codeScanner);
+        if (component.isVideo()) {
+            encodeVideo(context, component);
         }
 
         writer.endElement("span");
     }
 
-    protected void encodeVideo(final FacesContext context, final CodeScanner codeScanner) throws IOException {
+    protected void encodeVideo(final FacesContext context, final CodeScanner component) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
         writer.startElement("video", null);
-        if (codeScanner.getWidth() != null) {
-            writer.writeAttribute("width", codeScanner.getWidth(), null);
+        if (component.getWidth() != null) {
+            writer.writeAttribute("width", component.getWidth(), null);
         }
-        if (codeScanner.getHeight() != null) {
-            writer.writeAttribute("height", codeScanner.getHeight(), null);
+        if (component.getHeight() != null) {
+            writer.writeAttribute("height", component.getHeight(), null);
         }
         writer.endElement("video");
     }
 
-    protected void encodeScript(final FacesContext context, final CodeScanner codeScanner) throws IOException {
+    protected void encodeScript(final FacesContext context, final CodeScanner component) throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context);
-        wb.init("ExtCodeScanner", codeScanner)
-                    .attr("type", codeScanner.getTypeEnum().name())
-                    .attr("autoStart", codeScanner.isAutoStart());
-        if (codeScanner.getDeviceId() != null) {
-            wb.attr("deviceId", codeScanner.getDeviceId());
+        wb.init("ExtCodeScanner", component)
+                    .attr("type", component.getTypeEnum().name())
+                    .attr("autoStart", component.isAutoStart());
+        if (component.getDeviceId() != null) {
+            wb.attr("deviceId", component.getDeviceId());
         }
-        if (codeScanner.getFor() != null) {
-            String forInputClientId = getForInputClientId(context, codeScanner);
+        if (component.getFor() != null) {
+            String forInputClientId = getForInputClientId(context, component);
             if (forInputClientId != null) {
                 wb.attr("forInput", forInputClientId);
             }
         }
-        if (codeScanner.getOnsuccess() != null) {
-            wb.callback("onsuccess", "function()", codeScanner.getOnsuccess());
+        if (component.getOnsuccess() != null) {
+            wb.callback("onsuccess", "function()", component.getOnsuccess());
         }
-        if (codeScanner.getOnerror() != null) {
-            wb.callback("onerror", "function()", codeScanner.getOnerror());
+        if (component.getOnerror() != null) {
+            wb.callback("onerror", "function()", component.getOnerror());
         }
 
-        encodeClientBehaviors(context, codeScanner);
+        encodeClientBehaviors(context, component);
 
         wb.finish();
     }
 
-    protected String getForInputClientId(final FacesContext context, final CodeScanner codeScanner) {
-        UIComponent forComponent = SearchExpressionUtils.resolveComponent(codeScanner.getFor(), codeScanner);
+    protected String getForInputClientId(final FacesContext context, final CodeScanner component) {
+        UIComponent forComponent = SearchExpressionUtils.resolveComponent(component.getFor(), component);
         if (forComponent == null) {
             return null;
         }
@@ -123,5 +124,4 @@ public class CodeScannerRenderer extends CoreRenderer {
         }
         return forComponent.getClientId(context);
     }
-
 }
