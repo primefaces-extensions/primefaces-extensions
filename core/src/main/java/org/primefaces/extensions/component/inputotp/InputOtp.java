@@ -26,15 +26,12 @@ import java.util.Objects;
 
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.application.ResourceDependency;
+import jakarta.faces.component.FacesComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.convert.NumberConverter;
 
-import org.primefaces.component.api.InputHolder;
-import org.primefaces.component.api.RTLAware;
-import org.primefaces.component.api.Widget;
+import org.primefaces.cdk.api.FacesComponentInfo;
 import org.primefaces.component.inputtext.InputText;
-import org.primefaces.extensions.component.api.AbstractPrimeHtmlInputText;
-import org.primefaces.extensions.component.inputphone.InputPhone;
 import org.primefaces.extensions.util.Constants;
 import org.primefaces.extensions.util.ExtLangUtils;
 import org.primefaces.extensions.util.MessageFactory;
@@ -45,17 +42,15 @@ import org.primefaces.util.LangUtils;
  *
  * @since 14.0.0
  */
+@FacesComponent(value = InputOtp.COMPONENT_TYPE, namespace = InputOtp.COMPONENT_FAMILY)
+@FacesComponentInfo(description = "InputOtp is a one-time password / verification code input with separate cells.")
 @ResourceDependency(library = "primefaces", name = "components.css")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "inputotp/inputotp.css")
 @ResourceDependency(library = Constants.LIBRARY, name = "inputotp/inputotp.js")
-public class InputOtp extends AbstractPrimeHtmlInputText implements Widget, InputHolder, RTLAware {
-
-    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.InputOtp";
-    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-    public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.InputOtpRenderer";
+public class InputOtp extends InputOtpBaseImpl {
 
     public static final String STYLE_CLASS = "ui-inputotp ui-widget";
     public static final String RTL_STYLE_CLASS = "ui-inputotp-rtl";
@@ -64,8 +59,6 @@ public class InputOtp extends AbstractPrimeHtmlInputText implements Widget, Inpu
     public static final String INPUT_SUFFIX = "_input";
     public static final String HIDDEN_SUFFIX = "_hidden";
 
-    // disabled, readonly, style, styleClass, size, placeholder handled by component
-    // renderer
     public static final List<String> INPUT_OTP_ATTRIBUTES_WITHOUT_EVENTS = List.of(
                 "accesskey",
                 "alt",
@@ -76,30 +69,6 @@ public class InputOtp extends AbstractPrimeHtmlInputText implements Widget, Inpu
                 "tabindex",
                 "title");
 
-    // @formatter:off
-    @SuppressWarnings("java:S115")
-    public enum PropertyKeys {
-        placeholder,
-        autocomplete,
-        integerOnly,
-        inputStyle,
-        inputStyleClass,
-        separator,
-        ariaLabel,
-        length,
-        mask
-    }
-    // @formatter:on
-
-    public InputOtp() {
-        setRendererType(DEFAULT_RENDERER);
-    }
-
-    @Override
-    public String getFamily() {
-        return COMPONENT_FAMILY;
-    }
-
     @Override
     public String getInputClientId() {
         return getClientId() + INPUT_SUFFIX + 1;
@@ -108,100 +77,6 @@ public class InputOtp extends AbstractPrimeHtmlInputText implements Widget, Inpu
     @Override
     public String getValidatableInputClientId() {
         return getClientId() + HIDDEN_SUFFIX;
-    }
-
-    @Override
-    public String getAriaLabelledBy() {
-        return (String) getStateHelper().get("ariaLabelledBy");
-    }
-
-    @Override
-    public void setAriaLabelledBy(final String ariaLabelledBy) {
-        getStateHelper().put("ariaLabelledBy", ariaLabelledBy);
-    }
-
-    @Override
-    public String getAriaDescribedBy() {
-        return (String) getStateHelper().get("ariaDescribedBy");
-    }
-
-    @Override
-    public void setAriaDescribedBy(String ariaDescribedBy) {
-        getStateHelper().put("ariaDescribedBy", ariaDescribedBy);
-    }
-
-    public String getPlaceholder() {
-        return (String) getStateHelper().eval(InputPhone.PropertyKeys.placeholder, null);
-    }
-
-    public void setPlaceholder(final String placeholder) {
-        getStateHelper().put(InputPhone.PropertyKeys.placeholder, placeholder);
-    }
-
-    @Override
-    public String getAutocomplete() {
-        return (String) getStateHelper().eval(PropertyKeys.autocomplete, "off");
-    }
-
-    public boolean isIntegerOnly() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.integerOnly, false);
-    }
-
-    public void setIntegerOnly(final boolean integerOnly) {
-        getStateHelper().put(PropertyKeys.integerOnly, integerOnly);
-    }
-
-    public String getInputStyle() {
-        return (String) getStateHelper().eval(PropertyKeys.inputStyle, null);
-    }
-
-    public void setInputStyle(final String inputStyle) {
-        getStateHelper().put(PropertyKeys.inputStyle, inputStyle);
-    }
-
-    public String getInputStyleClass() {
-        return (String) getStateHelper().eval(PropertyKeys.inputStyleClass, null);
-    }
-
-    public void setInputStyleClass(final String inputStyleClass) {
-        getStateHelper().put(PropertyKeys.inputStyleClass, inputStyleClass);
-    }
-
-    public String getSeparator() {
-        return (String) getStateHelper().eval(PropertyKeys.separator, null);
-    }
-
-    public void setSeparator(final String separator) {
-        getStateHelper().put(PropertyKeys.separator, separator);
-    }
-
-    public String getAriaLabel() {
-        return (String) getStateHelper().eval(PropertyKeys.ariaLabel, null);
-    }
-
-    public void setAriaLabel(final String ariaLabel) {
-        getStateHelper().put(PropertyKeys.ariaLabel, ariaLabel);
-    }
-
-    public int getLength() {
-        return (int) getStateHelper().eval(PropertyKeys.length, 4);
-    }
-
-    public void setLength(final int length) {
-        getStateHelper().put(PropertyKeys.length, length);
-    }
-
-    public boolean isMask() {
-        return (boolean) getStateHelper().eval(PropertyKeys.mask, false);
-    }
-
-    public void setMask(final boolean mask) {
-        getStateHelper().put(PropertyKeys.mask, mask);
-    }
-
-    @Override
-    public String getWidgetVar() {
-        return (String) getStateHelper().eval("widgetVar", resolveWidgetVar());
     }
 
     @Override
@@ -215,7 +90,6 @@ public class InputOtp extends AbstractPrimeHtmlInputText implements Widget, Inpu
             return;
         }
 
-        // all characters must match the length to be complete
         if (isValid() && isRequired() && submittedValue.length() != getLength()) {
             String requiredMessageStr = getRequiredMessage();
             FacesMessage message;
@@ -244,7 +118,7 @@ public class InputOtp extends AbstractPrimeHtmlInputText implements Widget, Inpu
                                 validatorMessage);
                 }
                 else {
-                    String exampleValue = "9".repeat(getSize());
+                    String exampleValue = "9".repeat(getLength());
                     message = MessageFactory.getMessage(NumberConverter.NUMBER_ID,
                                 FacesMessage.SEVERITY_ERROR,
                                 getSubmittedValue(),
@@ -255,5 +129,4 @@ public class InputOtp extends AbstractPrimeHtmlInputText implements Widget, Inpu
             }
         }
     }
-
 }

@@ -21,8 +21,6 @@
  */
 package org.primefaces.extensions.component.inputphone;
 
-import static org.primefaces.extensions.component.inputphone.InputPhone.EVENT_COUNTRY_SELECT;
-
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
@@ -34,6 +32,7 @@ import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
 import jakarta.faces.convert.Converter;
+import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.component.inputtext.InputText;
 import org.primefaces.extensions.config.PrimeExtensionsEnvironment;
@@ -54,42 +53,41 @@ import org.primefaces.util.WidgetBuilder;
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
  * @since 7.0
  */
-public class InputPhoneRenderer extends InputRenderer {
+@FacesRenderer(rendererType = InputPhone.DEFAULT_RENDERER, componentFamily = InputPhone.COMPONENT_FAMILY)
+public class InputPhoneRenderer extends InputRenderer<InputPhone> {
 
     private static final Logger LOGGER = Logger.getLogger(InputPhoneRenderer.class.getName());
     private static final String HIDDEN_ID = "_hidden";
     private static final String ISO2_ID = "_iso2";
 
     @Override
-    public void decode(final FacesContext context, final UIComponent component) {
-        final InputPhone inputPhone = (InputPhone) component;
+    public void decode(final FacesContext context, final InputPhone component) {
 
-        if (!shouldDecode(inputPhone)) {
+        if (!shouldDecode(component)) {
             return;
         }
 
-        decodeBehaviors(context, inputPhone);
+        decodeBehaviors(context, component);
 
-        final String inputId = inputPhone.getClientId(context) + HIDDEN_ID;
+        final String inputId = component.getClientId(context) + HIDDEN_ID;
         final String submittedValue = context.getExternalContext().getRequestParameterMap().get(inputId);
 
         if (submittedValue != null) {
-            inputPhone.setSubmittedValue(submittedValue);
+            component.setSubmittedValue(submittedValue);
         }
     }
 
     @Override
-    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-        final InputPhone inputPhone = (InputPhone) component;
+    public void encodeEnd(final FacesContext context, final InputPhone component) throws IOException {
 
-        final Object value = inputPhone.getValue();
-        String valueToRender = ComponentUtils.getValueToRender(context, inputPhone, value);
+        final Object value = component.getValue();
+        String valueToRender = ComponentUtils.getValueToRender(context, component, value);
         if (valueToRender == null) {
             valueToRender = Constants.EMPTY_STRING;
         }
 
-        encodeMarkup(context, inputPhone, valueToRender);
-        encodeScript(context, inputPhone);
+        encodeMarkup(context, component, valueToRender);
+        encodeScript(context, component);
     }
 
     @Override
@@ -129,46 +127,46 @@ public class InputPhoneRenderer extends InputRenderer {
         final String eventName = context.getExternalContext()
                     .getRequestParameterMap()
                     .get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
-        return !EVENT_COUNTRY_SELECT.equals(eventName);
+        return !InputPhone.ClientBehaviorEventKeys.countrySelect.name().equals(eventName);
     }
 
-    protected void encodeMarkup(final FacesContext context, final InputPhone inputPhone, final String valueToRender)
+    protected void encodeMarkup(final FacesContext context, final InputPhone component, final String valueToRender)
                 throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
-        final String clientId = inputPhone.getClientId(context);
+        final String clientId = component.getClientId(context);
         final String styleClass = getStyleClassBuilder(context)
                     .add(InputPhone.STYLE_CLASS)
-                    .add(inputPhone.getStyleClass())
+                    .add(component.getStyleClass())
                     .build();
 
-        writer.startElement("span", inputPhone);
+        writer.startElement("span", component);
         writer.writeAttribute("id", clientId, null);
         writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
 
-        if (inputPhone.getStyle() != null) {
-            writer.writeAttribute(Attrs.STYLE, inputPhone.getStyle(), Attrs.STYLE);
+        if (component.getStyle() != null) {
+            writer.writeAttribute(Attrs.STYLE, component.getStyle(), Attrs.STYLE);
         }
 
-        renderRTLDirection(context, inputPhone);
-        encodeInput(context, inputPhone, clientId, valueToRender);
-        encodeHiddenInputs(context, inputPhone, clientId, valueToRender);
+        renderRTLDirection(context, component);
+        encodeInput(context, component, clientId, valueToRender);
+        encodeHiddenInputs(context, component, clientId, valueToRender);
 
         writer.endElement("span");
     }
 
-    protected void encodeInput(final FacesContext context, final InputPhone inputPhone, final String clientId,
+    protected void encodeInput(final FacesContext context, final InputPhone component, final String clientId,
                 final String valueToRender)
                 throws IOException {
 
         final ResponseWriter writer = context.getResponseWriter();
         final String inputId = clientId + InputPhone.INPUT_SUFFIX;
-        final String inputStyle = inputPhone.getInputStyle();
-        final String styleClass = createStyleClass(inputPhone, "inputStyleClass", InputText.STYLE_CLASS);
+        final String inputStyle = component.getInputStyle();
+        final String styleClass = createStyleClass(component, "inputStyleClass", InputText.STYLE_CLASS);
 
         writer.startElement("input", null);
         writer.writeAttribute("id", inputId, null);
         writer.writeAttribute("name", inputId, null);
-        writer.writeAttribute("type", inputPhone.getType(), null);
+        writer.writeAttribute("type", component.getType(), null);
         writer.writeAttribute("value", valueToRender, null);
         writer.writeAttribute(Attrs.CLASS, styleClass, "inputStyleClass");
 
@@ -176,53 +174,53 @@ public class InputPhoneRenderer extends InputRenderer {
             writer.writeAttribute(Attrs.STYLE, inputStyle, null);
         }
 
-        renderAccessibilityAttributes(context, inputPhone);
-        renderPassThruAttributes(context, inputPhone, HTML.INPUT_TEXT_ATTRS_WITHOUT_EVENTS);
-        renderDomEvents(context, inputPhone, HTML.INPUT_TEXT_EVENTS);
-        renderValidationMetadata(context, inputPhone);
+        renderAccessibilityAttributes(context, component);
+        renderPassThruAttributes(context, component, HTML.INPUT_TEXT_ATTRS_WITHOUT_EVENTS);
+        renderDomEvents(context, component, HTML.INPUT_TEXT_EVENTS);
+        renderValidationMetadata(context, component);
 
         writer.endElement("input");
     }
 
-    protected void encodeHiddenInputs(final FacesContext context, final InputPhone inputPhone, final String clientId, final String valueToRender)
+    protected void encodeHiddenInputs(final FacesContext context, final InputPhone component, final String clientId, final String valueToRender)
                 throws IOException {
-        renderHiddenInput(context, clientId + ISO2_ID, inputPhone.getInitialCountry(), inputPhone.isDisabled());
-        renderHiddenInput(context, clientId + HIDDEN_ID, valueToRender, inputPhone.isDisabled());
+        renderHiddenInput(context, clientId + ISO2_ID, component.getInitialCountry(), component.isDisabled());
+        renderHiddenInput(context, clientId + HIDDEN_ID, valueToRender, component.isDisabled());
     }
 
-    protected void encodeScript(final FacesContext context, final InputPhone inputPhone) throws IOException {
+    protected void encodeScript(final FacesContext context, final InputPhone component) throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context);
-        wb.init("ExtInputPhone", inputPhone);
-        encodeCountries(wb, "excludeCountries", inputPhone.getExcludeCountries());
-        wb.attr("allowDropdown", inputPhone.isAllowDropdown(), true);
-        wb.attr("autoHideDialCode", inputPhone.isAutoHideDialCode(), true);
-        wb.attr("fixDropdownWidth", inputPhone.isFixDropdownWidth(), true);
-        wb.attr("formatOnDisplay", inputPhone.isFormatOnDisplay(), true);
-        wb.attr("formatAsYouType", inputPhone.isFormatAsYouType(), true);
-        wb.attr("nationalMode", inputPhone.isNationalMode(), true);
-        wb.attr("separateDialCode", inputPhone.isSeparateDialCode(), false);
-        if (inputPhone.getAutoPlaceholderEnum() != InputPhone.AutoPlaceholder.polite) {
-            wb.attr("autoPlaceholder", inputPhone.getAutoPlaceholder());
+        wb.init("ExtInputPhone", component);
+        encodeCountries(wb, "excludeCountries", component.getExcludeCountries());
+        wb.attr("allowDropdown", component.isAllowDropdown(), true);
+        wb.attr("autoHideDialCode", component.isAutoHideDialCode(), true);
+        wb.attr("fixDropdownWidth", component.isFixDropdownWidth(), true);
+        wb.attr("formatOnDisplay", component.isFormatOnDisplay(), true);
+        wb.attr("formatAsYouType", component.isFormatAsYouType(), true);
+        wb.attr("nationalMode", component.isNationalMode(), true);
+        wb.attr("separateDialCode", component.isSeparateDialCode(), false);
+        if (component.getAutoPlaceholderEnum() != InputPhone.AutoPlaceholder.polite) {
+            wb.attr("autoPlaceholder", component.getAutoPlaceholder());
         }
-        if (LangUtils.isNotBlank(inputPhone.getInitialCountry())) {
-            wb.attr("initialCountry", inputPhone.getInitialCountry());
+        if (LangUtils.isNotBlank(component.getInitialCountry())) {
+            wb.attr("initialCountry", component.getInitialCountry());
         }
-        if (InputPhone.COUNTRY_AUTO.equals(inputPhone.getInitialCountry())) {
-            if (inputPhone.getGeoIpLookup() == null) {
+        if (InputPhone.COUNTRY_AUTO.equals(component.getInitialCountry())) {
+            if (component.getGeoIpLookup() == null) {
                 throw new FacesException("InputPhone geoIpLookup property is required when initialCountry is 'auto'.");
             }
-            wb.nativeAttr("geoIpLookup", inputPhone.getGeoIpLookup());
+            wb.nativeAttr("geoIpLookup", component.getGeoIpLookup());
         }
-        encodeCountries(wb, "onlyCountries", inputPhone.getOnlyCountries());
-        if (inputPhone.getPlaceholderNumberTypeEnum() != InputPhone.PlaceholderNumberType.mobile) {
-            wb.attr("placeholderNumberType", inputPhone.getPlaceholderNumberType().toUpperCase());
+        encodeCountries(wb, "onlyCountries", component.getOnlyCountries());
+        if (component.getPlaceholderNumberTypeEnum() != InputPhone.PlaceholderNumberType.mobile) {
+            wb.attr("placeholderNumberType", component.getPlaceholderNumberType().toUpperCase());
         }
-        encodeCountries(wb, "countryOrder", inputPhone.getPreferredCountries());
-        if (inputPhone.getLocalizedCountries() != null) {
-            wb.nativeAttr("i18n", objectToJsonString(inputPhone.getLocalizedCountries()));
+        encodeCountries(wb, "countryOrder", component.getPreferredCountries());
+        if (component.getLocalizedCountries() != null) {
+            wb.nativeAttr("i18n", objectToJsonString(component.getLocalizedCountries()));
         }
 
-        encodeClientBehaviors(context, inputPhone);
+        encodeClientBehaviors(context, component);
 
         wb.finish();
     }
@@ -230,7 +228,7 @@ public class InputPhoneRenderer extends InputRenderer {
     private void encodeCountries(final WidgetBuilder wb, final String attribute, final Object value)
                 throws IOException {
         final Collection<String> countries = toCollection(value);
-        if (!countries.isEmpty()) {
+        if (countries != null && !countries.isEmpty()) {
             wb.nativeAttr(attribute, new JSONArray(countries).toString());
         }
     }

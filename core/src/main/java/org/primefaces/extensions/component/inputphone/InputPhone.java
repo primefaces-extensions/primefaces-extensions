@@ -21,26 +21,17 @@
  */
 package org.primefaces.extensions.component.inputphone;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 import jakarta.faces.application.ResourceDependency;
+import jakarta.faces.component.FacesComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.event.AjaxBehaviorEvent;
 import jakarta.faces.event.FacesEvent;
 
-import org.primefaces.cdk.api.PrimeClientBehaviorEventKeys;
-import org.primefaces.component.api.InputHolder;
-import org.primefaces.component.api.MixedClientBehaviorHolder;
-import org.primefaces.component.api.RTLAware;
-import org.primefaces.component.api.Widget;
+import org.primefaces.cdk.api.FacesComponentInfo;
 import org.primefaces.event.SelectEvent;
-import org.primefaces.extensions.component.api.AbstractPrimeHtmlInputText;
 import org.primefaces.extensions.model.inputphone.Country;
-import org.primefaces.util.Constants;
-import org.primefaces.util.LangUtils;
 
 /**
  * <code>InputPhone</code> component.
@@ -48,53 +39,21 @@ import org.primefaces.util.LangUtils;
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
  * @since 7.0
  */
+@FacesComponent(value = InputPhone.COMPONENT_TYPE, namespace = InputPhone.COMPONENT_FAMILY)
+@FacesComponentInfo(description = "InputPhone is an international telephone input with country selector.")
 @ResourceDependency(library = "primefaces", name = "components.css")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "inputphone/inputphone.css")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "inputphone/inputphone.js")
-public class InputPhone extends AbstractPrimeHtmlInputText
-            implements Widget, InputHolder, MixedClientBehaviorHolder, RTLAware {
-
-    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.InputPhone";
-    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-    public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.InputPhoneRenderer";
+public class InputPhone extends InputPhoneBaseImpl {
 
     public static final String STYLE_CLASS = "ui-inputphone ui-widget";
-    public static final String EVENT_COUNTRY_SELECT = "countrySelect";
     public static final String COUNTRY_AUTO = "auto";
     public static final String INPUT_SUFFIX = "_input";
 
-    private static final List<String> UNOBSTRUSIVE_EVENT_NAMES = LangUtils.unmodifiableList(EVENT_COUNTRY_SELECT);
-    private static final Collection<String> EVENT_NAMES = LangUtils.concat(AbstractPrimeHtmlInputText.EVENT_NAMES,
-                UNOBSTRUSIVE_EVENT_NAMES);
-
     // @formatter:off
-    @SuppressWarnings("java:S115")
-    public enum PropertyKeys {
-        allowDropdown,
-        autoHideDialCode,
-        autoPlaceholder,
-        excludeCountries,
-        fixDropdownWidth,
-        formatAsYouType,
-        formatOnDisplay,
-        geoIpLookup,
-        initialCountry,
-        inputStyle,
-        inputStyleClass,
-        localizedCountries,
-        nationalMode,
-        onlyCountries,
-        placeholder,
-        placeholderNumberType,
-        preferredCountries,
-        separateDialCode,
-        type,
-        widgetVar
-    }
-
     @SuppressWarnings("java:S115")
     public enum AutoPlaceholder {
         polite,
@@ -117,26 +76,6 @@ public class InputPhone extends AbstractPrimeHtmlInputText
     }
     // @formatter:on
 
-    public InputPhone() {
-        setRendererType(DEFAULT_RENDERER);
-    }
-
-    @Override
-    public String getFamily() {
-        return COMPONENT_FAMILY;
-    }
-
-    @Override
-    public Collection<String> getEventNames() {
-        return EVENT_NAMES;
-    }
-
-    @Override
-    public Collection<PrimeClientBehaviorEventKeys> getUnobtrusiveClientBehaviorEventKeys() {
-        // TODO replace UNOBSTRUSIVE_EVENT_NAMES
-        return List.of();
-    }
-
     @Override
     public String getInputClientId() {
         return getClientId() + INPUT_SUFFIX;
@@ -147,219 +86,36 @@ public class InputPhone extends AbstractPrimeHtmlInputText
         return getClientId() + INPUT_SUFFIX;
     }
 
-    @Override
-    public String getAriaLabelledBy() {
-        return (String) getStateHelper().get("ariaLabelledBy");
-    }
-
-    @Override
-    public void setAriaLabelledBy(final String ariaLabelledBy) {
-        getStateHelper().put("ariaLabelledBy", ariaLabelledBy);
-    }
-
-    @Override
-    public String getAriaDescribedBy() {
-        return (String) getStateHelper().get("ariaDescribedBy");
-    }
-
-    @Override
-    public void setAriaDescribedBy(String ariaDescribedBy) {
-        getStateHelper().put("ariaDescribedBy", ariaDescribedBy);
-    }
-
-    public String getPlaceholder() {
-        return (String) getStateHelper().eval(PropertyKeys.placeholder, null);
-    }
-
-    public void setPlaceholder(final String placeholder) {
-        getStateHelper().put(PropertyKeys.placeholder, placeholder);
-    }
-
-    public String getWidgetVar() {
-        return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
-    }
-
-    public void setWidgetVar(final String widgetVar) {
-        getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
-    }
-
-    public String getType() {
-        return (String) getStateHelper().eval(PropertyKeys.type, "tel");
-    }
-
-    public void setType(final String type) {
-        getStateHelper().put(PropertyKeys.type, type);
-    }
-
-    public boolean isAllowDropdown() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.allowDropdown, true);
-    }
-
-    public void setAllowDropdown(final boolean allowDropdown) {
-        getStateHelper().put(PropertyKeys.allowDropdown, allowDropdown);
-    }
-
-    public boolean isAutoHideDialCode() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.autoHideDialCode, true);
-    }
-
-    public void setAutoHideDialCode(final boolean autoHideDialCode) {
-        getStateHelper().put(PropertyKeys.autoHideDialCode, autoHideDialCode);
-    }
-
-    public String getAutoPlaceholder() {
-        return (String) getStateHelper().eval(PropertyKeys.autoPlaceholder, AutoPlaceholder.polite.name());
-    }
-
     public AutoPlaceholder getAutoPlaceholderEnum() {
         return AutoPlaceholder.valueOf(getAutoPlaceholder());
-    }
-
-    public void setAutoPlaceholder(final String autoPlaceholder) {
-        getStateHelper().put(PropertyKeys.autoPlaceholder, autoPlaceholder);
-    }
-
-    public Object getExcludeCountries() {
-        return getStateHelper().eval(PropertyKeys.excludeCountries, Collections.emptyList());
-    }
-
-    public void setExcludeCountries(final Object excludeCountries) {
-        getStateHelper().put(PropertyKeys.excludeCountries, excludeCountries);
-    }
-
-    public boolean isFixDropdownWidth() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.fixDropdownWidth, true);
-    }
-
-    public void setFixDropdownWidth(final boolean fixDropdownWidth) {
-        getStateHelper().put(PropertyKeys.fixDropdownWidth, fixDropdownWidth);
-    }
-
-    public boolean isFormatOnDisplay() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.formatOnDisplay, true);
-    }
-
-    public void setFormatOnDisplay(final boolean formatOnDisplay) {
-        getStateHelper().put(PropertyKeys.formatOnDisplay, formatOnDisplay);
-    }
-
-    public boolean isFormatAsYouType() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.formatAsYouType, true);
-    }
-
-    public void setFormatAsYouType(final boolean formatAsYouType) {
-        getStateHelper().put(PropertyKeys.formatAsYouType, formatAsYouType);
-    }
-
-    public String getInitialCountry() {
-        return (String) getStateHelper().eval(PropertyKeys.initialCountry, "us");
-    }
-
-    public void setInitialCountry(final String initialCountry) {
-        getStateHelper().put(PropertyKeys.initialCountry, initialCountry);
-    }
-
-    public boolean isNationalMode() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.nationalMode, true);
-    }
-
-    public void setNationalMode(final boolean nationalMode) {
-        getStateHelper().put(PropertyKeys.nationalMode, nationalMode);
-    }
-
-    public Object getOnlyCountries() {
-        return getStateHelper().eval(PropertyKeys.onlyCountries, Collections.emptyList());
-    }
-
-    public void setOnlyCountries(final Object onlyCountries) {
-        getStateHelper().put(PropertyKeys.onlyCountries, onlyCountries);
-    }
-
-    public String getPlaceholderNumberType() {
-        return (String) getStateHelper().eval(PropertyKeys.placeholderNumberType, PlaceholderNumberType.mobile.name());
     }
 
     public PlaceholderNumberType getPlaceholderNumberTypeEnum() {
         return PlaceholderNumberType.valueOf(getPlaceholderNumberType());
     }
 
-    public void setPlaceholderNumberType(final String placeholderNumberType) {
-        getStateHelper().put(PropertyKeys.placeholderNumberType, placeholderNumberType);
-    }
-
-    public Object getPreferredCountries() {
-        return getStateHelper().eval(PropertyKeys.preferredCountries, Collections.emptyList());
-    }
-
-    public void setPreferredCountries(final Object preferredCountries) {
-        getStateHelper().put(PropertyKeys.preferredCountries, preferredCountries);
-    }
-
-    public boolean isSeparateDialCode() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.separateDialCode, false);
-    }
-
-    public void setSeparateDialCode(final boolean separateDialCode) {
-        getStateHelper().put(PropertyKeys.separateDialCode, separateDialCode);
-    }
-
-    public String getInputStyle() {
-        return (String) getStateHelper().eval(PropertyKeys.inputStyle, null);
-    }
-
-    public void setInputStyle(final String inputStyle) {
-        getStateHelper().put(PropertyKeys.inputStyle, inputStyle);
-    }
-
-    public String getInputStyleClass() {
-        return (String) getStateHelper().eval(PropertyKeys.inputStyleClass, null);
-    }
-
-    public void setInputStyleClass(final String inputStyleClass) {
-        getStateHelper().put(PropertyKeys.inputStyleClass, inputStyleClass);
-    }
-
-    public String getGeoIpLookup() {
-        return (String) getStateHelper().eval(PropertyKeys.geoIpLookup, null);
-    }
-
-    public void setGeoIpLookup(final String geoIpLookup) {
-        getStateHelper().put(PropertyKeys.geoIpLookup, geoIpLookup);
-    }
-
-    public Object getLocalizedCountries() {
-        return getStateHelper().eval(PropertyKeys.localizedCountries, null);
-    }
-
-    public void setLocalizedCountries(final Object localizedCountries) {
-        getStateHelper().put(PropertyKeys.localizedCountries, localizedCountries);
-    }
-
     @Override
     public void queueEvent(final FacesEvent event) {
-        final FacesContext context = getFacesContext();
-        final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-        final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
-
-        if (eventName != null && event instanceof AjaxBehaviorEvent) {
+        if (isAjaxBehaviorEventSource(event)) {
+            final FacesContext context = event.getFacesContext();
+            final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
             final AjaxBehaviorEvent ajaxBehaviorEvent = (AjaxBehaviorEvent) event;
 
-            if (EVENT_COUNTRY_SELECT.equals(eventName)) {
+            if (isAjaxBehaviorEvent(event, ClientBehaviorEventKeys.countrySelect)) {
                 final Country selectedCountry = getCountry(getClientId(context), params);
                 final SelectEvent<Country> selectEvent = new SelectEvent<>(this, ajaxBehaviorEvent.getBehavior(),
                             selectedCountry);
                 selectEvent.setPhaseId(ajaxBehaviorEvent.getPhaseId());
                 super.queueEvent(selectEvent);
+                return;
             }
             else {
-                // e.g. blur, focus, change
+                // blur/focus/change events
                 super.queueEvent(event);
+                return;
             }
         }
-        else {
-            // e.g. valueChange
-            super.queueEvent(event);
-        }
+        super.queueEvent(event);
     }
 
     protected static Country getCountry(final String clientId, final Map<String, String> params) {
@@ -367,5 +123,4 @@ public class InputPhone extends AbstractPrimeHtmlInputText
                     params.get(clientId + "_iso2"),
                     params.get(clientId + "_dialCode"));
     }
-
 }

@@ -24,9 +24,9 @@ package org.primefaces.extensions.component.inputotp;
 import java.io.IOException;
 
 import jakarta.faces.FacesException;
-import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
+import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.InputRenderer;
@@ -42,85 +42,84 @@ import org.primefaces.util.WidgetBuilder;
  *
  * @since 14.0.0
  */
-public class InputOtpRenderer extends InputRenderer {
+@FacesRenderer(rendererType = InputOtp.DEFAULT_RENDERER, componentFamily = InputOtp.COMPONENT_FAMILY)
+public class InputOtpRenderer extends InputRenderer<InputOtp> {
 
     @Override
-    public void decode(final FacesContext context, final UIComponent component) {
-        final InputOtp inputOtp = (InputOtp) component;
+    public void decode(final FacesContext context, final InputOtp component) {
 
-        if (!shouldDecode(inputOtp)) {
+        if (!shouldDecode(component)) {
             return;
         }
 
-        final String inputId = inputOtp.getClientId(context) + InputOtp.HIDDEN_SUFFIX;
+        final String inputId = component.getClientId(context) + InputOtp.HIDDEN_SUFFIX;
         final String submittedValue = context.getExternalContext().getRequestParameterMap().get(inputId);
 
         if (submittedValue != null) {
-            inputOtp.setSubmittedValue(submittedValue);
+            component.setSubmittedValue(submittedValue);
         }
 
-        decodeBehaviors(context, inputOtp);
+        decodeBehaviors(context, component);
     }
 
     @Override
-    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-        final InputOtp inputOtp = (InputOtp) component;
+    public void encodeEnd(final FacesContext context, final InputOtp component) throws IOException {
 
-        if (inputOtp.getLength() < 1) {
+        if (component.getLength() < 1) {
             throw new FacesException("InputOtp length property should be > 0");
         }
 
-        String valueToRender = ComponentUtils.getValueToRender(context, inputOtp, inputOtp.getValue());
+        String valueToRender = ComponentUtils.getValueToRender(context, component, component.getValue());
         if (valueToRender == null) {
             valueToRender = Constants.EMPTY_STRING;
         }
 
-        encodeMarkup(context, inputOtp, valueToRender);
-        encodeScript(context, inputOtp);
+        encodeMarkup(context, component, valueToRender);
+        encodeScript(context, component);
     }
 
-    protected void encodeMarkup(final FacesContext context, final InputOtp inputOtp, final String valueToRender)
+    protected void encodeMarkup(final FacesContext context, final InputOtp component, final String valueToRender)
                 throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
-        final String clientId = inputOtp.getClientId(context);
+        final String clientId = component.getClientId(context);
         final String styleClass = getStyleClassBuilder(context)
-                    .add(InputOtp.STYLE_CLASS, inputOtp.getStyleClass())
-                    .add(ComponentUtils.isRTL(context, inputOtp), InputOtp.RTL_STYLE_CLASS)
+                    .add(InputOtp.STYLE_CLASS, component.getStyleClass())
+                    .add(ComponentUtils.isRTL(context, component), InputOtp.RTL_STYLE_CLASS)
                     .build();
 
-        writer.startElement("span", inputOtp);
+        writer.startElement("span", component);
         writer.writeAttribute("id", clientId, null);
         writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
 
-        if (inputOtp.getStyle() != null) {
-            writer.writeAttribute(Attrs.STYLE, inputOtp.getStyle(), Attrs.STYLE);
+        if (component.getStyle() != null) {
+            writer.writeAttribute(Attrs.STYLE, component.getStyle(), Attrs.STYLE);
         }
 
-        encodeInput(context, inputOtp, clientId, valueToRender);
-        encodeHiddenInput(context, inputOtp, clientId, valueToRender);
+        encodeInput(context, component, clientId, valueToRender);
+        encodeHiddenInput(context, component, clientId, valueToRender);
 
         writer.endElement("span");
     }
 
-    protected void encodeInput(final FacesContext context, final InputOtp inputOtp, final String clientId,
+    protected void encodeInput(final FacesContext context, final InputOtp component, final String clientId,
                 final String valueToRender)
                 throws IOException {
 
         final ResponseWriter writer = context.getResponseWriter();
-        final String inputStyle = inputOtp.getInputStyle();
-        final String inputStyleClass = createStyleClass(inputOtp, InputOtp.PropertyKeys.inputStyleClass.name(), InputOtp.CELL_STYLE_CLASS);
+        final String inputStyle = component.getInputStyle();
+        final String inputStyleClass = createStyleClass(component, "inputStyleClass", InputOtp.CELL_STYLE_CLASS);
         final char[] chars = valueToRender.toCharArray();
-        final boolean hasSeparatorFacet = FacetUtils.shouldRenderFacet(inputOtp.getFacet("separator"));
-        for (int i = 1; i <= inputOtp.getLength(); i++) {
+        final boolean hasSeparatorFacet = FacetUtils.shouldRenderFacet(component.getFacet("separator"));
+        for (int i = 1; i <= component.getLength(); i++) {
 
-            if (i > 1 && (LangUtils.isNotBlank(inputOtp.getSeparator()) || hasSeparatorFacet)) {
+            if (i > 1 && (LangUtils.isNotBlank(component.getSeparator()) || hasSeparatorFacet)) {
                 writer.startElement("div", null);
                 writer.writeAttribute(Attrs.CLASS, InputOtp.SEPARATOR_STYLE_CLASS, null);
                 if (hasSeparatorFacet) {
-                    inputOtp.getFacet("separator").encodeAll(context);
+                    component.getFacet("separator").encodeAll(context);
                 }
                 else {
-                    writer.writeText(inputOtp.getSeparator(), InputOtp.PropertyKeys.separator.name());
+                    writer.writeText(component.getSeparator(), "separator");
                 }
                 writer.endElement("div");
             }
@@ -133,50 +132,50 @@ public class InputOtpRenderer extends InputRenderer {
             writer.writeAttribute("name", inputId, null);
             writer.writeAttribute("value", inputValue, null);
             writer.writeAttribute("size", 1, null);
-            writer.writeAttribute("maxlength", inputOtp.getLength(), null);
+            writer.writeAttribute("maxlength", component.getLength(), null);
             writer.writeAttribute(Attrs.CLASS, inputStyleClass, null);
 
             if (LangUtils.isNotBlank(inputStyle)) {
                 writer.writeAttribute(Attrs.STYLE, inputStyle, null);
             }
 
-            if (inputOtp.isMask()) {
+            if (component.isMask()) {
                 writer.writeAttribute("type", "password", null);
             }
 
-            if (inputOtp.isIntegerOnly() && LangUtils.isBlank(inputOtp.getInputmode())) {
-                inputOtp.setInputmode("numeric");
+            if (component.isIntegerOnly() && LangUtils.isBlank(component.getInputmode())) {
+                component.setInputmode("numeric");
             }
 
-            if (LangUtils.isNotBlank(inputOtp.getPlaceholder())) {
-                char placeholder = inputOtp.getPlaceholder().charAt((i - 1) % inputOtp.getPlaceholder().length());
+            if (LangUtils.isNotBlank(component.getPlaceholder())) {
+                char placeholder = component.getPlaceholder().charAt((i - 1) % component.getPlaceholder().length());
                 writer.writeAttribute("placeholder", placeholder, null);
             }
 
-            renderAccessibilityAttributes(context, inputOtp);
-            renderRTLDirection(context, inputOtp);
-            renderPassThruAttributes(context, inputOtp, InputOtp.INPUT_OTP_ATTRIBUTES_WITHOUT_EVENTS);
-            renderDomEvents(context, inputOtp, HTML.INPUT_TEXT_EVENTS);
-            renderValidationMetadata(context, inputOtp);
+            renderAccessibilityAttributes(context, component);
+            renderRTLDirection(context, component);
+            renderPassThruAttributes(context, component, InputOtp.INPUT_OTP_ATTRIBUTES_WITHOUT_EVENTS);
+            renderDomEvents(context, component, HTML.INPUT_TEXT_EVENTS);
+            renderValidationMetadata(context, component);
 
             writer.endElement("input");
         }
     }
 
-    protected void encodeHiddenInput(final FacesContext context, final InputOtp inputOtp, final String clientId, final String valueToRender)
+    protected void encodeHiddenInput(final FacesContext context, final InputOtp component, final String clientId, final String valueToRender)
                 throws IOException {
-        renderHiddenInput(context, clientId + InputOtp.HIDDEN_SUFFIX, valueToRender, inputOtp.isDisabled());
+        renderHiddenInput(context, clientId + InputOtp.HIDDEN_SUFFIX, valueToRender, component.isDisabled());
     }
 
-    protected void encodeScript(final FacesContext context, final InputOtp inputOtp) throws IOException {
+    protected void encodeScript(final FacesContext context, final InputOtp component) throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context);
-        wb.init("ExtInputOtp", inputOtp);
-        wb.attr("integerOnly", inputOtp.isIntegerOnly(), false);
-        if (LangUtils.isNotBlank(inputOtp.getAriaLabel())) {
-            wb.attr("ariaLabel", inputOtp.getAriaLabel());
+        wb.init("ExtInputOtp", component);
+        wb.attr("integerOnly", component.isIntegerOnly(), false);
+        if (LangUtils.isNotBlank(component.getAriaLabel())) {
+            wb.attr("ariaLabel", component.getAriaLabel());
         }
 
-        encodeClientBehaviors(context, inputOtp);
+        encodeClientBehaviors(context, component);
 
         wb.finish();
     }
