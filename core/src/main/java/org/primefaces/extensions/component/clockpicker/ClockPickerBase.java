@@ -23,9 +23,9 @@ package org.primefaces.extensions.component.clockpicker;
 
 import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
+import org.primefaces.component.api.AbstractPrimeHtmlInputText;
 import org.primefaces.component.api.InputHolder;
 import org.primefaces.component.api.Widget;
-import org.primefaces.extensions.component.api.AbstractPrimeHtmlInputText;
 
 /**
  * <code>ClockPicker</code> component base class.
