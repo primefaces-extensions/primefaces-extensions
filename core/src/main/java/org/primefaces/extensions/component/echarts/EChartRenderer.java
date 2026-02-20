@@ -26,21 +26,23 @@ import java.io.IOException;
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
+import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.FacetUtils;
 import org.primefaces.util.FastStringWriter;
 import org.primefaces.util.WidgetBuilder;
 
-public class EChartRenderer extends CoreRenderer {
+@FacesRenderer(rendererType = EChart.DEFAULT_RENDERER, componentFamily = EChart.COMPONENT_FAMILY)
+public class EChartRenderer extends CoreRenderer<EChart> {
 
     @Override
-    public void decode(FacesContext context, UIComponent component) {
+    public void decode(FacesContext context, EChart component) {
         super.decodeBehaviors(context, component);
     }
 
     @Override
-    public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
+    public void encodeEnd(FacesContext context, EChart component) throws IOException {
         EChart chart = (EChart) component;
 
         encodeMarkup(context, chart);
@@ -82,7 +84,7 @@ public class EChartRenderer extends CoreRenderer {
      * Allow value to be a property or a facet of raw JSON.
      */
     protected String renderConfig(FacesContext context, EChart chart) throws IOException {
-        UIComponent facet = chart.getFacet("value");
+        UIComponent facet = chart.getValueFacet();
         if (FacetUtils.shouldRenderFacet(facet)) {
             // swap writers
             ResponseWriter originalWriter = context.getResponseWriter();

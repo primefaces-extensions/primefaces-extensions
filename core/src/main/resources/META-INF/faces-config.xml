@@ -22,10 +22,6 @@
     </application>
 
     <component>
-        <component-type>org.primefaces.extensions.component.EChart</component-type>
-        <component-class>org.primefaces.extensions.component.echarts.EChart</component-class>
-    </component>
-    <component>
         <component-type>org.primefaces.extensions.component.FuzzySearch</component-type>
         <component-class>org.primefaces.extensions.component.fuzzysearch.FuzzySearch</component-class>
     </component>
@@ -172,11 +168,6 @@
     </converter>
 
     <render-kit>
-        <renderer>
-            <component-family>org.primefaces.extensions.component</component-family>
-            <renderer-type>org.primefaces.extensions.component.EChartRenderer</renderer-type>
-            <renderer-class>org.primefaces.extensions.component.echarts.EChartRenderer</renderer-class>
-        </renderer>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.FuzzySearchRenderer</renderer-type>
