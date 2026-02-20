@@ -71,8 +71,8 @@ public class LightSwitch extends LightSwitchBaseImpl {
     }
 
     protected void setSelectedByValueExpression(final FacesContext context, final String selected) {
-        if (getValueExpression("selected") != null) {
-            getValueExpression("selected").setValue(context.getELContext(), selected);
+        if (getValueExpression(PropertyKeys.selected.name()) != null) {
+            getValueExpression(PropertyKeys.selected.name()).setValue(context.getELContext(), selected);
         }
         else {
             setSelected(selected);

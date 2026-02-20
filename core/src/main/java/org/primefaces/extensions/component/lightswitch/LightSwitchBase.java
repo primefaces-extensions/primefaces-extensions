@@ -61,9 +61,6 @@ public abstract class LightSwitchBase extends UIComponentBase implements Widget 
         return COMPONENT_FAMILY;
     }
 
-    @Property(description = "Name of the client side widget.")
-    public abstract String getWidgetVar();
-
     @Property(description = "The currently selected theme name.")
     public abstract String getSelected();
 
