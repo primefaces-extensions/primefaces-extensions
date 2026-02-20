@@ -19,19 +19,37 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package org.primefaces.extensions.component.keynote;
+package org.primefaces.extensions.component.fluidgrid;
 
-import jakarta.faces.component.FacesComponent;
+import jakarta.faces.component.UIComponentBase;
 
-import org.primefaces.cdk.api.FacesComponentInfo;
+import org.primefaces.cdk.api.FacesComponentBase;
+import org.primefaces.cdk.api.Property;
 
 /**
- * <code>UIKeynoteItem</code> component.
+ * <code>UIFluidGridItem</code> component base class.
  *
  * @author Oleg Varaksin / last modified by Melloware
- * @since 6.3
+ * @since 1.1.0
  */
-@FacesComponent(value = UIKeynoteItem.COMPONENT_TYPE, namespace = UIKeynoteItem.COMPONENT_FAMILY)
-@FacesComponentInfo(description = "Defines a slide/section template for a KeynoteItem type; used as a child of Keynote.")
-public class UIKeynoteItem extends UIKeynoteItemBaseImpl {
+@FacesComponentBase
+public abstract class UIFluidGridItemBase extends UIComponentBase {
+
+    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.UIFluidGridItem";
+    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
+
+    public UIFluidGridItemBase() {
+        setRendererType(null);
+    }
+
+    @Override
+    public String getFamily() {
+        return COMPONENT_FAMILY;
+    }
+
+    @Property(description = "Item type identifier; must match a FluidGridItem type in the model.", defaultValue = "default")
+    public abstract String getType();
+
+    @Property(description = "Style class for the grid item wrapper.")
+    public abstract String getStyleClass();
 }

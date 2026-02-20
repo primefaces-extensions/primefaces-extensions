@@ -23,22 +23,22 @@ package org.primefaces.extensions.component.keynote;
 
 import java.io.IOException;
 
-import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
+import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
 
-public class KeynoteItemRenderer extends CoreRenderer {
+@FacesRenderer(rendererType = UIKeynoteItem.DEFAULT_RENDERER, componentFamily = UIKeynoteItem.COMPONENT_FAMILY)
+public class KeynoteItemRenderer extends CoreRenderer<UIKeynoteItem> {
 
     public static final String ITEM_CLASS = "ui-keynote-item";
     public static final String SPEAKER_NOTE_CLASS = "notes";
 
     @Override
-    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
+    public void encodeEnd(final FacesContext context, final UIKeynoteItem uiKeynoteItem) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
-        final UIKeynoteItem uiKeynoteItem = (UIKeynoteItem) component;
 
         writer.startElement("section", null);
 
@@ -114,7 +114,7 @@ public class KeynoteItemRenderer extends CoreRenderer {
     }
 
     @Override
-    public void encodeChildren(final FacesContext fc, final UIComponent component) {
+    public void encodeChildren(final FacesContext fc, final UIKeynoteItem component) {
         // nothing to do
     }
 }

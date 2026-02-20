@@ -44,6 +44,8 @@ import jakarta.faces.event.PostValidateEvent;
 import jakarta.faces.event.PreValidateEvent;
 import jakarta.faces.render.Renderer;
 
+import org.primefaces.cdk.api.FacesComponentBase;
+import org.primefaces.cdk.api.Property;
 import org.primefaces.component.api.UITabPanel;
 import org.primefaces.extensions.event.EventDataWrapper;
 import org.primefaces.extensions.model.common.KeyData;
@@ -58,6 +60,7 @@ import org.primefaces.util.ComponentTraversalUtils;
  * @version $Revision$
  * @since 0.5
  */
+@FacesComponentBase
 public abstract class AbstractDynamicData extends UIComponentBase implements NamingContainer, UniqueIdVendor {
 
     protected KeyData data;
@@ -66,21 +69,12 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
     private Boolean isNested = null;
 
     /**
-     * Properties that are tracked by state saving.
-     *
-     * @author Oleg Varaksin / last modified by $Author$
-     * @version $Revision$
+     * Internal state keys (not component attributes).
      */
     @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
 
-        // @formatter:off
-      saved,
-      lastId,
-      var,
-      varContainerId,
-      value;
-      //@formatter:on
+        saved, lastId;
 
         private final String toString;
 
@@ -94,29 +88,14 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
         }
     }
 
-    public String getVar() {
-        return (String) getStateHelper().get(PropertyKeys.var);
-    }
+    @Property(description = "Name of the request-scoped variable that exposes the current row/control data.")
+    public abstract String getVar();
 
-    public void setVar(final String var) {
-        getStateHelper().put(PropertyKeys.var, var);
-    }
+    @Property(description = "Name of the request-scoped variable that exposes the current container client id.")
+    public abstract String getVarContainerId();
 
-    public String getVarContainerId() {
-        return (String) getStateHelper().get(PropertyKeys.varContainerId);
-    }
-
-    public void setVarContainerId(final String varContainerId) {
-        getStateHelper().put(PropertyKeys.varContainerId, varContainerId);
-    }
-
-    public Object getValue() {
-        return getStateHelper().eval(PropertyKeys.value, null);
-    }
-
-    public void setValue(final Object value) {
-        getStateHelper().put(PropertyKeys.value, value);
-    }
+    @Property(description = "The dynamic data model (e.g. DynaFormModel).", required = true)
+    public abstract Object getValue();
 
     /**
      * Finds instance of {@link org.primefaces.extensions.model.common.KeyData} by corresponding key.

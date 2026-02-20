@@ -28,6 +28,7 @@ import jakarta.faces.FacesException;
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
+import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.extensions.model.fluidgrid.FluidGridItem;
@@ -41,7 +42,8 @@ import org.primefaces.util.WidgetBuilder;
  * @author Oleg Varaksin / last modified by Melloware
  * @since 0.5
  */
-public class FluidGridRenderer extends CoreRenderer {
+@FacesRenderer(rendererType = FluidGrid.DEFAULT_RENDERER, componentFamily = FluidGrid.COMPONENT_FAMILY)
+public class FluidGridRenderer extends CoreRenderer<FluidGrid> {
 
     private static final String GRID_CLASS = "pe-fluidgrid";
     private static final String GRID_ITEM_CLASS = "pe-fluidgrid-item";
@@ -50,44 +52,42 @@ public class FluidGridRenderer extends CoreRenderer {
     private static final String LIST_ITEM_ROLE = "listitem";
 
     @Override
-    public void decode(final FacesContext context, final UIComponent component) {
+    public void decode(final FacesContext context, final FluidGrid component) {
         decodeBehaviors(context, component);
     }
 
     @Override
-    public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
-        final FluidGrid fluidGrid = (FluidGrid) component;
-
-        encodeMarkup(fc, fluidGrid);
-        encodeScript(fc, fluidGrid);
+    public void encodeEnd(final FacesContext fc, final FluidGrid component) throws IOException {
+        encodeMarkup(fc, component);
+        encodeScript(fc, component);
     }
 
-    protected void encodeMarkup(final FacesContext fc, final FluidGrid fluidGrid) throws IOException {
+    protected void encodeMarkup(final FacesContext fc, final FluidGrid component) throws IOException {
         final ResponseWriter writer = fc.getResponseWriter();
-        final String clientId = fluidGrid.getClientId(fc);
+        final String clientId = component.getClientId(fc);
         final String styleClass = getStyleClassBuilder(fc)
                     .add(GRID_CLASS)
-                    .add(fluidGrid.getStyleClass())
+                    .add(component.getStyleClass())
                     .build();
 
-        writer.startElement("div", fluidGrid);
+        writer.startElement("div", component);
         writer.writeAttribute("id", clientId, "id");
         writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
-        if (fluidGrid.getStyle() != null) {
-            writer.writeAttribute(Attrs.STYLE, fluidGrid.getStyle(), Attrs.STYLE);
+        if (component.getStyle() != null) {
+            writer.writeAttribute(Attrs.STYLE, component.getStyle(), Attrs.STYLE);
         }
 
         writer.writeAttribute("role", LIST_ROLE, null);
 
-        if (fluidGrid.getVar() != null) {
+        if (component.getVar() != null) {
             // dynamic items
-            final Object value = fluidGrid.getValue();
+            final Object value = component.getValue();
             if (value != null) {
                 if (!(value instanceof Collection<?>)) {
                     throw new FacesException("Value in FluidGrid must be of type Collection / List");
                 }
 
-                for (final UIComponent kid : fluidGrid.getChildren()) {
+                for (final UIComponent kid : component.getChildren()) {
                     if (kid.isRendered() && !(kid instanceof UIFluidGridItem)) {
                         // first render children like stamped elements, etc.
                         renderChild(fc, kid);
@@ -97,25 +97,25 @@ public class FluidGridRenderer extends CoreRenderer {
                 final Collection<FluidGridItem> col = (Collection<FluidGridItem>) value;
                 for (final FluidGridItem fluidGridItem : col) {
                     // find ui item by type
-                    final UIFluidGridItem uiItem = fluidGrid.getItem(fluidGridItem.getType());
+                    final UIFluidGridItem uiItem = component.getItem(fluidGridItem.getType());
 
                     if (uiItem.isRendered()) {
                         // set data in request scope
-                        fluidGrid.setData(fluidGridItem);
+                        component.setData(fluidGridItem);
 
                         // render item
-                        renderItem(fc, writer, fluidGrid, uiItem);
+                        renderItem(fc, writer, component, uiItem);
                     }
                 }
             }
         }
         else {
             // static items
-            for (final UIComponent kid : fluidGrid.getChildren()) {
+            for (final UIComponent kid : component.getChildren()) {
                 if (kid.isRendered()) {
                     if (kid instanceof UIFluidGridItem) {
                         // render item
-                        renderItem(fc, writer, fluidGrid, (UIFluidGridItem) kid);
+                        renderItem(fc, writer, component, (UIFluidGridItem) kid);
                     }
                     else {
                         // render a child like stamped element, etc.
@@ -128,27 +128,27 @@ public class FluidGridRenderer extends CoreRenderer {
         writer.endElement("div");
     }
 
-    protected void encodeScript(final FacesContext fc, final FluidGrid fluidGrid) throws IOException {
+    protected void encodeScript(final FacesContext fc, final FluidGrid component) throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(fc);
-        wb.init("ExtFluidGrid", fluidGrid);
+        wb.init("ExtFluidGrid", component);
         wb.append(",opts:{");
-        wb.append("isFitWidth:" + fluidGrid.isFitWidth());
-        wb.append(",isOriginLeft:" + fluidGrid.isOriginLeft());
-        wb.append(",isOriginTop:" + fluidGrid.isOriginTop());
-        wb.append(",isResizeBound:" + fluidGrid.isResizeBound());
-        wb.append(",hasImages:" + fluidGrid.isHasImages());
+        wb.append("isFitWidth:" + component.isFitWidth());
+        wb.append(",isOriginLeft:" + component.isOriginLeft());
+        wb.append(",isOriginTop:" + component.isOriginTop());
+        wb.append(",isResizeBound:" + component.isResizeBound());
+        wb.append(",hasImages:" + component.isHasImages());
 
-        if (fluidGrid.gethGutter() != 0) {
-            wb.append(",gutter:" + fluidGrid.gethGutter());
+        if (component.getHGutter() != 0) {
+            wb.append(",gutter:" + component.getHGutter());
         }
 
-        final String stamp = SearchExpressionUtils.resolveClientIdsForClientSide(fc, fluidGrid, fluidGrid.getStamp());
+        final String stamp = SearchExpressionUtils.resolveClientIdsForClientSide(fc, component, component.getStamp());
         if (stamp != null) {
             wb.append(",stamp:'" + stamp + "'");
         }
 
-        if (fluidGrid.getTransitionDuration() != null) {
-            wb.append(",transitionDuration:'" + fluidGrid.getTransitionDuration() + "'");
+        if (component.getTransitionDuration() != null) {
+            wb.append(",transitionDuration:'" + component.getTransitionDuration() + "'");
         }
         else {
             wb.append(",transitionDuration:0");
@@ -156,11 +156,11 @@ public class FluidGridRenderer extends CoreRenderer {
 
         wb.append("}");
 
-        encodeClientBehaviors(fc, fluidGrid);
+        encodeClientBehaviors(fc, component);
         wb.finish();
     }
 
-    protected void renderItem(final FacesContext fc, final ResponseWriter writer, final FluidGrid fluidGrid,
+    protected void renderItem(final FacesContext fc, final ResponseWriter writer, final FluidGrid component,
                 final UIFluidGridItem uiItem)
                 throws IOException {
         writer.startElement("div", null);
@@ -172,8 +172,8 @@ public class FluidGridRenderer extends CoreRenderer {
             writer.writeAttribute(Attrs.CLASS, GRID_ITEM_CLASS, null);
         }
 
-        if (fluidGrid.getvGutter() != 0) {
-            writer.writeAttribute(Attrs.STYLE, "margin-bottom: " + fluidGrid.getvGutter() + "px", null);
+        if (component.getVGutter() != 0) {
+            writer.writeAttribute(Attrs.STYLE, "margin-bottom: " + component.getVGutter() + "px", null);
         }
 
         writer.writeAttribute("role", LIST_ITEM_ROLE, null);
@@ -185,7 +185,7 @@ public class FluidGridRenderer extends CoreRenderer {
     }
 
     @Override
-    public void encodeChildren(final FacesContext context, final UIComponent component) {
+    public void encodeChildren(final FacesContext context, final FluidGrid component) {
         // Rendering happens on encodeEnd
     }
 

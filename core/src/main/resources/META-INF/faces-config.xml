@@ -22,24 +22,8 @@
     </application>
 
     <component>
-        <component-type>org.primefaces.extensions.component.DynaForm</component-type>
-        <component-class>org.primefaces.extensions.component.dynaform.DynaForm</component-class>
-    </component>
-    <component>
         <component-type>org.primefaces.extensions.component.EChart</component-type>
         <component-class>org.primefaces.extensions.component.echarts.EChart</component-class>
-    </component>
-    <component>
-        <component-type>org.primefaces.extensions.component.UIDynaFormControl</component-type>
-        <component-class>org.primefaces.extensions.component.dynaform.UIDynaFormControl</component-class>
-    </component>
-    <component>
-        <component-type>org.primefaces.extensions.component.FluidGrid</component-type>
-        <component-class>org.primefaces.extensions.component.fluidgrid.FluidGrid</component-class>
-    </component>
-    <component>
-        <component-type>org.primefaces.extensions.component.UIFluidGridItem</component-type>
-        <component-class>org.primefaces.extensions.component.fluidgrid.UIFluidGridItem</component-class>
     </component>
     <component>
         <component-type>org.primefaces.extensions.component.FuzzySearch</component-type>
@@ -134,10 +118,6 @@
         <component-class>org.primefaces.extensions.component.qrcode.QRCode</component-class>
     </component>
     <component>
-        <component-type>org.primefaces.extensions.component.DocumentViewer</component-type>
-        <component-class>org.primefaces.extensions.component.documentviewer.DocumentViewer</component-class>
-    </component>
-    <component>
         <component-type>org.primefaces.extensions.component.GChart</component-type>
         <component-class>org.primefaces.extensions.component.gchart.GChart</component-class>
     </component>
@@ -160,14 +140,6 @@
     <component>
         <component-type>org.primefaces.extensions.component.InputPlace</component-type>
         <component-class>org.primefaces.extensions.component.inputplace.InputPlace</component-class>
-    </component>
-    <component>
-        <component-type>org.primefaces.extensions.component.Keynote</component-type>
-        <component-class>org.primefaces.extensions.component.keynote.Keynote</component-class>
-    </component>
-    <component>
-        <component-type>org.primefaces.extensions.component.UIKeynoteItem</component-type>
-        <component-class>org.primefaces.extensions.component.keynote.UIKeynoteItem</component-class>
     </component>
     <component>
         <component-type>org.primefaces.extensions.component.TimeAgo</component-type>
@@ -218,18 +190,8 @@
     <render-kit>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>
-            <renderer-type>org.primefaces.extensions.component.DynaFormRenderer</renderer-type>
-            <renderer-class>org.primefaces.extensions.component.dynaform.DynaFormRenderer</renderer-class>
-        </renderer>
-        <renderer>
-            <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.EChartRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.echarts.EChartRenderer</renderer-class>
-        </renderer>
-        <renderer>
-            <component-family>org.primefaces.extensions.component</component-family>
-            <renderer-type>org.primefaces.extensions.component.FluidGridRenderer</renderer-type>
-            <renderer-class>org.primefaces.extensions.component.fluidgrid.FluidGridRenderer</renderer-class>
         </renderer>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>
@@ -303,11 +265,6 @@
         </renderer>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>
-            <renderer-type>org.primefaces.extensions.component.DocumentViewerRenderer</renderer-type>
-            <renderer-class>org.primefaces.extensions.component.documentviewer.DocumentViewerRenderer</renderer-class>
-        </renderer>
-        <renderer>
-            <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.GChartRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.gchart.GChartRenderer</renderer-class>
         </renderer>
@@ -345,16 +302,6 @@
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.InputPlaceRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.inputplace.InputPlaceRenderer</renderer-class>
-        </renderer>
-        <renderer>
-            <component-family>org.primefaces.extensions.component</component-family>
-            <renderer-type>org.primefaces.extensions.component.KeynoteRenderer</renderer-type>
-            <renderer-class>org.primefaces.extensions.component.keynote.KeynoteRenderer</renderer-class>
-        </renderer>
-        <renderer>
-            <component-family>org.primefaces.extensions.component</component-family>
-            <renderer-type>org.primefaces.extensions.component.KeynoteItemRenderer</renderer-type>
-            <renderer-class>org.primefaces.extensions.component.keynote.KeynoteItemRenderer</renderer-class>
         </renderer>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>

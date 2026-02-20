@@ -19,19 +19,39 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package org.primefaces.extensions.component.keynote;
+package org.primefaces.extensions.component.dynaform;
 
-import jakarta.faces.component.FacesComponent;
+import jakarta.faces.component.UIComponentBase;
 
-import org.primefaces.cdk.api.FacesComponentInfo;
+import org.primefaces.cdk.api.FacesComponentBase;
+import org.primefaces.cdk.api.Property;
+import org.primefaces.component.api.StyleAware;
 
 /**
- * <code>UIKeynoteItem</code> component.
+ * <code>UIDynaFormControl</code> component base class.
  *
  * @author Oleg Varaksin / last modified by Melloware
- * @since 6.3
+ * @since 0.5
  */
-@FacesComponent(value = UIKeynoteItem.COMPONENT_TYPE, namespace = UIKeynoteItem.COMPONENT_FAMILY)
-@FacesComponentInfo(description = "Defines a slide/section template for a KeynoteItem type; used as a child of Keynote.")
-public class UIKeynoteItem extends UIKeynoteItemBaseImpl {
+@FacesComponentBase
+public abstract class UIDynaFormControlBase extends UIComponentBase implements StyleAware {
+
+    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.UIDynaFormControl";
+    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
+
+    public UIDynaFormControlBase() {
+        setRendererType(null);
+    }
+
+    @Override
+    public String getFamily() {
+        return COMPONENT_FAMILY;
+    }
+
+    @Property(description = "Control type identifier; must match a DynaFormControl type in the model.", defaultValue = "default")
+    public abstract String getType();
+
+    @Property(description = "Search expression for the input component this control wraps (for label 'for' and validation).")
+    public abstract String getFor();
+
 }
