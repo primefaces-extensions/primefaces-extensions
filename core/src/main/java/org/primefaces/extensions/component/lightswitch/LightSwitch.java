@@ -21,23 +21,16 @@
  */
 package org.primefaces.extensions.component.lightswitch;
 
-import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
 import jakarta.faces.application.ResourceDependency;
-import jakarta.faces.component.UIComponentBase;
-import jakarta.faces.component.behavior.ClientBehaviorHolder;
+import jakarta.faces.component.FacesComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.event.AjaxBehaviorEvent;
 import jakarta.faces.event.FacesEvent;
 
-import org.primefaces.cdk.api.PrimeClientBehaviorEventKeys;
-import org.primefaces.component.api.MixedClientBehaviorHolder;
-import org.primefaces.component.api.Widget;
+import org.primefaces.cdk.api.FacesComponentInfo;
 import org.primefaces.event.SelectEvent;
-import org.primefaces.util.Constants;
-import org.primefaces.util.LangUtils;
 
 /**
  * <code>LightSwitch</code> component. Automatically switches to defined dark mode theme based on OS settings.
@@ -45,127 +38,44 @@ import org.primefaces.util.LangUtils;
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
  * @since 10.0
  */
+@FacesComponent(value = LightSwitch.COMPONENT_TYPE, namespace = LightSwitch.COMPONENT_FAMILY)
+@FacesComponentInfo(description = "LightSwitch automatically switches to defined dark mode theme based on OS settings.")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "primefaces-extensions.js")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "lightswitch/lightswitch.js")
-public class LightSwitch extends UIComponentBase implements Widget, ClientBehaviorHolder, MixedClientBehaviorHolder {
+public class LightSwitch extends LightSwitchBaseImpl {
 
-    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.LightSwitch";
-    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
     public static final String EVENT_SWITCH = "switch";
-
-    private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.LightSwitchRenderer";
-    private static final Collection<String> EVENT_NAMES = LangUtils.unmodifiableList(EVENT_SWITCH);
-
-    // @formatter:off
-    @SuppressWarnings("java:S115")
-    public enum PropertyKeys {
-        widgetVar,
-        selected,
-        light,
-        dark,
-        automatic
-    }
-    // @formatter:on
-
-    /**
-     * Default constructor
-     */
-    public LightSwitch() {
-        setRendererType(DEFAULT_RENDERER);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getFamily() {
-        return COMPONENT_FAMILY;
-    }
-
-    @Override
-    public String getDefaultEventName() {
-        return EVENT_SWITCH;
-    }
-
-    @Override
-    public Collection<String> getEventNames() {
-        return EVENT_NAMES;
-    }
-
-    // TODO: remove
-    public Collection<String> getUnobstrusiveEventNames() {
-        return getEventNames();
-    }
-
-    @Override
-    public Collection<PrimeClientBehaviorEventKeys> getUnobtrusiveClientBehaviorEventKeys() {
-        // TODO replace UNOBSTRUSIVE_EVENT_NAMES
-        return List.of();
-    }
-
-    public String getWidgetVar() {
-        return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
-    }
-
-    public void setWidgetVar(final String widgetVar) {
-        getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
-    }
-
-    public String getSelected() {
-        return (String) getStateHelper().eval(PropertyKeys.selected, null);
-    }
-
-    public void setSelected(final String selected) {
-        getStateHelper().put(PropertyKeys.selected, selected);
-    }
-
-    public void setSelectedByValueExpression(final FacesContext context, final String selected) {
-        this.getValueExpression(PropertyKeys.selected.name()).setValue(context.getELContext(), selected);
-    }
-
-    public String getLight() {
-        return (String) getStateHelper().eval(PropertyKeys.light, "saga-blue");
-    }
-
-    public void setLight(final String light) {
-        getStateHelper().put(PropertyKeys.light, light);
-    }
-
-    public String getDark() {
-        return (String) getStateHelper().eval(PropertyKeys.dark, "arya-blue");
-    }
-
-    public void setDark(final String dark) {
-        getStateHelper().put(PropertyKeys.dark, dark);
-    }
-
-    public boolean isAutomatic() {
-        return (boolean) getStateHelper().eval(PropertyKeys.automatic, true);
-    }
-
-    public void setAutomatic(final boolean automatic) {
-        getStateHelper().put(PropertyKeys.automatic, automatic);
-    }
 
     @Override
     public void queueEvent(final FacesEvent event) {
         final FacesContext context = getFacesContext();
-        final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-        final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
 
-        if (eventName != null && event instanceof AjaxBehaviorEvent) {
-            final AjaxBehaviorEvent ajaxBehaviorEvent = (AjaxBehaviorEvent) event;
+        if (isAjaxBehaviorEventSource(event)) {
+            final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+            final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
 
-            if (EVENT_SWITCH.equals(eventName)) {
+            if (isAjaxBehaviorEvent(event, ClientBehaviorEventKeys._switch)) {
                 final String theme = params.get(getClientId(context) + "_theme");
-                final SelectEvent<String> selectEvent = new SelectEvent<>(this, ajaxBehaviorEvent.getBehavior(), theme);
-                selectEvent.setPhaseId(ajaxBehaviorEvent.getPhaseId());
+                final SelectEvent<String> selectEvent = new SelectEvent<>(this, behaviorEvent.getBehavior(), theme);
+                selectEvent.setPhaseId(behaviorEvent.getPhaseId());
                 setSelectedByValueExpression(context, theme);
                 super.queueEvent(selectEvent);
+                return;
             }
+        }
+
+        super.queueEvent(event);
+    }
+
+    protected void setSelectedByValueExpression(final FacesContext context, final String selected) {
+        if (getValueExpression(PropertyKeys.selected.name()) != null) {
+            getValueExpression(PropertyKeys.selected.name()).setValue(context.getELContext(), selected);
+        }
+        else {
+            setSelected(selected);
         }
     }
 

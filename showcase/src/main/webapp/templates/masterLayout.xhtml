@@ -37,7 +37,7 @@
 
         <h:form id="switchForm">
             <pe:lightSwitch id="lightSwitch" widgetVar="lightSwitch" selected="#{userSettings.currentThemeName}">
-                <p:ajax update="themeSelectMenu" ignoreComponentNotFound="true"/>
+                <p:ajax event="switch" update="themeSelectMenu" ignoreComponentNotFound="true"/>
             </pe:lightSwitch>
         </h:form>
 
