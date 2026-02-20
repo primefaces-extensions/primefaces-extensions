@@ -31,13 +31,15 @@ import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
+import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.extensions.model.keynote.KeynoteItem;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.WidgetBuilder;
 
-public class KeynoteRenderer extends CoreRenderer {
+@FacesRenderer(rendererType = Keynote.DEFAULT_RENDERER, componentFamily = Keynote.COMPONENT_FAMILY)
+public class KeynoteRenderer extends CoreRenderer<Keynote> {
 
     public static final String CONTAINER_CLASS = "ui-keynote reveal";
     public static final String SLIDES_CLASS = "slides";
@@ -46,19 +48,14 @@ public class KeynoteRenderer extends CoreRenderer {
      * {@inheritDoc}
      */
     @Override
-    public void decode(final FacesContext context, final UIComponent component) {
+    public void decode(final FacesContext context, final Keynote component) {
         decodeBehaviors(context, component);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    public void encodeBegin(final FacesContext context, final UIComponent component) throws IOException {
-        final Keynote keynote = (Keynote) component;
-
-        if (!"none".equals(keynote.getTheme())) {
-            encodeCSS(context, keynote.getLibrary(), keynote.getTheme());
+    public void encodeBegin(final FacesContext context, final Keynote component) throws IOException {
+        if (!"none".equals(component.getTheme())) {
+            encodeCSS(context, component.getLibrary(), component.getTheme());
         }
     }
 
@@ -66,43 +63,41 @@ public class KeynoteRenderer extends CoreRenderer {
      * {@inheritDoc}
      */
     @Override
-    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-        final Keynote keynote = (Keynote) component;
-
-        encodeMarkup(context, keynote);
-        encodeScript(context, keynote);
+    public void encodeEnd(final FacesContext context, final Keynote component) throws IOException {
+        encodeMarkup(context, component);
+        encodeScript(context, component);
     }
 
     /**
      * Create the HTML markup for the DOM.
      */
-    private void encodeMarkup(final FacesContext context, final Keynote keynote) throws IOException {
+    private void encodeMarkup(final FacesContext context, final Keynote component) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
-        final String clientId = keynote.getClientId(context);
+        final String clientId = component.getClientId(context);
         final String styleClass = getStyleClassBuilder(context)
                     .add(CONTAINER_CLASS)
-                    .add(keynote.getStyleClass())
+                    .add(component.getStyleClass())
                     .build();
 
-        writer.startElement("div", keynote);
+        writer.startElement("div", component);
         writer.writeAttribute("id", clientId, null);
         writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
-        if (keynote.getStyle() != null) {
-            writer.writeAttribute(Attrs.STYLE, keynote.getStyle(), Attrs.STYLE);
+        if (component.getStyle() != null) {
+            writer.writeAttribute(Attrs.STYLE, component.getStyle(), Attrs.STYLE);
         }
 
         writer.startElement("div", null);
         writer.writeAttribute(Attrs.CLASS, SLIDES_CLASS, "class");
 
-        if (keynote.getVar() != null) {
+        if (component.getVar() != null) {
             // dynamic items
-            final Object value = keynote.getValue();
+            final Object value = component.getValue();
             if (value != null) {
                 if (!(value instanceof Collection)) {
                     throw new FacesException("Value in Keynote must be of type Collection / List");
                 }
 
-                final List<UIComponent> children = keynote.getChildren();
+                final List<UIComponent> children = component.getChildren();
                 for (int i = 0; i < children.size(); i++) {
                     final UIComponent kid = children.get(i);
                     if (kid.isRendered() && !(kid instanceof UIKeynoteItem)) {
@@ -115,11 +110,11 @@ public class KeynoteRenderer extends CoreRenderer {
                 for (int i = 0; i < col.size(); i++) {
                     final KeynoteItem keynoteItem = (KeynoteItem) col.toArray()[i];
                     // find ui item by type
-                    final UIKeynoteItem uiItem = keynote.getItem(keynoteItem.getType());
+                    final UIKeynoteItem uiItem = component.getItem(keynoteItem.getType());
 
                     if (uiItem.isRendered()) {
                         // set data in request scope
-                        keynote.setData(keynoteItem);
+                        component.setData(keynoteItem);
 
                         // render item
                         renderChild(context, uiItem);
@@ -129,7 +124,7 @@ public class KeynoteRenderer extends CoreRenderer {
         }
         else {
             // static items
-            final List<UIComponent> children = keynote.getChildren();
+            final List<UIComponent> children = component.getChildren();
             for (int i = 0; i < children.size(); i++) {
                 final UIComponent kid = children.get(i);
                 if (kid.isRendered()) {
@@ -146,32 +141,32 @@ public class KeynoteRenderer extends CoreRenderer {
     /**
      * Create the Javascript.
      */
-    private void encodeScript(final FacesContext context, final Keynote keynote) throws IOException {
+    private void encodeScript(final FacesContext context, final Keynote component) throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context);
 
-        wb.init("ExtKeynote", keynote)
-                    .attr("width", keynote.getWidth(), 960)
-                    .attr("height", keynote.getHeight(), 700)
-                    .attr("margin", keynote.getMargin(), 0.04)
-                    .attr("minScale", keynote.getMinScale(), 0.2)
-                    .attr("maxScale", keynote.getMaxScale(), 2.0)
-                    .attr("autoSlide", keynote.getAutoSlide(), 0)
-                    .attr("center", keynote.isCenter(), true)
-                    .attr("controls", keynote.isControls(), true)
-                    .attr("disableLayout", keynote.isDisableLayout(), false)
-                    .attr("embedded", keynote.isEmbedded(), false)
-                    .attr("loop", keynote.isLoop(), false)
-                    .attr("navigationMode", keynote.getNavigationMode(), "default")
-                    .attr("progress", keynote.isProgress(), true)
-                    .attr("showNotes", keynote.isShowNotes(), false)
-                    .attr("slideNumber", keynote.getSlideNumber(), "false")
-                    .attr("touch", keynote.isTouch(), true)
-                    .attr("transition", keynote.getTransition(), "slide")
-                    .attr("transitionSpeed", keynote.getTransitionSpeed(), "default")
-                    .attr("backgroundTransition", keynote.getBackgroundTransition(), "fade")
-                    .attr("theme", keynote.getTheme(), "none");
+        wb.init("ExtKeynote", component)
+                    .attr("width", component.getWidth(), 960)
+                    .attr("height", component.getHeight(), 700)
+                    .attr("margin", component.getMargin(), 0.04)
+                    .attr("minScale", component.getMinScale(), 0.2)
+                    .attr("maxScale", component.getMaxScale(), 2.0)
+                    .attr("autoSlide", component.getAutoSlide(), 0)
+                    .attr("center", component.isCenter(), true)
+                    .attr("controls", component.isControls(), true)
+                    .attr("disableLayout", component.isDisableLayout(), false)
+                    .attr("embedded", component.isEmbedded(), false)
+                    .attr("loop", component.isLoop(), false)
+                    .attr("navigationMode", component.getNavigationMode(), "default")
+                    .attr("progress", component.isProgress(), true)
+                    .attr("showNotes", component.isShowNotes(), false)
+                    .attr("slideNumber", component.getSlideNumber(), "false")
+                    .attr("touch", component.isTouch(), true)
+                    .attr("transition", component.getTransition(), "slide")
+                    .attr("transitionSpeed", component.getTransitionSpeed(), "default")
+                    .attr("backgroundTransition", component.getBackgroundTransition(), "fade")
+                    .attr("theme", component.getTheme(), "none");
 
-        encodeClientBehaviors(context, keynote);
+        encodeClientBehaviors(context, component);
 
         wb.finish();
     }
@@ -200,7 +195,7 @@ public class KeynoteRenderer extends CoreRenderer {
      * {@inheritDoc}
      */
     @Override
-    public void encodeChildren(final FacesContext context, final UIComponent component) {
+    public void encodeChildren(final FacesContext context, final Keynote component) {
         // Do nothing
     }
 

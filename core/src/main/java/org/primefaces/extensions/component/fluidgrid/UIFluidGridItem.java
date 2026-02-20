@@ -21,9 +21,9 @@
  */
 package org.primefaces.extensions.component.fluidgrid;
 
-import jakarta.faces.component.UIComponentBase;
+import jakarta.faces.component.FacesComponent;
 
-import org.primefaces.extensions.model.fluidgrid.FluidGridItem;
+import org.primefaces.cdk.api.FacesComponentInfo;
 
 /**
  * <code>UIFluidGridItem</code> component.
@@ -31,44 +31,7 @@ import org.primefaces.extensions.model.fluidgrid.FluidGridItem;
  * @author Oleg Varaksin / last modified by Melloware
  * @since 1.1.0
  */
-public class UIFluidGridItem extends UIComponentBase {
-    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-
-    /**
-     * Properties that are tracked by state saving.
-     *
-     * @author Oleg Varaksin / last modified by $Author$
-     */
-    @SuppressWarnings("java:S115")
-    protected enum PropertyKeys {
-        // @formatter:off
-      type,
-      styleClass
-      // @formatter:on
-    }
-
-    public UIFluidGridItem() {
-        setRendererType(null);
-    }
-
-    @Override
-    public String getFamily() {
-        return COMPONENT_FAMILY;
-    }
-
-    public void setType(final String type) {
-        getStateHelper().put(PropertyKeys.type, type);
-    }
-
-    public String getType() {
-        return (String) getStateHelper().eval(PropertyKeys.type, FluidGridItem.DEFAULT_TYPE);
-    }
-
-    public void setStyleClass(final String styleClass) {
-        getStateHelper().put(PropertyKeys.styleClass, styleClass);
-    }
-
-    public String getStyleClass() {
-        return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
-    }
+@FacesComponent(value = UIFluidGridItem.COMPONENT_TYPE, namespace = UIFluidGridItem.COMPONENT_FAMILY)
+@FacesComponentInfo(description = "Defines an item template for a FluidGridItem type; used as a child of FluidGrid.")
+public class UIFluidGridItem extends UIFluidGridItemBaseImpl {
 }

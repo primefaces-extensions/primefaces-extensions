@@ -30,9 +30,9 @@ import java.util.Objects;
 
 import jakarta.faces.application.Resource;
 import jakarta.faces.application.ResourceHandler;
-import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
+import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.context.PrimeRequestContext;
 import org.primefaces.extensions.util.Attrs;
@@ -51,42 +51,40 @@ import org.primefaces.util.Lazy;
  * @author Melloware mellowaredev@gmail.com
  * @since 3.0.0
  */
-public class DocumentViewerRenderer extends CoreRenderer {
+@FacesRenderer(rendererType = DocumentViewer.DEFAULT_RENDERER, componentFamily = DocumentViewer.COMPONENT_FAMILY)
+public class DocumentViewerRenderer extends CoreRenderer<DocumentViewer> {
 
     @Override
-    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-        boolean hideResourceVersion = PrimeRequestContext.getCurrentInstance(context).isHideResourceVersion();
-        if (hideResourceVersion) {
-            logDevelopmentWarning(context, this, "DocumentViewer requires a resource version to work properly and '" +
-                        Constants.ContextParams.HIDE_RESOURCE_VERSION + "' is currently configured.");
+    public void encodeEnd(final FacesContext context, final DocumentViewer component) throws IOException {
+        if (PrimeRequestContext.getCurrentInstance(context).isHideResourceVersion()) {
+            logDevelopmentWarning(context, this, "DocumentViewer requires a resource version to work properly and '"
+                        + Constants.ContextParams.HIDE_RESOURCE_VERSION + "' is currently configured.");
         }
 
-        final DocumentViewer documentViewer = (DocumentViewer) component;
-        encodeMarkup(context, documentViewer);
+        encodeMarkup(context, component);
     }
 
-    private void encodeMarkup(final FacesContext context, final DocumentViewer documentViewer) throws IOException {
-        // Section 508 frame title for assisted technology
-        String title = documentViewer.getTitle() != null ? documentViewer.getTitle() : documentViewer.getName();
+    private void encodeMarkup(final FacesContext context, final DocumentViewer component) throws IOException {
+        String title = component.getTitle() != null ? component.getTitle() : component.getName();
         title = ExtLangUtils.defaultString(title, "Document Viewer");
 
         final ResponseWriter writer = context.getResponseWriter();
-        writer.startElement("iframe", documentViewer);
-        writer.writeAttribute("id", documentViewer.getClientId(), null);
-        writer.writeAttribute(Attrs.STYLE, documentViewer.getStyle(), null);
+        writer.startElement("iframe", component);
+        writer.writeAttribute("id", component.getClientId(), null);
+        writer.writeAttribute(Attrs.STYLE, component.getStyle(), null);
         writer.writeAttribute("title", title, null);
-        writer.writeAttribute("width", documentViewer.getWidth() != null ? documentViewer.getWidth() : "100%", null);
-        writer.writeAttribute("height", documentViewer.getHeight(), null);
+        writer.writeAttribute("width", component.getWidth(), null);
+        writer.writeAttribute("height", component.getHeight(), null);
         writer.writeAttribute("allowfullscreen", Constants.EMPTY_STRING, null);
         writer.writeAttribute("webkitallowfullscreen", Constants.EMPTY_STRING, null);
-        writer.writeAttribute("src", generateSrc(context, documentViewer), null);
+        writer.writeAttribute("src", generateSrc(context, component), null);
         writer.endElement("iframe");
     }
 
-    private String generateSrc(final FacesContext context, final DocumentViewer documentViewer) throws IOException {
+    private String generateSrc(final FacesContext context, final DocumentViewer component) throws IOException {
         final String imageSrc;
         try {
-            imageSrc = URLEncoder.encode(getDocumentSource(context, documentViewer), StandardCharsets.UTF_8);
+            imageSrc = URLEncoder.encode(getDocumentSource(context, component), StandardCharsets.UTF_8);
         }
         catch (final Exception ex) {
             throw new IOException(ex);
@@ -95,35 +93,30 @@ public class DocumentViewerRenderer extends CoreRenderer {
         return getResourceURL(context) +
                     "&file=" +
                     imageSrc +
-                    generateHashString(documentViewer);
+                    generateHashString(component);
     }
 
-    private String generateHashString(final DocumentViewer documentViewer) {
+    private String generateHashString(final DocumentViewer component) {
         final List<String> params = new ArrayList<>(4);
-        params.add("locale=" + documentViewer.calculateLocale().toString().replace('_', '-'));
+        params.add("locale=" + component.calculateLocale().toString().replace('_', '-'));
 
-        // page: page number. Example: page=2
-        if (documentViewer.getPage() != null) {
-            params.add("page=" + documentViewer.getPage());
+        if (component.getPage() != null) {
+            params.add("page=" + component.getPage());
         }
 
-        // zoom level. Example: zoom=200 (accepted formats: '[zoom],[left],[top]',
-        // 'page-width', 'page-height', 'page-fit', 'auto')
-        if (LangUtils.isNotBlank(documentViewer.getZoom())) {
-            params.add("zoom=" + documentViewer.getZoom());
+        if (LangUtils.isNotBlank(component.getZoom())) {
+            params.add("zoom=" + component.getZoom());
         }
 
-        // nameddest: go to a named destination
-        if (LangUtils.isNotBlank(documentViewer.getNameddest())) {
-            params.add("nameddest=" + documentViewer.getNameddest());
+        if (LangUtils.isNotBlank(component.getNameddest())) {
+            params.add("nameddest=" + component.getNameddest());
         }
 
-        // pagemode: either "thumbs" or "bookmarks". Example: pagemode=thumbs
-        if (LangUtils.isNotBlank(documentViewer.getPagemode())) {
-            params.add("pagemode=" + documentViewer.getPagemode());
+        if (LangUtils.isNotBlank(component.getPagemode())) {
+            params.add("pagemode=" + component.getPagemode());
         }
 
-        params.add("disableFontFace=" + documentViewer.isDisableFontFace());
+        params.add("disableFontFace=" + component.isDisableFontFace());
 
         return "#" + String.join("&", params.toArray(new String[0]));
     }
@@ -134,35 +127,32 @@ public class DocumentViewerRenderer extends CoreRenderer {
                     handler.createResource("documentviewer/pdfviewer.html", "primefaces-extensions").getRequestPath());
     }
 
-    protected String getDocumentSource(final FacesContext context, final DocumentViewer documentViewer) {
-        final String name = documentViewer.getName();
+    protected String getDocumentSource(final FacesContext context, final DocumentViewer component) {
+        final String name = component.getName();
 
         if (name != null) {
-            final String libName = documentViewer.getLibrary();
+            final String libName = component.getLibrary();
             final ResourceHandler handler = context.getApplication().getResourceHandler();
             final Resource res = handler.createResource(name, libName);
 
             if (res == null) {
                 return "RES_NOT_FOUND";
             }
-            else {
-                final String requestPath = res.getRequestPath();
-                return context.getExternalContext().encodeResourceURL(requestPath);
-            }
+            final String requestPath = res.getRequestPath();
+            return context.getExternalContext().encodeResourceURL(requestPath);
         }
-        else {
-            final Object value = documentViewer.getValue();
-            String downloadName = documentViewer.getDownload();
-            if (value instanceof StreamedContent) {
-                final StreamedContent streamedContent = (StreamedContent) value;
-                downloadName = Objects.toString(streamedContent.getName(), downloadName);
-            }
-            return DynamicContentSrcBuilder.build(context,
-                        documentViewer,
-                        documentViewer.getValueExpression("value"),
-                        new Lazy<>(() -> value),
-                        documentViewer.isCache(),
-                        true) + "&download=" + downloadName;
+
+        final Object value = component.getValue();
+        String downloadName = component.getDownload();
+        if (value instanceof StreamedContent) {
+            final StreamedContent streamedContent = (StreamedContent) value;
+            downloadName = Objects.toString(streamedContent.getName(), downloadName);
         }
+        return DynamicContentSrcBuilder.build(context,
+                    component,
+                    component.getValueExpression("value"),
+                    new Lazy<>(() -> value),
+                    component.isCache(),
+                    true) + "&download=" + downloadName;
     }
 }

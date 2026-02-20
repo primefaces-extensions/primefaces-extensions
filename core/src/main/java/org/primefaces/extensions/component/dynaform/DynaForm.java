@@ -28,6 +28,7 @@ import java.util.Map;
 import jakarta.faces.FacesException;
 import jakarta.faces.application.ResourceDependency;
 import jakarta.faces.component.ContextCallback;
+import jakarta.faces.component.FacesComponent;
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.component.UINamingContainer;
 import jakarta.faces.component.visit.VisitCallback;
@@ -35,8 +36,7 @@ import jakarta.faces.component.visit.VisitContext;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.event.PhaseId;
 
-import org.primefaces.component.api.Widget;
-import org.primefaces.extensions.component.api.AbstractDynamicData;
+import org.primefaces.cdk.api.FacesComponentInfo;
 import org.primefaces.extensions.model.common.KeyData;
 import org.primefaces.extensions.model.dynaform.DynaFormControl;
 import org.primefaces.extensions.model.dynaform.DynaFormModel;
@@ -49,103 +49,17 @@ import org.primefaces.extensions.util.Constants;
  * @version $Revision$
  * @since 0.5
  */
+@FacesComponent(value = DynaForm.COMPONENT_TYPE, namespace = DynaForm.COMPONENT_FAMILY)
+@FacesComponentInfo(description = "DynaForm is a dynamic form component that renders based on a DynaFormModel.")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "dynaform/dynaform.css")
 @ResourceDependency(library = Constants.LIBRARY, name = "dynaform/dynaform.js")
-public class DynaForm extends AbstractDynamicData implements Widget {
-
-    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.DynaForm";
-    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-    private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.DynaFormRenderer";
+public class DynaForm extends DynaFormBaseImpl {
 
     private Map<String, UIDynaFormControl> cells;
-
-    /**
-     * Properties that are tracked by state saving.
-     *
-     * @author Oleg Varaksin / last modified by $Author$
-     * @version $Revision$
-     */
-    @SuppressWarnings("java:S115")
-    protected enum PropertyKeys {
-        //@formatter:off
-        widgetVar,
-        autoSubmit,
-        openExtended,
-        buttonBarPosition,
-        style,
-        styleClass,
-        columnClasses
-        //@formatter:on
-    }
-
-    public DynaForm() {
-        setRendererType(DEFAULT_RENDERER);
-    }
-
-    @Override
-    public String getFamily() {
-        return COMPONENT_FAMILY;
-    }
-
-    public String getWidgetVar() {
-        return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
-    }
-
-    public void setWidgetVar(final String widgetVar) {
-        getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
-    }
-
-    public boolean isAutoSubmit() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.autoSubmit, false);
-    }
-
-    public void setAutoSubmit(final boolean autoSubmit) {
-        getStateHelper().put(PropertyKeys.autoSubmit, autoSubmit);
-    }
-
-    public boolean isOpenExtended() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.openExtended, false);
-    }
-
-    public void setOpenExtended(final boolean openExtended) {
-        getStateHelper().put(PropertyKeys.openExtended, openExtended);
-    }
-
-    public String getButtonBarPosition() {
-        return (String) getStateHelper().eval(PropertyKeys.buttonBarPosition, "bottom");
-    }
-
-    public void setButtonBarPosition(final String buttonBarPosition) {
-        getStateHelper().put(PropertyKeys.buttonBarPosition, buttonBarPosition);
-    }
-
-    public void setStyle(final String style) {
-        getStateHelper().put(PropertyKeys.style, style);
-    }
-
-    public String getStyle() {
-        return (String) getStateHelper().eval(PropertyKeys.style, null);
-    }
-
-    public void setStyleClass(final String styleClass) {
-        getStateHelper().put(PropertyKeys.styleClass, styleClass);
-    }
-
-    public String getStyleClass() {
-        return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
-    }
-
-    public void setColumnClasses(java.lang.String columnClasses) {
-        getStateHelper().put(PropertyKeys.columnClasses, columnClasses);
-    }
-
-    public java.lang.String getColumnClasses() {
-        return (java.lang.String) getStateHelper().eval(PropertyKeys.columnClasses, null);
-    }
 
     public UIDynaFormControl getControlCell(final String type) {
         final UIDynaFormControl cell = getControlCells().get(type);

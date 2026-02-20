@@ -21,14 +21,16 @@
  */
 package org.primefaces.extensions.component.fluidgrid;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import jakarta.faces.FacesException;
 import jakarta.faces.application.ResourceDependency;
 import jakarta.faces.component.ContextCallback;
+import jakarta.faces.component.FacesComponent;
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.component.UINamingContainer;
-import jakarta.faces.component.behavior.ClientBehaviorHolder;
 import jakarta.faces.component.visit.VisitCallback;
 import jakarta.faces.component.visit.VisitContext;
 import jakarta.faces.context.FacesContext;
@@ -36,12 +38,10 @@ import jakarta.faces.event.AjaxBehaviorEvent;
 import jakarta.faces.event.FacesEvent;
 import jakarta.faces.event.PhaseId;
 
-import org.primefaces.component.api.Widget;
-import org.primefaces.extensions.component.api.AbstractDynamicData;
+import org.primefaces.cdk.api.FacesComponentInfo;
 import org.primefaces.extensions.event.LayoutCompleteEvent;
 import org.primefaces.extensions.model.common.KeyData;
 import org.primefaces.extensions.model.fluidgrid.FluidGridItem;
-import org.primefaces.util.Constants;
 
 /**
  * <code>FluidGrid</code> component.
@@ -49,179 +49,35 @@ import org.primefaces.util.Constants;
  * @author Oleg Varaksin / last modified by Melloware
  * @since 1.1.0
  */
+@FacesComponent(value = FluidGrid.COMPONENT_TYPE, namespace = FluidGrid.COMPONENT_FAMILY)
+@FacesComponentInfo(description = "FluidGrid is a masonry-style layout component that arranges items in an optimal position based on vertical space.")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "primefaces-extensions.js")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "fluidgrid/fluidgrid.css")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "fluidgrid/fluidgrid.js")
-public class FluidGrid extends AbstractDynamicData implements Widget, ClientBehaviorHolder {
-
-    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.FluidGrid";
-    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-    public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.FluidGridRenderer";
-
-    private static final Collection<String> EVENT_NAMES = Collections
-                .unmodifiableCollection(Arrays.asList("layoutComplete"));
+public class FluidGrid extends FluidGridBaseImpl {
 
     private Map<String, UIFluidGridItem> items;
 
-    /**
-     * Properties that are tracked by state saving.
-     *
-     * @author Oleg Varaksin / last modified by Melloware
-     */
-    @SuppressWarnings("java:S115")
-    protected enum PropertyKeys {
-        // @formatter:off
-      widgetVar,
-      style,
-      styleClass,
-      hGutter,
-      vGutter,
-      fitWidth,
-      originLeft,
-      originTop,
-      resizeBound,
-      stamp,
-      transitionDuration,
-      hasImages
-      // @formatter:on
-    }
-
-    public FluidGrid() {
-        setRendererType(DEFAULT_RENDERER);
-    }
-
-    @Override
-    public String getFamily() {
-        return COMPONENT_FAMILY;
-    }
-
-    public String getWidgetVar() {
-        return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
-    }
-
-    public void setWidgetVar(final String widgetVar) {
-        getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
-    }
-
-    public String getStyle() {
-        return (String) getStateHelper().eval(PropertyKeys.style, null);
-    }
-
-    public void setStyle(final String style) {
-        getStateHelper().put(PropertyKeys.style, style);
-    }
-
-    public String getStyleClass() {
-        return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
-    }
-
-    public void setStyleClass(final String styleClass) {
-        getStateHelper().put(PropertyKeys.styleClass, styleClass);
-    }
-
-    public int gethGutter() {
-        return (Integer) getStateHelper().eval(PropertyKeys.hGutter, 0);
-    }
-
-    public void sethGutter(final int hGutter) {
-        getStateHelper().put(PropertyKeys.hGutter, hGutter);
-    }
-
-    public int getvGutter() {
-        return (Integer) getStateHelper().eval(PropertyKeys.vGutter, 0);
-    }
-
-    public void setvGutter(final int vGutter) {
-        getStateHelper().put(PropertyKeys.vGutter, vGutter);
-    }
-
-    public boolean isFitWidth() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.fitWidth, false);
-    }
-
-    public void setFitWidth(final boolean fitWidth) {
-        getStateHelper().put(PropertyKeys.fitWidth, fitWidth);
-    }
-
-    public boolean isOriginLeft() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.originLeft, true);
-    }
-
-    public void setOriginLeft(final boolean originLeft) {
-        getStateHelper().put(PropertyKeys.originLeft, originLeft);
-    }
-
-    public boolean isOriginTop() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.originTop, true);
-    }
-
-    public void setOriginTop(final boolean originTop) {
-        getStateHelper().put(PropertyKeys.originTop, originTop);
-    }
-
-    public boolean isResizeBound() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.resizeBound, true);
-    }
-
-    public void setResizeBound(final boolean resizeBound) {
-        getStateHelper().put(PropertyKeys.resizeBound, resizeBound);
-    }
-
-    public String getStamp() {
-        return (String) getStateHelper().eval(PropertyKeys.stamp, null);
-    }
-
-    public void setStamp(final String stamp) {
-        getStateHelper().put(PropertyKeys.stamp, stamp);
-    }
-
-    public String getTransitionDuration() {
-        return (String) getStateHelper().eval(PropertyKeys.transitionDuration, "0.4s");
-    }
-
-    public void setTransitionDuration(final String transitionDuration) {
-        getStateHelper().put(PropertyKeys.transitionDuration, transitionDuration);
-    }
-
-    public boolean isHasImages() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.hasImages, false);
-    }
-
-    public void setHasImages(final boolean hasImages) {
-        getStateHelper().put(PropertyKeys.hasImages, hasImages);
-    }
-
-    @Override
-    public Collection<String> getEventNames() {
-        return EVENT_NAMES;
-    }
-
     @Override
     public void queueEvent(final FacesEvent event) {
-        final FacesContext context = FacesContext.getCurrentInstance();
-        final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-        final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
-
-        if ("layoutComplete".equals(eventName)) {
-            if (event instanceof AjaxBehaviorEvent && isSelfRequest(context)) {
+        if (isAjaxBehaviorEventSource(event)) {
+            if (isAjaxBehaviorEvent(event, ClientBehaviorEventKeys.layoutComplete)) {
                 final LayoutCompleteEvent layoutCompleteEvent = new LayoutCompleteEvent(this,
                             ((AjaxBehaviorEvent) event).getBehavior());
                 layoutCompleteEvent.setPhaseId(event.getPhaseId());
 
                 super.queueEvent(layoutCompleteEvent);
+                return;
+            }
+            else {
+                super.queueEvent(event);
+                return;
             }
         }
-        else {
-            super.queueEvent(event);
-        }
-    }
-
-    private boolean isSelfRequest(final FacesContext context) {
-        return getClientId(context).equals(
-                    context.getExternalContext().getRequestParameterMap().get(Constants.RequestParams.PARTIAL_SOURCE_PARAM));
+        super.queueEvent(event);
     }
 
     public UIFluidGridItem getItem(final String type) {

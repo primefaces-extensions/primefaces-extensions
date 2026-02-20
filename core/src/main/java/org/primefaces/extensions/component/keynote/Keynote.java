@@ -28,304 +28,40 @@ import java.util.Map;
 import jakarta.faces.FacesException;
 import jakarta.faces.application.ResourceDependency;
 import jakarta.faces.component.ContextCallback;
+import jakarta.faces.component.FacesComponent;
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.component.UINamingContainer;
-import jakarta.faces.component.behavior.ClientBehaviorHolder;
 import jakarta.faces.component.visit.VisitCallback;
 import jakarta.faces.component.visit.VisitContext;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.event.AjaxBehaviorEvent;
-import jakarta.faces.event.BehaviorEvent;
 import jakarta.faces.event.FacesEvent;
 import jakarta.faces.event.PhaseId;
 
-import org.primefaces.component.api.PrimeClientBehaviorHolder;
-import org.primefaces.component.api.Widget;
-import org.primefaces.extensions.component.api.AbstractDynamicData;
+import org.primefaces.cdk.api.FacesComponentInfo;
 import org.primefaces.extensions.event.KeynoteEvent;
 import org.primefaces.extensions.model.common.KeyData;
 import org.primefaces.extensions.model.keynote.KeynoteItem;
-import org.primefaces.util.Constants;
-import org.primefaces.util.MapBuilder;
 
+@FacesComponent(value = Keynote.COMPONENT_TYPE, namespace = Keynote.COMPONENT_FAMILY)
+@FacesComponentInfo(description = "Keynote is a presentation component based on Reveal.js.")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "primefaces-extensions.js")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "keynote/keynote.js")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "keynote/keynote.css")
-public class Keynote extends AbstractDynamicData implements Widget, ClientBehaviorHolder, PrimeClientBehaviorHolder {
-
-    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Keynote";
-    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-    public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.KeynoteRenderer";
-
-    private static final String DEFAULT_EVENT = "slideChanged";
-
-    private static final Map<String, Class<? extends BehaviorEvent>> BEHAVIOR_EVENT_MAPPING = MapBuilder.<String, Class<? extends BehaviorEvent>> builder()
-                .put("slideTransitionEnd", null)
-                .put(DEFAULT_EVENT, null)
-                .build();
-
-    private static final Collection<String> EVENT_NAMES = BEHAVIOR_EVENT_MAPPING.keySet();
+public class Keynote extends KeynoteBaseImpl {
 
     private Map<String, UIKeynoteItem> items;
 
-    // @formatter:off
-    @SuppressWarnings("java:S115")
-    protected enum PropertyKeys {
-        widgetVar,
-        width,
-        height,
-        margin,
-        minScale,
-        maxScale,
-        autoSlide,
-        center,
-        controls,
-        disableLayout,
-        embedded,
-        loop,
-        navigationMode,
-        progress,
-        showNotes,
-        slideNumber,
-        touch,
-        transition,
-        transitionSpeed,
-        backgroundTransition,
-        theme,
-        library,
-        style,
-        styleClass
-    }
-    //@formatter:on
-
-    public Keynote() {
-        setRendererType(DEFAULT_RENDERER);
-    }
-
-    @Override
-    public Map<String, Class<? extends BehaviorEvent>> getBehaviorEventMapping() {
-        return BEHAVIOR_EVENT_MAPPING;
-    }
-
-    @Override
-    public Collection<String> getEventNames() {
-        return EVENT_NAMES;
-    }
-
-    @Override
-    public String getDefaultEventName() {
-        return DEFAULT_EVENT;
-    }
-
-    @Override
-    public String getFamily() {
-        return COMPONENT_FAMILY;
-    }
-
-    public int getWidth() {
-        return (Integer) getStateHelper().eval(PropertyKeys.width, 960);
-    }
-
-    public void setWidth(final int width) {
-        getStateHelper().put(PropertyKeys.width, width);
-    }
-
-    public int getHeight() {
-        return (Integer) getStateHelper().eval(PropertyKeys.height, 700);
-    }
-
-    public void setHeight(final int height) {
-        getStateHelper().put(PropertyKeys.height, height);
-    }
-
-    public Double getMargin() {
-        return (Double) getStateHelper().eval(PropertyKeys.margin, 0.04);
-    }
-
-    public void setMargin(final Double margin) {
-        getStateHelper().put(PropertyKeys.margin, margin);
-    }
-
-    public Double getMinScale() {
-        return (Double) getStateHelper().eval(PropertyKeys.minScale, 0.2);
-    }
-
-    public void setMinScale(final Double minScale) {
-        getStateHelper().put(PropertyKeys.minScale, minScale);
-    }
-
-    public Double getMaxScale() {
-        return (Double) getStateHelper().eval(PropertyKeys.maxScale, 2.0);
-    }
-
-    public void setMaxScale(final Double maxScale) {
-        getStateHelper().put(PropertyKeys.maxScale, maxScale);
-    }
-
-    public int getAutoSlide() {
-        return (Integer) getStateHelper().eval(PropertyKeys.autoSlide, 0);
-    }
-
-    public void setAutoSlide(final int autoSlide) {
-        getStateHelper().put(PropertyKeys.autoSlide, autoSlide);
-    }
-
-    public Boolean isCenter() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.center, true);
-    }
-
-    public void setCenter(final Boolean center) {
-        getStateHelper().put(PropertyKeys.center, center);
-    }
-
-    public Boolean isControls() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.controls, true);
-    }
-
-    public void setControls(final Boolean controls) {
-        getStateHelper().put(PropertyKeys.controls, controls);
-    }
-
-    public Boolean isDisableLayout() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.disableLayout, false);
-    }
-
-    public void setDisableLayout(final Boolean disableLayout) {
-        getStateHelper().put(PropertyKeys.disableLayout, disableLayout);
-    }
-
-    public Boolean isEmbedded() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.embedded, false);
-    }
-
-    public void setEmbedded(final Boolean embedded) {
-        getStateHelper().put(PropertyKeys.embedded, embedded);
-    }
-
-    public Boolean isLoop() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.loop, false);
-    }
-
-    public void setLoop(final Boolean loop) {
-        getStateHelper().put(PropertyKeys.loop, loop);
-    }
-
-    public String getNavigationMode() {
-        return (String) getStateHelper().eval(PropertyKeys.navigationMode, "default");
-    }
-
-    public void setNavigationMode(final String navigationMode) {
-        getStateHelper().put(PropertyKeys.navigationMode, navigationMode);
-    }
-
-    public Boolean isProgress() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.progress, true);
-    }
-
-    public void setProgress(final Boolean progress) {
-        getStateHelper().put(PropertyKeys.progress, progress);
-    }
-
-    public Boolean isShowNotes() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.showNotes, false);
-    }
-
-    public void setShowNotes(final Boolean showNotes) {
-        getStateHelper().put(PropertyKeys.showNotes, showNotes);
-    }
-
-    public String getSlideNumber() {
-        return (String) getStateHelper().eval(PropertyKeys.slideNumber, "false");
-    }
-
-    public void setSlideNumber(final String slideNumber) {
-        getStateHelper().put(PropertyKeys.slideNumber, slideNumber);
-    }
-
-    public Boolean isTouch() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.touch, true);
-    }
-
-    public void setTouch(final Boolean touch) {
-        getStateHelper().put(PropertyKeys.touch, touch);
-    }
-
-    public String getTransition() {
-        return (String) getStateHelper().eval(PropertyKeys.transition, "slide");
-    }
-
-    public void setTransition(final String transition) {
-        getStateHelper().put(PropertyKeys.transition, transition);
-    }
-
-    public String getTransitionSpeed() {
-        return (String) getStateHelper().eval(PropertyKeys.transitionSpeed, "default");
-    }
-
-    public void setTransitionSpeed(final String transitionSpeed) {
-        getStateHelper().put(PropertyKeys.transitionSpeed, transitionSpeed);
-    }
-
-    public String getBackgroundTransition() {
-        return (String) getStateHelper().eval(PropertyKeys.backgroundTransition, "fade");
-    }
-
-    public void setBackgroundTransition(final String backgroundTransition) {
-        getStateHelper().put(PropertyKeys.backgroundTransition, backgroundTransition);
-    }
-
-    public String getTheme() {
-        return (String) getStateHelper().eval(PropertyKeys.theme, "none");
-    }
-
-    public void setTheme(final String theme) {
-        getStateHelper().put(PropertyKeys.theme, theme);
-    }
-
-    public String getLibrary() {
-        return (String) getStateHelper().eval(PropertyKeys.library, org.primefaces.extensions.util.Constants.LIBRARY);
-    }
-
-    public void setLibrary(final String library) {
-        getStateHelper().put(PropertyKeys.library, library);
-    }
-
-    public String getWidgetVar() {
-        return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
-    }
-
-    public void setWidgetVar(final String widgetVar) {
-        getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
-    }
-
-    public String getStyle() {
-        return (String) getStateHelper().eval(PropertyKeys.style, null);
-    }
-
-    public void setStyle(final String style) {
-        getStateHelper().put(PropertyKeys.style, style);
-    }
-
-    public String getStyleClass() {
-        return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
-    }
-
-    public void setStyleClass(final String styleClass) {
-        getStateHelper().put(PropertyKeys.styleClass, styleClass);
-    }
-
     @Override
     public void queueEvent(final FacesEvent event) {
-        if (event instanceof AjaxBehaviorEvent) {
-            final FacesContext context = getFacesContext();
-            final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
+        if (isAjaxBehaviorEventSource(event)) {
+            final FacesContext context = event.getFacesContext();
             final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-            final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
-
-            if ("slideTransitionEnd".equals(eventName)) {
+            final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
+            if (isAjaxBehaviorEvent(event, ClientBehaviorEventKeys.slideTransitionEnd)) {
                 final boolean slideTransitionEnd = Boolean.parseBoolean(
                             params.get(getClientId(context) + "_slideTransitionEnd"));
                 final boolean lastSlide = Boolean.parseBoolean(params.get(getClientId(context) + "_lastSlide"));
@@ -333,22 +69,23 @@ public class Keynote extends AbstractDynamicData implements Widget, ClientBehavi
                             slideTransitionEnd, lastSlide);
                 keynoteEvent.setPhaseId(event.getPhaseId());
                 super.queueEvent(keynoteEvent);
+                return;
             }
-            else if (DEFAULT_EVENT.equals(eventName)) {
+            else if (isAjaxBehaviorEvent(event, ClientBehaviorEventKeys.slideChanged)) {
                 final boolean slideChanged = Boolean.parseBoolean(params.get(getClientId(context) + "_slideChanged"));
                 final boolean lastSlide = Boolean.parseBoolean(params.get(getClientId(context) + "_lastSlide"));
                 final KeynoteEvent keynoteEvent = new KeynoteEvent(this, behaviorEvent.getBehavior(), slideChanged,
                             lastSlide);
                 keynoteEvent.setPhaseId(event.getPhaseId());
                 super.queueEvent(keynoteEvent);
+                return;
             }
             else {
                 super.queueEvent(event);
+                return;
             }
         }
-        else {
-            super.queueEvent(event);
-        }
+        super.queueEvent(event);
     }
 
     public UIKeynoteItem getItem(final String type) {
@@ -404,7 +141,6 @@ public class Keynote extends AbstractDynamicData implements Widget, ClientBehavi
     @Override
     protected void processChildren(final FacesContext context, final PhaseId phaseId) {
         if (getVar() != null) {
-            // dynamic items
             final Object value = getValue();
             if (value != null) {
                 checkModelInstance(value);
@@ -418,7 +154,6 @@ public class Keynote extends AbstractDynamicData implements Widget, ClientBehavi
             resetData();
         }
         else {
-            // static items
             processKeynoteStaticItems(context, phaseId);
         }
     }
@@ -426,7 +161,6 @@ public class Keynote extends AbstractDynamicData implements Widget, ClientBehavi
     @Override
     protected boolean visitChildren(final VisitContext context, final VisitCallback callback) {
         if (getVar() != null) {
-            // dynamic items
             final Object value = getValue();
             if (value == null) {
                 return false;
@@ -444,7 +178,6 @@ public class Keynote extends AbstractDynamicData implements Widget, ClientBehavi
             resetData();
         }
         else {
-            // static items
             return visitKeynoteStaticItems(context, callback);
         }
 
@@ -463,18 +196,14 @@ public class Keynote extends AbstractDynamicData implements Widget, ClientBehavi
         checkModelInstance(value);
 
         if (getChildCount() > 0) {
-            // extract the keynoteItem key from the clientId
-            // it's similar to rowKey in UIData
             String key = clientId.substring(getClientId().length() + 1);
             key = key.substring(0, key.indexOf(UINamingContainer.getSeparatorChar(context)));
 
             final Collection<KeynoteItem> keynoteItems = (Collection<KeynoteItem>) value;
             for (final KeynoteItem keynoteItem : keynoteItems) {
 
-                // determine associated KeynoteItem
                 if (keynoteItem.getKey().equals(key)) {
 
-                    // get UI control for KeynoteItem
                     UIKeynoteItem uiKeynoteItem = null;
                     if (getVar() == null) {
                         for (final UIComponent child : getChildren()) {
@@ -493,10 +222,8 @@ public class Keynote extends AbstractDynamicData implements Widget, ClientBehavi
                     }
 
                     try {
-                        // push the associated data before visiting the child components
                         setData(keynoteItem);
 
-                        // visit children
                         if (uiKeynoteItem.invokeOnComponent(context, clientId, callback)) {
                             return true;
                         }
@@ -608,10 +335,8 @@ public class Keynote extends AbstractDynamicData implements Widget, ClientBehavi
 
     @Override
     public Object saveState(final FacesContext context) {
-        // reset component for MyFaces view pooling
         items = null;
 
         return super.saveState(context);
     }
-
 }

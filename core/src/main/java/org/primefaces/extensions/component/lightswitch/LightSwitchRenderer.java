@@ -24,8 +24,8 @@ package org.primefaces.extensions.component.lightswitch;
 import java.io.IOException;
 import java.util.Map;
 
-import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
+import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.Constants;
@@ -37,42 +37,41 @@ import org.primefaces.util.WidgetBuilder;
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
  * @since 10.0
  */
-public class LightSwitchRenderer extends CoreRenderer {
+@FacesRenderer(componentFamily = LightSwitchBase.COMPONENT_FAMILY, rendererType = LightSwitchBase.DEFAULT_RENDERER)
+public class LightSwitchRenderer extends CoreRenderer<LightSwitch> {
 
     @Override
-    public void decode(final FacesContext context, final UIComponent component) {
+    public void decode(final FacesContext context, final LightSwitch component) {
         decodeBehaviors(context, component);
     }
 
     @Override
-    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-        LightSwitch lightSwitch = (LightSwitch) component;
-
+    public void encodeEnd(final FacesContext context, final LightSwitch component) throws IOException {
         final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
         final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
         if (LightSwitch.EVENT_SWITCH.equals(eventName)) {
             return;
         }
 
-        String theme = params.get(lightSwitch.getClientId(context) + "_theme");
+        String theme = params.get(component.getClientId(context) + "_theme");
         if (theme != null) {
-            lightSwitch.setSelectedByValueExpression(context, theme);
+            component.setSelectedByValueExpression(context, theme);
             return;
         }
 
-        encodeScript(context, lightSwitch);
+        encodeScript(context, component);
     }
 
-    protected void encodeScript(FacesContext context, LightSwitch lightSwitch) throws IOException {
+    protected void encodeScript(FacesContext context, LightSwitch component) throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context)
-                    .init("ExtLightSwitch", lightSwitch)
-                    .attr("selected", lightSwitch.getSelected())
-                    .attr("light", lightSwitch.getLight())
-                    .attr("dark", lightSwitch.getDark())
-                    .attr("automatic", lightSwitch.isAutomatic())
-                    .attr("parent", lightSwitch.getParent().getClientId());
+                    .init("ExtLightSwitch", component)
+                    .attr("selected", component.getSelected())
+                    .attr("light", component.getLight())
+                    .attr("dark", component.getDark())
+                    .attr("automatic", component.isAutomatic())
+                    .attr("parent", component.getParent().getClientId());
 
-        encodeClientBehaviors(context, lightSwitch);
+        encodeClientBehaviors(context, component);
 
         wb.finish();
     }
