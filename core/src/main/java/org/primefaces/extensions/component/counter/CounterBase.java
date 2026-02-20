@@ -22,51 +22,34 @@
 package org.primefaces.extensions.component.counter;
 
 import jakarta.faces.component.UIComponentBase;
-import jakarta.faces.component.behavior.ClientBehaviorHolder;
 
-import org.primefaces.component.api.PrimeClientBehaviorHolder;
+import org.primefaces.cdk.api.FacesBehaviorEvent;
+import org.primefaces.cdk.api.FacesBehaviorEvents;
+import org.primefaces.cdk.api.FacesComponentBase;
+import org.primefaces.cdk.api.Property;
+import org.primefaces.component.api.StyleAware;
 import org.primefaces.component.api.Widget;
+import org.primefaces.event.SelectEvent;
 
 /**
- * <code>Counter</code> component.
+ * <code>Counter</code> component base class.
  *
  * @author https://github.com/aripddev
  * @since 8.0.1
  */
-public abstract class CounterBase extends UIComponentBase implements Widget, ClientBehaviorHolder, PrimeClientBehaviorHolder {
+@FacesComponentBase
+@FacesBehaviorEvents({
+            @FacesBehaviorEvent(name = "start", event = SelectEvent.class, description = "Fires when the counter animation starts."),
+            @FacesBehaviorEvent(name = "end", event = SelectEvent.class, description = "Fires when the counter animation ends.", defaultEvent = true)
+})
+public abstract class CounterBase extends UIComponentBase implements Widget, StyleAware {
 
+    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Counter";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-
     public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.CounterRenderer";
 
-    @SuppressWarnings("java:S115")
-    protected enum PropertyKeys {
-        //@formatter:off
-        widgetVar,
-        style,
-        styleClass,
-        start,
-        end,
-        decimals,
-        duration,
-        useGrouping,
-        useEasing,
-        smartEasingThreshold,
-        smartEasingAmount,
-        locale,
-        separator,
-        decimal,
-        prefix,
-        suffix,
-        autoStart,
-        visible,
-        onstart,
-        onend
-        //@formatter:off
-    }
-
     public CounterBase() {
-        super.setRendererType(DEFAULT_RENDERER);
+        setRendererType(DEFAULT_RENDERER);
     }
 
     @Override
@@ -74,164 +57,54 @@ public abstract class CounterBase extends UIComponentBase implements Widget, Cli
         return COMPONENT_FAMILY;
     }
 
-    public String getWidgetVar() {
-        return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
-    }
+    @Property(description = "Starting value for the counter.", defaultValue = "0.0")
+    public abstract Double getStart();
 
-    public void setWidgetVar(final String widgetVar) {
-        getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
-    }
+    @Property(description = "Ending value for the counter.")
+    public abstract Double getEnd();
 
-    public String getStyle() {
-        return (String) getStateHelper().eval(PropertyKeys.style, null);
-    }
+    @Property(description = "Number of decimal places.", defaultValue = "0")
+    public abstract Integer getDecimals();
 
-    public void setStyle(final String style) {
-        getStateHelper().put(PropertyKeys.style, style);
-    }
+    @Property(description = "Animation duration in seconds.", defaultValue = "2")
+    public abstract Integer getDuration();
 
-    public String getStyleClass() {
-        return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
-    }
+    @Property(description = "Whether to use grouping separators (e.g. 1,000).", defaultValue = "true")
+    public abstract boolean isUseGrouping();
 
-    public void setStyleClass(final String styleClass) {
-        getStateHelper().put(PropertyKeys.styleClass, styleClass);
-    }
+    @Property(description = "Whether to use easing in the animation.", defaultValue = "true")
+    public abstract boolean isUseEasing();
 
-    public Double getStart() {
-        return (Double) getStateHelper().eval(PropertyKeys.start, 0.0);
-    }
+    @Property(description = "Threshold for smart easing.", defaultValue = "999")
+    public abstract Integer getSmartEasingThreshold();
 
-    public void setStart(final Double start) {
-        getStateHelper().put(PropertyKeys.start, start);
-    }
+    @Property(description = "Amount for smart easing.", defaultValue = "333")
+    public abstract Integer getSmartEasingAmount();
 
-    public Double getEnd() {
-        return (Double) getStateHelper().eval(PropertyKeys.end, null);
-    }
+    @Property(description = "Locale for number formatting. Can be a string or java.util.Locale instance.")
+    public abstract Object getLocale();
 
-    public void setEnd(final Double end) {
-        getStateHelper().put(PropertyKeys.end, end);
-    }
+    @Property(description = "Thousands grouping separator character.")
+    public abstract String getSeparator();
 
-    public Integer getDecimals() {
-        return (Integer) getStateHelper().eval(PropertyKeys.decimals, 0);
-    }
+    @Property(description = "Decimal separator character.")
+    public abstract String getDecimal();
 
-    public void setDecimals(final Integer decimals) {
-        getStateHelper().put(PropertyKeys.decimals, decimals);
-    }
+    @Property(description = "Text to display before the number.")
+    public abstract String getPrefix();
 
-    public Integer getDuration() {
-        return (Integer) getStateHelper().eval(PropertyKeys.duration, 2);
-    }
+    @Property(description = "Text to display after the number.")
+    public abstract String getSuffix();
 
-    public void setDuration(final Integer duration) {
-        getStateHelper().put(PropertyKeys.duration, duration);
-    }
+    @Property(description = "Whether to start the counter automatically.", defaultValue = "true")
+    public abstract boolean isAutoStart();
 
-    public Boolean isUseGrouping() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.useGrouping, true);
-    }
+    @Property(description = "Whether the component is initially visible.", defaultValue = "true")
+    public abstract boolean isVisible();
 
-    public void setUseGrouping(final Boolean useGrouping) {
-        getStateHelper().put(PropertyKeys.useGrouping, useGrouping);
-    }
+    @Property(description = "Client-side callback when the counter animation starts.")
+    public abstract String getOnstart();
 
-    public Boolean isUseEasing() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.useEasing, true);
-    }
-
-    public void setUseEasing(final Boolean useEasing) {
-        getStateHelper().put(PropertyKeys.useEasing, useEasing);
-    }
-
-    public Integer getSmartEasingThreshold() {
-        return (Integer) getStateHelper().eval(PropertyKeys.smartEasingThreshold, 999);
-    }
-
-    public void setSmartEasingThreshold(final Integer smartEasingThreshold) {
-        getStateHelper().put(PropertyKeys.smartEasingThreshold, smartEasingThreshold);
-    }
-
-    public Integer getSmartEasingAmount() {
-        return (Integer) getStateHelper().eval(PropertyKeys.smartEasingAmount, 333);
-    }
-
-    public void setSmartEasingAmount(final Integer smartEasingAmount) {
-        getStateHelper().put(PropertyKeys.smartEasingAmount, smartEasingAmount);
-    }
-
-    public Object getLocale() {
-        return getStateHelper().eval(PropertyKeys.locale, null);
-    }
-
-    public void setLocale(final Object locale) {
-        getStateHelper().put(PropertyKeys.locale, locale);
-    }
-
-    public String getSeparator() {
-        return (String) getStateHelper().eval(PropertyKeys.separator, null);
-    }
-
-    public void setSeparator(final String separator) {
-        getStateHelper().put(PropertyKeys.separator, separator);
-    }
-
-    public String getDecimal() {
-        return (String) getStateHelper().eval(PropertyKeys.decimal, null);
-    }
-
-    public void setDecimal(final String decimal) {
-        getStateHelper().put(PropertyKeys.decimal, decimal);
-    }
-
-    public String getPrefix() {
-        return (String) getStateHelper().eval(PropertyKeys.prefix, "");
-    }
-
-    public void setPrefix(final String prefix) {
-        getStateHelper().put(PropertyKeys.prefix, prefix);
-    }
-
-    public String getSuffix() {
-        return (String) getStateHelper().eval(PropertyKeys.suffix, "");
-    }
-
-    public void setSuffix(final String suffix) {
-        getStateHelper().put(PropertyKeys.suffix, suffix);
-    }
-
-    public Boolean isAutoStart() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.autoStart, true);
-    }
-
-    public void setAutoStart(final Boolean autoStart) {
-        getStateHelper().put(PropertyKeys.autoStart, autoStart);
-    }
-
-    public boolean isVisible() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.visible, true);
-    }
-
-    public void setVisible(final boolean visible) {
-        getStateHelper().put(PropertyKeys.visible, visible);
-    }
-
-    public String getOnend() {
-        return (String) getStateHelper().eval(PropertyKeys.onend, null);
-    }
-
-    public void setOnend(final String onend) {
-        getStateHelper().put(PropertyKeys.onend, onend);
-    }
-
-    public String getOnstart() {
-        return (String) getStateHelper().eval(PropertyKeys.onstart, null);
-    }
-
-    public void setOnstart(final String onstart) {
-        getStateHelper().put(PropertyKeys.onstart, onstart);
-    }
-
+    @Property(description = "Client-side callback when the counter animation ends.")
+    public abstract String getOnend();
 }

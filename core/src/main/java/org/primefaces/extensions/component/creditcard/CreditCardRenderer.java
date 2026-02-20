@@ -23,9 +23,9 @@ package org.primefaces.extensions.component.creditcard;
 
 import java.io.IOException;
 
-import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
+import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
@@ -39,52 +39,51 @@ import org.primefaces.util.WidgetBuilder;
  * @author Melloware mellowaredev@gmail.com
  * @since 8.0.1
  */
-public class CreditCardRenderer extends CoreRenderer {
+@FacesRenderer(rendererType = CreditCard.DEFAULT_RENDERER, componentFamily = CreditCard.COMPONENT_FAMILY)
+public class CreditCardRenderer extends CoreRenderer<CreditCard> {
 
     @Override
-    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-        final CreditCard creditCard = (CreditCard) component;
-        encodeMarkup(context, creditCard);
-        encodeScript(context, creditCard);
+    public void encodeEnd(final FacesContext context, final CreditCard component) throws IOException {
+        encodeMarkup(context, component);
+        encodeScript(context, component);
     }
 
-    protected void encodeMarkup(final FacesContext context, final CreditCard creditCard) throws IOException {
+    protected void encodeMarkup(final FacesContext context, final CreditCard component) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
-        final String clientId = creditCard.getClientId(context);
-        final String widgetVar = creditCard.resolveWidgetVar();
+        final String clientId = component.getClientId(context);
+        final String widgetVar = component.resolveWidgetVar();
         final String styleClass = CreditCard.STYLE_CLASS;
 
-        writer.startElement("div", creditCard);
+        writer.startElement("div", component);
         writer.writeAttribute("id", clientId, "id");
         writer.writeAttribute(HTML.WIDGET_VAR, widgetVar, null);
         writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
         writer.endElement("div");
     }
 
-    protected void encodeScript(final FacesContext context, final CreditCard creditCard) throws IOException {
+    protected void encodeScript(final FacesContext context, final CreditCard component) throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context);
-        wb.init("ExtCreditCard", creditCard);
-        wb.attr("width", creditCard.getWidth(), 350);
-        wb.attr("formatting", creditCard.isFormatting(), true);
+        wb.init("ExtCreditCard", component);
+        wb.attr("width", component.getWidth() != null ? component.getWidth() : 350, 350);
+        wb.attr("formatting", component.isFormatting(), true);
 
-        wb.nativeAttr("messages", "{validDate:'" + creditCard.getLabelValidDate() + "',"
-                    + "monthYear:'" + creditCard.getLabelMonthYear() + "'}");
+        wb.nativeAttr("messages", "{validDate:'" + component.getLabelValidDate().replace("\n", "\\n") + "',"
+                    + "monthYear:'" + component.getLabelMonthYear() + "'}");
 
         final StringBuilder placeholder = new StringBuilder(1024);
-        placeholder.append("{name:'").append(creditCard.getPlaceholderName()).append("'");
-        if (!LangUtils.isBlank(creditCard.getPlaceholderNumber())) {
-            placeholder.append(",number:'").append(creditCard.getPlaceholderNumber()).append("'");
+        placeholder.append("{name:'").append(component.getPlaceholderName()).append("'");
+        if (!LangUtils.isBlank(component.getPlaceholderNumber())) {
+            placeholder.append(",number:'").append(component.getPlaceholderNumber()).append("'");
         }
-        if (!LangUtils.isBlank(creditCard.getPlaceholderExpiry())) {
-            placeholder.append(",expiry:'").append(creditCard.getPlaceholderExpiry()).append("'");
+        if (!LangUtils.isBlank(component.getPlaceholderExpiry())) {
+            placeholder.append(",expiry:'").append(component.getPlaceholderExpiry()).append("'");
         }
-        if (!LangUtils.isBlank(creditCard.getPlaceholderCvc())) {
-            placeholder.append(",cvc:'").append(creditCard.getPlaceholderCvc()).append("'");
+        if (!LangUtils.isBlank(component.getPlaceholderCvc())) {
+            placeholder.append(",cvc:'").append(component.getPlaceholderCvc()).append("'");
         }
         placeholder.append("}");
         wb.nativeAttr("placeholders", placeholder.toString());
 
         wb.finish();
     }
-
 }
