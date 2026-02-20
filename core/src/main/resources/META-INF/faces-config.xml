@@ -22,14 +22,6 @@
     </application>
 
     <component>
-        <component-type>org.primefaces.extensions.component.Calculator</component-type>
-        <component-class>org.primefaces.extensions.component.calculator.Calculator</component-class>
-    </component>
-    <component>
-        <component-type>org.primefaces.extensions.component.Clipboard</component-type>
-        <component-class>org.primefaces.extensions.component.clipboard.Clipboard</component-class>
-    </component>
-    <component>
         <component-type>org.primefaces.extensions.component.Counter</component-type>
         <component-class>org.primefaces.extensions.component.counter.Counter</component-class>
     </component>
@@ -222,10 +214,6 @@
         <component-class>org.primefaces.extensions.component.localized.Localized</component-class>
     </component>
     <component>
-        <component-type>org.primefaces.extensions.component.ClockPicker</component-type>
-        <component-class>org.primefaces.extensions.component.clockpicker.ClockPicker</component-class>
-    </component>
-    <component>
         <component-type>org.primefaces.extensions.component.OSMap</component-type>
         <component-class>org.primefaces.extensions.component.osmap.OSMap</component-class>
     </component>
@@ -248,16 +236,6 @@
     </converter>
 
     <render-kit>
-        <renderer>
-            <component-family>org.primefaces.extensions.component</component-family>
-            <renderer-type>org.primefaces.extensions.component.CalculatorRenderer</renderer-type>
-            <renderer-class>org.primefaces.extensions.component.calculator.CalculatorRenderer</renderer-class>
-        </renderer>
-        <renderer>
-            <component-family>org.primefaces.extensions.component</component-family>
-            <renderer-type>org.primefaces.extensions.component.ClipboardRenderer</renderer-type>
-            <renderer-class>org.primefaces.extensions.component.clipboard.ClipboardRenderer</renderer-class>
-        </renderer>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.CounterRenderer</renderer-type>
@@ -452,11 +430,6 @@
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.LocalizedRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.localized.LocalizedRenderer</renderer-class>
-        </renderer>
-        <renderer>
-            <component-family>org.primefaces.extensions.component</component-family>
-            <renderer-type>org.primefaces.extensions.component.ClockPickerRenderer</renderer-type>
-            <renderer-class>org.primefaces.extensions.component.clockpicker.ClockPickerRenderer</renderer-class>
         </renderer>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>
