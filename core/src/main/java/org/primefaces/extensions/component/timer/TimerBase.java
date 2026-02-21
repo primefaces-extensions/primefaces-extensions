@@ -61,9 +61,6 @@ public abstract class TimerBase extends UIComponentBase implements Widget, AjaxS
     @Property(description = "Interval in milliseconds.", defaultValue = "1000")
     public abstract int getInterval();
 
-    @Property(description = "Component(s) to be updated with ajax.")
-    public abstract String getUpdate();
-
     @Property(description = "A method expression to invoke by polling.")
     public abstract MethodExpression getListener();
 
@@ -76,44 +73,11 @@ public abstract class TimerBase extends UIComponentBase implements Widget, AjaxS
     @Property(description = "JavaScript callback on each timer step.")
     public abstract String getOntimerstep();
 
-    @Property(description = "JavaScript callback before ajax request begins.")
-    public abstract String getOnstart();
-
-    @Property(description = "JavaScript callback when ajax request is completed.")
-    public abstract String getOncomplete();
-
-    @Property(description = "Component id(s) to process partially instead of whole view.")
-    public abstract String getProcess();
-
-    @Property(description = "JavaScript callback when ajax request fails.")
-    public abstract String getOnerror();
-
-    @Property(description = "JavaScript callback when ajax request succeeds.")
-    public abstract String getOnsuccess();
-
-    @Property(description = "Global ajax requests are listened by ajaxStatus.", defaultValue = "true")
-    public abstract boolean isGlobal();
-
-    @Property(description = "Delays ajax requests.")
-    public abstract String getDelay();
-
-    @Property(description = "When true, ajax requests are not queued.", defaultValue = "false")
-    public abstract boolean isAsync();
-
     @Property(description = "If true, timer starts automatically.", defaultValue = "true")
     public abstract boolean isAutoStart();
 
-    @Property(description = "Enables partial submit.", defaultValue = "false")
-    public abstract boolean isPartialSubmit();
-
-    @Property(description = "Reset values during ajax update.", defaultValue = "false")
-    public abstract boolean isResetValues();
-
     @Property(description = "Display format.", defaultValue = "")
     public abstract String getFormat();
-
-    @Property(description = "Skips auto update when true.", defaultValue = "false")
-    public abstract boolean isIgnoreAutoUpdate();
 
     @Property(description = "Controls visibility.", defaultValue = "true")
     public abstract boolean isVisible();
@@ -127,15 +91,6 @@ public abstract class TimerBase extends UIComponentBase implements Widget, AjaxS
     @Property(description = "Client-side function used to format the remaining duration.", defaultValue = "")
     public abstract String getFormatFunction();
 
-    @Property(description = "Partial submit filter selector.")
-    public abstract String getPartialSubmitFilter();
-
-    @Property(description = "Form to serialize for ajax requests.")
-    public abstract String getForm();
-
     @Property(description = "Title rendered on the timer element.", defaultValue = "")
     public abstract String getTitle();
-
-    @Property(description = "Ignore unresolved update targets.", defaultValue = "false")
-    public abstract boolean isIgnoreComponentNotFound();
 }
