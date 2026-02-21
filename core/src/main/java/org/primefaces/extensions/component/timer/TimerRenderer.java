@@ -24,12 +24,12 @@ package org.primefaces.extensions.component.timer;
 import java.io.IOException;
 
 import jakarta.faces.FacesException;
-import jakarta.faces.component.UIComponent;
 import jakarta.faces.component.UIForm;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
 import jakarta.faces.event.ActionEvent;
 import jakarta.faces.event.PhaseId;
+import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.context.PrimeRequestContext;
 import org.primefaces.extensions.util.Attrs;
@@ -46,52 +46,46 @@ import org.primefaces.util.WidgetBuilder;
  * @author f.strazzullo
  * @since 3.0.0
  */
-public class TimerRenderer extends CoreRenderer {
-
-    public static final String RENDERER_TYPE = "org.primefaces.extensions.component.TimerRenderer";
+@FacesRenderer(rendererType = Timer.DEFAULT_RENDERER, componentFamily = Timer.COMPONENT_FAMILY)
+public class TimerRenderer extends CoreRenderer<Timer> {
 
     @Override
-    public void decode(final FacesContext context, final UIComponent component) {
-        final Timer timer = (Timer) component;
-
-        if (context.getExternalContext().getRequestParameterMap().containsKey(timer.getClientId(context))) {
-            final ActionEvent event = new ActionEvent(timer);
-            if (timer.isImmediate()) {
+    public void decode(final FacesContext context, final Timer component) {
+        if (context.getExternalContext().getRequestParameterMap().containsKey(component.getClientId(context))) {
+            final ActionEvent event = new ActionEvent(component);
+            if (component.isImmediate()) {
                 event.setPhaseId(PhaseId.APPLY_REQUEST_VALUES);
             }
             else {
                 event.setPhaseId(PhaseId.INVOKE_APPLICATION);
             }
 
-            timer.queueEvent(event);
+            component.queueEvent(event);
         }
     }
 
     @Override
-    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-        final Timer timer = (Timer) component;
-
-        encodeMarkup(context, timer);
-        encodeScript(context, timer);
-
+    public void encodeEnd(final FacesContext context, final Timer component) throws IOException {
+        encodeMarkup(context, component);
+        encodeScript(context, component);
     }
 
-    protected void encodeMarkup(final FacesContext context, final Timer timer) throws IOException {
+    protected void encodeMarkup(final FacesContext context, final Timer component) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
 
-        writer.startElement("span", timer);
-        writer.writeAttribute("id", timer.getClientId(), null);
-        writer.writeAttribute("title", timer.getTitle(), null);
-        writer.writeAttribute(Attrs.CLASS, Timer.STYLE_CLASS + " " + timer.getStyleClass(), "styleclass");
+        writer.startElement("span", component);
+        writer.writeAttribute("id", component.getClientId(), null);
+        writer.writeAttribute("title", component.getTitle(), null);
+        writer.writeAttribute(Attrs.CLASS, Timer.STYLE_CLASS + " " + component.getStyleClass(), "styleclass");
         writer.writeAttribute(Attrs.STYLE,
-                    (!timer.isVisible() ? "display:none;" : Constants.EMPTY_STRING) + timer.getStyle(), Attrs.STYLE);
+                    (!component.isVisible() ? "display:none;" : Constants.EMPTY_STRING) + component.getStyle(), Attrs.STYLE);
         writer.endElement("span");
     }
 
-    protected void encodeScript(final FacesContext context, final Timer timer) throws IOException {
-        final String clientId = timer.getClientId(context);
+    protected void encodeScript(final FacesContext context, final Timer component) throws IOException {
+        final String clientId = component.getClientId(context);
 
-        final UIForm form = ComponentTraversalUtils.closestForm(timer);
+        final UIForm form = ComponentTraversalUtils.closestForm(component);
         if (form == null) {
             throw new FacesException("Timer:" + clientId + " needs to be enclosed in a form component");
         }
@@ -99,48 +93,48 @@ public class TimerRenderer extends CoreRenderer {
         final AjaxRequestBuilder builder = PrimeRequestContext.getCurrentInstance().getAjaxRequestBuilder();
 
         String request = null;
-        if (timer.getListener() != null) {
+        if (component.getListener() != null) {
             request = builder.init()
                         .source(clientId)
-                        .form(timer, timer, form)
-                        .process(timer, timer.getProcess())
-                        .update(timer, timer.getUpdate())
-                        .async(timer.isAsync())
-                        .global(timer.isGlobal())
-                        .delay(timer.getDelay())
-                        .partialSubmit(timer.isPartialSubmit(), timer.isPartialSubmitSet(), timer.getPartialSubmitFilter())
-                        .resetValues(timer.isResetValues(), timer.isResetValuesSet())
-                        .ignoreAutoUpdate(timer.isIgnoreAutoUpdate())
-                        .onstart(timer.getOnstart())
-                        .onerror(timer.getOnerror())
-                        .onsuccess(timer.getOnsuccess())
-                        .oncomplete(timer.getOncomplete())
-                        .params(timer)
+                        .form(component, component, form)
+                        .process(component, component.getProcess())
+                        .update(component, component.getUpdate())
+                        .async(component.isAsync())
+                        .global(component.isGlobal())
+                        .delay(component.getDelay())
+                        .partialSubmit(component.isPartialSubmit(), component.isPartialSubmitSet(), component.getPartialSubmitFilter())
+                        .resetValues(component.isResetValues(), component.isResetValuesSet())
+                        .ignoreAutoUpdate(component.isIgnoreAutoUpdate())
+                        .onstart(component.getOnstart())
+                        .onerror(component.getOnerror())
+                        .onsuccess(component.getOnsuccess())
+                        .oncomplete(component.getOncomplete())
+                        .params(component)
                         .build();
         }
 
         final WidgetBuilder wb = getWidgetBuilder(context);
 
-        wb.init("ExtTimer", timer)
-                    .attr("timeout", timer.getTimeout()).attr("interval", timer.getInterval())
-                    .attr("singleRun", timer.isSingleRun()).attr("format", timer.getFormat())
-                    .attr("autoStart", timer.isAutoStart()).attr("forward", timer.isForward())
-                    .attr("locale", timer.calculateLocale().toString());
+        wb.init("ExtTimer", component)
+                    .attr("timeout", component.getTimeout()).attr("interval", component.getInterval())
+                    .attr("singleRun", component.isSingleRun()).attr("format", component.getFormat())
+                    .attr("autoStart", component.isAutoStart()).attr("forward", component.isForward())
+                    .attr("locale", component.calculateLocale().toString());
 
         if (request != null) {
             wb.callback("listener", "function()", request);
         }
 
-        if (LangUtils.isNotBlank(timer.getOntimerstep())) {
-            wb.callback("ontimerstep", "function(intervalData)", timer.getOntimerstep());
+        if (LangUtils.isNotBlank(component.getOntimerstep())) {
+            wb.callback("ontimerstep", "function(intervalData)", component.getOntimerstep());
         }
 
-        if (LangUtils.isNotBlank(timer.getFormatFunction())) {
-            wb.callback("formatFunction", "function(value)", timer.getFormatFunction());
+        if (LangUtils.isNotBlank(component.getFormatFunction())) {
+            wb.callback("formatFunction", "function(value)", component.getFormatFunction());
         }
 
-        if (LangUtils.isNotBlank(timer.getOntimercomplete())) {
-            wb.callback("ontimercomplete", "function()", timer.getOntimercomplete());
+        if (LangUtils.isNotBlank(component.getOntimercomplete())) {
+            wb.callback("ontimercomplete", "function()", component.getOntimercomplete());
         }
 
         wb.finish();
