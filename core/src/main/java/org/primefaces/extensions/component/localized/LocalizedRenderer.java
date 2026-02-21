@@ -33,6 +33,7 @@ import jakarta.el.ExpressionFactory;
 import jakarta.faces.FacesException;
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
+import jakarta.faces.render.FacesRenderer;
 import jakarta.servlet.ServletContext;
 
 import org.primefaces.extensions.config.PrimeExtensionsEnvironment;
@@ -48,74 +49,74 @@ import org.primefaces.util.LangUtils;
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
  * @since 11.0.3
  */
-public class LocalizedRenderer extends CoreRenderer {
+@FacesRenderer(rendererType = Localized.DEFAULT_RENDERER, componentFamily = Localized.COMPONENT_FAMILY)
+public class LocalizedRenderer extends CoreRenderer<Localized> {
 
     public static final String WEB_FOLDER = "WEB-INF/pfe-localized";
     public static final String QUARKUS_FOLDER = "pfe-localized";
 
     @Override
-    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-        final Localized localized = (Localized) component;
-        encodeMarkup(context, localized);
+    public void encodeEnd(final FacesContext context, final Localized component) throws IOException {
+        encodeMarkup(context, component);
     }
 
-    protected void encodeMarkup(final FacesContext context, final Localized localized) throws IOException {
-        if (LangUtils.isBlank(localized.getName())) {
-            encodeFromFacet(context, localized);
+    protected void encodeMarkup(final FacesContext context, final Localized component) throws IOException {
+        if (LangUtils.isBlank(component.getName())) {
+            encodeFromFacet(context, component);
         }
         else {
-            encodeFromFile(context, localized);
+            encodeFromFile(context, component);
         }
     }
 
-    protected void encodeFromFacet(final FacesContext context, final Localized localized) throws IOException {
-        final Locale locale = localized.calculateLocale(context);
+    protected void encodeFromFacet(final FacesContext context, final Localized component) throws IOException {
+        final Locale locale = component.calculateLocale(context);
         final String language = locale.getLanguage();
         final String country = locale.getCountry();
-        resolveFacet(localized, language, country).encodeAll(context);
+        resolveFacet(component, language, country).encodeAll(context);
     }
 
-    protected UIComponent resolveFacet(final Localized localized, final String language, final String country) {
-        UIComponent facet = localized.getFacet(language + "_" + country);
+    protected UIComponent resolveFacet(final Localized component, final String language, final String country) {
+        UIComponent facet = component.getFacet(language + "_" + country);
         if (FacetUtils.shouldRenderFacet(facet)) {
             return facet;
         }
-        facet = localized.getFacet(language);
+        facet = component.getFacet(language);
         if (FacetUtils.shouldRenderFacet(facet)) {
             return facet;
         }
-        facet = localized.getFacet("default");
+        facet = component.getDefaultFacet();
         if (FacetUtils.shouldRenderFacet(facet)) {
             return facet;
         }
         throw new FacesException("No facet found for " + language + "_" + country + ", nor a 'default' facet");
     }
 
-    protected void encodeFromFile(final FacesContext context, final Localized localized) throws IOException {
-        final Path filePath = resolvePath(context, localized);
+    protected void encodeFromFile(final FacesContext context, final Localized component) throws IOException {
+        final Path filePath = resolvePath(context, component);
         final byte[] bytes = Files.readAllBytes(filePath);
         String value = new String(bytes);
-        if (localized.isEvalEl()) {
+        if (component.isEvalEl()) {
             value = evaluateEl(context, value);
         }
-        if (localized.isEscape()) {
+        if (component.isEscape()) {
             value = EscapeUtils.forHtml(value);
         }
-        if (localized.isMarkdown()) {
+        if (component.isMarkdown()) {
             value = toHTML(context, value);
         }
         context.getResponseWriter().append(value);
     }
 
-    protected Path resolvePath(final FacesContext context, final Localized localized) {
+    protected Path resolvePath(final FacesContext context, final Localized component) {
         final ServletContext servletContext = ((ServletContext) context.getExternalContext().getContext());
         final String web = servletContext.getRealPath(WEB_FOLDER);
         final String meta = servletContext.getRealPath(QUARKUS_FOLDER);
-        final Locale locale = localized.calculateLocale(context);
+        final Locale locale = component.calculateLocale(context);
         final String language = locale.getLanguage();
         final String country = locale.getCountry();
-        final String folder = localized.getFolder();
-        final String name = localized.getName();
+        final String folder = component.getFolder();
+        final String name = component.getName();
         Path path = resolvePath(web, folder, name, language, country);
         if (path == null) {
             path = resolvePath(web, null, name, language, country);
@@ -127,7 +128,7 @@ public class LocalizedRenderer extends CoreRenderer {
             path = resolvePath(meta, null, name, language, country);
         }
         if (path == null) {
-            throw new IllegalStateException("Cannot find Localized file for: " + localized.getClientId(context));
+            throw new IllegalStateException("Cannot find Localized file for: " + component.getClientId(context));
         }
         return path;
     }

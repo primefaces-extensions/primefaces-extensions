@@ -22,10 +22,6 @@
     </application>
 
     <component>
-        <component-type>org.primefaces.extensions.component.Legend</component-type>
-        <component-class>org.primefaces.extensions.component.legend.Legend</component-class>
-    </component>
-    <component>
         <component-type>org.primefaces.extensions.component.RemoteCommand</component-type>
         <component-class>org.primefaces.extensions.component.remotecommand.RemoteCommand</component-class>
     </component>
@@ -102,10 +98,6 @@
         <component-class>org.primefaces.extensions.component.monacoeditor.MonacoDiffEditorFramed</component-class>
     </component>
     <component>
-        <component-type>org.primefaces.extensions.component.Localized</component-type>
-        <component-class>org.primefaces.extensions.component.localized.Localized</component-class>
-    </component>
-    <component>
         <component-type>org.primefaces.extensions.component.OSMap</component-type>
         <component-class>org.primefaces.extensions.component.osmap.OSMap</component-class>
     </component>
@@ -132,11 +124,6 @@
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.RemoteCommandRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.remotecommand.RemoteCommandRenderer</renderer-class>
-        </renderer>
-        <renderer>
-            <component-family>org.primefaces.extensions.component</component-family>
-            <renderer-type>org.primefaces.extensions.component.LegendRenderer</renderer-type>
-            <renderer-class>org.primefaces.extensions.component.legend.LegendRenderer</renderer-class>
         </renderer>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>
@@ -192,11 +179,6 @@
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.MonacoDiffEditorFramedRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.monacoeditor.MonacoDiffEditorFramedRenderer</renderer-class>
-        </renderer>
-        <renderer>
-            <component-family>org.primefaces.extensions.component</component-family>
-            <renderer-type>org.primefaces.extensions.component.LocalizedRenderer</renderer-type>
-            <renderer-class>org.primefaces.extensions.component.localized.LocalizedRenderer</renderer-class>
         </renderer>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>
