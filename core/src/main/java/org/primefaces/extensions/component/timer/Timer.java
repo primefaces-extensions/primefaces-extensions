@@ -60,12 +60,12 @@ public class Timer extends TimerBaseImpl {
 
     @Override
     public boolean isPartialSubmitSet() {
-        return getStateHelper().get("partialSubmit") != null || getValueExpression("partialSubmit") != null;
+        return getStateHelper().get(PropertyKeys.partialSubmit) != null || getValueExpression(PropertyKeys.partialSubmit.name()) != null;
     }
 
     @Override
     public boolean isResetValuesSet() {
-        return getStateHelper().get("resetValues") != null || getValueExpression("resetValues") != null;
+        return getStateHelper().get(PropertyKeys.resetValues) != null || getValueExpression(PropertyKeys.resetValues.name()) != null;
     }
 
     @Override
