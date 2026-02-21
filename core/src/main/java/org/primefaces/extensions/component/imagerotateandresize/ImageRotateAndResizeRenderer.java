@@ -23,8 +23,8 @@ package org.primefaces.extensions.component.imagerotateandresize;
 
 import java.io.IOException;
 
-import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
+import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.renderkit.CoreRenderer;
@@ -37,22 +37,22 @@ import org.primefaces.util.WidgetBuilder;
  * @version $Revision$
  * @since 0.1
  */
-public class ImageRotateAndResizeRenderer extends CoreRenderer {
+@FacesRenderer(rendererType = ImageRotateAndResize.DEFAULT_RENDERER, componentFamily = ImageRotateAndResize.COMPONENT_FAMILY)
+public class ImageRotateAndResizeRenderer extends CoreRenderer<ImageRotateAndResize> {
 
     @Override
-    public void decode(final FacesContext context, final UIComponent component) {
+    public void decode(final FacesContext context, final ImageRotateAndResize component) {
         decodeBehaviors(context, component);
     }
 
     @Override
-    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-        final ImageRotateAndResize imageRotateAndResize = (ImageRotateAndResize) component;
+    public void encodeEnd(final FacesContext context, final ImageRotateAndResize component) throws IOException {
 
         final WidgetBuilder wb = getWidgetBuilder(context);
-        wb.init("ExtImageRotateAndResize", imageRotateAndResize);
-        wb.attr("target", SearchExpressionUtils.resolveClientIdsForClientSide(context, imageRotateAndResize, imageRotateAndResize.getFor()));
+        wb.init("ExtImageRotateAndResize", component);
+        wb.attr("target", SearchExpressionUtils.resolveClientIdsForClientSide(context, component, component.getFor()));
 
-        encodeClientBehaviors(context, imageRotateAndResize);
+        encodeClientBehaviors(context, component);
         wb.finish();
     }
 }

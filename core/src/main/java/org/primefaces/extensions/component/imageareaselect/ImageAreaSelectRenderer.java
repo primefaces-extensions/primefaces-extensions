@@ -23,8 +23,8 @@ package org.primefaces.extensions.component.imageareaselect;
 
 import java.io.IOException;
 
-import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
+import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.renderkit.CoreRenderer;
@@ -37,40 +37,40 @@ import org.primefaces.util.WidgetBuilder;
  * @version $Revision$
  * @since 0.1
  */
-public class ImageAreaSelectRenderer extends CoreRenderer {
+@FacesRenderer(rendererType = ImageAreaSelect.DEFAULT_RENDERER, componentFamily = ImageAreaSelect.COMPONENT_FAMILY)
+public class ImageAreaSelectRenderer extends CoreRenderer<ImageAreaSelect> {
 
     @Override
-    public void decode(final FacesContext context, final UIComponent component) {
+    public void decode(final FacesContext context, final ImageAreaSelect component) {
         decodeBehaviors(context, component);
     }
 
     @Override
-    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-        final ImageAreaSelect imageAreaSelect = (ImageAreaSelect) component;
+    public void encodeEnd(final FacesContext context, final ImageAreaSelect component) throws IOException {
 
         final WidgetBuilder wb = getWidgetBuilder(context);
-        wb.init("ExtImageAreaSelect", imageAreaSelect);
-        wb.attr("target", SearchExpressionUtils.resolveClientIdsForClientSide(context, imageAreaSelect, imageAreaSelect.getFor()))
-                    .attr("aspectRatio", imageAreaSelect.getAspectRatio())
-                    .attr("autoHide", imageAreaSelect.isAutoHide())
-                    .attr("fadeSpeed", imageAreaSelect.getFadeSpeed())
-                    .attr("handles", imageAreaSelect.isHandles())
-                    .attr("hide", imageAreaSelect.isHide())
-                    .attr("imageHeight", imageAreaSelect.getImageHeight())
-                    .attr("imageWidth", imageAreaSelect.getImageWidth())
-                    .attr("movable", imageAreaSelect.isMovable())
-                    .attr("persistent", imageAreaSelect.isPersistent())
-                    .attr("resizable", imageAreaSelect.isPersistent())
-                    .attr("show", imageAreaSelect.isShow())
-                    .attr("zIndex", imageAreaSelect.getZIndex())
-                    .attr("maxHeight", imageAreaSelect.getMaxHeight())
-                    .attr("maxWidth", imageAreaSelect.getMaxWidth())
-                    .attr("minHeight", imageAreaSelect.getMinHeight())
-                    .attr("minWidth", imageAreaSelect.getMinWidth())
-                    .attr("keyboardSupport", imageAreaSelect.isKeyboardSupport())
-                    .attr("parentSelector", imageAreaSelect.getParentSelector());
+        wb.init("ExtImageAreaSelect", component);
+        wb.attr("target", SearchExpressionUtils.resolveClientIdsForClientSide(context, component, component.getFor()))
+                    .attr("aspectRatio", component.getAspectRatio())
+                    .attr("autoHide", component.getAutoHide())
+                    .attr("fadeSpeed", component.getFadeSpeed())
+                    .attr("handles", component.getHandles())
+                    .attr("hide", component.getHide())
+                    .attr("imageHeight", component.getImageHeight())
+                    .attr("imageWidth", component.getImageWidth())
+                    .attr("movable", component.getMovable())
+                    .attr("persistent", component.getPersistent())
+                    .attr("resizable", component.getResizable())
+                    .attr("show", component.getShow())
+                    .attr("zIndex", component.getZIndex())
+                    .attr("maxHeight", component.getMaxHeight())
+                    .attr("maxWidth", component.getMaxWidth())
+                    .attr("minHeight", component.getMinHeight())
+                    .attr("minWidth", component.getMinWidth())
+                    .attr("keyboardSupport", component.getKeyboardSupport())
+                    .attr("parentSelector", component.getParentSelector());
 
-        encodeClientBehaviors(context, imageAreaSelect);
+        encodeClientBehaviors(context, component);
         wb.finish();
     }
 }

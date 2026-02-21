@@ -21,135 +21,54 @@
  */
 package org.primefaces.extensions.component.imagerotateandresize;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Map;
 
 import jakarta.faces.application.ResourceDependency;
-import jakarta.faces.component.UIComponentBase;
-import jakarta.faces.component.behavior.ClientBehaviorHolder;
+import jakarta.faces.component.FacesComponent;
 import jakarta.faces.context.FacesContext;
-import jakarta.faces.event.BehaviorEvent;
+import jakarta.faces.event.AjaxBehaviorEvent;
 import jakarta.faces.event.FacesEvent;
 
-import org.primefaces.component.api.Widget;
+import org.primefaces.cdk.api.FacesComponentInfo;
 import org.primefaces.extensions.event.ResizeEvent;
 import org.primefaces.extensions.event.RotateEvent;
-import org.primefaces.util.Constants;
+import org.primefaces.extensions.util.Constants;
 
 /**
  * Component class for the <code>ImageRotateAndResize</code> component.
  *
- * @author Thomas Andraschko / last modified by $Author$
- * @version $Revision$
+ * @author Thomas Andraschko
  * @since 0.1
  */
+@FacesComponent(value = ImageRotateAndResize.COMPONENT_TYPE, namespace = ImageRotateAndResize.COMPONENT_FAMILY)
+@FacesComponentInfo(description = "ImageRotateAndResize allows rotating and resizing an image.")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
-@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "primefaces-extensions.js")
-@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "imagerotateandresize/imagerotateandresize.js")
-public class ImageRotateAndResize extends UIComponentBase implements Widget, ClientBehaviorHolder {
-
-    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.ImageRotateAndResize";
-    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-    public static final String EVENT_ROTATE = "rotate";
-    public static final String EVENT_RESIZE = "resize";
-    private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.ImageRotateAndResizeRenderer";
-
-    private static final Collection<String> EVENT_NAMES = Collections.unmodifiableCollection(Arrays.asList(EVENT_ROTATE, EVENT_RESIZE));
-
-    /**
-     * Properties that are tracked by state saving.
-     *
-     * @author Thomas Andraschko / last modified by $Author$
-     * @version $Revision$
-     */
-    @SuppressWarnings("java:S115")
-    protected enum PropertyKeys {
-
-        widgetVar, forValue("for");
-
-        private final String toString;
-
-        PropertyKeys(String toString) {
-            this.toString = toString;
-        }
-
-        PropertyKeys() {
-            toString = null;
-        }
-
-        @Override
-        public String toString() {
-            return ((toString != null) ? toString : super.toString());
-        }
-    }
-
-    public ImageRotateAndResize() {
-        setRendererType(DEFAULT_RENDERER);
-    }
-
-    @Override
-    public String getFamily() {
-        return COMPONENT_FAMILY;
-    }
-
-    @Override
-    public Collection<String> getEventNames() {
-        return EVENT_NAMES;
-    }
-
-    public String getWidgetVar() {
-        return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
-    }
-
-    public void setWidgetVar(final String widgetVar) {
-        getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
-    }
-
-    public String getFor() {
-        return (String) getStateHelper().eval(PropertyKeys.forValue, null);
-    }
-
-    public void setFor(final String forValue) {
-        getStateHelper().put(PropertyKeys.forValue, forValue);
-    }
+@ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.js")
+@ResourceDependency(library = Constants.LIBRARY, name = "imagerotateandresize/imagerotateandresize.js")
+public class ImageRotateAndResize extends ImageRotateAndResizeBaseImpl {
 
     @Override
     public void queueEvent(final FacesEvent event) {
-        final FacesContext context = FacesContext.getCurrentInstance();
-        final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-        final String clientId = getClientId(context);
+        if (isAjaxBehaviorEventSource(event)) {
+            final FacesContext context = event.getFacesContext();
+            final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+            final String clientId = getClientId(context);
+            final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
 
-        if (isRequestSource(clientId, params)) {
-            final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
-
-            final BehaviorEvent behaviorEvent = (BehaviorEvent) event;
-
-            if (eventName.equals(EVENT_RESIZE)) {
+            if (isAjaxBehaviorEvent(event, ClientBehaviorEventKeys.resize)) {
                 final double width = Double.parseDouble(params.get(clientId + "_width"));
                 final double height = Double.parseDouble(params.get(clientId + "_height"));
-
-                final ResizeEvent resizeEvent = new ResizeEvent(this, behaviorEvent.getBehavior(), width, height);
-
-                super.queueEvent(resizeEvent);
+                super.queueEvent(new ResizeEvent(this, behaviorEvent.getBehavior(), width, height));
+                return;
             }
-            else if (eventName.equals(EVENT_ROTATE)) {
+            if (isAjaxBehaviorEvent(event, ClientBehaviorEventKeys.rotate)) {
                 final int degree = Integer.parseInt(params.get(clientId + "_degree"));
-
-                final RotateEvent rotateEvent = new RotateEvent(this, behaviorEvent.getBehavior(), degree);
-
-                super.queueEvent(rotateEvent);
+                super.queueEvent(new RotateEvent(this, behaviorEvent.getBehavior(), degree));
+                return;
             }
         }
-        else {
-            super.queueEvent(event);
-        }
-    }
-
-    private static boolean isRequestSource(final String clientId, final Map<String, String> params) {
-        return clientId.equals(params.get(Constants.RequestParams.PARTIAL_SOURCE_PARAM));
+        super.queueEvent(event);
     }
 }
