@@ -21,18 +21,18 @@
  */
 package org.primefaces.extensions.component.waypoint;
 
-import java.util.*;
+import java.util.Locale;
+import java.util.Map;
 
 import jakarta.faces.application.ResourceDependency;
-import jakarta.faces.component.UIComponentBase;
-import jakarta.faces.component.behavior.ClientBehaviorHolder;
+import jakarta.faces.component.FacesComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.event.AjaxBehaviorEvent;
 import jakarta.faces.event.FacesEvent;
 
-import org.primefaces.component.api.Widget;
+import org.primefaces.cdk.api.FacesComponentInfo;
 import org.primefaces.extensions.event.WaypointEvent;
-import org.primefaces.util.Constants;
+import org.primefaces.extensions.util.Constants;
 
 /**
  * <code>Waypoint</code> component.
@@ -40,83 +40,21 @@ import org.primefaces.util.Constants;
  * @author Oleg Varaksin / last modified by Melloware
  * @since 0.6
  */
+@FacesComponent(value = Waypoint.COMPONENT_TYPE, namespace = Waypoint.COMPONENT_FAMILY)
+@FacesComponentInfo(description = "Waypoint makes it easy to execute a custom logic whenever you scroll to an element.")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
-@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "primefaces-extensions.js")
-@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "waypoint/waypoint.js")
-public class Waypoint extends UIComponentBase implements Widget, ClientBehaviorHolder {
+@ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.js")
+@ResourceDependency(library = Constants.LIBRARY, name = "waypoint/waypoint.js")
+public class Waypoint extends WaypointBaseImpl {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Waypoint";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-    private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.WaypointRenderer";
 
-    private static final Collection<String> EVENT_NAMES = Collections
-                .unmodifiableCollection(Arrays.asList(WaypointEvent.NAME));
-
-    @SuppressWarnings("java:S115")
-    protected enum PropertyKeys {
-        // @formatter:off
-      widgetVar,
-      forValue("for"),
-      forContext,
-      enabled,
-      horizontal,
-      offset,
-      continuous,
-      triggerOnce;
-      // @formatter:on
-
-        private final String toString;
-
-        PropertyKeys(String toString) {
-            this.toString = toString;
-        }
-
-        PropertyKeys() {
-            toString = null;
-        }
-
-        @Override
-        public String toString() {
-            return ((toString != null) ? toString : super.toString());
-        }
-    }
-
-    public Waypoint() {
-        setRendererType(DEFAULT_RENDERER);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getFamily() {
-        return COMPONENT_FAMILY;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Collection<String> getEventNames() {
-        return EVENT_NAMES;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getDefaultEventName() {
-        return WaypointEvent.NAME;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void processDecodes(final FacesContext fc) {
-        if (isSelfRequest(fc)) {
+        if (isAjaxRequestSource(fc)) {
             decode(fc);
         }
         else {
@@ -128,121 +66,27 @@ public class Waypoint extends UIComponentBase implements Widget, ClientBehaviorH
      * {@inheritDoc}
      */
     @Override
-    public void processValidators(final FacesContext fc) {
-        if (!isSelfRequest(fc)) {
-            super.processValidators(fc);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void processUpdates(final FacesContext fc) {
-        if (!isSelfRequest(fc)) {
-            super.processUpdates(fc);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void queueEvent(final FacesEvent event) {
-        final FacesContext fc = FacesContext.getCurrentInstance();
-
-        if (isSelfRequest(fc)) {
+        if (isAjaxBehaviorEventSource(event)) {
+            final FacesContext fc = event.getFacesContext();
             final Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
-            final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+            final String clientId = getClientId(fc);
             final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
 
-            if (WaypointEvent.NAME.equals(eventName)) {
-                final String direction = params.get(getClientId(fc) + "_direction");
-                final String waypointId = params.get(getClientId(fc) + "_waypointId");
+            if (isAjaxBehaviorEvent(event, ClientBehaviorEventKeys.reached)) {
+                final String direction = params.get(clientId + "_direction");
+                final String waypointId = params.get(clientId + "_waypointId");
 
                 final WaypointEvent waypointEvent = new WaypointEvent(this, behaviorEvent.getBehavior(),
-                            direction != null ? WaypointEvent.Direction.valueOf(direction.toUpperCase(
-                                        Locale.ENGLISH))
+                            direction != null ? WaypointEvent.Direction.valueOf(direction.toUpperCase(Locale.ENGLISH))
                                         : null,
                             waypointId);
-                waypointEvent.setPhaseId(behaviorEvent.getPhaseId());
+                waypointEvent.setPhaseId(event.getPhaseId());
                 super.queueEvent(waypointEvent);
-
                 return;
             }
         }
 
         super.queueEvent(event);
     }
-
-    public String getWidgetVar() {
-        return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
-    }
-
-    public void setWidgetVar(final String widgetVar) {
-        getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
-    }
-
-    public String getFor() {
-        return (String) getStateHelper().eval(PropertyKeys.forValue, null);
-    }
-
-    public void setFor(final String forValue) {
-        getStateHelper().put(PropertyKeys.forValue, forValue);
-    }
-
-    public String getForContext() {
-        return (String) getStateHelper().eval(PropertyKeys.forContext, null);
-    }
-
-    public void setForContext(final String forContext) {
-        getStateHelper().put(PropertyKeys.forContext, forContext);
-    }
-
-    public boolean isEnabled() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.enabled, true);
-    }
-
-    public void setEnabled(final boolean enabled) {
-        getStateHelper().put(PropertyKeys.enabled, enabled);
-    }
-
-    public boolean isHorizontal() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.horizontal, false);
-    }
-
-    public void setHorizontal(final boolean horizontal) {
-        getStateHelper().put(PropertyKeys.horizontal, horizontal);
-    }
-
-    public String getOffset() {
-        return (String) getStateHelper().eval(PropertyKeys.offset, null);
-    }
-
-    public void setOffset(final String offset) {
-        getStateHelper().put(PropertyKeys.offset, offset);
-    }
-
-    public boolean isContinuous() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.continuous, true);
-    }
-
-    public void setContinuous(final boolean continuous) {
-        getStateHelper().put(PropertyKeys.continuous, continuous);
-    }
-
-    public boolean isTriggerOnce() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.triggerOnce, false);
-    }
-
-    public void setTriggerOnce(final boolean triggerOnce) {
-        getStateHelper().put(PropertyKeys.triggerOnce, triggerOnce);
-    }
-
-    private boolean isSelfRequest(final FacesContext fc) {
-        return getClientId(fc)
-                    .equals(fc.getExternalContext().getRequestParameterMap()
-                                .get(Constants.RequestParams.PARTIAL_SOURCE_PARAM));
-    }
-
 }
