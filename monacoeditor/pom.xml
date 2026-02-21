@@ -48,7 +48,14 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-clean-plugin</artifactId>
                 <configuration>
+                    <excludeDefaultDirectories>true</excludeDefaultDirectories>
                     <filesets>
+                        <fileset>
+                            <directory>target</directory>
+                            <excludes>
+                                <exclude>git/**</exclude>
+                            </excludes>
+                        </fileset>
                         <fileset>
                             <directory>src/main/js/node_modules</directory>
                         </fileset>
@@ -88,8 +95,19 @@
                         </goals>
                         <phase>generate-resources</phase>
                         <configuration>
-                            <arguments>install</arguments>
+                            <arguments>ci</arguments>
                             <testFailureIgnore>true</testFailureIgnore>
+                        </configuration>
+                    </execution>
+                    <!-- Clean git cache before generating locales -->
+                    <execution>
+                        <id>clean-git-directory</id>
+                        <goals>
+                            <goal>npx</goal>
+                        </goals>
+                        <phase>generate-resources</phase>
+                        <configuration>
+                            <arguments>rimraf ../../../target/git</arguments>
                         </configuration>
                     </execution>
                     <!-- Verify code -->
