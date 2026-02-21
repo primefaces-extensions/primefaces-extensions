@@ -49,9 +49,6 @@ import org.primefaces.extensions.util.Constants;
 @ResourceDependency(library = Constants.LIBRARY, name = "waypoint/waypoint.js")
 public class Waypoint extends WaypointBaseImpl {
 
-    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Waypoint";
-    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-
     @Override
     public void processDecodes(final FacesContext fc) {
         if (isAjaxRequestSource(fc)) {
@@ -75,6 +72,7 @@ public class Waypoint extends WaypointBaseImpl {
             super.processUpdates(fc);
         }
     }
+
     /**
      * {@inheritDoc}
      */
