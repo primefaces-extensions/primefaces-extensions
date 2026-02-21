@@ -62,6 +62,19 @@ public class Waypoint extends WaypointBaseImpl {
         }
     }
 
+    @Override
+    public void processValidators(final FacesContext fc) {
+        if (!isAjaxRequestSource(fc)) {
+            super.processValidators(fc);
+        }
+    }
+
+    @Override
+    public void processUpdates(final FacesContext fc) {
+        if (!isAjaxRequestSource(fc)) {
+            super.processUpdates(fc);
+        }
+    }
     /**
      * {@inheritDoc}
      */
