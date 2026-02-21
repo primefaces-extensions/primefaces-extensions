@@ -23,9 +23,9 @@ package org.primefaces.extensions.component.tooltip;
 
 import java.io.IOException;
 
-import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
+import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.renderkit.CoreRenderer;
@@ -42,42 +42,42 @@ import org.primefaces.util.WidgetBuilder;
  * @author Oleg Varaksin / last modified by Melloware
  * @since 0.2
  */
-public class TooltipRenderer extends CoreRenderer {
+@FacesRenderer(rendererType = Tooltip.DEFAULT_RENDERER, componentFamily = Tooltip.COMPONENT_FAMILY)
+public class TooltipRenderer extends CoreRenderer<Tooltip> {
 
     @Override
-    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-        final Tooltip tooltip = (Tooltip) component;
-        final String header = tooltip.getHeader();
-        final String styleClass = tooltip.getStyleClass();
-        final boolean global = tooltip.isGlobal();
-        final boolean shared = tooltip.isShared();
-        final boolean autoShow = tooltip.isAutoShow();
-        final boolean mouseTracking = tooltip.isMouseTracking();
+    public void encodeEnd(final FacesContext context, final Tooltip component) throws IOException {
+        final String header = component.getHeader();
+        final String styleClass = component.getStyleClass();
+        final boolean global = component.isGlobal();
+        final boolean shared = component.isShared();
+        final boolean autoShow = component.isAutoShow();
+        final boolean mouseTracking = component.isMouseTracking();
         String target = null;
 
-        if (!global || tooltip.getFor() != null) {
-            target = SearchExpressionUtils.resolveClientIdsForClientSide(context, component, tooltip.getFor());
+        if (!global || component.getFor() != null) {
+            target = SearchExpressionUtils.resolveClientIdsForClientSide(context, component, component.getFor());
         }
 
         final ResponseWriter writer = context.getResponseWriter();
         String text = null;
-        if (tooltip.getChildCount() > 0) {
+        if (component.getChildCount() > 0) {
             final FastStringWriter fsw = new FastStringWriter();
             final ResponseWriter clonedWriter = writer.cloneWithWriter(fsw);
             context.setResponseWriter(clonedWriter);
-            renderChildren(context, tooltip);
+            renderChildren(context, component);
             context.setResponseWriter(writer);
             text = fsw.toString();
         }
         else {
-            final String valueToRender = ComponentUtils.getValueToRender(context, tooltip);
+            final String valueToRender = ComponentUtils.getValueToRender(context, component);
             if (valueToRender != null) {
                 text = valueToRender;
             }
         }
 
         final WidgetBuilder wb = getWidgetBuilder(context);
-        wb.init("ExtTooltip", tooltip);
+        wb.init("ExtTooltip", component);
         wb.attr("global", global);
         wb.attr("shared", shared);
         wb.attr("autoShow", autoShow);
@@ -122,31 +122,31 @@ public class TooltipRenderer extends CoreRenderer {
         else if (shared && !global) {
             wb.append(",show:{target:PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector('"
                         + target + "')" + ",delay:"
-                        + tooltip.getShowDelay() + ",effect:function(){$(this)." + tooltip.getShowEffect() + "("
-                        + tooltip.getShowEffectLength() + ");}}");
+                        + component.getShowDelay() + ",effect:function(){$(this)." + component.getShowEffect() + "("
+                        + component.getShowEffectLength() + ");}}");
             wb.append(",hide:{target:PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector('"
                         + target + "')" + ",delay:"
-                        + tooltip.getHideDelay() + ",fixed:" + tooltip.isFixed() + ",effect:function(){$(this)."
-                        + tooltip.getHideEffect() + "(" + tooltip.getHideEffectLength() + ");}}");
+                        + component.getHideDelay() + ",fixed:" + component.isFixed() + ",effect:function(){$(this)."
+                        + component.getHideEffect() + "(" + component.getHideEffectLength() + ");}}");
         }
         else if (autoShow) {
             wb.append(",show:{when:false,ready:true}");
             wb.append(",hide:false");
         }
         else {
-            wb.append(",show:{event:'" + tooltip.getShowEvent() + "',delay:" + tooltip.getShowDelay()
-                        + ",effect:function(){$(this)." + tooltip.getShowEffect() + "(" + tooltip.getShowEffectLength()
+            wb.append(",show:{event:'" + component.getShowEvent() + "',delay:" + component.getShowDelay()
+                        + ",effect:function(){$(this)." + component.getShowEffect() + "(" + component.getShowEffectLength()
                         + ");}}");
-            wb.append(",hide:{event:'" + tooltip.getHideEvent() + "',delay:" + tooltip.getHideDelay() + ",fixed:"
-                        + tooltip.isFixed() + ",effect:function(){$(this)." + tooltip.getHideEffect() + "("
-                        + tooltip.getHideEffectLength() + ");}}");
+            wb.append(",hide:{event:'" + component.getHideEvent() + "',delay:" + component.getHideDelay() + ",fixed:"
+                        + component.isFixed() + ",effect:function(){$(this)." + component.getHideEffect() + "("
+                        + component.getHideEffectLength() + ");}}");
         }
 
         // position
         wb.append(",position: {");
-        wb.append("at:'" + tooltip.getAtPosition() + "'");
-        wb.append(",my:'" + tooltip.getMyPosition() + "'");
-        wb.append(",adjust:{x:" + tooltip.getAdjustX() + ",y:" + tooltip.getAdjustY() + "}");
+        wb.append("at:'" + component.getAtPosition() + "'");
+        wb.append(",my:'" + component.getMyPosition() + "'");
+        wb.append(",adjust:{x:" + component.getAdjustX() + ",y:" + component.getAdjustY() + "}");
         wb.append(",viewport:$(window)");
         if (mouseTracking) {
             wb.append(",target:'mouse'");
@@ -161,7 +161,7 @@ public class TooltipRenderer extends CoreRenderer {
     }
 
     @Override
-    public void encodeChildren(final FacesContext context, final UIComponent component) {
+    public void encodeChildren(final FacesContext context, final Tooltip component) {
         // do nothing
     }
 
