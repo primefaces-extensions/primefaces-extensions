@@ -23,7 +23,6 @@ package org.primefaces.extensions.component.waypoint;
 
 import java.io.IOException;
 
-import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.render.FacesRenderer;
 
@@ -38,40 +37,39 @@ import org.primefaces.util.WidgetBuilder;
  * @since 0.6
  */
 @FacesRenderer(rendererType = Waypoint.DEFAULT_RENDERER, componentFamily = Waypoint.COMPONENT_FAMILY)
-public class WaypointRenderer extends CoreRenderer {
+public class WaypointRenderer extends CoreRenderer<Waypoint> {
 
     @Override
-    public void decode(final FacesContext context, final UIComponent component) {
+    public void decode(final FacesContext context, final Waypoint component) {
         decodeBehaviors(context, component);
     }
 
     @Override
-    public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
-        final Waypoint waypoint = (Waypoint) component;
-        encodeScript(fc, waypoint);
+    public void encodeEnd(final FacesContext fc, final Waypoint component) throws IOException {
+        encodeScript(fc, component);
     }
 
-    private void encodeScript(final FacesContext fc, final Waypoint waypoint) throws IOException {
-        final String context = SearchExpressionUtils.resolveClientIdsForClientSide(fc, waypoint, waypoint.getForContext());
-        final String target = SearchExpressionUtils.resolveClientIdsForClientSide(fc, waypoint, waypoint.getFor());
+    private void encodeScript(final FacesContext fc, final Waypoint component) throws IOException {
+        final String context = SearchExpressionUtils.resolveClientIdsForClientSide(fc, component, component.getForContext());
+        final String target = SearchExpressionUtils.resolveClientIdsForClientSide(fc, component, component.getFor());
 
         final WidgetBuilder wb = getWidgetBuilder(fc);
-        wb.init("ExtWaypoint", waypoint);
+        wb.init("ExtWaypoint", component);
         wb.attr("target", target);
-        wb.attr("continuous", waypoint.isContinuous());
-        wb.attr("enabled", waypoint.isEnabled());
-        wb.attr("horizontal", waypoint.isHorizontal());
-        wb.attr("triggerOnce", waypoint.isTriggerOnce());
+        wb.attr("continuous", component.isContinuous());
+        wb.attr("enabled", component.isEnabled());
+        wb.attr("horizontal", component.isHorizontal());
+        wb.attr("triggerOnce", component.isTriggerOnce());
 
         if (context != null) {
             wb.attr("context", context);
         }
 
-        if (waypoint.getOffset() != null) {
-            wb.nativeAttr("offset", waypoint.getOffset());
+        if (component.getOffset() != null) {
+            wb.nativeAttr("offset", component.getOffset());
         }
 
-        encodeClientBehaviors(fc, waypoint);
+        encodeClientBehaviors(fc, component);
 
         wb.finish();
     }
