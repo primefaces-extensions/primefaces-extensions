@@ -23,8 +23,8 @@ package org.primefaces.extensions.component.imagezoom;
 
 import java.io.IOException;
 
-import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
+import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.renderkit.CoreRenderer;
@@ -36,19 +36,19 @@ import org.primefaces.util.WidgetBuilder;
  * @author Melloware
  * @since 11.0.3
  */
-public class ImageZoomRenderer extends CoreRenderer {
+@FacesRenderer(rendererType = ImageZoom.DEFAULT_RENDERER, componentFamily = ImageZoom.COMPONENT_FAMILY)
+public class ImageZoomRenderer extends CoreRenderer<ImageZoom> {
 
     @Override
-    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-        final ImageZoom imageZoom = (ImageZoom) component;
+    public void encodeEnd(final FacesContext context, final ImageZoom component) throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context);
-        wb.init("ImageZoom", imageZoom);
-        wb.attr("target", SearchExpressionUtils.resolveClientIdsForClientSide(context, imageZoom, imageZoom.getFor()))
-                    .attr("margin", imageZoom.getMargin(), 0)
-                    .attr("scrollOffset", imageZoom.getScrollOffset(), 40)
-                    .attr("background", imageZoom.getBackground(), "#fff")
-                    .attr("container", imageZoom.getContainer(), "#fff")
-                    .attr("template", imageZoom.getTemplate(), "#fff");
+        wb.init("ImageZoom", component);
+        wb.attr("target", SearchExpressionUtils.resolveClientIdsForClientSide(context, component, component.getFor()))
+                    .attr("margin", component.getMargin(), 0)
+                    .attr("scrollOffset", component.getScrollOffset(), 40)
+                    .attr("background", component.getBackground(), "#fff")
+                    .attr("container", component.getContainer(), "#fff")
+                    .attr("template", component.getTemplate(), "#fff");
         wb.finish();
     }
 }
