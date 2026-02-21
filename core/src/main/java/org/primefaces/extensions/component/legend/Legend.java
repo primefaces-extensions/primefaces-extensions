@@ -21,12 +21,10 @@
  */
 package org.primefaces.extensions.component.legend;
 
-import java.util.Map;
-
 import jakarta.faces.application.ResourceDependency;
-import jakarta.faces.component.UIComponentBase;
+import jakarta.faces.component.FacesComponent;
 
-import org.primefaces.component.api.Widget;
+import org.primefaces.cdk.api.FacesComponentInfo;
 import org.primefaces.extensions.util.Constants;
 
 /**
@@ -35,105 +33,21 @@ import org.primefaces.extensions.util.Constants;
  * @author Melloware mellowaredev@gmail.com
  * @since 7.1
  */
+@FacesComponent(value = Legend.COMPONENT_TYPE, namespace = Legend.COMPONENT_FAMILY)
+@FacesComponentInfo(description = "Legend component for chart labels and colors.")
 @ResourceDependency(library = "primefaces", name = "components.css")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "legend/legend.css")
 @ResourceDependency(library = Constants.LIBRARY, name = "legend/legend.js")
-public class Legend extends UIComponentBase implements Widget {
+public class Legend extends LegendBaseImpl {
 
-    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Legend";
-    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
     public static final String STYLE_CLASS_VERTICAL = "ui-legend-vertical ";
     public static final String STYLE_CLASS_HORIZONTAL = "ui-legend-horizontal ";
     public static final String SCALE_STYLE = "ui-legend-scale";
     public static final String LABELS_STYLE = "ui-legend-labels";
     public static final String TITLE_STYLE = "ui-legend-title";
     public static final String FOOTER_STYLE = "ui-legend-footer";
-
-    private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.LegendRenderer";
-
-    @SuppressWarnings("java:S115")
-    protected enum PropertyKeys {
-
-        // @formatter:off
-        widgetVar,
-        style,
-        styleClass,
-        title,
-        footer,
-        values,
-        layout
-        // @formatter:on
-    }
-
-    /**
-     * Default constructor
-     */
-    public Legend() {
-        setRendererType(DEFAULT_RENDERER);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getFamily() {
-        return COMPONENT_FAMILY;
-    }
-
-    @Override
-    public String getWidgetVar() {
-        return (String) getStateHelper().eval("widgetVar", resolveWidgetVar());
-    }
-
-    public String getLayout() {
-        return (String) getStateHelper().eval(PropertyKeys.layout, "vertical");
-    }
-
-    public void setLayout(final String layout) {
-        getStateHelper().put(PropertyKeys.layout, layout);
-    }
-
-    public String getTitle() {
-        return (String) getStateHelper().eval(PropertyKeys.title, null);
-    }
-
-    public void setTitle(final String title) {
-        getStateHelper().put(PropertyKeys.title, title);
-    }
-
-    public String getFooter() {
-        return (String) getStateHelper().eval(PropertyKeys.footer, null);
-    }
-
-    public void setFooter(final String footer) {
-        getStateHelper().put(PropertyKeys.footer, footer);
-    }
-
-    public String getStyle() {
-        return (String) getStateHelper().eval(PropertyKeys.style, null);
-    }
-
-    public void setStyle(final String _style) {
-        getStateHelper().put(PropertyKeys.style, _style);
-    }
-
-    public String getStyleClass() {
-        return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
-    }
-
-    public void setStyleClass(final String _styleClass) {
-        getStateHelper().put(PropertyKeys.styleClass, _styleClass);
-    }
-
-    public Map<String, String> getValues() {
-        return (Map<String, String>) getStateHelper().eval(PropertyKeys.values, null);
-    }
-
-    public void setValues(final Map<String, String> map) {
-        getStateHelper().put(PropertyKeys.values, map);
-    }
 
 }
