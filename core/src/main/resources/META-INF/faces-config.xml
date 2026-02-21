@@ -38,14 +38,6 @@
         <component-class>org.primefaces.extensions.component.parameters.MethodParameter</component-class>
     </component>
     <component>
-        <component-type>org.primefaces.extensions.component.Layout</component-type>
-        <component-class>org.primefaces.extensions.component.layout.Layout</component-class>
-    </component>
-    <component>
-        <component-type>org.primefaces.extensions.component.LayoutPane</component-type>
-        <component-class>org.primefaces.extensions.component.layout.LayoutPane</component-class>
-    </component>
-    <component>
         <component-type>org.primefaces.extensions.component.MasterDetail</component-type>
         <component-class>org.primefaces.extensions.component.masterdetail.MasterDetail</component-class>
     </component>
@@ -145,16 +137,6 @@
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.LegendRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.legend.LegendRenderer</renderer-class>
-        </renderer>
-        <renderer>
-            <component-family>org.primefaces.extensions.component</component-family>
-            <renderer-type>org.primefaces.extensions.component.LayoutRenderer</renderer-type>
-            <renderer-class>org.primefaces.extensions.component.layout.LayoutRenderer</renderer-class>
-        </renderer>
-        <renderer>
-            <component-family>org.primefaces.extensions.component</component-family>
-            <renderer-type>org.primefaces.extensions.component.LayoutPaneRenderer</renderer-type>
-            <renderer-class>org.primefaces.extensions.component.layout.LayoutPaneRenderer</renderer-class>
         </renderer>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>
