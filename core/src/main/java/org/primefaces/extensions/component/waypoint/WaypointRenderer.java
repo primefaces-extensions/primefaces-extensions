@@ -25,6 +25,7 @@ import java.io.IOException;
 
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
+import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.renderkit.CoreRenderer;
@@ -36,6 +37,7 @@ import org.primefaces.util.WidgetBuilder;
  * @author Oleg Varaksin / last modified by Melloware
  * @since 0.6
  */
+@FacesRenderer(rendererType = Waypoint.DEFAULT_RENDERER, componentFamily = Waypoint.COMPONENT_FAMILY)
 public class WaypointRenderer extends CoreRenderer {
 
     @Override
