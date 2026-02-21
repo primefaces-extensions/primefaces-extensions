@@ -25,11 +25,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import jakarta.faces.component.UIComponent;
-import jakarta.faces.component.UISelectOne;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
 import jakarta.faces.model.SelectItem;
+import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.component.inputtext.InputText;
 import org.primefaces.extensions.util.Attrs;
@@ -46,77 +45,75 @@ import org.primefaces.util.WidgetBuilder;
  * @author https://github.com/aripddev
  * @since 8.0.1
  */
-public class FuzzySearchRenderer extends SelectOneRenderer {
+@FacesRenderer(rendererType = FuzzySearch.DEFAULT_RENDERER, componentFamily = FuzzySearch.COMPONENT_FAMILY)
+public class FuzzySearchRenderer extends SelectOneRenderer<FuzzySearch> {
 
     private static final String INPUT = "_input";
 
     @Override
-    public void decode(final FacesContext context, final UIComponent component) {
-        final FuzzySearch fuzzySearch = (FuzzySearch) component;
-        if (!shouldDecode(fuzzySearch)) {
+    public void decode(final FacesContext context, final FuzzySearch component) {
+        if (!shouldDecode(component)) {
             return;
         }
 
-        final String clientId = fuzzySearch.getClientId(context);
+        final String clientId = component.getClientId(context);
         final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
         final String submittedValue = params.get(clientId + INPUT);
 
         if (submittedValue != null) {
-            fuzzySearch.setSubmittedValue(submittedValue);
+            component.setSubmittedValue(submittedValue);
         }
 
-        decodeBehaviors(context, fuzzySearch);
+        decodeBehaviors(context, component);
     }
 
     @Override
-    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-        final FuzzySearch fuzzySearch = (FuzzySearch) component;
-
-        encodeMarkup(context, fuzzySearch);
-        encodeScript(context, fuzzySearch);
+    public void encodeEnd(final FacesContext context, final FuzzySearch component) throws IOException {
+        encodeMarkup(context, component);
+        encodeScript(context, component);
     }
 
-    protected void encodeMarkup(final FacesContext context, final FuzzySearch fuzzySearch) throws IOException {
+    protected void encodeMarkup(final FacesContext context, final FuzzySearch component) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
 
-        final String clientId = fuzzySearch.getClientId(context);
-        final List<SelectItem> selectItems = getSelectItems(context, fuzzySearch);
+        final String clientId = component.getClientId(context);
+        final List<SelectItem> selectItems = getSelectItems(context, component);
         final int selectItemsSize = selectItems.size();
-        final String style = fuzzySearch.getStyle();
+        final String style = component.getStyle();
         final String styleClass = getStyleClassBuilder(context)
                     .add(FuzzySearch.STYLE_CLASS)
-                    .add(fuzzySearch.getStyleClass())
+                    .add(component.getStyleClass())
                     .add("ui-buttonset-" + selectItemsSize)
-                    .add(!fuzzySearch.isValid(), "ui-state-error")
+                    .add(!component.isValid(), "ui-state-error")
                     .build();
 
-        writer.startElement("div", fuzzySearch);
+        writer.startElement("div", component);
         writer.writeAttribute("id", clientId, "id");
         writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
         if (style != null) {
             writer.writeAttribute(Attrs.STYLE, style, Attrs.STYLE);
         }
 
-        writer.startElement("input", fuzzySearch);
+        writer.startElement("input", component);
         writer.writeAttribute("id", clientId + INPUT, null);
         writer.writeAttribute("name", clientId + INPUT, null);
-        writer.writeAttribute("placeholder", fuzzySearch.getPlaceholder(), null);
-        writer.writeAttribute("class", createStyleClass(fuzzySearch, InputText.STYLE_CLASS), "styleClass");
-        renderPassThruAttributes(context, fuzzySearch, HTML.TAB_INDEX);
-        renderDomEvents(context, fuzzySearch, HTML.BLUR_FOCUS_EVENTS);
-        renderAccessibilityAttributes(context, fuzzySearch);
-        renderValidationMetadata(context, fuzzySearch);
-        final String valueToRender = ComponentUtils.getValueToRender(context, fuzzySearch);
+        writer.writeAttribute("placeholder", component.getPlaceholder(), null);
+        writer.writeAttribute("class", createStyleClass(component, InputText.STYLE_CLASS), "styleClass");
+        renderPassThruAttributes(context, component, HTML.TAB_INDEX);
+        renderDomEvents(context, component, HTML.BLUR_FOCUS_EVENTS);
+        renderAccessibilityAttributes(context, component);
+        renderValidationMetadata(context, component);
+        final String valueToRender = ComponentUtils.getValueToRender(context, component);
         if (valueToRender != null) {
             writer.writeAttribute("value", valueToRender, null);
         }
         writer.endElement("input");
 
-        writer.startElement("div", fuzzySearch);
+        writer.startElement("div", component);
         writer.writeAttribute("id", clientId + "_fuzzysearch-search-results", null);
 
-        if (fuzzySearch.isListItemsAtTheBeginning()) {
-            encodeSelectItems(context, fuzzySearch, selectItems);
+        if (component.isListItemsAtTheBeginning()) {
+            encodeSelectItems(context, component, selectItems);
         }
 
         writer.endElement("div");
@@ -124,22 +121,22 @@ public class FuzzySearchRenderer extends SelectOneRenderer {
         writer.endElement("div");
     }
 
-    protected void encodeSelectItems(final FacesContext context, final FuzzySearch fuzzySearch, final List<SelectItem> selectItems) throws IOException {
+    protected void encodeSelectItems(final FacesContext context, final FuzzySearch component, final List<SelectItem> selectItems) throws IOException {
         for (final SelectItem selectItem : selectItems) {
-            encodeOption(context, fuzzySearch, selectItem);
+            encodeOption(context, component, selectItem);
         }
     }
 
     protected void encodeOption(
-                final FacesContext context, final FuzzySearch fuzzySearch, final SelectItem option) throws IOException {
+                final FacesContext context, final FuzzySearch component, final SelectItem option) throws IOException {
 
         final ResponseWriter writer = context.getResponseWriter();
-        final String itemValueAsString = getOptionAsString(context, fuzzySearch, fuzzySearch.getConverter(), option.getValue());
+        final String itemValueAsString = getOptionAsString(context, component, component.getConverter(), option.getValue());
 
-        final String resultStyle = fuzzySearch.getResultStyle();
+        final String resultStyle = component.getResultStyle();
         final String resultStyleClass = getStyleClassBuilder(context)
                     .add(FuzzySearch.ITEM_CLASS)
-                    .add(fuzzySearch.getResultStyleClass())
+                    .add(component.getResultStyleClass())
                     .build();
 
         // results
@@ -148,7 +145,7 @@ public class FuzzySearchRenderer extends SelectOneRenderer {
         if (resultStyle != null) {
             writer.writeAttribute(Attrs.STYLE, resultStyle, "resultStyle");
         }
-        writer.writeAttribute("tabindex", fuzzySearch.getTabindex(), null);
+        writer.writeAttribute("tabindex", component.getTabindex(), null);
         if (option.getDescription() != null) {
             writer.writeAttribute("title", option.getDescription(), null);
         }
@@ -164,33 +161,40 @@ public class FuzzySearchRenderer extends SelectOneRenderer {
         writer.endElement("div");
     }
 
-    protected void encodeScript(final FacesContext context, final FuzzySearch fuzzySearch) throws IOException {
+    protected void encodeScript(final FacesContext context, final FuzzySearch component) throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context);
 
-        final List<SelectItem> selectItems = getSelectItems(context, fuzzySearch);
+        final List<SelectItem> selectItems = getSelectItems(context, component);
         final JSONArray ja = new JSONArray();
         for (final SelectItem selectItem : selectItems) {
-            ja.put(new JSONObject(selectItem));
+            final JSONObject jo = new JSONObject();
+            jo.put("label", selectItem.getLabel());
+            jo.put("value", getOptionAsString(context, component, component.getConverter(), selectItem.getValue()));
+            jo.put("escape", selectItem.isEscape());
+            if (selectItem.getDescription() != null) {
+                jo.put("description", selectItem.getDescription());
+            }
+            ja.put(jo);
         }
         final String jsonDatasource = ja.toString();
 
-        wb.init(FuzzySearch.class.getSimpleName(), fuzzySearch)
-                    .attr("resultStyle", fuzzySearch.getResultStyle())
-                    .attr("resultStyleClass", fuzzySearch.getResultStyleClass())
-                    .attr("listItemsAtTheBeginning", fuzzySearch.isListItemsAtTheBeginning())
+        wb.init(FuzzySearch.class.getSimpleName(), component)
+                    .attr("resultStyle", component.getResultStyle())
+                    .attr("resultStyleClass", component.getResultStyleClass())
+                    .attr("listItemsAtTheBeginning", component.isListItemsAtTheBeginning())
                     .attr("datasource", jsonDatasource)
-                    .attr("unselectable", fuzzySearch.isUnselectable(), true)
-                    .attr("highlight", fuzzySearch.isHighlight(), true)
-                    .callback("change", "function()", fuzzySearch.getOnchange());
+                    .attr("unselectable", component.isUnselectable(), true)
+                    .attr("highlight", component.isHighlight(), true)
+                    .callback("change", "function()", component.getOnchange());
 
-        encodeClientBehaviors(context, fuzzySearch);
+        encodeClientBehaviors(context, component);
 
         wb.finish();
     }
 
     @Override
-    protected String getSubmitParam(final FacesContext context, final UISelectOne selectOne) {
-        return selectOne.getClientId(context);
+    protected String getSubmitParam(final FacesContext context, final FuzzySearch component) {
+        return component.getClientId(context);
     }
 
 }

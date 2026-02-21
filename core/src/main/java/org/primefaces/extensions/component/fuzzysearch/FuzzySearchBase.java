@@ -22,44 +22,36 @@
 package org.primefaces.extensions.component.fuzzysearch;
 
 import jakarta.faces.component.UISelectOne;
-import jakarta.faces.component.behavior.ClientBehaviorHolder;
 
-import org.primefaces.component.api.PrimeClientBehaviorHolder;
+import org.primefaces.cdk.api.FacesBehaviorEvent;
+import org.primefaces.cdk.api.FacesBehaviorEvents;
+import org.primefaces.cdk.api.FacesComponentBase;
+import org.primefaces.cdk.api.Property;
+import org.primefaces.component.api.InputHolder;
+import org.primefaces.component.api.PrimeSelect;
+import org.primefaces.component.api.StyleAware;
 import org.primefaces.component.api.Widget;
+import org.primefaces.event.SelectEvent;
 
 /**
- * <code>FuzzySearch</code> component.
+ * <code>FuzzySearch</code> component base class.
  *
  * @author https://github.com/aripddev
  * @since 8.0.1
  */
-public abstract class FuzzySearchBase extends UISelectOne implements Widget, ClientBehaviorHolder, PrimeClientBehaviorHolder {
+@FacesComponentBase
+@FacesBehaviorEvents({
+            @FacesBehaviorEvent(name = "change", event = SelectEvent.class,
+                        description = "Fires when selection changes.", defaultEvent = true)
+})
+public abstract class FuzzySearchBase extends UISelectOne implements Widget, InputHolder, StyleAware, PrimeSelect {
 
+    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.FuzzySearch";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-
     public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.FuzzySearchRenderer";
 
-    @SuppressWarnings("java:S115")
-    protected enum PropertyKeys {
-        // @formatter:off
-        widgetVar,
-        disabled,
-        label,
-        onchange,
-        style,
-        styleClass,
-        tabindex,
-        unselectable,
-        resultStyle,
-        resultStyleClass,
-        placeholder,
-        highlight,
-        listItemsAtTheBeginning
-        // @formatter:on
-    }
-
     public FuzzySearchBase() {
-        super.setRendererType(DEFAULT_RENDERER);
+        setRendererType(DEFAULT_RENDERER);
     }
 
     @Override
@@ -67,108 +59,33 @@ public abstract class FuzzySearchBase extends UISelectOne implements Widget, Cli
         return COMPONENT_FAMILY;
     }
 
-    public String getWidgetVar() {
-        return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
-    }
+    @Property(description = "When true, component is disabled.", defaultValue = "false")
+    public abstract boolean isDisabled();
 
-    public void setWidgetVar(final String widgetVar) {
-        getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
-    }
+    @Property(description = "A localized user presentable name.")
+    public abstract String getLabel();
 
-    public boolean isDisabled() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.disabled, false);
-    }
+    @Property(description = "Client-side callback when selection changes.")
+    public abstract String getOnchange();
 
-    public void setDisabled(final boolean disabled) {
-        getStateHelper().put(PropertyKeys.disabled, disabled);
-    }
+    @Property(description = "Tab index for accessibility.")
+    public abstract String getTabindex();
 
-    public String getLabel() {
-        return (String) getStateHelper().eval(PropertyKeys.label, null);
-    }
+    @Property(description = "When true, selection can be cleared.", defaultValue = "true")
+    public abstract boolean isUnselectable();
 
-    public void setLabel(final String label) {
-        getStateHelper().put(PropertyKeys.label, label);
-    }
+    @Property(description = "Inline style for result items.")
+    public abstract String getResultStyle();
 
-    public String getOnchange() {
-        return (String) getStateHelper().eval(PropertyKeys.onchange, null);
-    }
+    @Property(description = "Style class for result items.")
+    public abstract String getResultStyleClass();
 
-    public void setOnchange(final String onchange) {
-        getStateHelper().put(PropertyKeys.onchange, onchange);
-    }
+    @Property(description = "Placeholder text for the search input.")
+    public abstract String getPlaceholder();
 
-    public String getStyle() {
-        return (String) getStateHelper().eval(PropertyKeys.style, null);
-    }
+    @Property(description = "When true, matching text is highlighted.", defaultValue = "true")
+    public abstract boolean isHighlight();
 
-    public void setStyle(final String style) {
-        getStateHelper().put(PropertyKeys.style, style);
-    }
-
-    public String getStyleClass() {
-        return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
-    }
-
-    public void setStyleClass(final String styleClass) {
-        getStateHelper().put(PropertyKeys.styleClass, styleClass);
-    }
-
-    public String getTabindex() {
-        return (String) getStateHelper().eval(PropertyKeys.tabindex, null);
-    }
-
-    public void setTabindex(final String tabindex) {
-        getStateHelper().put(PropertyKeys.tabindex, tabindex);
-    }
-
-    public boolean isUnselectable() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.unselectable, true);
-    }
-
-    public void setUnselectable(final boolean unselectable) {
-        getStateHelper().put(PropertyKeys.unselectable, unselectable);
-    }
-
-    public boolean isHighlight() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.highlight, true);
-    }
-
-    public void setHighlight(final boolean highlight) {
-        getStateHelper().put(PropertyKeys.highlight, highlight);
-    }
-
-    public String getResultStyle() {
-        return (String) getStateHelper().eval(PropertyKeys.resultStyle, null);
-    }
-
-    public void setResultStyle(final String resultStyle) {
-        getStateHelper().put(PropertyKeys.resultStyle, resultStyle);
-    }
-
-    public String getResultStyleClass() {
-        return (String) getStateHelper().eval(PropertyKeys.resultStyleClass, null);
-    }
-
-    public void setResultStyleClass(final String resultStyleClass) {
-        getStateHelper().put(PropertyKeys.resultStyleClass, resultStyleClass);
-    }
-
-    public String getPlaceholder() {
-        return (String) getStateHelper().eval(PropertyKeys.placeholder, null);
-    }
-
-    public void setPlaceholder(final String placeholder) {
-        getStateHelper().put(PropertyKeys.placeholder, placeholder);
-    }
-
-    public boolean isListItemsAtTheBeginning() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.listItemsAtTheBeginning, false);
-    }
-
-    public void setListItemsAtTheBeginning(final boolean listItemsAtTheBeginning) {
-        getStateHelper().put(PropertyKeys.listItemsAtTheBeginning, listItemsAtTheBeginning);
-    }
-
+    @Property(description = "When true, list items are shown before search.", defaultValue = "false")
+    public abstract boolean isListItemsAtTheBeginning();
 }

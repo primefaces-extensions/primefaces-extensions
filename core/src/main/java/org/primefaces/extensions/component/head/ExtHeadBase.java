@@ -21,17 +21,36 @@
  */
 package org.primefaces.extensions.component.head;
 
-import jakarta.faces.component.FacesComponent;
+import jakarta.faces.component.UIOutput;
 
-import org.primefaces.cdk.api.FacesComponentInfo;
+import org.primefaces.cdk.api.FacesComponentBase;
+import org.primefaces.cdk.api.Property;
 
 /**
- * Component class for the <code>ExtHead</code> component.
+ * Component base class for the <code>ExtHead</code> component.
  *
  * @author Thomas Andraschko
  * @since 0.2
  */
-@FacesComponent(value = ExtHead.COMPONENT_TYPE, namespace = ExtHead.COMPONENT_FAMILY)
-@FacesComponentInfo(description = "Extends the document head with title and shortcut icon support.")
-public class ExtHead extends ExtHeadBaseImpl {
+@FacesComponentBase
+public abstract class ExtHeadBase extends UIOutput {
+
+    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Head";
+    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
+    public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.HeadRenderer";
+
+    public ExtHeadBase() {
+        setRendererType(DEFAULT_RENDERER);
+    }
+
+    @Override
+    public String getFamily() {
+        return COMPONENT_FAMILY;
+    }
+
+    @Property(description = "Page title (rendered in head).")
+    public abstract String getTitle();
+
+    @Property(description = "Shortcut icon URL (favicon).")
+    public abstract String getShortcutIcon();
 }

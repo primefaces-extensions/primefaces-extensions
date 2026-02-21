@@ -21,19 +21,18 @@
  */
 package org.primefaces.extensions.component.fuzzysearch;
 
-import java.util.Collection;
 import java.util.Map;
 
 import jakarta.faces.application.ResourceDependency;
+import jakarta.faces.component.FacesComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.event.AjaxBehaviorEvent;
-import jakarta.faces.event.BehaviorEvent;
 import jakarta.faces.event.FacesEvent;
 
+import org.primefaces.cdk.api.FacesComponentInfo;
 import org.primefaces.event.SelectEvent;
+import org.primefaces.extensions.util.Constants;
 import org.primefaces.util.ComponentUtils;
-import org.primefaces.util.Constants;
-import org.primefaces.util.MapBuilder;
 
 /**
  * <code>FuzzySearch</code> component.
@@ -41,63 +40,45 @@ import org.primefaces.util.MapBuilder;
  * @author https://github.com/aripddev
  * @since 8.0.1
  */
+@FacesComponent(value = FuzzySearch.COMPONENT_TYPE, namespace = FuzzySearch.COMPONENT_FAMILY)
+@FacesComponentInfo(description = "FuzzySearch is a select-one input with fuzzy search and autocomplete.")
 @ResourceDependency(library = "primefaces", name = "components.css")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = "primefaces", name = "components.js")
-@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "fuzzysearch/fuzzysearch.js")
-public class FuzzySearch extends FuzzySearchBase {
-
-    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.FuzzySearch";
+@ResourceDependency(library = Constants.LIBRARY, name = "fuzzysearch/fuzzysearch.js")
+public class FuzzySearch extends FuzzySearchBaseImpl {
 
     public static final String STYLE_CLASS = "ui-fuzzysearch ui-widget ui-corner-all";
     public static final String ITEM_CLASS = "ui-fuzzysearch-item";
 
-    private static final String DEFAULT_EVENT = "change";
-
-    private static final Map<String, Class<? extends BehaviorEvent>> BEHAVIOR_EVENT_MAPPING = MapBuilder.<String, Class<? extends BehaviorEvent>> builder()
-                .put(DEFAULT_EVENT, null)
-                .build();
-
-    private static final Collection<String> EVENT_NAMES = BEHAVIOR_EVENT_MAPPING.keySet();
-
     @Override
-    public Map<String, Class<? extends BehaviorEvent>> getBehaviorEventMapping() {
-        return BEHAVIOR_EVENT_MAPPING;
+    public String getInputClientId() {
+        return getClientId(getFacesContext()) + "_input";
     }
 
     @Override
-    public Collection<String> getEventNames() {
-        return EVENT_NAMES;
-    }
-
-    @Override
-    public String getDefaultEventName() {
-        return DEFAULT_EVENT;
+    public String getValidatableInputClientId() {
+        return getInputClientId();
     }
 
     @Override
     public void queueEvent(final FacesEvent event) {
-        if (event instanceof AjaxBehaviorEvent) {
-            final FacesContext context = getFacesContext();
-            final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
+        if (isAjaxBehaviorEventSource(event)) {
+            final FacesContext context = event.getFacesContext();
             final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-            final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+            final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
 
-            if (DEFAULT_EVENT.equals(eventName)) {
-                final Object item = ComponentUtils.getConvertedValue(context, this, params.get(getClientId(context) + "_change"));
-                final SelectEvent selectEvent = new SelectEvent(this, behaviorEvent.getBehavior(), item);
+            if (isAjaxBehaviorEvent(event, ClientBehaviorEventKeys.change)) {
+                final Object item = ComponentUtils.getConvertedValue(context, this,
+                            params.get(getClientId(context) + "_change"));
+                final SelectEvent<Object> selectEvent = new SelectEvent<>(this, behaviorEvent.getBehavior(), item);
                 selectEvent.setPhaseId(event.getPhaseId());
                 super.queueEvent(selectEvent);
-            }
-            else {
-                super.queueEvent(event);
+                return;
             }
         }
-        else {
-            super.queueEvent(event);
-        }
+        super.queueEvent(event);
     }
-
 }

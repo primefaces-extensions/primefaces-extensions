@@ -27,6 +27,7 @@ import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
+import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.extensions.util.Attrs;
 
@@ -51,14 +52,14 @@ import org.primefaces.extensions.util.Attrs;
  * @author Thomas Andraschko
  * @since 0.2
  */
+@FacesRenderer(rendererType = ExtHead.DEFAULT_RENDERER, componentFamily = ExtHead.COMPONENT_FAMILY)
 public class ExtHeadRenderer extends org.primefaces.renderkit.HeadRenderer {
 
     @Override
     public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-        final ResponseWriter writer = context.getResponseWriter();
         final ExtHead extHead = (ExtHead) component;
+        final ResponseWriter writer = context.getResponseWriter();
 
-        // encode title and shortcut icon
         encodeTitle(extHead, writer);
         encodeShortcutIcon(context, extHead, writer);
 
