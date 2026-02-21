@@ -26,6 +26,7 @@ import java.io.IOException;
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
+import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
@@ -37,12 +38,12 @@ import org.primefaces.renderkit.CoreRenderer;
  * @version $Revision$
  * @since 0.6.0
  */
-public class LayoutPaneRenderer extends CoreRenderer {
+@FacesRenderer(rendererType = LayoutPane.DEFAULT_RENDERER, componentFamily = LayoutPane.COMPONENT_FAMILY)
+public class LayoutPaneRenderer extends CoreRenderer<LayoutPane> {
 
     @Override
-    public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
+    public void encodeEnd(final FacesContext fc, final LayoutPane layoutPane) throws IOException {
         final ResponseWriter writer = fc.getResponseWriter();
-        final LayoutPane layoutPane = (LayoutPane) component;
 
         final String position = layoutPane.getPosition();
         final String combinedPosition;
@@ -177,7 +178,7 @@ public class LayoutPaneRenderer extends CoreRenderer {
     }
 
     @Override
-    public void encodeChildren(final FacesContext fc, final UIComponent component) {
-        // nothing to do
+    public void encodeChildren(final FacesContext fc, final LayoutPane component) {
+        // nothing to do - children rendered in encodeEnd via renderChildren
     }
 }

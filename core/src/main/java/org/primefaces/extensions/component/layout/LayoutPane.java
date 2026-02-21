@@ -23,7 +23,6 @@ package org.primefaces.extensions.component.layout;
 
 import jakarta.faces.FacesException;
 import jakarta.faces.component.UIComponent;
-import jakarta.faces.component.UIComponentBase;
 import jakarta.faces.component.UIForm;
 import jakarta.faces.component.html.HtmlPanelGroup;
 import jakarta.faces.context.FacesContext;
@@ -40,304 +39,12 @@ import org.primefaces.extensions.model.layout.LayoutOptions;
  * @author Oleg Varaksin / last modified by Melloware
  * @since 0.2
  */
+@jakarta.faces.component.FacesComponent(value = LayoutPane.COMPONENT_TYPE, namespace = LayoutPane.COMPONENT_FAMILY)
+@org.primefaces.cdk.api.FacesComponentInfo(description = "Layout pane for border layout (north, south, east, west, center).")
 @ListenerFor(systemEventClass = PreRenderComponentEvent.class)
-public class LayoutPane extends UIComponentBase {
-
-    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.LayoutPane";
-    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-    private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.LayoutPaneRenderer";
+public class LayoutPane extends LayoutPaneBaseImpl {
 
     private LayoutOptions options;
-
-    /**
-     * Properties that are tracked by state saving.
-     *
-     * @author Oleg Varaksin / last modified by $Author$
-     * @version $Revision$
-     */
-    @SuppressWarnings("java:S115")
-    protected enum PropertyKeys {
-
-        // @formatter:off
-        position,
-        paneSelector,
-        combinedPosition,
-        styleHeader,
-        styleClassHeader,
-        styleContent,
-        styleClassContent,
-        resizable,
-        slideable,
-        closable,
-        size,
-        minSize,
-        maxSize,
-        minWidth,
-        maxWidth,
-        minHeight,
-        maxHeight,
-        spacing_open,
-        spacing_closed,
-        initClosed,
-        initHidden,
-        resizeWhileDragging,
-        togglerTip_open("Open"),
-        togglerTip_closed("Close"),
-        resizerTip("Resize"),
-        sliderTip("Slide"),
-        maskContents,
-        maskObjects;
-        // @formatter:on
-
-        private final String toString;
-
-        PropertyKeys(String toString) {
-            this.toString = toString;
-        }
-
-        PropertyKeys() {
-            toString = null;
-        }
-
-        @Override
-        public String toString() {
-            return ((toString != null) ? toString : super.toString());
-        }
-    }
-
-    public LayoutPane() {
-        setRendererType(DEFAULT_RENDERER);
-    }
-
-    @Override
-    public String getFamily() {
-        return COMPONENT_FAMILY;
-    }
-
-    public String getStyleHeader() {
-        return (String) getStateHelper().eval(PropertyKeys.styleHeader, null);
-    }
-
-    public void setStyleHeader(final String styleHeader) {
-        getStateHelper().put(PropertyKeys.styleHeader, styleHeader);
-    }
-
-    public String getStyleClassHeader() {
-        return (String) getStateHelper().eval(PropertyKeys.styleClassHeader, null);
-    }
-
-    public void setStyleClassHeader(final String styleClassHeader) {
-        getStateHelper().put(PropertyKeys.styleClassHeader, styleClassHeader);
-    }
-
-    public String getStyleContent() {
-        return (String) getStateHelper().eval(PropertyKeys.styleContent, null);
-    }
-
-    public void setStyleContent(final String styleContent) {
-        getStateHelper().put(PropertyKeys.styleContent, styleContent);
-    }
-
-    public String getStyleClassContent() {
-        return (String) getStateHelper().eval(PropertyKeys.styleClassContent, null);
-    }
-
-    public void setStyleClassContent(final String styleClassContent) {
-        getStateHelper().put(PropertyKeys.styleClassContent, styleClassContent);
-    }
-
-    // position "north" | "south" | "west" | "east" | "center"
-    public String getPosition() {
-        return (String) getStateHelper().eval(PropertyKeys.position, Layout.PANE_POSITION_CENTER);
-    }
-
-    public void setPosition(final String position) {
-        getStateHelper().put(PropertyKeys.position, position);
-    }
-
-    public String getPaneSelector() {
-        return (String) getStateHelper().eval(PropertyKeys.paneSelector, null);
-    }
-
-    public void setPaneSelector(final String paneSelector) {
-        getStateHelper().put(PropertyKeys.paneSelector, paneSelector);
-    }
-
-    public String getCombinedPosition() {
-        return (String) getStateHelper().eval(PropertyKeys.combinedPosition, Layout.PANE_POSITION_CENTER);
-    }
-
-    public void setCombinedPosition(final String combinedPosition) {
-        getStateHelper().put(PropertyKeys.combinedPosition, combinedPosition);
-    }
-
-    public String getTogglerTipOpen() {
-        return (String) getStateHelper().eval(PropertyKeys.togglerTip_open, null);
-    }
-
-    public void setTogglerTipOpen(final String togglerTipOpen) {
-        getStateHelper().put(PropertyKeys.togglerTip_open, togglerTipOpen);
-    }
-
-    public String getTogglerTipClosed() {
-        return (String) getStateHelper().eval(PropertyKeys.togglerTip_closed, null);
-    }
-
-    public void setTogglerTipClosed(final String togglerTipClosed) {
-        getStateHelper().put(PropertyKeys.togglerTip_closed, togglerTipClosed);
-    }
-
-    public String getResizerTip() {
-        return (String) getStateHelper().eval(PropertyKeys.resizerTip, null);
-    }
-
-    public void setResizerTip(final String resizerTip) {
-        getStateHelper().put(PropertyKeys.resizerTip, resizerTip);
-    }
-
-    public String getSliderTip() {
-        return (String) getStateHelper().eval(PropertyKeys.sliderTip, null);
-    }
-
-    public void setSliderTip(final String sliderTip) {
-        getStateHelper().put(PropertyKeys.sliderTip, sliderTip);
-    }
-
-    public boolean isResizable() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.resizable, true);
-    }
-
-    public void setResizable(final boolean resizable) {
-        getStateHelper().put(PropertyKeys.resizable, resizable);
-    }
-
-    public boolean isSlidable() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.slideable, true);
-    }
-
-    public void setSlidable(final boolean slideable) {
-        getStateHelper().put(PropertyKeys.slideable, slideable);
-    }
-
-    public boolean isClosable() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.closable, true);
-    }
-
-    public void setClosable(final boolean closable) {
-        getStateHelper().put(PropertyKeys.closable, closable);
-    }
-
-    public String getSize() {
-        return (String) getStateHelper().eval(PropertyKeys.size, null);
-    }
-
-    public void setSize(final String size) {
-        getStateHelper().put(PropertyKeys.size, size);
-    }
-
-    public String getMinSize() {
-        return (String) getStateHelper().eval(PropertyKeys.minSize, null);
-    }
-
-    public void setMinSize(final String minSize) {
-        getStateHelper().put(PropertyKeys.minSize, minSize);
-    }
-
-    public String getMaxSize() {
-        return (String) getStateHelper().eval(PropertyKeys.maxSize, null);
-    }
-
-    public void setMaxSize(final String maxSize) {
-        getStateHelper().put(PropertyKeys.maxSize, maxSize);
-    }
-
-    public String getMinWidth() {
-        return (String) getStateHelper().eval(PropertyKeys.minWidth, null);
-    }
-
-    public void setMinWidth(final String minWidth) {
-        getStateHelper().put(PropertyKeys.minWidth, minWidth);
-    }
-
-    public String getMaxWidth() {
-        return (String) getStateHelper().eval(PropertyKeys.maxWidth, null);
-    }
-
-    public void setMaxWidth(final String maxWidth) {
-        getStateHelper().put(PropertyKeys.maxWidth, maxWidth);
-    }
-
-    public String getMinHeight() {
-        return (String) getStateHelper().eval(PropertyKeys.minHeight, null);
-    }
-
-    public void setMinHeight(final String minHeight) {
-        getStateHelper().put(PropertyKeys.minHeight, minHeight);
-    }
-
-    public String getMaxHeight() {
-        return (String) getStateHelper().eval(PropertyKeys.maxHeight, null);
-    }
-
-    public void setMaxHeight(final String maxHeight) {
-        getStateHelper().put(PropertyKeys.maxHeight, maxHeight);
-    }
-
-    public int getSpacingOpen() {
-        return (Integer) getStateHelper().eval(PropertyKeys.spacing_open, 6);
-    }
-
-    public void setSpacingOpen(final int spacingOpen) {
-        getStateHelper().put(PropertyKeys.spacing_open, spacingOpen);
-    }
-
-    public int getSpacingClosed() {
-        return (Integer) getStateHelper().eval(PropertyKeys.spacing_closed, 6);
-    }
-
-    public void setSpacingClosed(final int spacingClosed) {
-        getStateHelper().put(PropertyKeys.spacing_closed, spacingClosed);
-    }
-
-    public boolean isInitClosed() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.initClosed, false);
-    }
-
-    public void setInitClosed(final boolean initClosed) {
-        getStateHelper().put(PropertyKeys.initClosed, initClosed);
-    }
-
-    public boolean isInitHidden() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.initHidden, false);
-    }
-
-    public void setInitHidden(final boolean initHidden) {
-        getStateHelper().put(PropertyKeys.initHidden, initHidden);
-    }
-
-    public boolean isResizeWhileDragging() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.resizeWhileDragging, false);
-    }
-
-    public void setResizeWhileDragging(final boolean resizeWhileDragging) {
-        getStateHelper().put(PropertyKeys.resizeWhileDragging, resizeWhileDragging);
-    }
-
-    public boolean isMaskContents() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.maskContents, false);
-    }
-
-    public void setMaskContents(final boolean maskContents) {
-        getStateHelper().put(PropertyKeys.maskContents, maskContents);
-    }
-
-    public boolean isMaskObjects() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.maskObjects, false);
-    }
-
-    public void setMaskObjects(final boolean maskObjects) {
-        getStateHelper().put(PropertyKeys.maskObjects, maskObjects);
-    }
 
     @Override
     public void processEvent(final ComponentSystemEvent event) {
@@ -355,94 +62,85 @@ public class LayoutPane extends UIComponentBase {
             return options;
         }
 
-        // create options object
         options = new LayoutOptions();
 
-        final boolean isResizable = isResizable();
-        if (!isResizable) {
-            options.addOption(PropertyKeys.resizable.toString(), false);
+        if (!isResizable()) {
+            options.addOption("resizable", false);
         }
 
-        final boolean isSlidable = isSlidable();
-        if (!isSlidable) {
-            options.addOption(PropertyKeys.slideable.toString(), false);
+        if (!isSlidable()) {
+            options.addOption("slideable", false);
         }
 
-        final boolean isClosable = isClosable();
-        if (!isClosable) {
-            options.addOption(PropertyKeys.closable.toString(), false);
+        if (!isClosable()) {
+            options.addOption("closable", false);
         }
 
-        options.addOption(PropertyKeys.spacing_open.toString(), getSpacingOpen());
-        options.addOption(PropertyKeys.spacing_closed.toString(), getSpacingClosed());
+        options.addOption("spacing_open", getSpacingOpen());
+        options.addOption("spacing_closed", getSpacingClosed());
 
-        final boolean initClosed = isInitClosed();
-        if (initClosed) {
-            options.addOption(PropertyKeys.initClosed.toString(), true);
+        if (isInitClosed()) {
+            options.addOption("initClosed", true);
         }
 
-        final boolean initHidden = isInitHidden();
-        if (initHidden) {
-            options.addOption(PropertyKeys.initHidden.toString(), true);
+        if (isInitHidden()) {
+            options.addOption("initHidden", true);
         }
 
-        final boolean isResizeWhileDragging = isResizeWhileDragging();
-        if (isResizeWhileDragging) {
-            options.addOption(PropertyKeys.resizeWhileDragging.toString(), true);
+        if (isResizeWhileDragging()) {
+            options.addOption("resizeWhileDragging", true);
         }
 
-        final boolean isMaskContents = isMaskContents();
-        if (isMaskContents) {
-            options.addOption(PropertyKeys.maskContents.toString(), true);
+        if (isMaskContents()) {
+            options.addOption("maskContents", true);
             options.addOption("contentIgnoreSelector", ".ui-layout-mask");
         }
 
-        final boolean isMaskObjects = isMaskObjects();
-        if (isMaskObjects) {
-            options.addOption(PropertyKeys.maskObjects.toString(), true);
-            if (!isMaskContents) {
+        if (isMaskObjects()) {
+            options.addOption("maskObjects", true);
+            if (!isMaskContents()) {
                 options.addOption("contentIgnoreSelector", ".ui-layout-mask");
             }
         }
 
         final String paneSelector = getPaneSelector();
         if (paneSelector != null) {
-            options.addOption(PropertyKeys.paneSelector.toString(), paneSelector);
+            options.addOption("paneSelector", paneSelector);
         }
 
         final String size = getSize();
         if (size != null) {
-            options.addOption(PropertyKeys.size.toString(), size);
+            options.addOption("size", size);
         }
 
         final String minSize = getMinSize();
         if (minSize != null) {
-            options.addOption(PropertyKeys.minSize.toString(), minSize);
+            options.addOption("minSize", minSize);
         }
 
         final String maxSize = getMaxSize();
         if (maxSize != null) {
-            options.addOption(PropertyKeys.maxSize.toString(), maxSize);
+            options.addOption("maxSize", maxSize);
         }
 
         final String minWidth = getMinWidth();
         if (minWidth != null) {
-            options.addOption(PropertyKeys.minWidth.toString(), minWidth);
+            options.addOption("minWidth", minWidth);
         }
 
         final String maxWidth = getMaxWidth();
         if (maxWidth != null) {
-            options.addOption(PropertyKeys.maxWidth.toString(), maxWidth);
+            options.addOption("maxWidth", maxWidth);
         }
 
         final String minHeight = getMinHeight();
         if (minHeight != null) {
-            options.addOption(PropertyKeys.minHeight.toString(), minHeight);
+            options.addOption("minHeight", minHeight);
         }
 
         final String maxHeight = getMaxHeight();
         if (maxHeight != null) {
-            options.addOption(PropertyKeys.maxHeight.toString(), maxHeight);
+            options.addOption("maxHeight", maxHeight);
         }
 
         final LayoutOptions tips = new LayoutOptions();
@@ -450,30 +148,28 @@ public class LayoutPane extends UIComponentBase {
 
         final String resizerTip = getResizerTip();
         if (resizerTip != null) {
-            tips.addOption(PropertyKeys.resizerTip.toString(), resizerTip);
+            tips.addOption("resizerTip", resizerTip);
         }
 
         final String sliderTip = getSliderTip();
         if (sliderTip != null) {
-            tips.addOption(PropertyKeys.sliderTip.toString(), sliderTip);
+            tips.addOption("sliderTip", sliderTip);
         }
 
         final String togglerTipOpen = getTogglerTipOpen();
         if (togglerTipOpen != null) {
-            tips.addOption(PropertyKeys.togglerTip_open.toString(), togglerTipOpen);
+            tips.addOption("togglerTip_open", togglerTipOpen);
         }
 
         final String togglerTipClosed = getTogglerTipClosed();
         if (togglerTipClosed != null) {
-            tips.addOption(PropertyKeys.togglerTip_closed.toString(), togglerTipClosed);
+            tips.addOption("togglerTip_closed", togglerTipClosed);
         }
 
         return options;
     }
 
     private void setOptions(final UIComponent parent) {
-        // create layout options for this pane via attributes defined in
-        // pe:layoutPane
         final String position = getPosition();
         final LayoutOptions thisLayoutOptions = getOptions();
         LayoutOptions parentOpts;
@@ -493,7 +189,6 @@ public class LayoutPane extends UIComponentBase {
                 parentOpts = new LayoutOptions();
                 layout.setOptions(parentOpts);
 
-                // options for all panes
                 final LayoutOptions defaults = new LayoutOptions();
                 parentOpts.setPanesOptions(defaults);
                 final LayoutOptions tips = new LayoutOptions();
@@ -501,27 +196,26 @@ public class LayoutPane extends UIComponentBase {
 
                 final String resizerTip = layout.getResizerTip();
                 if (resizerTip != null) {
-                    tips.addOption(Layout.PropertyKeys.resizerTip.toString(), resizerTip);
+                    tips.addOption("resizerTip", resizerTip);
                 }
 
                 final String sliderTip = layout.getSliderTip();
                 if (sliderTip != null) {
-                    tips.addOption(Layout.PropertyKeys.sliderTip.toString(), sliderTip);
+                    tips.addOption("sliderTip", sliderTip);
                 }
 
                 final String togglerTipOpen = layout.getTogglerTipOpen();
                 if (togglerTipOpen != null) {
-                    tips.addOption(Layout.PropertyKeys.togglerTip_open.toString(), togglerTipOpen);
+                    tips.addOption("togglerTip_open", togglerTipOpen);
                 }
 
                 final String togglerTipClosed = layout.getTogglerTipClosed();
                 if (togglerTipClosed != null) {
-                    tips.addOption(Layout.PropertyKeys.togglerTip_closed.toString(), togglerTipClosed);
+                    tips.addOption("togglerTip_closed", togglerTipClosed);
                 }
 
-                final boolean maskPanesEarly = layout.isMaskPanesEarly();
-                if (maskPanesEarly) {
-                    parentOpts.addOption(Layout.PropertyKeys.maskPanesEarly.toString(), true);
+                if (layout.isMaskPanesEarly()) {
+                    parentOpts.addOption("maskPanesEarly", true);
                 }
             }
         }
@@ -573,8 +267,7 @@ public class LayoutPane extends UIComponentBase {
     }
 
     @Override
-    public Object saveState(FacesContext context) {
-        // reset component for MyFaces view pooling
+    public Object saveState(final FacesContext context) {
         options = null;
 
         return super.saveState(context);

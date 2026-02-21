@@ -24,9 +24,9 @@ package org.primefaces.extensions.component.layout;
 import java.io.IOException;
 
 import jakarta.el.ValueExpression;
-import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
+import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.extensions.model.layout.LayoutOptions;
 import org.primefaces.extensions.util.Attrs;
@@ -41,88 +41,87 @@ import org.primefaces.util.WidgetBuilder;
  * @author Oleg Varaksin / last modified by Melloware
  * @since 0.2
  */
-public class LayoutRenderer extends CoreRenderer {
+@FacesRenderer(rendererType = Layout.DEFAULT_RENDERER, componentFamily = Layout.COMPONENT_FAMILY)
+public class LayoutRenderer extends CoreRenderer<Layout> {
 
     @Override
-    public void decode(final FacesContext fc, final UIComponent component) {
+    public void decode(final FacesContext fc, final Layout component) {
         decodeBehaviors(fc, component);
     }
 
     @Override
-    public void encodeBegin(final FacesContext fc, final UIComponent component) throws IOException {
+    public void encodeBegin(final FacesContext fc, final Layout component) throws IOException {
         ResponseWriter writer = fc.getResponseWriter();
-        final Layout layout = (Layout) component;
 
-        final boolean buildOptions = layout.getOptions() == null;
-        layout.setBuildOptions(buildOptions);
+        final boolean buildOptions = component.getOptions() == null;
+        component.setBuildOptions(buildOptions);
 
         if (buildOptions) {
             final FastStringWriter fsw = new FastStringWriter();
-            layout.setOriginalWriter(writer);
-            layout.setFastStringWriter(fsw);
+            component.setOriginalWriter(writer);
+            component.setFastStringWriter(fsw);
             fc.setResponseWriter(writer.cloneWithWriter(fsw));
             writer = fc.getResponseWriter();
         }
 
-        if (layout.isElementLayout()) {
-            writer.startElement("div", layout);
-            writer.writeAttribute("id", layout.getClientId(fc), "id");
+        if (component.isElementLayout()) {
+            writer.startElement("div", component);
+            writer.writeAttribute("id", component.getClientId(fc), "id");
 
-            if (layout.getStyle() != null) {
-                writer.writeAttribute(Attrs.STYLE, layout.getStyle(), Attrs.STYLE);
+            if (component.getStyle() != null) {
+                writer.writeAttribute(Attrs.STYLE, component.getStyle(), Attrs.STYLE);
             }
 
-            if (layout.getStyleClass() != null) {
-                writer.writeAttribute(Attrs.CLASS, layout.getStyleClass(), "styleClass");
+            if (component.getStyleClass() != null) {
+                writer.writeAttribute(Attrs.CLASS, component.getStyleClass(), "styleClass");
             }
         }
     }
 
     @Override
-    public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
+    public void encodeEnd(final FacesContext fc, final Layout component) throws IOException {
         final ResponseWriter writer = fc.getResponseWriter();
-        final Layout layout = (Layout) component;
 
-        if (layout.isElementLayout()) {
-            if (!layout.isStateCookie()) {
+        if (component.isElementLayout()) {
+            if (!component.isStateCookie()) {
                 // render hidden field for server-side state saving
-                final String clientId = layout.getClientId(fc);
+                final String clientId = component.getClientId(fc);
                 renderHiddenInput(fc, clientId + "_state", null, false);
             }
 
             writer.endElement("div");
         }
 
-        if (layout.isBuildOptions()) {
-            fc.setResponseWriter(layout.getOriginalWriter());
-            encodeScript(fc, layout);
-            fc.getResponseWriter().write(layout.getFastStringWriter().toString());
-            layout.removeOptions();
-            layout.setOriginalWriter(null);
-            layout.setFastStringWriter(null);
+        if (component.isBuildOptions()) {
+            fc.setResponseWriter(component.getOriginalWriter());
+            encodeScript(fc, component);
+            fc.getResponseWriter().write(component.getFastStringWriter().toString());
+            component.removeOptions();
+            component.setOriginalWriter(null);
+            component.setFastStringWriter(null);
         }
         else {
-            encodeScript(fc, layout);
+            encodeScript(fc, component);
         }
 
-        layout.setBuildOptions(false);
+        component.setBuildOptions(false);
     }
 
-    protected void encodeScript(final FacesContext fc, final Layout layout) throws IOException {
+    protected void encodeScript(final FacesContext fc, final Layout component) throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(fc);
-        wb.init("ExtLayout", layout);
-        wb.attr("clientState", layout.isStateCookie());
-        wb.attr("full", layout.isFullPage(), false);
+        wb.init("ExtLayout", component);
+        wb.attr("clientState", component.isStateCookie());
+        wb.attr("full", component.isFullPage(), false);
 
-        if (layout.isNested()) {
-            wb.attr("parent", layout.getParent().getClientId(fc));
+        if (component.isNested()) {
+            wb.attr("parent", component.getParent().getClientId(fc));
         }
 
-        final ValueExpression stateVE = layout.getValueExpression(Layout.PropertyKeys.state.toString());
-        if (stateVE != null && !layout.isFullPage() && !layout.isStateCookie()) {
+        final ValueExpression stateVE = component.getValueExpression("state");
+        if (stateVE != null && !component.isFullPage() && !component.isStateCookie()) {
             wb.attr("serverState", true);
 
-            final String state = layout.getState();
+            final String state = component.getState();
             if (LangUtils.isNotBlank(state)) {
                 wb.attr("state", state);
             }
@@ -134,7 +133,7 @@ public class LayoutRenderer extends CoreRenderer {
             wb.attr("serverState", false);
         }
 
-        final Object layoutOptions = layout.getOptions();
+        final Object layoutOptions = component.getOptions();
         if (layoutOptions instanceof LayoutOptions) {
             final LayoutOptions options = (LayoutOptions) layoutOptions;
             wb.append(",options:" + options.toJson());
@@ -147,7 +146,7 @@ public class LayoutRenderer extends CoreRenderer {
             wb.append(",options:{}");
         }
 
-        encodeClientBehaviors(fc, layout);
+        encodeClientBehaviors(fc, component);
 
         wb.finish();
     }
