@@ -21,70 +21,27 @@
  */
 package org.primefaces.extensions.component.monacoeditor;
 
-import java.util.Collection;
-import java.util.Map;
-
 import jakarta.faces.application.ResourceDependency;
-import jakarta.faces.event.BehaviorEvent;
+import jakarta.faces.component.FacesComponent;
 
+import org.primefaces.cdk.api.FacesComponentInfo;
 import org.primefaces.extensions.util.Constants;
 
 /**
- * Component for the Monaco code diff editor JavaScript library .This is the framed monaco editor that creates a new instance in a separate iframe to allow for
- * better scoping, i.e. loading types etc. without affecting other editors. There is also an inline widget when this scoping is not required as iframes create
- * additional overhead.
+ * Framed Monaco diff editor component (iframe).
  *
- * @see MonacoDiffEditorInline
  * @since 11.1.0
  */
-@SuppressWarnings("java:S110")
+@FacesComponent(value = MonacoDiffEditorFramedBase.COMPONENT_TYPE, namespace = MonacoEditorCommonBase.COMPONENT_FAMILY)
+@FacesComponentInfo(description = "Framed Monaco diff editor (iframe).")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "monacoeditor/widget-framed.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "monacoeditor/monacoeditor.css")
-public class MonacoDiffEditorFramed extends MonacoDiffEditorBase {
+public class MonacoDiffEditorFramed extends MonacoDiffEditorFramedBaseImpl {
 
-    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.MonacoDiffEditorFramed";
-
-    public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.MonacoDiffEditorFramedRenderer";
-
+    public static final String COMPONENT_TYPE = MonacoDiffEditorFramedBase.COMPONENT_TYPE;
     public static final String STYLE_CLASS = "ui-monaco-editor ui-monaco-editor-diff ui-monaco-editor-framed ";
-
     public static final String WIDGET_NAME = "ExtMonacoDiffEditorFramed";
-
-    /**
-     * Default no-arg constructor for this widget invoked by the framework.
-     */
-    public MonacoDiffEditorFramed() {
-        super(DEFAULT_RENDERER);
-    }
-
-    @Override
-    public Map<String, Class<? extends BehaviorEvent>> getBehaviorEventMapping() {
-        // no additional events for now
-        return BASE_BEHAVIOR_EVENT_MAPPING;
-    }
-
-    @Override
-    public Collection<String> getEventNames() {
-        // no additional events for now
-        return BASE_EVENT_NAMES;
-    }
-
-    public String getExtender() {
-        return (String) getStateHelper().eval(DiffEditorFramedPropertyKeys.extender, null);
-    }
-
-    public void setExtender(final String extender) {
-        getStateHelper().put(DiffEditorFramedPropertyKeys.extender, extender);
-    }
-
-    public Object getIframeUrlParams() {
-        return getStateHelper().eval(DiffEditorFramedPropertyKeys.iframeUrlParams, null);
-    }
-
-    public void setIframeUrlParams(final Object iframeUrlParams) {
-        getStateHelper().put(DiffEditorFramedPropertyKeys.iframeUrlParams, iframeUrlParams);
-    }
 }

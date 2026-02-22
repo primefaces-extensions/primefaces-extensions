@@ -21,28 +21,21 @@
  */
 package org.primefaces.extensions.component.monacoeditor;
 
+import org.primefaces.cdk.api.FacesComponentBase;
+
 /**
- * Base properties for both the framed and the inline Monaco editor widget.
+ * CDK base for the framed Monaco code editor.
  *
  * @since 10.0.0
  */
-@SuppressWarnings("java:S115")
-enum BaseEditorPropertyKeys {
-    autoResize, //
-    basename, //
-    customThemes, //
-    directory, //
-    editorOptions, //
-    extension, //
-    height, //
-    language, //
-    oninitialized, //
-    onpaste, //
-    placeholder, //
-    scheme, //
-    locale, //
-    localeUrl, //
-    widgetVar, //
-    width, //
-    ;
+@FacesComponentBase
+public abstract class MonacoEditorFramedBase extends MonacoEditorBaseImpl
+            implements CodeEditorFramedProperties {
+
+    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.MonacoEditorFramed";
+    public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.MonacoEditorFramedRenderer";
+
+    public MonacoEditorFramedBase() {
+        setRendererType(DEFAULT_RENDERER);
+    }
 }

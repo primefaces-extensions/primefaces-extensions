@@ -21,70 +21,28 @@
  */
 package org.primefaces.extensions.component.monacoeditor;
 
-import java.util.Collection;
-import java.util.Map;
-
 import jakarta.faces.application.ResourceDependency;
-import jakarta.faces.event.BehaviorEvent;
+import jakarta.faces.component.FacesComponent;
 
+import org.primefaces.cdk.api.FacesComponentInfo;
 import org.primefaces.extensions.util.Constants;
 
 /**
- * Component for the Monaco code editor JavaScript library .This is the framed Monaco editor that creates a new instance in a separate iframe to allow for
- * better scoping, i.e. loading types etc. without affecting other editors. There is also an inline widget when this scoping is not required as iframes create
- * additional overhead.
+ * Framed Monaco code editor component (iframe).
  *
- * @see MonacoEditorInline
  * @since 10.0.0
  */
-@SuppressWarnings("java:S110")
+@FacesComponent(value = MonacoEditorFramedBase.COMPONENT_TYPE, namespace = MonacoEditorCommonBase.COMPONENT_FAMILY)
+@FacesComponentInfo(description = "Framed Monaco code editor (iframe).")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "monacoeditor/widget-framed.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "monacoeditor/monacoeditor.css")
-public class MonacoEditorFramed extends MonacoEditorBase {
+public class MonacoEditorFramed extends MonacoEditorFramedBaseImpl {
 
-    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.MonacoEditorFramed";
-
-    public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.MonacoEditorFramedRenderer";
-
+    public static final String COMPONENT_TYPE = MonacoEditorFramedBase.COMPONENT_TYPE;
     public static final String STYLE_CLASS = "ui-monaco-editor ui-monaco-editor-code ui-monaco-editor-framed ";
-
     public static final String WIDGET_NAME = "ExtMonacoCodeEditorFramed";
 
-    /**
-     * Default no-arg constructor for this widget invoked by the framework.
-     */
-    public MonacoEditorFramed() {
-        super(DEFAULT_RENDERER);
-    }
-
-    @Override
-    public Map<String, Class<? extends BehaviorEvent>> getBehaviorEventMapping() {
-        // no additional events for now
-        return BASE_BEHAVIOR_EVENT_MAPPING;
-    }
-
-    @Override
-    public Collection<String> getEventNames() {
-        // no additional events for now
-        return BASE_EVENT_NAMES;
-    }
-
-    public String getExtender() {
-        return (String) getStateHelper().eval(CodeEditorFramedPropertyKeys.extender, null);
-    }
-
-    public void setExtender(final String extender) {
-        getStateHelper().put(CodeEditorFramedPropertyKeys.extender, extender);
-    }
-
-    public Object getIframeUrlParams() {
-        return getStateHelper().eval(CodeEditorFramedPropertyKeys.iframeUrlParams, null);
-    }
-
-    public void setIframeUrlParams(final Object iframeUrlParams) {
-        getStateHelper().put(CodeEditorFramedPropertyKeys.iframeUrlParams, iframeUrlParams);
-    }
 }

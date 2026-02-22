@@ -21,20 +21,21 @@
  */
 package org.primefaces.extensions.component.monacoeditor;
 
+import org.primefaces.cdk.api.FacesComponentBase;
+
 /**
- * Additional properties for the framed editor widget not covered by the base options.
+ * CDK base for the framed Monaco diff editor.
  *
- * @since 10.0.0
+ * @since 11.1.0
  */
-@SuppressWarnings("java:S115")
-enum CodeEditorFramedPropertyKeys {
-    /**
-     * Extender script to add custom functionality via JavaScript. Must be a URL to an extender script that is loaded into the iframe.
-     */
-    extender,
-    /**
-     * Additional URL params that are added to the iframe URL.
-     */
-    iframeUrlParams,
-    ;
+@FacesComponentBase
+public abstract class MonacoDiffEditorFramedBase extends MonacoDiffEditorBehaviorBase
+            implements DiffEditorFramedProperties {
+
+    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.MonacoDiffEditorFramed";
+    public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.MonacoDiffEditorFramedRenderer";
+
+    public MonacoDiffEditorFramedBase() {
+        setRendererType(DEFAULT_RENDERER);
+    }
 }

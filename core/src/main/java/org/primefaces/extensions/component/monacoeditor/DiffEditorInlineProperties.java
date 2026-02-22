@@ -21,28 +21,18 @@
  */
 package org.primefaces.extensions.component.monacoeditor;
 
-import jakarta.faces.application.ResourceDependency;
-import jakarta.faces.component.FacesComponent;
-
-import org.primefaces.cdk.api.FacesComponentInfo;
-import org.primefaces.extensions.util.Constants;
+import org.primefaces.cdk.api.Property;
 
 /**
- * Inline Monaco diff editor component.
+ * Additional properties for the inline diff editor widget.
  *
- * @since 11.0.1
+ * @since 11.1.0
  */
-@FacesComponent(value = MonacoDiffEditorInlineBase.COMPONENT_TYPE, namespace = MonacoEditorCommonBase.COMPONENT_FAMILY)
-@FacesComponentInfo(description = "Inline Monaco diff editor.")
-@ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
-@ResourceDependency(library = "primefaces", name = "core.js")
-@ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.js")
-@ResourceDependency(library = Constants.LIBRARY, name = "monacoeditor/widget-inline.js")
-@ResourceDependency(library = Constants.LIBRARY, name = "monacoeditor/monacoeditor.css")
-public class MonacoDiffEditorInline extends MonacoDiffEditorInlineBaseImpl {
+public interface DiffEditorInlineProperties {
 
-    public static final String COMPONENT_TYPE = MonacoDiffEditorInlineBase.COMPONENT_TYPE;
-    public static final String STYLE_CLASS = "ui-monaco-editor ui-monaco-editor-diff ui-monaco-editor-inline ";
-    public static final String WIDGET_NAME = "ExtMonacoDiffEditorInline";
+    @Property(description = "Extender script: JavaScript expression that evaluates to an extender instance.")
+    String getExtender();
 
+    @Property(description = "Search expression for overflow widgets DOM node.")
+    String getOverflowWidgetsDomNode();
 }

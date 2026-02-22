@@ -150,15 +150,15 @@ abstract class MonacoDiffEditorBaseRenderer<TEditor extends MonacoDiffEditorBase
     protected final void addBaseWidgetProperties(final FacesContext context, final WidgetBuilder wb,
                 final TEditor monacoEditor)
                 throws IOException {
-        wb.attr("originalDisabled", monacoEditor.isOriginalDisabled(), MonacoDiffEditorBase.DEFAULT_ORIGINAL_DISABLED);
-        wb.attr("originalReadonly", monacoEditor.isOriginalReadonly(), MonacoDiffEditorBase.DEFAULT_ORIGINAL_READONLY);
-        wb.attr("originalLanguage", monacoEditor.getOriginalLanguage(), MonacoDiffEditorBase.DEFAULT_ORIGINAL_LANGUAGE);
-        wb.attr("originalRequired", monacoEditor.isOriginalRequired(), MonacoDiffEditorBase.DEFAULT_ORIGINAL_REQUIRED);
+        wb.attr("originalDisabled", monacoEditor.isOriginalDisabled(), MonacoDiffEditorBehaviorBase.DEFAULT_ORIGINAL_DISABLED);
+        wb.attr("originalReadonly", monacoEditor.isOriginalReadonly(), MonacoDiffEditorBehaviorBase.DEFAULT_ORIGINAL_READONLY);
+        wb.attr("originalLanguage", monacoEditor.getOriginalLanguage(), MonacoDiffEditorBehaviorBase.DEFAULT_ORIGINAL_LANGUAGE);
+        wb.attr("originalRequired", monacoEditor.isOriginalRequired(), MonacoDiffEditorBehaviorBase.DEFAULT_ORIGINAL_REQUIRED);
 
-        wb.attr("originalScheme", monacoEditor.getScheme(), MonacoDiffEditorBase.DEFAULT_ORIGINAL_SCHEME);
-        wb.attr("originalDirectory", monacoEditor.getDirectory(), MonacoDiffEditorBase.DEFAULT_ORIGINAL_DIRECTORY);
-        wb.attr("originalBasename", monacoEditor.getBasename(), MonacoDiffEditorBase.DEFAULT_ORIGINAL_BASENAME);
-        wb.attr("originalExtension", monacoEditor.getExtension(), MonacoDiffEditorBase.DEFAULT_ORIGINAL_EXTENSION);
+        wb.attr("originalScheme", monacoEditor.getScheme(), MonacoDiffEditorBehaviorBase.DEFAULT_ORIGINAL_SCHEME);
+        wb.attr("originalDirectory", monacoEditor.getDirectory(), MonacoDiffEditorBehaviorBase.DEFAULT_ORIGINAL_DIRECTORY);
+        wb.attr("originalBasename", monacoEditor.getBasename(), MonacoDiffEditorBehaviorBase.DEFAULT_ORIGINAL_BASENAME);
+        wb.attr("originalExtension", monacoEditor.getExtension(), MonacoDiffEditorBehaviorBase.DEFAULT_ORIGINAL_EXTENSION);
 
         wb.callback("onoriginalblur", CALLBACK_SIGNATURE, monacoEditor.getOnoriginalblur());
         wb.callback("onoriginalchange", CALLBACK_SIGNATURE, monacoEditor.getOnoriginalchange());

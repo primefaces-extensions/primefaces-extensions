@@ -21,20 +21,23 @@
  */
 package org.primefaces.extensions.component.monacoeditor;
 
+import jakarta.faces.component.html.HtmlInputTextarea;
+
+import org.primefaces.cdk.api.FacesComponentBase;
+
 /**
- * Additional properties for the framed diff editor widget not covered by the base options.
+ * CDK base for Monaco editor common behavior (shared by code and diff editors).
  *
- * @since 11.1.0
+ * @since 10.0.0
  */
-@SuppressWarnings("java:S115")
-enum DiffEditorFramedPropertyKeys {
-    /**
-     * Extender script to add custom functionality via JavaScript. Must be a URL to an extender script that is loaded into the iframe.
-     */
-    extender,
-    /**
-     * Additional URL params that are added to the iframe URL.
-     */
-    iframeUrlParams,
-    ;
+@FacesComponentBase
+public abstract class MonacoEditorCommonBase extends HtmlInputTextarea
+            implements BaseEditorProperties {
+
+    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
+
+    @Override
+    public String getFamily() {
+        return COMPONENT_FAMILY;
+    }
 }
