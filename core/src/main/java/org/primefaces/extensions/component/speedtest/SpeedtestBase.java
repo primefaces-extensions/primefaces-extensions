@@ -27,6 +27,7 @@ import org.primefaces.cdk.api.FacesBehaviorEvent;
 import org.primefaces.cdk.api.FacesBehaviorEvents;
 import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
+import org.primefaces.component.api.StyleAware;
 import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.SpeedTestEvent;
 
@@ -41,7 +42,7 @@ import org.primefaces.extensions.event.SpeedTestEvent;
             @FacesBehaviorEvent(name = SpeedTestEvent.NAME, event = SpeedTestEvent.class, description = "Fires when the speedtest is finished.",
                         defaultEvent = true)
 })
-public abstract class SpeedtestBase extends UIComponentBase implements Widget {
+public abstract class SpeedtestBase extends UIComponentBase implements Widget, StyleAware {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Speedtest";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -82,10 +83,4 @@ public abstract class SpeedtestBase extends UIComponentBase implements Widget {
 
     @Property(description = "URL to the file used for testing (should be some megabytes).")
     public abstract String getFile();
-
-    @Property(description = "Inline style of the main container.")
-    public abstract String getStyle();
-
-    @Property(description = "Style class of the main container.")
-    public abstract String getStyleClass();
 }
