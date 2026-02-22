@@ -21,18 +21,41 @@
  */
 package org.primefaces.extensions.component.masterdetail;
 
-import jakarta.faces.component.FacesComponent;
+import jakarta.faces.component.UIComponentBase;
 
-import org.primefaces.cdk.api.FacesComponentInfo;
+import org.primefaces.cdk.api.FacesComponentBase;
+import org.primefaces.cdk.api.Property;
 
 /**
- * <code>MasterDetailLevel</code> component.
+ * <code>MasterDetailLevel</code> component base class.
  *
  * @author Oleg Varaksin / last modified by Melloware
  * @since 0.2
  */
-@FacesComponent(value = MasterDetailLevel.COMPONENT_TYPE, namespace = MasterDetailLevel.COMPONENT_FAMILY)
-@FacesComponentInfo(description = "A detail level container inside MasterDetail.")
-public class MasterDetailLevel extends MasterDetailLevelBaseImpl {
+@FacesComponentBase
+public abstract class MasterDetailLevelBase extends UIComponentBase {
 
+    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.MasterDetailLevel";
+    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
+
+    public MasterDetailLevelBase() {
+        setRendererType(null);
+    }
+
+    @Override
+    public String getFamily() {
+        return COMPONENT_FAMILY;
+    }
+
+    @Property(description = "Level number (1-based).")
+    public abstract Integer getLevel();
+
+    @Property(description = "Request-scoped variable name for the context value at this level.")
+    public abstract String getContextVar();
+
+    @Property(description = "Label for this level (e.g. in breadcrumb).")
+    public abstract String getLevelLabel();
+
+    @Property(description = "Whether this level is disabled in navigation.", defaultValue = "false")
+    public abstract boolean isLevelDisabled();
 }

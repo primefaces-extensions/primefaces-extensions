@@ -32,6 +32,7 @@ import jakarta.faces.component.visit.VisitContext;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
 import jakarta.faces.convert.Converter;
+import jakarta.faces.render.FacesRenderer;
 import jakarta.faces.render.Renderer;
 
 import org.primefaces.component.breadcrumb.BreadCrumb;
@@ -53,33 +54,33 @@ import org.primefaces.util.LangUtils;
  * @version $Revision$
  * @since 0.2
  */
-public class MasterDetailRenderer extends CoreRenderer {
+@FacesRenderer(rendererType = MasterDetail.DEFAULT_RENDERER, componentFamily = MasterDetail.COMPONENT_FAMILY)
+public class MasterDetailRenderer extends CoreRenderer<MasterDetail> {
 
     private static final String FACET_HEADER = "header";
     private static final String FACET_FOOTER = "footer";
     private static final String FACET_LABEL = Attrs.LABEL;
 
     @Override
-    public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
-        final MasterDetail masterDetail = (MasterDetail) component;
+    public void encodeEnd(final FacesContext fc, final MasterDetail component) throws IOException {
         final MasterDetailLevel mdl;
 
-        if (masterDetail.isSelectDetailRequest(fc)) {
+        if (component.isSelectDetailRequest(fc)) {
             // component has been navigated via SelectDetailLevel
-            final MasterDetailLevel mdlToProcess = masterDetail.getDetailLevelToProcess(fc);
+            final MasterDetailLevel mdlToProcess = component.getDetailLevelToProcess(fc);
 
             if (fc.isValidationFailed()) {
                 mdl = mdlToProcess;
             }
             else {
-                mdl = getDetailLevelToEncode(fc, masterDetail, mdlToProcess, masterDetail.getDetailLevelToGo(fc));
+                mdl = getDetailLevelToEncode(fc, component, mdlToProcess, component.getDetailLevelToGo(fc));
 
                 // reset last saved validation state and stored values of editable components
                 final MasterDetailLevelVisitCallback visitCallback = new MasterDetailLevelVisitCallback();
                 mdlToProcess.visitTree(VisitContext.createVisitContext(fc), visitCallback);
 
-                final String preserveInputs = masterDetail.getPreserveInputs(fc);
-                final String resetInputs = masterDetail.getResetInputs(fc);
+                final String preserveInputs = component.getPreserveInputs(fc);
+                final String resetInputs = component.getResetInputs(fc);
                 final String[] piIds = preserveInputs != null ? preserveInputs.split("[\\s,]+") : null;
                 final String[] riIds = resetInputs != null ? resetInputs.split("[\\s,]+") : null;
                 final boolean preserveAll = ExtLangUtils.contains(piIds, "@all");
@@ -101,74 +102,74 @@ public class MasterDetailRenderer extends CoreRenderer {
                 }
             }
 
-            masterDetail.updateModel(fc, mdl);
+            component.updateModel(fc, mdl);
         }
         else {
             // component has been navigated from the outside, e.g. GET request or POST update from another component
-            mdl = masterDetail.getDetailLevelByLevel(masterDetail.getLevel());
+            mdl = component.getDetailLevelByLevel(component.getLevel());
         }
 
         if (mdl == null) {
             throw new FacesException(
-                        "MasterDetailLevel [Level=" + masterDetail.getLevel() +
+                        "MasterDetailLevel [Level=" + component.getLevel() +
                                     "] must be nested inside a MasterDetail component!");
         }
 
         // render MasterDetailLevel
-        encodeMarkup(fc, masterDetail, mdl);
+        encodeMarkup(fc, component, mdl);
 
         // reset calculated values
-        masterDetail.resetCalculatedValues();
+        component.resetCalculatedValues();
     }
 
-    protected MasterDetailLevel getDetailLevelToEncode(final FacesContext fc, final MasterDetail masterDetail,
+    protected MasterDetailLevel getDetailLevelToEncode(final FacesContext fc, final MasterDetail component,
                 final MasterDetailLevel mdlToProcess,
                 final MasterDetailLevel mdlToGo) {
-        if (masterDetail.getSelectLevelListener() != null) {
-            final SelectLevelEvent selectLevelEvent = new SelectLevelEvent(masterDetail, mdlToProcess.getLevel(),
+        if (component.getSelectLevelListener() != null) {
+            final SelectLevelEvent selectLevelEvent = new SelectLevelEvent(component, mdlToProcess.getLevel(),
                         mdlToGo.getLevel());
-            final int levelToEncode = (Integer) masterDetail.getSelectLevelListener()
+            final int levelToEncode = (Integer) component.getSelectLevelListener()
                         .invoke(fc.getELContext(), new Object[] {selectLevelEvent});
             if (levelToEncode != mdlToGo.getLevel()) {
                 // new MasterDetailLevel to go
-                return masterDetail.getDetailLevelByLevel(levelToEncode);
+                return component.getDetailLevelByLevel(levelToEncode);
             }
         }
 
         return mdlToGo;
     }
 
-    protected void encodeMarkup(final FacesContext fc, final MasterDetail masterDetail, final MasterDetailLevel mdl)
+    protected void encodeMarkup(final FacesContext fc, final MasterDetail component, final MasterDetailLevel mdl)
                 throws IOException {
         if (mdl == null) {
             throw new FacesException("MasterDetailLevel must be nested inside a MasterDetail component!");
         }
         final ResponseWriter writer = fc.getResponseWriter();
-        final String clientId = masterDetail.getClientId(fc);
-        final String styleClass = masterDetail.getStyleClass() == null ? "pe-master-detail" : "pe-master-detail " + masterDetail.getStyleClass();
+        final String clientId = component.getClientId(fc);
+        final String styleClass = component.getStyleClass() == null ? "pe-master-detail" : "pe-master-detail " + component.getStyleClass();
 
-        writer.startElement("div", masterDetail);
+        writer.startElement("div", component);
         writer.writeAttribute("id", clientId, "id");
         writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
-        if (masterDetail.getStyle() != null) {
-            writer.writeAttribute(Attrs.STYLE, masterDetail.getStyle(), Attrs.STYLE);
+        if (component.getStyle() != null) {
+            writer.writeAttribute(Attrs.STYLE, component.getStyle(), Attrs.STYLE);
         }
 
-        if (masterDetail.isShowBreadcrumb()) {
-            if (masterDetail.isBreadcrumbAboveHeader()) {
+        if (component.isShowBreadcrumb()) {
+            if (component.isBreadcrumbAboveHeader()) {
                 // render breadcrumb and then header
-                renderBreadcrumb(fc, masterDetail, mdl);
-                encodeFacet(fc, masterDetail, FACET_HEADER);
+                renderBreadcrumb(fc, component, mdl);
+                encodeFacet(fc, component, component.getHeaderFacet());
             }
             else {
                 // render header and then breadcrumb
-                encodeFacet(fc, masterDetail, FACET_HEADER);
-                renderBreadcrumb(fc, masterDetail, mdl);
+                encodeFacet(fc, component, component.getHeaderFacet());
+                renderBreadcrumb(fc, component, mdl);
             }
         }
         else {
             // render header without breadcrumb
-            encodeFacet(fc, masterDetail, FACET_HEADER);
+            encodeFacet(fc, component, component.getHeaderFacet());
         }
 
         // render container for MasterDetailLevel
@@ -180,7 +181,7 @@ public class MasterDetailRenderer extends CoreRenderer {
         Object contextValue = null;
         final String contextVar = mdl.getContextVar();
         if (LangUtils.isNotBlank(contextVar)) {
-            contextValue = masterDetail.getContextValueFromFlow(fc, mdl, true);
+            contextValue = component.getContextValueFromFlow(fc, mdl, true);
         }
 
         if (contextValue != null) {
@@ -198,19 +199,19 @@ public class MasterDetailRenderer extends CoreRenderer {
         writer.endElement("div");
 
         // render footer
-        encodeFacet(fc, masterDetail, FACET_FOOTER);
+        encodeFacet(fc, component, component.getFooterFacet());
         writer.endElement("div");
     }
 
-    protected void renderBreadcrumb(final FacesContext fc, final MasterDetail masterDetail, final MasterDetailLevel mdl)
+    protected void renderBreadcrumb(final FacesContext fc, final MasterDetail component, final MasterDetailLevel mdl)
                 throws IOException {
         // get breadcrumb and its current model
-        final BreadCrumb breadcrumb = masterDetail.getBreadcrumb();
+        final BreadCrumb breadcrumb = component.getBreadcrumb();
 
         // update breadcrumb items
-        updateBreadcrumb(fc, breadcrumb, masterDetail, mdl);
+        updateBreadcrumb(fc, breadcrumb, component, mdl);
 
-        if (!masterDetail.isShowBreadcrumbFirstLevel()) {
+        if (!component.isShowBreadcrumbFirstLevel()) {
             final int levelToRender = mdl.getLevel();
             if (levelToRender == 1) {
                 breadcrumb.setStyleClass("ui-helper-hidden");
@@ -224,24 +225,23 @@ public class MasterDetailRenderer extends CoreRenderer {
         breadcrumb.encodeAll(fc);
     }
 
-    protected void encodeFacet(final FacesContext fc, final UIComponent component, final String name)
+    protected void encodeFacet(final FacesContext fc, final MasterDetail component, final UIComponent facet)
                 throws IOException {
-        final UIComponent facet = component.getFacet(name);
         if (FacetUtils.shouldRenderFacet(facet)) {
             facet.encodeAll(fc);
         }
     }
 
-    protected void updateBreadcrumb(final FacesContext fc, final BreadCrumb breadcrumb, final MasterDetail masterDetail,
+    protected void updateBreadcrumb(final FacesContext fc, final BreadCrumb breadcrumb, final MasterDetail component,
                 final MasterDetailLevel mdlToRender) throws IOException {
         boolean lastMdlFound = false;
         final int levelToRender = mdlToRender.getLevel();
-        final boolean isShowAllBreadcrumbItems = masterDetail.isShowAllBreadcrumbItems();
+        final boolean isShowAllBreadcrumbItems = component.isShowAllBreadcrumbItems();
 
-        for (final UIComponent child : masterDetail.getChildren()) {
+        for (final UIComponent child : component.getChildren()) {
             if (child instanceof MasterDetailLevel) {
                 final MasterDetailLevel mdl = (MasterDetailLevel) child;
-                final DefaultMenuItem menuItem = getMenuItemByLevel(breadcrumb, masterDetail, mdl);
+                final DefaultMenuItem menuItem = getMenuItemByLevel(breadcrumb, component, mdl);
                 if (menuItem == null) {
                     // note: don't throw exception because menuItem can be null when MasterDetail is within DataTable
                     return;
@@ -262,7 +262,7 @@ public class MasterDetailRenderer extends CoreRenderer {
                 else {
                     menuItem.setRendered(true);
 
-                    final Object contextValue = masterDetail.getContextValueFromFlow(fc, mdl,
+                    final Object contextValue = component.getContextValueFromFlow(fc, mdl,
                                 mdl.getLevel() == mdlToRender.getLevel());
                     final String contextVar = mdl.getContextVar();
                     final boolean putContext = LangUtils.isNotBlank(contextVar) && contextValue != null;
@@ -307,7 +307,7 @@ public class MasterDetailRenderer extends CoreRenderer {
 
                     if (!menuItem.isDisabled()) {
                         // set current level parameter
-                        updateUIParameter(menuItem, masterDetail.getClientId(fc) + MasterDetail.CURRENT_LEVEL,
+                        updateUIParameter(menuItem, component.getClientId(fc) + MasterDetail.CURRENT_LEVEL,
                                     levelToRender);
                     }
                 }
@@ -319,9 +319,9 @@ public class MasterDetailRenderer extends CoreRenderer {
         }
     }
 
-    protected DefaultMenuItem getMenuItemByLevel(final BreadCrumb breadcrumb, final MasterDetail masterDetail,
+    protected DefaultMenuItem getMenuItemByLevel(final BreadCrumb breadcrumb, final MasterDetail component,
                 final MasterDetailLevel mdl) {
-        final String menuItemId = masterDetail.getId() + "_bcItem_" + mdl.getLevel();
+        final String menuItemId = component.getId() + "_bcItem_" + mdl.getLevel();
         for (final MenuElement child : breadcrumb.getModel().getElements()) {
             if (menuItemId.equals(child.getId())) {
                 return (DefaultMenuItem) child;
@@ -348,7 +348,7 @@ public class MasterDetailRenderer extends CoreRenderer {
     }
 
     @Override
-    public void encodeChildren(final FacesContext fc, final UIComponent component) {
+    public void encodeChildren(final FacesContext fc, final MasterDetail component) {
         // rendering happens on encodeEnd
     }
 
