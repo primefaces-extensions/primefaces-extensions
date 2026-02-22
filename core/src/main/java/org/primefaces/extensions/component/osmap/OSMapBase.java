@@ -22,21 +22,37 @@
 package org.primefaces.extensions.component.osmap;
 
 import jakarta.faces.component.UIComponentBase;
-import jakarta.faces.component.behavior.ClientBehaviorHolder;
 
-import org.primefaces.component.api.PrimeClientBehaviorHolder;
+import org.primefaces.cdk.api.FacesBehaviorEvent;
+import org.primefaces.cdk.api.FacesBehaviorEvents;
+import org.primefaces.cdk.api.FacesComponentBase;
+import org.primefaces.cdk.api.Property;
+import org.primefaces.component.api.StyleAware;
 import org.primefaces.component.api.Widget;
+import org.primefaces.event.map.MarkerDragEvent;
+import org.primefaces.event.map.OverlaySelectEvent;
+import org.primefaces.event.map.PointSelectEvent;
+import org.primefaces.event.map.StateChangeEvent;
+import org.primefaces.model.map.MapModel;
 
-public abstract class OSMapBase extends UIComponentBase implements Widget, ClientBehaviorHolder, PrimeClientBehaviorHolder {
+/**
+ * CDK base for the OSMap (OpenStreetMap) component.
+ *
+ * @since 10.0.0
+ */
+@FacesComponentBase
+@FacesBehaviorEvents({
+            @FacesBehaviorEvent(name = "overlaySelect", event = OverlaySelectEvent.class, description = "Fires when an overlay is selected."),
+            @FacesBehaviorEvent(name = "overlayDblSelect", event = OverlaySelectEvent.class, description = "Fires when an overlay is double-selected."),
+            @FacesBehaviorEvent(name = "stateChange", event = StateChangeEvent.class, description = "Fires when the map view state changes."),
+            @FacesBehaviorEvent(name = "pointSelect", event = PointSelectEvent.class, description = "Fires when a point is selected.", defaultEvent = true),
+            @FacesBehaviorEvent(name = "pointDblSelect", event = PointSelectEvent.class, description = "Fires when a point is double-selected."),
+            @FacesBehaviorEvent(name = "markerDrag", event = MarkerDragEvent.class, description = "Fires when a marker is dragged.")
+})
+public abstract class OSMapBase extends UIComponentBase implements Widget, StyleAware {
 
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-
     public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.OSMapRenderer";
-
-    public enum PropertyKeys {
-
-        widgetVar, model, style, styleClass, center, zoom, zoomControl, attribution, tileUrl, draggable, onPointClick, scrollWheel, fullScreen, loadingControl
-    }
 
     public OSMapBase() {
         setRendererType(DEFAULT_RENDERER);
@@ -47,115 +63,39 @@ public abstract class OSMapBase extends UIComponentBase implements Widget, Clien
         return COMPONENT_FAMILY;
     }
 
-    public String getWidgetVar() {
-        return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
-    }
+    @Property(description = "Client-side widget variable name.")
+    public abstract String getWidgetVar();
 
-    public void setWidgetVar(String widgetVar) {
-        getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
-    }
+    @Property(description = "Map model with markers, polylines, polygons, etc.")
+    public abstract MapModel getModel();
 
-    public org.primefaces.model.map.MapModel getModel() {
-        return (org.primefaces.model.map.MapModel) getStateHelper().eval(PropertyKeys.model, null);
-    }
+    @Property(description = "Center of the map as 'lat,lng'.")
+    public abstract String getCenter();
 
-    public void setModel(org.primefaces.model.map.MapModel model) {
-        getStateHelper().put(PropertyKeys.model, model);
-    }
+    @Property(description = "Initial zoom level.", defaultValue = "8")
+    public abstract int getZoom();
 
-    public String getStyle() {
-        return (String) getStateHelper().eval(PropertyKeys.style, null);
-    }
+    @Property(description = "Whether zoom control is shown.", defaultValue = "true")
+    public abstract boolean isZoomControl();
 
-    public void setStyle(String style) {
-        getStateHelper().put(PropertyKeys.style, style);
-    }
+    @Property(description = "Attribution text for the tile layer.")
+    public abstract String getAttribution();
 
-    public String getStyleClass() {
-        return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
-    }
+    @Property(description = "URL template for map tiles.")
+    public abstract String getTileUrl();
 
-    public void setStyleClass(String styleClass) {
-        getStateHelper().put(PropertyKeys.styleClass, styleClass);
-    }
+    @Property(description = "Whether the map is draggable.", defaultValue = "true")
+    public abstract boolean isDraggable();
 
-    public String getCenter() {
-        return (String) getStateHelper().eval(PropertyKeys.center, null);
-    }
+    @Property(description = "Client-side script to run when a point is clicked.")
+    public abstract String getOnPointClick();
 
-    public void setCenter(String center) {
-        getStateHelper().put(PropertyKeys.center, center);
-    }
+    @Property(description = "Whether scroll wheel zoom is enabled.", defaultValue = "true")
+    public abstract boolean isScrollWheel();
 
-    public int getZoom() {
-        return (Integer) getStateHelper().eval(PropertyKeys.zoom, 8);
-    }
+    @Property(description = "Whether full screen control is shown.", defaultValue = "true")
+    public abstract boolean isFullScreen();
 
-    public void setZoom(int zoom) {
-        getStateHelper().put(PropertyKeys.zoom, zoom);
-    }
-
-    public boolean isZoomControl() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.zoomControl, true);
-    }
-
-    public void setZoomControl(boolean zoomControl) {
-        getStateHelper().put(PropertyKeys.zoomControl, zoomControl);
-    }
-
-    public String getAttribution() {
-        return (String) getStateHelper().eval(PropertyKeys.attribution, null);
-    }
-
-    public void setAttribution(String attribution) {
-        getStateHelper().put(PropertyKeys.attribution, attribution);
-    }
-
-    public String getTileUrl() {
-        return (String) getStateHelper().eval(PropertyKeys.tileUrl, null);
-    }
-
-    public void setTileUrl(String tileUrl) {
-        getStateHelper().put(PropertyKeys.tileUrl, tileUrl);
-    }
-
-    public boolean isDraggable() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.draggable, true);
-    }
-
-    public void setDraggable(boolean draggable) {
-        getStateHelper().put(PropertyKeys.draggable, draggable);
-    }
-
-    public String getOnPointClick() {
-        return (String) getStateHelper().eval(PropertyKeys.onPointClick, null);
-    }
-
-    public void setOnPointClick(String onPointClick) {
-        getStateHelper().put(PropertyKeys.onPointClick, onPointClick);
-    }
-
-    public boolean isScrollWheel() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.scrollWheel, true);
-    }
-
-    public void setScrollWheel(boolean scrollWheel) {
-        getStateHelper().put(PropertyKeys.scrollWheel, scrollWheel);
-    }
-
-    public boolean isFullScreen() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.fullScreen, true);
-    }
-
-    public void setFullScreen(boolean fullScreen) {
-        getStateHelper().put(PropertyKeys.fullScreen, fullScreen);
-    }
-
-    public boolean isLoadingControl() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.loadingControl, true);
-    }
-
-    public void setLoadingControl(boolean loadingControl) {
-        getStateHelper().put(PropertyKeys.loadingControl, loadingControl);
-    }
+    @Property(description = "Whether loading control is shown.", defaultValue = "true")
+    public abstract boolean isLoadingControl();
 }

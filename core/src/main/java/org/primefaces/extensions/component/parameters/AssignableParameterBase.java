@@ -22,23 +22,21 @@
 package org.primefaces.extensions.component.parameters;
 
 import jakarta.el.ValueExpression;
-import jakarta.faces.component.FacesComponent;
 
+import org.primefaces.cdk.api.FacesComponentBase;
+import org.primefaces.cdk.api.Property;
 import org.primefaces.extensions.component.api.AbstractParameter;
 
 /**
- * Component for the <code>AssignableParameter</code>; applies a RemoteCommand parameter to a backing bean.
+ * CDK base for the AssignableParameter component.
  *
  * @since 0.5
  */
-@FacesComponent(value = AssignableParameterBase.COMPONENT_TYPE, namespace = AbstractParameter.COMPONENT_FAMILY)
-public class AssignableParameter extends AssignableParameterBaseImpl {
+@FacesComponentBase
+public abstract class AssignableParameterBase extends AbstractParameter {
 
-    @Override
-    public ValueExpression getValueExpression(final String name) {
-        if ("value".equals(name)) {
-            return getAssignTo();
-        }
-        return super.getValueExpression(name);
-    }
+    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.AssignableParameter";
+
+    @Property(description = "ValueExpression where the parameter will be applied.", type = ValueExpression.class, required = true)
+    public abstract ValueExpression getAssignTo();
 }

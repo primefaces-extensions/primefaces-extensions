@@ -31,67 +31,59 @@ import jakarta.faces.view.facelets.Metadata;
 import jakarta.faces.view.facelets.MetadataTarget;
 import jakarta.faces.view.facelets.TagAttribute;
 
+import org.primefaces.cdk.api.FacesTagHandler;
+import org.primefaces.cdk.api.Property;
+
 /**
- * {@link ComponentHandler} for the {@link AssignableParameter} component.
+ * ComponentHandler for the AssignableParameter component; maps assignTo attribute as ValueExpression.
  *
- * @author Thomas Andraschko / last modified by $Author$
- * @version $Revision$
  * @since 0.5
  */
+@FacesTagHandler("Component handler for assignableParam; maps assignTo attribute to the component.")
 public class AssignableParameterHandler extends ComponentHandler {
 
+    private static final String ASSIGN_TO_PROPERTY = "assignTo";
     private static final AssignToMetaRule META_RULE = new AssignToMetaRule();
 
-    /**
-     * {@link MetaRule} for the <code>assignTo</code> of the {@link AssignableParameter}.
-     *
-     * @author Thomas Andraschko / last modified by $Author$
-     * @version $Revision$
-     */
+    @Property(description = "ValueExpression where the parameter will be applied.", type = ValueExpression.class, required = true)
+    private final TagAttribute assignToAttribute;
+
+    public AssignableParameterHandler(final ComponentConfig config) {
+        super(config);
+        this.assignToAttribute = getRequiredAttribute(ASSIGN_TO_PROPERTY);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    protected MetaRuleset createMetaRuleset(final Class type) {
+        final MetaRuleset metaRuleset = super.createMetaRuleset(type);
+        metaRuleset.addRule(META_RULE);
+        return metaRuleset;
+    }
+
     private static final class AssignToMetaRule extends MetaRule {
 
         @Override
         public Metadata applyRule(final String name, final TagAttribute attribute, final MetadataTarget meta) {
-            if (meta.isTargetInstanceOf(AssignableParameter.class) && AssignableParameter.PropertyKeys.assignTo.toString().equals(name)) {
+            if (meta.isTargetInstanceOf(AssignableParameter.class) && ASSIGN_TO_PROPERTY.equals(name)) {
                 return new AssignToValueExpressionMetadata(attribute);
             }
-
             return null;
         }
     }
 
-    /**
-     * {@link Metadata} for the <code>assignTo</code> of the {@link AssignableParameter}.
-     *
-     * @author Thomas Andraschko / last modified by $Author$
-     * @version $Revision$
-     */
     private static final class AssignToValueExpressionMetadata extends Metadata {
 
         private final TagAttribute attribute;
 
-        public AssignToValueExpressionMetadata(final TagAttribute attribute) {
+        AssignToValueExpressionMetadata(final TagAttribute attribute) {
             this.attribute = attribute;
         }
 
         @Override
         public void applyMetadata(final FaceletContext context, final Object instance) {
             final AssignableParameter param = (AssignableParameter) instance;
-            final ValueExpression valueExpression = attribute.getValueExpression(context, Object.class);
-
-            param.setAssignTo(valueExpression);
+            param.setAssignTo(attribute.getValueExpression(context, Object.class));
         }
-    }
-
-    public AssignableParameterHandler(final ComponentConfig config) {
-        super(config);
-    }
-
-    @Override
-    protected MetaRuleset createMetaRuleset(final Class type) {
-        final MetaRuleset metaRuleset = super.createMetaRuleset(type);
-        metaRuleset.addRule(META_RULE);
-
-        return metaRuleset;
     }
 }

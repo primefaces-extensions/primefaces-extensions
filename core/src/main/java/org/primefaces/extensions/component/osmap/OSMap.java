@@ -21,23 +21,32 @@
  */
 package org.primefaces.extensions.component.osmap;
 
-import java.util.*;
+import java.util.Map;
 
 import jakarta.faces.FacesException;
 import jakarta.faces.application.ResourceDependency;
+import jakarta.faces.component.FacesComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.event.AjaxBehaviorEvent;
-import jakarta.faces.event.BehaviorEvent;
 import jakarta.faces.event.FacesEvent;
 
-import org.primefaces.event.map.*;
+import org.primefaces.cdk.api.FacesComponentInfo;
+import org.primefaces.event.map.MarkerDragEvent;
+import org.primefaces.event.map.OverlaySelectEvent;
+import org.primefaces.event.map.PointSelectEvent;
+import org.primefaces.event.map.StateChangeEvent;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.LatLngBounds;
 import org.primefaces.model.map.Marker;
-import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
-import org.primefaces.util.MapBuilder;
 
+/**
+ * OpenStreetMap component using Leaflet.
+ *
+ * @since 10.0.0
+ */
+@FacesComponent(value = OSMap.COMPONENT_TYPE, namespace = OSMapBase.COMPONENT_FAMILY)
+@FacesComponentInfo(description = "OpenStreetMap component using Leaflet.")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "leaflet/leaflet.css")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "leaflet/leaflet.js")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "leaflet/leaflet.fullscreen.css")
@@ -46,47 +55,24 @@ import org.primefaces.util.MapBuilder;
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "leaflet/leaflet.loading.js")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "osmap/osmap.js")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "primefaces-extensions.js")
-public class OSMap extends OSMapBase {
+public class OSMap extends OSMapBaseImpl {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.OSMap";
 
-    private static final Map<String, Class<? extends BehaviorEvent>> BEHAVIOR_EVENT_MAPPING = MapBuilder.<String, Class<? extends BehaviorEvent>> builder()
-                .put("overlaySelect", OverlaySelectEvent.class)
-                .put("overlayDblSelect", OverlaySelectEvent.class)
-                .put("stateChange", StateChangeEvent.class)
-                .put("pointSelect", PointSelectEvent.class)
-                .put("pointDblSelect", PointSelectEvent.class)
-                .put("markerDrag", MarkerDragEvent.class)
-                .build();
-
-    private static final Collection<String> EVENT_NAMES = BEHAVIOR_EVENT_MAPPING.keySet();
-
-    @Override
-    public Map<String, Class<? extends BehaviorEvent>> getBehaviorEventMapping() {
-        return BEHAVIOR_EVENT_MAPPING;
-    }
-
-    @Override
-    public Collection<String> getEventNames() {
-        return EVENT_NAMES;
-    }
-
     @Override
     public void queueEvent(FacesEvent event) {
-        FacesContext context = getFacesContext();
-        Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-        String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
-        String clientId = getClientId(context);
-
-        if (ComponentUtils.isRequestSource(this, context)) {
-
+        if (isAjaxBehaviorEventSource(event)) {
+            FacesContext context = event.getFacesContext();
+            Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+            String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+            String clientId = getClientId(context);
             AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
             FacesEvent wrapperEvent = null;
 
-            if ("overlaySelect".equals(eventName) || "overlayDblSelect".equals(eventName)) {
+            if (isAjaxBehaviorEvent(event, ClientBehaviorEventKeys.overlaySelect) || isAjaxBehaviorEvent(event, ClientBehaviorEventKeys.overlayDblSelect)) {
                 wrapperEvent = new OverlaySelectEvent(this, behaviorEvent.getBehavior(), getModel().findOverlay(params.get(clientId + "_overlayId")));
             }
-            else if ("stateChange".equals(eventName)) {
+            else if (isAjaxBehaviorEvent(event, ClientBehaviorEventKeys.stateChange)) {
                 String[] centerLoc = params.get(clientId + "_center").split(",");
                 String[] northeastLoc = params.get(clientId + "_northeast").split(",");
                 String[] southwestLoc = params.get(clientId + "_southwest").split(",");
@@ -98,13 +84,13 @@ public class OSMap extends OSMapBase {
 
                 wrapperEvent = new StateChangeEvent(this, behaviorEvent.getBehavior(), new LatLngBounds(northeast, southwest), zoomLevel, center);
             }
-            else if ("pointSelect".equals(eventName) || "pointDblSelect".equals(eventName)) {
+            else if (isAjaxBehaviorEvent(event, ClientBehaviorEventKeys.pointSelect) || isAjaxBehaviorEvent(event, ClientBehaviorEventKeys.pointDblSelect)) {
                 String[] latlng = params.get(clientId + "_pointLatLng").split(",");
                 LatLng position = new LatLng(Double.parseDouble(latlng[0]), Double.parseDouble(latlng[1]));
 
                 wrapperEvent = new PointSelectEvent(this, behaviorEvent.getBehavior(), position);
             }
-            else if ("markerDrag".equals(eventName)) {
+            else if (isAjaxBehaviorEvent(event, ClientBehaviorEventKeys.markerDrag)) {
                 Marker marker = (Marker) getModel().findOverlay(params.get(clientId + "_markerId"));
                 double lat = Double.parseDouble(params.get(clientId + "_lat"));
                 double lng = Double.parseDouble(params.get(clientId + "_lng"));

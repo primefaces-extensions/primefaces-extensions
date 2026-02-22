@@ -26,118 +26,118 @@ import java.util.Iterator;
 import java.util.List;
 
 import jakarta.faces.FacesException;
-import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
+import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.model.map.*;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.WidgetBuilder;
 
-public class OSMapRenderer extends CoreRenderer {
+@FacesRenderer(rendererType = OSMapBase.DEFAULT_RENDERER, componentFamily = OSMapBase.COMPONENT_FAMILY)
+public class OSMapRenderer extends CoreRenderer<OSMap> {
 
     @Override
-    public void decode(FacesContext context, UIComponent component) {
-        decodeBehaviors(context, component);
+    public void decode(FacesContext context, OSMap component) {
+        super.decodeBehaviors(context, component);
     }
 
     @Override
-    public void encodeEnd(FacesContext facesContext, UIComponent component) throws IOException {
-        OSMap map = (OSMap) component;
-
-        encodeMarkup(facesContext, map);
-        encodeScript(facesContext, map);
+    public void encodeEnd(FacesContext facesContext, OSMap component) throws IOException {
+        encodeMarkup(facesContext, component);
+        encodeScript(facesContext, component);
     }
 
-    protected void encodeMarkup(FacesContext context, OSMap map) throws IOException {
+    protected void encodeMarkup(FacesContext context, OSMap component) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
-        String clientId = map.getClientId(context);
+        String clientId = component.getClientId(context);
 
-        writer.startElement("div", map);
+        writer.startElement("div", component);
         writer.writeAttribute("id", clientId + "_map", null);
-        if (map.getStyle() != null) {
-            writer.writeAttribute("style", map.getStyle(), null);
+        if (component.getStyle() != null) {
+            writer.writeAttribute("style", component.getStyle(), null);
         }
-        if (map.getStyleClass() != null) {
-            writer.writeAttribute("class", map.getStyleClass(), null);
+        if (component.getStyleClass() != null) {
+            writer.writeAttribute("class", component.getStyleClass(), null);
         }
 
         writer.endElement("div");
     }
 
-    protected void encodeScript(FacesContext context, OSMap map) throws IOException {
+    protected void encodeScript(FacesContext context, OSMap component) throws IOException {
 
-        String[] parts = map.getCenter().split(",");
+        String[] parts = component.getCenter().split(",");
 
         WidgetBuilder wb = getWidgetBuilder(context);
-        wb.init("OSMap", map);
-        wb.attr("center", map.getCenter());
+        wb.init("OSMap", component);
+        wb.attr("center", component.getCenter());
         wb.nativeAttr("map",
-                    "L.map('" + map.getClientId() + "_map', { dragging: " + map.isDraggable() + ", zoomControl: " + map.isZoomControl() + ", scrollWheelZoom: "
-                                + map.isScrollWheel() + ", loadingControl: " + map.isLoadingControl() + " } ).setView(['"
+                    "L.map('" + component.getClientId() + "_map', { dragging: " + component.isDraggable() + ", zoomControl: " + component.isZoomControl()
+                                + ", scrollWheelZoom: "
+                                + component.isScrollWheel() + ", loadingControl: " + component.isLoadingControl() + " } ).setView(['"
                                 + parts[0].trim() + "', '"
-                                + parts[1].trim() + "'], " + map.getZoom() + ")");
+                                + parts[1].trim() + "'], " + component.getZoom() + ")");
 
         String tileUrl = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
         String attribution = "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a>";
 
-        if (map.getTileUrl() != null) {
-            tileUrl = map.getTileUrl();
+        if (component.getTileUrl() != null) {
+            tileUrl = component.getTileUrl();
         }
 
-        if (map.getAttribution() != null) {
-            attribution = map.getAttribution();
+        if (component.getAttribution() != null) {
+            attribution = component.getAttribution();
         }
 
         wb.nativeAttr("tile", "L.tileLayer('" + tileUrl + "', { attribution: '" + attribution + "' })");
 
-        encodeOverlays(context, map);
+        encodeOverlays(context, component);
 
-        if (map.isFullScreen()) {
-            encodeFullScreen(context, map);
+        if (component.isFullScreen()) {
+            encodeFullScreen(context, component);
         }
 
         // Client events
-        if (map.getOnPointClick() != null) {
-            wb.callback("onPointClick", "function(event)", map.getOnPointClick() + ";");
+        if (component.getOnPointClick() != null) {
+            wb.callback("onPointClick", "function(event)", component.getOnPointClick() + ";");
         }
 
-        encodeClientBehaviors(context, map);
+        encodeClientBehaviors(context, component);
 
         wb.finish();
     }
 
-    protected void encodeFullScreen(FacesContext context, OSMap map) throws IOException {
+    protected void encodeFullScreen(FacesContext context, OSMap component) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
-        writer.write(",fullScreen: " + map.isFullScreen());
+        writer.write(",fullScreen: " + component.isFullScreen());
     }
 
-    protected void encodeOverlays(FacesContext context, OSMap map) throws IOException {
-        MapModel model = map.getModel();
+    protected void encodeOverlays(FacesContext context, OSMap component) throws IOException {
+        MapModel model = component.getModel();
 
         // Overlays
         if (model != null) {
             if (!model.getMarkers().isEmpty()) {
-                encodeMarkers(context, map);
+                encodeMarkers(context, component);
             }
             if (!model.getPolylines().isEmpty()) {
-                encodePolylines(context, map);
+                encodePolylines(context, component);
             }
             if (!model.getPolygons().isEmpty()) {
-                encodePolygons(context, map);
+                encodePolygons(context, component);
             }
             if (!model.getCircles().isEmpty()) {
-                encodeCircles(context, map);
+                encodeCircles(context, component);
             }
             if (!model.getRectangles().isEmpty()) {
-                encodeRectangles(context, map);
+                encodeRectangles(context, component);
             }
         }
     }
 
-    protected void encodeMarkers(FacesContext context, OSMap map) throws IOException {
+    protected void encodeMarkers(FacesContext context, OSMap component) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
-        MapModel model = map.getModel();
+        MapModel model = component.getModel();
 
         writer.write(",markers:[");
 
@@ -181,9 +181,9 @@ public class OSMapRenderer extends CoreRenderer {
         }
     }
 
-    protected void encodePolylines(FacesContext context, OSMap map) throws IOException {
+    protected void encodePolylines(FacesContext context, OSMap component) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
-        MapModel model = map.getModel();
+        MapModel model = component.getModel();
 
         writer.write(",polylines:[");
 
@@ -213,9 +213,9 @@ public class OSMapRenderer extends CoreRenderer {
         writer.write("]");
     }
 
-    protected void encodePolygons(FacesContext context, OSMap map) throws IOException {
+    protected void encodePolygons(FacesContext context, OSMap component) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
-        MapModel model = map.getModel();
+        MapModel model = component.getModel();
 
         writer.write(",polygons:[");
 
@@ -248,9 +248,9 @@ public class OSMapRenderer extends CoreRenderer {
         writer.write("]");
     }
 
-    protected void encodeCircles(FacesContext context, OSMap map) throws IOException {
+    protected void encodeCircles(FacesContext context, OSMap component) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
-        MapModel model = map.getModel();
+        MapModel model = component.getModel();
 
         writer.write(",circles:[");
 
@@ -285,9 +285,9 @@ public class OSMapRenderer extends CoreRenderer {
         writer.write("]");
     }
 
-    protected void encodeRectangles(FacesContext context, OSMap map) throws IOException {
+    protected void encodeRectangles(FacesContext context, OSMap component) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
-        MapModel model = map.getModel();
+        MapModel model = component.getModel();
 
         writer.write(",rectangles:[");
 
@@ -340,7 +340,7 @@ public class OSMapRenderer extends CoreRenderer {
     }
 
     @Override
-    public void encodeChildren(FacesContext context, UIComponent component) throws IOException {
+    public void encodeChildren(FacesContext context, OSMap component) throws IOException {
         // Do Nothing
     }
 

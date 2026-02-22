@@ -19,34 +19,43 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package org.primefaces.extensions.component.api;
+package org.primefaces.extensions.component.remotecommand;
 
-import jakarta.faces.component.UIOutput;
+import jakarta.el.MethodExpression;
+import jakarta.faces.component.UICommand;
 
 import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
+import org.primefaces.component.api.AjaxSource;
 
 /**
- * Abstract base class for <b>parameters</b>.
+ * CDK base for the RemoteCommand component.
  *
- * @author Thomas Andraschko / last modified by $Author$
- * @version $Revision$
- * @since 0.5
+ * @since 0.2
  */
 @FacesComponentBase
-public abstract class AbstractParameter extends UIOutput {
+public abstract class RemoteCommandBase extends UICommand implements AjaxSource {
 
+    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.RemoteCommand";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
+    public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.RemoteCommandRenderer";
 
-    @Property(description = "Name of the parameter.")
-    public abstract String getName();
-
-    public AbstractParameter() {
-        setRendererType(null);
+    public RemoteCommandBase() {
+        setRendererType(DEFAULT_RENDERER);
     }
 
     @Override
     public String getFamily() {
         return COMPONENT_FAMILY;
     }
+
+    @Property(description = "Name of the JavaScript function to create.")
+    public abstract String getName();
+
+    @Property(description = "Whether to automatically run the JavaScript function when the page is loaded.", defaultValue = "false")
+    public abstract boolean isAutoRun();
+
+    @Property(description = "A method expression to invoke by polling.")
+    public abstract MethodExpression getActionListenerMethodExpression();
+
 }
