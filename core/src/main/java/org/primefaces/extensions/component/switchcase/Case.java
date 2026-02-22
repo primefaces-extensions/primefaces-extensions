@@ -21,43 +21,16 @@
  */
 package org.primefaces.extensions.component.switchcase;
 
+import org.primefaces.cdk.api.FacesComponentInfo;
+
 /**
  * Component class for the <code>Case</code> component.
  *
- * @author Michael Gmeiner / last modified by $Author: $
- * @version $Revision: $
+ * @author Michael Gmeiner / last modified by Melloware
  * @since 0.6
  */
-public class Case extends DefaultCase {
+@jakarta.faces.component.FacesComponent(value = Case.COMPONENT_TYPE, namespace = Case.COMPONENT_FAMILY)
+@FacesComponentInfo(description = "Case rendered when its value matches the switch value.")
+public class Case extends CaseBaseImpl {
 
-    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Case";
-    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-
-    /**
-     * Properties that are tracked by state saving.
-     *
-     * @author Michael Gmeiner / last modified by $Author: $
-     * @version $Revision: $
-     */
-    @SuppressWarnings("java:S115")
-    protected enum PropertyKeys {
-        value
-    }
-
-    public Case() {
-        setRendererType(null);
-    }
-
-    @Override
-    public String getFamily() {
-        return COMPONENT_FAMILY;
-    }
-
-    public Object getValue() {
-        return getStateHelper().eval(PropertyKeys.value, null);
-    }
-
-    public void setValue(final Object value) {
-        getStateHelper().put(PropertyKeys.value, value);
-    }
 }

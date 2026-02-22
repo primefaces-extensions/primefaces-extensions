@@ -21,16 +21,30 @@
  */
 package org.primefaces.extensions.component.switchcase;
 
-import org.primefaces.cdk.api.FacesComponentInfo;
+import jakarta.faces.component.UINamingContainer;
+
+import org.primefaces.cdk.api.FacesComponentBase;
+import org.primefaces.component.api.StyleAware;
 
 /**
- * Component class for the <code>DefaultCase</code> component.
+ * Component base class for the <code>DefaultCase</code> component.
  *
  * @author Michael Gmeiner / last modified by Melloware
  * @since 0.6
  */
-@jakarta.faces.component.FacesComponent(value = DefaultCase.COMPONENT_TYPE, namespace = DefaultCase.COMPONENT_FAMILY)
-@FacesComponentInfo(description = "Default case rendered when no case value matches the switch value.")
-public class DefaultCase extends DefaultCaseBaseImpl {
+@FacesComponentBase
+public abstract class DefaultCaseBase extends UINamingContainer implements StyleAware {
+
+    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.DefaultCase";
+    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
+
+    public DefaultCaseBase() {
+        setRendererType(null);
+    }
+
+    @Override
+    public String getFamily() {
+        return COMPONENT_FAMILY;
+    }
 
 }

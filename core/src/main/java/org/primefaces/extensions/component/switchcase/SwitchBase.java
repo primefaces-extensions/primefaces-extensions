@@ -21,16 +21,32 @@
  */
 package org.primefaces.extensions.component.switchcase;
 
-import org.primefaces.cdk.api.FacesComponentInfo;
+import jakarta.faces.component.UIComponentBase;
+
+import org.primefaces.cdk.api.FacesComponentBase;
+import org.primefaces.cdk.api.Property;
 
 /**
- * Component class for the <code>DefaultCase</code> component.
+ * Component base class for the <code>Switch</code> component.
  *
  * @author Michael Gmeiner / last modified by Melloware
  * @since 0.6
  */
-@jakarta.faces.component.FacesComponent(value = DefaultCase.COMPONENT_TYPE, namespace = DefaultCase.COMPONENT_FAMILY)
-@FacesComponentInfo(description = "Default case rendered when no case value matches the switch value.")
-public class DefaultCase extends DefaultCaseBaseImpl {
+@FacesComponentBase
+public abstract class SwitchBase extends UIComponentBase {
 
+    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Switch";
+    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
+
+    public SwitchBase() {
+        setRendererType(null);
+    }
+
+    @Override
+    public String getFamily() {
+        return COMPONENT_FAMILY;
+    }
+
+    @Property(description = "The value to compare against case values to determine which case to render.")
+    public abstract Object getValue();
 }
