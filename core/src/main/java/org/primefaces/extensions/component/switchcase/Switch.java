@@ -26,12 +26,13 @@ import java.util.Objects;
 
 import jakarta.faces.FacesException;
 import jakarta.faces.component.UIComponent;
-import jakarta.faces.component.UIComponentBase;
 import jakarta.faces.component.visit.VisitCallback;
 import jakarta.faces.component.visit.VisitContext;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.event.FacesEvent;
 import jakarta.faces.event.PhaseId;
+
+import org.primefaces.cdk.api.FacesComponentInfo;
 
 /**
  * Component class for the <code>Switch</code> component.
@@ -39,36 +40,13 @@ import jakarta.faces.event.PhaseId;
  * @author Michael Gmeiner / last modified by Melloware
  * @since 0.6
  */
-public class Switch extends UIComponentBase {
-
-    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Switch";
-    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-
-    @SuppressWarnings("java:S115")
-    protected enum PropertyKeys {
-        value
-    }
-
-    public Switch() {
-        setRendererType(null);
-    }
-
-    @Override
-    public String getFamily() {
-        return COMPONENT_FAMILY;
-    }
-
-    public Object getValue() {
-        return getStateHelper().eval(PropertyKeys.value, null);
-    }
-
-    public void setValue(final Object value) {
-        getStateHelper().put(PropertyKeys.value, value);
-    }
+@jakarta.faces.component.FacesComponent(value = Switch.COMPONENT_TYPE, namespace = Switch.COMPONENT_FAMILY)
+@FacesComponentInfo(description = "Switch evaluates a value and renders the matching case or defaultCase child.")
+public class Switch extends SwitchBaseImpl {
 
     private void evaluate() {
-        DefaultCase caseToRender = null;
-        DefaultCase defaultCase = null;
+        UIComponent caseToRender = null;
+        UIComponent defaultCase = null;
 
         for (final UIComponent child : getChildren()) {
             child.setRendered(false);
@@ -83,7 +61,7 @@ public class Switch extends UIComponentBase {
                 }
             }
             else if (child instanceof DefaultCase) {
-                defaultCase = (DefaultCase) child;
+                defaultCase = child;
             }
             else {
                 throw new FacesException("Switch only accepts case or defaultCase as children.");
@@ -125,7 +103,6 @@ public class Switch extends UIComponentBase {
 
     @Override
     public boolean visitTree(final VisitContext context, final VisitCallback callback) {
-        // mustn't evaluate cases during Restore View
         if (context.getFacesContext().getCurrentPhaseId() != PhaseId.RESTORE_VIEW) {
             evaluate();
         }
@@ -137,5 +114,4 @@ public class Switch extends UIComponentBase {
         evaluate();
         super.encodeBegin(context);
     }
-
 }
