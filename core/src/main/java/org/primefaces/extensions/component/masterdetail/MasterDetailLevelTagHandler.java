@@ -25,6 +25,9 @@ import jakarta.faces.view.facelets.ComponentConfig;
 import jakarta.faces.view.facelets.ComponentHandler;
 import jakarta.faces.view.facelets.TagAttribute;
 
+import org.primefaces.cdk.api.FacesTagHandler;
+import org.primefaces.cdk.api.Property;
+
 /**
  * {@link ComponentHandler} for the <code>MasterDetailLevel</code>.
  *
@@ -32,9 +35,10 @@ import jakarta.faces.view.facelets.TagAttribute;
  * @version $Revision$
  * @since 0.2
  */
+@FacesTagHandler("Component handler for MasterDetailLevel; enforces required level attribute.")
 public class MasterDetailLevelTagHandler extends ComponentHandler {
 
-    @SuppressWarnings("unused") // check required attribute
+    @Property(description = "Level of this detail (1-based). Unique inside masterDetail.", type = Integer.class, required = true)
     private final TagAttribute level;
 
     public MasterDetailLevelTagHandler(final ComponentConfig config) {

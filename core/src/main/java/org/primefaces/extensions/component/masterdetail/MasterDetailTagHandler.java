@@ -27,6 +27,7 @@ import jakarta.faces.view.facelets.ComponentHandler;
 import jakarta.faces.view.facelets.FaceletContext;
 import jakarta.faces.view.facelets.MetaRuleset;
 
+import org.primefaces.cdk.api.FacesTagHandler;
 import org.primefaces.component.breadcrumb.BreadCrumb;
 import org.primefaces.facelets.MethodRule;
 import org.primefaces.model.menu.DefaultMenuModel;
@@ -38,6 +39,7 @@ import org.primefaces.model.menu.DefaultMenuModel;
  * @version $Revision$
  * @since 0.2
  */
+@FacesTagHandler("Component handler for MasterDetail; wires selectLevelListener and optional breadcrumb.")
 public class MasterDetailTagHandler extends ComponentHandler {
 
     private static final MethodRule SELECT_LEVEL_LISTENER = new MethodRule("selectLevelListener", int.class, new Class[] {SelectLevelEvent.class});

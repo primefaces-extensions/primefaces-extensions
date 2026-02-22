@@ -23,17 +23,17 @@ package org.primefaces.extensions.component.masterdetail;
 
 import java.util.Map;
 
-import jakarta.el.MethodExpression;
 import jakarta.el.ValueExpression;
 import jakarta.faces.FacesException;
 import jakarta.faces.application.ResourceDependency;
+import jakarta.faces.component.FacesComponent;
 import jakarta.faces.component.UIComponent;
-import jakarta.faces.component.UIComponentBase;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.PartialViewContext;
 import jakarta.faces.event.ComponentSystemEvent;
 import jakarta.faces.event.PostRestoreStateEvent;
 
+import org.primefaces.cdk.api.FacesComponentInfo;
 import org.primefaces.component.breadcrumb.BreadCrumb;
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.MenuModel;
@@ -43,12 +43,13 @@ import org.primefaces.util.LangUtils;
 /**
  * <code>MasterDetail</code> component.
  *
- * @author Oleg Varaksin / last modified by $Author$
- * @version $Revision$
+ * @author Oleg Varaksin / last modified by Melloware
  * @since 0.2
  */
+@FacesComponent(value = MasterDetail.COMPONENT_TYPE, namespace = MasterDetail.COMPONENT_FAMILY)
+@FacesComponentInfo(description = "Master-detail navigation with levels and optional breadcrumb.")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "primefaces-extensions.css")
-public class MasterDetail extends UIComponentBase {
+public class MasterDetail extends MasterDetailBaseImpl {
 
     public static final String CONTEXT_VALUE_VALUE_EXPRESSION = "mdContextValueVE";
     public static final String SELECTED_LEVEL_VALUE_EXPRESSION = "selectedLevelVE";
@@ -66,116 +67,10 @@ public class MasterDetail extends UIComponentBase {
     public static final String RESOLVED_CONTEXT_VALUE = "contextValue_";
     public static final String BREADCRUMB_ID_PREFIX = "_bc";
 
-    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.MasterDetail";
-    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-    private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.MasterDetailRenderer";
-
     private MasterDetailLevel detailLevelToProcess;
     private MasterDetailLevel detailLevelToGo;
     private int levelPositionToProcess = -1;
     private int levelCount = -1;
-
-    /**
-     * Properties that are tracked by state saving.
-     *
-     * @author Oleg Varaksin / last modified by $Author$
-     * @version $Revision$
-     */
-    @SuppressWarnings("java:S115")
-    protected enum PropertyKeys {
-        // @formatter:off
-        level,
-        contextValue,
-        selectLevelListener,
-        showBreadcrumb,
-        showAllBreadcrumbItems,
-        showBreadcrumbFirstLevel,
-        breadcrumbAboveHeader,
-        style,
-        styleClass
-        // @formatter:on
-    }
-
-    public MasterDetail() {
-        setRendererType(DEFAULT_RENDERER);
-    }
-
-    @Override
-    public String getFamily() {
-        return COMPONENT_FAMILY;
-    }
-
-    public int getLevel() {
-        return (Integer) getStateHelper().eval(PropertyKeys.level, 1);
-    }
-
-    public void setLevel(final int level) {
-        getStateHelper().put(PropertyKeys.level, level);
-    }
-
-    public Object getContextValue() {
-        return getStateHelper().eval(PropertyKeys.contextValue, null);
-    }
-
-    public void setContextValue(final Object contextValue) {
-        getStateHelper().put(PropertyKeys.contextValue, contextValue);
-    }
-
-    public MethodExpression getSelectLevelListener() {
-        return (MethodExpression) getStateHelper().eval(PropertyKeys.selectLevelListener, null);
-    }
-
-    public void setSelectLevelListener(final MethodExpression selectLevelListener) {
-        getStateHelper().put(PropertyKeys.selectLevelListener, selectLevelListener);
-    }
-
-    public boolean isShowBreadcrumb() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.showBreadcrumb, true);
-    }
-
-    public void setShowBreadcrumb(final boolean showBreadcrumb) {
-        getStateHelper().put(PropertyKeys.showBreadcrumb, showBreadcrumb);
-    }
-
-    public boolean isShowAllBreadcrumbItems() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.showAllBreadcrumbItems, false);
-    }
-
-    public void setShowBreadcrumbFirstLevel(final boolean showBreadcrumbFirstLevel) {
-        getStateHelper().put(PropertyKeys.showBreadcrumbFirstLevel, showBreadcrumbFirstLevel);
-    }
-
-    public boolean isShowBreadcrumbFirstLevel() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.showBreadcrumbFirstLevel, true);
-    }
-
-    public void setShowAllBreadcrumbItems(final boolean showAllBreadcrumbItems) {
-        getStateHelper().put(PropertyKeys.showAllBreadcrumbItems, showAllBreadcrumbItems);
-    }
-
-    public boolean isBreadcrumbAboveHeader() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.breadcrumbAboveHeader, true);
-    }
-
-    public void setBreadcrumbAboveHeader(final boolean breadcrumbAboveHeader) {
-        getStateHelper().put(PropertyKeys.breadcrumbAboveHeader, breadcrumbAboveHeader);
-    }
-
-    public String getStyle() {
-        return (String) getStateHelper().eval(PropertyKeys.style, null);
-    }
-
-    public void setStyle(final String style) {
-        getStateHelper().put(PropertyKeys.style, style);
-    }
-
-    public String getStyleClass() {
-        return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
-    }
-
-    public void setStyleClass(final String styleClass) {
-        getStateHelper().put(PropertyKeys.styleClass, styleClass);
-    }
 
     @Override
     public void processEvent(final ComponentSystemEvent event) {
@@ -188,7 +83,6 @@ public class MasterDetail extends UIComponentBase {
 
         final PartialViewContext pvc = fc.getPartialViewContext();
         if (pvc.getRenderIds().isEmpty()) {
-            // update the MasterDetail component automatically
             pvc.getRenderIds().add(getClientId(fc));
         }
 
@@ -249,7 +143,6 @@ public class MasterDetail extends UIComponentBase {
         final String strSelectedStep = fc.getExternalContext().getRequestParameterMap()
                     .get(getClientId(fc) + SELECTED_STEP);
 
-        // selected level != null
         if (strSelectedLevel != null) {
             final int selectedLevel = Integer.parseInt(strSelectedLevel);
             detailLevelToGo = getDetailLevelByLevel(selectedLevel);
@@ -262,11 +155,9 @@ public class MasterDetail extends UIComponentBase {
 
         final int step;
         if (strSelectedStep != null) {
-            // selected step != null
             step = Integer.parseInt(strSelectedStep);
         }
         else {
-            // selected level and selected step are null ==> go to the next level
             step = 1;
         }
 
@@ -304,19 +195,16 @@ public class MasterDetail extends UIComponentBase {
 
     public void updateModel(final FacesContext fc, final MasterDetailLevel mdlToGo) {
         final int levelToGo = mdlToGo.getLevel();
-        final ValueExpression levelVE = getValueExpression(PropertyKeys.level.toString());
+        final ValueExpression levelVE = getValueExpression(PropertyKeys.level.name());
         if (levelVE != null) {
-            // update "level"
             levelVE.setValue(fc.getELContext(), levelToGo);
             getStateHelper().remove(PropertyKeys.level);
         }
 
-        // get component caused this ajax request
         final String source = fc.getExternalContext().getRequestParameterMap()
                     .get(Constants.RequestParams.PARTIAL_SOURCE_PARAM);
         final MasterDetailLevel mdl = getDetailLevelToProcess(fc);
 
-        // get resolved context value
         Object contextValue = null;
         final Map<String, Object> contextValues = (Map<String, Object>) mdl.getAttributes().get(CONTEXT_VALUES);
         if (contextValues != null) {
@@ -324,12 +212,10 @@ public class MasterDetail extends UIComponentBase {
         }
 
         if (contextValue != null) {
-            // update current context value for corresponding MasterDetailLevel
             mdlToGo.getAttributes().put(getClientId(fc) + CURRENT_CONTEXT_VALUE, contextValue);
 
-            final ValueExpression contextValueVE = getValueExpression(PropertyKeys.contextValue.toString());
+            final ValueExpression contextValueVE = getValueExpression(PropertyKeys.contextValue.name());
             if (contextValueVE != null) {
-                // update "contextValue"
                 contextValueVE.setValue(fc.getELContext(), contextValue);
                 getStateHelper().remove(PropertyKeys.contextValue);
             }
@@ -338,13 +224,11 @@ public class MasterDetail extends UIComponentBase {
 
     public Object getContextValueFromFlow(final FacesContext fc, final MasterDetailLevel mdl,
                 final boolean includeModel) {
-        // try to get context value from internal storage
         final Object contextValue = mdl.getAttributes().get(getClientId(fc) + MasterDetail.CURRENT_CONTEXT_VALUE);
         if (contextValue != null) {
             return contextValue;
         }
 
-        // try to get context value from external storage (e.g. managed bean)
         if (includeModel) {
             return getContextValue();
         }
@@ -372,7 +256,6 @@ public class MasterDetail extends UIComponentBase {
                 if (child instanceof MasterDetailLevel) {
                     final int level = ((MasterDetailLevel) child).getLevel();
 
-                    // create menu item to detail level
                     final DefaultMenuItem menuItem = new DefaultMenuItem();
                     menuItem.setId(menuItemIdPrefix + level);
                     menuItem.setAjax(true);
@@ -380,7 +263,6 @@ public class MasterDetail extends UIComponentBase {
                     menuItem.setProcess("@none");
                     menuItem.setUpdate("@parent");
 
-                    // add UIParameter
                     menuItem.setParam(clientId + MasterDetail.SELECT_DETAIL_REQUEST, true);
                     menuItem.setParam(clientId + MasterDetail.CURRENT_LEVEL, -1);
                     menuItem.setParam(clientId + MasterDetail.SELECTED_LEVEL, level);
@@ -415,7 +297,7 @@ public class MasterDetail extends UIComponentBase {
                 final MasterDetailLevel mdl = (MasterDetailLevel) child;
                 count++;
 
-                if (detailLevelToProcess == null && mdl.getLevel() == currentLevel) {
+                if (detailLevelToProcess == null && mdl.getLevel() != null && mdl.getLevel() == currentLevel) {
                     detailLevelToProcess = mdl;
                     levelPositionToProcess = count;
                 }
@@ -450,7 +332,6 @@ public class MasterDetail extends UIComponentBase {
             }
         }
 
-        // should not happen
         return null;
     }
 
@@ -472,7 +353,6 @@ public class MasterDetail extends UIComponentBase {
 
     @Override
     public Object saveState(final FacesContext context) {
-        // reset component for MyFaces view pooling
         detailLevelToGo = null;
         detailLevelToProcess = null;
         levelCount = -1;
