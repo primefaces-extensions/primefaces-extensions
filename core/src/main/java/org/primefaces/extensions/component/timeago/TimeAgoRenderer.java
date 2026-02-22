@@ -23,9 +23,9 @@ package org.primefaces.extensions.component.timeago;
 
 import java.io.IOException;
 
-import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
+import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
@@ -37,54 +37,54 @@ import org.primefaces.util.WidgetBuilder;
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
  * @since 7.0.1
  */
-public class TimeAgoRenderer extends CoreRenderer {
+@FacesRenderer(rendererType = TimeAgo.DEFAULT_RENDERER, componentFamily = TimeAgo.COMPONENT_FAMILY)
+public class TimeAgoRenderer extends CoreRenderer<TimeAgo> {
 
     @Override
-    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-        final TimeAgo timeAgo = (TimeAgo) component;
-        final Object value = timeAgo.getValue();
+    public void encodeEnd(final FacesContext context, final TimeAgo component) throws IOException {
+        final Object value = component.getValue();
         if (value == null) {
             return;
         }
-        encodeMarkup(context, timeAgo);
-        encodeScript(context, timeAgo);
+        encodeMarkup(context, component);
+        encodeScript(context, component);
     }
 
-    protected void encodeMarkup(final FacesContext context, final TimeAgo timeAgo) throws IOException {
+    protected void encodeMarkup(final FacesContext context, final TimeAgo component) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
-        final String clientId = timeAgo.getClientId(context);
+        final String clientId = component.getClientId(context);
         final String styleClass = getStyleClassBuilder(context)
                     .add(TimeAgo.STYLE_CLASS)
-                    .add(timeAgo.getStyleClass())
+                    .add(component.getStyleClass())
                     .build();
 
-        writer.startElement("span", timeAgo);
+        writer.startElement("span", component);
         writer.writeAttribute("id", clientId, null);
         writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
 
-        if (timeAgo.getStyle() != null) {
-            writer.writeAttribute(Attrs.STYLE, timeAgo.getStyle(), Attrs.STYLE);
+        if (component.getStyle() != null) {
+            writer.writeAttribute(Attrs.STYLE, component.getStyle(), Attrs.STYLE);
         }
 
-        encodeTime(context, timeAgo);
+        encodeTime(context, component);
 
         writer.endElement("span");
     }
 
-    protected void encodeTime(final FacesContext context, final TimeAgo timeAgo) throws IOException {
+    protected void encodeTime(final FacesContext context, final TimeAgo component) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
-        final String formattedForJs = timeAgo.formattedForJs();
+        final String formattedForJs = component.formattedForJs();
 
         writer.startElement("time", null);
         writer.writeAttribute("datetime", formattedForJs, null);
-        writer.writeText(timeAgo.getTitlePattern() == null ? formattedForJs : timeAgo.formattedForTitle(), null);
+        writer.writeText(component.getTitlePattern() == null ? formattedForJs : component.formattedForTitle(), null);
         writer.endElement("time");
     }
 
-    protected void encodeScript(final FacesContext context, final TimeAgo timeAgo) throws IOException {
-        final String locale = timeAgo.calculateLocale().getLanguage();
+    protected void encodeScript(final FacesContext context, final TimeAgo component) throws IOException {
+        final String locale = component.calculateLocale().getLanguage();
         final WidgetBuilder wb = getWidgetBuilder(context);
-        wb.init("ExtTimeAgo", timeAgo);
+        wb.init("ExtTimeAgo", component);
         if (locale != null) {
             wb.attr("locale", locale);
         }
