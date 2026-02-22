@@ -21,69 +21,28 @@
  */
 package org.primefaces.extensions.component.monacoeditor;
 
-import java.util.Collection;
-import java.util.Map;
-
 import jakarta.faces.application.ResourceDependency;
-import jakarta.faces.event.BehaviorEvent;
+import jakarta.faces.component.FacesComponent;
 
+import org.primefaces.cdk.api.FacesComponentInfo;
 import org.primefaces.extensions.util.Constants;
 
 /**
- * Component for the Monaco code editor JavaScript library. This is the inline monaco editor that creates a new instance in a textarea element on the same page.
- * There is also framed version available that creates an editor in an iframe for better scoping.
+ * Inline Monaco code editor component.
  *
- * @see MonacoEditorFramed
  * @since 10.0.0
  */
-@SuppressWarnings("java:S110")
+@FacesComponent(value = MonacoEditorInlineBase.COMPONENT_TYPE, namespace = MonacoEditorCommonBase.COMPONENT_FAMILY)
+@FacesComponentInfo(description = "Inline Monaco code editor (no iframe).")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "monacoeditor/widget-inline.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "monacoeditor/monacoeditor.css")
-public class MonacoEditorInline extends MonacoEditorBase {
+public class MonacoEditorInline extends MonacoEditorInlineBaseImpl {
 
-    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.MonacoEditorInline";
-
-    public static final String RENDERER_TYPE = "org.primefaces.extensions.component.MonacoEditorInlineRenderer";
-
+    public static final String COMPONENT_TYPE = MonacoEditorInlineBase.COMPONENT_TYPE;
     public static final String STYLE_CLASS = "ui-monaco-editor ui-monaco-editor-code ui-monaco-editor-inline ";
-
     public static final String WIDGET_NAME = "ExtMonacoCodeEditorInline";
 
-    /**
-     * Default no-arg constructor for this widget invoked by the framework.
-     */
-    public MonacoEditorInline() {
-        super(RENDERER_TYPE);
-    }
-
-    @Override
-    public Map<String, Class<? extends BehaviorEvent>> getBehaviorEventMapping() {
-        // no additional events for now
-        return BASE_BEHAVIOR_EVENT_MAPPING;
-    }
-
-    @Override
-    public final Collection<String> getEventNames() {
-        // no additional events for now
-        return BASE_EVENT_NAMES;
-    }
-
-    public final String getExtender() {
-        return (String) getStateHelper().eval(CodeEditorInlinePropertyKeys.extender, null);
-    }
-
-    public final void setExtender(final String extender) {
-        getStateHelper().put(CodeEditorInlinePropertyKeys.extender, extender);
-    }
-
-    public final String getOverflowWidgetsDomNode() {
-        return (String) getStateHelper().eval(CodeEditorInlinePropertyKeys.overflowWidgetsDomNode, null);
-    }
-
-    public final void setOverflowWidgetsDomNode(final String overflowWidgetsDomNode) {
-        getStateHelper().put(CodeEditorInlinePropertyKeys.overflowWidgetsDomNode, overflowWidgetsDomNode);
-    }
 }

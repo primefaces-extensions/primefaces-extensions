@@ -21,28 +21,21 @@
  */
 package org.primefaces.extensions.component.monacoeditor;
 
-import jakarta.faces.application.ResourceDependency;
-import jakarta.faces.component.FacesComponent;
-
-import org.primefaces.cdk.api.FacesComponentInfo;
-import org.primefaces.extensions.util.Constants;
+import org.primefaces.cdk.api.FacesComponentBase;
 
 /**
- * Inline Monaco diff editor component.
+ * CDK base for the inline Monaco diff editor.
  *
- * @since 11.0.1
+ * @since 11.1.0
  */
-@FacesComponent(value = MonacoDiffEditorInlineBase.COMPONENT_TYPE, namespace = MonacoEditorCommonBase.COMPONENT_FAMILY)
-@FacesComponentInfo(description = "Inline Monaco diff editor.")
-@ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
-@ResourceDependency(library = "primefaces", name = "core.js")
-@ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.js")
-@ResourceDependency(library = Constants.LIBRARY, name = "monacoeditor/widget-inline.js")
-@ResourceDependency(library = Constants.LIBRARY, name = "monacoeditor/monacoeditor.css")
-public class MonacoDiffEditorInline extends MonacoDiffEditorInlineBaseImpl {
+@FacesComponentBase
+public abstract class MonacoDiffEditorInlineBase extends MonacoDiffEditorBehaviorBase
+            implements DiffEditorInlineProperties {
 
-    public static final String COMPONENT_TYPE = MonacoDiffEditorInlineBase.COMPONENT_TYPE;
-    public static final String STYLE_CLASS = "ui-monaco-editor ui-monaco-editor-diff ui-monaco-editor-inline ";
-    public static final String WIDGET_NAME = "ExtMonacoDiffEditorInline";
+    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.MonacoDiffEditorInline";
+    public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.MonacoDiffEditorInlineRenderer";
 
+    public MonacoDiffEditorInlineBase() {
+        setRendererType(DEFAULT_RENDERER);
+    }
 }

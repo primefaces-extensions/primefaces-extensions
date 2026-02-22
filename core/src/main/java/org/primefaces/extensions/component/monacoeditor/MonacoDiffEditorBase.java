@@ -21,252 +21,52 @@
  */
 package org.primefaces.extensions.component.monacoeditor;
 
-import java.util.Collection;
-import java.util.Map;
+import jakarta.faces.event.AjaxBehaviorEvent;
 
-import jakarta.faces.application.FacesMessage;
-import jakarta.faces.context.FacesContext;
-import jakarta.faces.event.BehaviorEvent;
-
-import org.primefaces.util.MapBuilder;
-import org.primefaces.util.MessageFactory;
+import org.primefaces.cdk.api.FacesBehaviorEvent;
+import org.primefaces.cdk.api.FacesBehaviorEvents;
+import org.primefaces.cdk.api.FacesComponentBase;
+import org.primefaces.extensions.model.monacoeditor.DiffEditorOptions;
 
 /**
- * Base component for both the framed and inline monaco diff code editor widget.
+ * CDK base for the Monaco diff editor (shared by inline and framed).
  *
- * @since 10.0.0
+ * @since 11.1.0
  */
-@SuppressWarnings("java:S110")
-public abstract class MonacoDiffEditorBase
-                                           extends MonacoEditorCommon<org.primefaces.extensions.model.monacoeditor.DiffEditorOptions> {
-    static final String DEFAULT_EVENT = "change";
+@FacesComponentBase
+@FacesBehaviorEvents({
+            @FacesBehaviorEvent(name = "change", event = AjaxBehaviorEvent.class, description = "Fires when the diff content changes.", defaultEvent = true),
+            @FacesBehaviorEvent(name = "initialized", event = AjaxBehaviorEvent.class, description = "Fires when the editor is initialized."),
+            @FacesBehaviorEvent(name = "blur", event = AjaxBehaviorEvent.class, description = "Fires when the element loses focus."),
+            @FacesBehaviorEvent(name = "focus", event = AjaxBehaviorEvent.class, description = "Fires when the element gains focus."),
+            @FacesBehaviorEvent(name = "keydown", event = AjaxBehaviorEvent.class, description = "Fires when a key is pressed down."),
+            @FacesBehaviorEvent(name = "keyup", event = AjaxBehaviorEvent.class, description = "Fires when a key is released."),
+            @FacesBehaviorEvent(name = "mousedown", event = AjaxBehaviorEvent.class, description = "Fires when a mouse button is pressed down."),
+            @FacesBehaviorEvent(name = "mousemove", event = AjaxBehaviorEvent.class, description = "Fires when the mouse is moved."),
+            @FacesBehaviorEvent(name = "mouseup", event = AjaxBehaviorEvent.class, description = "Fires when a mouse button is released."),
+            @FacesBehaviorEvent(name = "paste", event = AjaxBehaviorEvent.class, description = "Fires when paste is performed."),
+            @FacesBehaviorEvent(name = "originalBlur", event = AjaxBehaviorEvent.class, description = "Fires when the original editor loses focus."),
+            @FacesBehaviorEvent(name = "originalChange", event = AjaxBehaviorEvent.class, description = "Fires when the original content changes."),
+            @FacesBehaviorEvent(name = "originalFocus", event = AjaxBehaviorEvent.class, description = "Fires when the original editor gains focus."),
+            @FacesBehaviorEvent(name = "originalKeydown", event = AjaxBehaviorEvent.class,
+                        description = "Fires when a key is pressed down in the original editor."),
+            @FacesBehaviorEvent(name = "originalKeyup", event = AjaxBehaviorEvent.class, description = "Fires when a key is released in the original editor."),
+            @FacesBehaviorEvent(name = "originalMousedown", event = AjaxBehaviorEvent.class,
+                        description = "Fires when a mouse button is pressed in the original editor."),
+            @FacesBehaviorEvent(name = "originalMousemove", event = AjaxBehaviorEvent.class,
+                        description = "Fires when the mouse is moved in the original editor."),
+            @FacesBehaviorEvent(name = "originalMouseup", event = AjaxBehaviorEvent.class,
+                        description = "Fires when a mouse button is released in the original editor."),
+            @FacesBehaviorEvent(name = "originalPaste", event = AjaxBehaviorEvent.class, description = "Fires when paste is performed in the original editor.")
+})
+public abstract class MonacoDiffEditorBase extends MonacoEditorCommon<DiffEditorOptions>
+            implements DiffEditorProperties {
 
-    static final Map<String, Class<? extends BehaviorEvent>> BASE_BEHAVIOR_EVENT_MAPPING = MapBuilder.<String, Class<? extends BehaviorEvent>> builder() //
-                .put(DEFAULT_EVENT, null) //
-                .put("initialized", null) //
-                .put("blur", null) //
-                .put("focus", null) //
-                .put("keydown", null) //
-                .put("keyup", null) //
-                .put("mousedown", null) //
-                .put("mousemove", null) //
-                .put("mouseup", null) //
-                .put("paste", null) //
-                .put("originalBlur", null) //
-                .put("originalChange", null) //
-                .put("originalFocus", null) //
-                .put("originalKeydown", null) //
-                .put("originalKeyup", null) //
-                .put("originalMousedown", null) //
-                .put("originalMousemove", null) //
-                .put("originalMouseup", null) //
-                .put("originalPaste", null) //
-                .build();
-
-    static final Collection<String> BASE_EVENT_NAMES = BASE_BEHAVIOR_EVENT_MAPPING.keySet();
-
-    static final boolean DEFAULT_ORIGINAL_DISABLED = true;
-    static final boolean DEFAULT_ORIGINAL_READONLY = false;
-    static final boolean DEFAULT_ORIGINAL_REQUIRED = false;
-    static final String DEFAULT_ORIGINAL_BASENAME = "";
-    static final String DEFAULT_ORIGINAL_EXTENSION = "";
-    static final String DEFAULT_ORIGINAL_DIRECTORY = "";
-    static final String DEFAULT_ORIGINAL_SCHEME = "inmemory";
-    static final String DEFAULT_ORIGINAL_LANGUAGE = null;
+    protected MonacoDiffEditorBase() {
+        this((String) null);
+    }
 
     protected MonacoDiffEditorBase(final String rendererType) {
-        super(rendererType, org.primefaces.extensions.model.monacoeditor.DiffEditorOptions.class);
-    }
-
-    public final boolean isOriginalDisabled() {
-        return (Boolean) getStateHelper().eval(DiffEditorPropertyKeys.originalDisabled, true);
-    }
-
-    public final void setOriginalDisabled(final boolean originalEditable) {
-        getStateHelper().put(DiffEditorPropertyKeys.originalDisabled, originalEditable);
-    }
-
-    public final boolean isOriginalReadonly() {
-        return (Boolean) getStateHelper().eval(DiffEditorPropertyKeys.originalReadonly, false);
-    }
-
-    public final void setOriginalReadonly(final boolean originalReadonly) {
-        getStateHelper().put(DiffEditorPropertyKeys.originalReadonly, originalReadonly);
-    }
-
-    public final boolean isOriginalRequired() {
-        return (Boolean) getStateHelper().eval(DiffEditorPropertyKeys.originalRequired, false);
-    }
-
-    public final void setOriginalRequired(final boolean originalRequired) {
-        getStateHelper().put(DiffEditorPropertyKeys.originalRequired, originalRequired);
-    }
-
-    @Override
-    public final String getDefaultEventName() {
-        return DEFAULT_EVENT;
-    }
-
-    public String getLanguage() {
-        return (String) getStateHelper().eval(DiffEditorPropertyKeys.language, null);
-    }
-
-    // We allow both a string and an instance of ELanguage
-    public void setLanguage(final Object language) {
-        getStateHelper().put(DiffEditorPropertyKeys.language, language != null ? language.toString() : null);
-    }
-
-    public String getOriginalLanguage() {
-        return (String) getStateHelper().eval(DiffEditorPropertyKeys.originalLanguage, null);
-    }
-
-    // We allow both a string and an instance of ELanguage
-    public void setOriginalLanguage(final Object originalLanguage) {
-        getStateHelper().put(DiffEditorPropertyKeys.originalLanguage,
-                    originalLanguage != null ? originalLanguage.toString() : null);
-    }
-
-    public String getOnoriginalblur() {
-        return (String) getStateHelper().eval(DiffEditorPropertyKeys.onoriginalblur, null);
-    }
-
-    public final void setOnoriginalblur(final String onoriginalblur) {
-        getStateHelper().put(DiffEditorPropertyKeys.onoriginalblur, onoriginalblur);
-    }
-
-    public String getOnoriginalchange() {
-        return (String) getStateHelper().eval(DiffEditorPropertyKeys.onoriginalchange, null);
-    }
-
-    public final void setOnoriginalchange(final String onoriginalchange) {
-        getStateHelper().put(DiffEditorPropertyKeys.onoriginalchange, onoriginalchange);
-    }
-
-    public String getOnoriginalfocus() {
-        return (String) getStateHelper().eval(DiffEditorPropertyKeys.onoriginalfocus, null);
-    }
-
-    public final void setOnoriginalfocus(final String onoriginalfocus) {
-        getStateHelper().put(DiffEditorPropertyKeys.onoriginalfocus, onoriginalfocus);
-    }
-
-    public String getOnoriginalkeyup() {
-        return (String) getStateHelper().eval(DiffEditorPropertyKeys.onoriginalkeyup, null);
-    }
-
-    public final void setOnoriginalkeyup(final String onoriginalkeyup) {
-        getStateHelper().put(DiffEditorPropertyKeys.onoriginalkeyup, onoriginalkeyup);
-    }
-
-    public String getOnoriginalkeydown() {
-        return (String) getStateHelper().eval(DiffEditorPropertyKeys.onoriginalkeydown, null);
-    }
-
-    public final void setOnoriginalkeydown(final String onoriginalkeydown) {
-        getStateHelper().put(DiffEditorPropertyKeys.onoriginalkeydown, onoriginalkeydown);
-    }
-
-    public String getOnoriginalmouseup() {
-        return (String) getStateHelper().eval(DiffEditorPropertyKeys.onoriginalmouseup, null);
-    }
-
-    public final void setOnoriginalmouseup(final String onoriginalmouseup) {
-        getStateHelper().put(DiffEditorPropertyKeys.onoriginalmouseup, onoriginalmouseup);
-    }
-
-    public String getOnoriginalmousedown() {
-        return (String) getStateHelper().eval(DiffEditorPropertyKeys.onoriginalmousedown, null);
-    }
-
-    public final void setOnoriginalmousedown(final String onoriginalmousedown) {
-        getStateHelper().put(DiffEditorPropertyKeys.onoriginalmousedown, onoriginalmousedown);
-    }
-
-    public String getOnoriginalmousemove() {
-        return (String) getStateHelper().eval(DiffEditorPropertyKeys.onoriginalmousemove, null);
-    }
-
-    public final void setOnoriginalmousemove(final String onoriginalmousemove) {
-        getStateHelper().put(DiffEditorPropertyKeys.onoriginalmousemove, onoriginalmousemove);
-    }
-
-    public String getOnoriginalpaste() {
-        return (String) getStateHelper().eval(DiffEditorPropertyKeys.onoriginalpaste, null);
-    }
-
-    public final void setOnoriginalpaste(final String onoriginalpaste) {
-        getStateHelper().put(DiffEditorPropertyKeys.onoriginalpaste, onoriginalpaste);
-    }
-
-    public final String getOriginalDirectory() {
-        return (String) getStateHelper().eval(DiffEditorPropertyKeys.originalDirectory, DEFAULT_ORIGINAL_DIRECTORY);
-    }
-
-    public final void setOriginalDirectory(final String originalDirectory) {
-        getStateHelper().put(DiffEditorPropertyKeys.originalDirectory, originalDirectory);
-    }
-
-    public final String getOriginalExtension() {
-        return (String) getStateHelper().eval(DiffEditorPropertyKeys.originalExtension, DEFAULT_ORIGINAL_EXTENSION);
-    }
-
-    public final void setOriginalExtension(final String originalExtension) {
-        getStateHelper().put(DiffEditorPropertyKeys.originalExtension, originalExtension);
-    }
-
-    public final String getOriginalBasename() {
-        return (String) getStateHelper().eval(DiffEditorPropertyKeys.originalBasename, DEFAULT_ORIGINAL_BASENAME);
-    }
-
-    public final void setOriginalBasename(final String basename) {
-        getStateHelper().put(DiffEditorPropertyKeys.originalBasename, basename);
-    }
-
-    public final String getOriginalScheme() {
-        return (String) getStateHelper().eval(DiffEditorPropertyKeys.originalScheme, DEFAULT_ORIGINAL_SCHEME);
-    }
-
-    public final void setOriginalScheme(final String originalScheme) {
-        getStateHelper().put(DiffEditorPropertyKeys.originalScheme, originalScheme);
-    }
-
-    @Override
-    protected void validateValue(final FacesContext context, final Object newValue) {
-        final org.primefaces.extensions.model.monaco.MonacoDiffEditorModel model;
-        model = (org.primefaces.extensions.model.monaco.MonacoDiffEditorModel) newValue;
-        // If our value is valid, enforce the required property if present for the modified editor
-        if (isValid() && isRequired() && (model == null || isEmpty(model.getModifiedValue()))) {
-            final String requiredMessageStr = getRequiredMessage();
-            final FacesMessage message;
-            if (null != requiredMessageStr) {
-                message = new FacesMessage(FacesMessage.SEVERITY_ERROR, requiredMessageStr, requiredMessageStr);
-            }
-            else {
-                final Object label = org.primefaces.extensions.util.MessageFactory.getLabel(context, this);
-                message = MessageFactory.getFacesMessage(context, REQUIRED_MESSAGE_ID, FacesMessage.SEVERITY_ERROR,
-                            label.toString());
-            }
-            context.addMessage(getClientId(context), message);
-            setValid(false);
-        }
-
-        // If our value is valid, enforce the required property if present for the original edtor
-        if (isValid() && isOriginalRequired() && (model == null || isEmpty(model.getOriginalValue()))) {
-            final String requiredMessageStr = getRequiredMessage();
-            final FacesMessage message;
-            if (null != requiredMessageStr) {
-                message = new FacesMessage(FacesMessage.SEVERITY_ERROR, requiredMessageStr, requiredMessageStr);
-            }
-            else {
-                final Object label = org.primefaces.extensions.util.MessageFactory.getLabel(context, this);
-                message = MessageFactory.getFacesMessage(context, REQUIRED_MESSAGE_ID, FacesMessage.SEVERITY_ERROR,
-                            label.toString());
-            }
-            context.addMessage(getClientId(context), message);
-            setValid(false);
-        }
-
-        // Call super which calls the validators if our value is valid
-        super.validateValue(context, newValue);
+        super(rendererType, DiffEditorOptions.class);
     }
 }

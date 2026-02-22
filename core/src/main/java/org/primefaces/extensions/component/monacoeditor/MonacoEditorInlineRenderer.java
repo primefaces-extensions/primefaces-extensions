@@ -25,6 +25,7 @@ import java.io.IOException;
 
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
+import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.util.WidgetBuilder;
@@ -34,6 +35,7 @@ import org.primefaces.util.WidgetBuilder;
  *
  * @since 10.0.0
  */
+@FacesRenderer(rendererType = MonacoEditorInlineBase.DEFAULT_RENDERER, componentFamily = MonacoEditorCommonBase.COMPONENT_FAMILY)
 public class MonacoEditorInlineRenderer extends MonacoEditorBaseRenderer<MonacoEditorInline> {
 
     /**

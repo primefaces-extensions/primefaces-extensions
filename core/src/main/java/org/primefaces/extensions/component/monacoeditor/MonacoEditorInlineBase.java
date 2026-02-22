@@ -21,20 +21,21 @@
  */
 package org.primefaces.extensions.component.monacoeditor;
 
-/**
- * Additional properties for the diff inline editor widget not covered by the base options.
- *
- * @since 11.1.0
- */
-@SuppressWarnings("java:S115")
-enum DiffEditorInlinePropertyKeys {
-    /**
-     * Extender script to add custom functionality via JavaScript. Must be a JavaScript expression that evaluates to an extender instance.
-     */
-    extender,
+import org.primefaces.cdk.api.FacesComponentBase;
 
-    /**
-     * Search expression for a component. Places overflow widgets inside an external DOM node. Defaults to an internal DOM node.
-     */
-    overflowWidgetsDomNode;
+/**
+ * CDK base for the inline Monaco code editor.
+ *
+ * @since 10.0.0
+ */
+@FacesComponentBase
+public abstract class MonacoEditorInlineBase extends MonacoEditorBaseImpl
+            implements CodeEditorInlineProperties {
+
+    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.MonacoEditorInline";
+    public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.MonacoEditorInlineRenderer";
+
+    public MonacoEditorInlineBase() {
+        setRendererType(DEFAULT_RENDERER);
+    }
 }

@@ -21,31 +21,18 @@
  */
 package org.primefaces.extensions.component.monacoeditor;
 
+import org.primefaces.cdk.api.Property;
+
 /**
- * Base properties for both the framed and the inline Monaco diff editor widget.
+ * Additional properties for the inline code editor widget.
  *
- * @since 11.1.0
+ * @since 10.0.0
  */
-@SuppressWarnings("java:S115")
-enum DiffEditorPropertyKeys {
-    language, //
-    originalDisabled, //
-    originalLanguage, //
-    originalReadonly, //
-    originalRequired, //
-    originalTabindex, //
-    onoriginalblur, //
-    onoriginalchange, //
-    onoriginalfocus, //
-    onoriginalkeydown, //
-    onoriginalkeyup, //
-    onoriginalmouseup, //
-    onoriginalmousedown, //
-    onoriginalmousemove, //
-    onoriginalpaste, //
-    originalDirectory, //
-    originalExtension, //
-    originalBasename, //
-    originalScheme, //
-    ;
+public interface CodeEditorInlineProperties {
+
+    @Property(description = "Extender script: JavaScript expression that evaluates to an extender instance.")
+    String getExtender();
+
+    @Property(description = "Search expression for a component; places overflow widgets inside an external DOM node.")
+    String getOverflowWidgetsDomNode();
 }

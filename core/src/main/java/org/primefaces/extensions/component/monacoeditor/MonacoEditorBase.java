@@ -21,44 +21,34 @@
  */
 package org.primefaces.extensions.component.monacoeditor;
 
-import java.util.Collection;
-import java.util.Map;
+import jakarta.faces.event.AjaxBehaviorEvent;
 
-import jakarta.faces.event.BehaviorEvent;
-
-import org.primefaces.util.MapBuilder;
+import org.primefaces.cdk.api.FacesBehaviorEvent;
+import org.primefaces.cdk.api.FacesBehaviorEvents;
+import org.primefaces.cdk.api.FacesComponentBase;
+import org.primefaces.extensions.model.monacoeditor.EditorOptions;
 
 /**
  * Base component for both the framed and inline monaco code editor widget.
  *
  * @since 10.0.0
  */
-@SuppressWarnings("java:S110")
-public abstract class MonacoEditorBase
-                                       extends MonacoEditorCommon<org.primefaces.extensions.model.monacoeditor.EditorOptions> {
-    static final String DEFAULT_EVENT = "change";
+@FacesComponentBase
+@FacesBehaviorEvents({
+            @FacesBehaviorEvent(name = "change", event = AjaxBehaviorEvent.class, description = "Fires when the content changes.", defaultEvent = true),
+            @FacesBehaviorEvent(name = "blur", event = AjaxBehaviorEvent.class, description = "Fires when the element loses focus."),
+            @FacesBehaviorEvent(name = "focus", event = AjaxBehaviorEvent.class, description = "Fires when the element gains focus."),
+            @FacesBehaviorEvent(name = "initialized", event = AjaxBehaviorEvent.class, description = "Fires when the editor is initialized."),
+            @FacesBehaviorEvent(name = "keydown", event = AjaxBehaviorEvent.class, description = "Fires when a key is pressed down."),
+            @FacesBehaviorEvent(name = "keyup", event = AjaxBehaviorEvent.class, description = "Fires when a key is released."),
+            @FacesBehaviorEvent(name = "mousedown", event = AjaxBehaviorEvent.class, description = "Fires when a mouse button is pressed down."),
+            @FacesBehaviorEvent(name = "mousemove", event = AjaxBehaviorEvent.class, description = "Fires when the mouse is moved."),
+            @FacesBehaviorEvent(name = "mouseup", event = AjaxBehaviorEvent.class, description = "Fires when a mouse button is released."),
+            @FacesBehaviorEvent(name = "paste", event = AjaxBehaviorEvent.class, description = "Fires when paste is performed.")
+})
+public abstract class MonacoEditorBase extends MonacoEditorCommon<EditorOptions> {
 
-    static final Map<String, Class<? extends BehaviorEvent>> BASE_BEHAVIOR_EVENT_MAPPING = MapBuilder.<String, Class<? extends BehaviorEvent>> builder() //
-                .put(DEFAULT_EVENT, null) //
-                .put("blur", null) //
-                .put("focus", null) //
-                .put("initialized", null) //
-                .put("keydown", null) //
-                .put("keyup", null) //
-                .put("mousedown", null) //
-                .put("mousemove", null) //
-                .put("mouseup", null) //
-                .put("paste", null) //
-                .build();
-
-    static final Collection<String> BASE_EVENT_NAMES = BASE_BEHAVIOR_EVENT_MAPPING.keySet();
-
-    protected MonacoEditorBase(final String rendererType) {
-        super(rendererType, org.primefaces.extensions.model.monacoeditor.EditorOptions.class);
-    }
-
-    @Override
-    public final String getDefaultEventName() {
-        return DEFAULT_EVENT;
+    protected MonacoEditorBase() {
+        super(null, EditorOptions.class);
     }
 }

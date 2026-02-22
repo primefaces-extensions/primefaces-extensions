@@ -141,7 +141,7 @@ abstract class MonacoEditorCommonRenderer<TEditor extends MonacoEditorCommon<TEd
         wb.attr("readonly", monacoEditor.isReadonly(), MonacoEditorCommon.DEFAULT_READONLY);
         wb.attr("placeholder", monacoEditor.getPlaceholder(), MonacoEditorCommon.DEFAULT_PLACEHOLDER);
         wb.attr("scheme", monacoEditor.getScheme(), MonacoEditorCommon.DEFAULT_SCHEME);
-        wb.attr("tabIndex", monacoEditor.getTabindex(), MonacoEditorCommon.DEFAULT_TABINDEX);
+        wb.attr("tabIndex", monacoEditor.getTabindex(), Integer.toString(MonacoEditorCommon.DEFAULT_TABINDEX));
         wb.attr("height", monacoEditor.getHeight(), MonacoEditorCommon.DEFAULT_HEIGHT);
         wb.attr("width", monacoEditor.getWidth(), MonacoEditorCommon.DEFAULT_WIDTH);
 
