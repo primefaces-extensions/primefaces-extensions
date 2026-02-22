@@ -22,18 +22,6 @@
     </application>
 
     <component>
-        <component-type>org.primefaces.extensions.component.RemoteCommand</component-type>
-        <component-class>org.primefaces.extensions.component.remotecommand.RemoteCommand</component-class>
-    </component>
-    <component>
-        <component-type>org.primefaces.extensions.component.AssignableParameter</component-type>
-        <component-class>org.primefaces.extensions.component.parameters.AssignableParameter</component-class>
-    </component>
-    <component>
-        <component-type>org.primefaces.extensions.component.MethodParameter</component-type>
-        <component-class>org.primefaces.extensions.component.parameters.MethodParameter</component-class>
-    </component>
-    <component>
         <component-type>org.primefaces.extensions.component.Sheet</component-type>
         <component-class>org.primefaces.extensions.component.sheet.Sheet</component-class>
     </component>
@@ -44,10 +32,6 @@
     <component>
         <component-type>org.primefaces.extensions.component.QRCode</component-type>
         <component-class>org.primefaces.extensions.component.qrcode.QRCode</component-class>
-    </component>
-    <component>
-        <component-type>org.primefaces.extensions.component.OSMap</component-type>
-        <component-class>org.primefaces.extensions.component.osmap.OSMap</component-class>
     </component>
 
     <converter>
@@ -70,11 +54,6 @@
     <render-kit>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>
-            <renderer-type>org.primefaces.extensions.component.RemoteCommandRenderer</renderer-type>
-            <renderer-class>org.primefaces.extensions.component.remotecommand.RemoteCommandRenderer</renderer-class>
-        </renderer>
-        <renderer>
-            <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.QRCodeRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.qrcode.QRCodeRenderer</renderer-class>
         </renderer>
@@ -82,11 +61,6 @@
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.SheetRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.sheet.SheetRenderer</renderer-class>
-        </renderer>
-        <renderer>
-            <component-family>org.primefaces.extensions.component</component-family>
-            <renderer-type>org.primefaces.extensions.component.OSMapRenderer</renderer-type>
-            <renderer-class>org.primefaces.extensions.component.osmap.OSMapRenderer</renderer-class>
         </renderer>
 
         <client-behavior-renderer>

@@ -21,8 +21,6 @@
  */
 package org.primefaces.extensions.component.parameters;
 
-import java.util.Arrays;
-
 import jakarta.faces.FacesException;
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.view.facelets.FaceletContext;
@@ -30,25 +28,29 @@ import jakarta.faces.view.facelets.TagAttribute;
 import jakarta.faces.view.facelets.TagConfig;
 import jakarta.faces.view.facelets.TagHandler;
 
+import org.primefaces.cdk.api.FacesTagHandler;
+import org.primefaces.cdk.api.Property;
+
 /**
- * {@link TagHandler} for the <code>MethodSignature</code> tag.
+ * TagHandler for the methodSignature tag; stores parameter types on the parent for MethodParameter children.
  *
- * @author Thomas Andraschko / last modified by $Author$
- * @version $Revision$
  * @since 0.5
  */
+@FacesTagHandler("Tag handler for methodSignature; comma-separated class names for RemoteCommand method parameters.")
 public class MethodSignatureTagHandler extends TagHandler {
 
     public static final String PARAMETERS_TYPES_ATTRIBUTE_NAME = "METHOD_SIGNATURE_PARAMETER_TYPES";
+
+    @Property(description = "A comma separated list of fully qualified class names, matching passed parameters in order.", type = String.class, required = true)
+    private final TagAttribute parametersAttribute;
 
     private final Class<?>[] parameterTypes;
 
     public MethodSignatureTagHandler(final TagConfig config) {
         super(config);
-
-        final TagAttribute parametersTag = getRequiredAttribute("parameters");
+        this.parametersAttribute = getRequiredAttribute("parameters");
         try {
-            parameterTypes = parseParameterTypes(parametersTag.getValue());
+            parameterTypes = parseParameterTypes(parametersAttribute.getValue());
         }
         catch (final ClassNotFoundException e) {
             throw new FacesException(e.getMessage(), e);
@@ -57,25 +59,22 @@ public class MethodSignatureTagHandler extends TagHandler {
 
     @Override
     public void apply(final FaceletContext ctx, final UIComponent parent) {
-        // store all parameter types to parent component
         parent.getAttributes().put(PARAMETERS_TYPES_ATTRIBUTE_NAME, parameterTypes);
     }
 
     public Class<?>[] getParameterTypes() {
         if (parameterTypes != null) {
-            return Arrays.copyOf(parameterTypes, parameterTypes.length);
+            return java.util.Arrays.copyOf(parameterTypes, parameterTypes.length);
         }
         return new Class<?>[] {};
     }
 
-    private Class<?>[] parseParameterTypes(final String parameters) throws ClassNotFoundException {
+    private static Class<?>[] parseParameterTypes(final String parameters) throws ClassNotFoundException {
         final String[] splitParameters = parameters.split(",");
         final Class<?>[] types = new Class<?>[splitParameters.length];
-
         for (int i = 0; i < splitParameters.length; i++) {
             types[i] = Class.forName(splitParameters[i].trim());
         }
-
         return types;
     }
 }

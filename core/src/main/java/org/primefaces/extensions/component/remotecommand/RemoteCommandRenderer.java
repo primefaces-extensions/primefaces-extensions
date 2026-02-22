@@ -28,13 +28,13 @@ import java.util.Map;
 import jakarta.el.ELContext;
 import jakarta.el.ValueExpression;
 import jakarta.faces.FacesException;
-import jakarta.faces.component.UIComponent;
 import jakarta.faces.component.UIForm;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
 import jakarta.faces.convert.Converter;
 import jakarta.faces.event.ActionEvent;
 import jakarta.faces.event.PhaseId;
+import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.extensions.component.api.AbstractParameter;
 import org.primefaces.extensions.component.parameters.AssignableParameter;
@@ -43,17 +43,15 @@ import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.ComponentTraversalUtils;
 
 /**
- * Renderer for the {@link RemoteCommand} component.
+ * Renderer for the RemoteCommand component.
  *
- * @author Thomas Andraschko / last modified by $Author$
- * @version $Revision$
  * @since 0.2
  */
-public class RemoteCommandRenderer extends CoreRenderer {
+@FacesRenderer(rendererType = RemoteCommandBase.DEFAULT_RENDERER, componentFamily = RemoteCommandBase.COMPONENT_FAMILY)
+public class RemoteCommandRenderer extends CoreRenderer<RemoteCommand> {
 
     @Override
-    public void decode(final FacesContext context, final UIComponent component) {
-        final RemoteCommand command = (RemoteCommand) component;
+    public void decode(final FacesContext context, final RemoteCommand command) {
 
         final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
         final String clientId = command.getClientId(context);
@@ -93,15 +91,14 @@ public class RemoteCommandRenderer extends CoreRenderer {
     }
 
     @Override
-    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-        final UIForm form = ComponentTraversalUtils.closestForm(component);
+    public void encodeEnd(final FacesContext context, final RemoteCommand command) throws IOException {
+        final UIForm form = ComponentTraversalUtils.closestForm(command);
         if (form == null) {
-            throw new FacesException("Component " + component.getClientId(context)
+            throw new FacesException("Component " + command.getClientId(context)
                         + " must be enclosed in a form.");
         }
 
         final ResponseWriter writer = context.getResponseWriter();
-        final RemoteCommand command = (RemoteCommand) component;
         final String clientId = command.getClientId(context);
 
         final List<AbstractParameter> parameters = command.getAllParameters();
@@ -111,8 +108,8 @@ public class RemoteCommandRenderer extends CoreRenderer {
         builder.init()
                     .source(clientId)
                     .form(command, command, form)
-                    .process(component, command.getProcess())
-                    .update(component, command.getUpdate())
+                    .process(command, command.getProcess())
+                    .update(command, command.getUpdate())
                     .async(command.isAsync())
                     .global(command.isGlobal())
                     .partialSubmit(command.isPartialSubmit(), command.isPartialSubmitSet(), command.getPartialSubmitFilter())
