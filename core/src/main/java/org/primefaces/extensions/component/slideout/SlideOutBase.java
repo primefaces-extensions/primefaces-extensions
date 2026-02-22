@@ -36,7 +36,7 @@ import org.primefaces.extensions.event.OpenEvent;
  */
 @FacesComponentBase
 @FacesBehaviorEvents({
-            @FacesBehaviorEvent(name = "open", event = OpenEvent.class, description = "Fires when the panel is opened.", defaultEvent = false),
+            @FacesBehaviorEvent(name = "open", event = OpenEvent.class, description = "Fires when the panel is opened.", defaultEvent = true),
             @FacesBehaviorEvent(name = "close", event = CloseEvent.class, description = "Fires when the panel is closed.", defaultEvent = false)
 })
 public abstract class SlideOutBase extends UIComponentBase implements Widget {
