@@ -42,10 +42,6 @@
         <component-class>org.primefaces.extensions.component.masterdetail.MasterDetailLevel</component-class>
     </component>
     <component>
-        <component-type>org.primefaces.extensions.component.Switch</component-type>
-        <component-class>org.primefaces.extensions.component.switchcase.Switch</component-class>
-    </component>
-    <component>
         <component-type>org.primefaces.extensions.component.Sheet</component-type>
         <component-class>org.primefaces.extensions.component.sheet.Sheet</component-class>
     </component>
@@ -56,14 +52,6 @@
     <component>
         <component-type>org.primefaces.extensions.component.SlideOut</component-type>
         <component-class>org.primefaces.extensions.component.slideout.SlideOut</component-class>
-    </component>
-    <component>
-        <component-type>org.primefaces.extensions.component.Case</component-type>
-        <component-class>org.primefaces.extensions.component.switchcase.Case</component-class>
-    </component>
-    <component>
-        <component-type>org.primefaces.extensions.component.DefaultCase</component-type>
-        <component-class>org.primefaces.extensions.component.switchcase.DefaultCase</component-class>
     </component>
     <component>
         <component-type>org.primefaces.extensions.component.QRCode</component-type>
