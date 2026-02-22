@@ -27,6 +27,7 @@ import jakarta.faces.FacesException;
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
+import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
@@ -40,13 +41,14 @@ import org.primefaces.util.WidgetBuilder;
  * @author ssibitz ssibitz@me.com
  * @since 6.2
  */
-public class SpeedtestRenderer extends CoreRenderer {
+@FacesRenderer(rendererType = SpeedtestBase.DEFAULT_RENDERER, componentFamily = SpeedtestBase.COMPONENT_FAMILY)
+public class SpeedtestRenderer extends CoreRenderer<Speedtest> {
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void decode(final FacesContext context, final UIComponent component) {
+    public void decode(final FacesContext context, final Speedtest component) {
         decodeBehaviors(context, component);
     }
 
@@ -54,51 +56,50 @@ public class SpeedtestRenderer extends CoreRenderer {
      * {@inheritDoc}
      */
     @Override
-    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-        final Speedtest speedtest = (Speedtest) component;
-        encodeMarkup(context, speedtest);
-        encodeScript(context, speedtest);
+    public void encodeEnd(final FacesContext context, final Speedtest component) throws IOException {
+        encodeMarkup(context, component);
+        encodeScript(context, component);
     }
 
     /**
      * Create the HTML markup for the DOM.
      */
-    private void encodeMarkup(final FacesContext context, final Speedtest speedtest) throws IOException {
+    private void encodeMarkup(final FacesContext context, final Speedtest component) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
-        final String clientId = speedtest.getClientId(context);
-        final String widgetVar = speedtest.resolveWidgetVar();
+        final String clientId = component.getClientId(context);
+        final String widgetVar = component.resolveWidgetVar();
         // Generate Speedtest:
-        writer.startElement("div", speedtest);
+        writer.startElement("div", component);
         writer.writeAttribute("id", clientId + "SpeedTest", "id");
-        if (speedtest.getStyleClass() != null) {
-            writer.writeAttribute(Attrs.CLASS, speedtest.getStyleClass(), "styleClass");
+        if (component.getStyleClass() != null) {
+            writer.writeAttribute(Attrs.CLASS, component.getStyleClass(), "styleClass");
         }
-        if (speedtest.getStyle() != null) {
-            writer.writeAttribute(Attrs.STYLE, speedtest.getStyle(), Attrs.STYLE);
+        if (component.getStyle() != null) {
+            writer.writeAttribute(Attrs.STYLE, component.getStyle(), Attrs.STYLE);
         }
         writer.writeAttribute(HTML.WIDGET_VAR, widgetVar, null);
-        writer.startElement("div", speedtest);
+        writer.startElement("div", component);
         writer.writeAttribute(Attrs.CLASS, "ui-g", null);
         // Download Gauge
-        writer.startElement("div", speedtest);
+        writer.startElement("div", component);
         writer.writeAttribute(Attrs.CLASS, "ui-g-3", null);
         writer.writeAttribute(Attrs.STYLE, "height:200px", null);
         writer.writeAttribute("id", clientId + "ggdown", "id");
         writer.endElement("div");
         // Upload Gauge
-        writer.startElement("div", speedtest);
+        writer.startElement("div", component);
         writer.writeAttribute(Attrs.CLASS, "ui-g-3", null);
         writer.writeAttribute(Attrs.STYLE, "height:200px", null);
         writer.writeAttribute("id", clientId + "ggup", "id");
         writer.endElement("div");
         // Ping Gauge
-        writer.startElement("div", speedtest);
+        writer.startElement("div", component);
         writer.writeAttribute(Attrs.CLASS, "ui-g-3", null);
         writer.writeAttribute(Attrs.STYLE, "height:200px", null);
         writer.writeAttribute("id", clientId + "ggping", "id");
         writer.endElement("div");
         // Jitter Gauge
-        writer.startElement("div", speedtest);
+        writer.startElement("div", component);
         writer.writeAttribute(Attrs.CLASS, "ui-g-3", null);
         writer.writeAttribute(Attrs.STYLE, "height:200px", null);
         writer.writeAttribute("id", clientId + "ggjitter", "id");
@@ -112,29 +113,29 @@ public class SpeedtestRenderer extends CoreRenderer {
     /**
      * Create the Javascript.
      */
-    private void encodeScript(final FacesContext context, final Speedtest speedtest) throws IOException {
-        final String clientId = speedtest.getClientId(context);
-        final UIComponent form = ComponentTraversalUtils.closestForm(speedtest);
+    private void encodeScript(final FacesContext context, final Speedtest component) throws IOException {
+        final String clientId = component.getClientId(context);
+        final UIComponent form = ComponentTraversalUtils.closestForm(component);
         if (form == null) {
             throw new FacesException("Speedtest:" + clientId + " needs to be enclosed in a form component");
         }
 
         final WidgetBuilder wb = getWidgetBuilder(context);
-        wb.init("ExtSpeedtest", speedtest);
+        wb.init("ExtSpeedtest", component);
         wb.attr("idDown", clientId + "ggdown");
         wb.attr("idUp", clientId + "ggup");
         wb.attr("idPing", clientId + "ggping");
         wb.attr("idJitter", clientId + "ggjitter");
-        wb.attr("captionPing", speedtest.getCaptionPing());
-        wb.attr("captionJitter", speedtest.getCaptionJitter());
-        wb.attr("captionDownload", speedtest.getCaptionDownload());
-        wb.attr("captionUpload", speedtest.getCaptionUpload());
-        wb.attr("colorPing", speedtest.getColorPing());
-        wb.attr("colorJitter", speedtest.getColorJitter());
-        wb.attr("colorDownload", speedtest.getColorDownload());
-        wb.attr("colorUpload", speedtest.getColorUpload());
-        wb.attr("file", speedtest.getFile());
-        encodeClientBehaviors(context, speedtest);
+        wb.attr("captionPing", component.getCaptionPing());
+        wb.attr("captionJitter", component.getCaptionJitter());
+        wb.attr("captionDownload", component.getCaptionDownload());
+        wb.attr("captionUpload", component.getCaptionUpload());
+        wb.attr("colorPing", component.getColorPing());
+        wb.attr("colorJitter", component.getColorJitter());
+        wb.attr("colorDownload", component.getColorDownload());
+        wb.attr("colorUpload", component.getColorUpload());
+        wb.attr("file", component.getFile());
+        encodeClientBehaviors(context, component);
         wb.finish();
     }
 }
