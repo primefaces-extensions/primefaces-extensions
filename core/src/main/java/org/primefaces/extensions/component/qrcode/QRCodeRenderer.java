@@ -21,75 +21,74 @@
  */
 package org.primefaces.extensions.component.qrcode;
 
-import java.io.*;
+import java.io.IOException;
 
-import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
+import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.WidgetBuilder;
 
 /**
- * Renderer for the {@link QRCode} component.
+ * Renderer for the QRCode component.
  *
- * @author Mauricio Fenoglio / last modified by Melloware
  * @since 1.2.0
  */
-public class QRCodeRenderer extends CoreRenderer {
+@FacesRenderer(rendererType = QRCodeBase.DEFAULT_RENDERER, componentFamily = QRCodeBase.COMPONENT_FAMILY)
+public class QRCodeRenderer extends CoreRenderer<QRCode> {
 
     @Override
-    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-        final QRCode qrCode = (QRCode) component;
-        encodeMarkup(context, qrCode);
-        encodeScript(context, qrCode);
+    public void encodeEnd(final FacesContext context, final QRCode component) throws IOException {
+        encodeMarkup(context, component);
+        encodeScript(context, component);
     }
 
-    protected void encodeScript(final FacesContext context, final QRCode qrCode) throws IOException {
+    protected void encodeScript(final FacesContext context, final QRCode component) throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context);
-        wb.init("ExtQRCode", qrCode);
-        wb.attr("render", qrCode.getRenderMethod())
-                    .attr("mode", qrCode.getRenderMode())
-                    .attr("minVersion", qrCode.getMinVersion())
-                    .attr("maxVersion", qrCode.getMaxVersion())
-                    .attr("left", qrCode.getLeftOffset())
-                    .attr("top", qrCode.getTopOffset())
-                    .attr("size", qrCode.getSize())
-                    .attr("fill", qrCode.getFillColor())
-                    .attr("ecLevel", qrCode.getEcLevel())
-                    .attr("background", qrCode.getBackground())
-                    .attr("text", qrCode.getText())
-                    .attr("radius", qrCode.getRadius())
-                    .attr("quiet", qrCode.getQuiet())
-                    .attr("mSize", qrCode.getLabelSize())
-                    .attr("mPosX", qrCode.getLabelPosX())
-                    .attr("mPosY", qrCode.getLabelPosY())
-                    .attr(Attrs.LABEL, qrCode.getLabel())
-                    .attr("fontname", qrCode.getFontName())
-                    .attr("fontcolor", qrCode.getFontColor());
+        wb.init("ExtQRCode", component);
+        wb.attr("render", component.getRenderMethod())
+                    .attr("mode", component.getRenderMode())
+                    .attr("minVersion", component.getMinVersion())
+                    .attr("maxVersion", component.getMaxVersion())
+                    .attr("left", component.getLeftOffset())
+                    .attr("top", component.getTopOffset())
+                    .attr("size", component.getSize())
+                    .attr("fill", component.getFillColor())
+                    .attr("ecLevel", component.getEcLevel())
+                    .attr("background", component.getBackground())
+                    .attr("text", component.getText())
+                    .attr("radius", component.getRadius())
+                    .attr("quiet", component.getQuiet())
+                    .attr("mSize", component.getLabelSize())
+                    .attr("mPosX", component.getLabelPosX())
+                    .attr("mPosY", component.getLabelPosY())
+                    .attr(Attrs.LABEL, component.getLabel())
+                    .attr("fontname", component.getFontName())
+                    .attr("fontcolor", component.getFontColor());
 
         wb.finish();
     }
 
-    private void encodeMarkup(final FacesContext context, final QRCode qrCode) throws IOException {
+    private void encodeMarkup(final FacesContext context, final QRCode component) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
-        final String clientId = qrCode.getClientId(context);
+        final String clientId = component.getClientId(context);
         final String styleClass = getStyleClassBuilder(context)
                     .add(QRCode.STYLE_CLASS)
-                    .add(qrCode.getStyleClass())
+                    .add(component.getStyleClass())
                     .build();
         writer.startElement("span", null);
         writer.writeAttribute("id", clientId, null);
         writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
-        if (qrCode.getStyle() != null) {
-            writer.writeAttribute(Attrs.STYLE, qrCode.getStyle(), Attrs.STYLE);
+        if (component.getStyle() != null) {
+            writer.writeAttribute(Attrs.STYLE, component.getStyle(), Attrs.STYLE);
         }
         writer.endElement("span");
     }
 
     @Override
-    public void encodeChildren(final FacesContext context, final UIComponent component) {
+    public void encodeChildren(final FacesContext context, final QRCode component) {
         // do nothing
     }
 

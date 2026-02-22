@@ -23,73 +23,20 @@ package org.primefaces.extensions.component.session;
 
 import jakarta.faces.application.ResourceDependency;
 import jakarta.faces.component.FacesComponent;
-import jakarta.faces.component.UIComponentBase;
 
-import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.util.Constants;
 
 /**
- * <code>Session</code> component.
+ * Session component: client-side session expiry handling.
  *
- * @author Frank Cornelis
  * @since 12.0.4
  */
-@FacesComponent(Session.COMPONENT_TYPE)
-@ResourceDependency(library = "jakarta.faces", name = "jsf.js")
+@FacesComponent(value = SessionBase.COMPONENT_TYPE, namespace = SessionBase.COMPONENT_FAMILY)
+@ResourceDependency(library = "jakarta.faces", name = "faces.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "session/session.js")
-public class Session extends UIComponentBase implements Widget {
-
-    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Session";
-
-    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-
-    @Override
-    public String getFamily() {
-        return COMPONENT_FAMILY;
-    }
-
-    enum PropertyKeys {
-        onexpire, onexpired, reactionPeriod, multiWindowSupport
-    }
-
-    @Override
-    public String getWidgetVar() {
-        return (String) getStateHelper().eval("widgetVar", resolveWidgetVar());
-    }
-
-    public String getOnexpire() {
-        return (String) getStateHelper().eval(PropertyKeys.onexpire);
-    }
-
-    public void setOnexpire(String onexpire) {
-        getStateHelper().put(PropertyKeys.onexpire, onexpire);
-    }
-
-    public String getOnexpired() {
-        return (String) getStateHelper().eval(PropertyKeys.onexpired);
-    }
-
-    public void setOnexpired(String onexpired) {
-        getStateHelper().put(PropertyKeys.onexpired, onexpired);
-    }
-
-    public Integer getReactionPeriod() {
-        return (Integer) getStateHelper().eval(PropertyKeys.reactionPeriod);
-    }
-
-    public void setReactionPeriod(Integer reactionPeriod) {
-        getStateHelper().put(PropertyKeys.reactionPeriod, reactionPeriod);
-    }
-
-    public boolean isMultiWindowSupport() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.multiWindowSupport, true);
-    }
-
-    public void setMultiWindowSupport(boolean multiWindowSupport) {
-        getStateHelper().put(PropertyKeys.multiWindowSupport, multiWindowSupport);
-    }
+public class Session extends SessionBaseImpl {
 
 }

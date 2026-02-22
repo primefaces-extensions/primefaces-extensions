@@ -23,7 +23,6 @@ package org.primefaces.extensions.component.session;
 
 import java.io.IOException;
 
-import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.render.FacesRenderer;
@@ -33,42 +32,38 @@ import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.WidgetBuilder;
 
 /**
- * Renderer for the {@link Session} component.
+ * Renderer for the Session component.
  *
- * @author Frank Cornelis
  * @since 12.0.4
  */
-@FacesRenderer(componentFamily = Session.COMPONENT_FAMILY, rendererType = SessionRenderer.RENDERER_TYPE)
-public class SessionRenderer extends CoreRenderer {
-
-    public static final String RENDERER_TYPE = "org.primefaces.extensions.component.SessionRenderer";
+@FacesRenderer(rendererType = SessionBase.DEFAULT_RENDERER, componentFamily = SessionBase.COMPONENT_FAMILY)
+public class SessionRenderer extends CoreRenderer<Session> {
 
     @Override
-    public void encodeBegin(FacesContext facesContext, UIComponent component) throws IOException {
-        Session sessionComponent = (Session) component;
-        Integer reactionPeriod = sessionComponent.getReactionPeriod();
-        if (null == reactionPeriod) {
+    public void encodeBegin(final FacesContext facesContext, final Session component) throws IOException {
+        Integer reactionPeriod = component.getReactionPeriod();
+        if (reactionPeriod == null) {
             reactionPeriod = 60;
         }
 
-        WidgetBuilder wb = getWidgetBuilder(facesContext);
-        wb.init("Session", sessionComponent);
+        final WidgetBuilder wb = getWidgetBuilder(facesContext);
+        wb.init("Session", component);
         wb.attr("reactionPeriod", reactionPeriod);
-        wb.attr("multiWindowSupport", sessionComponent.isMultiWindowSupport());
-        ExternalContext externalContext = facesContext.getExternalContext();
-        HttpSession httpSession = (HttpSession) externalContext.getSession(false);
+        wb.attr("multiWindowSupport", component.isMultiWindowSupport());
+        final ExternalContext externalContext = facesContext.getExternalContext();
+        final HttpSession httpSession = (HttpSession) externalContext.getSession(false);
         if (httpSession != null) {
-            int maxInactiveInterval = httpSession.getMaxInactiveInterval();
+            final int maxInactiveInterval = httpSession.getMaxInactiveInterval();
             if (maxInactiveInterval > 0) {
                 wb.attr("max_inactive_interval", maxInactiveInterval);
             }
         }
 
-        if (sessionComponent.getOnexpire() != null) {
-            wb.callback("onexpire", "function(e)", sessionComponent.getOnexpire());
+        if (component.getOnexpire() != null) {
+            wb.callback("onexpire", "function(e)", component.getOnexpire());
         }
-        if (sessionComponent.getOnexpired() != null) {
-            wb.callback("onexpired", "function(e)", sessionComponent.getOnexpired());
+        if (component.getOnexpired() != null) {
+            wb.callback("onexpired", "function(e)", component.getOnexpired());
         }
 
         wb.finish();

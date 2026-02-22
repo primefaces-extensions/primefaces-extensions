@@ -35,6 +35,7 @@ import jakarta.faces.component.behavior.ClientBehaviorContext;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
 import jakarta.faces.model.SelectItem;
+import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.behavior.ajax.AjaxBehavior;
 import org.primefaces.extensions.util.Attrs;
@@ -56,15 +57,15 @@ import org.primefaces.util.WidgetBuilder;
  * @author Mark Lassiter / Melloware
  * @since 6.2
  */
-public class SheetRenderer extends CoreRenderer {
+@FacesRenderer(rendererType = SheetBase.DEFAULT_RENDERER, componentFamily = SheetBase.COMPONENT_FAMILY)
+public class SheetRenderer extends CoreRenderer<Sheet> {
 
     /**
      * Encodes the Sheet component
      */
     @Override
-    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
+    public void encodeEnd(final FacesContext context, final Sheet sheet) throws IOException {
         final ResponseWriter responseWriter = context.getResponseWriter();
-        final Sheet sheet = (Sheet) component;
 
         // update column mappings on render
         sheet.updateColumnMappings();
@@ -303,8 +304,8 @@ public class SheetRenderer extends CoreRenderer {
             if (column.isReadOnly()) {
                 options.appendProperty("readOnly", "true", false);
             }
-            options.appendProperty("trimWhitespace", column.isTrimWhitespace().toString(), false);
-            options.appendProperty("wordWrap", column.isWordWrap().toString(), false);
+            options.appendProperty("trimWhitespace", column.getTrimWhitespace().toString(), false);
+            options.appendProperty("wordWrap", column.getWordWrap().toString(), false);
 
             // validate can be a function, regex, or string
             final String validateFunction = column.getOnvalidate();
@@ -748,8 +749,7 @@ public class SheetRenderer extends CoreRenderer {
      * These are JSON values and are parsed into our submitted values data on the Sheet component.
      */
     @Override
-    public void decode(final FacesContext context, final UIComponent component) {
-        final Sheet sheet = (Sheet) component;
+    public void decode(final FacesContext context, final Sheet sheet) {
         // update Sheet references to work around issue with getParent sometimes
         // being null
         for (final SheetColumn column : sheet.getColumns()) {

@@ -21,19 +21,6 @@
         </system-event-listener>
     </application>
 
-    <component>
-        <component-type>org.primefaces.extensions.component.Sheet</component-type>
-        <component-class>org.primefaces.extensions.component.sheet.Sheet</component-class>
-    </component>
-    <component>
-        <component-type>org.primefaces.extensions.component.SheetColumn</component-type>
-        <component-class>org.primefaces.extensions.component.sheet.SheetColumn</component-class>
-    </component>
-    <component>
-        <component-type>org.primefaces.extensions.component.QRCode</component-type>
-        <component-class>org.primefaces.extensions.component.qrcode.QRCode</component-class>
-    </component>
-
     <converter>
         <converter-id>org.primefaces.extensions.converter.JsonConverter</converter-id>
         <converter-class>org.primefaces.extensions.converter.JsonConverter</converter-class>
@@ -52,17 +39,6 @@
     </converter>
 
     <render-kit>
-        <renderer>
-            <component-family>org.primefaces.extensions.component</component-family>
-            <renderer-type>org.primefaces.extensions.component.QRCodeRenderer</renderer-type>
-            <renderer-class>org.primefaces.extensions.component.qrcode.QRCodeRenderer</renderer-class>
-        </renderer>
-        <renderer>
-            <component-family>org.primefaces.extensions.component</component-family>
-            <renderer-type>org.primefaces.extensions.component.SheetRenderer</renderer-type>
-            <renderer-class>org.primefaces.extensions.component.sheet.SheetRenderer</renderer-class>
-        </renderer>
-
         <client-behavior-renderer>
             <client-behavior-renderer-type>org.primefaces.extensions.behavior.JavascriptBehaviorRenderer</client-behavior-renderer-type>
             <client-behavior-renderer-class>org.primefaces.extensions.behavior.javascript.JavascriptBehaviorRenderer</client-behavior-renderer-class>

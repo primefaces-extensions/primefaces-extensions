@@ -22,9 +22,7 @@
 package org.primefaces.extensions.component.sheet;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -40,6 +38,7 @@ import jakarta.el.ValueExpression;
 import jakarta.faces.FacesException;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.application.ResourceDependency;
+import jakarta.faces.component.FacesComponent;
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.convert.Converter;
@@ -65,6 +64,7 @@ import org.primefaces.util.LangUtils;
  * @author Mark Lassiter / Melloware
  * @since 6.2
  */
+@FacesComponent(value = Sheet.COMPONENT_TYPE, namespace = SheetBase.COMPONENT_FAMILY)
 @ResourceDependency(library = "primefaces", name = "components.css")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
@@ -72,7 +72,7 @@ import org.primefaces.util.LangUtils;
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "primefaces-extensions.js")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, target = "head", name = "sheet/sheet.css")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "sheet/sheet.js")
-public class Sheet extends SheetBase {
+public class Sheet extends SheetBaseImpl {
 
     public static final String EVENT_CELL_SELECT = "cellSelect";
     public static final String EVENT_CHANGE = "change";
@@ -82,9 +82,6 @@ public class Sheet extends SheetBase {
     public static final String EVENT_ROW_SELECT = "rowSelect";
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Sheet";
-
-    private static final Collection<String> EVENT_NAMES = Collections.unmodifiableCollection(Arrays.asList(EVENT_CHANGE,
-                EVENT_CELL_SELECT, EVENT_SORT, EVENT_FILTER, EVENT_COLUMN_SELECT, EVENT_ROW_SELECT));
 
     /**
      * The list of UI Columns
@@ -146,28 +143,9 @@ public class Sheet extends SheetBase {
      * {@inheritDoc}
      */
     @Override
-    public Collection<String> getEventNames() {
-        return EVENT_NAMES;
-    }
-
-    @Override
-    public String getDefaultEventName() {
-        return EVENT_CHANGE;
-    }
-
-    @Override
-    public String getWidgetVar() {
-        return (String) getStateHelper().eval("widgetVar", resolveWidgetVar());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void queueEvent(final FacesEvent event) {
-        final FacesContext fc = FacesContext.getCurrentInstance();
-
-        if (isSelfRequest(fc) && event instanceof AjaxBehaviorEvent) {
+        if (isAjaxBehaviorEventSource(event)) {
+            final FacesContext context = event.getFacesContext();
             final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
             final SheetEvent sheetEvent = new SheetEvent(this, behaviorEvent.getBehavior());
             sheetEvent.setPhaseId(event.getPhaseId());
@@ -178,9 +156,32 @@ public class Sheet extends SheetBase {
         super.queueEvent(event);
     }
 
-    private boolean isSelfRequest(final FacesContext context) {
-        return getClientId(context).equals(context.getExternalContext().getRequestParameterMap()
-                    .get(Constants.RequestParams.PARTIAL_SOURCE_PARAM));
+    /**
+     * Gets the rowHeader value expression defined on the component.
+     *
+     * @return value expression for row header, or null if not set
+     */
+    protected ValueExpression getRowHeaderValueExpression() {
+        return getValueExpression("rowHeader");
+    }
+
+    /**
+     * Evaluates the rowKey value expression for the current row.
+     *
+     * @param context faces context
+     * @return row key value
+     * @throws FacesException if rowKey is not set or resolves to null
+     */
+    protected Object getRowKeyValue(final FacesContext context) {
+        final ValueExpression veRowKey = getValueExpression("rowKey");
+        if (veRowKey == null) {
+            throw new FacesException("RowKey required on sheet!");
+        }
+        final Object value = veRowKey.getValue(context.getELContext());
+        if (value == null) {
+            throw new FacesException("RowKey must resolve to non-null value for updates to work properly");
+        }
+        return value;
     }
 
     /**
@@ -249,13 +250,28 @@ public class Sheet extends SheetBase {
      * Resets the sorting to the originally specified values (if any)
      */
     public void resetSort() {
-        // Set to null to restore initial sort order specified by sortBy
-        getStateHelper().put(PropertyKeys.currentSortBy.name(), null);
-
-        final String origSortOrder = (String) getStateHelper().get(PropertyKeys.origSortOrder);
+        setCurrentSortBy(null);
+        final String origSortOrder = getOrigSortOrder();
         if (origSortOrder != null) {
             setSortOrder(origSortOrder);
         }
+    }
+
+    @Override
+    public void setSortOrder(final String sortOrder) {
+        if (getOrigSortOrder() == null) {
+            setOrigSortOrder(getSortOrder());
+        }
+        super.setSortOrder(sortOrder);
+    }
+
+    /**
+     * Saves the column by which the sheet is currently sorted (when the user clicks on a column).
+     *
+     * @param columnId ID of the column by which the sheet is currently sorted.
+     */
+    public void saveSortByColumn(final String columnId) {
+        setCurrentSortBy(columnId);
     }
 
     /**
@@ -407,22 +423,20 @@ public class Sheet extends SheetBase {
      * The sorted list of values.
      */
     public List<Object> getSortedValues() {
-        List<Object> filtered = getFilteredValue();
+        List<?> filtered = getFilteredValue();
         if (filtered == null || filtered.isEmpty()) {
             filtered = sortAndFilter();
         }
-        return filtered;
+        return (List<Object>) filtered;
     }
 
     /**
      * Gets the rendered col index of the column corresponding to the current sortBy. This is used to keep track of the current sort column in the page.
      */
     public int getSortColRenderIndex() {
-        // Was the column by which to sort changed by the user, ie. is there a saved ID?
-        String currentSortById = (String) getStateHelper().get(PropertyKeys.currentSortBy.name());
-        // Otherwise, did the user specify a valid column ID for the sortBy attribute?
+        String currentSortById = getCurrentSortBy();
         if (LangUtils.isEmpty(currentSortById)) {
-            final Object sortBy = getStateHelper().eval(PropertyKeys.sortBy.name());
+            final Object sortBy = getSortBy();
             if (sortBy instanceof String) {
                 currentSortById = (String) sortBy;
             }
@@ -441,9 +455,7 @@ public class Sheet extends SheetBase {
             }
         }
 
-        // Otherwise, fall back to the previous behavior of searching for the column
-        // by its value expression
-        final ValueExpression veSortBy = getValueExpression(PropertyKeys.sortBy.name());
+        final ValueExpression veSortBy = getValueExpression("sortBy");
         if (veSortBy == null) {
             return -1;
         }
@@ -455,7 +467,7 @@ public class Sheet extends SheetBase {
                 continue;
             }
 
-            final ValueExpression veCol = column.getValueExpression(PropertyKeys.sortBy.name());
+            final ValueExpression veCol = column.getValueExpression("sortBy");
             if (veCol != null && veCol.getExpressionString().equals(sortByExp)) {
                 return colIdx;
             }
@@ -565,14 +577,13 @@ public class Sheet extends SheetBase {
         // Sort by the saved column. When none was saved, sort by the "sortBy" attribute of the sheet.
         final int sortByIdx = getSortColRenderIndex();
         final SheetColumn currentSortByColumn = sortByIdx >= 0 ? columns.get(sortByIdx) : null;
-        final ValueExpression currentSortByVe = currentSortByColumn != null ? currentSortByColumn.getValueExpression(
-                    PropertyKeys.sortBy.name()) : null;
+        final ValueExpression currentSortByVe = currentSortByColumn != null ? currentSortByColumn.getValueExpression("sortBy") : null;
         final ValueExpression veSortBy;
         if (currentSortByVe != null) {
             veSortBy = currentSortByVe;
         }
         else {
-            veSortBy = getValueExpression(PropertyKeys.sortBy.name());
+            veSortBy = getValueExpression("sortBy");
         }
         if (veSortBy != null) {
             final SortMeta sortMeta = SortMeta.builder().field("field").caseSensitiveSort(isCaseSensitiveSort())
@@ -622,25 +633,6 @@ public class Sheet extends SheetBase {
                 requestMap.remove(var);
             }
         }
-    }
-
-    /**
-     * Gets the rowKey for the current row
-     *
-     * @param context the faces context
-     * @return a row key value or null if the expression is not set
-     */
-    @Override
-    protected Object getRowKeyValue(final FacesContext context) {
-        final ValueExpression veRowKey = getValueExpression(PropertyKeys.rowKey.name());
-        if (veRowKey == null) {
-            throw new FacesException("RowKey required on sheet!");
-        }
-        final Object value = veRowKey.getValue(context.getELContext());
-        if (value == null) {
-            throw new FacesException("RowKey must resolve to non-null value for updates to work properly");
-        }
-        return value;
     }
 
     /**
@@ -773,7 +765,7 @@ public class Sheet extends SheetBase {
             setRowVar(context, rowKey);
             final Object rowVal = rowMap.get(rowKey);
 
-            final ValueExpression ve = column.getValueExpression(PropertyKeys.value.name());
+            final ValueExpression ve = column.getValueExpression("value");
             final ELContext elContext = context.getELContext();
             final Object oldValue = ve.getValue(elContext);
             ve.setValue(elContext, newValue);
