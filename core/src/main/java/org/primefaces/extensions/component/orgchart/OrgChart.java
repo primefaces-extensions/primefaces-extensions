@@ -32,6 +32,7 @@ import jakarta.faces.event.FacesEvent;
 import org.primefaces.cdk.api.FacesComponentInfo;
 import org.primefaces.extensions.event.OrgChartClickEvent;
 import org.primefaces.extensions.event.OrgChartDropEvent;
+import org.primefaces.extensions.util.Constants;
 
 /**
  * <code>orgchart</code> component.
@@ -45,10 +46,10 @@ import org.primefaces.extensions.event.OrgChartDropEvent;
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
-@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "primefaces-extensions.js")
-@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "orgchart/orgchart.js")
-@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "orgchart/orgchart.css")
-@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "orgchart/style.css")
+@ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.js")
+@ResourceDependency(library = Constants.LIBRARY, name = "orgchart/orgchart.js")
+@ResourceDependency(library = Constants.LIBRARY, name = "orgchart/orgchart.css")
+@ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.css")
 public class OrgChart extends OrgChartBaseImpl {
 
     public static final String STYLE_CLASS = "ui-orgchart ";
