@@ -32,7 +32,6 @@ import jakarta.faces.event.FacesEvent;
 
 import org.primefaces.cdk.api.FacesComponentInfo;
 import org.primefaces.extensions.event.SpeedTestEvent;
-import org.primefaces.util.Constants;
 
 /**
  * <code>Speedtest</code> component.
@@ -67,14 +66,13 @@ public class Speedtest extends SpeedtestBaseImpl {
      */
     @Override
     public void queueEvent(final FacesEvent event) {
-        final FacesContext fc = FacesContext.getCurrentInstance();
-
-        if (isAjaxBehaviorEventSource(event) && event instanceof AjaxBehaviorEvent) {
-            final Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
-            final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
-            final String clientId = getClientId(fc);
+        if (isAjaxBehaviorEventSource(event)) {
+            final FacesContext context = event.getFacesContext();
+            final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+            final String clientId = getClientId(context);
             final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
-            if (SpeedTestEvent.NAME.equals(eventName)) {
+
+            if (isAjaxBehaviorEvent(event, ClientBehaviorEventKeys.speedtest)) {
                 // Get parameters:
                 final Double pingTimeMS = convertParam(clientId, "_PingTimeMS", params);
                 final Double jitterTimeMS = convertParam(clientId, "_JitterTimeMS", params);
@@ -82,8 +80,12 @@ public class Speedtest extends SpeedtestBaseImpl {
                 final Double speedMbpsUpload = convertParam(clientId, "_SpeedMbpsUpload", params);
                 final SpeedTestEvent speedtestEvent = new SpeedTestEvent(this, behaviorEvent.getBehavior(),
                             pingTimeMS, jitterTimeMS, speedMbpsDownload, speedMbpsUpload);
-                speedtestEvent.setPhaseId(event.getPhaseId());
+                speedtestEvent.setPhaseId(behaviorEvent.getPhaseId());
                 super.queueEvent(speedtestEvent);
+                return;
+            }
+            else {
+                super.queueEvent(event);
                 return;
             }
         }
