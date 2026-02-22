@@ -23,9 +23,9 @@ package org.primefaces.extensions.component.slideout;
 
 import java.io.IOException;
 
-import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
+import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.extensions.util.ExtLangUtils;
@@ -39,13 +39,14 @@ import org.primefaces.util.WidgetBuilder;
  * @author Melloware mellowaredev@gmail.com
  * @since 6.1
  */
-public class SlideOutRenderer extends CoreRenderer {
+@FacesRenderer(rendererType = SlideOut.DEFAULT_RENDERER, componentFamily = SlideOut.COMPONENT_FAMILY)
+public class SlideOutRenderer extends CoreRenderer<SlideOut> {
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void decode(final FacesContext context, final UIComponent component) {
+    public void decode(final FacesContext context, final SlideOut component) {
         decodeBehaviors(context, component);
     }
 
@@ -53,17 +54,16 @@ public class SlideOutRenderer extends CoreRenderer {
      * {@inheritDoc}
      */
     @Override
-    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-        final SlideOut slideOut = (SlideOut) component;
-        encodeMarkup(context, slideOut);
-        encodeScript(context, slideOut);
+    public void encodeEnd(final FacesContext context, final SlideOut component) throws IOException {
+        encodeMarkup(context, component);
+        encodeScript(context, component);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void encodeChildren(final FacesContext context, final UIComponent component) {
+    public void encodeChildren(final FacesContext context, final SlideOut component) {
         // Do nothing
     }
 
@@ -78,27 +78,27 @@ public class SlideOutRenderer extends CoreRenderer {
     /**
      * Create the HTML markup for the DOM.
      */
-    private void encodeMarkup(final FacesContext context, final SlideOut slideOut) throws IOException {
+    private void encodeMarkup(final FacesContext context, final SlideOut component) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
-        final String clientId = slideOut.getClientId(context);
-        final String widgetVar = slideOut.resolveWidgetVar();
+        final String clientId = component.getClientId(context);
+        final String widgetVar = component.resolveWidgetVar();
 
-        writer.startElement("div", slideOut);
+        writer.startElement("div", component);
         writer.writeAttribute("id", clientId, "id");
         writer.writeAttribute(HTML.WIDGET_VAR, widgetVar, null);
 
-        if (slideOut.getPanelStyleClass() != null) {
-            writer.writeAttribute(Attrs.CLASS, slideOut.getPanelStyleClass(), "styleClass");
+        if (component.getPanelStyleClass() != null) {
+            writer.writeAttribute(Attrs.CLASS, component.getPanelStyleClass(), "styleClass");
         }
-        if (slideOut.getPanelStyle() != null) {
-            writer.writeAttribute(Attrs.STYLE, slideOut.getPanelStyle(), Attrs.STYLE);
+        if (component.getPanelStyle() != null) {
+            writer.writeAttribute(Attrs.STYLE, component.getPanelStyle(), Attrs.STYLE);
         }
 
         // handle
-        encodeHandle(context, slideOut);
+        encodeHandle(context, component);
 
         // content of the panel
-        renderChildren(context, slideOut);
+        renderChildren(context, component);
 
         writer.endElement("div");
     }
@@ -106,26 +106,26 @@ public class SlideOutRenderer extends CoreRenderer {
     /**
      * HTML markup for the tab handle.
      */
-    private void encodeHandle(final FacesContext context, final SlideOut slideOut) throws IOException {
+    private void encodeHandle(final FacesContext context, final SlideOut component) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
         final String styleClass = getStyleClassBuilder(context)
                     .add(SlideOut.HANDLE_CLASS)
-                    .add(slideOut.getHandleStyleClass())
+                    .add(component.getHandleStyleClass())
                     .build();
 
         writer.startElement("a", null);
-        writer.writeAttribute("id", getHandleId(context, slideOut), null);
-        if (slideOut.getHandleStyle() != null) {
-            writer.writeAttribute(Attrs.STYLE, slideOut.getHandleStyle(), Attrs.STYLE);
+        writer.writeAttribute("id", getHandleId(context, component), null);
+        if (component.getHandleStyle() != null) {
+            writer.writeAttribute(Attrs.STYLE, component.getHandleStyle(), Attrs.STYLE);
         }
         writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
 
         // icon
-        encodeIcon(context, slideOut);
+        encodeIcon(context, component);
 
         // handle text
-        if (slideOut.getTitle() != null) {
-            writer.writeText(slideOut.getTitle(), "title");
+        if (component.getTitle() != null) {
+            writer.writeText(component.getTitle(), "title");
         }
 
         writer.endElement("a");
@@ -134,13 +134,13 @@ public class SlideOutRenderer extends CoreRenderer {
     /**
      * HTML markup for the tab handle icon if defined.
      */
-    private void encodeIcon(final FacesContext context, final SlideOut slideOut) throws IOException {
-        if (slideOut.getIcon() == null) {
+    private void encodeIcon(final FacesContext context, final SlideOut component) throws IOException {
+        if (component.getIcon() == null) {
             return;
         }
 
         // fontawesome icons are OK but themeroller we need to add styles
-        String icon = slideOut.getIcon().trim();
+        String icon = component.getIcon().trim();
         if (icon.startsWith("ui")) {
             icon = "ui-icon " + icon + " ui-slideouttab-icon";
         }
@@ -156,54 +156,54 @@ public class SlideOutRenderer extends CoreRenderer {
     /**
      * Create the Javascript.
      */
-    private void encodeScript(final FacesContext context, final SlideOut slideOut) throws IOException {
+    private void encodeScript(final FacesContext context, final SlideOut component) throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context);
-        final String handleId = getHandleId(context, slideOut);
-        wb.init("ExtSlideOut", slideOut);
-        wb.attr("tabLocation", slideOut.getLocation());
+        final String handleId = getHandleId(context, component);
+        wb.init("ExtSlideOut", component);
+        wb.attr("tabLocation", component.getLocation());
         wb.attr("tabHandle", handleId);
-        wb.attr("speed", slideOut.getAnimateSpeed());
-        wb.attr("action", ExtLangUtils.lowerCase(slideOut.getShowOn()));
-        wb.attr("clickScreenToClose", slideOut.isClickScreenToClose());
-        wb.attr("onLoadSlideOut", slideOut.isAutoOpen());
-        wb.attr("positioning", slideOut.isSticky() ? "absolute" : "fixed");
-        wb.attr("offset", slideOut.getOffset());
-        wb.attr("offsetReverse", slideOut.isOffsetReverse());
-        wb.attr("handleOffsetReverse", slideOut.isHandleOffsetReverse());
-        wb.attr("bounceTimes", slideOut.getBounceTimes());
-        wb.attr("bounceDistance", slideOut.getBounceDistance());
+        wb.attr("speed", component.getAnimateSpeed());
+        wb.attr("action", ExtLangUtils.lowerCase(component.getShowOn()));
+        wb.attr("clickScreenToClose", component.isClickScreenToClose());
+        wb.attr("onLoadSlideOut", component.isAutoOpen());
+        wb.attr("positioning", component.isSticky() ? "absolute" : "fixed");
+        wb.attr("offset", component.getOffset());
+        wb.attr("offsetReverse", component.isOffsetReverse());
+        wb.attr("handleOffsetReverse", component.isHandleOffsetReverse());
+        wb.attr("bounceTimes", component.getBounceTimes());
+        wb.attr("bounceDistance", component.getBounceDistance());
         wb.nativeAttr("clickScreenToCloseFilters", "['.ui-slideouttab-panel', 'button', 'a']");
 
-        if (slideOut.getHandleOffset() != null) {
-            wb.attr("handleOffset", slideOut.getHandleOffset());
+        if (component.getHandleOffset() != null) {
+            wb.attr("handleOffset", component.getHandleOffset());
         }
 
-        if (slideOut.getOnopen() != null) {
-            wb.callback("onOpen", "function()", slideOut.getOnopen());
+        if (component.getOnopen() != null) {
+            wb.callback("onOpen", "function()", component.getOnopen());
         }
-        if (slideOut.getOnclose() != null) {
-            wb.callback("onClose", "function()", slideOut.getOnclose());
+        if (component.getOnclose() != null) {
+            wb.callback("onClose", "function()", component.getOnclose());
         }
-        if (slideOut.getOnslide() != null) {
-            wb.callback("onSlide", "function()", slideOut.getOnslide());
+        if (component.getOnslide() != null) {
+            wb.callback("onSlide", "function()", component.getOnslide());
         }
-        if (slideOut.getOnbeforeopen() != null) {
-            wb.callback("onBeforeOpen", "function()", slideOut.getOnbeforeopen());
+        if (component.getOnbeforeopen() != null) {
+            wb.callback("onBeforeOpen", "function()", component.getOnbeforeopen());
         }
-        if (slideOut.getOnbeforeclose() != null) {
-            wb.callback("onBeforeClose", "function()", slideOut.getOnbeforeclose());
+        if (component.getOnbeforeclose() != null) {
+            wb.callback("onBeforeClose", "function()", component.getOnbeforeclose());
         }
-        if (slideOut.getOnbeforeslide() != null) {
-            wb.callback("onBeforeSlide", "function()", slideOut.getOnbeforeslide());
+        if (component.getOnbeforeslide() != null) {
+            wb.callback("onBeforeSlide", "function()", component.getOnbeforeslide());
         }
 
-        encodeClientBehaviors(context, slideOut);
+        encodeClientBehaviors(context, component);
 
         wb.finish();
     }
 
-    private String getHandleId(final FacesContext context, final SlideOut slideOut) {
-        final String clientId = slideOut.getClientId(context);
+    private String getHandleId(final FacesContext context, final SlideOut component) {
+        final String clientId = component.getClientId(context);
         return clientId + "_handle";
     }
 
