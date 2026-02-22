@@ -23,9 +23,10 @@ package org.primefaces.extensions.component.localized;
 
 import java.util.Locale;
 
-import jakarta.faces.component.UIComponentBase;
+import jakarta.faces.component.FacesComponent;
 import jakarta.faces.context.FacesContext;
 
+import org.primefaces.cdk.api.FacesComponentInfo;
 import org.primefaces.util.LocaleUtils;
 
 /**
@@ -34,83 +35,12 @@ import org.primefaces.util.LocaleUtils;
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
  * @since 11.0.3
  */
-public class Localized extends UIComponentBase {
+@FacesComponent(value = Localized.COMPONENT_TYPE, namespace = Localized.COMPONENT_FAMILY)
+@FacesComponentInfo(description = "Localized content from files or facets by locale.")
+public class Localized extends LocalizedBaseImpl {
 
-    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Localized";
-    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-    public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.LocalizedRenderer";
-
-    // @formatter:off
-    @SuppressWarnings("java:S115")
-    public enum PropertyKeys {
-        name,
-        folder,
-        locale,
-        escape,
-        evalEl,
-        markdown
-    }
-    // @formatter:on
-
-    public Localized() {
-        setRendererType(DEFAULT_RENDERER);
-    }
-
-    @Override
-    public String getFamily() {
-        return COMPONENT_FAMILY;
-    }
-
-    public Locale calculateLocale(FacesContext facesContext) {
+    public Locale calculateLocale(final FacesContext facesContext) {
         return LocaleUtils.resolveLocale(facesContext, getLocale(), getClientId(facesContext));
-    }
-
-    public String getName() {
-        return (String) getStateHelper().eval(PropertyKeys.name, null);
-    }
-
-    public void setName(final String name) {
-        getStateHelper().put(PropertyKeys.name, name);
-    }
-
-    public String getFolder() {
-        return (String) getStateHelper().eval(PropertyKeys.folder, null);
-    }
-
-    public void setFolder(final String folder) {
-        getStateHelper().put(PropertyKeys.folder, folder);
-    }
-
-    public Object getLocale() {
-        return getStateHelper().eval(PropertyKeys.locale, null);
-    }
-
-    public void setLocale(final Object locale) {
-        getStateHelper().put(PropertyKeys.locale, locale);
-    }
-
-    public boolean isEscape() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.escape, true);
-    }
-
-    public void setEscape(final boolean escape) {
-        getStateHelper().put(PropertyKeys.escape, escape);
-    }
-
-    public boolean isEvalEl() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.evalEl, false);
-    }
-
-    public void setEvalEl(final boolean evalEl) {
-        getStateHelper().put(PropertyKeys.evalEl, evalEl);
-    }
-
-    public boolean isMarkdown() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.markdown, false);
-    }
-
-    public void setMarkdown(final boolean markdown) {
-        getStateHelper().put(PropertyKeys.markdown, markdown);
     }
 
 }

@@ -28,6 +28,7 @@ import java.util.Map.Entry;
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
+import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
@@ -41,47 +42,47 @@ import org.primefaces.util.WidgetBuilder;
  * @author Melloware mellowaredev@gmail.com
  * @since 7.1
  */
-public class LegendRenderer extends CoreRenderer {
+@FacesRenderer(rendererType = Legend.DEFAULT_RENDERER, componentFamily = Legend.COMPONENT_FAMILY)
+public class LegendRenderer extends CoreRenderer<Legend> {
 
     @Override
-    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-        final Legend legend = (Legend) component;
-        encodeMarkup(context, legend);
-        encodeScript(context, legend);
+    public void encodeEnd(final FacesContext context, final Legend component) throws IOException {
+        encodeMarkup(context, component);
+        encodeScript(context, component);
     }
 
-    private void encodeMarkup(FacesContext context, Legend legend) throws IOException {
+    private void encodeMarkup(FacesContext context, Legend component) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
-        final String clientId = legend.getClientId(context);
-        final String widgetVar = legend.resolveWidgetVar();
+        final String clientId = component.getClientId(context);
+        final String widgetVar = component.resolveWidgetVar();
         final String styleClass = getStyleClassBuilder(context)
-                    .add(legend.getLayout().equalsIgnoreCase("vertical")
+                    .add(component.getLayout().equalsIgnoreCase("vertical")
                                 ? Legend.STYLE_CLASS_VERTICAL
                                 : Legend.STYLE_CLASS_HORIZONTAL)
-                    .add(legend.getStyleClass())
+                    .add(component.getStyleClass())
                     .build();
 
-        writer.startElement("div", legend);
+        writer.startElement("div", component);
         writer.writeAttribute("id", clientId, "id");
         writer.writeAttribute(HTML.WIDGET_VAR, widgetVar, null);
         writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
-        if (legend.getStyle() != null) {
-            writer.writeAttribute(Attrs.STYLE, legend.getStyle(), Attrs.STYLE);
+        if (component.getStyle() != null) {
+            writer.writeAttribute(Attrs.STYLE, component.getStyle(), Attrs.STYLE);
         }
 
         // title
-        encodeTitle(context, legend);
+        encodeTitle(context, component);
 
         // items
-        encodeItems(context, legend);
+        encodeItems(context, component);
 
         // footer
-        encodeFooter(context, legend);
+        encodeFooter(context, component);
 
         writer.endElement("div");
     }
 
-    private void encodeItems(FacesContext context, Legend legend) throws IOException {
+    private void encodeItems(FacesContext context, Legend component) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
         // scales
         writer.startElement("div", null);
@@ -90,7 +91,7 @@ public class LegendRenderer extends CoreRenderer {
         writer.writeAttribute(Attrs.CLASS, Legend.LABELS_STYLE, null);
 
         // Key=text, Value=Color
-        final Map<String, String> values = legend.getValues();
+        final Map<String, String> values = component.getValues();
         for (final Entry<String, String> item : values.entrySet()) {
             writer.startElement("li", null);
             writer.startElement("span", null);
@@ -103,10 +104,10 @@ public class LegendRenderer extends CoreRenderer {
         writer.endElement("div");
     }
 
-    private void encodeTitle(FacesContext context, Legend legend) throws IOException {
+    private void encodeTitle(FacesContext context, Legend component) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
-        final UIComponent facet = legend.getFacet("title");
-        final String title = legend.getTitle();
+        final UIComponent facet = component.getTitleFacet();
+        final String title = component.getTitle();
         writer.startElement("div", null);
         writer.writeAttribute(Attrs.CLASS, Legend.TITLE_STYLE, null);
         if (FacetUtils.shouldRenderFacet(facet)) {
@@ -121,10 +122,10 @@ public class LegendRenderer extends CoreRenderer {
         writer.endElement("div");
     }
 
-    private void encodeFooter(FacesContext context, Legend legend) throws IOException {
+    private void encodeFooter(FacesContext context, Legend component) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
-        final UIComponent facet = legend.getFacet("footer");
-        final String footer = legend.getFooter();
+        final UIComponent facet = component.getFooterFacet();
+        final String footer = component.getFooter();
         writer.startElement("div", null);
         writer.writeAttribute(Attrs.CLASS, Legend.FOOTER_STYLE, null);
         if (FacetUtils.shouldRenderFacet(facet)) {
@@ -139,10 +140,10 @@ public class LegendRenderer extends CoreRenderer {
         writer.endElement("div");
     }
 
-    private void encodeScript(FacesContext context, Legend legend) throws IOException {
+    private void encodeScript(FacesContext context, Legend component) throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context);
-        wb.init("ExtLegend", legend);
-        wb.attr("layout", legend.getLayout());
+        wb.init("ExtLegend", component);
+        wb.attr("layout", component.getLayout());
         wb.finish();
     }
 
