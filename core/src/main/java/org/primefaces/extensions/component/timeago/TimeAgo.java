@@ -32,10 +32,10 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import jakarta.faces.application.ResourceDependency;
-import jakarta.faces.component.UIComponentBase;
+import jakarta.faces.component.FacesComponent;
 import jakarta.faces.context.FacesContext;
 
-import org.primefaces.component.api.Widget;
+import org.primefaces.cdk.api.FacesComponentInfo;
 import org.primefaces.extensions.util.Constants;
 import org.primefaces.util.LocaleUtils;
 
@@ -49,86 +49,15 @@ import org.primefaces.util.LocaleUtils;
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "timeago/timeago.js")
-public class TimeAgo extends UIComponentBase implements Widget {
-
-    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.TimeAgo";
-    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-    public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.TimeAgoRenderer";
+@FacesComponent(value = TimeAgo.COMPONENT_TYPE, namespace = TimeAgo.COMPONENT_FAMILY)
+@FacesComponentInfo(description = "TimeAgo displays relative time for a given date/time value.")
+public class TimeAgo extends TimeAgoBaseImpl {
 
     public static final String STYLE_CLASS = "ui-timeago ui-widget";
 
     private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
 
     private Locale appropriateLocale;
-
-    // @formatter:off
-    @SuppressWarnings("java:S115")
-    public enum PropertyKeys {
-        value,
-        widgetVar,
-        style,
-        styleClass,
-        locale,
-        titlePattern
-    }
-    // @formatter:on
-
-    public TimeAgo() {
-        setRendererType(DEFAULT_RENDERER);
-    }
-
-    @Override
-    public String getFamily() {
-        return COMPONENT_FAMILY;
-    }
-
-    public Object getValue() {
-        return getStateHelper().eval(PropertyKeys.value, null);
-    }
-
-    public void setValue(String value) {
-        getStateHelper().put(PropertyKeys.value, value);
-    }
-
-    public String getWidgetVar() {
-        return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
-    }
-
-    public void setWidgetVar(String widgetVar) {
-        getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
-    }
-
-    public String getStyle() {
-        return (String) getStateHelper().eval(PropertyKeys.style, null);
-    }
-
-    public void setStyle(String style) {
-        getStateHelper().put(PropertyKeys.style, style);
-    }
-
-    public String getStyleClass() {
-        return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
-    }
-
-    public void setStyleClass(String styleClass) {
-        getStateHelper().put(PropertyKeys.styleClass, styleClass);
-    }
-
-    public Object getLocale() {
-        return getStateHelper().eval(PropertyKeys.locale, null);
-    }
-
-    public void setLocale(final Object locale) {
-        getStateHelper().put(PropertyKeys.locale, locale);
-    }
-
-    public String getTitlePattern() {
-        return (String) getStateHelper().eval(PropertyKeys.titlePattern, null);
-    }
-
-    public void setTitlePattern(String titlePattern) {
-        getStateHelper().put(PropertyKeys.titlePattern, titlePattern);
-    }
 
     public Locale calculateLocale() {
         if (appropriateLocale == null) {
