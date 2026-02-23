@@ -24,7 +24,7 @@
         <primefaces-extensions.updated-components>inputPhone;monacoEditor;orgchart</primefaces-extensions.updated-components>
         <primefaces-extensions.deprecated-components/>
         <jetty.version>12.1.6</jetty.version>
-        <font-awesome.version>7.1.0</font-awesome.version>
+        <font-awesome.version>7.2.0</font-awesome.version>
     </properties>
     <dependencies>
         <dependency>
