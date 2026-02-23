@@ -58,7 +58,7 @@ public abstract class BlockUIBase extends UIComponentBase implements Widget {
     @Property(description = "Search expression for the component(s) to block.", implicitDefaultValue = "parent")
     public abstract String getSource();
 
-    @Property(description = "Search expression for the element to use as the blocking container.", required = true)
+    @Property(description = "Search expression for the element to use as the blocking container.")
     public abstract String getTarget();
 
     @Property(description = "Search expression for the component whose markup is used as blocking content.")

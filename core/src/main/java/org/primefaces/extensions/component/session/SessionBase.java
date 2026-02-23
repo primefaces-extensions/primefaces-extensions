@@ -48,10 +48,10 @@ public abstract class SessionBase extends UIComponentBase implements Widget {
         return COMPONENT_FAMILY;
     }
 
-    @Property(description = "Client-side callback when session is about to expire.")
+    @Property(description = "Client-side callback when session is about to expire.", required = true)
     public abstract String getOnexpire();
 
-    @Property(description = "Client-side callback when session has expired.")
+    @Property(description = "Client-side callback when session has expired.", required = true)
     public abstract String getOnexpired();
 
     @Property(description = "Reaction period in seconds.")

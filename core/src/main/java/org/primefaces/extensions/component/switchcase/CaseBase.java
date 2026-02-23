@@ -45,6 +45,6 @@ public abstract class CaseBase extends DefaultCaseBase {
         return COMPONENT_FAMILY;
     }
 
-    @Property(description = "The case value to compare with the switch value.")
+    @Property(description = "The case value to compare with the switch value.", required = true)
     public abstract Object getValue();
 }

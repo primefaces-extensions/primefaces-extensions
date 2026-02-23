@@ -41,7 +41,7 @@ import org.primefaces.extensions.util.Constants;
  * @since 6.1
  */
 @FacesComponent(value = SlideOut.COMPONENT_TYPE, namespace = SlideOut.COMPONENT_FAMILY)
-@FacesComponentInfo(description = "SlideOut creates a sliding panel with a handle.")
+@FacesComponentInfo(name = "slideout", description = "SlideOut creates a sliding panel with a handle.")
 @ResourceDependency(library = "primefaces", name = "components.css")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")

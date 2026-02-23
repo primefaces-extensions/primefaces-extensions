@@ -32,6 +32,6 @@ import org.primefaces.cdk.api.FacesComponentInfo;
  * @since 1.1.0
  */
 @FacesComponent(value = UIFluidGridItem.COMPONENT_TYPE, namespace = UIFluidGridItem.COMPONENT_FAMILY)
-@FacesComponentInfo(description = "Defines an item template for a FluidGridItem type; used as a child of FluidGrid.")
+@FacesComponentInfo(name = "fluidGridItem", description = "Defines an item template for a FluidGridItem type; used as a child of FluidGrid.")
 public class UIFluidGridItem extends UIFluidGridItemBaseImpl {
 }

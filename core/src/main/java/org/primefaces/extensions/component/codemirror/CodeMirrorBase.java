@@ -23,6 +23,8 @@ package org.primefaces.extensions.component.codemirror;
 
 import jakarta.el.MethodExpression;
 import jakarta.faces.component.html.HtmlInputTextarea;
+import jakarta.faces.event.ValueChangeListener;
+import jakarta.faces.validator.Validator;
 
 import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
@@ -44,6 +46,16 @@ public abstract class CodeMirrorBase extends HtmlInputTextarea implements InputA
     @Override
     public String getFamily() {
         return COMPONENT_FAMILY;
+    }
+
+    @Property(description = "A method expression referring to a method validating the input.")
+    public Validator<?> getValidator() {
+        throw new UnsupportedOperationException("Only for documentation purpose.");
+    }
+
+    @Property(description = "A method binding expression referring to a method for handling a valuchangeevent.")
+    public ValueChangeListener getValueChangeListener() {
+        throw new UnsupportedOperationException("Only for documentation purpose.");
     }
 
     @Property(description = "The theme to style the editor with.")

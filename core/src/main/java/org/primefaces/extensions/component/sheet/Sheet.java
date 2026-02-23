@@ -162,7 +162,7 @@ public class Sheet extends SheetBaseImpl {
      * @return value expression for row header, or null if not set
      */
     protected ValueExpression getRowHeaderValueExpression() {
-        return getValueExpression("rowHeader");
+        return getValueExpression(PropertyKeys.rowHeader.name());
     }
 
     /**
@@ -173,7 +173,7 @@ public class Sheet extends SheetBaseImpl {
      * @throws FacesException if rowKey is not set or resolves to null
      */
     protected Object getRowKeyValue(final FacesContext context) {
-        final ValueExpression veRowKey = getValueExpression("rowKey");
+        final ValueExpression veRowKey = getValueExpression(PropertyKeys.rowKey.name());
         if (veRowKey == null) {
             throw new FacesException("RowKey required on sheet!");
         }
@@ -369,7 +369,7 @@ public class Sheet extends SheetBaseImpl {
 
         setRowVar(context, rowKey);
         final SheetColumn column = getColumns().get(col);
-        final ValueExpression ve = column.getValueExpression("value");
+        final ValueExpression ve = column.getValueExpression(PropertyKeys.value.name());
         if (ve != null) {
             return ve.getValue(context.getELContext());
         }
@@ -455,7 +455,7 @@ public class Sheet extends SheetBaseImpl {
             }
         }
 
-        final ValueExpression veSortBy = getValueExpression("sortBy");
+        final ValueExpression veSortBy = getValueExpression(PropertyKeys.sortBy.name());
         if (veSortBy == null) {
             return -1;
         }
@@ -467,7 +467,7 @@ public class Sheet extends SheetBaseImpl {
                 continue;
             }
 
-            final ValueExpression veCol = column.getValueExpression("sortBy");
+            final ValueExpression veCol = column.getValueExpression(PropertyKeys.sortBy.name());
             if (veCol != null && veCol.getExpressionString().equals(sortByExp)) {
                 return colIdx;
             }
@@ -577,13 +577,13 @@ public class Sheet extends SheetBaseImpl {
         // Sort by the saved column. When none was saved, sort by the "sortBy" attribute of the sheet.
         final int sortByIdx = getSortColRenderIndex();
         final SheetColumn currentSortByColumn = sortByIdx >= 0 ? columns.get(sortByIdx) : null;
-        final ValueExpression currentSortByVe = currentSortByColumn != null ? currentSortByColumn.getValueExpression("sortBy") : null;
+        final ValueExpression currentSortByVe = currentSortByColumn != null ? currentSortByColumn.getValueExpression(PropertyKeys.sortBy.name()) : null;
         final ValueExpression veSortBy;
         if (currentSortByVe != null) {
             veSortBy = currentSortByVe;
         }
         else {
-            veSortBy = getValueExpression("sortBy");
+            veSortBy = getValueExpression(PropertyKeys.sortBy.name());
         }
         if (veSortBy != null) {
             final SortMeta sortMeta = SortMeta.builder().field("field").caseSensitiveSort(isCaseSensitiveSort())
@@ -765,7 +765,7 @@ public class Sheet extends SheetBaseImpl {
             setRowVar(context, rowKey);
             final Object rowVal = rowMap.get(rowKey);
 
-            final ValueExpression ve = column.getValueExpression("value");
+            final ValueExpression ve = column.getValueExpression(PropertyKeys.value.name());
             final ELContext elContext = context.getELContext();
             final Object oldValue = ve.getValue(elContext);
             ve.setValue(elContext, newValue);

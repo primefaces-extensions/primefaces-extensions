@@ -58,20 +58,19 @@ abstract class MonacoEditorBaseRenderer<TEditor extends MonacoEditorBase>
                 throws IOException;
 
     @Override
-    public final void decode(final FacesContext context, final UIComponent component) {
-        final TEditor monacoEditor = componentClass.cast(component);
+    public final void decode(final FacesContext context, final TEditor component) {
 
         // Do not allow modifications if component is not allowed to submit values.
         // Read-only is fine, we should still accept the submitted value when read-only
-        if (monacoEditor.isDisabled()) {
+        if (component.isDisabled()) {
             return;
         }
 
         // Decode value
-        final String clientId = monacoEditor.getClientId() + INPUT_SUFFIX;
+        final String clientId = component.getClientId() + INPUT_SUFFIX;
         final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
         if (params.containsKey(clientId)) {
-            monacoEditor.setSubmittedValue(params.get(clientId));
+            component.setSubmittedValue(params.get(clientId));
         }
 
         // Decode behaviors

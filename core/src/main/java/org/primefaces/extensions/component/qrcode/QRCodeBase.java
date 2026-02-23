@@ -85,8 +85,8 @@ public abstract class QRCodeBase extends UIOutput implements Widget, StyleAware 
     @Property(description = "Corner radius.", defaultValue = "0")
     public abstract Double getRadius();
 
-    @Property(description = "Quiet zone size.", defaultValue = "0")
-    public abstract Integer getQuiet();
+    @Property(description = "Quiet zone size.", defaultValue = "0.0")
+    public abstract Double getQuiet();
 
     @Property(description = "Label font size.", defaultValue = "0.1")
     public abstract Double getLabelSize();

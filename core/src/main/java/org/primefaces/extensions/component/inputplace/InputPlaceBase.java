@@ -68,4 +68,7 @@ public abstract class InputPlaceBase extends AbstractPrimeHtmlInputText implemen
 
     @Property(description = "Client-side callback when place is changed.")
     public abstract String getOnplacechanged();
+
+    @Property(description = "JavaScript extender function name.")
+    public abstract String getExtender();
 }

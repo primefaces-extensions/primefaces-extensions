@@ -42,15 +42,15 @@ public class MethodSignatureTagHandler extends TagHandler {
     public static final String PARAMETERS_TYPES_ATTRIBUTE_NAME = "METHOD_SIGNATURE_PARAMETER_TYPES";
 
     @Property(description = "A comma separated list of fully qualified class names, matching passed parameters in order.", type = String.class, required = true)
-    private final TagAttribute parametersAttribute;
+    private final TagAttribute parameters;
 
     private final Class<?>[] parameterTypes;
 
     public MethodSignatureTagHandler(final TagConfig config) {
         super(config);
-        this.parametersAttribute = getRequiredAttribute("parameters");
+        this.parameters = getRequiredAttribute("parameters");
         try {
-            parameterTypes = parseParameterTypes(parametersAttribute.getValue());
+            parameterTypes = parseParameterTypes(parameters.getValue());
         }
         catch (final ClassNotFoundException e) {
             throw new FacesException(e.getMessage(), e);
@@ -69,8 +69,8 @@ public class MethodSignatureTagHandler extends TagHandler {
         return new Class<?>[] {};
     }
 
-    private static Class<?>[] parseParameterTypes(final String parameters) throws ClassNotFoundException {
-        final String[] splitParameters = parameters.split(",");
+    private static Class<?>[] parseParameterTypes(final String parameterValues) throws ClassNotFoundException {
+        final String[] splitParameters = parameterValues.split(",");
         final Class<?>[] types = new Class<?>[splitParameters.length];
         for (int i = 0; i < splitParameters.length; i++) {
             types[i] = Class.forName(splitParameters[i].trim());

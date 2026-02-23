@@ -46,7 +46,7 @@ import org.primefaces.util.Constants;
  * @since 10.0.0
  */
 @FacesComponent(value = OSMap.COMPONENT_TYPE, namespace = OSMapBase.COMPONENT_FAMILY)
-@FacesComponentInfo(description = "OpenStreetMap component using Leaflet.")
+@FacesComponentInfo(name = "osmap", description = "OpenStreetMap component using Leaflet.")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "leaflet/leaflet.css")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "leaflet/leaflet.js")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "leaflet/leaflet.fullscreen.css")

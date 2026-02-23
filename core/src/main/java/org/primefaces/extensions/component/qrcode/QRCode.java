@@ -24,6 +24,7 @@ package org.primefaces.extensions.component.qrcode;
 import jakarta.faces.application.ResourceDependency;
 import jakarta.faces.component.FacesComponent;
 
+import org.primefaces.cdk.api.FacesComponentInfo;
 import org.primefaces.extensions.util.Constants;
 
 /**
@@ -32,6 +33,7 @@ import org.primefaces.extensions.util.Constants;
  * @since 1.2.0
  */
 @FacesComponent(value = QRCodeBase.COMPONENT_TYPE, namespace = QRCodeBase.COMPONENT_FAMILY)
+@FacesComponentInfo(name = "qrCode", description = "Generate QR codes dynamically")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")

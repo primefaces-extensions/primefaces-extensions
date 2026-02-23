@@ -32,6 +32,6 @@ import org.primefaces.cdk.api.FacesComponentInfo;
  * @since 0.2
  */
 @FacesComponent(value = ExtHead.COMPONENT_TYPE, namespace = ExtHead.COMPONENT_FAMILY)
-@FacesComponentInfo(description = "Extends the document head with title and shortcut icon support.")
+@FacesComponentInfo(name = "head", description = "Extends the document head with title and shortcut icon support.")
 public class ExtHead extends ExtHeadBaseImpl {
 }

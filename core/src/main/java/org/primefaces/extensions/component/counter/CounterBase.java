@@ -60,7 +60,7 @@ public abstract class CounterBase extends UIComponentBase implements Widget, Sty
     @Property(description = "Starting value for the counter.", defaultValue = "0.0")
     public abstract Double getStart();
 
-    @Property(description = "Ending value for the counter.")
+    @Property(description = "Ending value for the counter.", required = true)
     public abstract Double getEnd();
 
     @Property(description = "Number of decimal places.", defaultValue = "0")

@@ -25,7 +25,9 @@ import java.util.Collection;
 
 import jakarta.faces.component.UIInput;
 import jakarta.faces.component.behavior.ClientBehaviorHolder;
+import jakarta.faces.event.ValueChangeListener;
 import jakarta.faces.model.SelectItem;
+import jakarta.faces.validator.Validator;
 
 import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
@@ -113,6 +115,12 @@ public abstract class SheetColumnBase extends UIInput implements ClientBehaviorH
     @Property(description = "Filter by value expression.")
     public abstract Object getFilterBy();
 
+    @Property(description = "Column/value expression to sort by (Object for correct type).")
+    public abstract Object getSortBy();
+
+    @Property(description = "Sort direction.", defaultValue = "ASCENDING")
+    public abstract String getSortOrder();
+
     @Property(description = "Filter options.")
     public abstract Collection<SelectItem> getFilterOptions();
 
@@ -130,4 +138,14 @@ public abstract class SheetColumnBase extends UIInput implements ClientBehaviorH
 
     @Property(description = "Client-side cell validation script.")
     public abstract String getOnvalidate();
+
+    @Property(description = "A method expression referring to a method validating the input.")
+    public Validator<?> getValidator() {
+        throw new UnsupportedOperationException("Only for documentation purpose.");
+    }
+
+    @Property(description = "A method binding expression referring to a method for handling a valuchangeevent.")
+    public ValueChangeListener getValueChangeListener() {
+        throw new UnsupportedOperationException("Only for documentation purpose.");
+    }
 }

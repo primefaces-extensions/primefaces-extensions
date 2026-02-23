@@ -49,10 +49,10 @@ public abstract class DocumentViewerBase extends UIGraphic {
         return COMPONENT_FAMILY;
     }
 
-    @Property(description = "Width of the viewer iframe (e.g. '100%' or '800px').", defaultValue = "100%", required = true)
+    @Property(description = "Width of the viewer iframe (e.g. '100%' or '800px').", defaultValue = "100%")
     public abstract String getWidth();
 
-    @Property(description = "Height of the viewer iframe.", required = true)
+    @Property(description = "Height of the viewer iframe.")
     public abstract String getHeight();
 
     @Property(description = "Inline style for the iframe.")
@@ -90,4 +90,7 @@ public abstract class DocumentViewerBase extends UIGraphic {
 
     @Property(description = "Zoom level (e.g. 'page-width', 'page-fit', 'auto', or numeric).")
     public abstract String getZoom();
+
+    @Property(description = "URL of the document to view.")
+    public abstract String getUrl();
 }

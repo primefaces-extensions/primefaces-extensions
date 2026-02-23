@@ -60,7 +60,7 @@ public abstract class ImageAreaSelectBase extends UIComponentBase implements Wid
         return COMPONENT_FAMILY;
     }
 
-    @Property(description = "Search expression for the target image to attach the area selector to.")
+    @Property(description = "Search expression for the target image to attach the area selector to.", required = true)
     public abstract String getFor();
 
     @Property(description = "Aspect ratio of the selection (e.g. '1:1').")

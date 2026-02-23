@@ -451,6 +451,42 @@
                     </resourcesSets>
                 </configuration>
             </plugin>
+            <!-- Generate taglib -->
+            <plugin>
+                <groupId>org.primefaces</groupId>
+                <artifactId>primefaces-cdk-impl</artifactId>
+                <version>${primefaces.core.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate-taglib</goal>
+                        </goals>
+                        <phase>process-classes</phase>
+                        <configuration>
+                            <uri>http://primefaces.org/ui/extensions</uri>
+                            <shortName>pfe-test</shortName>
+                            <displayName>PrimeFaces Extensions</displayName>
+                        </configuration>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.primefaces</groupId>
+                        <artifactId>primefaces</artifactId>
+                        <version>${primefaces.core.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>com.google.code.gson</groupId>
+                        <artifactId>gson</artifactId>
+                        <version>${gson.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.json</groupId>
+                        <artifactId>json</artifactId>
+                        <version>20251224</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
@@ -630,7 +666,8 @@
                     <includeLicenseText>false</includeLicenseText>
                     <outputReactorProjects>true</outputReactorProjects>
                     <outputFormat>all</outputFormat>
-                    <verbose>false</verbose><!-- = ${cyclonedx.verbose} -->
+                    <verbose>false</verbose>
+                    <!-- = ${cyclonedx.verbose} -->
                 </configuration>
             </plugin>
         </plugins>

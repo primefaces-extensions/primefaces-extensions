@@ -26,6 +26,7 @@ import jakarta.faces.event.AjaxBehaviorEvent;
 import org.primefaces.cdk.api.FacesBehaviorEvent;
 import org.primefaces.cdk.api.FacesBehaviorEvents;
 import org.primefaces.cdk.api.FacesComponentBase;
+import org.primefaces.cdk.api.Property;
 import org.primefaces.extensions.model.monacoeditor.DiffEditorOptions;
 
 /**
@@ -59,8 +60,7 @@ import org.primefaces.extensions.model.monacoeditor.DiffEditorOptions;
                         description = "Fires when a mouse button is released in the original editor."),
             @FacesBehaviorEvent(name = "originalPaste", event = AjaxBehaviorEvent.class, description = "Fires when paste is performed in the original editor.")
 })
-public abstract class MonacoDiffEditorBase extends MonacoEditorCommon<DiffEditorOptions>
-            implements DiffEditorProperties {
+public abstract class MonacoDiffEditorBase extends MonacoEditorCommon<DiffEditorOptions> {
 
     protected MonacoDiffEditorBase() {
         this((String) null);
@@ -69,4 +69,64 @@ public abstract class MonacoDiffEditorBase extends MonacoEditorCommon<DiffEditor
     protected MonacoDiffEditorBase(final String rendererType) {
         super(rendererType, DiffEditorOptions.class);
     }
+
+    @Property(description = "Language mode for the diff editor.")
+    public abstract String getLanguage();
+
+    @Property(description = "Whether the original (left) editor is disabled.", defaultValue = "true")
+    public abstract boolean isOriginalDisabled();
+
+    @Property(description = "Language for the original editor.")
+    public abstract String getOriginalLanguage();
+
+    @Property(description = "Whether the original editor is readonly.", defaultValue = "false")
+    public abstract boolean isOriginalReadonly();
+
+    @Property(description = "Whether the original editor is required.", defaultValue = "false")
+    public abstract boolean isOriginalRequired();
+
+    @Property(description = "Tabindex for the original editor.")
+    public abstract String getOriginalTabindex();
+
+    @Property(description = "Client-side script for original blur.")
+    public abstract String getOnoriginalblur();
+
+    @Property(description = "Client-side script for original change.")
+    public abstract String getOnoriginalchange();
+
+    @Property(description = "Client-side script for original focus.")
+    public abstract String getOnoriginalfocus();
+
+    @Property(description = "Client-side script for original keydown.")
+    public abstract String getOnoriginalkeydown();
+
+    @Property(description = "Client-side script for original keyup.")
+    public abstract String getOnoriginalkeyup();
+
+    @Property(description = "Client-side script for original keypress.")
+    public abstract String getOnoriginalkeypress();
+
+    @Property(description = "Client-side script for original mouseup.")
+    public abstract String getOnoriginalmouseup();
+
+    @Property(description = "Client-side script for original mousedown.")
+    public abstract String getOnoriginalmousedown();
+
+    @Property(description = "Client-side script for original mousemove.")
+    public abstract String getOnoriginalmousemove();
+
+    @Property(description = "Client-side script for original paste.")
+    public abstract String getOnoriginalpaste();
+
+    @Property(description = "Directory for the original model.", defaultValue = "")
+    public abstract String getOriginalDirectory();
+
+    @Property(description = "Extension for the original model.", defaultValue = "")
+    public abstract String getOriginalExtension();
+
+    @Property(description = "Basename for the original model.", defaultValue = "")
+    public abstract String getOriginalBasename();
+
+    @Property(description = "Scheme for the original model.", defaultValue = "inmemory")
+    public abstract String getOriginalScheme();
 }

@@ -77,7 +77,8 @@ public class InputPlaceRenderer extends InputRenderer<InputPlace> {
                     .attr("apiKey", component.getApiKey(), null)
                     .attr("restrictTypes", component.getRestrictTypes(), null)
                     .attr("restrictCountries", component.getRestrictCountries(), null)
-                    .callback("onPlaceChanged", "function(place)", component.getOnplacechanged());
+                    .callback("onPlaceChanged", "function(place)", component.getOnplacechanged())
+                    .nativeAttr("extender", component.getExtender());
 
         encodeClientBehaviors(context, component);
         wb.finish();

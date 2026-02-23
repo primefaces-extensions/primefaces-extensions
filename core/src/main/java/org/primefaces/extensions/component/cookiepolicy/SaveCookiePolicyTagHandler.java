@@ -43,18 +43,18 @@ import org.primefaces.cdk.api.Property;
  * @since 11.0.3
  */
 @FacesTagHandler("Tag Handler for saving a cookie policy.")
-public class CookiePolicySaveTagHandler extends TagHandler {
+public class SaveCookiePolicyTagHandler extends TagHandler {
 
     @Property(description = "The cookie policy to be saved.", type = String.class, required = true)
-    private final TagAttribute policyAttribute;
+    private final TagAttribute policy;
 
     @Property(description = "Retention period in seconds.", type = Integer.class, required = false)
-    private final TagAttribute retentionAttribute;
+    private final TagAttribute retention;
 
-    public CookiePolicySaveTagHandler(final TagConfig config) {
+    public SaveCookiePolicyTagHandler(final TagConfig config) {
         super(config);
-        this.policyAttribute = getRequiredAttribute("policy");
-        this.retentionAttribute = getAttribute("retention");
+        this.policy = getRequiredAttribute("policy");
+        this.retention = getAttribute("retention");
     }
 
     @Override
@@ -69,11 +69,11 @@ public class CookiePolicySaveTagHandler extends TagHandler {
             throw new TagException(this.tag, "Can only be attached to ActionSource components.");
         }
 
-        final ValueExpression policyValueExpression = this.policyAttribute.getValueExpression(context, String.class);
+        final ValueExpression policyValueExpression = this.policy.getValueExpression(context, String.class);
 
         final ValueExpression retentionValueExpression;
-        if (null != this.retentionAttribute) {
-            retentionValueExpression = this.retentionAttribute.getValueExpression(context, Integer.class);
+        if (null != this.retention) {
+            retentionValueExpression = this.retention.getValueExpression(context, Integer.class);
         }
         else {
             retentionValueExpression = null;

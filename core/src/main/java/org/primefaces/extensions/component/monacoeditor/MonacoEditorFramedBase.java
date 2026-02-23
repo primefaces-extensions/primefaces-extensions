@@ -22,6 +22,7 @@
 package org.primefaces.extensions.component.monacoeditor;
 
 import org.primefaces.cdk.api.FacesComponentBase;
+import org.primefaces.cdk.api.Property;
 
 /**
  * CDK base for the framed Monaco code editor.
@@ -29,8 +30,7 @@ import org.primefaces.cdk.api.FacesComponentBase;
  * @since 10.0.0
  */
 @FacesComponentBase
-public abstract class MonacoEditorFramedBase extends MonacoEditorBaseImpl
-            implements CodeEditorFramedProperties {
+public abstract class MonacoEditorFramedBase extends MonacoEditorBaseImpl {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.MonacoEditorFramed";
     public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.MonacoEditorFramedRenderer";
@@ -38,4 +38,10 @@ public abstract class MonacoEditorFramedBase extends MonacoEditorBaseImpl
     public MonacoEditorFramedBase() {
         setRendererType(DEFAULT_RENDERER);
     }
+
+    @Property(description = "URL to an extender script loaded into the iframe.")
+    public abstract String getExtender();
+
+    @Property(description = "Additional URL params added to the iframe URL. Either a Map<String, String> or a String with a JavaScript expression that evaluates to an object representing such a map.")
+    public abstract Object getIframeUrlParams();
 }

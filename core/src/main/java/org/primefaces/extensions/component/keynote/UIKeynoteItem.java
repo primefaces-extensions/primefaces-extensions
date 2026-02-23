@@ -32,6 +32,6 @@ import org.primefaces.cdk.api.FacesComponentInfo;
  * @since 6.3
  */
 @FacesComponent(value = UIKeynoteItem.COMPONENT_TYPE, namespace = UIKeynoteItem.COMPONENT_FAMILY)
-@FacesComponentInfo(description = "Defines a slide/section template for a KeynoteItem type; used as a child of Keynote.")
+@FacesComponentInfo(name = "keynoteItem", description = "Defines a slide/section template for a KeynoteItem type; used as a child of Keynote.")
 public class UIKeynoteItem extends UIKeynoteItemBaseImpl {
 }
