@@ -61,7 +61,7 @@ public abstract class LightSwitchBase extends UIComponentBase implements Widget 
         return COMPONENT_FAMILY;
     }
 
-    @Property(description = "The currently selected theme name.")
+    @Property(description = "The currently selected theme name.", required = true)
     public abstract String getSelected();
 
     @Property(description = "The light theme name.", defaultValue = "saga-blue")

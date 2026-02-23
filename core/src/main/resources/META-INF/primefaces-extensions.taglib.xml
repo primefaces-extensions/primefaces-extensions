@@ -496,7 +496,7 @@
             </description>
             <name>customThemes</name>
             <required>false</required>
-            <type>java.lang.Map</type>
+            <type>java.util.Map</type>
         </attribute>
         <attribute>
             <description>
@@ -637,6 +637,7 @@
                 of monaco-editor.]]>
             </description>
             <name>overflowWidgetsDomNode</name>
+            <required>false</required>
             <type>java.lang.String</type>
         </attribute>
     </tag>
@@ -907,7 +908,7 @@
             </description>
             <name>customThemes</name>
             <required>false</required>
-            <type>java.lang.Map</type>
+            <type>java.util.Map</type>
         </attribute>
         <attribute>
             <description>
@@ -974,14 +975,14 @@
                 <![CDATA[
                     Additional URL parameters that are added to the iframe URL where the framed Monaco editor is loaded.
                     This may be useful, for example, when you wish to pass additional arguments to the extender script.
-                    Must be either a <code>java.lang.Map&lt;String, String | List&lt;String&gt;&gt;</code> (i.e. a map
+                    Must be either a <code>java.util.Map&lt;String, String | List&lt;String&gt;&gt;</code> (i.e. a map
                     where keys are strings and values are strings or lists of strings); or a <code>java.lang.String</code>
                     with a JavaScript expression that evaluates to an object representing such a map.
                 ]]>
             </description>
             <name>iframeUrlParams</name>
             <required>false</required>
-            <type>java.util.Map</type>
+            <type>java.lang.Object</type>
         </attribute>
         <attribute>
             <description>
@@ -1432,7 +1433,7 @@
             </description>
             <name>language</name>
             <required>false</required>
-            <type>java.lang.Object</type>
+            <type>java.lang.String</type>
         </attribute>
         <attribute>
             <description>
@@ -1442,7 +1443,7 @@
             </description>
             <name>originalLanguage</name>
             <required>false</required>
-            <type>java.lang.Object</type>
+            <type>java.lang.String</type>
         </attribute>
         <attribute>
             <description>
@@ -1453,7 +1454,7 @@
             </description>
             <name>customThemes</name>
             <required>false</required>
-            <type>java.lang.Map</type>
+            <type>java.util.Map</type>
         </attribute>
         <attribute>
             <description>
@@ -1627,6 +1628,7 @@
                 of monaco-editor.]]>
             </description>
             <name>overflowWidgetsDomNode</name>
+            <required>false</required>
             <type>java.lang.String</type>
         </attribute>
     </tag>
@@ -2022,7 +2024,7 @@
             </description>
             <name>language</name>
             <required>false</required>
-            <type>java.lang.Object</type>
+            <type>java.lang.String</type>
         </attribute>
         <attribute>
             <description>
@@ -2032,7 +2034,7 @@
             </description>
             <name>originalLanguage</name>
             <required>false</required>
-            <type>java.lang.Object</type>
+            <type>java.lang.String</type>
         </attribute>
         <attribute>
             <description>
@@ -2043,7 +2045,7 @@
             </description>
             <name>customThemes</name>
             <required>false</required>
-            <type>java.lang.Map</type>
+            <type>java.util.Map</type>
         </attribute>
         <attribute>
             <description>
@@ -2111,14 +2113,14 @@
                 <![CDATA[
                     Additional URL parameters that are added to the iframe URL where the framed Monaco editor is loaded.
                     This may be useful, for example, when you wish to pass additional arguments to the extender script.
-                    Must be either a <code>java.lang.Map&lt;String, String | List&lt;String&gt;&gt;</code> (i.e. a map
+                    Must be either a <code>java.util.Map&lt;String, String | List&lt;String&gt;&gt;</code> (i.e. a map
                     where keys are strings and values are strings or lists of strings); or a <code>java.lang.String</code>
                     with a JavaScript expression that evaluates to an object representing such a map.
                 ]]>
             </description>
             <name>iframeUrlParams</name>
             <required>false</required>
-            <type>java.util.Map</type>
+            <type>java.lang.Object</type>
         </attribute>
         <attribute>
             <description>
@@ -2730,7 +2732,7 @@
             </description>
             <name>matchBrackets</name>
             <required>false</required>
-            <type>java.lang.String</type>
+            <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
             <description>
@@ -3149,7 +3151,7 @@
                 <![CDATA[The search term to highlight.]]>
             </description>
             <name>value</name>
-            <required>false</required>
+            <required>true</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
@@ -3157,7 +3159,7 @@
                 <![CDATA[Search expression for the container to search in.]]>
             </description>
             <name>for</name>
-            <required>false</required>
+            <required>true</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
@@ -3248,7 +3250,7 @@
             </description>
             <name>formatting</name>
             <required>false</required>
-            <type>jakarta.lang.Boolean</type>
+            <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
             <description>
@@ -3330,7 +3332,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>jakarta.faces.component.UIOutput</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -3443,7 +3445,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>jakarta.faces.component.UIOutput</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -3509,7 +3511,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>jakarta.faces.component.UIOutput</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -3662,7 +3664,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>jakarta.faces.component.UIOutput</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -3727,7 +3729,7 @@
             </description>
             <name>converter</name>
             <required>false</required>
-            <type>java.faces.convert.Converter</type>
+            <type>jakarta.faces.convert.Converter</type>
         </attribute>
         <attribute>
             <description>
@@ -3917,7 +3919,7 @@
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>jakarta.faces.component.UIOutput</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -4649,7 +4651,7 @@
                 <![CDATA[A comma separated list with full qualified class names. Class names should match passed parameters in the same order as they were defined.]]>
             </description>
             <name>parameters</name>
-            <required>false</required>
+            <required>true</required>
             <type>java.lang.String</type>
         </attribute>
     </tag>
@@ -5039,7 +5041,7 @@
                 <![CDATA[Position of a pane. Possible values are 'north', 'south', 'west', 'east', 'center'. Default value is 'center'.]]>
             </description>
             <name>position</name>
-            <required>true</required>
+            <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
@@ -6306,7 +6308,7 @@
             </description>
             <name>converter</name>
             <required>false</required>
-            <type>java.faces.convert.Converter</type>
+            <type>jakarta.faces.convert.Converter</type>
         </attribute>
         <attribute>
             <description>
@@ -6782,7 +6784,7 @@
             </description>
             <name>leftOffset</name>
             <required>false</required>
-            <type>java.lang.Long</type>
+            <type>java.lang.Integer</type>
         </attribute>
         <attribute>
             <description>
@@ -6790,7 +6792,7 @@
             </description>
             <name>topOffset</name>
             <required>false</required>
-            <type>java.lang.Long</type>
+            <type>java.lang.Integer</type>
         </attribute>
         <attribute>
             <description>
@@ -6798,7 +6800,7 @@
             </description>
             <name>size</name>
             <required>false</required>
-            <type>java.lang.Long</type>
+            <type>java.lang.Integer</type>
         </attribute>
         <attribute>
             <description>
@@ -7854,29 +7856,13 @@
             </description>
             <name>converter</name>
             <required>false</required>
-            <type>java.faces.convert.Converter</type>
+            <type>jakarta.faces.convert.Converter</type>
         </attribute>
         <attribute>
             <description>
                 <![CDATA[Message to display when conversion fails.]]>
             </description>
             <name>converterMessage</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[The style class to apply dynamically to the selected column.]]>
-            </description>
-            <name>currentColClass</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[The style class to apply dynamically to the selected row.]]>
-            </description>
-            <name>currentRowClass</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
@@ -8344,7 +8330,7 @@
             </description>
             <name>converter</name>
             <required>false</required>
-            <type>java.faces.convert.Converter</type>
+            <type>jakarta.faces.convert.Converter</type>
         </attribute>
         <attribute>
             <description>
@@ -8886,7 +8872,7 @@
             </description>
             <name>converter</name>
             <required>false</required>
-            <type>java.faces.convert.Converter</type>
+            <type>jakarta.faces.convert.Converter</type>
         </attribute>
         <attribute>
             <description>
@@ -9269,6 +9255,7 @@
                 <![CDATA[Number of characters used to determine the width of the input element. Default is 4.]]>
             </description>
             <name>length</name>
+            <required>false</required>
             <type>int</type>
         </attribute>
         <attribute>
@@ -9419,7 +9406,7 @@
             </description>
             <name>converter</name>
             <required>false</required>
-            <type>java.faces.convert.Converter</type>
+            <type>jakarta.faces.convert.Converter</type>
         </attribute>
         <attribute>
             <description>
@@ -10299,7 +10286,7 @@ See showcase for an example. Default null.]]>
             </description>
             <name>binding</name>
             <required>false</required>
-            <type>jakarta.faces.component.UIOutput</type>
+            <type>jakarta.faces.component.UIComponent</type>
         </attribute>
         <attribute>
             <description>
@@ -10307,7 +10294,7 @@ See showcase for an example. Default null.]]>
             </description>
             <name>backgroundColor</name>
             <required>false</required>
-            <type>java.lang.Boolean</type>
+            <type>java.lang.String</type>
         </attribute>
         <attribute>
             <description>
@@ -10569,7 +10556,7 @@ See showcase for an example. Default null.]]>
                 <![CDATA[Width of video in CSS pixels.]]>
             </description>
             <name>width</name>
-            <required>false</required>
+            <required>true</required>
             <type>java.lang.Integer</type>
         </attribute>
         <attribute>
@@ -10577,7 +10564,7 @@ See showcase for an example. Default null.]]>
                 <![CDATA[Height of video in CSS pixels.]]>
             </description>
             <name>height</name>
-            <required>false</required>
+            <required>true</required>
             <type>java.lang.Integer</type>
         </attribute>
         <attribute>
@@ -10638,7 +10625,7 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Client id of the input this scanner will set the value to. Default is null.]]>
+                <![CDATA[Client id of the input this scanner will set the value to.]]>
             </description>
             <name>for</name>
             <required>false</required>
@@ -10756,6 +10743,7 @@ See showcase for an example. Default null.]]>
         <attribute>
             <description><![CDATA[Retention period in seconds.]]></description>
             <name>retention</name>
+            <required>false</required>
             <type>java.lang.Integer</type>
         </attribute>
     </tag>
@@ -10974,13 +10962,6 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Defines if the content of the component should be escaped or not.]]></description>
-            <name>escape</name>
-            <required>false</required>
-            <type>java.lang.Boolean</type>
-        </attribute>
-        <attribute>
-            <description>
                 <![CDATA[Secure the component with the HTML Sanitizer library on the classpath. Default is true.]]></description>
             <name>secure</name>
             <required>false</required>
@@ -11171,7 +11152,7 @@ See showcase for an example. Default null.]]>
             </description>
             <name>converter</name>
             <required>false</required>
-            <type>java.faces.convert.Converter</type>
+            <type>jakarta.faces.convert.Converter</type>
         </attribute>
         <attribute>
             <description>

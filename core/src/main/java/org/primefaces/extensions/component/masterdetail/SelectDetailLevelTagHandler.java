@@ -51,15 +51,16 @@ public class SelectDetailLevelTagHandler extends TagHandler {
 
     @Property(description = "Value expression for context value passed to the target level.", type = Object.class, required = false)
     private final TagAttribute contextValue;
-    @Property(description = "Listener method invoked before action/actionListener; return value used as contextValue.", type = Object.class, required = false)
+    @Property(description = "Listener method invoked before action/actionListener; return value used as contextValue.", type = MethodExpression.class,
+                required = false)
     private final TagAttribute listener;
     @Property(description = "Target detail level to navigate to.", type = Integer.class, required = false)
     private final TagAttribute level;
     @Property(description = "Step relative to current level (e.g. 1 = next, -1 = previous).", type = Integer.class, required = false)
     private final TagAttribute step;
-    @Property(description = "Client IDs of inputs whose values to preserve when navigating.", type = String.class, required = false)
+    @Property(description = "Client IDs of inputs whose values to preserve when navigating.", type = boolean.class, required = false)
     private final TagAttribute preserveInputs;
-    @Property(description = "Client IDs of inputs to reset when navigating.", type = String.class, required = false)
+    @Property(description = "Client IDs of inputs to reset when navigating.", type = boolean.class, required = false)
     private final TagAttribute resetInputs;
     @Property(description = "Event(s) to attach to when parent is ClientBehaviorHolder.", type = String.class, required = false)
     private final TagAttribute event;

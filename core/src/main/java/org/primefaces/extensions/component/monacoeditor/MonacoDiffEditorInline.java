@@ -33,7 +33,7 @@ import org.primefaces.extensions.util.Constants;
  * @since 11.0.1
  */
 @FacesComponent(value = MonacoDiffEditorInlineBase.COMPONENT_TYPE, namespace = MonacoEditorCommonBase.COMPONENT_FAMILY)
-@FacesComponentInfo(description = "Inline Monaco diff editor.")
+@FacesComponentInfo(name = "monacoDiffEditor", description = "Inline Monaco diff editor.")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.js")

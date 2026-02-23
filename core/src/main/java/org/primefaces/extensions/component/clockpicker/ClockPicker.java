@@ -38,7 +38,7 @@ import org.primefaces.util.LocaleUtils;
  * @since 6.1
  */
 @FacesComponent(value = ClockPicker.COMPONENT_TYPE, namespace = ClockPicker.COMPONENT_FAMILY)
-@FacesComponentInfo(description = "ClockPicker is a time picker component with clock-style UI.")
+@FacesComponentInfo(name = "clockpicker", description = "ClockPicker is a time picker component with clock-style UI.")
 @ResourceDependency(library = "primefaces", name = "components.css")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")

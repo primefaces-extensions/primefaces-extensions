@@ -25,6 +25,7 @@ import jakarta.el.ValueExpression;
 import jakarta.faces.component.FacesComponent;
 import jakarta.faces.component.UIComponent;
 
+import org.primefaces.cdk.api.FacesComponentInfo;
 import org.primefaces.extensions.component.api.AbstractParameter;
 import org.primefaces.extensions.util.DummyValueExpression;
 
@@ -34,6 +35,8 @@ import org.primefaces.extensions.util.DummyValueExpression;
  * @since 0.5
  */
 @FacesComponent(value = MethodParameterBase.COMPONENT_TYPE, namespace = AbstractParameter.COMPONENT_FAMILY)
+@FacesComponentInfo(name = "methodParam",
+            description = "Method can be used to receive a parameter of the RemoteCommand in the actionListener or action method.")
 public class MethodParameter extends MethodParameterBaseImpl {
 
     @Override

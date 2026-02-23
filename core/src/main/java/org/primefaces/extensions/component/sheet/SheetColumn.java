@@ -30,12 +30,15 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.validator.Validator;
 import jakarta.faces.validator.ValidatorException;
 
+import org.primefaces.cdk.api.FacesComponentInfo;
+
 /**
  * JSF component for a column in the Sheet component.
  *
  * @since 6.2
  */
 @FacesComponent(value = SheetColumnBase.COMPONENT_TYPE, namespace = SheetColumnBase.COMPONENT_FAMILY)
+@FacesComponentInfo(name = "sheetcolumn", description = "Data sheet column used to define the available columns in a Sheet component.")
 public class SheetColumn extends SheetColumnBaseImpl {
 
     private static final String MESSAGE_REQUIRED = "A valid value for this column is required.";

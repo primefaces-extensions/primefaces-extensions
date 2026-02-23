@@ -59,11 +59,9 @@ abstract class MonacoDiffEditorBaseRenderer<TEditor extends MonacoDiffEditorBase
     }
 
     @Override
-    public final void decode(final FacesContext context, final UIComponent component) {
-        final TEditor monacoEditor = componentClass.cast(component);
-
-        final String clientId = monacoEditor.getClientId() + INPUT_SUFFIX;
-        final String originalClientId = monacoEditor.getClientId() + INPUT_ORIGINAL_SUFFIX;
+    public final void decode(final FacesContext context, final TEditor component) {
+        final String clientId = component.getClientId() + INPUT_SUFFIX;
+        final String originalClientId = component.getClientId() + INPUT_ORIGINAL_SUFFIX;
         final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
 
         boolean update = false;
@@ -72,13 +70,13 @@ abstract class MonacoDiffEditorBaseRenderer<TEditor extends MonacoDiffEditorBase
 
         // Do not allow modifications if component is not allowed to submit values.
         // Read-only is fine, we should still accept the submitted value when read-only
-        if (!monacoEditor.isDisabled()) {
+        if (!component.isDisabled()) {
             if (params.containsKey(clientId)) {
                 modifiedValue = params.get(clientId);
                 update = true;
             }
         }
-        if (!monacoEditor.isOriginalDisabled()) {
+        if (!component.isOriginalDisabled()) {
             if (params.containsKey(originalClientId)) {
                 originalValue = params.get(originalClientId);
                 update = true;
@@ -87,7 +85,7 @@ abstract class MonacoDiffEditorBaseRenderer<TEditor extends MonacoDiffEditorBase
 
         if (update) {
             final Map.Entry<String, String> entry = new AbstractMap.SimpleEntry<>(originalValue, modifiedValue);
-            monacoEditor.setSubmittedValue(entry);
+            component.setSubmittedValue(entry);
         }
 
         // Decode behaviors

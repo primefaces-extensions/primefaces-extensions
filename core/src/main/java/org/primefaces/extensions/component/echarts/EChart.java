@@ -33,7 +33,7 @@ import org.primefaces.cdk.api.FacesComponentInfo;
 import org.primefaces.extensions.event.EChartEvent;
 
 @FacesComponent(value = EChart.COMPONENT_TYPE, namespace = EChart.COMPONENT_FAMILY)
-@FacesComponentInfo(description = "Apache ECharts component using raw JSON model.")
+@FacesComponentInfo(name = "echart", description = "Apache ECharts component using raw JSON model.")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")

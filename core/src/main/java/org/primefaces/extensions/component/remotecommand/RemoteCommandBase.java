@@ -23,6 +23,7 @@ package org.primefaces.extensions.component.remotecommand;
 
 import jakarta.el.MethodExpression;
 import jakarta.faces.component.UICommand;
+import jakarta.faces.event.ActionListener;
 
 import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
@@ -47,6 +48,16 @@ public abstract class RemoteCommandBase extends UICommand implements AjaxSource 
     @Override
     public String getFamily() {
         return COMPONENT_FAMILY;
+    }
+
+    @Property(description = "A method expression or a string outcome to process when command is executed.", skipAccessors = true)
+    public MethodExpression getAction() {
+        return super.getActionExpression();
+    }
+
+    @Property(description = "An action listener to process when command is executed.", skipAccessors = true)
+    public ActionListener getActionListener() {
+        return super.getActionListeners()[0];
     }
 
     @Property(description = "Name of the JavaScript function to create.")

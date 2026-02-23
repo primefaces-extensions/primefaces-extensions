@@ -69,10 +69,10 @@ public abstract class OSMapBase extends UIComponentBase implements Widget, Style
     @Property(description = "Map model with markers, polylines, polygons, etc.")
     public abstract MapModel getModel();
 
-    @Property(description = "Center of the map as 'lat,lng'.")
+    @Property(description = "Center of the map as 'lat,lng'.", required = true)
     public abstract String getCenter();
 
-    @Property(description = "Initial zoom level.", defaultValue = "8")
+    @Property(description = "Initial zoom level.", defaultValue = "8", required = true)
     public abstract int getZoom();
 
     @Property(description = "Whether zoom control is shown.", defaultValue = "true")

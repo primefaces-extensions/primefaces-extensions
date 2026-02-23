@@ -81,7 +81,7 @@ public abstract class CodeScannerBase extends UIComponentBase implements Widget,
     @Property(description = "Camera device ID to use when multiple cameras are available.")
     public abstract String getDeviceId();
 
-    @Property(description = "Search expression for the input component to write the scanned value to.", required = true)
+    @Property(description = "Search expression for the input component to write the scanned value to.")
     public abstract String getFor();
 
     @SuppressWarnings("java:S115")

@@ -42,7 +42,7 @@ import org.primefaces.extensions.util.Constants;
  * @since 6.3
  */
 @FacesComponent(value = OrgChart.COMPONENT_TYPE, namespace = OrgChart.COMPONENT_FAMILY)
-@FacesComponentInfo(description = "OrgChart is a simple and direct organization chart component.")
+@FacesComponentInfo(name = "orgchart", description = "OrgChart is a simple and direct organization chart component.")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")

@@ -33,6 +33,6 @@ import org.primefaces.cdk.api.FacesComponentInfo;
  * @since 0.5
  */
 @FacesComponent(value = UIDynaFormControl.COMPONENT_TYPE, namespace = UIDynaFormControl.COMPONENT_FAMILY)
-@FacesComponentInfo(description = "Defines a control template for a DynaFormControl type; used as a child of DynaForm.")
+@FacesComponentInfo(name = "dynaFormControl", description = "Defines a control template for a DynaFormControl type; used as a child of DynaForm.")
 public class UIDynaFormControl extends UIDynaFormControlBaseImpl {
 }

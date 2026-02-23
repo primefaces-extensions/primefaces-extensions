@@ -38,7 +38,7 @@ public abstract class AbstractParameter extends UIOutput {
 
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 
-    @Property(description = "Name of the parameter.")
+    @Property(description = "Name of the parameter.", required = true)
     public abstract String getName();
 
     public AbstractParameter() {

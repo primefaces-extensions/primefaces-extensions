@@ -50,7 +50,7 @@ public abstract class TimeAgoBase extends UIComponentBase implements Widget, Sty
         return COMPONENT_FAMILY;
     }
 
-    @Property(description = "Date/time value to display.")
+    @Property(description = "Date/time value to display.", required = true)
     public abstract Object getValue();
 
     @Property(description = "Locale used to localize the relative time. Can be a string or java.util.Locale instance.")

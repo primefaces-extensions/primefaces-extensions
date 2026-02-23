@@ -29,6 +29,7 @@ import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
 import org.primefaces.component.api.Widget;
 import org.primefaces.event.SelectEvent;
+import org.primefaces.extensions.component.gchart.model.GChartModel;
 
 /**
  * <code>GChart</code> component base class (Google Charts).
@@ -70,4 +71,7 @@ public abstract class GChartBase extends UIOutput implements Widget {
 
     @Property(description = "JavaScript extender function name.")
     public abstract String getExtender();
+
+    @Property(description = "Value of the chart. Use the GChartModelBuilder to create a new GChartModel", required = true)
+    public abstract GChartModel getValue();
 }

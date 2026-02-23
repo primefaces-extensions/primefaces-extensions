@@ -81,6 +81,6 @@ public abstract class SpeedtestBase extends UIComponentBase implements Widget, S
     @Property(defaultValue = "#333399", description = "Color for Upload gauge.")
     public abstract String getColorUpload();
 
-    @Property(description = "URL to the file used for testing (should be some megabytes).")
+    @Property(description = "URL to the file used for testing (should be some megabytes).", required = true)
     public abstract String getFile();
 }

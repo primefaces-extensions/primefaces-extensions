@@ -22,6 +22,7 @@
 package org.primefaces.extensions.component.monacoeditor;
 
 import org.primefaces.cdk.api.FacesComponentBase;
+import org.primefaces.cdk.api.Property;
 
 /**
  * CDK base for the inline Monaco code editor.
@@ -29,8 +30,7 @@ import org.primefaces.cdk.api.FacesComponentBase;
  * @since 10.0.0
  */
 @FacesComponentBase
-public abstract class MonacoEditorInlineBase extends MonacoEditorBaseImpl
-            implements CodeEditorInlineProperties {
+public abstract class MonacoEditorInlineBase extends MonacoEditorBaseImpl {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.MonacoEditorInline";
     public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.MonacoEditorInlineRenderer";
@@ -38,4 +38,10 @@ public abstract class MonacoEditorInlineBase extends MonacoEditorBaseImpl
     public MonacoEditorInlineBase() {
         setRendererType(DEFAULT_RENDERER);
     }
+
+    @Property(description = "Extender script: JavaScript expression that evaluates to an extender instance.")
+    public abstract String getExtender();
+
+    @Property(description = "Search expression for a component; places overflow widgets inside an external DOM node.")
+    public abstract String getOverflowWidgetsDomNode();
 }

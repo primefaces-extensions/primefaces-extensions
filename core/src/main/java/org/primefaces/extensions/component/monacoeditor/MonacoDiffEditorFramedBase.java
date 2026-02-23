@@ -22,6 +22,7 @@
 package org.primefaces.extensions.component.monacoeditor;
 
 import org.primefaces.cdk.api.FacesComponentBase;
+import org.primefaces.cdk.api.Property;
 
 /**
  * CDK base for the framed Monaco diff editor.
@@ -29,8 +30,7 @@ import org.primefaces.cdk.api.FacesComponentBase;
  * @since 11.1.0
  */
 @FacesComponentBase
-public abstract class MonacoDiffEditorFramedBase extends MonacoDiffEditorBehaviorBase
-            implements DiffEditorFramedProperties {
+public abstract class MonacoDiffEditorFramedBase extends MonacoDiffEditorBehaviorBase {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.MonacoDiffEditorFramed";
     public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.MonacoDiffEditorFramedRenderer";
@@ -38,4 +38,10 @@ public abstract class MonacoDiffEditorFramedBase extends MonacoDiffEditorBehavio
     public MonacoDiffEditorFramedBase() {
         setRendererType(DEFAULT_RENDERER);
     }
+
+    @Property(description = "URL to an extender script loaded into the iframe.")
+    public abstract String getExtender();
+
+    @Property(description = "Additional URL params added to the iframe URL.")
+    public abstract Object getIframeUrlParams();
 }

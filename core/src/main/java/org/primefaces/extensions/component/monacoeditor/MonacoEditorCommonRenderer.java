@@ -23,7 +23,6 @@ package org.primefaces.extensions.component.monacoeditor;
 
 import java.io.IOException;
 
-import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
 
@@ -39,7 +38,7 @@ import org.primefaces.util.WidgetBuilder;
  *
  * @since 11.1.0
  */
-abstract class MonacoEditorCommonRenderer<TEditor extends MonacoEditorCommon<TEditorOpts>, TEditorOpts> extends InputRenderer {
+abstract class MonacoEditorCommonRenderer<TEditor extends MonacoEditorCommon<TEditorOpts>, TEditorOpts> extends InputRenderer<TEditor> {
 
     protected static final String CALLBACK_SIGNATURE = "function()";
 
@@ -68,15 +67,14 @@ abstract class MonacoEditorCommonRenderer<TEditor extends MonacoEditorCommon<TEd
     }
 
     @Override
-    public final void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
+    public final void encodeEnd(final FacesContext context, final TEditor component) throws IOException {
         boolean hideResourceVersion = PrimeRequestContext.getCurrentInstance(context).isHideResourceVersion();
         if (hideResourceVersion) {
             logDevelopmentWarning(context, this, "Monaco Editor requires a resource version to work properly and '" +
                         Constants.ContextParams.HIDE_RESOURCE_VERSION + "' is currently configured.");
         }
-        final TEditor monacoEditor = componentClass.cast(component);
-        encodeMarkup(context, monacoEditor);
-        encodeScript(context, monacoEditor);
+        encodeMarkup(context, component);
+        encodeScript(context, component);
     }
 
     protected final void encodeMarkup(final FacesContext context, final TEditor monacoEditor) throws IOException {
