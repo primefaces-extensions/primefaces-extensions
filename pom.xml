@@ -453,6 +453,16 @@
                                 <include>src/main/java/**/*.java</include>
                                 <include>src/test/java/**/*.java</include>
                             </includes>
+                            <removeUnusedImports/>
+                            <importOrder>
+                                <order>java,jakarta,javax,org,com,</order>
+                            </importOrder>
+                            <eclipse>
+                                <file>${main.basedir}/src/conf/eclipse-pfe-formatter.xml</file>
+                            </eclipse>
+                            <licenseHeader>
+                                <file>${main.basedir}/src/conf/license.txt</file>
+                            </licenseHeader>
                             <endWithNewline/>
                         </java>
                     </configuration>
