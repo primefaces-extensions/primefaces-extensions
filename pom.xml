@@ -459,6 +459,7 @@
                             <licenseHeader>
                                 <file>${main.basedir}/src/conf/license.txt</file>
                             </licenseHeader>
+                            <endWithNewline/>
                         </java>
                     </configuration>
                     <executions>
