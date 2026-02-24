@@ -449,16 +449,11 @@
                     <version>2.46.1</version>
                     <configuration>
                         <java>
-                            <removeUnusedImports/>
-                            <importOrder>
-                                <order>java,jakarta,javax,org,com,</order>
-                            </importOrder>
-                            <eclipse>
-                                <file>${main.basedir}/src/conf/eclipse-pfe-formatter.xml</file>
-                            </eclipse>
-                            <licenseHeader>
-                                <file>${main.basedir}/src/conf/license.txt</file>
-                            </licenseHeader>
+                            <includes>
+                                <include>src/main/java/**/*.java</include>
+                                <include>src/test/java/**/*.java</include>
+                            </includes>
+                            <endWithNewline/>
                         </java>
                     </configuration>
                     <executions>
