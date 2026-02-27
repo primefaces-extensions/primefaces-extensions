@@ -22,7 +22,6 @@
 package org.primefaces.extensions.model.mongo;
 
 import java.beans.PropertyDescriptor;
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -49,7 +48,6 @@ import org.primefaces.util.PropertyDescriptorResolver;
 import dev.morphia.Datastore;
 import dev.morphia.query.CountOptions;
 import dev.morphia.query.FindOptions;
-import dev.morphia.query.MorphiaCursor;
 import dev.morphia.query.Query;
 import dev.morphia.query.Sort;
 import dev.morphia.query.filters.Filters;
@@ -60,7 +58,7 @@ import dev.morphia.query.filters.RegexFilter;
  *
  * @param <T> The model class.
  */
-public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Serializable {
+public class MorphiaLazyDataModel<T> extends LazyDataModel<T> {
 
     private static final Logger LOGGER = Logger.getLogger(MorphiaLazyDataModel.class.getName());
 
@@ -124,9 +122,7 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
 
         applyFilters(q, filters);
         opt.skip(first).limit(pageSize);
-        try (MorphiaCursor<T> cursor = q.iterator(opt)) {
-            return cursor.toList();
-        }
+        return datastore.get().find(entityClass, opt).iterator().toList();
     }
 
     protected FindOptions getFindOptions() {
