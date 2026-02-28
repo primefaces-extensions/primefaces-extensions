@@ -26,12 +26,14 @@ import java.util.logging.Logger;
 
 import jakarta.el.ValueExpression;
 import jakarta.faces.application.ResourceDependency;
+import jakarta.faces.component.FacesComponent;
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
 import jakarta.faces.event.AjaxBehaviorEvent;
 import jakarta.faces.event.FacesEvent;
 
+import org.primefaces.cdk.api.FacesComponentInfo;
 import org.primefaces.extensions.event.CloseEvent;
 import org.primefaces.extensions.event.OpenEvent;
 import org.primefaces.extensions.event.ResizeEvent;
@@ -44,8 +46,8 @@ import org.primefaces.util.LangUtils;
  * @author Oleg Varaksin / last modified by Melloware
  * @since 0.2
  */
-@jakarta.faces.component.FacesComponent(value = Layout.COMPONENT_TYPE, namespace = Layout.COMPONENT_FAMILY)
-@org.primefaces.cdk.api.FacesComponentInfo(description = "Layout component for border layout with resizable panes.")
+@FacesComponent(value = Layout.COMPONENT_TYPE, namespace = Layout.COMPONENT_FAMILY)
+@FacesComponentInfo(description = "Layout component for border layout with resizable panes.")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")

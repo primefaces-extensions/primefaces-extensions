@@ -31,23 +31,23 @@ import jakarta.faces.convert.Converter;
 import jakarta.faces.convert.ConverterException;
 import jakarta.faces.convert.FacesConverter;
 
+import org.primefaces.cdk.api.FacesConverterInfo;
 import org.primefaces.extensions.util.ExtLangUtils;
 import org.primefaces.util.Constants;
 import org.primefaces.util.LangUtils;
 
 /**
- * {@link Converter} which converts a string to a {@link java.util.Locale} an vice-versa.
+ * {@link Converter} which converts a string to a {@link java.util.Locale} an vice versa.
  *
  * @author Thomas Andraschko / last modified by $Author$
  * @version $Revision$
  * @since 0.2
  */
 @FacesConverter(value = "org.primefaces.extensions.converter.LocaleConverter")
-public class LocaleConverter implements Converter<Object>, Serializable {
+@FacesConverterInfo(name = "convertLocale", description = "Converter to convert an ISO Locale.")
+public class LocaleConverter extends LocaleConverterBaseImpl implements Serializable {
 
     private static final long serialVersionUID = 20121214L;
-
-    private char separator = '_';
 
     @Override
     public Object getAsObject(final FacesContext fc, final UIComponent component, final String value) {
@@ -55,7 +55,7 @@ public class LocaleConverter implements Converter<Object>, Serializable {
             return fc.getApplication().getDefaultLocale();
         }
 
-        return getLocaleObject(value, separator);
+        return getLocaleObject(value, getSeparatorWithDefault());
     }
 
     @Override
@@ -66,14 +66,14 @@ public class LocaleConverter implements Converter<Object>, Serializable {
                 return null;
             }
 
-            return getLocaleString(defaultLocale, separator);
+            return getLocaleString(defaultLocale, getSeparatorWithDefault());
         }
 
         if (value instanceof String) {
             return (String) value;
         }
         else if (value instanceof Locale) {
-            return getLocaleString((Locale) value, separator);
+            return getLocaleString((Locale) value, getSeparatorWithDefault());
         }
         else {
             throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -83,18 +83,18 @@ public class LocaleConverter implements Converter<Object>, Serializable {
         }
     }
 
-    public static Locale getLocaleObject(final String locale, final char seperator) {
+    public static Locale getLocaleObject(final String locale, final char separatorChar) {
         String replacedLocale = locale;
-        if (seperator != '-' && seperator != '_') {
-            replacedLocale = replacedLocale.replace(seperator, '_');
+        if (separatorChar != '-' && separatorChar != '_') {
+            replacedLocale = replacedLocale.replace(separatorChar, '_');
         }
 
         replacedLocale = replacedLocale.replace('-', '_');
 
         final String[] parts = replacedLocale.split("_");
         if (parts.length == 0
-                    || !parts[0].matches("[a-zA-Z]{2,2}")
-                    || parts.length > 1 && parts[1].length() != 0 && !parts[1].matches("[a-zA-Z]{2,2}")) {
+                    || !parts[0].matches("[a-zA-Z]{2}")
+                    || parts.length > 1 && !parts[1].isEmpty() && !parts[1].matches("[a-zA-Z]{2}")) {
             throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR,
                         "'" + locale + "' does not represent a valid locale",
                         Constants.EMPTY_STRING));
@@ -116,19 +116,11 @@ public class LocaleConverter implements Converter<Object>, Serializable {
         }
     }
 
-    public static String getLocaleString(final Locale locale, final char seperator) {
+    public static String getLocaleString(final Locale locale, final char separator) {
         if (LangUtils.isBlank(locale.getCountry())) {
             return locale.getLanguage();
         }
 
-        return locale.getLanguage() + seperator + locale.getCountry();
-    }
-
-    public char getSeparator() {
-        return separator;
-    }
-
-    public void setSeparator(final char separator) {
-        this.separator = separator;
+        return locale.getLanguage() + separator + locale.getCountry();
     }
 }

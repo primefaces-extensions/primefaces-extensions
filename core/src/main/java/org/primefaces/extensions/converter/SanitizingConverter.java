@@ -28,6 +28,7 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.convert.Converter;
 import jakarta.faces.convert.FacesConverter;
 
+import org.primefaces.cdk.api.FacesConverterInfo;
 import org.primefaces.util.Constants;
 import org.primefaces.util.LangUtils;
 
@@ -38,24 +39,10 @@ import org.primefaces.util.LangUtils;
  * @since 10.0.5
  */
 @FacesConverter(value = "primefaces.SanitizingConverter")
-public class SanitizingConverter implements Converter<Object>, Serializable {
+@FacesConverterInfo(name = "sanitizer", description = "Converter to sanitize HTML with an OWASP PolicyFactory.")
+public class SanitizingConverter extends SanitizingConverterBaseImpl implements Serializable {
 
     private static final long serialVersionUID = 20121214L;
-
-    /**
-     * Default policy blocks all HTML.
-     */
-    private static final org.owasp.html.PolicyFactory DEFAULT_POLICY = new org.owasp.html.HtmlPolicyBuilder().toFactory();
-
-    /**
-     * Custom policy provided by user.
-     */
-    private org.owasp.html.PolicyFactory policy;
-
-    /**
-     * If true use the OWASP HTML Decode to remove
-     */
-    private boolean decodeHtml = true;
 
     /**
      * Method to facilitate "mis-using" this class to sanitize data coming over the network
@@ -67,7 +54,7 @@ public class SanitizingConverter implements Converter<Object>, Serializable {
         if (LangUtils.isBlank(value)) {
             return value;
         }
-        String result = getPolicy().sanitize(value);
+        String result = getPolicyWithDefault().sanitize(value);
         if (isDecodeHtml()) {
             result = org.owasp.html.Encoding.decodeHtml(result, false);
         }
@@ -82,25 +69,6 @@ public class SanitizingConverter implements Converter<Object>, Serializable {
     @Override
     public String getAsString(final FacesContext fc, final UIComponent uic, final Object o) {
         return o == null ? Constants.EMPTY_STRING : sanitize(o.toString());
-    }
-
-    public org.owasp.html.PolicyFactory getPolicy() {
-        if (policy == null) {
-            policy = DEFAULT_POLICY;
-        }
-        return policy;
-    }
-
-    public void setPolicy(final org.owasp.html.PolicyFactory policy) {
-        this.policy = policy;
-    }
-
-    public boolean isDecodeHtml() {
-        return decodeHtml;
-    }
-
-    public void setDecodeHtml(final boolean decodeHtml) {
-        this.decodeHtml = decodeHtml;
     }
 
 }
