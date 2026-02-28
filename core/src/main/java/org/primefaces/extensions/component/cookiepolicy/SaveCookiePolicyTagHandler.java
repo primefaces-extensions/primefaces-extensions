@@ -42,7 +42,7 @@ import org.primefaces.cdk.api.Property;
  * @author Melloware mellowaredev@gmail.com / Frank Cornelis
  * @since 11.0.3
  */
-@FacesTagHandler("Tag Handler for saving a cookie policy.")
+@FacesTagHandler(description = "Tag Handler for saving a cookie policy.")
 public class SaveCookiePolicyTagHandler extends TagHandler {
 
     @Property(description = "The cookie policy to be saved.", type = String.class, required = true)

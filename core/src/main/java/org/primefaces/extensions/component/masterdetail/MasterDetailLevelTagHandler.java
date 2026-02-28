@@ -35,7 +35,7 @@ import org.primefaces.cdk.api.Property;
  * @version $Revision$
  * @since 0.2
  */
-@FacesTagHandler("Component handler for MasterDetailLevel; enforces required level attribute.")
+@FacesTagHandler(description = "Component handler for MasterDetailLevel; enforces required level attribute.")
 public class MasterDetailLevelTagHandler extends ComponentHandler {
 
     @Property(description = "Level of this detail (1-based). Unique inside masterDetail.", type = Integer.class, required = true)

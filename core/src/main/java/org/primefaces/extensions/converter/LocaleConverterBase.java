@@ -21,26 +21,22 @@
  */
 package org.primefaces.extensions.converter;
 
-import jakarta.faces.convert.FacesConverter;
+import org.primefaces.cdk.api.FacesConverterBase;
+import org.primefaces.cdk.api.Property;
+import org.primefaces.cdk.api.converter.PrimeConverter;
 
-import org.owasp.html.PolicyFactory;
-import org.primefaces.cdk.api.FacesConverterInfo;
-import org.primefaces.extensions.util.HtmlSanitizer;
+@FacesConverterBase
+public abstract class LocaleConverterBase extends PrimeConverter<Object> {
 
-/**
- * A lenient version of the {@link SanitizingConverter} that overrides the policy to allow certain HTML elements.
- */
-@FacesConverter(value = "primefaces.SanitizingLenientConverter")
-@FacesConverterInfo(name = "sanitizerLenient", description = "Converter to sanitize HTML with an OWASP PolicyFactory.")
-public class SanitizingLenientConverter extends SanitizingConverter {
+    @Property(description = "Character which will be used to separate the country and language. Default is '_'.", implicitDefaultValue = "_")
+    public abstract Character getSeparator();
 
-    private static final long serialVersionUID = 20241116L;
-
-    /**
-     * Overridden method to provide a lenient policy. This policy allows basic HTML tags such as <b>, <i>, <u>, and <a>.
-     */
-    @Override
-    public PolicyFactory getPolicy() {
-        return HtmlSanitizer.creatPolicyFactory(true, true, true, true, true, true, true);
+    public char getSeparatorWithDefault() {
+        Character sep = getSeparator();
+        if (sep == null) {
+            sep = '_';
+        }
+        return sep;
     }
+
 }

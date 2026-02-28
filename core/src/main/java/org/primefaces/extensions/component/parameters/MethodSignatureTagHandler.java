@@ -36,7 +36,7 @@ import org.primefaces.cdk.api.Property;
  *
  * @since 0.5
  */
-@FacesTagHandler("Tag handler for methodSignature; comma-separated class names for RemoteCommand method parameters.")
+@FacesTagHandler(description = "Tag handler for methodSignature; comma-separated class names for RemoteCommand method parameters.")
 public class MethodSignatureTagHandler extends TagHandler {
 
     public static final String PARAMETERS_TYPES_ATTRIBUTE_NAME = "METHOD_SIGNATURE_PARAMETER_TYPES";

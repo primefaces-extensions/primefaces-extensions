@@ -25,6 +25,7 @@ import jakarta.el.ValueExpression;
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
 
+import org.primefaces.cdk.api.FacesConverterInfo;
 import org.primefaces.extensions.util.json.GsonConverter;
 import org.primefaces.extensions.util.json.GsonExposeAwareConverter;
 
@@ -35,6 +36,7 @@ import org.primefaces.extensions.util.json.GsonExposeAwareConverter;
  * @version $Revision$
  * @since 1.1.0
  */
+@FacesConverterInfo(name = "convertGson", description = "Converter to convert JSON using GSON.")
 public class JsonExposeAwareConverter extends JsonConverter {
 
     private static final long serialVersionUID = 1L;
@@ -57,7 +59,7 @@ public class JsonExposeAwareConverter extends JsonConverter {
     }
 
     @Override
-    public Object getAsObject(FacesContext context, UIComponent component, String value) {
+    public String getAsObject(FacesContext context, UIComponent component, String value) {
         java.lang.reflect.Type objType;
 
         if (getType() == null) {

@@ -21,26 +21,30 @@
  */
 package org.primefaces.extensions.converter;
 
-import jakarta.faces.convert.FacesConverter;
-
 import org.owasp.html.PolicyFactory;
-import org.primefaces.cdk.api.FacesConverterInfo;
-import org.primefaces.extensions.util.HtmlSanitizer;
+import org.primefaces.cdk.api.FacesConverterBase;
+import org.primefaces.cdk.api.Property;
+import org.primefaces.cdk.api.converter.PrimeConverter;
 
-/**
- * A lenient version of the {@link SanitizingConverter} that overrides the policy to allow certain HTML elements.
- */
-@FacesConverter(value = "primefaces.SanitizingLenientConverter")
-@FacesConverterInfo(name = "sanitizerLenient", description = "Converter to sanitize HTML with an OWASP PolicyFactory.")
-public class SanitizingLenientConverter extends SanitizingConverter {
-
-    private static final long serialVersionUID = 20241116L;
+@FacesConverterBase
+public abstract class SanitizingConverterBase extends PrimeConverter<Object> {
 
     /**
-     * Overridden method to provide a lenient policy. This policy allows basic HTML tags such as <b>, <i>, <u>, and <a>.
+     * Default policy blocks all HTML.
      */
-    @Override
-    public PolicyFactory getPolicy() {
-        return HtmlSanitizer.creatPolicyFactory(true, true, true, true, true, true, true);
+    private static final org.owasp.html.PolicyFactory DEFAULT_POLICY = new org.owasp.html.HtmlPolicyBuilder().toFactory();
+
+    @Property(description = "Run input through OWASP HTML Decoder.", defaultValue = "true")
+    public abstract boolean isDecodeHtml();
+
+    @Property(description = "An instance of OWASP PolicyFactory which declares how to sanitize the input.", implicitDefaultValue = "strict")
+    public abstract PolicyFactory getPolicy();
+
+    public org.owasp.html.PolicyFactory getPolicyWithDefault() {
+        if (getPolicy() == null) {
+            return DEFAULT_POLICY;
+        }
+        return getPolicy();
     }
+
 }
