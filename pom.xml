@@ -473,7 +473,6 @@
                         </execution>
                     </executions>
                 </plugin>
-                <!-- dependencies to own plugins -->
                 <plugin>
                     <groupId>org.primefaces.extensions</groupId>
                     <artifactId>resources-optimizer-maven-plugin</artifactId>
