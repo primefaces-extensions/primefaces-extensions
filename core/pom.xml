@@ -237,13 +237,27 @@
                                 <include>codescanner/**</include>
                                 <include>markdowneditor/**</include>
                                 <include>suneditor/**</include>
-                                <include>orgchart/**</include>
                             </includes>
                             <aggregations>
                                 <aggregation>
                                     <inputDir>${resources.dir.compressed}</inputDir>
                                     <subDirMode>true</subDirMode>
                                     <withoutCompress>true</withoutCompress>
+                                </aggregation>
+                            </aggregations>
+                        </resourcesSet>
+                        <resourcesSet>
+                            <includes>
+                                <include>orgchart/**</include>
+                            </includes>
+                            <excludes>
+                                <exclude>orgchart/2-jspdf.js</exclude>
+                            </excludes>
+                            <aggregations>
+                                <aggregation>
+                                    <inputDir>${resources.dir.compressed}</inputDir>
+                                    <subDirMode>true</subDirMode>
+                                    <withoutCompress>${withoutCompress}</withoutCompress>
                                 </aggregation>
                             </aggregations>
                         </resourcesSet>
