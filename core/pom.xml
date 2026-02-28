@@ -464,7 +464,7 @@
                         <phase>process-classes</phase>
                         <configuration>
                             <uri>http://primefaces.org/ui/extensions</uri>
-                            <shortName>pfe-test</shortName>
+                            <shortName>primefaces-extensions</shortName>
                             <displayName>PrimeFaces Extensions</displayName>
                         </configuration>
                     </execution>
@@ -479,6 +479,11 @@
                         <groupId>com.google.code.gson</groupId>
                         <artifactId>gson</artifactId>
                         <version>${gson.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>com.googlecode.owasp-java-html-sanitizer</groupId>
+                        <artifactId>owasp-java-html-sanitizer</artifactId>
+                        <version>${owasp.version}</version>
                     </dependency>
                     <dependency>
                         <groupId>org.json</groupId>
@@ -513,7 +518,7 @@
                 <executions>
                     <execution>
                         <id>minify-xml</id>
-                        <phase>process-resources</phase>
+                        <phase>process-classes</phase>
                         <goals>
                             <goal>transform</goal>
                         </goals>
@@ -539,7 +544,7 @@
                 <executions>
                     <execution>
                         <id>rename-xml-file</id>
-                        <phase>process-resources</phase>
+                        <phase>process-classes</phase>
                         <configuration>
                             <target>
                                 <copy file="${project.build.directory}/classes/META-INF/primefaces-extensions.taglib.xml" tofile="${project.build.directory}/classes/META-INF/primefaces-extensions.urn.taglib.xml"/>
@@ -640,6 +645,14 @@
                         <version>3.2</version>
                     </dependency>
                 </dependencies>
+                <configuration>
+                    <includes>
+                        <include>\target\classes\META-INF\primefaces-extensions.taglib.xml</include>
+                    </includes>
+                    <excludes>
+                        <exclude>src\main</exclude>
+                    </excludes>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.cyclonedx</groupId>

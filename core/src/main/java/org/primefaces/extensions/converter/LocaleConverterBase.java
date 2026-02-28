@@ -28,7 +28,7 @@ import org.primefaces.cdk.api.converter.PrimeConverter;
 @FacesConverterBase
 public abstract class LocaleConverterBase extends PrimeConverter<Object> {
 
-    @Property(description = "Character which will be used to separate the country and language. Default is '_'.", implicitDefaultValue = "_")
+    @Property(description = "Character which will be used to separate the country and language.", implicitDefaultValue = "_")
     public abstract Character getSeparator();
 
     public char getSeparatorWithDefault() {

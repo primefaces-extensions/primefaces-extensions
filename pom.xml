@@ -101,6 +101,7 @@
         <jakarta-faces.version>4.0.14</jakarta-faces.version>
         <libphonenumber.version>9.0.25</libphonenumber.version>
         <morphia.version>2.5.2</morphia.version>
+        <owasp.version>20260102.1</owasp.version>
         <junit.version>5.13.4</junit.version>
         <primefaces.core.version>16.0.0-SNAPSHOT</primefaces.core.version>
         <primefaces.optimizer.version>2.6.6</primefaces.optimizer.version>
@@ -186,7 +187,7 @@
             <dependency>
                 <groupId>com.googlecode.owasp-java-html-sanitizer</groupId>
                 <artifactId>owasp-java-html-sanitizer</artifactId>
-                <version>20260102.1</version>
+                <version>${owasp.version}</version>
                 <optional>true</optional>
             </dependency>
             <!-- MongoDB optional dependencies -->
