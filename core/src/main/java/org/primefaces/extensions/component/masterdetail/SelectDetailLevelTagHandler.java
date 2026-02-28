@@ -46,7 +46,7 @@ import org.primefaces.extensions.util.ExtLangUtils;
  * @version $Revision$
  * @since 0.2
  */
-@FacesTagHandler("Tag handler for pe:selectDetailLevel; wires navigation and value expressions to parent ajax component.")
+@FacesTagHandler(description = "Tag handler for pe:selectDetailLevel; wires navigation and value expressions to parent ajax component.")
 public class SelectDetailLevelTagHandler extends TagHandler {
 
     @Property(description = "Value expression for context value passed to the target level.", type = Object.class, required = false)

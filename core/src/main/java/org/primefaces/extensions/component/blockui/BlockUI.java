@@ -22,6 +22,7 @@
 package org.primefaces.extensions.component.blockui;
 
 import jakarta.faces.application.ResourceDependency;
+import jakarta.faces.component.FacesComponent;
 
 import org.primefaces.cdk.api.FacesComponentInfo;
 import org.primefaces.extensions.util.Constants;
@@ -33,7 +34,7 @@ import org.primefaces.extensions.util.Constants;
  * @version $Revision$
  * @since 0.2
  */
-@jakarta.faces.component.FacesComponent(value = BlockUI.COMPONENT_TYPE, namespace = BlockUI.COMPONENT_FAMILY)
+@FacesComponent(value = BlockUI.COMPONENT_TYPE, namespace = BlockUI.COMPONENT_FAMILY)
 @FacesComponentInfo(description = "BlockUI blocks user interaction with the page or a specific component while content is loading.")
 @ResourceDependency(library = "primefaces", name = "components.css")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")

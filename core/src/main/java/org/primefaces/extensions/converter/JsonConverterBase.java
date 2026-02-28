@@ -21,26 +21,16 @@
  */
 package org.primefaces.extensions.converter;
 
-import jakarta.faces.convert.FacesConverter;
+import org.primefaces.cdk.api.FacesConverterBase;
+import org.primefaces.cdk.api.Property;
+import org.primefaces.cdk.api.converter.PrimeConverter;
 
-import org.owasp.html.PolicyFactory;
-import org.primefaces.cdk.api.FacesConverterInfo;
-import org.primefaces.extensions.util.HtmlSanitizer;
+@FacesConverterBase
+public abstract class JsonConverterBase extends PrimeConverter<Object> {
 
-/**
- * A lenient version of the {@link SanitizingConverter} that overrides the policy to allow certain HTML elements.
- */
-@FacesConverter(value = "primefaces.SanitizingLenientConverter")
-@FacesConverterInfo(name = "sanitizerLenient", description = "Converter to sanitize HTML with an OWASP PolicyFactory.")
-public class SanitizingLenientConverter extends SanitizingConverter {
+    @Property(description = "Data type of the value object (optional). Any primitive type, array, " +
+                "non-generic or generic type is supported. Data type is sometimes required to convert a value to a JSON representation. "
+                + "All data types should be fully qualified. Default is null.")
+    public abstract String getType();
 
-    private static final long serialVersionUID = 20241116L;
-
-    /**
-     * Overridden method to provide a lenient policy. This policy allows basic HTML tags such as <b>, <i>, <u>, and <a>.
-     */
-    @Override
-    public PolicyFactory getPolicy() {
-        return HtmlSanitizer.creatPolicyFactory(true, true, true, true, true, true, true);
-    }
 }

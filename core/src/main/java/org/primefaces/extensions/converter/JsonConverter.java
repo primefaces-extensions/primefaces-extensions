@@ -36,6 +36,7 @@ import jakarta.faces.convert.Converter;
 import jakarta.faces.convert.ConverterException;
 import jakarta.faces.convert.FacesConverter;
 
+import org.primefaces.cdk.api.FacesConverterInfo;
 import org.primefaces.extensions.util.ExtLangUtils;
 import org.primefaces.extensions.util.json.GsonConverter;
 import org.primefaces.extensions.util.json.ParameterizedTypeImpl;
@@ -49,7 +50,8 @@ import org.primefaces.util.Constants;
  * @since 0.2
  */
 @FacesConverter(value = "org.primefaces.extensions.converter.JsonConverter")
-public class JsonConverter implements Converter, Serializable {
+@FacesConverterInfo(name = "convertJson", description = "Converter to convert JSON.")
+public class JsonConverter extends JsonConverterBaseImpl implements Serializable {
 
     private static final long serialVersionUID = 20121214L;
 
@@ -75,8 +77,6 @@ public class JsonConverter implements Converter, Serializable {
         PRIMITIVE_ARRAY_CLASSES.put("float[]", float[].class);
         PRIMITIVE_ARRAY_CLASSES.put("double[]", double[].class);
     }
-
-    private String type;
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
@@ -197,14 +197,6 @@ public class JsonConverter implements Converter, Serializable {
         }
 
         return new ParameterizedTypeImpl(rawType, objectTypes, null);
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     private ConverterException notFoundException(String classType) {

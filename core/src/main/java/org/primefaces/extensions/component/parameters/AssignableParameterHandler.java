@@ -39,7 +39,7 @@ import org.primefaces.cdk.api.Property;
  *
  * @since 0.5
  */
-@FacesTagHandler("Component handler for assignableParam; maps assignTo attribute to the component.")
+@FacesTagHandler(description = "Component handler for assignableParam; maps assignTo attribute to the component.")
 public class AssignableParameterHandler extends ComponentHandler {
 
     private static final String ASSIGN_TO_PROPERTY = "assignTo";
