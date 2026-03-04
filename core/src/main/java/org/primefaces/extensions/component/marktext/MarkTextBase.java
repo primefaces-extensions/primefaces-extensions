@@ -21,7 +21,6 @@
  */
 package org.primefaces.extensions.component.marktext;
 
-import jakarta.el.MethodExpression;
 import jakarta.faces.component.UIComponentBase;
 
 import org.primefaces.cdk.api.FacesBehaviorEvent;
@@ -74,9 +73,6 @@ public abstract class MarkTextBase extends UIComponentBase implements Widget, St
 
     @Property(description = "Search accuracy level: 'partially', 'complementarily', or 'exactly'.", defaultValue = "partially")
     public abstract String getAccuracy();
-
-    @Property(description = "Server-side listener method for mark events.")
-    public abstract MethodExpression getActionListener();
 
     @Property(description = "Map of synonyms for term matching.")
     public abstract Object getSynonyms();

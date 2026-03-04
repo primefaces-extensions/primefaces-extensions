@@ -76,7 +76,6 @@ public class MarkTextRenderer extends CoreRenderer<MarkText> {
         wb.attr("accuracy", component.getAccuracy());
         wb.attr("acrossElements", component.getAcrossElements());
         wb.attr("className", component.getStyleClass());
-        wb.attr("hasActionListener", component.getActionListener() != null);
         if (component.getSynonyms() != null) {
             wb.nativeAttr("synonyms", new Gson().toJson(component.getSynonyms()));
         }
