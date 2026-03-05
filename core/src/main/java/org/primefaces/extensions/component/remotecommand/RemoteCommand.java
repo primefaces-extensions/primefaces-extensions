@@ -36,6 +36,7 @@ import jakarta.faces.event.ActionListener;
 import jakarta.faces.event.FacesEvent;
 import jakarta.faces.event.FacesListener;
 
+import org.primefaces.cdk.api.FacesComponentHandler;
 import org.primefaces.extensions.component.api.AbstractParameter;
 import org.primefaces.extensions.component.parameters.AssignableParameter;
 import org.primefaces.extensions.component.parameters.MethodParameter;
@@ -47,6 +48,7 @@ import org.primefaces.extensions.util.Constants;
  * @since 0.2
  */
 @FacesComponent(value = RemoteCommandBase.COMPONENT_TYPE, namespace = RemoteCommandBase.COMPONENT_FAMILY)
+@FacesComponentHandler(RemoteCommandHandler.class)
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")

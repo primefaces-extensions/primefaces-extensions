@@ -31,7 +31,6 @@ import jakarta.faces.view.facelets.Metadata;
 import jakarta.faces.view.facelets.MetadataTarget;
 import jakarta.faces.view.facelets.TagAttribute;
 
-import org.primefaces.cdk.api.FacesTagHandler;
 import org.primefaces.cdk.api.Property;
 
 /**
@@ -39,7 +38,6 @@ import org.primefaces.cdk.api.Property;
  *
  * @since 0.5
  */
-@FacesTagHandler(description = "Component handler for assignableParam; maps assignTo attribute to the component.")
 public class AssignableParameterHandler extends ComponentHandler {
 
     private static final String ASSIGN_TO_PROPERTY = "assignTo";

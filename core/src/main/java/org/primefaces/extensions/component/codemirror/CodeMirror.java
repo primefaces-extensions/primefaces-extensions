@@ -30,6 +30,7 @@ import jakarta.faces.component.FacesComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.event.FacesEvent;
 
+import org.primefaces.cdk.api.FacesComponentHandler;
 import org.primefaces.cdk.api.FacesComponentInfo;
 import org.primefaces.extensions.event.CompleteEvent;
 import org.primefaces.extensions.util.Constants;
@@ -43,6 +44,7 @@ import org.primefaces.extensions.util.Constants;
  */
 @FacesComponent(value = CodeMirror.COMPONENT_TYPE, namespace = CodeMirror.COMPONENT_FAMILY)
 @FacesComponentInfo(description = "CodeMirror to allow syntax highlighting and auto-completion.")
+@FacesComponentHandler(CodeMirrorHandler.class)
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")

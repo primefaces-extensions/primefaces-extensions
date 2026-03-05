@@ -24,6 +24,7 @@ package org.primefaces.extensions.component.parameters;
 import jakarta.el.ValueExpression;
 import jakarta.faces.component.FacesComponent;
 
+import org.primefaces.cdk.api.FacesComponentHandler;
 import org.primefaces.cdk.api.FacesComponentInfo;
 import org.primefaces.extensions.component.api.AbstractParameter;
 
@@ -34,6 +35,7 @@ import org.primefaces.extensions.component.api.AbstractParameter;
  */
 @FacesComponent(value = AssignableParameterBase.COMPONENT_TYPE, namespace = AbstractParameter.COMPONENT_FAMILY)
 @FacesComponentInfo(name = "assignableParam", description = "AssignableParam can be used the apply a parameter of the RemoteCommand to a backing bean.")
+@FacesComponentHandler(AssignableParameterHandler.class)
 public class AssignableParameter extends AssignableParameterBaseImpl {
 
     @Override

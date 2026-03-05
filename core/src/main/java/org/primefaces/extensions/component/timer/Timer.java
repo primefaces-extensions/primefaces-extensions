@@ -28,6 +28,7 @@ import jakarta.faces.application.ResourceDependency;
 import jakarta.faces.component.FacesComponent;
 import jakarta.faces.context.FacesContext;
 
+import org.primefaces.cdk.api.FacesComponentHandler;
 import org.primefaces.cdk.api.FacesComponentInfo;
 import org.primefaces.util.LocaleUtils;
 
@@ -46,6 +47,7 @@ import org.primefaces.util.LocaleUtils;
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "timer/timer.js")
 @FacesComponent(value = Timer.COMPONENT_TYPE, namespace = Timer.COMPONENT_FAMILY)
 @FacesComponentInfo(description = "Timer Component")
+@FacesComponentHandler(TimerHandler.class)
 public class Timer extends TimerBaseImpl {
 
     private Locale appropriateLocale;

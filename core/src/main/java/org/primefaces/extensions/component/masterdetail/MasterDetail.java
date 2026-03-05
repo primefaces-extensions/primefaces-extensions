@@ -33,6 +33,7 @@ import jakarta.faces.context.PartialViewContext;
 import jakarta.faces.event.ComponentSystemEvent;
 import jakarta.faces.event.PostRestoreStateEvent;
 
+import org.primefaces.cdk.api.FacesComponentHandler;
 import org.primefaces.cdk.api.FacesComponentInfo;
 import org.primefaces.component.breadcrumb.BreadCrumb;
 import org.primefaces.model.menu.DefaultMenuItem;
@@ -48,6 +49,7 @@ import org.primefaces.util.LangUtils;
  */
 @FacesComponent(value = MasterDetail.COMPONENT_TYPE, namespace = MasterDetail.COMPONENT_FAMILY)
 @FacesComponentInfo(description = "Master-detail navigation with levels and optional breadcrumb.")
+@FacesComponentHandler(MasterDetailTagHandler.class)
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "primefaces-extensions.css")
 public class MasterDetail extends MasterDetailBaseImpl {
 

@@ -23,6 +23,7 @@ package org.primefaces.extensions.component.masterdetail;
 
 import jakarta.faces.component.FacesComponent;
 
+import org.primefaces.cdk.api.FacesComponentHandler;
 import org.primefaces.cdk.api.FacesComponentInfo;
 
 /**
@@ -33,6 +34,7 @@ import org.primefaces.cdk.api.FacesComponentInfo;
  */
 @FacesComponent(value = MasterDetailLevel.COMPONENT_TYPE, namespace = MasterDetailLevel.COMPONENT_FAMILY)
 @FacesComponentInfo(description = "A detail level container inside MasterDetail.")
+@FacesComponentHandler(MasterDetailLevelTagHandler.class)
 public class MasterDetailLevel extends MasterDetailLevelBaseImpl {
 
 }
