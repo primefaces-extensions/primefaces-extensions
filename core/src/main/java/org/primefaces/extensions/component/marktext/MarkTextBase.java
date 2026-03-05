@@ -79,4 +79,7 @@ public abstract class MarkTextBase extends UIComponentBase implements Widget, St
 
     @Property(description = "Search across element boundaries.", defaultValue = "false")
     public abstract Boolean getAcrossElements();
+
+    @Property(description = "Wildcard matching mode: 'disabled'|'enabled'|'withSpaces'.", defaultValue = "disabled")
+    public abstract String getWildcards();
 }

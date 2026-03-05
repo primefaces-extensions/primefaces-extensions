@@ -75,6 +75,7 @@ public class MarkTextRenderer extends CoreRenderer<MarkText> {
         wb.attr("separateWordSearch", component.getSeparateWordSearch());
         wb.attr("accuracy", component.getAccuracy());
         wb.attr("acrossElements", component.getAcrossElements());
+        wb.attr("wildcards", component.getWildcards());
         wb.attr("className", component.getStyleClass());
         if (component.getSynonyms() != null) {
             wb.nativeAttr("synonyms", new Gson().toJson(component.getSynonyms()));
