@@ -1,0 +1,68 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="jakarta.faces.html"
+        xmlns:ui="jakarta.faces.facelets"
+        xmlns:f="jakarta.faces.core"
+        xmlns:p="primefaces"
+        xmlns:pe="primefaces.extensions">
+
+    <style>
+        .marktext-highlight {
+            background-color: yellow !important;
+            color: black !important;
+        }
+        .ignore,
+        .notes {
+            display: block;
+            padding: 0.5rem;
+            border-left: 4px solid #b0bec5;
+            background: #eceff1;
+            margin: 0.5rem 0;
+        }
+        mark {
+            background-color: yellow !important;
+            color: black !important;
+        }
+    </style>
+
+    <!-- EXAMPLE-SOURCE-START -->
+    <h:panelGrid columns="2" columnClasses="label,value" styleClass="ui-fluid">
+        <h:outputText value="Search term:"/>
+        <p:inputText id="searchInput" value="#{markTextExcludeController.searchTerm}" placeholder="Enter search term">
+            <p:ajax event="keyup" delay="300" update="markText activeExcludes" process="@this"/>
+        </p:inputText>
+
+        <h:outputText value="Excluded selectors:"/>
+        <p:selectManyCheckbox id="excludeSelectors" value="#{markTextExcludeController.excludedSelectors}" layout="pageDirection">
+            <f:selectItems value="#{markTextExcludeController.availableExcludes}" var="selector" itemLabel="#{selector}" itemValue="#{selector}"/>
+            <p:ajax event="change" update="markText activeExcludes" process="@this"/>
+        </p:selectManyCheckbox>
+    </h:panelGrid>
+
+    <p:panel id="activeExcludes" header="Current Exclusion Rules" style="margin-top: 1rem">
+        <h:outputText value="#{empty markTextExcludeController.excludedSelectors ? 'No selectors excluded. All matching text can be highlighted.' : markTextExcludeController.excludedSelectors}"/>
+    </p:panel>
+
+    <p:panel id="searchContainer" header="Searchable Content" style="margin-top: 1rem">
+        <h:panelGroup id="searchContent" layout="block">
+            <h3>PrimeFaces heading stays unmarked when h3 is excluded</h3>
+            <p>
+                PrimeFaces Extensions enhances PrimeFaces with additional components. This PrimeFaces occurrence in a normal paragraph should be highlighted.
+            </p>
+            <span class="ignore">
+                PrimeFaces inside this .ignore block should remain untouched when .ignore is excluded.
+            </span>
+            <p>
+                You can toggle exclusions to compare normal matches against ignored regions and verify that PrimeFaces is only marked in eligible content.
+            </p>
+            <div class="notes">
+                PrimeFaces inside this .notes block becomes ignored only when .notes is selected.
+            </div>
+        </h:panelGroup>
+    </p:panel>
+
+    <pe:markText id="markText" for="searchContent" value="#{markTextExcludeController.searchTerm}"
+                 exclude="#{markTextExcludeController.excludedSelectors}" styleClass="marktext-highlight"
+                 caseSensitive="false"/>
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>
