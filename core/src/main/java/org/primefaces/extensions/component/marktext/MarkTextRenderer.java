@@ -80,6 +80,9 @@ public class MarkTextRenderer extends CoreRenderer<MarkText> {
         if (component.getSynonyms() != null) {
             wb.nativeAttr("synonyms", new Gson().toJson(component.getSynonyms()));
         }
+        if (component.getExclude() != null) {
+            wb.nativeAttr("exclude", new Gson().toJson(component.getExclude()));
+        }
 
         encodeClientBehaviors(context, component);
 

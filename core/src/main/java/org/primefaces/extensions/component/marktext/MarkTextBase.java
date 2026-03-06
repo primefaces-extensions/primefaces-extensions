@@ -21,6 +21,8 @@
  */
 package org.primefaces.extensions.component.marktext;
 
+import java.util.List;
+
 import jakarta.faces.component.UIComponentBase;
 
 import org.primefaces.cdk.api.FacesBehaviorEvent;
@@ -76,6 +78,9 @@ public abstract class MarkTextBase extends UIComponentBase implements Widget, St
 
     @Property(description = "Map of synonyms for term matching.")
     public abstract Object getSynonyms();
+
+    @Property(description = "Array of exclusion selectors. Matches inside these elements will be ignored.")
+    public abstract List<String> getExclude();
 
     @Property(description = "Search across element boundaries.", defaultValue = "false")
     public abstract Boolean getAcrossElements();
