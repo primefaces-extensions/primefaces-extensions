@@ -172,6 +172,7 @@ public class OrgChartRenderer extends CoreRenderer<OrgChart> {
         wb.attr("zoomoutLimit", component.getZoomoutLimit());
         wb.attr("verticalDepth", component.getVerticalDepth());
         wb.attr("nodeTitle", component.getNodeTitle());
+        wb.attr("filterable", component.getFilterable(), false);
         wb.nativeAttr("extender", component.getExtender());
         wb.attr("data", data);
 

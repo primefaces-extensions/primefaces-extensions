@@ -111,6 +111,9 @@ public abstract class OrgChartBase extends UIData implements Widget, StyleAware 
     @Property(description = "The node title property name.", defaultValue = "name")
     public abstract String getNodeTitle();
 
+    @Property(description = "Render built-in filter controls for client-side node filtering.", defaultValue = "false")
+    public abstract Boolean getFilterable();
+
     @Property(description = "Name of javascript function to extend the widget.")
     public abstract String getExtender();
 }
