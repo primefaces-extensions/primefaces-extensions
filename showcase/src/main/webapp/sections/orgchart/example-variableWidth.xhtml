@@ -1,0 +1,49 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="jakarta.faces.html"
+    xmlns:ui="jakarta.faces.facelets" xmlns:p="primefaces"
+    xmlns:pe="primefaces.extensions" xmlns:f="jakarta.faces.core">
+
+    <h:form id="variableWidthForm">
+        <p:growl id="growl" showDetail="true" showSummary="true" />
+
+<!-- EXAMPLE-SOURCE-START -->
+        <style type="text/css">
+            .orgchart .wide-node .title,
+            .orgchart .wide-node .content {
+                width: 240px;
+            }
+
+            .orgchart .standard-node .title,
+            .orgchart .standard-node .content {
+                width: 160px;
+            }
+
+            .orgchart .narrow-node .title,
+            .orgchart .narrow-node .content {
+                width: 100px;
+            }
+        </style>
+
+        <pe:orgchart id="orgChart"
+                     widgetVar="variableWidthWidget"
+                     value="#{variableWidthOrgchartController.orgChartModel}"
+                     nodeId="id"
+                     nodeContent="title"
+                     nodeTitle="name"
+                     style="height:400px">
+        </pe:orgchart>
+<!-- EXAMPLE-SOURCE-END -->
+
+        <p:panel header="How it works" style="margin-top:10px">
+            <p>Nodes can have different widths to accommodate varying content lengths.
+            Use the <strong>className</strong> property on each node and define custom CSS rules
+            to set different widths for the title and content sections.</p>
+            <ul>
+                <li><strong>wide-node</strong> - 240px width for longer content</li>
+                <li><strong>standard-node</strong> - 160px width for medium content</li>
+                <li><strong>narrow-node</strong> - 100px width for short content</li>
+            </ul>
+            <p><em>Note:</em> The default node width is 130px. You can customize this by targeting
+            <code>.orgchart .your-class-name .title</code> and <code>.orgchart .your-class-name .content</code> in your CSS.</p>
+        </p:panel>
+    </h:form>
+</ui:composition>
