@@ -43,16 +43,38 @@ PrimeFaces.widget.ExtOrgChart = class extends PrimeFaces.widget.BaseWidget {
         var opts = $.extend(true, {}, cfg);
         opts['data'] = JSON.parse(opts['data']);
 
-        // Map parentNodeSymbol to icons.parentNode
+        // Map parentNodeSymbol to icons, preserving all required icon classes.
+        // For Font Awesome parent symbols, keep OCI as base theme class and provide FA classes per icon.
+        // This preserves OCI compact corner toggles while rendering the rest with FA.
+        // Otherwise, OCI (built-in) icons are used as the default theme.
         if (opts.parentNodeSymbol) {
-            opts.icons = opts.icons || {};
-            opts.icons.parentNode = opts.parentNodeSymbol;
-            // Set theme based on icon prefix
-            if (opts.parentNodeSymbol.startsWith('fa-')) {
-                opts.icons.theme = 'fa';
-            } else if (opts.parentNodeSymbol.startsWith('oci-')) {
-                opts.icons.theme = 'oci';
-            }
+            var isFa = opts.parentNodeSymbol.startsWith('fa-');
+            var defaults = isFa ? {
+                'theme': 'oci',
+                'parentNode': 'fa ' + opts.parentNodeSymbol,
+                'expandToUp': 'fa fa-chevron-up',
+                'collapseToDown': 'fa fa-chevron-down',
+                'collapseToLeft': 'fa fa-chevron-left',
+                'expandToRight': 'fa fa-chevron-right',
+                'backToCompact': 'oci-corner-top-left',
+                'backToLoose': 'oci-corner-bottom-right',
+                'collapsed': 'fa fa-plus-square',
+                'expanded': 'fa fa-minus-square',
+                'spinner': 'fa fa-spinner'
+            } : {
+                'theme': 'oci',
+                'parentNode': opts.parentNodeSymbol,
+                'expandToUp': 'oci-chevron-up',
+                'collapseToDown': 'oci-chevron-down',
+                'collapseToLeft': 'oci-chevron-left',
+                'expandToRight': 'oci-chevron-right',
+                'backToCompact': 'oci-corner-top-left',
+                'backToLoose': 'oci-corner-bottom-right',
+                'collapsed': 'oci-plus-square',
+                'expanded': 'oci-minus-square',
+                'spinner': 'oci-spinner'
+            };
+            opts.icons = $.extend({}, defaults, opts.icons);
         }
 
         this.orgchart = this.jq.orgchart(opts);
