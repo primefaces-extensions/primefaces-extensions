@@ -41,6 +41,8 @@ public class DefaultOrgChartNode implements OrgChartNode {
 
     private String className;
 
+    private boolean compact;
+
     private Object nodeData;
 
     private List<OrgChartNode> children = new ArrayList<>();
@@ -209,6 +211,16 @@ public class DefaultOrgChartNode implements OrgChartNode {
     @Override
     public void setClassName(final String className) {
         this.className = className;
+    }
+
+    @Override
+    public boolean isCompact() {
+        return compact;
+    }
+
+    @Override
+    public void setCompact(final boolean compact) {
+        this.compact = compact;
     }
 
     @Override
