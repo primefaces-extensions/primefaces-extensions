@@ -43,24 +43,24 @@ PrimeFaces.widget.ExtOrgChart = class extends PrimeFaces.widget.BaseWidget {
         var opts = $.extend(true, {}, cfg);
         opts['data'] = JSON.parse(opts['data']);
 
-        // Map parentNodeSymbol to icons, preserving all required icon classes.
-        // For Font Awesome parent symbols, keep OCI as base theme class and provide FA classes per icon.
-        // This preserves OCI compact corner toggles while rendering the rest with FA.
-        // Otherwise, OCI (built-in) icons are used as the default theme.
+        // Map parentNodeSymbol to icons.
+        // If a Font Awesome symbol is configured for parent nodes, keep OCI for structural
+        // controls (edge arrows, compact controls, toggle buttons, spinner) because the
+        // orgchart stylesheet positions/colors OCI classes specifically.
         if (opts.parentNodeSymbol) {
             var isFa = opts.parentNodeSymbol.startsWith('fa-');
             var defaults = isFa ? {
                 'theme': 'oci',
                 'parentNode': 'fa ' + opts.parentNodeSymbol,
-                'expandToUp': 'fa fa-chevron-up',
-                'collapseToDown': 'fa fa-chevron-down',
-                'collapseToLeft': 'fa fa-chevron-left',
-                'expandToRight': 'fa fa-chevron-right',
+                'expandToUp': 'oci-chevron-up',
+                'collapseToDown': 'oci-chevron-down',
+                'collapseToLeft': 'oci-chevron-left',
+                'expandToRight': 'oci-chevron-right',
                 'backToCompact': 'oci-corner-top-left',
                 'backToLoose': 'oci-corner-bottom-right',
-                'collapsed': 'fa fa-plus-square',
-                'expanded': 'fa fa-minus-square',
-                'spinner': 'fa fa-spinner'
+                'collapsed': 'oci-plus-square',
+                'expanded': 'oci-minus-square',
+                'spinner': 'oci-spinner'
             } : {
                 'theme': 'oci',
                 'parentNode': opts.parentNodeSymbol,
