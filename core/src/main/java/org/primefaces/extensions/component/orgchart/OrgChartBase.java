@@ -21,7 +21,7 @@
  */
 package org.primefaces.extensions.component.orgchart;
 
-import jakarta.faces.component.UIData;
+import jakarta.faces.component.UIOutput;
 
 import org.primefaces.cdk.api.FacesBehaviorEvent;
 import org.primefaces.cdk.api.FacesBehaviorEvents;
@@ -44,7 +44,7 @@ import org.primefaces.extensions.event.OrgChartDropEvent;
                         defaultEvent = true),
             @FacesBehaviorEvent(name = "drop", event = OrgChartDropEvent.class, description = "Fires when a node is dropped after dragging.")
 })
-public abstract class OrgChartBase extends UIData implements Widget, StyleAware {
+public abstract class OrgChartBase extends UIOutput implements Widget, StyleAware {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.OrgChart";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
