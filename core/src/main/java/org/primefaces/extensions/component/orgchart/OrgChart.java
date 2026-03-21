@@ -27,7 +27,7 @@ import java.util.Collections;
 import java.util.Map;
 
 import javax.faces.application.ResourceDependency;
-import javax.faces.component.UIData;
+import javax.faces.component.UIOutput;
 import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
@@ -52,7 +52,7 @@ import org.primefaces.util.Constants;
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "orgchart/orgchart.js")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "orgchart/orgchart.css")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "primefaces-extensions.css")
-public class OrgChart extends UIData implements Widget, ClientBehaviorHolder {
+public class OrgChart extends UIOutput implements Widget, ClientBehaviorHolder {
 
     public static final String STYLE_CLASS = "ui-orgchart ";
 
