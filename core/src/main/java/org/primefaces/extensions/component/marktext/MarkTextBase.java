@@ -127,6 +127,7 @@ public abstract class MarkTextBase extends UIComponentBase implements Widget, Cl
     public void setAccuracy(final String accuracy) {
         getStateHelper().put(PropertyKeys.accuracy, accuracy);
     }
+
     public Object getSynonyms() {
         return getStateHelper().eval(PropertyKeys.synonyms, null);
     }
