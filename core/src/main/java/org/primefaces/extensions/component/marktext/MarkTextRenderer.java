@@ -75,7 +75,6 @@ public class MarkTextRenderer extends CoreRenderer {
         wb.attr("accuracy", markText.getAccuracy());
         wb.attr("acrossElements", markText.getAcrossElements());
         wb.attr("className", markText.getStyleClass());
-        wb.attr("hasActionListener", markText.getActionListener() != null);
         if (markText.getSynonyms() != null) {
             wb.nativeAttr("synonyms", new Gson().toJson(markText.getSynonyms()));
         }

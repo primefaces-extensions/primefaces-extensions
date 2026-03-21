@@ -35,6 +35,8 @@
         </h:panelGroup>
     </p:panel>
 
-    <pe:markText id="markText" for="searchContent" value="#{synonymsMarkTextController.searchTerm}" synonyms="#{synonymsMarkTextController.synonyms}" styleClass="marktext-highlight" actionListener="#{synonymsMarkTextController.onHighlight}"/>
+    <pe:markText id="markText" for="searchContent" value="#{synonymsMarkTextController.searchTerm}" synonyms="#{synonymsMarkTextController.synonyms}" styleClass="marktext-highlight">
+        <p:ajax event="mark" listener="#{synonymsMarkTextController.onHighlight}" update="messages"/>
+    </pe:markText>
     <!-- EXAMPLE-SOURCE-END -->
 </ui:composition>
