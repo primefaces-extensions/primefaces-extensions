@@ -3212,14 +3212,6 @@
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
-        <attribute>
-            <description>
-                <![CDATA[Method expression for action listener called when highlighting occurs.]]>
-            </description>
-            <name>actionListener</name>
-            <required>false</required>
-            <method-signature>void actionListener(org.primefaces.extensions.event.MarkEvent)</method-signature>
-        </attribute>
     </tag>
     <tag>
         <description>
