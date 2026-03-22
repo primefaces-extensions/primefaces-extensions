@@ -18,7 +18,9 @@ PrimeFaces.widget.ExtMarkText = class extends PrimeFaces.widget.BaseWidget {
         this.caseSensitive = cfg.caseSensitive;
         this.separateWordSearch = cfg.separateWordSearch;
         this.accuracy = cfg.accuracy;
+
         this.synonyms = cfg.synonyms ? (typeof cfg.synonyms === 'string' ? JSON.parse(cfg.synonyms) : cfg.synonyms) : {};
+        this.exclude = cfg.exclude ? (typeof cfg.exclude === 'string' ? JSON.parse(cfg.exclude) : cfg.exclude) : [];
         this.acrossElements = cfg.acrossElements !== undefined ? cfg.acrossElements : false;
         this.wildcards = cfg.wildcards || 'disabled';
 
@@ -75,6 +77,7 @@ PrimeFaces.widget.ExtMarkText = class extends PrimeFaces.widget.BaseWidget {
                     wildcards: this.wildcards,
                     className: this.cfg.className,
                     synonyms: this.synonyms,
+                    exclude: this.exclude,
                     acrossElements: this.acrossElements,
                     each: function(element) {
                         var term = $(element).text();
