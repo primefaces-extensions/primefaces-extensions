@@ -3198,6 +3198,14 @@
         </attribute>
         <attribute>
             <description>
+                <![CDATA[Wildcard matching mode: 'disabled'|'enabled'|'withSpaces'. Default is 'disabled'.]]>
+            </description>
+            <name>wildcards</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
                 <![CDATA[Synonyms to search for. Can be a Map or a JSON string.]]>
             </description>
             <name>synonyms</name>

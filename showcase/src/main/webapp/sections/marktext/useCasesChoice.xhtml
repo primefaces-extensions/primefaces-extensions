@@ -35,6 +35,10 @@
                     styleClass="#{navigationContext.getMenuitemStyleClass('advancedFeatures')}"
                     onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
                     url="#{request.contextPath}/sections/marktext/advancedFeatures.jsf"/>
+        <p:menuitem value="Wildcard Search"
+                styleClass="#{navigationContext.getMenuitemStyleClass('wildcardSearch')}"
+                onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
+                url="#{request.contextPath}/sections/marktext/wildcard.jsf"/>
     </p:menu>
 </ui:composition>
 </html>

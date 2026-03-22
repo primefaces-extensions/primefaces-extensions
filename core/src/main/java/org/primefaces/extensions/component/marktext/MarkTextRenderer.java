@@ -74,6 +74,7 @@ public class MarkTextRenderer extends CoreRenderer {
         wb.attr("separateWordSearch", markText.getSeparateWordSearch());
         wb.attr("accuracy", markText.getAccuracy());
         wb.attr("acrossElements", markText.getAcrossElements());
+        wb.attr("wildcards", markText.getWildcards());
         wb.attr("className", markText.getStyleClass());
         if (markText.getSynonyms() != null) {
             wb.nativeAttr("synonyms", new Gson().toJson(markText.getSynonyms()));
