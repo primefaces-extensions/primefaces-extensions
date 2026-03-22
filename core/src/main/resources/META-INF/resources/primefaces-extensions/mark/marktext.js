@@ -72,7 +72,7 @@ PrimeFaces.widget.ExtMarkText = class extends PrimeFaces.widget.BaseWidget {
                     caseSensitive: this.caseSensitive,
                     separateWordSearch: this.separateWordSearch,
                     accuracy: this.accuracy,
-                        wildcards: this.wildcards,
+                    wildcards: this.wildcards,
                     className: this.cfg.className,
                     synonyms: this.synonyms,
                     acrossElements: this.acrossElements,
