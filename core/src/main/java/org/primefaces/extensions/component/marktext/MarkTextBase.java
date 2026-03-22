@@ -161,7 +161,7 @@ public abstract class MarkTextBase extends UIComponentBase implements Widget, Cl
         return (List<String>) getStateHelper().eval(PropertyKeys.exclude, null);
     }
 
-    public void setExclude(List<String> exclude) {
+    public void setExclude(final List<String> exclude) {
         getStateHelper().put(PropertyKeys.exclude, exclude);
     }
 }
