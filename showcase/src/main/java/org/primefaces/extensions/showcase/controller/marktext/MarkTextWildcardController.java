@@ -36,7 +36,7 @@ import org.primefaces.extensions.model.marktext.MarkPosition;
 /**
  * MarkText Wildcard Controller. Provides backend for the wildcard example in the showcase.
  *
- * @author ported
+ * @author jxmai
  */
 @Named
 @ViewScoped
