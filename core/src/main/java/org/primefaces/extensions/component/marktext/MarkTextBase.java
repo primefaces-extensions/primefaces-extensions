@@ -51,7 +51,8 @@ public abstract class MarkTextBase extends UIComponentBase implements Widget, Cl
         separateWordSearch,
         accuracy,
         synonyms,
-        acrossElements
+        acrossElements,
+        wildcards
         //@formatter:on
     }
 
@@ -126,6 +127,14 @@ public abstract class MarkTextBase extends UIComponentBase implements Widget, Cl
 
     public void setAccuracy(final String accuracy) {
         getStateHelper().put(PropertyKeys.accuracy, accuracy);
+    }
+
+    public String getWildcards() {
+        return (String) getStateHelper().eval(PropertyKeys.wildcards, "disabled");
+    }
+
+    public void setWildcards(final String wildcards) {
+        getStateHelper().put(PropertyKeys.wildcards, wildcards);
     }
 
     public Object getSynonyms() {
