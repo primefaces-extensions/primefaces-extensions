@@ -77,11 +77,19 @@ public class MarkTextRenderer extends CoreRenderer<MarkText> {
         wb.attr("acrossElements", component.getAcrossElements());
         wb.attr("wildcards", component.getWildcards());
         wb.attr("className", component.getStyleClass());
+
+        Gson gson = null;
         if (component.getSynonyms() != null) {
-            wb.nativeAttr("synonyms", new Gson().toJson(component.getSynonyms()));
+            if (gson == null) {
+                gson = new Gson();
+            }
+            wb.nativeAttr("synonyms", gson.toJson(component.getSynonyms()));
         }
         if (component.getExclude() != null) {
-            wb.nativeAttr("exclude", new Gson().toJson(component.getExclude()));
+            if (gson == null) {
+                gson = new Gson();
+            }
+            wb.nativeAttr("exclude", gson.toJson(component.getExclude()));
         }
 
         encodeClientBehaviors(context, component);
