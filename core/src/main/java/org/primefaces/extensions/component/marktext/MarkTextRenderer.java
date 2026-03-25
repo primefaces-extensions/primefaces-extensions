@@ -77,12 +77,18 @@ public class MarkTextRenderer extends CoreRenderer {
         wb.attr("wildcards", markText.getWildcards());
         wb.attr("className", markText.getStyleClass());
 
+        Gson gson = null;
         if (markText.getSynonyms() != null) {
-            wb.nativeAttr("synonyms", new Gson().toJson(markText.getSynonyms()));
+            if (gson == null) {
+                gson = new Gson();
+            }
+            wb.nativeAttr("synonyms", gson.toJson(markText.getSynonyms()));
         }
-
         if (markText.getExclude() != null) {
-            wb.nativeAttr("exclude", new Gson().toJson(markText.getExclude()));
+            if (gson == null) {
+                gson = new Gson();
+            }
+            wb.nativeAttr("exclude", gson.toJson(markText.getExclude()));
         }
 
         encodeClientBehaviors(context, markText);
