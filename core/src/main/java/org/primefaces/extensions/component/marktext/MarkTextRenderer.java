@@ -77,6 +77,7 @@ public class MarkTextRenderer extends CoreRenderer {
         wb.attr("wildcards", markText.getWildcards());
         wb.attr("className", markText.getStyleClass());
 
+        if (markText.getSynonyms() != null) {
         Gson gson = null;
         if (markText.getSynonyms() != null) {
             if (gson == null) {

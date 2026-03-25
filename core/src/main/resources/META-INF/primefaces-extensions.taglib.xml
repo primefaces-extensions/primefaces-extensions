@@ -3220,6 +3220,14 @@
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Array of exclusion selectors. Matches inside these elements will be ignored.]]>
+            </description>
+            <name>exclude</name>
+            <required>false</required>
+            <type>java.util.List</type>
+        </attribute>
     </tag>
     <tag>
         <description>

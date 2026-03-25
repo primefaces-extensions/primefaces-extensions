@@ -21,6 +21,8 @@
  */
 package org.primefaces.extensions.component.marktext;
 
+import java.util.List;
+
 import javax.faces.component.UIComponentBase;
 import javax.faces.component.behavior.ClientBehaviorHolder;
 
@@ -52,7 +54,8 @@ public abstract class MarkTextBase extends UIComponentBase implements Widget, Cl
         accuracy,
         synonyms,
         acrossElements,
-        wildcards
+        wildcards,
+        exclude;
         //@formatter:on
     }
 
@@ -151,5 +154,14 @@ public abstract class MarkTextBase extends UIComponentBase implements Widget, Cl
 
     public void setAcrossElements(final Boolean acrossElements) {
         getStateHelper().put(PropertyKeys.acrossElements, acrossElements);
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<String> getExclude() {
+        return (List<String>) getStateHelper().eval(PropertyKeys.exclude, null);
+    }
+
+    public void setExclude(final List<String> exclude) {
+        getStateHelper().put(PropertyKeys.exclude, exclude);
     }
 }
