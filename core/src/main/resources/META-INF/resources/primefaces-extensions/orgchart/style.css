@@ -3,3 +3,43 @@
   overflow: auto;
   text-align: center;
 }
+
+/* PrimeFaces Extensions - OrgChart filter UI */
+.orgchart .node.matched {
+  background-color: rgba(238, 217, 54, 0.5);
+}
+
+.orgchart .hierarchy.first-shown::before {
+  left: calc(50% - 1px);
+  width: calc(50% + 1px);
+}
+
+.orgchart .hierarchy.last-shown::before {
+  width: calc(50% + 1px);
+}
+
+.orgchart .hierarchy.first-shown.last-shown::before {
+  width: 2px;
+}
+
+.pfe-orgchart-filter-controls {
+  border: 1px solid #ddd;
+  margin: 0.75rem 0;
+  padding: 0.75rem;
+  text-align: center;
+}
+
+.pfe-orgchart-filter-input {
+  margin-right: 0.5rem;
+  max-width: 320px;
+  width: 100%;
+}
+
+.pfe-orgchart-filter-button {
+  margin-right: 0.5rem;
+  padding: 0.5rem 1rem;
+}
+
+.pfe-orgchart-filter-button:last-child {
+  margin-right: 0;
+}
