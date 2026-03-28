@@ -1,0 +1,33 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+    xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <!-- EXAMPLE-SOURCE-START -->
+    <h:form id="filterForm">
+        <h:panelGroup layout="block" style="margin:0 0 0.75rem 0;">
+            <h:outputText value="Programmatic API demo: quick actions can trigger common searches from business workflows." />
+        </h:panelGroup>
+
+        <h:panelGroup layout="block" style="margin:0 0 0.75rem 0;">
+            <p:commandButton type="button" value="Quick Filter: VP"
+                onclick="PF('orgChartFilterWidget').filterNodes('VP', false); return false;" style="margin-right:0.5rem;" />
+            <p:commandButton type="button" value="Quick Filter: Developer"
+                onclick="PF('orgChartFilterWidget').filterNodes('Developer', false); return false;" style="margin-right:0.5rem;" />
+            <p:commandButton type="button" value="Clear Programmatically"
+                onclick="PF('orgChartFilterWidget').clearFilter(); return false;" />
+        </h:panelGroup>
+
+        <pe:orgchart id="orgChart"
+                     widgetVar="orgChartFilterWidget"
+                     value="#{filterOrgchartController.orgChartNode}"
+                     filterable="true"
+                     draggable="true"
+                     exportButton="true"
+                     pan="true"
+                     zoom="true"
+                     direction="t2b"
+                     style="height:420px">
+        </pe:orgchart>
+    </h:form>
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

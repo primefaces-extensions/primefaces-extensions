@@ -83,6 +83,7 @@ public class OrgChart extends UIOutput implements Widget, ClientBehaviorHolder {
         zoomoutLimit, //
         verticalDepth, //
         nodeTitle, //
+        filterable, //
         style, //
         styleClass, //
         extender
@@ -301,6 +302,14 @@ public class OrgChart extends UIOutput implements Widget, ClientBehaviorHolder {
 
     public void setNodeTitle(final String nodeTitle) {
         getStateHelper().put(PropertyKeys.nodeTitle, nodeTitle);
+    }
+
+    public Boolean getFilterable() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.filterable, false);
+    }
+
+    public void setFilterable(final Boolean filterable) {
+        getStateHelper().put(PropertyKeys.filterable, filterable);
     }
 
     public String getStyle() {
