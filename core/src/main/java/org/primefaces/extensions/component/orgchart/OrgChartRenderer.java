@@ -197,6 +197,10 @@ public class OrgChartRenderer extends CoreRenderer {
             json.put("className", orgChartNode.getClassName());
         }
 
+        if (orgChartNode.isCompact()) {
+            json.put("compact", true);
+        }
+
         if (orgChartNode.getChildCount() > 0) {
             final List<JSONObject> jsonChildren = new ArrayList<>();
             for (int i = 0; i < orgChartNode.getChildCount(); i++) {
