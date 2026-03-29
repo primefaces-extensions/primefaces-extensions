@@ -43,16 +43,38 @@ PrimeFaces.widget.ExtOrgChart = PrimeFaces.widget.BaseWidget.extend({
         var opts = $.extend(true, {}, cfg);
         opts['data'] = JSON.parse(opts['data']);
 
-        // Map parentNodeSymbol to icons.parentNode
+        // Map parentNodeSymbol to icons.
+        // If a Font Awesome symbol is configured for parent nodes, keep OCI for structural
+        // controls (edge arrows, compact controls, toggle buttons, spinner) because the
+        // orgchart stylesheet positions/colors OCI classes specifically.
         if (opts.parentNodeSymbol) {
-            opts.icons = opts.icons || {};
-            opts.icons.parentNode = opts.parentNodeSymbol;
-            // Set theme based on icon prefix
-            if (opts.parentNodeSymbol.startsWith('fa-')) {
-                opts.icons.theme = 'fa';
-            } else if (opts.parentNodeSymbol.startsWith('oci-')) {
-                opts.icons.theme = 'oci';
-            }
+            var isFa = opts.parentNodeSymbol.startsWith('fa-');
+            var defaults = isFa ? {
+                'theme': 'oci',
+                'parentNode': 'fa ' + opts.parentNodeSymbol,
+                'expandToUp': 'oci-chevron-up',
+                'collapseToDown': 'oci-chevron-down',
+                'collapseToLeft': 'oci-chevron-left',
+                'expandToRight': 'oci-chevron-right',
+                'backToCompact': 'oci-corner-top-left',
+                'backToLoose': 'oci-corner-bottom-right',
+                'collapsed': 'oci-plus-square',
+                'expanded': 'oci-minus-square',
+                'spinner': 'oci-spinner'
+            } : {
+                'theme': 'oci',
+                'parentNode': opts.parentNodeSymbol,
+                'expandToUp': 'oci-chevron-up',
+                'collapseToDown': 'oci-chevron-down',
+                'collapseToLeft': 'oci-chevron-left',
+                'expandToRight': 'oci-chevron-right',
+                'backToCompact': 'oci-corner-top-left',
+                'backToLoose': 'oci-corner-bottom-right',
+                'collapsed': 'oci-plus-square',
+                'expanded': 'oci-minus-square',
+                'spinner': 'oci-spinner'
+            };
+            opts.icons = $.extend({}, defaults, opts.icons);
         }
 
         this.orgchart = this.jq.orgchart(opts);

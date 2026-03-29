@@ -19,6 +19,10 @@
                     styleClass="#{navigationContext.getMenuitemStyleClass('filterNode')}"
                     onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
                     url="#{request.contextPath}/sections/orgchart/filterNode.jsf"/>
+        <p:menuitem value="Compact Mode"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('compactMode')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
+                    url="#{request.contextPath}/sections/orgchart/compactMode.jsf"/>
     </p:menu>
 </ui:composition>
 </html>

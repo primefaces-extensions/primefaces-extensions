@@ -64,4 +64,8 @@ public interface OrgChartNode {
 
     int getChildCount();
 
+    boolean isCompact();
+
+    void setCompact(boolean compact);
+
 }

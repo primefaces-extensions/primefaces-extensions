@@ -1,0 +1,40 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+    xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <!-- EXAMPLE-SOURCE-START -->
+    <style type="text/css">
+        .compact-demo .orgchart {
+            background: unset;
+        }
+    </style>
+
+    <h:form id="compactForm">
+
+        <h:panelGroup layout="block" styleClass="compact-demo" style="margin:0 0 0.75rem 0;">
+            <pe:orgchart id="orgChart"
+                        widgetVar="orgChartCompact"
+                        value="#{compactOrgchartController.orgChartNode}"
+                        nodeContent="title"
+                        parentNodeSymbol="fa-users"
+                        pan="true"
+                        zoom="true"
+                        direction="t2b"
+                        style="height:480px">
+            </pe:orgchart>
+        </h:panelGroup>
+
+        <h:panelGroup layout="block" style="margin:0.75rem 0 0 0;">
+            <p:panel header="About Compact Mode">
+                Set <code>compact=true</code> on a node to display its children in a compact grid
+                inside the parent box.
+                <br/><br/>
+                In this sample, <strong>Bo Miao</strong> is compact and includes a nested compact node
+                (<strong>Si Xuan</strong>). Use the green corner controls to switch between compact and
+                loose layouts.
+            </p:panel>
+        </h:panelGroup>
+
+    </h:form>
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>
