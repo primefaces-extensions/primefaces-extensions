@@ -53,6 +53,7 @@ public abstract class MarkTextBase extends UIComponentBase implements Widget, Cl
         separateWordSearch,
         accuracy,
         synonyms,
+        diacritics,
         acrossElements,
         wildcards,
         exclude;
@@ -138,6 +139,14 @@ public abstract class MarkTextBase extends UIComponentBase implements Widget, Cl
 
     public void setWildcards(final String wildcards) {
         getStateHelper().put(PropertyKeys.wildcards, wildcards);
+    }
+
+    public Boolean getDiacritics() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.diacritics, Boolean.TRUE);
+    }
+
+    public void setDiacritics(final Boolean diacritics) {
+        getStateHelper().put(PropertyKeys.diacritics, diacritics);
     }
 
     public Object getSynonyms() {
