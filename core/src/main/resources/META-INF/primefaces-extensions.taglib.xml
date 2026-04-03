@@ -3198,6 +3198,14 @@
         </attribute>
         <attribute>
             <description>
+                <![CDATA[Whether accented and unaccented letters are treated as the same during matching. Default is true.]]>
+            </description>
+            <name>diacritics</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
                 <![CDATA[Wildcard matching mode: 'disabled'|'enabled'|'withSpaces'. Default is 'disabled'.]]>
             </description>
             <name>wildcards</name>
