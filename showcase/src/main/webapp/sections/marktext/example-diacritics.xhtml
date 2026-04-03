@@ -43,6 +43,8 @@
     </p:panel>
 
     <pe:markText id="markText" widgetVar="markTextWidget" for="searchContent" value="#{diacriticsMarkTextController.searchTerm}"
-                 diacritics="#{diacriticsMarkTextController.diacritics}" styleClass="marktext-highlight"/>
+                 diacritics="#{diacriticsMarkTextController.diacritics}" styleClass="marktext-highlight">
+        <p:ajax event="mark" listener="#{diacriticsMarkTextController.onHighlight}"/>
+    </pe:markText>
     <!-- EXAMPLE-SOURCE-END -->
 </ui:composition>
