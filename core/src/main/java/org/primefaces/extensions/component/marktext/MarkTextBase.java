@@ -87,4 +87,7 @@ public abstract class MarkTextBase extends UIComponentBase implements Widget, St
 
     @Property(description = "Wildcard matching mode: 'disabled'|'enabled'|'withSpaces'.", defaultValue = "disabled")
     public abstract String getWildcards();
+
+    @Property(description = "Whether accented and unaccented letters are treated as the same during matching.", defaultValue = "true")
+    public abstract Boolean getDiacritics();
 }

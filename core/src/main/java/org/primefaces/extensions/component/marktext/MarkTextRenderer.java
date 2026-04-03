@@ -74,6 +74,7 @@ public class MarkTextRenderer extends CoreRenderer<MarkText> {
         wb.attr("caseSensitive", component.getCaseSensitive());
         wb.attr("separateWordSearch", component.getSeparateWordSearch());
         wb.attr("accuracy", component.getAccuracy());
+        wb.attr("diacritics", component.getDiacritics());
         wb.attr("acrossElements", component.getAcrossElements());
         wb.attr("wildcards", component.getWildcards());
         wb.attr("className", component.getStyleClass());
