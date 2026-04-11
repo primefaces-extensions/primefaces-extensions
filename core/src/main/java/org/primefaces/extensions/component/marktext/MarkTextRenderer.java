@@ -74,6 +74,8 @@ public class MarkTextRenderer extends CoreRenderer {
         wb.attr("separateWordSearch", markText.getSeparateWordSearch());
         wb.attr("accuracy", markText.getAccuracy());
         wb.attr("diacritics", markText.getDiacritics());
+        wb.attr("iframes", markText.getIframes());
+        wb.attr("iframesTimeout", markText.getIframesTimeout());
         wb.attr("acrossElements", markText.getAcrossElements());
         wb.attr("wildcards", markText.getWildcards());
         wb.attr("className", markText.getStyleClass());

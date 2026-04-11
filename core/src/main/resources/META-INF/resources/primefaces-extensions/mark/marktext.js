@@ -19,6 +19,8 @@ PrimeFaces.widget.ExtMarkText = class extends PrimeFaces.widget.BaseWidget {
         this.separateWordSearch = cfg.separateWordSearch;
         this.accuracy = cfg.accuracy;
         this.diacritics = cfg.diacritics !== undefined ? cfg.diacritics : true;
+        this.iframes = cfg.iframes !== undefined ? cfg.iframes : false;
+        this.iframesTimeout = cfg.iframesTimeout !== undefined && cfg.iframesTimeout !== null ? cfg.iframesTimeout : 5000;
 
         this.synonyms = cfg.synonyms ? (typeof cfg.synonyms === 'string' ? JSON.parse(cfg.synonyms) : cfg.synonyms) : {};
         this.exclude = cfg.exclude ? (typeof cfg.exclude === 'string' ? JSON.parse(cfg.exclude) : cfg.exclude) : [];
@@ -76,6 +78,8 @@ PrimeFaces.widget.ExtMarkText = class extends PrimeFaces.widget.BaseWidget {
                     separateWordSearch: this.separateWordSearch,
                     accuracy: this.accuracy,
                     diacritics: this.diacritics,
+                    iframes: this.iframes,
+                    iframesTimeout: this.iframesTimeout,
                     wildcards: this.wildcards,
                     className: this.cfg.className,
                     synonyms: this.synonyms,
@@ -87,10 +91,13 @@ PrimeFaces.widget.ExtMarkText = class extends PrimeFaces.widget.BaseWidget {
                             matchedTerms.push(term);
                         }
 
-                        var range = document.createRange();
-                        range.selectNodeContents(targetElement[0]);
-                        range.setEndBefore(element);
-                        var start = range.toString().length;
+                        var start = 0;
+                        if (element.ownerDocument === targetElement[0].ownerDocument) {
+                            var range = element.ownerDocument.createRange();
+                            range.selectNodeContents(targetElement[0]);
+                            range.setEndBefore(element);
+                            start = range.toString().length;
+                        }
 
                         var $mark = $(element);
                         var nearestParentWithId = $mark.closest('[id]');

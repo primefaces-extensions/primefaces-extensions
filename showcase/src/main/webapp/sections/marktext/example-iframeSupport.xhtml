@@ -1,0 +1,75 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <style>
+        .marktext-highlight {
+            background-color: #ffeb3b !important;
+            color: #111827 !important;
+        }
+        mark {
+            background-color: #ffeb3b !important;
+            color: #111827 !important;
+        }
+    </style>
+
+    <!-- EXAMPLE-SOURCE-START -->
+    <h:panelGrid columns="7" cellpadding="6" style="margin-bottom: 12px;">
+        <h:outputText value="Search term:"/>
+        <p:inputText id="searchTerm"
+                value="#{iframeMarkTextController.searchTerm}" placeholder="e.g. compliance">
+            <p:ajax event="keyup" delay="500" update="searchArea markTextIframe"/>
+        </p:inputText>
+
+        <h:outputText value="Search iframes:"/>
+        <p:selectBooleanCheckbox value="#{iframeMarkTextController.iframes}">
+            <p:ajax update="searchArea markTextIframe"/>
+        </p:selectBooleanCheckbox>
+
+        <h:outputText value="Timeout (ms):"/>
+        <p:inputNumber id="iframeTimeout"
+                value="#{iframeMarkTextController.iframesTimeout}" minValue="0" decimalPlaces="0">
+            <p:ajax event="blur" update="searchArea markTextIframe"/>
+        </p:inputNumber>
+
+        <p:commandButton value="Highlight" icon="pi pi-search" update="searchArea markTextIframe"/>
+    </h:panelGrid>
+
+    <p:panel id="searchArea" header="Operational Guide with Embedded Policy Frame">
+        <p:messages id="iframeInfo" closable="true">
+            <p:autoUpdate/>
+        </p:messages>
+
+        <p style="margin-top: 0;">
+            This example searches both the parent document and a same-origin iframe.
+            Enable <code>iframes</code> to include embedded frame content in the highlight result.
+        </p>
+
+        <h:panelGroup id="searchContent" layout="block">
+            <h3>Parent Document Content</h3>
+            <p>
+                The compliance team reviews policy updates every sprint and tracks mandatory training tasks.
+                A professional rollout plan should include communication, compliance checkpoints, and audit readiness.
+            </p>
+            <p>
+                Use the controls above to test search behavior when iframe scanning is enabled or disabled.
+            </p>
+
+            <h3 style="margin-top: 18px;">Embedded Policy Frame (Same Origin)</h3>
+            <iframe title="Policy Frame"
+                    src="#{request.contextPath}/sections/marktext/iframe-policy-content.html"
+                    style="width: 100%; height: 210px; border: 1px solid var(--surface-border, #d1d5db); border-radius: 4px;"></iframe>
+        </h:panelGroup>
+    </p:panel>
+
+    <pe:markText id="markTextIframe"
+                 for="searchContent"
+                 value="#{iframeMarkTextController.searchTerm}"
+                 styleClass="marktext-highlight"
+                 iframes="#{iframeMarkTextController.iframes}"
+                 iframesTimeout="#{iframeMarkTextController.iframesTimeout}"/>
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>
