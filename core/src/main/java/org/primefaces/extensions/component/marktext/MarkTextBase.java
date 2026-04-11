@@ -82,6 +82,12 @@ public abstract class MarkTextBase extends UIComponentBase implements Widget, St
     @Property(description = "Array of exclusion selectors. Matches inside these elements will be ignored.")
     public abstract List<String> getExclude();
 
+    @Property(description = "Whether matching should include same-origin iframe documents.", defaultValue = "false")
+    public abstract Boolean getIframes();
+
+    @Property(description = "Maximum wait time in milliseconds for iframe loading.", defaultValue = "5000")
+    public abstract Integer getIframesTimeout();
+
     @Property(description = "Search across element boundaries.", defaultValue = "false")
     public abstract Boolean getAcrossElements();
 

@@ -1,0 +1,37 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets">
+<ui:composition>
+    <h:outputStylesheet>
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            color: #111827;
+            margin: 0;
+            padding: 12px;
+            line-height: 1.45;
+            background: #f9fafb;
+        }
+
+        .policy-title {
+            font-weight: 700;
+            margin: 0 0 8px;
+            color: #0f172a;
+        }
+
+        .policy-note {
+            margin: 8px 0 0;
+            color: #374151;
+            font-size: 0.95rem;
+        }
+    </h:outputStylesheet>
+
+    <h3 class="policy-title">Embedded Policy Notes</h3>
+    <p>
+        Compliance verification is required before each release candidate enters production.
+        Teams should maintain compliance records, review policy exceptions, and confirm audit evidence.
+    </p>
+    <p class="policy-note">
+        This same-origin content is intentionally embedded for MarkText iframe search demonstration.
+    </p>
+</ui:composition>
+</html>
