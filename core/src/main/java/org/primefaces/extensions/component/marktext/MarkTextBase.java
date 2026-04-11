@@ -56,7 +56,9 @@ public abstract class MarkTextBase extends UIComponentBase implements Widget, Cl
         diacritics,
         acrossElements,
         wildcards,
-        exclude;
+        exclude,
+        iframes,
+        iframesTimeout;
         //@formatter:on
     }
 
@@ -172,5 +174,21 @@ public abstract class MarkTextBase extends UIComponentBase implements Widget, Cl
 
     public void setExclude(final List<String> exclude) {
         getStateHelper().put(PropertyKeys.exclude, exclude);
+    }
+
+    public Boolean getIframes() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.iframes, Boolean.FALSE);
+    }
+
+    public void setIframes(final Boolean iframes) {
+        getStateHelper().put(PropertyKeys.iframes, iframes);
+    }
+
+    public Integer getIframesTimeout() {
+        return (Integer) getStateHelper().eval(PropertyKeys.iframesTimeout, 5000);
+    }
+
+    public void setIframesTimeout(final Integer iframesTimeout) {
+        getStateHelper().put(PropertyKeys.iframesTimeout, iframesTimeout);
     }
 }
