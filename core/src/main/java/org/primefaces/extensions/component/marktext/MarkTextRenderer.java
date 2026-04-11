@@ -75,6 +75,8 @@ public class MarkTextRenderer extends CoreRenderer<MarkText> {
         wb.attr("separateWordSearch", component.getSeparateWordSearch());
         wb.attr("accuracy", component.getAccuracy());
         wb.attr("diacritics", component.getDiacritics());
+        wb.attr("iframes", component.getIframes());
+        wb.attr("iframesTimeout", component.getIframesTimeout());
         wb.attr("acrossElements", component.getAcrossElements());
         wb.attr("wildcards", component.getWildcards());
         wb.attr("className", component.getStyleClass());
