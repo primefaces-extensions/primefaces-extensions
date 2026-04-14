@@ -35,7 +35,7 @@ PrimeFaces.widget.ExtClipboard = PrimeFaces.widget.BaseWidget.extend({
         this.trigger = _trigger;
 
         // destroy the old Clipboard
-        this._remove();
+        this.destroy();
 
         // start building the options to configure the clipboard
         var opts = {
