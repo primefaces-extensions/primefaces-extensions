@@ -1,0 +1,31 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <p:growl id="growl" showDetail="true" showSummary="true"/>
+
+    <div class="card">
+        <h3>Basic</h3>
+        <pe:meterGroup value="#{meterGroupController.meters}" />
+    </div>
+
+    <div class="card">
+        <h3>Vertical</h3>
+        <pe:meterGroup value="#{meterGroupController.meters}" orientation="vertical" style="height: 300px" />
+    </div>
+
+    <div class="card">
+        <h3>Labels at Start</h3>
+        <pe:meterGroup value="#{meterGroupController.meters}" labelPosition="start" />
+    </div>
+
+    <div class="card">
+        <h3>Vertical Labels</h3>
+        <pe:meterGroup value="#{meterGroupController.meters}" labelOrientation="vertical" />
+    </div>
+
+</ui:composition>

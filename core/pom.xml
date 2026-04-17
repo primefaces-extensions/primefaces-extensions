@@ -205,6 +205,7 @@
                                 <include>timer/**</include>
                                 <include>tooltip/**</include>
                                 <include>waypoint/**</include>
+                                <include>metergroup/**</include>
                             </includes>
                             <aggregations>
                                 <aggregation>
