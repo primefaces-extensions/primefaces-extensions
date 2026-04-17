@@ -1,0 +1,78 @@
+.ui-metergroup {
+    display: flex;
+    gap: 1rem;
+}
+
+.ui-metergroup-horizontal {
+    flex-direction: column;
+}
+
+.ui-metergroup-vertical {
+    flex-direction: row;
+}
+
+.ui-metergroup-meters {
+    display: flex;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #e5e7eb;
+}
+
+.ui-metergroup-horizontal .ui-metergroup-meters {
+    height: 0.5rem;
+    flex-direction: row;
+}
+
+.ui-metergroup-vertical .ui-metergroup-meters {
+    width: 0.5rem;
+    flex-direction: column;
+    height: 100%;
+}
+
+.ui-metergroup-meter {
+    transition: width 0.5s ease-in-out, height 0.5s ease-in-out;
+}
+
+.ui-metergroup-horizontal .ui-metergroup-meter {
+    height: 100%;
+}
+
+.ui-metergroup-vertical .ui-metergroup-meter {
+    width: 100%;
+}
+
+.ui-metergroup-labels {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    gap: 1rem;
+}
+
+.ui-metergroup-labels-vertical {
+    flex-direction: column;
+}
+
+.ui-metergroup-labels-horizontal {
+    flex-direction: row;
+}
+
+.ui-metergroup-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.ui-metergroup-label-icon,
+.ui-metergroup-label-color {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ui-metergroup-label-color {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+}

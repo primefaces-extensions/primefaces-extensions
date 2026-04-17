@@ -3255,6 +3255,96 @@
     </tag>
     <tag>
         <description>
+            <![CDATA[MeterGroup is a component to visualize data spread as a progress bar.]]>
+        </description>
+        <tag-name>meterGroup</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.MeterGroup</component-type>
+            <renderer-type>org.primefaces.extensions.component.MeterGroupRenderer</renderer-type>
+        </component>
+        <attribute>
+            <description>
+                <![CDATA[Unique identifier of the component in a namingContainer.]]>
+            </description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[A list of MeterGroupItem objects to display.]]>
+            </description>
+            <name>value</name>
+            <required>true</required>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Min value of the meter. Default is 0.0.]]>
+            </description>
+            <name>min</name>
+            <required>false</required>
+            <type>java.lang.Double</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Max value of the meter. If 0, defaults to 100 or sum of values. Default is 0.0.]]>
+            </description>
+            <name>max</name>
+            <required>false</required>
+            <type>java.lang.Double</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Orientation of the meter. Valid values: horizontal, vertical. Default is horizontal.]]>
+            </description>
+            <name>orientation</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Position of the labels relative to the meters. Valid values: start, end. Default is end.]]>
+            </description>
+            <name>labelPosition</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Orientation of the labels. Valid values: horizontal, vertical. Default is horizontal.]]>
+            </description>
+            <name>labelOrientation</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Whether to show the labels. Default is true.]]>
+            </description>
+            <name>showLabels</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Inline style of the component. Default value is null.]]>
+            </description>
+            <name>style</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Style class of the component. Default value is null.]]>
+            </description>
+            <name>styleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+    <tag>
+        <description>
             <![CDATA[CreditCard will take any card form and make it the best part of the checkout process.]]>
         </description>
         <tag-name>creditCard</tag-name>
