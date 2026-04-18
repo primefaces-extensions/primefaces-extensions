@@ -28,7 +28,7 @@ import org.primefaces.component.api.Widget;
 /**
  * <code>MeterGroup</code> component.
  *
- * @since 16.0.0
+ * @since 15.0.15
  */
 public abstract class MeterGroupBase extends UIComponentBase implements Widget {
 

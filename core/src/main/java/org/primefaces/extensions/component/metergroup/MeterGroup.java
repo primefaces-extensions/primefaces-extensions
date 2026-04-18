@@ -26,7 +26,7 @@ import javax.faces.application.ResourceDependency;
 /**
  * <code>MeterGroup</code> component.
  *
- * @since 16.0.0
+ * @since 15.0.15
  */
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "metergroup/metergroup.css")
 public class MeterGroup extends MeterGroupBase {
