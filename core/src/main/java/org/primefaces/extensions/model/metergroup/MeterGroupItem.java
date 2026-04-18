@@ -27,7 +27,7 @@ import java.util.Objects;
 /**
  * Model class for the MeterGroup item.
  *
- * @since 16.0.0
+ * @since 15.0.15
  */
 public class MeterGroupItem implements Serializable {
 

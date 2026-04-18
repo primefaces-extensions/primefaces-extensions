@@ -27,7 +27,7 @@ import java.io.Serializable;
  * Model class for marktext positions.
  *
  * @author jxmai
- * @since 16.0.0
+ * @since 15.0.13
  */
 public class MarkPosition implements Serializable {
 
