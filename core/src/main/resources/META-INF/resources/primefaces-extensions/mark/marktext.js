@@ -39,9 +39,7 @@ PrimeFaces.widget.ExtMarkText = class extends PrimeFaces.widget.BaseWidget {
      */
     refresh(cfg) {
         this._cleanUp();
-        this.value = cfg.value;
         super.refresh(cfg);
-        this._initMark();
     }
 
     /**
