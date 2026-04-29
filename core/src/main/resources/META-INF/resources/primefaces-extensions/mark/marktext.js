@@ -39,7 +39,9 @@ PrimeFaces.widget.ExtMarkText = class extends PrimeFaces.widget.BaseWidget {
      */
     refresh(cfg) {
         this._cleanUp();
+        this.value = cfg.value;
         super.refresh(cfg);
+        this._initMark();
     }
 
     /**
@@ -112,6 +114,9 @@ PrimeFaces.widget.ExtMarkText = class extends PrimeFaces.widget.BaseWidget {
                     },
                     done: function(totalMatches) {
                         $this.jq.trigger('marktext.mark', [matchedTerms, positions]);
+                        if ($this.cfg.onDone) {
+                            $this.cfg.onDone(totalMatches);
+                        }
                     }
                 };
 
