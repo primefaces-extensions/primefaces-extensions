@@ -1,0 +1,50 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="jakarta.faces.html"
+        xmlns:ui="jakarta.faces.facelets"
+        xmlns:p="primefaces"
+        xmlns:pe="primefaces.extensions">
+
+    <style>
+        .marktext-highlight {
+            background-color: yellow !important;
+            color: black !important;
+        }
+        mark {
+            background-color: yellow !important;
+            color: black !important;
+        }
+    </style>
+
+    <script type="text/javascript">
+        function markDone(totalMatches) {
+            document.getElementById('doneCount').textContent = totalMatches;
+            document.getElementById('doneLabel').textContent = totalMatches === 0
+                ? 'No matches found.'
+                : 'Marking complete: ' + totalMatches + ' match' + (totalMatches !== 1 ? 'es' : '') + ' highlighted.';
+        }
+    </script>
+
+    <!-- EXAMPLE-SOURCE-START -->
+    <h:panelGrid columns="2">
+        <h:outputText value="Search term:"/>
+        <p:inputText id="doneSearchInput" value="#{markTextDoneController.searchTerm}" placeholder="Enter search term"
+                     onkeyup="PF('markTextWvDone').updateMark(this.value)"/>
+    </h:panelGrid>
+
+    <p:panel id="searchContainer" header="Searchable Content" style="margin-top: 20px">
+        <p>#{markTextDoneController.processedText}</p>
+    </p:panel>
+
+    <p:panel id="donePanel" header="Done Callback Result" style="margin-top: 20px">
+        <h:outputText id="doneLabel" value="No search performed yet." />
+        <br/>
+        <h:outputText value="Total matches: "/>
+        <h:outputText id="doneCount" value="0"/>
+    </p:panel>
+
+    <pe:markText id="markText" widgetVar="markTextWvDone" for="searchContainer" value="#{markTextDoneController.searchTerm}"
+                 styleClass="marktext-highlight" caseSensitive="false"
+                 onDone="markDone(totalMatches)"/>
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

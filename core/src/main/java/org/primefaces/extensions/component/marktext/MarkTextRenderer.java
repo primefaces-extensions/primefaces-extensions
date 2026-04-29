@@ -30,6 +30,7 @@ import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.util.LangUtils;
 import org.primefaces.util.WidgetBuilder;
 
 import com.google.gson.Gson;
@@ -93,6 +94,10 @@ public class MarkTextRenderer extends CoreRenderer<MarkText> {
                 gson = new Gson();
             }
             wb.nativeAttr("exclude", gson.toJson(component.getExclude()));
+        }
+
+        if (LangUtils.isNotBlank(component.getOnDone())) {
+            wb.callback("onDone", "function(totalMatches)", component.getOnDone());
         }
 
         encodeClientBehaviors(context, component);
