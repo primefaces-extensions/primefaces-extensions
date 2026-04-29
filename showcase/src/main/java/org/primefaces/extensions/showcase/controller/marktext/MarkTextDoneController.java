@@ -30,7 +30,6 @@ import jakarta.inject.Named;
  * MarkText Done Callback Controller.
  * 
  * @author jxmai
- *
  * @since 16.0.0
  */
 @Named
