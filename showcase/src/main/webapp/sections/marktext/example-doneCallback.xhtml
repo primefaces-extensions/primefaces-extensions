@@ -5,10 +5,6 @@
         xmlns:p="primefaces"
         xmlns:pe="primefaces.extensions">
 
-    <p:messages id="messages" showSummary="true" showDetail="true">
-        <p:autoUpdate/>
-    </p:messages>
-
     <style>
         .marktext-highlight {
             background-color: yellow !important;
@@ -32,9 +28,8 @@
     <!-- EXAMPLE-SOURCE-START -->
     <h:panelGrid columns="2">
         <h:outputText value="Search term:"/>
-        <p:inputText id="searchInput" value="#{markTextDoneController.searchTerm}" placeholder="Enter search term">
-            <p:ajax event="keyup" delay="300" update="markText" process="@this"/>
-        </p:inputText>
+        <p:inputText id="doneSearchInput" value="#{markTextDoneController.searchTerm}" placeholder="Enter search term"
+                     onkeyup="PF('markTextWvDone').updateMark(this.value)"/>
     </h:panelGrid>
 
     <p:panel id="searchContainer" header="Searchable Content" style="margin-top: 20px">
@@ -48,7 +43,7 @@
         <h:outputText id="doneCount" value="0"/>
     </p:panel>
 
-    <pe:markText id="markText" for="searchContainer" value="#{markTextDoneController.searchTerm}"
+    <pe:markText id="markText" widgetVar="markTextWvDone" for="searchContainer" value="#{markTextDoneController.searchTerm}"
                  styleClass="marktext-highlight" caseSensitive="false"
                  onDone="markDone(totalMatches)"/>
     <!-- EXAMPLE-SOURCE-END -->
