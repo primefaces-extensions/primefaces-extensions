@@ -58,7 +58,8 @@ public abstract class MarkTextBase extends UIComponentBase implements Widget, Cl
         wildcards,
         exclude,
         iframes,
-        iframesTimeout;
+        iframesTimeout,
+        onDone;
         //@formatter:on
     }
 
@@ -190,5 +191,13 @@ public abstract class MarkTextBase extends UIComponentBase implements Widget, Cl
 
     public void setIframesTimeout(final Integer iframesTimeout) {
         getStateHelper().put(PropertyKeys.iframesTimeout, iframesTimeout);
+    }
+
+    public String getOnDone() {
+        return (String) getStateHelper().eval(PropertyKeys.onDone, null);
+    }
+
+    public void setOnDone(final String onDone) {
+        getStateHelper().put(PropertyKeys.onDone, onDone);
     }
 }

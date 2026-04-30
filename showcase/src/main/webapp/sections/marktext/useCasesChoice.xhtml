@@ -51,6 +51,10 @@
             styleClass="#{navigationContext.getMenuitemStyleClass('wildcardSearch')}"
             onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
             url="#{request.contextPath}/sections/marktext/wildcard.jsf"/>
+        <p:menuitem value="Done Callback"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('doneCallback')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
+                    url="#{request.contextPath}/sections/marktext/doneCallback.jsf"/>
     </p:menu>
 </ui:composition>
 </html>

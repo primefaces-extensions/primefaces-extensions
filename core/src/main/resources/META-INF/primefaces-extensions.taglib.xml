@@ -3252,6 +3252,14 @@
             <required>false</required>
             <type>java.lang.Integer</type>
         </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client-side callback executed after marking is complete. The callback receives totalMatches as a parameter.]]>
+            </description>
+            <name>onDone</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
     </tag>
     <tag>
         <description>

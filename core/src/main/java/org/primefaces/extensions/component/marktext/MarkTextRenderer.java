@@ -29,6 +29,7 @@ import javax.faces.context.ResponseWriter;
 
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.util.LangUtils;
 import org.primefaces.util.WidgetBuilder;
 
 import com.google.gson.Gson;
@@ -92,6 +93,10 @@ public class MarkTextRenderer extends CoreRenderer {
                 gson = new Gson();
             }
             wb.nativeAttr("exclude", gson.toJson(markText.getExclude()));
+        }
+
+        if (LangUtils.isNotBlank(markText.getOnDone())) {
+            wb.callback("onDone", "function(totalMatches)", markText.getOnDone());
         }
 
         encodeClientBehaviors(context, markText);
