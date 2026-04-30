@@ -39,7 +39,9 @@ public class BasicSunEditorController implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String html = "<h1>SunEditor</h1><p>Lightweight, flexible, customizable <strong>WYSIWYG</strong> text editor.</p>";
-    private String htmlDialog = "<h1>SunEditor in Dialog</h1><p>Hover over the image below to see paragraph helpers:</p><p><img alt=\"Sample Image\" src=\"https://placehold.co/600x400/EEE/999?text=Sample+Image\" style=\"display: block; margin: 20px auto; max-width: 100%; height: auto;\"></p>";
+    private String htmlDialog = "<h1>SunEditor in Dialog</h1><p>Hover over the image below to see paragraph helpers:</p>"
+                + "<p><img alt=\"Sample Image\" src=\"https://placehold.co/600x400/EEE/999?text=Sample+Image\""
+                + " style=\"display: block; margin: 20px auto; max-width: 100%; height: auto;\"></p>";
     private String mode = "classic";
 
     private String language = "fr";
