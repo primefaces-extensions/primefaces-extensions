@@ -563,7 +563,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
             }
 
             if (state == null) {
-                state = saved.get(clientId);
+                state = saved.get(id);
 
                 if (state == null) {
                     state = new SavedEditableValueState();
@@ -621,7 +621,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
             input.setValid(state.isValid());
             input.setSubmittedValue(state.getSubmittedValue());
             input.setLocalValueSet(state.isLocalValueSet());
-            if (state.getLabelValue() != null) {
+            if (state.getLabelValue() != null && component.getValueExpression(Attrs.LABEL) == null) {
                 ((UIComponent) input).getAttributes().put(Attrs.LABEL, state.getLabelValue());
             }
 
