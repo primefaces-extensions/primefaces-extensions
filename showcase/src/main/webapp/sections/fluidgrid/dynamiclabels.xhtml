@@ -1,0 +1,93 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="primefaces"
+      xmlns:pe="primefaces.extensions"
+      xmlns:showcase="primefaces.extensions.showcase">
+<ui:composition template="/templates/showcaseLayout.xhtml">
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="FluidGrid"/>
+        </f:facet>
+        <h:panelGroup layout="block" styleClass="centerContent">
+            FluidGrid allows to set up a nice tight grid with items that have variable heights and widths.
+            FluidGrid is a responsive grid. That means, the grid will reflow as the window size changes.
+            Items can have any content: text, images, links, input fields, etc.
+            They can be defined in a static or in a dynamic way as in data iteration components.
+            <p/>
+            This example demonstrates dynamic items whose <strong>label</strong> attribute on input
+            components is bound to the data model via the <strong>var</strong> variable.
+            The <strong>Change Items</strong> button dynamically replaces the grid's items to verify
+            that labels are correctly preserved across dynamic updates.
+            <p/>
+            Click <strong>Submit</strong> with empty required fields to see that each validation
+            message correctly displays its own component's label — not the label of the last item.
+        </h:panelGroup>
+
+        <h:panelGroup layout="block" styleClass="centerExample">
+            <!-- EXAMPLE-SOURCE-START -->
+            <p:growl id="growl" showDetail="true" showSummary="true">
+                <p:autoUpdate/>
+            </p:growl>
+
+            <p:commandButton value="Change Items" action="#{fluidGridDynamicLabelsController.changeItems}"
+                             process="@this" update="fluidGrid" style="margin-bottom:10px"/>
+
+            <pe:fluidGrid id="fluidGrid" value="#{fluidGridDynamicLabelsController.items}" var="data"
+                          resizeBound="false" hGutter="20" style="width:450px">
+                <pe:fluidGridItem type="input">
+                    <div class="dynLabel">
+                        <p:outputLabel for="txt" value="#{data.label}"/>
+                    </div>
+                    <p:inputText id="txt" value="#{data.value}" label="#{data.label}" required="#{data.required}"/>
+                </pe:fluidGridItem>
+            </pe:fluidGrid>
+
+            <p:commandButton value="Submit" style="margin-top: 10px;"
+                             process="fluidGrid" update="fluidGrid"
+                             oncomplete="if(!args.validationFailed) {PF('inputValuesWidget').show();}"/>
+
+            <p:dialog header="Submitted Values" widgetVar="inputValuesWidget">
+                <p:dataList id="inputValues" value="#{fluidGridDynamicLabelsController.items}" var="item"
+                            style="margin:10px;">
+                    <h:outputText value="#{item.data.label} : #{item.data.value}" style="margin-right:15px;"/>
+                </p:dataList>
+            </p:dialog>
+
+            <h:outputStylesheet id="fluidGridCSS">
+                .pe-fluidgrid-item {
+                    width: 180px;
+                    height: 65px;
+                }
+                .pe-fluidgrid-item input {
+                    width: 170px;
+                }
+                .dynLabel {
+                    font-weight: bold;
+                    margin-bottom: 5px;
+                }
+            </h:outputStylesheet>
+            <!-- EXAMPLE-SOURCE-END -->
+        </h:panelGroup>
+
+        <ui:decorate template="/templates/twoTabsDecorator.xhtml">
+            <ui:define name="contentTab1">
+${showcase:getFileContent('/sections/fluidgrid/examples/example-dynamiclabels.xhtml')}
+            </ui:define>
+            <ui:define name="contentTab2">
+${showcase:getFileContent('/org/primefaces/extensions/showcase/controller/fluidgrid/FluidGridDynamicLabelsController.java')}
+            </ui:define>
+        </ui:decorate>
+    </ui:define>
+    <ui:define name="useCases">
+        <ui:include src="/sections/fluidgrid/useCasesChoice.xhtml"/>
+    </ui:define>
+    <ui:define name="docuTable">
+        <ui:include src="/sections/shared/twoTabsDocumentation.xhtml">
+            <ui:param name="tagName1" value="fluidGrid"/>
+            <ui:param name="tagName2" value="fluidGridItem"/>
+        </ui:include>
+    </ui:define>
+</ui:composition>
+</html>
