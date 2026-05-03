@@ -15,7 +15,7 @@
 
         <p:ajax event="change" listener="#{sheetAjaxController.cellChangeEvent}"/>
         <p:ajax event="columnSelect" listener="#{sheetAjaxController.columnSelectEvent}"/>
-        <p:ajax event="rowSelect" listener="#{sheetAjaxController.rowSelectEvent}"/>
+        <p:ajax event="rowSelect" listener="#{sheetAjaxController.rowSelectEvent}" update="detailPanel"/>
 
         <f:facet name="header">
             <h:outputText value="Assets"/>
@@ -33,4 +33,25 @@
     </pe:sheet>
 
     <!-- EXAMPLE-SOURCE-END -->
+
+    <p:panel id="detailPanel" header="Selected Row Details" style="margin-top:1rem">
+        <h:panelGrid columns="2" rendered="#{sheetAjaxController.selectedAsset != null}">
+            <h:outputText value="ID:"/>
+            <h:outputText value="#{sheetAjaxController.selectedAsset.assetId}"/>
+            <h:outputText value="Host Name:"/>
+            <h:outputText value="#{sheetAjaxController.selectedAsset.hostName}"/>
+            <h:outputText value="Platform:"/>
+            <h:outputText value="#{sheetAjaxController.selectedAsset.platform}"/>
+            <h:outputText value="Type:"/>
+            <h:outputText value="#{sheetAjaxController.selectedAsset.assetType}"/>
+            <h:outputText value="Arch:"/>
+            <h:outputText value="#{sheetAjaxController.selectedAsset.platformArch}"/>
+            <h:outputText value="Purchase Price:"/>
+            <h:outputText value="#{sheetAjaxController.selectedAsset.purchasePrice}"/>
+            <h:outputText value="Active:"/>
+            <h:outputText value="#{sheetAjaxController.selectedAsset.active}"/>
+        </h:panelGrid>
+        <h:outputText value="Click a row to see details." rendered="#{sheetAjaxController.selectedAsset == null}"
+                      style="color:#888"/>
+    </p:panel>
 </ui:composition>

@@ -34,6 +34,7 @@ import org.apache.commons.collections4.IterableUtils;
 import org.primefaces.extensions.component.sheet.Sheet;
 import org.primefaces.extensions.event.SheetEvent;
 import org.primefaces.extensions.model.sheet.SheetUpdate;
+import org.primefaces.extensions.showcase.model.sheet.Asset;
 
 /**
  * {@link Sheet} Ajax Controller.
@@ -45,6 +46,8 @@ import org.primefaces.extensions.model.sheet.SheetUpdate;
 public class SheetAjaxController extends SheetController {
 
     private static final long serialVersionUID = 20120224L;
+
+    private Asset selectedAsset;
 
     /**
      * Ajax callback from the Sheet component when a cell value is changed.
@@ -79,11 +82,17 @@ public class SheetAjaxController extends SheetController {
     /**
      * Ajax callback from the Sheet component when a row is selected.
      */
-    public static void rowSelectEvent(final SheetEvent event) {
-        final Sheet sheet = event.getSheet();
-        final int row = sheet.getSelectedRow() + 1;
+    public void rowSelectEvent(final SheetEvent event) {
+        selectedAsset = (Asset) event.getRowData();
+        final int row = event.getRowIndex() + 1;
+        final String hostName = (selectedAsset != null) ? selectedAsset.getHostName() : "N/A";
         FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage("Row Selected", String.format("Row %d selected.", row)));
+                    new FacesMessage("Row Selected",
+                                String.format("Row %d selected. Host: %s", row, hostName)));
+    }
+
+    public Asset getSelectedAsset() {
+        return selectedAsset;
     }
 
     public static void validateExactly5(final FacesContext context, final UIComponent comp, final Object value) {

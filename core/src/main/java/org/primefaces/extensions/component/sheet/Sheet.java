@@ -164,7 +164,19 @@ public class Sheet extends SheetBase {
 
         if (isSelfRequest(fc) && event instanceof AjaxBehaviorEvent) {
             final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
-            final SheetEvent sheetEvent = new SheetEvent(this, behaviorEvent.getBehavior());
+
+            final int rowIndex = getSelectedRow();
+            final int colIndex = getSelectedColumn();
+            Object rowData = null;
+            if (rowIndex >= 0) {
+                final List<Object> values = getSortedValues();
+                if (rowIndex < values.size()) {
+                    rowData = values.get(rowIndex);
+                }
+            }
+
+            final SheetEvent sheetEvent = new SheetEvent(this, behaviorEvent.getBehavior(), rowData, rowIndex,
+                        colIndex);
             sheetEvent.setPhaseId(event.getPhaseId());
             super.queueEvent(sheetEvent);
             return;
