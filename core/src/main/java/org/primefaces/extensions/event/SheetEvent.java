@@ -37,11 +37,35 @@ public class SheetEvent extends AbstractAjaxBehaviorEvent {
 
     private static final long serialVersionUID = 1L;
 
+    private transient Object rowData;
+    private int rowIndex = -1;
+    private int columnIndex = -1;
+
     public SheetEvent(final UIComponent component, final Behavior behavior) {
         super(component, behavior);
     }
 
+    public SheetEvent(final UIComponent component, final Behavior behavior, final Object rowData,
+                final int rowIndex, final int columnIndex) {
+        super(component, behavior);
+        this.rowData = rowData;
+        this.rowIndex = rowIndex;
+        this.columnIndex = columnIndex;
+    }
+
     public Sheet getSheet() {
         return (Sheet) getComponent();
+    }
+
+    public Object getRowData() {
+        return rowData;
+    }
+
+    public int getRowIndex() {
+        return rowIndex;
+    }
+
+    public int getColumnIndex() {
+        return columnIndex;
     }
 }
