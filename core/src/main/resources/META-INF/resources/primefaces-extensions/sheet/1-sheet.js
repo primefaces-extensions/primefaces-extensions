@@ -241,8 +241,8 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
                             $this.filterKeyDown($this, e)
                         }).on('keyup.sheetfilter', function (e) {
                             $this.filterKeyUp($this, e)
-                        }).on('mouseover.sheetfilter', function (e) {
-                            $this.filterMouseOver($this, e)
+                        }).on('mousedown.sheetfilter', function (e) {
+                            $this.filterMouseDown($this, e)
                         }).on('focusin.sheetfilter', function () {
                             $this.filterFocusIn($this, this)
                         }).on('focusout.sheetfilter', function () {
@@ -264,8 +264,8 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
                             $this.filterKeyDown($this, e)
                         }).on('keyup.sheetfilter', function (e) {
                             $this.filterKeyUp($this, e)
-                        }).on('mouseover.sheetfilter', function (e) {
-                            $this.filterMouseOver($this, e)
+                        }).on('mousedown.sheetfilter', function (e) {
+                            $this.filterMouseDown($this, e)
                         }).on('focusin.sheetfilter', function () {
                             $this.filterFocusIn($this, this)
                         });
@@ -448,9 +448,14 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
         }
     },
 
-    // to alleviate focus issues focus on mouse over
-    filterMouseOver: function (sheet, e) {
+    filterMouseDown: function (sheet, e) {
+        var editor = sheet.ht.getActiveEditor();
+        if (editor && editor.isOpened()) {
+            return;
+        }
+        sheet.focusing = true;
         $(e.target).focus();
+        sheet.focusing = false;
     },
 
     // keep track of focused filter input. if previous filter altered,
