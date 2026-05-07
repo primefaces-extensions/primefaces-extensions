@@ -71,6 +71,9 @@ public abstract class SunEditorBase extends AbstractEditorInputTextArea {
     @Property(description = "The mode to use: 'classic', 'inline', etc.", defaultValue = "classic")
     public abstract String getMode();
 
+    @Property(description = "The theme to use: 'auto', 'dark', or 'default'.", defaultValue = "auto")
+    public abstract String getTheme();
+
     @Property(description = "Locale for the editor. Can be a string or java.util.Locale instance.")
     public abstract Object getLocale();
 

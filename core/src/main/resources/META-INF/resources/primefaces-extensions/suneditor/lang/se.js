@@ -1,191 +1,241 @@
-/*
- * wysiwyg web editor
- *
- * suneditor.js
- * Copyright 2017 JiHong Lee.
- * 
- * Swedish translation by olehrb at github or gmail
- *
- * MIT license.
- */
-'use strict';
-
+// Sweden
+// 스웨덴
 (function (global, factory) {
-    if (typeof module === 'object' && typeof module.exports === 'object') {
-        module.exports = global.document ?
-            factory(global, true) :
-            function (w) {
-                if (!w.document) {
-                    throw new Error('SUNEDITOR_LANG a window with a document');
-                }
-                return factory(w);
-            };
-    } else {
-        factory(global);
-    }
-}(typeof window !== 'undefined' ? window : this, function (window, noGlobal) {
-    const lang = {
-        code: 'se',
-        toolbar: {
-            default: 'Default',
-            save: 'Spara',
-            font: 'Typsnitt',
-            formats: 'Format',
-            fontSize: 'Textstorlek',
-            bold: 'Fet',
-            underline: 'Understruket',
-            italic: 'Kursiv',
-            strike: 'Överstruket',
-            subscript: 'Sänkt skrift',
-            superscript: 'Höjd skrift',
-            removeFormat: 'Ta bort formattering',
-            fontColor: 'Textfärg',
-            hiliteColor: 'Bakgrundsfärg',
-            indent: 'Minska indrag',
-            outdent: 'Öka indrag',
-            align: 'Justering',
-            alignLeft: 'Vänsterjustering',
-            alignRight: 'Högerjustering',
-            alignCenter: 'Mittenjusteirng',
-            alignJustify: 'Justera indrag',
-            list: 'Listor',
-            orderList: 'Numrerad lista',
-            unorderList: 'Oordnad lista',
-            horizontalRule: 'Horisontell linje',
-            hr_solid: 'Solid',
-            hr_dotted: 'Punkter',
-            hr_dashed: 'Prickad',
-            table: 'Tabell',
-            link: 'Länk',
-            math: 'Math',
-            image: 'Bild',
-            video: 'Video',
-            audio: 'Ljud',
-            fullScreen: 'Helskärm',
-            showBlocks: 'Visa block',
-            codeView: 'Visa koder',
-            undo: 'Ångra',
-            redo: 'Gör om',
-            preview: 'Preview',
-            print: 'Print',
-            tag_p: 'Paragraf',
-            tag_div: 'Normal (DIV)',
-            tag_h: 'Rubrik',
-            tag_blockquote: 'Citer',
-            tag_pre: 'Kod',
-            template: 'Mall',
-            lineHeight: 'Linjehöjd',
-            paragraphStyle: 'Stil på stycke',
-            textStyle: 'Textstil',
-            imageGallery: 'Bildgalleri',
-            dir_ltr: 'Vänster till höger',
-            dir_rtl: 'Höger till vänster',
-            mention: 'Namn'
-        },
-        dialogBox: {
-            linkBox: {
-                title: 'Lägg till länk',
-                url: 'URL till länk',
-                text: 'Länktext',
-                newWindowCheck: 'Öppna i nytt fönster',
-                downloadLinkCheck: 'Nedladdningslänk',
-                bookmark: 'Bokmärke'
-            },
-            mathBox: {
-                title: 'Math',
-                inputLabel: 'Matematisk notation',
-                fontSizeLabel: 'Textstorlek',
-                previewLabel: 'Preview'
-            },
-            imageBox: {
-                title: 'Lägg till bild',
-                file: 'Lägg till från fil',
-                url: 'Lägg till från URL',
-                altText: 'Alternativ text'
-            },
-            videoBox: {
-                title: 'Lägg till video',
-                file: 'Lägg till från fil',
-                url: 'Bädda in video / YouTube,Vimeo'
-            },
-            audioBox: {
-                title: 'Lägg till ljud',
-                file: 'Lägg till från fil',
-                url: 'Lägg till från URL'
-            },
-            browser: {
-                tags: 'Tags',
-                search: 'Sök',
-            },
-            caption: 'Lägg till beskrivning',
-            close: 'Stäng',
-            submitButton: 'Skicka',
-            revertButton: 'Återgå',
-            proportion: 'Spara proportioner',
-            basic: 'Basic',
-            left: 'Vänster',
-            right: 'Höger',
-            center: 'Center',
-            width: 'Bredd',
-            height: 'Höjd',
-            size: 'Storlek',
-            ratio: 'Förhållande'
-        },
-        controller: {
-            edit: 'Redigera',
-            unlink: 'Ta bort länk',
-            remove: 'Ta bort',
-            insertRowAbove: 'Lägg till rad över',
-            insertRowBelow: 'Lägg till rad under',
-            deleteRow: 'Ta bort rad',
-            insertColumnBefore: 'Lägg till kolumn före',
-            insertColumnAfter: 'Lägg till kolumn efter',
-            deleteColumn: 'Ta bort kolumner',
-            fixedColumnWidth: 'Fast kolumnbredd',
-            resize100: 'Förstora 100%',
-            resize75: 'Förstora 75%',
-            resize50: 'Förstora 50%',
-            resize25: 'Förstora 25%',
-            autoSize: 'Autostorlek',
-            mirrorHorizontal: 'Spegling, horisontell',
-            mirrorVertical: 'Spegling, vertikal',
-            rotateLeft: 'Rotera till vänster',
-            rotateRight: 'Rotera till höger',
-            maxSize: 'Maxstorlek',
-            minSize: 'Minsta storlek',
-            tableHeader: 'Rubrik tabell',
-            mergeCells: 'Sammanfoga celler (merge)',
-            splitCells: 'Separera celler',
-            HorizontalSplit: 'Separera horisontalt',
-            VerticalSplit: 'Separera vertikalt'
-        },
-        menu: {
-            spaced: 'Avstånd',
-            bordered: 'Avgränsningslinje',
-            neon: 'Neon',
-            translucent: 'Genomskinlig',
-            shadow: 'Skugga',
-            code: 'Kod'
-        }
-    };
+	if (typeof module === 'object' && typeof module.exports === 'object') {
+		module.exports = global.document
+			? factory(global, true)
+			: function (w) {
+					if (!w.document) {
+						throw new Error('SUNEDITOR_LANG a window with a document');
+					}
+					return factory(w);
+				};
+	} else {
+		factory(global);
+	}
+})(typeof window !== 'undefined' ? window : this, function (window, noGlobal) {
+	const lang = {
+		code: 'se',
+		align: 'Justering',
+		alignBottom: 'Rikta in botten',
+		alignCenter: 'Mittenjusteirng',
+		alignJustify: 'Justera indrag',
+		alignLeft: 'Vänsterjustering',
+		alignMiddle: 'Justera mitten',
+		alignRight: 'Högerjustering',
+		alignTop: 'Rikta upp toppen',
+		anchor: 'Förankra',
+		asBlock: 'Som ett block',
+		asInline: 'Som en inline',
+		asLink: 'Som länk',
+		audio: 'Ljud',
+		audioGallery: 'Ljudgalleri',
+		audio_modal_file: 'Lägg till från fil',
+		audio_modal_title: 'Lägg till ljud',
+		audio_modal_url: 'Lägg till från URL',
+		autoSize: 'Autostorlek',
+		backgroundColor: 'Bakgrundsfärg',
+		basic: 'Basic',
+		blockStyle: 'Block stil',
+		bold: 'Fet',
+		border: 'Gräns',
+		border_all: 'Gränsa alla',
+		border_inside: 'Kant inuti',
+		border_horizontal: 'Kant horisontell',
+		border_vertical: 'Kant vertikal',
+		border_outside: 'Gräns ​​utanför',
+		border_left: 'Kant till vänster',
+		border_top: 'Border topp',
+		border_right: 'Kant till höger',
+		border_bottom: 'Kant botten',
+		border_none: 'Gränser ingen',
+		bulletedList: 'Oordnad lista',
+		cancel: 'Avboka',
+		caption: 'Lägg till beskrivning',
+		cellProperties: 'Cellegenskaper',
+		center: 'Centrum',
+		close: 'Stäng',
+		codeView: 'Visa koder',
+		color: 'Färg',
+		colorPicker: 'Färgväljare',
+		column: 'Kolumn',
+		comment: 'Kommentarer',
+		commentAdd: 'Lägg till kommentar',
+		commentShow: 'Visa kommentarer',
+		copy: 'Kopiera',
+		copyFormat: 'Målarformatering',
+		cut: 'Skära',
+		default: 'Default',
+		deleteColumn: 'Ta bort kolumner',
+		deleteRow: 'Ta bort rad',
+		dir_ltr: 'Vänster till höger',
+		dir_rtl: 'Höger till vänster',
+		download: 'Ladda ner',
+		drag: 'Dra',
+		drawing: 'Ritning',
+		drawing_modal_title: 'Ritning',
+		edit: 'Redigera',
+		embed: 'Bädda in',
+		embed_modal_title: 'Bädda in',
+		embed_modal_source: 'Bädda in källa / URL',
+		exportPDF: 'Exportera till PDF',
+		exportWord: 'Exportera till Word',
+		find: 'Hitta',
+		decrease: 'Minska',
+		increase: 'Öka',
+		fileBrowser: 'Filläsare',
+		fileGallery: 'Filgalleri',
+		fileUpload: 'Filuppladdning',
+		fixedColumnWidth: 'Fast kolumnbredd',
+		font: 'Typsnitt',
+		fontColor: 'Textfärg',
+		fontSize: 'Textstorlek',
+		formats: 'Format',
+		fullScreen: 'Helskärm',
+		height: 'Höjd',
+		horizontalLine: 'Horisontell linje',
+		horizontalSplit: 'Separera horisontalt',
+		hr_dashed: 'Prickad',
+		hr_dotted: 'Punkter',
+		hr_solid: 'Solid',
+		id: 'ID',
+		image: 'Bild',
+		imageGallery: 'Bildgalleri',
+		image_modal_altText: 'Alternativ text',
+		image_modal_file: 'Lägg till från fil',
+		image_modal_title: 'Lägg till bild',
+		image_modal_url: 'Lägg till från URL',
+		importWord: 'Importera från Word',
+		indent: 'Minska indrag',
+		inlineStyle: 'Inline stil',
+		insertColumnAfter: 'Lägg till kolumn efter',
+		insertColumnBefore: 'Lägg till kolumn före',
+		insertRowAbove: 'Lägg till rad över',
+		insertRowBelow: 'Lägg till rad under',
+		insertLine: 'Infoga linje',
+		italic: 'Kursiv',
+		layout: 'Layout',
+		left: 'Vänster',
+		lineHeight: 'Linjehöjd',
+		link: 'Länk',
+		link_modal_bookmark: 'Bokmärke',
+		link_modal_downloadLinkCheck: 'Nedladdningslänk',
+		link_modal_newWindowCheck: 'Öppna i nytt fönster',
+		link_modal_text: 'Länktext',
+		link_modal_title: 'Lägg till länk',
+		link_modal_url: 'URL till länk',
+		link_modal_relAttribute: 'Rel attribut',
+		list: 'Listor',
+		markdownView: 'Markdown-vy',
+		math: 'Math',
+		math_modal_fontSizeLabel: 'Textstorlek',
+		math_modal_inputLabel: 'Matematisk notation',
+		math_modal_previewLabel: 'Preview',
+		math_modal_title: 'Math',
+		maxSize: 'Maxstorlek',
+		mediaGallery: 'Rel attribut',
+		autocomplete: 'Autoslutför',
+		mention: 'Namn',
+		menu_bordered: 'Avgränsningslinje',
+		menu_code: 'Kod',
+		menu_neon: 'Neon',
+		menu_shadow: 'Skugga',
+		menu_spaced: 'Avstånd',
+		menu_translucent: 'Genomskinlig',
+		mergeCells: 'Sammanfoga celler (merge)',
+		minSize: 'Minsta storlek',
+		mirrorHorizontal: 'Spegling, horisontell',
+		mirrorVertical: 'Spegling, vertikal',
+		newDocument: 'Rel attribut',
+		numberedList: 'Numrerad lista',
+		outdent: 'Öka indrag',
+		pageBreak: 'Sidbrytning',
+		pageDown: 'Sidbrytning',
+		pageNumber: 'Sidnummer',
+		pageUp: 'Sida upp',
+		paragraphStyle: 'Stil på stycke',
+		preview: 'Preview',
+		print: 'Print',
+		proportion: 'Spara proportioner',
+		ratio: 'Förhållande',
+		redo: 'Gör om',
+		remove: 'Ta bort',
+		removeFormat: 'Ta bort formattering',
+		replace: 'Ersätta',
+		replaceAll: 'Byt ut alla',
+		resize100: 'Förstora 100%',
+		resize25: 'Förstora 25%',
+		resize50: 'Förstora 50%',
+		resize75: 'Förstora 75%',
+		resize: 'Ändra storlek',
+		revert: 'Återgå',
+		revisionHistory: 'Revisionshistorik',
+		right: 'Höger',
+		rotateLeft: 'Rotera till vänster',
+		rotateRight: 'Rotera till höger',
+		row: 'Rad',
+		save: 'Spara',
+		search: 'Sök',
+		selectAll: 'Välj Alla',
+		showBlocks: 'Visa block',
+		size: 'Storlek',
+		splitCells: 'Separera celler',
+		strike: 'Överstruket',
+		submitButton: 'Skicka',
+		subscript: 'Sänkt skrift',
+		superscript: 'Höjd skrift',
+		table: 'Tabell',
+		tableHeader: 'Rubrik tabell',
+		tableProperties: 'Tabellegenskaper',
+		tags: 'Tags',
+		tag_blockquote: 'Citer',
+		codeBlock: 'Kodblock',
+		tag_div: 'Normal (DIV)',
+		tag_h: 'Rubrik',
+		tag_p: 'Paragraf',
+		tag_pre: 'Kod',
+		template: 'Mall',
+		textStyle: 'Textstil',
+		title: 'Titel',
+		underline: 'Understruket',
+		undo: 'Ångra',
+		unmergeCells: 'koppla bort celler',
+		unlink: 'Ta bort länk',
+		verticalSplit: 'Separera vertikalt',
+		video: 'Video',
+		videoGallery: 'Videogalleri',
+		video_modal_file: 'Lägg till från fil',
+		video_modal_title: 'Lägg till video',
+		video_modal_url: 'Bädda in video / YouTube,Vimeo',
+		width: 'Bredd',
+		codeLanguage: 'Språk',
+		codeLanguage_none: 'Ingen',
+		finder_matchCase: 'Matchfodral',
+		finder_wholeWord: 'Hela ordet',
+		finder_regex: 'Reguljärt uttryck',
+		finder_prev: 'Föregående match',
+		finder_next: 'Nästa match',
+		message_copy_success: 'Kopierat till urklipp',
+		message_copy_fail: 'Kopieringen misslyckades. Kopiera manuellt.',
+	};
 
-    if (typeof noGlobal === typeof undefined) {
-        if (!window.SUNEDITOR_LANG) {
-            Object.defineProperty(window, 'SUNEDITOR_LANG', {
-                enumerable: true,
-                writable: false,
-                configurable: false,
-                value: {}
-            });
-        }
+	if (typeof noGlobal === typeof undefined) {
+		if (!window.SUNEDITOR_LANG) {
+			Object.defineProperty(window, 'SUNEDITOR_LANG', {
+				enumerable: true,
+				writable: false,
+				configurable: false,
+				value: {},
+			});
+		}
 
-        Object.defineProperty(window.SUNEDITOR_LANG, 'se', {
-            enumerable: true,
-            writable: true,
-            configurable: true,
-            value: lang
-        });
-    }
+		Object.defineProperty(window.SUNEDITOR_LANG, 'se', {
+			enumerable: true,
+			writable: true,
+			configurable: true,
+			value: lang,
+		});
+	}
 
-    return lang;
-}));
+	return lang;
+});

@@ -1,188 +1,241 @@
-/*
- * wysiwyg web editor
- *
- * suneditor.js
- * Copyright 2017 JiHong Lee.
- * MIT license.
- */
-'use strict';
-
+// Russia
+// 러시아어
 (function (global, factory) {
-    if (typeof module === 'object' && typeof module.exports === 'object') {
-        module.exports = global.document ?
-            factory(global, true) :
-            function (w) {
-                if (!w.document) {
-                    throw new Error('SUNEDITOR_LANG a window with a document');
-                }
-                return factory(w);
-            };
-    } else {
-        factory(global);
-    }
-}(typeof window !== 'undefined' ? window : this, function (window, noGlobal) {
-    const lang = {
-        code: 'ru',
-        toolbar: {
-            default: 'По умолчанию',
-            save: 'Сохранить',
-            font: 'Шрифт',
-            formats: 'Стиль абзаца',
-            fontSize: 'Размер шрифта',
-            bold: 'Полужирный',
-            underline: 'Подчёркнутый',
-            italic: 'Курсив',
-            strike: 'Зачеркнутый',
-            subscript: 'Нижний индекс',
-            superscript: 'Верхний индекс',
-            removeFormat: 'Очистить форматирование',
-            fontColor: 'Цвет текста',
-            hiliteColor: 'Цвет фона',
-            indent: 'Увеличить отступ',
-            outdent: 'Уменьшить отступ',
-            align: 'Выравнивание',
-            alignLeft: 'Слева',
-            alignRight: 'Справа',
-            alignCenter: 'По центру',
-            alignJustify: 'По ширине',
-            list: 'Списки',
-            orderList: 'Нумерованный',
-            unorderList: 'Маркированный',
-            horizontalRule: 'Горизонтальная линия',
-            hr_solid: 'Сплошная',
-            hr_dotted: 'Пунктир',
-            hr_dashed: 'Штриховая',
-            table: 'Таблица',
-            link: 'Ссылка',
-            math: 'математический',
-            image: 'Изображение',
-            video: 'Видео',
-            audio: 'Аудио',
-            fullScreen: 'Полный экран',
-            showBlocks: 'Блочный вид',
-            codeView: 'Редактировать HTML',
-            undo: 'Отменить',
-            redo: 'Вернуть',
-            preview: 'Предварительный просмотр',
-            print: 'Печать',
-            tag_p: 'Текст',
-            tag_div: 'Базовый',
-            tag_h: 'Заголовок',
-            tag_blockquote: 'Цитата',
-            tag_pre: 'Код',
-            template: 'Шаблон',
-            lineHeight: 'Высота линии',
-            paragraphStyle: 'Стиль абзаца',
-            textStyle: 'Стиль текста',
-            imageGallery: 'Галерея',
-            dir_ltr: 'Слева направо',
-            dir_rtl: 'Справа налево',
-            mention: 'Упоминание'
-        },
-        dialogBox: {
-            linkBox: {
-                title: 'Вставить ссылку',
-                url: 'Ссылка',
-                text: 'Текст',
-                newWindowCheck: 'Открывать в новом окне',
-                downloadLinkCheck: 'Ссылка для скачивания',
-                bookmark: 'Закладка'
-            },
-            mathBox: {
-                title: 'математический',
-                inputLabel: 'Математическая запись',
-                fontSizeLabel: 'Кегль',
-                previewLabel: 'Предварительный просмотр'
-            },
-            imageBox: {
-                title: 'Вставить изображение',
-                file: 'Выберите файл',
-                url: 'Адрес изображения',
-                altText: 'Текстовое описание изображения'
-            },
-            videoBox: {
-                title: 'Вставить видео',
-                file: 'Выберите файл',
-                url: 'Ссылка на видео, Youtube,Vimeo'
-            },
-            audioBox: {
-                title: 'Вставить аудио',
-                file: 'Выберите файл',
-                url: 'Адрес аудио'
-            },
-            browser: {
-                tags: 'Теги',
-                search: 'Поиск',
-            },
-            caption: 'Добавить подпись',
-            close: 'Закрыть',
-            submitButton: 'Подтвердить',
-            revertButton: 'Сбросить',
-            proportion: 'Сохранить пропорции',
-            basic: 'Без обтекания',
-            left: 'Слева',
-            right: 'Справа',
-            center: 'По центру',
-            width: 'Ширина',
-            height: 'Высота',
-            size: 'Размер',
-            ratio: 'Соотношение'
-        },
-        controller: {
-            edit: 'Изменить',
-            unlink: 'Убрать ссылку',
-            remove: 'Удалить',
-            insertRowAbove: 'Вставить строку выше',
-            insertRowBelow: 'Вставить строку ниже',
-            deleteRow: 'Удалить строку',
-            insertColumnBefore: 'Вставить столбец слева',
-            insertColumnAfter: 'Вставить столбец справа',
-            deleteColumn: 'Удалить столбец',
-            fixedColumnWidth: 'Фиксированная ширина столбца',
-            resize100: 'Размер 100%',
-            resize75: 'Размер 75%',
-            resize50: 'Размер 50%',
-            resize25: 'Размер 25%',
-            autoSize: 'Авто размер',
-            mirrorHorizontal: 'Отразить по горизонтали',
-            mirrorVertical: 'Отразить по вертикали',
-            rotateLeft: 'Повернуть против часовой стрелки',
-            rotateRight: 'Повернуть по часовой стрелке',
-            maxSize: 'Ширина по размеру страницы',
-            minSize: 'Ширина по содержимому',
-            tableHeader: 'Строка заголовков',
-            mergeCells: 'Объединить ячейки',
-            splitCells: 'Разделить ячейку',
-            HorizontalSplit: 'Разделить горизонтально',
-            VerticalSplit: 'Разделить вертикально'
-        },
-        menu: {
-            spaced: 'интервал',
-            bordered: 'Граничная Линия',
-            neon: 'неон',
-            translucent: 'полупрозрачный',
-            shadow: 'Тень',
-            code: 'Код'
-        }
-    };
+	if (typeof module === 'object' && typeof module.exports === 'object') {
+		module.exports = global.document
+			? factory(global, true)
+			: function (w) {
+					if (!w.document) {
+						throw new Error('SUNEDITOR_LANG a window with a document');
+					}
+					return factory(w);
+				};
+	} else {
+		factory(global);
+	}
+})(typeof window !== 'undefined' ? window : this, function (window, noGlobal) {
+	const lang = {
+		code: 'ru',
+		align: 'Выравнивание',
+		alignBottom: 'Выровнять по нижнему краю',
+		alignCenter: 'По центру',
+		alignJustify: 'По ширине',
+		alignLeft: 'Слева',
+		alignMiddle: 'Выровнять по центру',
+		alignRight: 'Справа',
+		alignTop: 'Выровнять по верхнему краю',
+		anchor: 'Якорь',
+		asBlock: 'Как блок',
+		asInline: 'Как встроенный',
+		asLink: 'Как ссылка',
+		audio: 'Аудио',
+		audioGallery: 'Аудиогалерея',
+		audio_modal_file: 'Выберите файл',
+		audio_modal_title: 'Вставить аудио',
+		audio_modal_url: 'Адрес аудио',
+		autoSize: 'Авто размер',
+		backgroundColor: 'Цвет фона',
+		basic: 'Без обтекания',
+		blockStyle: 'Стиль блока',
+		bold: 'Полужирный',
+		border: 'Граница',
+		border_all: 'Граница всего',
+		border_inside: 'Граница внутри',
+		border_horizontal: 'Граница горизонтальная',
+		border_vertical: 'Граница вертикальная',
+		border_outside: 'Граница снаружи',
+		border_left: 'Граница слева',
+		border_top: 'Граница сверху',
+		border_right: 'Граница справа',
+		border_bottom: 'Граница снизу',
+		border_none: 'Граница отсутствует',
+		bulletedList: 'Маркированный',
+		cancel: 'Отмена',
+		caption: 'Добавить подпись',
+		cellProperties: 'Свойства ячейки',
+		center: 'По центру',
+		close: 'Закрыть',
+		codeView: 'Редактировать HTML',
+		color: 'Цвет',
+		colorPicker: 'Выбор цвета',
+		column: 'Столбец',
+		comment: 'Комментарии',
+		commentAdd: 'Добавить комментарий',
+		commentShow: 'Показать комментарии',
+		copy: 'Копировать',
+		copyFormat: 'Форматирование рисования',
+		cut: 'Вырезать',
+		default: 'По умолчанию',
+		deleteColumn: 'Удалить столбец',
+		deleteRow: 'Удалить строку',
+		dir_ltr: 'Слева направо',
+		dir_rtl: 'Справа налево',
+		download: 'Скачать',
+		drag: 'Перетащить',
+		drawing: 'Рисунок',
+		drawing_modal_title: 'Рисунок',
+		edit: 'Изменить',
+		embed: 'Встроить',
+		embed_modal_title: 'Встроить',
+		embed_modal_source: 'Встроить Источник / URL',
+		exportPDF: 'Экспорт в PDF',
+		exportWord: 'Экспорт в Word',
+		find: 'Найти',
+		decrease: 'Уменьшить',
+		increase: 'Увеличить',
+		fileBrowser: 'Браузер файлов',
+		fileGallery: 'Галерея файлов',
+		fileUpload: 'Загрузка файлов',
+		fixedColumnWidth: 'Фиксированная ширина столбца',
+		font: 'Шрифт',
+		fontColor: 'Цвет текста',
+		fontSize: 'Размер шрифта',
+		formats: 'Стиль абзаца',
+		fullScreen: 'Полный экран',
+		height: 'Высота',
+		horizontalLine: 'Горизонтальная линия',
+		horizontalSplit: 'Разделить горизонтально',
+		hr_dashed: 'Штриховая',
+		hr_dotted: 'Пунктир',
+		hr_solid: 'Сплошная',
+		id: 'ID',
+		image: 'Изображение',
+		imageGallery: 'Галерея',
+		image_modal_altText: 'Текстовое описание изображения',
+		image_modal_file: 'Выберите файл',
+		image_modal_title: 'Вставить изображение',
+		image_modal_url: 'Адрес изображения',
+		importWord: 'Импорт из Word',
+		indent: 'Увеличить отступ',
+		inlineStyle: 'Встроенный стиль',
+		insertColumnAfter: 'Вставить столбец справа',
+		insertColumnBefore: 'Вставить столбец слева',
+		insertRowAbove: 'Вставить строку выше',
+		insertRowBelow: 'Вставить строку ниже',
+		insertLine: 'Вставить строку',
+		italic: 'Курсив',
+		layout: 'Макет',
+		left: 'Слева',
+		lineHeight: 'Высота линии',
+		link: 'Ссылка',
+		link_modal_bookmark: 'Закладка',
+		link_modal_downloadLinkCheck: 'Ссылка для скачивания',
+		link_modal_newWindowCheck: 'Открывать в новом окне',
+		link_modal_text: 'Текст',
+		link_modal_title: 'Вставить ссылку',
+		link_modal_url: 'Ссылка',
+		link_modal_relAttribute: 'Атрибут Rel',
+		list: 'Списки',
+		markdownView: 'Просмотр в формате Markdown',
+		math: 'математический',
+		math_modal_fontSizeLabel: 'Кегль',
+		math_modal_inputLabel: 'Математическая запись',
+		math_modal_previewLabel: 'Предварительный просмотр',
+		math_modal_title: 'математический',
+		maxSize: 'Ширина по размеру страницы',
+		mediaGallery: 'Галерея мультимедиа',
+		autocomplete: 'Автозаполнение',
+		mention: 'Упоминание',
+		menu_bordered: 'Граничная Линия',
+		menu_code: 'Код',
+		menu_neon: 'неон',
+		menu_shadow: 'Тень',
+		menu_spaced: 'интервал',
+		menu_translucent: 'полупрозрачный',
+		mergeCells: 'Объединить ячейки',
+		minSize: 'Ширина по содержимому',
+		mirrorHorizontal: 'Отразить по горизонтали',
+		mirrorVertical: 'Отразить по вертикали',
+		newDocument: 'Новый документ',
+		numberedList: 'Нумерованный',
+		outdent: 'Уменьшить отступ',
+		pageBreak: 'Разрыв страницы',
+		pageDown: 'Страница вниз',
+		pageNumber: 'Страница номер',
+		pageUp: 'Страница вверх',
+		paragraphStyle: 'Стиль абзаца',
+		preview: 'Предварительный просмотр',
+		print: 'Печать',
+		proportion: 'Сохранить пропорции',
+		ratio: 'Соотношение',
+		redo: 'Вернуть',
+		remove: 'Удалить',
+		removeFormat: 'Очистить форматирование',
+		replace: 'Заменить',
+		replaceAll: 'Заменить все',
+		resize100: 'Размер 100%',
+		resize25: 'Размер 25%',
+		resize50: 'Размер 50%',
+		resize75: 'Размер 75%',
+		resize: 'Изменить размер',
+		revert: 'Сбросить',
+		revisionHistory: 'История изменений',
+		right: 'Справа',
+		rotateLeft: 'Повернуть против часовой стрелки',
+		rotateRight: 'Повернуть по часовой стрелке',
+		row: 'Строка',
+		save: 'Сохранить',
+		search: 'Поиск',
+		selectAll: 'Выбрать все',
+		showBlocks: 'Блочный вид',
+		size: 'Размер',
+		splitCells: 'Разделить ячейку',
+		strike: 'Зачеркнутый',
+		submitButton: 'Подтвердить',
+		subscript: 'Нижний индекс',
+		superscript: 'Верхний индекс',
+		table: 'Таблица',
+		tableHeader: 'Строка заголовков',
+		tableProperties: 'Свойства таблицы',
+		tags: 'Теги',
+		tag_blockquote: 'Цитата',
+		codeBlock: 'Блок кода',
+		tag_div: 'Базовый',
+		tag_h: 'Заголовок',
+		tag_p: 'Текст',
+		tag_pre: 'Код',
+		template: 'Шаблон',
+		textStyle: 'Стиль текста',
+		title: 'Заголовок',
+		underline: 'Подчёркнутый',
+		undo: 'Отменить',
+		unmergeCells: 'Отменить объединение ячеек',
+		unlink: 'Убрать ссылку',
+		verticalSplit: 'Разделить вертикально',
+		video: 'Видео',
+		videoGallery: 'Видеогалерея',
+		video_modal_file: 'Выберите файл',
+		video_modal_title: 'Вставить видео',
+		video_modal_url: 'Ссылка на видео, Youtube,Vimeo',
+		width: 'Ширина',
+		codeLanguage: 'Язык',
+		codeLanguage_none: 'Никто',
+		finder_matchCase: 'Спичечный коробок',
+		finder_wholeWord: 'Целое Слово',
+		finder_regex: 'Регулярное выражение',
+		finder_prev: 'Предыдущий матч',
+		finder_next: 'Следующий матч',
+		message_copy_success: 'Скопировано в буфер обмена',
+		message_copy_fail: 'Не удалось скопировать. Пожалуйста, скопируйте вручную.',
+	};
 
-    if (typeof noGlobal === typeof undefined) {
-        if (!window.SUNEDITOR_LANG) {
-            Object.defineProperty(window, 'SUNEDITOR_LANG', {
-                enumerable: true,
-                writable: false,
-                configurable: false,
-                value: {}
-            });
-        }
+	if (typeof noGlobal === typeof undefined) {
+		if (!window.SUNEDITOR_LANG) {
+			Object.defineProperty(window, 'SUNEDITOR_LANG', {
+				enumerable: true,
+				writable: false,
+				configurable: false,
+				value: {},
+			});
+		}
 
-        Object.defineProperty(window.SUNEDITOR_LANG, 'ru', {
-            enumerable: true,
-            writable: true,
-            configurable: true,
-            value: lang
-        });
-    }
+		Object.defineProperty(window.SUNEDITOR_LANG, 'ru', {
+			enumerable: true,
+			writable: true,
+			configurable: true,
+			value: lang,
+		});
+	}
 
-    return lang;
-}));
+	return lang;
+});

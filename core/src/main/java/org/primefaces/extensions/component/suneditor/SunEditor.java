@@ -44,6 +44,7 @@ import org.primefaces.util.LocaleUtils;
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "suneditor/suneditor.css")
+@ResourceDependency(library = Constants.LIBRARY, name = "suneditor/themes/dark.css")
 @ResourceDependency(library = Constants.LIBRARY, name = "suneditor/suneditor.js")
 public class SunEditor extends SunEditorBaseImpl {
 
