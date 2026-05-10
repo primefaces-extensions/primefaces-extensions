@@ -43,6 +43,7 @@ public class BasicSunEditorController implements Serializable {
                 + "<p><img alt=\"Sample Image\" src=\"https://placehold.co/600x400/EEE/999?text=Sample+Image\""
                 + " style=\"display: block; margin: 20px auto; max-width: 100%; height: auto;\"></p>";
     private String mode = "classic";
+    private String theme = "auto";
 
     private String language = "fr";
     private boolean rtl = false;
@@ -89,6 +90,8 @@ public class BasicSunEditorController implements Serializable {
 
     public List<SelectItem> getLanguages() {
         final List<SelectItem> results = new ArrayList<>();
+        results.add(new SelectItem("ckb", "Central Kurdish"));
+        results.add(new SelectItem("cs", "Czech"));
         results.add(new SelectItem("da", "Dansk (Danish)"));
         results.add(new SelectItem("de", "Deutsch (German)"));
         results.add(new SelectItem("en", "English (US/UK)"));
@@ -107,7 +110,7 @@ public class BasicSunEditorController implements Serializable {
         results.add(new SelectItem("ru", "\u0420\u0443\u0441\u0441\u043a\u0438\u0439 (Russian)"));
         results.add(new SelectItem("se", "Swedish"));
         results.add(new SelectItem("tr", "Turkish"));
-        results.add(new SelectItem("uk_ua", "\u0423\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u0430 (Ukrainian)"));
+        results.add(new SelectItem("uk", "\u0423\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u0430 (Ukrainian)"));
         results.add(new SelectItem("zh_CN", "\u4e2d\u6587 (\u7b80\u4f53) (Chinese, Simplified)"));
         return results;
     }
@@ -121,12 +124,28 @@ public class BasicSunEditorController implements Serializable {
         return results;
     }
 
+    public List<SelectItem> getThemes() {
+        final List<SelectItem> results = new ArrayList<>();
+        results.add(new SelectItem("auto", "Auto"));
+        results.add(new SelectItem("default", "Default"));
+        results.add(new SelectItem("dark", "Dark"));
+        return results;
+    }
+
     public String getMode() {
         return mode;
     }
 
     public void setMode(final String mode) {
         this.mode = mode;
+    }
+
+    public String getTheme() {
+        return theme;
+    }
+
+    public void setTheme(final String theme) {
+        this.theme = theme;
     }
 
     public String getLanguage() {

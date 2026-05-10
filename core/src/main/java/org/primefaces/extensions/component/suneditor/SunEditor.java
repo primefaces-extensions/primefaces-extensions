@@ -61,6 +61,7 @@ public class SunEditor extends AbstractEditorInputTextArea implements ClientBeha
         width,
         height,
         mode,
+        theme,
         locale,
         strictMode
         // @formatter:on
@@ -109,6 +110,14 @@ public class SunEditor extends AbstractEditorInputTextArea implements ClientBeha
 
     public void setMode(String mode) {
         getStateHelper().put(PropertyKeys.mode, mode);
+    }
+
+    public String getTheme() {
+        return (String) getStateHelper().eval(PropertyKeys.theme, "auto");
+    }
+
+    public void setTheme(String theme) {
+        getStateHelper().put(PropertyKeys.theme, theme);
     }
 
     public Object getLocale() {

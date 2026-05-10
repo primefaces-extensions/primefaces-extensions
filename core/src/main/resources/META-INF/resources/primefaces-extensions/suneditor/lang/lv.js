@@ -1,188 +1,241 @@
-/*
- * wysiwyg web editor
- *
- * suneditor.js
- * Copyright 2017 JiHong Lee.
- * MIT license.
- */
-'use strict';
-
+// Latvia
+// 라트리아어
 (function (global, factory) {
-    if (typeof module === 'object' && typeof module.exports === 'object') {
-        module.exports = global.document ?
-            factory(global, true) :
-            function (w) {
-                if (!w.document) {
-                    throw new Error('SUNEDITOR_LANG a window with a document');
-                }
-                return factory(w);
-            };
-    } else {
-        factory(global);
-    }
-}(typeof window !== 'undefined' ? window : this, function (window, noGlobal) {
-    const lang = {
-        code: 'lv',
-        toolbar: {
-            default: 'Noklusējuma',
-            save: 'Saglabāt',
-            font: 'Fonts',
-            formats: 'Formāti',
-            fontSize: 'Fonta lielums',
-            bold: 'Treknraksts',
-            underline: 'Pasvītrot',
-            italic: 'Slīpraksts',
-            strike: 'Pārsvītrojums',
-            subscript: 'Apakšraksts',
-            superscript: 'Augšraksts',
-            removeFormat: 'Noņemt formātu',
-            fontColor: 'Fonta krāsa',
-            hiliteColor: 'Teksta iezīmēšanas krāsa',
-            indent: 'Palielināt atkāpi',
-            outdent: 'Samazināt atkāpi',
-            align: 'Izlīdzināt',
-            alignLeft: 'Līdzināt pa kreisi',
-            alignRight: 'Līdzināt pa labi',
-            alignCenter: 'Centrēt',
-            alignJustify: 'Taisnot',
-            list: 'Saraksts',
-            orderList: 'Numerācija',
-            unorderList: 'Aizzimes',
-            horizontalRule: 'Horizontāla līnija',
-            hr_solid: 'Ciets',
-            hr_dotted: 'Punktiņš',
-            hr_dashed: 'Braša',
-            table: 'Tabula',
-            link: 'Saite',
-            math: 'Matemātika',
-            image: 'Attēls',
-            video: 'Video',
-            audio: 'Audio',
-            fullScreen: 'Pilnekrāna režīms',
-            showBlocks: 'Parādit blokus',
-            codeView: 'Koda skats',
-            undo: 'Atsaukt',
-            redo: 'Atkārtot',
-            preview: 'Priekšskatījums',
-            print: 'Drukāt',
-            tag_p: 'Paragrāfs',
-            tag_div: 'Normāli (DIV)',
-            tag_h: 'Galvene',
-            tag_blockquote: 'Citāts',
-            tag_pre: 'Kods',
-            template: 'Veidne',
-            lineHeight: 'Līnijas augstums',
-            paragraphStyle: 'Paragrāfa stils',
-            textStyle: 'Teksta stils',
-            imageGallery: 'Attēlu galerija',
-            dir_ltr: 'No kreisās uz labo',
-            dir_rtl: 'No labās uz kreiso',
-            mention: 'Pieminēt'
-        },
-        dialogBox: {
-            linkBox: {
-                title: 'Ievietot saiti',
-                url: 'Saites URL',
-                text: 'Parādāmais teksts',
-                newWindowCheck: 'Atvērt jaunā logā',
-                downloadLinkCheck: 'Lejupielādes saite',
-                bookmark: 'Grāmatzīme'
-            },
-            mathBox: {
-                title: 'Matemātika',
-                inputLabel: 'Matemātiskā notācija',
-                fontSizeLabel: 'Fonta lielums',
-                previewLabel: 'Priekšskatījums'
-            },
-            imageBox: {
-                title: 'Ievietot attēlu',
-                file: 'Izvēlieties no failiem',
-                url: 'Attēla URL',
-                altText: 'Alternatīvs teksts'
-            },
-            videoBox: {
-                title: 'Ievietot video',
-                file: 'Izvēlieties no failiem',
-                url: 'Multivides iegulšanas URL, YouTube/Vimeo'
-            },
-            audioBox: {
-                title: 'Ievietot audio',
-                file: 'Izvēlieties no failiem',
-                url: 'Audio URL'
-            },
-            browser: {
-                tags: 'Tagi',
-                search: 'Meklēt'
-            },
-            caption: 'Ievietot aprakstu',
-            close: 'Aizvērt',
-            submitButton: 'Iesniegt',
-            revertButton: 'Atjaunot',
-            proportion: 'Ierobežo proporcijas',
-            basic: 'Nav iesaiņojuma',
-            left: 'Pa kreisi',
-            right: 'Labajā pusē',
-            center: 'Centrs',
-            width: 'Platums',
-            height: 'Augstums',
-            size: 'Izmērs',
-            ratio: 'Attiecība'
-        },
-        controller: {
-            edit: 'Rediģēt',
-            unlink: 'Atsaistīt',
-            remove: 'Noņemt',
-            insertRowAbove: 'Ievietot rindu virs',
-            insertRowBelow: 'Ievietot rindu zemāk',
-            deleteRow: 'Dzēst rindu',
-            insertColumnBefore: 'Ievietot kolonnu pirms',
-            insertColumnAfter: 'Ievietot kolonnu aiz',
-            deleteColumn: 'Dzēst kolonnu',
-            fixColumnWidth: 'Fiksēts kolonnas platums',
-            resize100: 'Mainīt izmēru 100%',
-            resize75: 'Mainīt izmēru 75%',
-            resize50: 'Mainīt izmēru 50%',
-            resize25: 'Mainīt izmēru 25%',
-            autoSize: 'Automātiskais izmērs',
-            mirrorHorizontal: 'Spogulis, horizontāls',
-            mirrorVertical: 'Spogulis, vertikāls',
-            rotateLeft: 'Pagriezt pa kreisi',
-            rotateRight: 'Pagriezt pa labi',
-            maxSize: 'Maksimālais izmērs',
-            minSize: 'Minimālais izmērs',
-            tableHeader: 'Tabulas galvene',
-            mergeCells: 'Apvienot šūnas',
-            splitCells: 'Sadalīt šūnas',
-            HorizontalSplit: 'Horizontāls sadalījums',
-            VerticalSplit: 'Vertikāls sadalījums'
-        },
-        menu: {
-            spaced: 'Ar atstarpi',
-            bordered: 'Robežojās',
-            neon: 'Neona',
-            translucent: 'Caurspīdīgs',
-            shadow: 'Ēna',
-            code: 'Kods'
-        }
-    };
+	if (typeof module === 'object' && typeof module.exports === 'object') {
+		module.exports = global.document
+			? factory(global, true)
+			: function (w) {
+					if (!w.document) {
+						throw new Error('SUNEDITOR_LANG a window with a document');
+					}
+					return factory(w);
+				};
+	} else {
+		factory(global);
+	}
+})(typeof window !== 'undefined' ? window : this, function (window, noGlobal) {
+	const lang = {
+		code: 'lv',
+		align: 'Izlīdzināt',
+		alignBottom: 'Izlīdziniet apakšējo daļu',
+		alignCenter: 'Centrēt',
+		alignJustify: 'Taisnot',
+		alignLeft: 'Līdzināt pa kreisi',
+		alignMiddle: 'Izlīdzināt vidū',
+		alignRight: 'Līdzināt pa labi',
+		alignTop: 'Izlīdziniet augšdaļu',
+		anchor: 'Enkurs',
+		asBlock: 'Kā bloks',
+		asInline: 'Kā iekļauts',
+		asLink: 'Kā saite',
+		audio: 'Audio',
+		audioGallery: 'Audio galerija',
+		audio_modal_file: 'Izvēlieties no failiem',
+		audio_modal_title: 'Ievietot audio',
+		audio_modal_url: 'Audio URL',
+		autoSize: 'Automātiskais izmērs',
+		backgroundColor: 'Teksta iezīmēšanas krāsa',
+		basic: 'Nav iesaiņojuma',
+		blockStyle: 'Bloka stils',
+		bold: 'Treknraksts',
+		border: 'Robeža',
+		border_all: 'Robeža visu',
+		border_inside: 'Robeža iekšā',
+		border_horizontal: 'Robeža horizontāla',
+		border_vertical: 'Apmale vertikāla',
+		border_outside: 'Robeža ārpusē',
+		border_left: 'Robeža pa kreisi',
+		border_top: 'Apmales augšdaļa',
+		border_right: 'Robeža pa labi',
+		border_bottom: 'Apmales apakšdaļa',
+		border_none: 'Robežas nav',
+		bulletedList: 'Aizzimes',
+		cancel: 'Atcelt',
+		caption: 'Ievietot aprakstu',
+		cellProperties: 'Šūnu īpašības',
+		center: 'Centrs',
+		close: 'Aizvērt',
+		codeView: 'Koda skats',
+		color: 'Krāsa',
+		colorPicker: 'Krāsu atlasītājs',
+		column: 'Kolonna',
+		comment: 'komentāri',
+		commentAdd: 'Pievienot komentāru',
+		commentShow: 'Rādīt komentārus',
+		copy: 'Kopēt',
+		copyFormat: 'Krāsu formatēšana',
+		cut: 'Izgriezt',
+		default: 'Noklusējuma',
+		deleteColumn: 'Dzēst kolonnu',
+		deleteRow: 'Dzēst rindu',
+		dir_ltr: 'No kreisās uz labo',
+		dir_rtl: 'No labās uz kreiso',
+		download: 'Lejupielādēt',
+		drag: 'Velciet',
+		drawing: 'Zīmējums',
+		drawing_modal_title: 'Zīmējums',
+		edit: 'Rediģēt',
+		embed: 'Iegult',
+		embed_modal_title: 'Iegult',
+		embed_modal_source: 'Iegult avotu / URL',
+		exportPDF: 'Eksportēt uz PDF',
+		exportWord: 'Eksportēt uz Word',
+		find: 'Atrast',
+		decrease: 'Samazināt',
+		increase: 'Palielināt',
+		fileBrowser: 'Failu pārlūks',
+		fileGallery: 'Failu galerija',
+		fileUpload: 'Failu augšupielāde',
+		fixedColumnWidth: 'Fiksēts kolonnas platums',
+		font: 'Fonts',
+		fontColor: 'Fonta krāsa',
+		fontSize: 'Fonta lielums',
+		formats: 'Formāti',
+		fullScreen: 'Pilnekrāna režīms',
+		height: 'Augstums',
+		horizontalLine: 'Horizontāla līnija',
+		horizontalSplit: 'Horizontāls sadalījums',
+		hr_dashed: 'Braša',
+		hr_dotted: 'Punktiņš',
+		hr_solid: 'Ciets',
+		id: 'ID',
+		image: 'Attēls',
+		imageGallery: 'Attēlu galerija',
+		image_modal_altText: 'Alternatīvs teksts',
+		image_modal_file: 'Izvēlieties no failiem',
+		image_modal_title: 'Ievietot attēlu',
+		image_modal_url: 'Attēla URL',
+		importWord: 'Importēt no Word',
+		indent: 'Palielināt atkāpi',
+		inlineStyle: 'Iekļauts stils',
+		insertColumnAfter: 'Ievietot kolonnu aiz',
+		insertColumnBefore: 'Ievietot kolonnu pirms',
+		insertRowAbove: 'Ievietot rindu virs',
+		insertRowBelow: 'Ievietot rindu zemāk',
+		insertLine: 'Ievietojiet rindu',
+		italic: 'Slīpraksts',
+		layout: 'Izkārtojums',
+		left: 'Pa kreisi',
+		lineHeight: 'Līnijas augstums',
+		link: 'Saite',
+		link_modal_bookmark: 'Grāmatzīme',
+		link_modal_downloadLinkCheck: 'Lejupielādes saite',
+		link_modal_newWindowCheck: 'Atvērt jaunā logā',
+		link_modal_text: 'Parādāmais teksts',
+		link_modal_title: 'Ievietot saiti',
+		link_modal_url: 'Saites URL',
+		link_modal_relAttribute: 'Rel atribūts',
+		list: 'Saraksts',
+		markdownView: 'Markdown skats',
+		math: 'Matemātika',
+		math_modal_fontSizeLabel: 'Fonta lielums',
+		math_modal_inputLabel: 'Matemātiskā notācija',
+		math_modal_previewLabel: 'Priekšskatījums',
+		math_modal_title: 'Matemātika',
+		maxSize: 'Maksimālais izmērs',
+		mediaGallery: 'Mediju galerija',
+		autocomplete: 'Automātiskā pabeigšana',
+		mention: 'Pieminēt',
+		menu_bordered: 'Robežojās',
+		menu_code: 'Kods',
+		menu_neon: 'Neona',
+		menu_shadow: 'Ēna',
+		menu_spaced: 'Ar atstarpi',
+		menu_translucent: 'Caurspīdīgs',
+		mergeCells: 'Apvienot šūnas',
+		minSize: 'Minimālais izmērs',
+		mirrorHorizontal: 'Spogulis, horizontāls',
+		mirrorVertical: 'Spogulis, vertikāls',
+		newDocument: 'Jauns dokuments',
+		numberedList: 'Numerācija',
+		outdent: 'Samazināt atkāpi',
+		pageBreak: 'Lapas pārtraukums',
+		pageDown: 'Lapa uz leju',
+		pageNumber: 'Lapas numurs',
+		pageUp: 'Lapa uz augšu',
+		paragraphStyle: 'Paragrāfa stils',
+		preview: 'Priekšskatījums',
+		print: 'Drukāt',
+		proportion: 'Ierobežo proporcijas',
+		ratio: 'Attiecība',
+		redo: 'Atkārtot',
+		remove: 'Noņemt',
+		removeFormat: 'Noņemt formātu',
+		replace: 'Aizstāt',
+		replaceAll: 'Aizstāt visu',
+		resize100: 'Mainīt izmēru 100%',
+		resize25: 'Mainīt izmēru 25%',
+		resize50: 'Mainīt izmēru 50%',
+		resize75: 'Mainīt izmēru 75%',
+		resize: 'Mainīt izmērus',
+		revert: 'Atjaunot',
+		revisionHistory: 'Pārskatīšanas vēsture',
+		right: 'Labajā pusē',
+		rotateLeft: 'Pagriezt pa kreisi',
+		rotateRight: 'Pagriezt pa labi',
+		row: 'Rinda',
+		save: 'Saglabāt',
+		search: 'Meklēt',
+		selectAll: 'Atlasiet visu',
+		showBlocks: 'Parādit blokus',
+		size: 'Izmērs',
+		splitCells: 'Sadalīt šūnas',
+		strike: 'Pārsvītrojums',
+		submitButton: 'Iesniegt',
+		subscript: 'Apakšraksts',
+		superscript: 'Augšraksts',
+		table: 'Tabula',
+		tableHeader: 'Tabulas galvene',
+		tableProperties: 'Tabulas īpašības',
+		tags: 'Tagi',
+		tag_blockquote: 'Citāts',
+		codeBlock: 'Koda bloks',
+		tag_div: 'Normāli (DIV)',
+		tag_h: 'Galvene',
+		tag_p: 'Paragrāfs',
+		tag_pre: 'Kods',
+		template: 'Veidne',
+		textStyle: 'Teksta stils',
+		title: 'Nosaukums',
+		underline: 'Pasvītrot',
+		undo: 'Atsaukt',
+		unmergeCells: 'Atvienot šūnu sapludināšanu',
+		unlink: 'Atsaistīt',
+		verticalSplit: 'Vertikāls sadalījums',
+		video: 'Video',
+		videoGallery: 'Video galerija',
+		video_modal_file: 'Izvēlieties no failiem',
+		video_modal_title: 'Ievietot video',
+		video_modal_url: 'Multivides iegulšanas URL, YouTube/Vimeo',
+		width: 'Platums',
+		codeLanguage: 'Valoda',
+		codeLanguage_none: 'Neviens',
+		finder_matchCase: 'Atbilstības gadījums',
+		finder_wholeWord: 'Viss vārds',
+		finder_regex: 'Regulārā izteiksme',
+		finder_prev: 'Iepriekšējā spēle',
+		finder_next: 'Nākamā spēle',
+		message_copy_success: 'Kopēts starpliktuvē',
+		message_copy_fail: 'Kopēšana neizdevās. Lūdzu, kopējiet manuāli.',
+	};
 
-    if (typeof noGlobal === typeof undefined) {
-        if (!window.SUNEDITOR_LANG) {
-            Object.defineProperty(window, 'SUNEDITOR_LANG', {
-                enumerable: true,
-                writable: false,
-                configurable: false,
-                value: {}
-            });
-        }
+	if (typeof noGlobal === typeof undefined) {
+		if (!window.SUNEDITOR_LANG) {
+			Object.defineProperty(window, 'SUNEDITOR_LANG', {
+				enumerable: true,
+				writable: false,
+				configurable: false,
+				value: {},
+			});
+		}
 
-        Object.defineProperty(window.SUNEDITOR_LANG, 'lv', {
-            enumerable: true,
-            writable: true,
-            configurable: true,
-            value: lang
-        });
-    }
+		Object.defineProperty(window.SUNEDITOR_LANG, 'lv', {
+			enumerable: true,
+			writable: true,
+			configurable: true,
+			value: lang,
+		});
+	}
 
-    return lang;
-}));
+	return lang;
+});

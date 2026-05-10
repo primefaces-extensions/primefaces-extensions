@@ -1,188 +1,241 @@
-/*
- * wysiwyg web editor
- *
- * suneditor.js
- * Copyright 2019 JiHong Lee.
- * MIT license.
- */
-'use strict';
-
+// France
+// 프랑스어
 (function (global, factory) {
-    if (typeof module === 'object' && typeof module.exports === 'object') {
-        module.exports = global.document ?
-            factory(global, true) :
-            function (w) {
-                if (!w.document) {
-                    throw new Error('SUNEDITOR_LANG a window with a document');
-                }
-                return factory(w);
-            };
-    } else {
-        factory(global);
-    }
-}(typeof window !== 'undefined' ? window : this, function (window, noGlobal) {
-    const lang = {
-        code: 'fr',
-        toolbar: {
-            default: 'Défaut',
-            save: 'Sauvegarder',
-            font: 'Police',
-            formats: 'Formats',
-            fontSize: 'Taille',
-            bold: 'Gras',
-            underline: 'Souligné',
-            italic: 'Italique',
-            strike: 'Barré',
-            subscript: 'Indice',
-            superscript: 'Exposant',
-            removeFormat: 'Effacer le formatage',
-            fontColor: 'Couleur du texte',
-            hiliteColor: 'Couleur en arrière plan',
-            indent: 'Indenter',
-            outdent: 'Désindenter',
-            align: 'Alignement',
-            alignLeft: 'À gauche',
-            alignRight: 'À droite',
-            alignCenter: 'Centré',
-            alignJustify: 'Justifié',
-            list: 'Liste',
-            orderList: 'Ordonnée',
-            unorderList: 'Non-ordonnée',
-            horizontalRule: 'Ligne horizontale',
-            hr_solid: 'Solide',
-            hr_dotted: 'Points',
-            hr_dashed: 'Tirets',
-            table: 'Table',
-            link: 'Lien',
-            math: 'Math',
-            image: 'Image',
-            video: 'Video',
-            audio: 'Audio',
-            fullScreen: 'Plein écran',
-            showBlocks: 'Voir les blocs',
-            codeView: 'Voir le code',
-            undo: 'Annuler',
-            redo: 'Rétablir',
-            preview: 'Prévisualiser',
-            print: 'Imprimer',
-            tag_p: 'Paragraphe',
-            tag_div: 'Normal (DIV)',
-            tag_h: 'Titre',
-            tag_blockquote: 'Citation',
-            tag_pre: 'Code',
-            template: 'Template',
-            lineHeight: 'Hauteur de la ligne',
-            paragraphStyle: 'Style de paragraphe',
-            textStyle: 'Style de texte',
-            imageGallery: 'Galerie d\'images',
-            dir_ltr: 'De gauche à droite',
-            dir_rtl: 'De droite à gauche',
-            mention: 'Mention'
-        },
-        dialogBox: {
-            linkBox: {
-                title: 'Insérer un lien',
-                url: 'Adresse URL du lien',
-                text: 'Texte à afficher',
-                newWindowCheck: 'Ouvrir dans une nouvelle fenêtre',
-                downloadLinkCheck: 'Lien de téléchargement',
-                bookmark: 'Signet'
-            },
-            mathBox: {
-                title: 'Math',
-                inputLabel: 'Notation mathématique',
-                fontSizeLabel: 'Taille',
-                previewLabel: 'Prévisualiser'
-            },
-            imageBox: {
-                title: 'Insérer une image',
-                file: 'Sélectionner le fichier',
-                url: 'Adresse URL du fichier',
-                altText: 'Texte Alternatif'
-            },
-            videoBox: {
-                title: 'Insérer une vidéo',
-                file: 'Sélectionner le fichier',
-                url: 'URL d’intégration du média, YouTube/Vimeo'
-            },
-            audioBox: {
-                title: 'Insérer un fichier audio',
-                file: 'Sélectionner le fichier',
-                url: 'Adresse URL du fichier'
-            },
-            browser: {
-                tags: 'Mots clés',
-                search: 'Chercher',
-            },
-            caption: 'Insérer une description',
-            close: 'Fermer',
-            submitButton: 'Appliquer',
-            revertButton: 'Revenir en arrière',
-            proportion: 'Maintenir le rapport hauteur/largeur',
-            basic: 'Basique',
-            left: 'Gauche',
-            right: 'Droite',
-            center: 'Centré',
-            width: 'Largeur',
-            height: 'Hauteur',
-            size: 'Taille',
-            ratio: 'Rapport'
-        },
-        controller: {
-            edit: 'Modifier',
-            unlink: 'Supprimer un lien',
-            remove: 'Effacer',
-            insertRowAbove: 'Insérer une ligne en dessous',
-            insertRowBelow: 'Insérer une ligne au dessus',
-            deleteRow: 'Effacer la ligne',
-            insertColumnBefore: 'Insérer une colonne avant',
-            insertColumnAfter: 'Insérer une colonne après',
-            deleteColumn: 'Effacer la colonne',
-            fixedColumnWidth: 'Largeur de colonne fixe',
-            resize100: 'Redimensionner à 100%',
-            resize75: 'Redimensionner à 75%',
-            resize50: 'Redimensionner à 50%',
-            resize25: 'Redimensionner à 25%',
-            autoSize: 'Taille automatique',
-            mirrorHorizontal: 'Mirroir, Horizontal',
-            mirrorVertical: 'Mirroir, Vertical',
-            rotateLeft: 'Rotation à gauche',
-            rotateRight: 'Rotation à droite',
-            maxSize: 'Taille max',
-            minSize: 'Taille min',
-            tableHeader: 'En-tête de table',
-            mergeCells: 'Fusionner les cellules',
-            splitCells: 'Diviser les Cellules',
-            HorizontalSplit: 'Scission horizontale',
-            VerticalSplit: 'Scission verticale'
-        },
-        menu: {
-            spaced: 'Espacement',
-            bordered: 'Ligne de démarcation',
-            neon: 'Néon',
-            translucent: 'Translucide',
-            shadow: 'Ombre',
-            code: 'Code'
-        }
-    };
+	if (typeof module === 'object' && typeof module.exports === 'object') {
+		module.exports = global.document
+			? factory(global, true)
+			: function (w) {
+					if (!w.document) {
+						throw new Error('SUNEDITOR_LANG a window with a document');
+					}
+					return factory(w);
+				};
+	} else {
+		factory(global);
+	}
+})(typeof window !== 'undefined' ? window : this, function (window, noGlobal) {
+	const lang = {
+		code: 'fr',
+		align: 'Alignement',
+		alignBottom: 'Aligner en bas',
+		alignCenter: 'Centré',
+		alignJustify: 'Justifié',
+		alignLeft: 'À gauche',
+		alignMiddle: 'Aligner au milieu',
+		alignRight: 'À droite',
+		alignTop: 'Aligner en haut',
+		anchor: 'Ancre',
+		asBlock: 'En tant que bloc',
+		asInline: "En tant qu'élément en ligne",
+		asLink: 'En tant que lien',
+		audio: 'Audio',
+		audioGallery: 'Galerie audio',
+		audio_modal_file: 'Sélectionner le fichier',
+		audio_modal_title: 'Insérer un fichier audio',
+		audio_modal_url: 'Adresse URL du fichier',
+		autoSize: 'Taille automatique',
+		backgroundColor: 'Couleur en arrière plan',
+		basic: 'Basique',
+		blockStyle: 'Style de bloc',
+		bold: 'Gras',
+		border: 'Bordure',
+		border_all: 'Bordure entière',
+		border_inside: 'Bordure intérieure',
+		border_horizontal: 'Bordure horizontale',
+		border_vertical: 'Bordure verticale',
+		border_outside: 'Bordure extérieure',
+		border_left: 'Bordure gauche',
+		border_top: 'Bordure supérieure',
+		border_right: 'Bordure droite',
+		border_bottom: 'Bordure inférieure',
+		border_none: 'Aucune bordure',
+		bulletedList: 'Non-ordonnée',
+		cancel: 'Annuler',
+		caption: 'Insérer une description',
+		cellProperties: 'Propriétés de la cellule',
+		center: 'Centré',
+		close: 'Fermer',
+		codeView: 'Voir le code',
+		color: 'Couleur',
+		colorPicker: 'Sélecteur de couleurs',
+		column: 'Colonne',
+		comment: 'Commentaires',
+		commentAdd: 'Ajouter un commentaire',
+		commentShow: 'Afficher les commentaires',
+		copy: 'Copier',
+		copyFormat: 'Peindre la mise en forme',
+		cut: 'Couper',
+		default: 'Défaut',
+		deleteColumn: 'Effacer la colonne',
+		deleteRow: 'Effacer la ligne',
+		dir_ltr: 'De gauche à droite',
+		dir_rtl: 'De droite à gauche',
+		download: 'Télécharger',
+		drag: 'Glisser',
+		drawing: 'Dessin',
+		drawing_modal_title: 'Dessin',
+		edit: 'Modifier',
+		embed: 'Intégrer',
+		embed_modal_title: 'Intégrer',
+		embed_modal_source: "Intégrer la source / l'URL",
+		exportPDF: 'Exporter au format PDF',
+		exportWord: 'Exporter vers Word',
+		find: 'Rechercher',
+		decrease: 'Diminuer',
+		increase: 'Augmenter',
+		fileBrowser: 'Navigateur de fichiers',
+		fileGallery: 'Galerie de fichiers',
+		fileUpload: 'Téléchargement de fichiers',
+		fixedColumnWidth: 'Largeur de colonne fixe',
+		font: 'Police',
+		fontColor: 'Couleur du texte',
+		fontSize: 'Taille',
+		formats: 'Formats',
+		fullScreen: 'Plein écran',
+		height: 'Hauteur',
+		horizontalLine: 'Ligne horizontale',
+		horizontalSplit: 'Scission horizontale',
+		hr_dashed: 'Tirets',
+		hr_dotted: 'Points',
+		hr_solid: 'Solide',
+		id: 'ID',
+		image: 'Image',
+		imageGallery: "Galerie d'images",
+		image_modal_altText: 'Texte Alternatif',
+		image_modal_file: 'Sélectionner le fichier',
+		image_modal_title: 'Insérer une image',
+		image_modal_url: 'Adresse URL du fichier',
+		importWord: 'Importer depuis Word',
+		indent: 'Indenter',
+		inlineStyle: 'Style en ligne',
+		insertColumnAfter: 'Insérer une colonne après',
+		insertColumnBefore: 'Insérer une colonne avant',
+		insertRowAbove: 'Insérer une ligne en dessous',
+		insertRowBelow: 'Insérer une ligne au dessus',
+		insertLine: 'Insérer une ligne',
+		italic: 'Italique',
+		layout: 'Mise en page',
+		left: 'Gauche',
+		lineHeight: 'Hauteur de la ligne',
+		link: 'Lien',
+		link_modal_bookmark: 'Signet',
+		link_modal_downloadLinkCheck: 'Lien de téléchargement',
+		link_modal_newWindowCheck: 'Ouvrir dans une nouvelle fenêtre',
+		link_modal_text: 'Texte à afficher',
+		link_modal_title: 'Insérer un lien',
+		link_modal_url: 'Adresse URL du lien',
+		link_modal_relAttribute: 'Attribut Rel',
+		list: 'Liste',
+		markdownView: 'Vue Markdown',
+		math: 'Math',
+		math_modal_fontSizeLabel: 'Taille',
+		math_modal_inputLabel: 'Notation mathématique',
+		math_modal_previewLabel: 'Prévisualiser',
+		math_modal_title: 'Math',
+		maxSize: 'Taille max',
+		mediaGallery: 'Galerie multimédia',
+		autocomplete: 'Saisie semi-automatique',
+		mention: 'Mention',
+		menu_bordered: 'Ligne de démarcation',
+		menu_code: 'Code',
+		menu_neon: 'Néon',
+		menu_shadow: 'Ombre',
+		menu_spaced: 'Espacement',
+		menu_translucent: 'Translucide',
+		mergeCells: 'Fusionner les cellules',
+		minSize: 'Taille min',
+		mirrorHorizontal: 'Mirroir, Horizontal',
+		mirrorVertical: 'Mirroir, Vertical',
+		newDocument: 'Nouveau document',
+		numberedList: 'Ordonnée',
+		outdent: 'Désindenter',
+		pageBreak: 'Saut de page',
+		pageDown: 'Page suivante',
+		pageNumber: 'Numéro de page',
+		pageUp: 'Page précédente',
+		paragraphStyle: 'Style de paragraphe',
+		preview: 'Prévisualiser',
+		print: 'Imprimer',
+		proportion: 'Maintenir le rapport hauteur/largeur',
+		ratio: 'Rapport',
+		redo: 'Rétablir',
+		remove: 'Effacer',
+		removeFormat: 'Effacer le formatage',
+		replace: 'Remplacer',
+		replaceAll: 'Remplacer tous',
+		resize100: 'Redimensionner à 100%',
+		resize25: 'Redimensionner à 25%',
+		resize50: 'Redimensionner à 50%',
+		resize75: 'Redimensionner à 75%',
+		resize: 'Změnit velikost',
+		revert: 'Revenir en arrière',
+		revisionHistory: 'Historique des révisions',
+		right: 'Droite',
+		rotateLeft: 'Rotation à gauche',
+		rotateRight: 'Rotation à droite',
+		row: 'Ligne',
+		save: 'Sauvegarder',
+		search: 'Chercher',
+		selectAll: 'Sélectionner tout',
+		showBlocks: 'Voir les blocs',
+		size: 'Taille',
+		splitCells: 'Diviser les Cellules',
+		strike: 'Barré',
+		submitButton: 'Appliquer',
+		subscript: 'Indice',
+		superscript: 'Exposant',
+		table: 'Table',
+		tableHeader: 'En-tête de table',
+		tableProperties: 'Propriétés du tableau',
+		tags: 'Mots clés',
+		tag_blockquote: 'Citation',
+		codeBlock: 'Bloc de code',
+		tag_div: 'Normal (DIV)',
+		tag_h: 'Titre',
+		tag_p: 'Paragraphe',
+		tag_pre: 'Code',
+		template: 'Template',
+		textStyle: 'Style de texte',
+		title: 'Titre',
+		underline: 'Souligné',
+		undo: 'Annuler',
+		unmergeCells: 'Annuler la fusion des cellules',
+		unlink: 'Supprimer un lien',
+		verticalSplit: 'Scission verticale',
+		video: 'Video',
+		videoGallery: 'Galerie vidéo',
+		video_modal_file: 'Sélectionner le fichier',
+		video_modal_title: 'Insérer une vidéo',
+		video_modal_url: 'URL d’intégration du média, YouTube/Vimeo',
+		width: 'Largeur',
+		codeLanguage: 'Langue',
+		codeLanguage_none: 'Aucun',
+		finder_matchCase: "Boîte d'allumettes",
+		finder_wholeWord: 'Mot entier',
+		finder_regex: 'Expression régulière',
+		finder_prev: 'Match précédent',
+		finder_next: 'Prochain match',
+		message_copy_success: 'Copié dans le presse-papiers',
+		message_copy_fail: 'Échec de la copie. Veuillez copier manuellement.',
+	};
 
-    if (typeof noGlobal === typeof undefined) {
-        if (!window.SUNEDITOR_LANG) {
-            Object.defineProperty(window, 'SUNEDITOR_LANG', {
-                enumerable: true,
-                writable: false,
-                configurable: false,
-                value: {}
-            });
-        }
+	if (typeof noGlobal === typeof undefined) {
+		if (!window.SUNEDITOR_LANG) {
+			Object.defineProperty(window, 'SUNEDITOR_LANG', {
+				enumerable: true,
+				writable: false,
+				configurable: false,
+				value: {},
+			});
+		}
 
-        Object.defineProperty(window.SUNEDITOR_LANG, 'fr', {
-            enumerable: true,
-            writable: true,
-            configurable: true,
-            value: lang
-        });
-    }
+		Object.defineProperty(window.SUNEDITOR_LANG, 'fr', {
+			enumerable: true,
+			writable: true,
+			configurable: true,
+			value: lang,
+		});
+	}
 
-    return lang;
-}));
+	return lang;
+});

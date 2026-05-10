@@ -11,11 +11,18 @@
         <p:autoUpdate/>
     </p:growl>
 
-    <h:panelGrid columns="6" id="pnlDetails" styleClass="p-4" >
+    <h:panelGrid columns="8" id="pnlDetails" styleClass="p-4" >
         <p:outputLabel value="Mode:" for="@next" styleClass="mr-2"/>
         <p:selectOneMenu id="cboMode" value="#{basicSunEditorController.mode}" styleClass="w-12rem mr-2"
                          required="true">
             <f:selectItems value="#{basicSunEditorController.modes}"/>
+            <p:ajax update="sunEditor"/>
+        </p:selectOneMenu>
+
+        <p:outputLabel value="Theme:" for="@next" styleClass="mr-2"/>
+        <p:selectOneMenu id="cboTheme" value="#{basicSunEditorController.theme}" styleClass="w-12rem mr-2"
+                         required="true">
+            <f:selectItems value="#{basicSunEditorController.themes}"/>
             <p:ajax update="sunEditor"/>
         </p:selectOneMenu>
 
@@ -34,10 +41,10 @@
 
     <pe:sunEditor id="sunEditor" widgetVar="sunEditor" value="#{basicSunEditorController.html}"
                   mode="#{basicSunEditorController.mode}" dir="#{basicSunEditorController.rtl ? 'rtl' : 'ltr'}"
-                  locale="#{basicSunEditorController.language}"
-                  toolbar="[['font','fontSize','formatBlock'],['paragraphStyle','blockquote'], ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'],
+                  theme="#{basicSunEditorController.theme}" locale="#{basicSunEditorController.language}"
+                  toolbar="[['font','fontSize','blockStyle'],['paragraphStyle','blockquote'], ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'],
                   '/'
-                  ,['fontColor', 'hiliteColor', 'outdent', 'indent', 'align', 'horizontalRule', 'list', 'table'],
+                  ,['fontColor', 'backgroundColor', 'outdent', 'indent', 'align', 'hr', 'list', 'table'],
                    ['link', 'image', 'audio', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview', 'print', 'save']]">
         <p:ajax event="paste" listener="#{basicSunEditorController.onPaste}"/>
         <p:ajax event="copy" listener="#{basicSunEditorController.onCopy}"/>

@@ -1,188 +1,241 @@
-/*
- * wysiwyg web editor
- *
- * suneditor.js
- * Copyright 2017 JiHong Lee.
- * MIT license.
- */
-'use strict';
-
+// Italy
+// 이탈리아어
 (function (global, factory) {
-    if (typeof module === 'object' && typeof module.exports === 'object') {
-        module.exports = global.document ?
-            factory(global, true) :
-            function (w) {
-                if (!w.document) {
-                    throw new Error('SUNEDITOR_LANG una finestra con un documento');
-                }
-                return factory(w);
-            };
-    } else {
-        factory(global);
-    }
-}(typeof window !== 'undefined' ? window : this, function (window, noGlobal) {
-    const lang = {
-        code: 'it',
-        toolbar: {
-            default: 'Predefinita',
-            save: 'Salva',
-            font: 'Font',
-            formats: 'Formato',
-            fontSize: 'Grandezza',
-            bold: 'Grassetto',
-            underline: 'Sottolineato',
-            italic: 'Corsivo',
-            strike: 'Barrato',
-            subscript: 'Apice',
-            superscript: 'Pedice',
-            removeFormat: 'Rimuovi formattazione',
-            fontColor: 'Colore testo',
-            hiliteColor: 'Colore sottolineatura',
-            indent: 'Aumenta rientro',
-            outdent: 'Riduci rientro',
-            align: 'Allinea',
-            alignLeft: 'Allinea a sinistra',
-            alignRight: 'Allinea a destra',
-            alignCenter: 'Allinea al centro',
-            alignJustify: 'Giustifica testo',
-            list: 'Elenco',
-            orderList: 'Elenco numerato',
-            unorderList: 'Elenco puntato',
-            horizontalRule: 'Linea orizzontale',
-            hr_solid: 'Linea continua',
-            hr_dotted: 'Puntini',
-            hr_dashed: 'Trattini',
-            table: 'Tabella',
-            link: 'Collegamento ipertestuale',
-            math: 'Formula matematica',
-            image: 'Immagine',
-            video: 'Video',
-            audio: 'Audio',
-            fullScreen: 'A tutto schermo',
-            showBlocks: 'Visualizza blocchi',
-            codeView: 'Visualizza codice',
-            undo: 'Annulla',
-            redo: 'Ripristina',
-            preview: 'Anteprima',
-            print: 'Stampa',
-            tag_p: 'Paragrafo',
-            tag_div: 'Normale (DIV)',
-            tag_h: 'Titolo',
-            tag_blockquote: 'Citazione',
-            tag_pre: 'Codice',
-            template: 'Modello',
-            lineHeight: 'Interlinea',
-            paragraphStyle: 'Stile paragrafo',
-            textStyle: 'Stile testo',
-            imageGallery: 'Galleria di immagini',
-            dir_ltr: 'Da sinistra a destra',
-            dir_rtl: 'Da destra a sinistra',
-            mention: 'Menzione'
-        },
-        dialogBox: {
-            linkBox: {
-                title: 'Inserisci un link',
-                url: 'Indirizzo',
-                text: 'Testo da visualizzare',
-                newWindowCheck: 'Apri in una nuova finestra',
-                downloadLinkCheck: 'Link per scaricare',
-                bookmark: 'Segnalibro'
-            },
-            mathBox: {
-                title: 'Matematica',
-                inputLabel: 'Notazione matematica',
-                fontSizeLabel: 'Grandezza testo',
-                previewLabel: 'Anteprima'
-            },
-            imageBox: {
-                title: 'Inserisci immagine',
-                file: 'Seleziona da file',
-                url: 'Indirizzo immagine',
-                altText: 'Testo alternativo (ALT)'
-            },
-            videoBox: {
-                title: 'Inserisci video',
-                file: 'Seleziona da file',
-                url: 'Indirizzo video di embed, YouTube/Vimeo'
-            },
-            audioBox: {
-                title: 'Inserisci audio',
-                file: 'Seleziona da file',
-                url: 'Indirizzo audio'
-            },
-            browser: {
-                tags: 'tag',
-                search: 'Ricerca',
-            },
-            caption: 'Inserisci didascalia',
-            close: 'Chiudi',
-            submitButton: 'Invia',
-            revertButton: 'Annulla',
-            proportion: 'Proporzionale',
-            basic: 'Da impostazione',
-            left: 'Sinistra',
-            right: 'Destra',
-            center: 'Centrato',
-            width: 'Larghezza',
-            height: 'Altezza',
-            size: 'Dimensioni',
-            ratio: 'Rapporto'
-        },
-        controller: {
-            edit: 'Modifica',
-            unlink: 'Elimina link',
-            remove: 'Rimuovi',
-            insertRowAbove: 'Inserisci riga sopra',
-            insertRowBelow: 'Inserisci riga sotto',
-            deleteRow: 'Cancella riga',
-            insertColumnBefore: 'Inserisci colonna prima',
-            insertColumnAfter: 'Inserisci colonna dopo',
-            deleteColumn: 'Cancella colonna',
-            fixedColumnWidth: 'Larghezza delle colonne fissa',
-            resize100: 'Ridimensiona 100%',
-            resize75: 'Ridimensiona 75%',
-            resize50: 'Ridimensiona 50%',
-            resize25: 'Ridimensiona 25%',
-            autoSize: 'Ridimensione automatica',
-            mirrorHorizontal: 'Capovolgi orizzontalmente',
-            mirrorVertical: 'Capovolgi verticalmente',
-            rotateLeft: 'Ruota a sinistra',
-            rotateRight: 'Ruota a destra',
-            maxSize: 'Dimensione massima',
-            minSize: 'Dimensione minima',
-            tableHeader: 'Intestazione tabella',
-            mergeCells: 'Unisci celle',
-            splitCells: 'Dividi celle',
-            HorizontalSplit: 'Separa orizontalmente',
-            VerticalSplit: 'Separa verticalmente'
-        },
-        menu: {
-            spaced: 'Spaziato',
-            bordered: 'Bordato',
-            neon: 'Luminoso',
-            translucent: 'Traslucido',
-            shadow: 'Ombra',
-            code: 'Codice'
-        }
-    };
+	if (typeof module === 'object' && typeof module.exports === 'object') {
+		module.exports = global.document
+			? factory(global, true)
+			: function (w) {
+					if (!w.document) {
+						throw new Error('SUNEDITOR_LANG una finestra con un documento');
+					}
+					return factory(w);
+				};
+	} else {
+		factory(global);
+	}
+})(typeof window !== 'undefined' ? window : this, function (window, noGlobal) {
+	const lang = {
+		code: 'it',
+		align: 'Allinea',
+		alignBottom: 'Allinea in basso',
+		alignCenter: 'Allinea al centro',
+		alignJustify: 'Giustifica testo',
+		alignLeft: 'Allinea a sinistra',
+		alignMiddle: 'Allinea al centro',
+		alignRight: 'Allinea a destra',
+		alignTop: 'Allinea in alto',
+		anchor: 'Ancora',
+		asBlock: 'Come blocco',
+		asInline: 'Come in linea',
+		asLink: 'Come collegamento',
+		audio: 'Audio',
+		audioGallery: 'Galleria audio',
+		audio_modal_file: 'Seleziona da file',
+		audio_modal_title: 'Inserisci audio',
+		audio_modal_url: 'Indirizzo audio',
+		autoSize: 'Ridimensione automatica',
+		backgroundColor: 'Colore sottolineatura',
+		basic: 'Da impostazione',
+		blockStyle: 'Stile blocco',
+		bold: 'Grassetto',
+		border: 'Bordo',
+		border_all: 'Bordo tutto',
+		border_inside: 'Bordo interno',
+		border_horizontal: 'Bordo interno',
+		border_vertical: 'Bordo verticale',
+		border_outside: 'Bordo esterno',
+		border_left: 'Bordo sinistro',
+		border_top: 'Bordo superiore',
+		border_right: 'Bordo destro',
+		border_bottom: 'Bordo inferiore',
+		border_none: 'Nessuno bordo',
+		bulletedList: 'Elenco puntato',
+		cancel: 'Annulla',
+		caption: 'Inserisci didascalia',
+		cellProperties: 'Proprietà cella',
+		center: 'Centrato',
+		close: 'Chiudi',
+		codeView: 'Visualizza codice',
+		color: 'Colore',
+		colorPicker: 'Selettore colore',
+		column: 'Colonna',
+		comment: 'Commenti',
+		commentAdd: 'Aggiungi commento',
+		commentShow: 'Mostra commenti',
+		copy: 'Copia',
+		copyFormat: 'Colora Formattazione',
+		cut: 'Taglia',
+		default: 'Predefinita',
+		deleteColumn: 'Cancella colonna',
+		deleteRow: 'Cancella riga',
+		dir_ltr: 'Da sinistra a destra',
+		dir_rtl: 'Da destra a sinistra',
+		download: 'Scarica',
+		drag: 'Scarica',
+		drawing: 'Disegno',
+		drawing_modal_title: 'Disegno',
+		edit: 'Modifica',
+		embed: 'Incorpora',
+		embed_modal_title: 'Incorpora',
+		embed_modal_source: 'Incorpora origine / URL',
+		exportPDF: 'Esporta in PDF',
+		exportWord: 'Esporta in Word',
+		find: 'Trova',
+		decrease: 'Diminuisci',
+		increase: 'Aumenta',
+		fileBrowser: 'Browser file',
+		fileGallery: 'Galleria file',
+		fileUpload: 'Caricamento file',
+		fixedColumnWidth: 'Larghezza delle colonne fissa',
+		font: 'Font',
+		fontColor: 'Colore testo',
+		fontSize: 'Grandezza',
+		formats: 'Formato',
+		fullScreen: 'A tutto schermo',
+		height: 'Altezza',
+		horizontalLine: 'Linea orizzontale',
+		horizontalSplit: 'Separa orizontalmente',
+		hr_dashed: 'Trattini',
+		hr_dotted: 'Puntini',
+		hr_solid: 'Linea continua',
+		id: 'ID',
+		image: 'Immagine',
+		imageGallery: 'Galleria di immagini',
+		image_modal_altText: 'Testo alternativo (ALT)',
+		image_modal_file: 'Seleziona da file',
+		image_modal_title: 'Inserisci immagine',
+		image_modal_url: 'Indirizzo immagine',
+		importWord: 'Importa da Word',
+		indent: 'Aumenta rientro',
+		inlineStyle: 'Stile in linea',
+		insertColumnAfter: 'Inserisci colonna dopo',
+		insertColumnBefore: 'Inserisci colonna prima',
+		insertRowAbove: 'Inserisci riga sopra',
+		insertRowBelow: 'Inserisci riga sotto',
+		insertLine: 'Inserisci riga',
+		italic: 'Corsivo',
+		layout: 'Modello',
+		left: 'Sinistra',
+		lineHeight: 'Interlinea',
+		link: 'Collegamento ipertestuale',
+		link_modal_bookmark: 'Segnalibro',
+		link_modal_downloadLinkCheck: 'Link per scaricare',
+		link_modal_newWindowCheck: 'Apri in una nuova finestra',
+		link_modal_text: 'Testo da visualizzare',
+		link_modal_title: 'Inserisci un link',
+		link_modal_url: 'Indirizzo',
+		link_modal_relAttribute: 'Attributo rel',
+		list: 'Elenco',
+		markdownView: 'Visualizzazione Markdown',
+		math: 'Formula matematica',
+		math_modal_fontSizeLabel: 'Grandezza testo',
+		math_modal_inputLabel: 'Notazione matematica',
+		math_modal_previewLabel: 'Anteprima',
+		math_modal_title: 'Matematica',
+		maxSize: 'Dimensione massima',
+		mediaGallery: 'Galleria multimediale',
+		autocomplete: 'Completamento automatico',
+		mention: 'Menzione',
+		menu_bordered: 'Bordato',
+		menu_code: 'Codice',
+		menu_neon: 'Luminoso',
+		menu_shadow: 'Ombra',
+		menu_spaced: 'Spaziato',
+		menu_translucent: 'Traslucido',
+		mergeCells: 'Unisci celle',
+		minSize: 'Dimensione minima',
+		mirrorHorizontal: 'Capovolgi orizzontalmente',
+		mirrorVertical: 'Capovolgi verticalmente',
+		newDocument: 'Nuovo documento',
+		numberedList: 'Elenco numerato',
+		outdent: 'Riduci rientro',
+		pageBreak: 'Interruzione di pagina',
+		pageDown: 'Pagina giù',
+		pageNumber: 'Numero di pagina',
+		pageUp: 'Pagina su',
+		paragraphStyle: 'Stile paragrafo',
+		preview: 'Anteprima',
+		print: 'Stampa',
+		proportion: 'Proporzionale',
+		ratio: 'Rapporto',
+		redo: 'Ripristina',
+		remove: 'Rimuovi',
+		removeFormat: 'Rimuovi formattazione',
+		replace: 'Sostituisci',
+		replaceAll: 'Sostituisci tutto',
+		resize100: 'Ridimensiona 100%',
+		resize25: 'Ridimensiona 25%',
+		resize50: 'Ridimensiona 50%',
+		resize75: 'Ridimensiona 75%',
+		resize: 'Ridimensiona',
+		revert: 'Annulla',
+		revisionHistory: 'Cronologia revisioni',
+		right: 'Destra',
+		rotateLeft: 'Ruota a sinistra',
+		rotateRight: 'Ruota a destra',
+		row: 'Riga',
+		save: 'Salva',
+		search: 'Ricerca',
+		selectAll: 'Seleziona tutto',
+		showBlocks: 'Visualizza blocchi',
+		size: 'Dimensioni',
+		splitCells: 'Dividi celle',
+		strike: 'Barrato',
+		submitButton: 'Invia',
+		subscript: 'Apice',
+		superscript: 'Pedice',
+		table: 'Tabella',
+		tableHeader: 'Intestazione tabella',
+		tableProperties: 'Proprietà tabella',
+		tags: 'tag',
+		tag_blockquote: 'Citazione',
+		codeBlock: 'Blocco di codice',
+		tag_div: 'Normale (DIV)',
+		tag_h: 'Titolo',
+		tag_p: 'Paragrafo',
+		tag_pre: 'Codice',
+		template: 'Modello',
+		textStyle: 'Stile testo',
+		title: 'Titolo',
+		underline: 'Sottolineato',
+		undo: 'Annulla',
+		unmergeCells: 'Annulla unione celle',
+		unlink: 'Elimina link',
+		verticalSplit: 'Separa verticalmente',
+		video: 'Video',
+		videoGallery: 'Galleria video',
+		video_modal_file: 'Seleziona da file',
+		video_modal_title: 'Inserisci video',
+		video_modal_url: 'Indirizzo video di embed, YouTube/Vimeo',
+		width: 'Larghezza',
+		codeLanguage: 'Lingua',
+		codeLanguage_none: 'Nessuno',
+		finder_matchCase: 'Scatola di fiammiferi',
+		finder_wholeWord: 'Parola intera',
+		finder_regex: 'Espressione regolare',
+		finder_prev: 'Partita precedente',
+		finder_next: 'Prossima partita',
+		message_copy_success: 'Copiato negli appunti',
+		message_copy_fail: 'Copia non riuscita. Copia manuale richiesta.',
+	};
 
-    if (typeof noGlobal === typeof undefined) {
-        if (!window.SUNEDITOR_LANG) {
-            Object.defineProperty(window, 'SUNEDITOR_LANG', {
-                enumerable: true,
-                writable: false,
-                configurable: false,
-                value: {}
-            });
-        }
+	if (typeof noGlobal === typeof undefined) {
+		if (!window.SUNEDITOR_LANG) {
+			Object.defineProperty(window, 'SUNEDITOR_LANG', {
+				enumerable: true,
+				writable: false,
+				configurable: false,
+				value: {},
+			});
+		}
 
-        Object.defineProperty(window.SUNEDITOR_LANG, 'it', {
-            enumerable: true,
-            writable: true,
-            configurable: true,
-            value: lang
-        });
-    }
+		Object.defineProperty(window.SUNEDITOR_LANG, 'it', {
+			enumerable: true,
+			writable: true,
+			configurable: true,
+			value: lang,
+		});
+	}
 
-    return lang;
-}));
+	return lang;
+});
