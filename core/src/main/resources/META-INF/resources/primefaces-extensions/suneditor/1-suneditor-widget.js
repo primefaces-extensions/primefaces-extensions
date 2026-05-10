@@ -150,16 +150,7 @@ PrimeFaces.widget.ExtSunEditor = class extends PrimeFaces.widget.DeferredWidget 
     }
 
     isDarkTheme() {
-        let theme = PrimeFaces.settings.theme || "";
-        if (!theme) {
-            const themeLink = PrimeFaces.getThemeLink();
-            const href = themeLink && themeLink.length ? themeLink.attr("href") : "";
-            const match = href ? href.match(/[?&]ln=primefaces-([^&]+)/) : null;
-            theme = match ? match[1] : "";
-        }
-
-        return theme ? /(^|[-_])(arya|vela|luna|dark)([-_]|$)|nova-dark/i.test(theme) :
-                window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+        return PrimeFaces.env.getThemeContrast() === 'dark';
     }
 
     // @override
