@@ -41,6 +41,7 @@ public class BasicSunEditorController implements Serializable {
     private String html = "<h1>SunEditor</h1><p>Lightweight, flexible, customizable <strong>WYSIWYG</strong> text editor.</p>";
     private String htmlDialog = "<h1>SunEditor in Dialog</h1><p>Hover over the image below to see paragraph helpers:</p><p><img alt=\"Sample Image\" src=\"https://placehold.co/600x400/EEE/999?text=Sample+Image\" style=\"display: block; margin: 20px auto; max-width: 100%; height: auto;\"></p>";
     private String mode = "classic";
+    private String theme = "auto";
 
     private String language = "fr";
     private boolean rtl = false;
@@ -119,12 +120,28 @@ public class BasicSunEditorController implements Serializable {
         return results;
     }
 
+    public List<SelectItem> getThemes() {
+        final List<SelectItem> results = new ArrayList<>();
+        results.add(new SelectItem("auto", "Auto"));
+        results.add(new SelectItem("default", "Default"));
+        results.add(new SelectItem("dark", "Dark"));
+        return results;
+    }
+
     public String getMode() {
         return mode;
     }
 
     public void setMode(final String mode) {
         this.mode = mode;
+    }
+
+    public String getTheme() {
+        return theme;
+    }
+
+    public void setTheme(final String theme) {
+        this.theme = theme;
     }
 
     public String getLanguage() {

@@ -163,6 +163,7 @@ public class SunEditorRenderer extends InputRenderer<SunEditor> {
                     .attr("width", component.getWidth())
                     .attr("height", component.getHeight())
                     .attr("mode", component.getMode(), "classic")
+                    .attr("theme", component.getTheme(), "auto")
                     .attr("rtl", ComponentUtils.isRTL(context, component), false)
                     .attr("locale", component.calculateLocale().toString())
                     .attr("readOnly", component.isReadonly(), false)
