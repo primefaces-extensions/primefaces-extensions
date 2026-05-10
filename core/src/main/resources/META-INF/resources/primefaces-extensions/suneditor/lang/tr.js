@@ -1,191 +1,241 @@
-/*
- * wysiwyg web editor
- *
- * suneditor.js
- * Copyright 2023 JiHong Lee.
- *
- * Turkish translation by worm-codes at github.com/worm-codes
- *
- * MIT license.
- */
-'use strict';
-
+// Turkey
+// 튀르키예
 (function (global, factory) {
-    if (typeof module === 'object' && typeof module.exports === 'object') {
-        module.exports = global.document ?
-            factory(global, true) :
-            function (w) {
-                if (!w.document) {
-                    throw new Error('SUNEDITOR_LANG a window with a document');
-                }
-                return factory(w);
-            };
-    } else {
-        factory(global);
-    }
-}(typeof window !== 'undefined' ? window : this, function (window, noGlobal) {
+	if (typeof module === 'object' && typeof module.exports === 'object') {
+		module.exports = global.document
+			? factory(global, true)
+			: function (w) {
+					if (!w.document) {
+						throw new Error('SUNEDITOR_LANG a window with a document');
+					}
+					return factory(w);
+				};
+	} else {
+		factory(global);
+	}
+})(typeof window !== 'undefined' ? window : this, function (window, noGlobal) {
 	const lang = {
-		code: "tr",
-		toolbar: {
-			default: "Varsayılan",
-			save: "Kaydet",
-			font: "Yazı Tipi",
-			formats: "Biçimlendirmeler",
-			fontSize: "Boyut",
-			bold: "Kalın",
-			underline: "Alt Çizili",
-			italic: "İtalik",
-			strike: "Üstü Çizili",
-			subscript: "Alt Simge",
-			superscript: "Üst Simge",
-			removeFormat: "Biçimi Kaldır",
-			fontColor: "Yazı Tipi Rengi",
-			hiliteColor: "Vurgu Rengi",
-			indent: "Girinti",
-			outdent: "Girintiyi Azalt",
-			align: "Hizala",
-			alignLeft: "Sola Hizala",
-			alignRight: "Sağa Hizala",
-			alignCenter: "Ortaya Hizala",
-			alignJustify: "İki Yana Yasla",
-			list: "Liste",
-			orderList: "Sıralı Liste",
-			unorderList: "Sırasız Liste",
-			horizontalRule: "Yatay Çizgi",
-			hr_solid: "Düz",
-			hr_dotted: "Noktalı",
-			hr_dashed: "Kesikli",
-			table: "Tablo",
-			link: "Bağlantı",
-			math: "Matematik",
-			image: "Görsel",
-			video: "Video",
-			audio: "Ses",
-			fullScreen: "Tam Ekran",
-			showBlocks: "Blokları Göster",
-			codeView: "Kod Görünümü",
-			undo: "Geri Al",
-			redo: "İleri Al",
-			preview: "Önizleme",
-			print: "Yazdır",
-			tag_p: "Paragraf",
-			tag_div: "Normal (DIV)",
-			tag_h: "Başlık",
-			tag_blockquote: "Alıntı",
-			tag_pre: "Kod",
-			template: "Şablon",
-			lineHeight: "Satır Yüksekliği",
-			paragraphStyle: "Paragraf Stili",
-			textStyle: "Metin Stili",
-			imageGallery: "Görüntü Galerisi",
-			dir_ltr: "Soldan Sağa",
-			dir_rtl: "Sağdan Sola",
-			mention: "Belirtmek"
-		},
-		dialogBox: {
-			linkBox: {
-				title: "Bağlantı Ekle",
-				url: "Bağlantı URL'si",
-				text: "Görüntülenecek Metin",
-				newWindowCheck: "Yeni Pencerede Aç",
-				downloadLinkCheck: "Bağlantıyı İndir",
-				bookmark: "Bağlantıyı Yer İmlerine Ekle"
-			},
-			mathBox: {
-				title: "Matematik",
-				inputLabel: "Matematiksel Simgeler",
-				fontSizeLabel: "Yazı Tipi Boyutu",
-				previewLabel: "Önizleme"
-			},
-			imageBox: {
-				title: "Görüntü Ekle",
-				file: "Dosya Seç",
-				url: "Görüntü URL'si",
-				altText: "Alternatif Metin"
-			},
-			videoBox: {
-				title: "Video Ekle",
-				file: "Dosya Seç",
-				url: "Medya Ekleme URL'si (YouTube/Vimeo)"
-			},
-			audioBox: {
-				title: "Ses Ekle",
-				file: "Dosya Seç",
-				url: "Ses URL'si"
-			},
-			browser: {
-				tags: "Etiketler",
-				search: "Ara"
-			},
-			caption: "Açıklama Giriniz",
-			close: "Kapat",
-			submitButton: "Gönder",
-			revertButton: "Geri Dön",
-			proportion: "Orantıları Koru",
-			basic: "Temel",
-			left: "Sola",
-			right: "Sağa",
-			center: "Ortaya",
-			width: "Genişlik",
-			height: "Yükseklik",
-			size: "Boyut",
-			ratio: "Oran"
-		},
-		controller: {
-			edit: "Düzenle",
-			unlink: "Bağlantıyı Kaldır",
-			remove: "Kaldır",
-			insertRowAbove: "Satır Yukarı Ekle",
-			insertRowBelow: "Satır Aşağı Ekle",
-			deleteRow: "Satırı Sil",
-			insertColumnBefore: "Sütun Önce Ekle",
-			insertColumnAfter: "Sütun Sonrası Ekle",
-			deleteColumn: "Sütunu Sil",
-			fixedColumnWidth: "Sabit Sütun Genişliği",
-			resize100: "%100 Ölçeklendir",
-			resize75: "%75 Ölçeklendir",
-			resize50: "%50 Ölçeklendir",
-			resize25: "%25 Ölçeklendir",
-			autoSize: "Ölçeğe Otomatik Ayar",
-			mirrorHorizontal: "Düzlemsel Aynalama (Yatay)",
-			mirrorVertical: "Düzlemsel Aynalama (Dikey)",
-			rotateLeft: "Saat Yönünde Döndür",
-			rotateRight: "Saat Yönünün Tersine Döndür",
-			maxSize: "En Büyük Boyut",
-			minSize: "En Küçük Boyut",
-			tableHeader: "Tablo Başlığı",
-			mergeCells: "Hücreleri Birleştir",
-			splitCells: "Hücreleri Ayır",
-			HorizontalSplit: "Yatay Ayırma",
-			VerticalSplit: "Dikey Ayırma"
-		},
-		menu: {
-			spaced: "Aralıklı",
-			bordered: "Çerçeveli",
-			neon: "Neon",
-			translucent: "Yarı Saydam",
-			shadow: "Gölge",
-			code: "Kod"
-		}
+		code: 'tr',
+		align: 'Hizala',
+		alignBottom: 'Alt hizala',
+		alignCenter: 'Ortaya Hizala',
+		alignJustify: 'İki Yana Yasla',
+		alignLeft: 'Sola Hizala',
+		alignMiddle: 'Orta hizala',
+		alignRight: 'Sağa Hizala',
+		alignTop: 'Üst hizala',
+		anchor: 'Bağlantı',
+		asBlock: 'Blok olarak',
+		asInline: 'Satır içi olarak',
+		asLink: 'Bağlantı olarak',
+		audio: 'Ses',
+		audioGallery: 'Ses galerisi',
+		audio_modal_file: 'Dosya Seç',
+		audio_modal_title: 'Ses Ekle',
+		audio_modal_url: "Ses URL'si",
+		autoSize: 'Ölçeğe Otomatik Ayar',
+		backgroundColor: 'Vurgu Rengi',
+		basic: 'Temel',
+		blockStyle: 'Blok stili',
+		bold: 'Kalın',
+		border: 'Kenarlık',
+		border_all: 'Tüm kenarlık',
+		border_inside: 'İç kenarlık',
+		border_horizontal: 'Yatay kenarlık',
+		border_vertical: 'Dikey kenarlık',
+		border_outside: 'Dış kenarlık',
+		border_left: 'Sol kenarlık',
+		border_top: 'Üst kenarlık',
+		border_right: 'Sağ kenarlık',
+		border_bottom: 'Alt kenarlık',
+		border_none: 'Kenarlık yok',
+		bulletedList: 'Sırasız Liste',
+		cancel: 'İptal',
+		caption: 'Açıklama Giriniz',
+		cellProperties: 'Hücre özellikleri',
+		center: 'Ortaya',
+		close: 'Kapat',
+		codeView: 'Kod Görünümü',
+		color: 'Renk',
+		colorPicker: 'Renk seçici',
+		column: 'Sütun',
+		comment: 'Yorumlar',
+		commentAdd: 'Yorum ekle',
+		commentShow: 'Yorumları göster',
+		copy: 'Kopyala',
+		copyFormat: 'Boya Biçimlendirme',
+		cut: 'Kes',
+		default: 'Varsayılan',
+		deleteColumn: 'Sütunu Sil',
+		deleteRow: 'Satırı Sil',
+		dir_ltr: 'Soldan Sağa',
+		dir_rtl: 'Sağdan Sola',
+		download: 'İndir',
+		drag: 'Sürükle',
+		drawing: 'Çizim',
+		drawing_modal_title: 'Çizim',
+		edit: 'Düzenle',
+		embed: 'Göm',
+		embed_modal_title: 'Göm',
+		embed_modal_source: "Kaynak / URL'yi göm",
+		exportPDF: "PDF'ye aktar",
+		exportWord: "Word'e aktar",
+		find: 'Bul',
+		decrease: 'Azalt',
+		increase: 'Arttır',
+		fileBrowser: 'Dosya tarayıcısı',
+		fileGallery: 'Dosya galerisi',
+		fileUpload: 'Dosya yükleme',
+		fixedColumnWidth: 'Sabit Sütun Genişliği',
+		font: 'Yazı Tipi',
+		fontColor: 'Yazı Tipi Rengi',
+		fontSize: 'Boyut',
+		formats: 'Biçimlendirmeler',
+		fullScreen: 'Tam Ekran',
+		height: 'Yükseklik',
+		horizontalLine: 'Yatay Çizgi',
+		horizontalSplit: 'Yatay Ayırma',
+		hr_dashed: 'Kesikli',
+		hr_dotted: 'Noktalı',
+		hr_solid: 'Düz',
+		id: 'Kimlik',
+		image: 'Görsel',
+		imageGallery: 'Görüntü Galerisi',
+		image_modal_altText: 'Alternatif Metin',
+		image_modal_file: 'Dosya Seç',
+		image_modal_title: 'Görüntü Ekle',
+		image_modal_url: "Görüntü URL'si",
+		importWord: "Word'den içe aktar",
+		indent: 'Girinti',
+		inlineStyle: 'Satır içi stil',
+		insertColumnAfter: 'Sütun Sonrası Ekle',
+		insertColumnBefore: 'Sütun Önce Ekle',
+		insertRowAbove: 'Satır Yukarı Ekle',
+		insertRowBelow: 'Satır Aşağı Ekle',
+		insertLine: 'Satır ekle',
+		italic: 'İtalik',
+		layout: 'Düzen',
+		left: 'Sola',
+		lineHeight: 'Satır Yüksekliği',
+		link: 'Bağlantı',
+		link_modal_bookmark: 'Bağlantıyı Yer İmlerine Ekle',
+		link_modal_downloadLinkCheck: 'Bağlantıyı İndir',
+		link_modal_newWindowCheck: 'Yeni Pencerede Aç',
+		link_modal_text: 'Görüntülenecek Metin',
+		link_modal_title: 'Bağlantı Ekle',
+		link_modal_url: "Bağlantı URL'si",
+		link_modal_relAttribute: 'Rel niteliği',
+		list: 'Liste',
+		markdownView: 'Markdown görünümü',
+		math: 'Matematik',
+		math_modal_fontSizeLabel: 'Yazı Tipi Boyutu',
+		math_modal_inputLabel: 'Matematiksel Simgeler',
+		math_modal_previewLabel: 'Önizleme',
+		math_modal_title: 'Matematik',
+		maxSize: 'En Büyük Boyut',
+		mediaGallery: 'Medya galerisi',
+		autocomplete: 'Otomatik Tamamlama',
+		mention: 'Belirtmek',
+		menu_bordered: 'Çerçeveli',
+		menu_code: 'Kod',
+		menu_neon: 'Neon',
+		menu_shadow: 'Gölge',
+		menu_spaced: 'Aralıklı',
+		menu_translucent: 'Yarı Saydam',
+		mergeCells: 'Hücreleri Birleştir',
+		minSize: 'En Küçük Boyut',
+		mirrorHorizontal: 'Düzlemsel Aynalama (Yatay)',
+		mirrorVertical: 'Düzlemsel Aynalama (Dikey)',
+		newDocument: 'Yeni belge',
+		numberedList: 'Sıralı Liste',
+		outdent: 'Girintiyi Azalt',
+		pageBreak: 'Sayfa sonu',
+		pageDown: 'Sayfa aşağı',
+		pageNumber: 'Sayfa numarası',
+		pageUp: 'Sayfa yukarı',
+		paragraphStyle: 'Paragraf Stili',
+		preview: 'Önizleme',
+		print: 'Yazdır',
+		proportion: 'Orantıları Koru',
+		ratio: 'Oran',
+		redo: 'İleri Al',
+		remove: 'Kaldır',
+		removeFormat: 'Biçimi Kaldır',
+		replace: 'Değiştir',
+		replaceAll: 'Tümünü değiştir',
+		resize100: '%100 Ölçeklendir',
+		resize25: '%25 Ölçeklendir',
+		resize50: '%50 Ölçeklendir',
+		resize75: '%75 Ölçeklendir',
+		resize: 'Yeniden boyutlandır',
+		revert: 'Geri Dön',
+		revisionHistory: 'Revizyon Geçmişi',
+		right: 'Sağa',
+		rotateLeft: 'Saat Yönünde Döndür',
+		rotateRight: 'Saat Yönünün Tersine Döndür',
+		row: 'Satır',
+		save: 'Kaydet',
+		search: 'Ara',
+		selectAll: 'Tümünü seç',
+		showBlocks: 'Blokları Göster',
+		size: 'Boyut',
+		splitCells: 'Hücreleri Ayır',
+		strike: 'Üstü Çizili',
+		submitButton: 'Gönder',
+		subscript: 'Alt Simge',
+		superscript: 'Üst Simge',
+		table: 'Tablo',
+		tableHeader: 'Tablo Başlığı',
+		tableProperties: 'Tablo özellikleri',
+		tags: 'Etiketler',
+		tag_blockquote: 'Alıntı',
+		codeBlock: 'Kod Bloğu',
+		tag_div: 'Normal (DIV)',
+		tag_h: 'Başlık',
+		tag_p: 'Paragraf',
+		tag_pre: 'Kod',
+		template: 'Şablon',
+		textStyle: 'Metin Stili',
+		title: 'Başlık',
+		underline: 'Alt Çizili',
+		undo: 'Geri Al',
+		unmergeCells: 'Hücre birleştirmeyi kaldır',
+		unlink: 'Bağlantıyı Kaldır',
+		verticalSplit: 'Dikey Ayırma',
+		video: 'Video',
+		videoGallery: 'Video galerisi',
+		video_modal_file: 'Dosya Seç',
+		video_modal_title: 'Video Ekle',
+		video_modal_url: "Medya Ekleme URL'si (YouTube/Vimeo)",
+		width: 'Genişlik',
+		codeLanguage: 'Dil',
+		codeLanguage_none: 'Hiçbiri',
+		finder_matchCase: 'Kibrit Kutusu',
+		finder_wholeWord: 'Tüm Kelime',
+		finder_regex: 'Düzenli İfade',
+		finder_prev: 'Önceki Maç',
+		finder_next: 'Sonraki Maç',
+		message_copy_success: 'Panoya kopyalandı',
+		message_copy_fail: 'Kopyalama başarısız oldu. Lütfen manuel olarak kopyalayın.',
 	};
 
-    if (typeof noGlobal === typeof undefined) {
-        if (!window.SUNEDITOR_LANG) {
-            Object.defineProperty(window, 'SUNEDITOR_LANG', {
-                enumerable: true,
-                writable: false,
-                configurable: false,
-                value: {}
-            });
-        }
+	if (typeof noGlobal === typeof undefined) {
+		if (!window.SUNEDITOR_LANG) {
+			Object.defineProperty(window, 'SUNEDITOR_LANG', {
+				enumerable: true,
+				writable: false,
+				configurable: false,
+				value: {},
+			});
+		}
 
-        Object.defineProperty(window.SUNEDITOR_LANG, 'tr', {
-            enumerable: true,
-            writable: true,
-            configurable: true,
-            value: lang
-        });
-    }
+		Object.defineProperty(window.SUNEDITOR_LANG, 'tr', {
+			enumerable: true,
+			writable: true,
+			configurable: true,
+			value: lang,
+		});
+	}
 
-    return lang;
-}));
+	return lang;
+});

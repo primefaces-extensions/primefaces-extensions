@@ -1,188 +1,241 @@
-/*
- * wysiwyg web editor
- *
- * suneditor.js
- * Copyright 2017 JiHong Lee.
- * MIT license.
- */
-'use strict';
-
+// Farsi (Persian)
+// 페르시아어
 (function (global, factory) {
-    if (typeof module === 'object' && typeof module.exports === 'object') {
-        module.exports = global.document ?
-            factory(global, true) :
-            function (w) {
-                if (!w.document) {
-                    throw new Error('SUNEDITOR_LANG a window with a document');
-                }
-                return factory(w);
-            };
-    } else {
-        factory(global);
-    }
-}(typeof window !== 'undefined' ? window : this, function (window, noGlobal) {
-    const lang = {
-        code: 'fa',
-        toolbar: {
-            default: 'پیش فرض',
-            save: 'ذخیره',
-            font: 'فونت',
-            formats: 'قالب‌ها',
-            fontSize: 'اندازه‌ی فونت',
-            bold: 'پررنگ کردن',
-            underline: 'زیرخطدار کردن',
-            italic: 'کج کردن',
-            strike: 'خط میان‌دار کردن',
-            subscript: 'نوشتن به صورت زیر متن',
-            superscript: 'نوشتن به صورت بالای متن',
-            removeFormat: 'حذف قالب',
-            fontColor: 'رنگ پیش زمینه',
-            hiliteColor: 'رنگ پس‌زمینه',
-            indent: 'جلو بردن',
-            outdent: 'عقب بردن',
-            align: 'چیدمان',
-            alignLeft: 'چپ‌چین',
-            alignRight: 'راست‌چین',
-            alignCenter: 'وسط‌چین',
-            alignJustify: 'همتراز از هر دو سمت',
-            list: 'لیست',
-            orderList: 'لیست شمارشی',
-            unorderList: 'لیست گلوله‌ای',
-            horizontalRule: 'درج خط افقی',
-            hr_solid: 'تو پر',
-            hr_dotted: 'نقطه‌چین',
-            hr_dashed: 'خط تیره',
-            table: 'درج جدول',
-            link: 'درج لینک',
-            math: 'درج فرمول ریاضی',
-            image: 'درج تصویر',
-            video: 'درج ویدئو',
-            audio: 'درج صوت',
-            fullScreen: 'تمام صفحه',
-            showBlocks: 'نمایش بلاک‌بندی',
-            codeView: 'مشاهده‌ی کُد HTML',
-            undo: 'برگرداندن تغییر',
-            redo: 'تکرار تغییر',
-            preview: 'پیش نمایش',
-            print: 'چاپ',
-            tag_p: 'پاراگراف',
-            tag_div: 'عادی (DIV)',
-            tag_h: 'هدر',
-            tag_blockquote: 'نقل قول',
-            tag_pre: 'کُد',
-            template: 'درج محتوا بر اساس الگو',
-            lineHeight: 'ارتفاع خط',
-            paragraphStyle: 'استایل پاراگراف',
-            textStyle: 'استایل متن',
-            imageGallery: 'گالری تصاویر',
-            dir_ltr: 'چپ به راست',
-            dir_rtl: 'راست به چپ',
-            mention: 'ذکر کردن'
-        },
-        dialogBox: {
-            linkBox: {
-                title: 'درج  لینک',
-                url: 'آدرس لینک',
-                text: 'عنوان لینک',
-                newWindowCheck: 'در پنجره‌ی جدیدی باز شود',
-                downloadLinkCheck: 'لینک دانلود',
-                bookmark: 'نشان'
-            },
-            mathBox: {
-                title: 'فرمول ریاضی',
-                inputLabel: 'تعریف فرمول',
-                fontSizeLabel: 'اندازه‌ی فونت',
-                previewLabel: 'پیش نمایش'
-            },
-            imageBox: {
-                title: 'درج تصویر',
-                file: 'انتخاب فایل',
-                url: 'آدرس Url',
-                altText: 'متن جایگزین'
-            },
-            videoBox: {
-                title: 'درج ویدئو',
-                file: 'انتخاب فایل',
-                url: 'آدرس Url ویدئو, YouTube/Vimeo'
-            },
-            audioBox: {
-                title: 'درج صوت',
-                file: 'انتخاب فایل',
-                url: 'آدرس Url'
-            },
-            browser: {
-                tags: 'تگ‌ها',
-                search: 'جستجو',
-            },
-            caption: 'توضیح',
-            close: 'بستن',
-            submitButton: 'درج',
-            revertButton: 'برگرداندن تغییرات',
-            proportion: 'محدودیت اندازه',
-            basic: 'چیدمان پیش فرض',
-            left: 'چپ',
-            right: 'راست',
-            center: 'وسط',
-            width: 'پهنا',
-            height: 'ارتفاع',
-            size: 'اندازه',
-            ratio: 'نسبت'
-        },
-        controller: {
-            edit: 'ویرایش',
-            unlink: 'حذف لینک',
-            remove: 'حذف',
-            insertRowAbove: 'درج سطر در بالا',
-            insertRowBelow: 'درج سطر در پایین',
-            deleteRow: 'حذف سطر',
-            insertColumnBefore: 'درج یک ستون به عقب',
-            insertColumnAfter: 'درج یک ستون در جلو',
-            deleteColumn: 'حذف ستون',
-            fixedColumnWidth: 'اندازه ستون ثابت',
-            resize100: 'اندازه‌ی 100%',
-            resize75: 'اندازه‌ی 75%',
-            resize50: 'اندازه‌ی 50%',
-            resize25: 'اندازه‌ی 25%',
-            autoSize: 'اندازه‌ی خودکار',
-            mirrorHorizontal: 'بر عکس کردن در جهت افقی',
-            mirrorVertical: 'بر عکس کردن در جهت عمودی',
-            rotateLeft: 'دوران به چپ',
-            rotateRight: 'دوران به راست',
-            maxSize: 'حداکثر اندازه',
-            minSize: 'حداقل اندازه',
-            tableHeader: 'هدر جدول',
-            mergeCells: 'ادغام خانه‌ها',
-            splitCells: 'تقسیم خانه به چند خانه',
-            HorizontalSplit: 'تقسیم در جهت افقی',
-            VerticalSplit: 'تقسیم در جهت عمودی'
-        },
-        menu: {
-            spaced: 'فضادار',
-            bordered: 'لبه‌دار',
-            neon: 'نئونی',
-            translucent: 'نیمه شفاف',
-            shadow: 'سایه',
-            code: 'کُد'
-        }
-    };
+	if (typeof module === 'object' && typeof module.exports === 'object') {
+		module.exports = global.document
+			? factory(global, true)
+			: function (w) {
+					if (!w.document) {
+						throw new Error('SUNEDITOR_LANG a window with a document');
+					}
+					return factory(w);
+				};
+	} else {
+		factory(global);
+	}
+})(typeof window !== 'undefined' ? window : this, function (window, noGlobal) {
+	const lang = {
+		code: 'fa',
+		align: 'چیدمان',
+		alignBottom: 'تراز کردن پایین',
+		alignCenter: 'وسط‌چین',
+		alignJustify: 'همتراز از هر دو سمت',
+		alignLeft: 'چپ‌چین',
+		alignMiddle: 'وسط تراز کنید',
+		alignRight: 'راست‌چین',
+		alignTop: 'بالا تراز کنید',
+		anchor: 'لنگر',
+		asBlock: 'به عنوان یک بلوک',
+		asInline: 'به صورت خطی',
+		asLink: 'به عنوان یک پیوند',
+		audio: 'درج صوت',
+		audioGallery: 'گالری صوتی',
+		audio_modal_file: 'انتخاب فایل',
+		audio_modal_title: 'درج صوت',
+		audio_modal_url: 'آدرس Url',
+		autoSize: 'اندازه‌ی خودکار',
+		backgroundColor: 'رنگ پس‌زمینه',
+		basic: 'چیدمان پیش فرض',
+		blockStyle: 'سبک بلوک',
+		bold: 'پررنگ کردن',
+		border: 'مرز',
+		border_all: 'مرز همه',
+		border_inside: 'مرز داخل',
+		border_horizontal: 'مرز افقی',
+		border_vertical: 'مرز عمودی',
+		border_outside: 'مرز بیرون',
+		border_left: 'حاشیه سمت چپ',
+		border_top: 'بالای حاشیه',
+		border_right: 'حاشیه سمت راست',
+		border_bottom: 'پایین حاشیه',
+		border_none: 'مرز هیچ',
+		bulletedList: 'لیست گلوله‌ای',
+		cancel: 'لغو کنید',
+		caption: 'توضیح',
+		cellProperties: 'خواص سلولی',
+		center: 'وسط',
+		close: 'بستن',
+		codeView: 'مشاهده‌ی کُد HTML',
+		color: 'رنگ',
+		colorPicker: 'انتخابگر رنگ',
+		column: 'ستون',
+		comment: 'نظرات',
+		commentAdd: 'اضافه کردن نظر',
+		commentShow: 'نمایش نظرات',
+		copy: 'کپی کنید',
+		copyFormat: 'قالب بندی رنگ',
+		cut: 'برش دهید',
+		default: 'پیش فرض',
+		deleteColumn: 'حذف ستون',
+		deleteRow: 'حذف سطر',
+		dir_ltr: 'چپ به راست',
+		dir_rtl: 'راست به چپ',
+		download: 'دانلود کنید',
+		drag: 'بکشید',
+		drawing: 'طراحی',
+		drawing_modal_title: 'طراحی',
+		edit: 'ویرایش',
+		embed: 'جاسازی کنید',
+		embed_modal_title: 'جاسازی کنید',
+		embed_modal_source: 'منبع / URL را جاسازی کنید',
+		exportPDF: 'صادرات به PDF',
+		exportWord: 'صادرات به Word',
+		find: 'پیدا کنید',
+		decrease: 'کاهش دهد',
+		increase: 'افزایش دهید',
+		fileBrowser: 'مرورگر فایل',
+		fileGallery: 'گالری فایل',
+		fileUpload: 'آپلود فایل',
+		fixedColumnWidth: 'اندازه ستون ثابت',
+		font: 'فونت',
+		fontColor: 'رنگ پیش زمینه',
+		fontSize: 'اندازه‌ی فونت',
+		formats: 'قالب‌ها',
+		fullScreen: 'تمام صفحه',
+		height: 'ارتفاع',
+		horizontalLine: 'درج خط افقی',
+		horizontalSplit: 'تقسیم در جهت افقی',
+		hr_dashed: 'خط تیره',
+		hr_dotted: 'نقطه‌چین',
+		hr_solid: 'تو پر',
+		id: 'شناسه',
+		image: 'درج تصویر',
+		imageGallery: 'گالری تصاویر',
+		image_modal_altText: 'متن جایگزین',
+		image_modal_file: 'انتخاب فایل',
+		image_modal_title: 'درج تصویر',
+		image_modal_url: 'آدرس Url',
+		importWord: 'واردات از Word',
+		indent: 'جلو بردن',
+		inlineStyle: 'سبک درون خطی',
+		insertColumnAfter: 'درج یک ستون در جلو',
+		insertColumnBefore: 'درج یک ستون به عقب',
+		insertRowAbove: 'درج سطر در بالا',
+		insertRowBelow: 'درج سطر در پایین',
+		insertLine: 'درج خط',
+		italic: 'کج کردن',
+		layout: 'طرح بندی',
+		left: 'چپ',
+		lineHeight: 'ارتفاع خط',
+		link: 'درج لینک',
+		link_modal_bookmark: 'نشان',
+		link_modal_downloadLinkCheck: 'لینک دانلود',
+		link_modal_newWindowCheck: 'در پنجره‌ی جدیدی باز شود',
+		link_modal_text: 'عنوان لینک',
+		link_modal_title: 'درج  لینک',
+		link_modal_url: 'آدرس لینک',
+		link_modal_relAttribute: 'ویژگی Rel',
+		list: 'لیست',
+		markdownView: 'نمای نشانه‌گذاری شده',
+		math: 'درج فرمول ریاضی',
+		math_modal_fontSizeLabel: 'اندازه‌ی فونت',
+		math_modal_inputLabel: 'تعریف فرمول',
+		math_modal_previewLabel: 'پیش نمایش',
+		math_modal_title: 'فرمول ریاضی',
+		maxSize: 'حداکثر اندازه',
+		mediaGallery: 'گالری رسانه',
+		autocomplete: 'تکمیل خودکار',
+		mention: 'ذکر کردن',
+		menu_bordered: 'لبه‌دار',
+		menu_code: 'کُد',
+		menu_neon: 'نئونی',
+		menu_shadow: 'سایه',
+		menu_spaced: 'فضادار',
+		menu_translucent: 'نیمه شفاف',
+		mergeCells: 'ادغام خانه‌ها',
+		minSize: 'حداقل اندازه',
+		mirrorHorizontal: 'بر عکس کردن در جهت افقی',
+		mirrorVertical: 'بر عکس کردن در جهت عمودی',
+		newDocument: 'سند جدید',
+		numberedList: 'لیست شمارشی',
+		outdent: 'عقب بردن',
+		pageBreak: 'شکستن صفحه',
+		pageDown: 'صفحه پایین',
+		pageNumber: 'شماره صفحه',
+		pageUp: 'صفحه به بالا',
+		paragraphStyle: 'استایل پاراگراف',
+		preview: 'پیش نمایش',
+		print: 'چاپ',
+		proportion: 'محدودیت اندازه',
+		ratio: 'نسبت',
+		redo: 'تکرار تغییر',
+		remove: 'حذف',
+		removeFormat: 'حذف قالب',
+		replace: 'جایگزین کنید',
+		replaceAll: 'همه را جایگزین کنید',
+		resize100: 'اندازه‌ی 100%',
+		resize25: 'اندازه‌ی 25%',
+		resize50: 'اندازه‌ی 50%',
+		resize75: 'اندازه‌ی 75%',
+		resize: 'تغییر اندازه',
+		revert: 'برگرداندن تغییرات',
+		revisionHistory: 'تاریخچه تجدید نظر',
+		right: 'راست',
+		rotateLeft: 'دوران به چپ',
+		rotateRight: 'دوران به راست',
+		row: 'ردیف',
+		save: 'ذخیره',
+		search: 'جستجو',
+		selectAll: 'همه را انتخاب کنید',
+		showBlocks: 'نمایش بلاک‌بندی',
+		size: 'اندازه',
+		splitCells: 'تقسیم خانه به چند خانه',
+		strike: 'خط میان‌دار کردن',
+		submitButton: 'درج',
+		subscript: 'نوشتن به صورت زیر متن',
+		superscript: 'نوشتن به صورت بالای متن',
+		table: 'درج جدول',
+		tableHeader: 'هدر جدول',
+		tableProperties: 'خواص جدول',
+		tags: 'تگ‌ها',
+		tag_blockquote: 'نقل قول',
+		codeBlock: 'بلوک کد',
+		tag_div: 'عادی (DIV)',
+		tag_h: 'هدر',
+		tag_p: 'پاراگراف',
+		tag_pre: 'کُد',
+		template: 'درج محتوا بر اساس الگو',
+		textStyle: 'استایل متن',
+		title: 'عنوان',
+		underline: 'زیرخطدار کردن',
+		undo: 'برگرداندن تغییر',
+		unmergeCells: 'جدا کردن سلول‌های ادغام‌شده',
+		unlink: 'حذف لینک',
+		verticalSplit: 'تقسیم در جهت عمودی',
+		video: 'درج ویدئو',
+		videoGallery: 'گالری ویدیو',
+		video_modal_file: 'انتخاب فایل',
+		video_modal_title: 'درج ویدئو',
+		video_modal_url: 'آدرس Url ویدئو, YouTube/Vimeo',
+		width: 'پهنا',
+		codeLanguage: 'زبان',
+		codeLanguage_none: 'هیچکدام',
+		finder_matchCase: 'مورد مطابقت',
+		finder_wholeWord: 'کل کلمه',
+		finder_regex: 'عبارت منظم',
+		finder_prev: 'مسابقه قبلی',
+		finder_next: 'مسابقه بعدی',
+		message_copy_success: 'در کلیپ‌بورد کپی شد',
+		message_copy_fail: 'کپی انجام نشد. لطفاً به صورت دستی کپی کنید.',
+	};
 
-    if (typeof noGlobal === typeof undefined) {
-        if (!window.SUNEDITOR_LANG) {
-            Object.defineProperty(window, 'SUNEDITOR_LANG', {
-                enumerable: true,
-                writable: false,
-                configurable: false,
-                value: {}
-            });
-        }
+	if (typeof noGlobal === typeof undefined) {
+		if (!window.SUNEDITOR_LANG) {
+			Object.defineProperty(window, 'SUNEDITOR_LANG', {
+				enumerable: true,
+				writable: false,
+				configurable: false,
+				value: {},
+			});
+		}
 
-        Object.defineProperty(window.SUNEDITOR_LANG, 'fa', {
-            enumerable: true,
-            writable: true,
-            configurable: true,
-            value: lang
-        });
-    }
+		Object.defineProperty(window.SUNEDITOR_LANG, 'fa', {
+			enumerable: true,
+			writable: true,
+			configurable: true,
+			value: lang,
+		});
+	}
 
-    return lang;
-}));
+	return lang;
+});

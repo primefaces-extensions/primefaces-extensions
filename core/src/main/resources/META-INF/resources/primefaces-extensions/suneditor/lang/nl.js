@@ -1,188 +1,241 @@
-/*
- * wysiwyg web editor
- *
- * suneditor.js
- * Copyright 2017 JiHong Lee.
- * MIT license.
- */
-'use strict';
-
+// Netherlands
+// 네덜란드어
 (function (global, factory) {
-    if (typeof module === 'object' && typeof module.exports === 'object') {
-        module.exports = global.document ?
-            factory(global, true) :
-            function (w) {
-                if (!w.document) {
-                    throw new Error('SUNEDITOR_LANG a window with a document');
-                }
-                return factory(w);
-            };
-    } else {
-        factory(global);
-    }
-}(typeof window !== 'undefined' ? window : this, function (window, noGlobal) {
-    const lang = {
-        code: 'nl',
-        toolbar: {
-            default: 'Standaard',
-            save: 'Opslaan',
-            font: 'Lettertype',
-            formats: 'Formaten',
-            fontSize: 'Lettergrootte',
-            bold: 'Vetgedrukt',
-            underline: 'Onderstrepen',
-            italic: 'Cursief',
-            strike: 'Doorstrepen',
-            subscript: 'Subscript',
-            superscript: 'Superscript',
-            removeFormat: 'Opmaak verwijderen',
-            fontColor: 'Tekstkleur',
-            hiliteColor: 'Tekst markeren',
-            indent: 'Inspringen',
-            outdent: 'Inspringen ongedaan maken',
-            align: 'Uitlijnen',
-            alignLeft: 'Links uitlijnen',
-            alignRight: 'Rechts uitlijnen',
-            alignCenter: 'In het midden uitlijnen',
-            alignJustify: 'Uitvullen',
-            list: 'Lijst',
-            orderList: 'Geordende lijst',
-            unorderList: 'Ongeordende lijst',
-            horizontalRule: 'Horizontale regel',
-            hr_solid: 'Standaard',
-            hr_dotted: 'Gestippeld',
-            hr_dashed: 'Gestreept',
-            table: 'Tabel',
-            link: 'Link',
-            math: 'Wiskunde',
-            image: 'Afbeelding',
-            video: 'Video',
-            audio: 'Audio',
-            fullScreen: 'Volledig scherm',
-            showBlocks: 'Blokken tonen',
-            codeView: 'Broncode weergeven',
-            undo: 'Ongedaan maken',
-            redo: 'Ongedaan maken herstellen',
-            preview: 'Voorbeeldweergave',
-            print: 'Printen',
-            tag_p: 'Alinea',
-            tag_div: 'Normaal (div)',
-            tag_h: 'Kop',
-            tag_blockquote: 'Citaat',
-            tag_pre: 'Code',
-            template: 'Sjabloon',
-            lineHeight: 'Lijnhoogte',
-            paragraphStyle: 'Alineastijl',
-            textStyle: 'Tekststijl',
-            imageGallery: 'Galerij',
-            dir_ltr: 'Van links naar rechts',
-            dir_rtl: 'Rechts naar links',
-            mention: 'Vermelding'
-        },
-        dialogBox: {
-            linkBox: {
-                title: 'Link invoegen',
-                url: 'URL',
-                text: 'Tekst van de link',
-                newWindowCheck: 'In een nieuw tabblad openen',
-                downloadLinkCheck: 'Downloadlink',
-                bookmark: 'Bladwijzer'
-            },
-            mathBox: {
-                title: 'Wiskunde',
-                inputLabel: 'Wiskundige notatie',
-                fontSizeLabel: 'Lettergrootte',
-                previewLabel: 'Voorbeeld'
-            },
-            imageBox: {
-                title: 'Afbeelding invoegen',
-                file: 'Selecteer een bestand van uw apparaat',
-                url: 'URL',
-                altText: 'Alt-tekst'
-            },
-            videoBox: {
-                title: 'Video invoegen',
-                file: 'Selecteer een bestand van uw apparaat',
-                url: 'Embedded URL (YouTube/Vimeo)'
-            },
-            audioBox: {
-                title: 'Audio invoegen',
-                file: 'Selecteer een bestand van uw apparaat',
-                url: 'URL'
-            },
-            browser: {
-                tags: 'Tags',
-                search: 'Zoeken',
-            },
-            caption: 'Omschrijving toevoegen',
-            close: 'Sluiten',
-            submitButton: 'Toepassen',
-            revertButton: 'Standaardwaarden herstellen',
-            proportion: 'Verhouding behouden',
-            basic: 'Standaard',
-            left: 'Links',
-            right: 'Rechts',
-            center: 'Midden',
-            width: 'Breedte',
-            height: 'Hoogte',
-            size: 'Grootte',
-            ratio: 'Verhouding'
-        },
-        controller: {
-            edit: 'Bewerken',
-            unlink: 'Ontkoppelen',
-            remove: 'Verwijderen',
-            insertRowAbove: 'Rij hierboven invoegen',
-            insertRowBelow: 'Rij hieronder invoegen',
-            deleteRow: 'Rij verwijderen',
-            insertColumnBefore: 'Kolom links invoegen',
-            insertColumnAfter: 'Kolom rechts invoegen',
-            deleteColumn: 'Kolom verwijderen',
-            fixedColumnWidth: 'Vaste kolombreedte',
-            resize100: 'Formaat wijzigen: 100%',
-            resize75: 'Formaat wijzigen: 75%',
-            resize50: 'Formaat wijzigen: 50%',
-            resize25: 'Formaat wijzigen: 25%',
-            autoSize: 'Automatische grootte',
-            mirrorHorizontal: 'Horizontaal spiegelen',
-            mirrorVertical: 'Verticaal spiegelen',
-            rotateLeft: 'Naar links draaien',
-            rotateRight: 'Naar rechts draaien',
-            maxSize: 'Maximale grootte',
-            minSize: 'Minimale grootte',
-            tableHeader: 'Tabelkoppen',
-            mergeCells: 'Cellen samenvoegen',
-            splitCells: 'Cellen splitsen',
-            HorizontalSplit: 'Horizontaal splitsen',
-            VerticalSplit: 'Verticaal splitsen'
-        },
-        menu: {
-            spaced: 'Uit elkaar',
-            bordered: 'Omlijnd',
-            neon: 'Neon',
-            translucent: 'Doorschijnend',
-            shadow: 'Schaduw',
-            code: 'Code'
-        }
-    };
+	if (typeof module === 'object' && typeof module.exports === 'object') {
+		module.exports = global.document
+			? factory(global, true)
+			: function (w) {
+					if (!w.document) {
+						throw new Error('SUNEDITOR_LANG a window with a document');
+					}
+					return factory(w);
+				};
+	} else {
+		factory(global);
+	}
+})(typeof window !== 'undefined' ? window : this, function (window, noGlobal) {
+	const lang = {
+		code: 'nl',
+		align: 'Uitlijnen',
+		alignBottom: 'Onder uitlijnen',
+		alignCenter: 'In het midden uitlijnen',
+		alignJustify: 'Uitvullen',
+		alignLeft: 'Links uitlijnen',
+		alignMiddle: 'Midden uitlijnen',
+		alignRight: 'Rechts uitlijnen',
+		alignTop: 'Boven uitlijnen',
+		anchor: 'Anker',
+		asBlock: 'Als blok',
+		asInline: 'Als inline',
+		asLink: 'Als link',
+		audio: 'Audio',
+		audioGallery: 'Audiogalerij',
+		audio_modal_file: 'Selecteer een bestand van uw apparaat',
+		audio_modal_title: 'Audio invoegen',
+		audio_modal_url: 'URL',
+		autoSize: 'Automatische grootte',
+		backgroundColor: 'Tekst markeren',
+		basic: 'Standaard',
+		blockStyle: 'Blokstijl',
+		bold: 'Vetgedrukt',
+		border: 'Rand',
+		border_all: 'Alle randen',
+		border_inside: 'Binnenrand',
+		border_horizontal: 'Horizontaal rand',
+		border_vertical: 'Verticaal rand',
+		border_outside: 'Buitenrand',
+		border_left: 'Links rand',
+		border_top: 'Bovenrand',
+		border_right: 'Rechts rand',
+		border_bottom: 'Onderrand',
+		border_none: 'Geen randen',
+		bulletedList: 'Ongeordende lijst',
+		cancel: 'Annuleren',
+		caption: 'Omschrijving toevoegen',
+		cellProperties: 'Celeigenschappen',
+		center: 'Midden',
+		close: 'Sluiten',
+		codeView: 'Broncode weergeven',
+		color: 'Kleur',
+		colorPicker: 'Kleurenkiezer',
+		column: 'Kolom',
+		comment: 'Opmerkingen',
+		commentAdd: 'Opmerking toevoegen',
+		commentShow: 'Opmerkingen weergeven',
+		copy: 'Kopiëren',
+		copyFormat: 'Paint Opmaak',
+		cut: 'Knippen',
+		default: 'Standaard',
+		deleteColumn: 'Kolom verwijderen',
+		deleteRow: 'Rij verwijderen',
+		dir_ltr: 'Van links naar rechts',
+		dir_rtl: 'Rechts naar links',
+		download: 'Downloaden',
+		drag: 'Slepen',
+		drawing: 'Tekenen',
+		drawing_modal_title: 'Tekenen',
+		edit: 'Bewerken',
+		embed: 'Insluiten',
+		embed_modal_title: 'Insluiten',
+		embed_modal_source: 'Bron / URL insluiten',
+		exportPDF: 'Exporteren naar PDF',
+		exportWord: 'Exporteren naar Word',
+		find: 'Zoeken',
+		decrease: 'Verkleinen',
+		increase: 'Vergroten',
+		fileBrowser: 'Bestandsbrowser',
+		fileGallery: 'Bestandsgalerij',
+		fileUpload: 'Bestand uploaden',
+		fixedColumnWidth: 'Vaste kolombreedte',
+		font: 'Lettertype',
+		fontColor: 'Tekstkleur',
+		fontSize: 'Lettergrootte',
+		formats: 'Formaten',
+		fullScreen: 'Volledig scherm',
+		height: 'Hoogte',
+		horizontalLine: 'Horizontale regel',
+		horizontalSplit: 'Horizontaal splitsen',
+		hr_dashed: 'Gestreept',
+		hr_dotted: 'Gestippeld',
+		hr_solid: 'Standaard',
+		id: 'ID',
+		image: 'Afbeelding',
+		imageGallery: 'Galerij',
+		image_modal_altText: 'Alt-tekst',
+		image_modal_file: 'Selecteer een bestand van uw apparaat',
+		image_modal_title: 'Afbeelding invoegen',
+		image_modal_url: 'URL',
+		importWord: 'Importeren vanuit Word',
+		indent: 'Inspringen',
+		inlineStyle: 'Inline-stijl',
+		insertColumnAfter: 'Kolom rechts invoegen',
+		insertColumnBefore: 'Kolom links invoegen',
+		insertRowAbove: 'Rij hierboven invoegen',
+		insertRowBelow: 'Rij hieronder invoegen',
+		insertLine: 'Regel invoegen',
+		italic: 'Cursief',
+		layout: 'Lay-out',
+		left: 'Links',
+		lineHeight: 'Lijnhoogte',
+		link: 'Link',
+		link_modal_bookmark: 'Bladwijzer',
+		link_modal_downloadLinkCheck: 'Downloadlink',
+		link_modal_newWindowCheck: 'In een nieuw tabblad openen',
+		link_modal_text: 'Tekst van de link',
+		link_modal_title: 'Link invoegen',
+		link_modal_url: 'URL',
+		link_modal_relAttribute: 'Rel-attribuut',
+		list: 'Lijst',
+		markdownView: 'Markdown-weergave',
+		math: 'Wiskunde',
+		math_modal_fontSizeLabel: 'Lettergrootte',
+		math_modal_inputLabel: 'Wiskundige notatie',
+		math_modal_previewLabel: 'Voorbeeld',
+		math_modal_title: 'Wiskunde',
+		maxSize: 'Maximale grootte',
+		mediaGallery: 'Mediagalerij',
+		autocomplete: 'Automatisch aanvullen',
+		mention: 'Vermelding',
+		menu_bordered: 'Omlijnd',
+		menu_code: 'Code',
+		menu_neon: 'Neon',
+		menu_shadow: 'Schaduw',
+		menu_spaced: 'Uit elkaar',
+		menu_translucent: 'Doorschijnend',
+		mergeCells: 'Cellen samenvoegen',
+		minSize: 'Minimale grootte',
+		mirrorHorizontal: 'Horizontaal spiegelen',
+		mirrorVertical: 'Verticaal spiegelen',
+		newDocument: 'Nieuw document',
+		numberedList: 'Geordende lijst',
+		outdent: 'Inspringen ongedaan maken',
+		pageBreak: 'Pagina-einde',
+		pageDown: 'Pagina omlaag',
+		pageNumber: 'Paginanummer',
+		pageUp: 'Pagina omhoog',
+		paragraphStyle: 'Alineastijl',
+		preview: 'Voorbeeldweergave',
+		print: 'Printen',
+		proportion: 'Verhouding behouden',
+		ratio: 'Verhouding',
+		redo: 'Ongedaan maken herstellen',
+		remove: 'Verwijderen',
+		removeFormat: 'Opmaak verwijderen',
+		replace: 'Vervangen',
+		replaceAll: 'Alles vervangen',
+		resize100: 'Formaat wijzigen: 100%',
+		resize25: 'Formaat wijzigen: 25%',
+		resize50: 'Formaat wijzigen: 50%',
+		resize75: 'Formaat wijzigen: 75%',
+		resize: 'Formaat wijzigen',
+		revert: 'Standaardwaarden herstellen',
+		revisionHistory: 'Revisiegeschiedenis',
+		right: 'Rechts',
+		rotateLeft: 'Naar links draaien',
+		rotateRight: 'Naar rechts draaien',
+		row: 'Rij',
+		save: 'Opslaan',
+		search: 'Zoeken',
+		selectAll: 'Alles selecteren',
+		showBlocks: 'Blokken tonen',
+		size: 'Grootte',
+		splitCells: 'Cellen splitsen',
+		strike: 'Doorstrepen',
+		submitButton: 'Toepassen',
+		subscript: 'Subscript',
+		superscript: 'Superscript',
+		table: 'Tabel',
+		tableHeader: 'Tabelkoppen',
+		tableProperties: 'Tabeleigenschappen',
+		tags: 'Tags',
+		tag_blockquote: 'Citaat',
+		codeBlock: 'Codeblok',
+		tag_div: 'Normaal (div)',
+		tag_h: 'Kop',
+		tag_p: 'Alinea',
+		tag_pre: 'Code',
+		template: 'Sjabloon',
+		textStyle: 'Tekststijl',
+		title: 'Titel',
+		underline: 'Onderstrepen',
+		undo: 'Ongedaan maken',
+		unmergeCells: 'Samenvoegen van cellen ongedaan maken',
+		unlink: 'Ontkoppelen',
+		verticalSplit: 'Verticaal splitsen',
+		video: 'Video',
+		videoGallery: 'Videogalerij',
+		video_modal_file: 'Selecteer een bestand van uw apparaat',
+		video_modal_title: 'Video invoegen',
+		video_modal_url: 'Embedded URL (YouTube/Vimeo)',
+		width: 'Breedte',
+		codeLanguage: 'Taal',
+		codeLanguage_none: 'Geen',
+		finder_matchCase: 'Lucifersdoosje',
+		finder_wholeWord: 'Heel woord',
+		finder_regex: 'Reguliere expressie',
+		finder_prev: 'Vorige wedstrijd',
+		finder_next: 'Volgende wedstrijd',
+		message_copy_success: 'Gekopieerd naar klembord',
+		message_copy_fail: 'Kopiëren mislukt. Kopieer handmatig.',
+	};
 
-    if (typeof noGlobal === typeof undefined) {
-        if (!window.SUNEDITOR_LANG) {
-            Object.defineProperty(window, 'SUNEDITOR_LANG', {
-                enumerable: true,
-                writable: false,
-                configurable: false,
-                value: {}
-            });
-        }
+	if (typeof noGlobal === typeof undefined) {
+		if (!window.SUNEDITOR_LANG) {
+			Object.defineProperty(window, 'SUNEDITOR_LANG', {
+				enumerable: true,
+				writable: false,
+				configurable: false,
+				value: {},
+			});
+		}
 
-        Object.defineProperty(window.SUNEDITOR_LANG, 'nl', {
-            enumerable: true,
-            writable: true,
-            configurable: true,
-            value: lang
-        });
-    }
+		Object.defineProperty(window.SUNEDITOR_LANG, 'nl', {
+			enumerable: true,
+			writable: true,
+			configurable: true,
+			value: lang,
+		});
+	}
 
-    return lang;
-}));
+	return lang;
+});
