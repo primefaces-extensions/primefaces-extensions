@@ -658,7 +658,7 @@ public class Sheet extends SheetBaseImpl {
     /**
      * Gets the row key value as a string for the current row var.
      */
-    protected String getRowKeyValueAsString(final FacesContext context) {
+    public String getRowKeyValueAsString(final FacesContext context) {
         return getRowKeyValueAsString(getRowKeyValue(context));
     }
 

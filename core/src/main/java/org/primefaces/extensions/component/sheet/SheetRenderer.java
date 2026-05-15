@@ -27,6 +27,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import jakarta.faces.FacesException;
 import jakarta.faces.component.UIComponent;
@@ -38,6 +39,9 @@ import jakarta.faces.model.SelectItem;
 import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.behavior.ajax.AjaxBehavior;
+import org.primefaces.component.export.DataExporters;
+import org.primefaces.extensions.component.sheet.export.SheetCSVExporter;
+import org.primefaces.extensions.component.sheet.export.SheetXMLExporter;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.extensions.util.ExtLangUtils;
 import org.primefaces.extensions.util.JavascriptVarBuilder;
@@ -60,11 +64,21 @@ import org.primefaces.util.WidgetBuilder;
 @FacesRenderer(rendererType = SheetBase.DEFAULT_RENDERER, componentFamily = SheetBase.COMPONENT_FAMILY)
 public class SheetRenderer extends CoreRenderer<Sheet> {
 
+    private static final AtomicBoolean EXPORTERS_REGISTERED = new AtomicBoolean(false);
+
+    private static void registerExporters() {
+        if (EXPORTERS_REGISTERED.compareAndSet(false, true)) {
+            DataExporters.register(Sheet.class, SheetCSVExporter.class, "csv");
+            DataExporters.register(Sheet.class, SheetXMLExporter.class, "xml");
+        }
+    }
+
     /**
      * Encodes the Sheet component
      */
     @Override
     public void encodeEnd(final FacesContext context, final Sheet sheet) throws IOException {
+        registerExporters();
         final ResponseWriter responseWriter = context.getResponseWriter();
 
         // update column mappings on render
