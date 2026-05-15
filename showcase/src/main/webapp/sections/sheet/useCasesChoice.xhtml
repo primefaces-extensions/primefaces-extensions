@@ -19,6 +19,10 @@
                     styleClass="#{navigationContext.getMenuitemStyleClass('dynamicColumns')}"
                     onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
                     url="#{request.contextPath}/sections/sheet/dynamicColumns.jsf"/>
+        <p:menuitem value="Data Export"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('dataExport')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
+                    url="#{request.contextPath}/sections/sheet/dataExport.jsf"/>
     </p:menu>
 </ui:composition>
 </html>
