@@ -27,6 +27,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
@@ -37,6 +38,9 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.model.SelectItem;
 
 import org.primefaces.behavior.ajax.AjaxBehavior;
+import org.primefaces.component.export.DataExporters;
+import org.primefaces.extensions.component.sheet.export.SheetCSVExporter;
+import org.primefaces.extensions.component.sheet.export.SheetXMLExporter;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.extensions.util.ExtLangUtils;
 import org.primefaces.extensions.util.JavascriptVarBuilder;
@@ -58,11 +62,21 @@ import org.primefaces.util.WidgetBuilder;
  */
 public class SheetRenderer extends CoreRenderer {
 
+    private static final AtomicBoolean EXPORTERS_REGISTERED = new AtomicBoolean(false);
+
+    private static void registerExporters() {
+        if (EXPORTERS_REGISTERED.compareAndSet(false, true)) {
+            DataExporters.register(Sheet.class, SheetCSVExporter.class, "csv");
+            DataExporters.register(Sheet.class, SheetXMLExporter.class, "xml");
+        }
+    }
+
     /**
      * Encodes the Sheet component
      */
     @Override
     public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
+        registerExporters();
         final ResponseWriter responseWriter = context.getResponseWriter();
         final Sheet sheet = (Sheet) component;
 
