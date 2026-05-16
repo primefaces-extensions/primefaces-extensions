@@ -27,14 +27,14 @@ function createExtender(settings) {
 
             // Enable JavaScript type checking
             if (settings.tsCheck && settings.language === "javascript") {
-                monaco.languages.typescript.javascriptDefaults.setCompilerOptions(Object.assign(
+                monaco.typescript.javascriptDefaults.setCompilerOptions(Object.assign(
                     {},
-                    monaco.languages.typescript.javascriptDefaults.getCompilerOptions(),
+                    monaco.typescript.javascriptDefaults.getCompilerOptions(),
                     {checkJs: true, strict: true}
                 ));
-                monaco.languages.typescript.javascriptDefaults.setDiagnosticsOptions(Object.assign(
+                monaco.typescript.javascriptDefaults.setDiagnosticsOptions(Object.assign(
                     {},
-                    monaco.languages.typescript.javascriptDefaults.getDiagnosticsOptions(),
+                    monaco.typescript.javascriptDefaults.getDiagnosticsOptions(),
                     {noSemanticValidation: false}
                 ));
             }
@@ -57,10 +57,10 @@ function createExtender(settings) {
                     .then(function (declarations) {
                         return declarations.forEach(function (declaration) {
                             if (settings.language === "javascript") {
-                                monaco.languages.typescript.javascriptDefaults.addExtraLib(declaration.text, declaration.file);
+                                monaco.typescript.javascriptDefaults.addExtraLib(declaration.text, declaration.file);
                             }
                             if (settings.language === "typescript") {
-                                monaco.languages.typescript.typescriptDefaults.addExtraLib(declaration.text, declaration.file);
+                                monaco.typescript.typescriptDefaults.addExtraLib(declaration.text, declaration.file);
                             }
                         });
                     });
