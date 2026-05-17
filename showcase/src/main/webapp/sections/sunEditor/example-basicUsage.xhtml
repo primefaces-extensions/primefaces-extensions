@@ -40,12 +40,12 @@
     </h:panelGrid>
 
     <pe:sunEditor id="sunEditor" widgetVar="sunEditor" value="#{basicSunEditorController.html}"
-                  mode="#{basicSunEditorController.mode}" dir="#{basicSunEditorController.rtl ? 'rtl' : 'ltr'}"
-                  theme="#{basicSunEditorController.theme}" locale="#{basicSunEditorController.language}"
-                  toolbar="[['font','fontSize','blockStyle'],['paragraphStyle','blockquote'], ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'],
-                  '/'
-                  ,['fontColor', 'backgroundColor', 'outdent', 'indent', 'align', 'hr', 'list', 'table'],
-                   ['link', 'image', 'audio', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview', 'print', 'save']]">
+                   mode="#{basicSunEditorController.mode}" dir="#{basicSunEditorController.rtl ? 'rtl' : 'ltr'}"
+                   theme="#{basicSunEditorController.theme}" locale="#{basicSunEditorController.language}"
+                   toolbar="[['font','fontSize','blockStyle'],['paragraphStyle','blockquote'], ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'],
+                   '/'
+                   ,['fontColor', 'backgroundColor', 'outdent', 'indent', 'align', 'hr', 'list', 'table'],
+                    ['link', 'image', 'audio', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview', 'exportPDF', 'save']]">
         <p:ajax event="paste" listener="#{basicSunEditorController.onPaste}"/>
         <p:ajax event="copy" listener="#{basicSunEditorController.onCopy}"/>
         <p:ajax event="cut" listener="#{basicSunEditorController.onCut}"/>

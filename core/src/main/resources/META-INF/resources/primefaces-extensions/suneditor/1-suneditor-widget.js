@@ -17,8 +17,13 @@ PrimeFaces.widget.ExtSunEditor = class extends PrimeFaces.widget.DeferredWidget 
         this.disabled = (cfg.disabled === undefined) ? false : cfg.disabled;
         this.cfg.strictMode = (cfg.strictMode === undefined) ? true : cfg.strictMode;
         this.cfg.textDirection = this.cfg.rtl ? "rtl" : "ltr";
-        this.cfg.plugins = this.cfg.plugins || SUNEDITOR.plugins;
+        this.cfg.plugins = Object.assign({}, SUNEDITOR.plugins, this.cfg.plugins);
         this.cfg.v2Migration = true;
+
+        this.cfg.exportPDF = {
+            apiUrl: this.cfg.exportPDFUrl
+                || (PrimeFaces.settings.contextPath + '/api/suneditor/export-pdf')
+        };
 
         if (this.disabled) {
             this.input.attr("disabled", "disabled");
