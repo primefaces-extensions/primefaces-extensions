@@ -48,15 +48,17 @@ public class SunEditorExportPDFServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/pdf");
 
-        Reader reader = new InputStreamReader(request.getInputStream(), StandardCharsets.UTF_8);
-        StringBuilder sb = new StringBuilder();
-        char[] buf = new char[1024];
-        int len;
-        while ((len = reader.read(buf)) != -1) {
-            sb.append(buf, 0, len);
+        String json;
+        try (Reader reader = new InputStreamReader(request.getInputStream(), StandardCharsets.UTF_8)) {
+            StringBuilder sb = new StringBuilder();
+            char[] buf = new char[1024];
+            int len;
+            while ((len = reader.read(buf)) != -1) {
+                sb.append(buf, 0, len);
+            }
+            json = sb.toString();
         }
 
-        String json = sb.toString();
         String fileName = "suneditor.pdf";
         String htmlContent = "";
 
