@@ -17,7 +17,7 @@ PrimeFaces.widget.ExtSunEditor = class extends PrimeFaces.widget.DeferredWidget 
         this.disabled = (cfg.disabled === undefined) ? false : cfg.disabled;
         this.cfg.strictMode = (cfg.strictMode === undefined) ? true : cfg.strictMode;
         this.cfg.textDirection = this.cfg.rtl ? "rtl" : "ltr";
-        this.cfg.plugins = Object.assign({}, SUNEDITOR.plugins, this.cfg.plugins);
+        this.cfg.plugins = this.cfg.plugins || SUNEDITOR.plugins;
         this.cfg.v2Migration = true;
 
         this.cfg.exportPDF = {
