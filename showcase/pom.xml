@@ -114,6 +114,12 @@
             <artifactId>openpdf</artifactId>
             <version>1.3.43</version>
         </dependency>
+        <!-- SunEditor Export PDF -->
+        <dependency>
+            <groupId>org.xhtmlrenderer</groupId>
+            <artifactId>flying-saucer-pdf-openpdf</artifactId>
+            <version>9.4.0</version>
+        </dependency>
         <!-- Sanitizing Converter -->
         <dependency>
             <groupId>com.googlecode.owasp-java-html-sanitizer</groupId>
