@@ -20,6 +20,11 @@ PrimeFaces.widget.ExtSunEditor = class extends PrimeFaces.widget.DeferredWidget 
         this.cfg.plugins = this.cfg.plugins || SUNEDITOR.plugins;
         this.cfg.v2Migration = true;
 
+        this.cfg.exportPDF = {
+            apiUrl: this.cfg.exportPDFUrl
+                || (PrimeFaces.settings.contextPath + '/api/suneditor/export-pdf')
+        };
+
         if (this.disabled) {
             this.input.attr("disabled", "disabled");
             this.jq.addClass("ui-state-disabled");
