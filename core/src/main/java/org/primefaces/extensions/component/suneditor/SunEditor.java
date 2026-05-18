@@ -112,6 +112,9 @@ public class SunEditor extends AbstractEditorInputTextArea implements ClientBeha
         getStateHelper().put(PropertyKeys.mode, mode);
     }
 
+    /**
+     * The theme to use: 'auto', 'default', 'dark', 'cobalt', 'cream', or 'midnight'.
+     */
     public String getTheme() {
         return (String) getStateHelper().eval(PropertyKeys.theme, "auto");
     }
