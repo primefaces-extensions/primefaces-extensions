@@ -125,6 +125,9 @@ public class BasicSunEditorController implements Serializable {
         results.add(new SelectItem("auto", "Auto"));
         results.add(new SelectItem("default", "Default"));
         results.add(new SelectItem("dark", "Dark"));
+        results.add(new SelectItem("cobalt", "Cobalt"));
+        results.add(new SelectItem("cream", "Cream"));
+        results.add(new SelectItem("midnight", "Midnight"));
         return results;
     }
 
