@@ -108,13 +108,13 @@
         <dependency>
             <groupId>com.github.librepdf</groupId>
             <artifactId>openpdf</artifactId>
-            <version>1.4.2</version>
+            <version>3.0.4</version>
         </dependency>
         <!-- SunEditor Export PDF -->
         <dependency>
             <groupId>org.xhtmlrenderer</groupId>
-            <artifactId>flying-saucer-pdf-openpdf</artifactId>
-            <version>9.4.0</version>
+            <artifactId>flying-saucer-pdf</artifactId>
+            <version>10.2.0</version>
         </dependency>
         <!-- Sanitizing Converter -->
         <dependency>

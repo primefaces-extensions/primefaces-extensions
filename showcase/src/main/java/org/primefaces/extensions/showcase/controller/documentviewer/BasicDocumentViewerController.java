@@ -28,12 +28,11 @@ import java.io.Serializable;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
 
+import org.openpdf.text.Document;
+import org.openpdf.text.Paragraph;
+import org.openpdf.text.pdf.PdfWriter;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
-
-import com.lowagie.text.Document;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.pdf.PdfWriter;
 
 @Named
 @RequestScoped
