@@ -11238,6 +11238,13 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
+                <![CDATA[The theme to use: 'auto', 'default', 'dark', 'cobalt', 'cream', or 'midnight'. Default auto.]]></description>
+            <name>theme</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
                 <![CDATA[String or java.util.Locale representing user locale. Default is a locale specified in view root.]]>
             </description>
             <name>locale</name>
