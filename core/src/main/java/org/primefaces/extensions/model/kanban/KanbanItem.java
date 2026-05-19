@@ -46,6 +46,12 @@ public class KanbanItem implements Serializable {
         this.title = title;
     }
 
+    public KanbanItem(String id, String title, String description) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+    }
+
     public String getId() {
         return id;
     }

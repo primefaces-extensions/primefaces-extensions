@@ -84,23 +84,24 @@ public class KanbanRenderer extends CoreRenderer {
                 throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context);
 
-        if (kanban.getValue() == null) {
-            throw new FacesException("The value attribute must be a List<KanbanColumn>");
+        final Object value = kanban.getValue();
+        if (value == null) {
+            throw new FacesException("The value attribute is required and must be a List<KanbanColumn>");
         }
-
-        if (!(kanban.getValue() instanceof List)) {
-            throw new FacesException("The value attribute must be a List<KanbanColumn>");
+        if (!(value instanceof List)) {
+            throw new FacesException("The value attribute must be a List<KanbanColumn>, but was: "
+                        + value.getClass().getName());
         }
 
         @SuppressWarnings("unchecked")
-        final List<KanbanColumn> columns = (List<KanbanColumn>) kanban.getValue();
+        final List<KanbanColumn> columns = (List<KanbanColumn>) value;
         final String data = toJSON(columns).toString();
 
         wb.init("ExtKanban", kanban);
         wb.attr("draggable", kanban.isDraggable());
         wb.attr("addItemButton", kanban.isAddItemButton());
         wb.nativeAttr("extender", kanban.getExtender());
-        wb.attr("boards", data);
+        wb.nativeAttr("boards", data);
 
         encodeClientBehaviors(context, kanban);
         wb.finish();
@@ -115,7 +116,7 @@ public class KanbanRenderer extends CoreRenderer {
             board.put("title", column.getTitle());
 
             if (column.getCssClass() != null && !column.getCssClass().isEmpty()) {
-                board.put("class", column.getCssClass());
+                board.put("class", column.getCssClass().replaceAll("\\s+", ","));
             }
 
             final JSONArray items = new JSONArray();

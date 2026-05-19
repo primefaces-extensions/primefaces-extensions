@@ -57,22 +57,22 @@ public class KanbanController implements Serializable {
         // To Do column
         KanbanColumn todoColumn = new KanbanColumn("todo", "To Do");
         todoColumn.setCssClass("kanban-todo");
-        todoColumn.addItem(new KanbanItem("item1", "Add support for Kanban"));
-        todoColumn.getItems().get(0).setDescription("Create a new Kanban component for PrimeFaces Extensions");
-        todoColumn.addItem(new KanbanItem("item2", "Write documentation"));
-        todoColumn.getItems().get(1).setDescription("Document the new component");
+        todoColumn.addItem(new KanbanItem("item1", "Add support for Kanban",
+                    "Create a new Kanban component for PrimeFaces Extensions"));
+        todoColumn.addItem(new KanbanItem("item2", "Write documentation",
+                    "Document the new component"));
 
         // In Progress column
         KanbanColumn inProgressColumn = new KanbanColumn("inprogress", "In Progress");
         inProgressColumn.setCssClass("kanban-inprogress");
-        inProgressColumn.addItem(new KanbanItem("item3", "Design component"));
-        inProgressColumn.getItems().get(0).setDescription("Design the Kanban board component");
+        inProgressColumn.addItem(new KanbanItem("item3", "Design component",
+                    "Design the Kanban board component"));
 
         // Done column
         KanbanColumn doneColumn = new KanbanColumn("done", "Done");
         doneColumn.setCssClass("kanban-done");
-        doneColumn.addItem(new KanbanItem("item4", "Research libraries"));
-        doneColumn.getItems().get(0).setDescription("Research available Kanban libraries");
+        doneColumn.addItem(new KanbanItem("item4", "Research libraries",
+                    "Research available Kanban libraries"));
 
         columns.add(todoColumn);
         columns.add(inProgressColumn);
@@ -90,9 +90,8 @@ public class KanbanController implements Serializable {
         for (KanbanColumn column : columns) {
             if (column.getId().equals(event.getColumnId())) {
                 int count = column.getItems().size() + 1;
-                KanbanItem newItem = new KanbanItem("new-" + count, "New Task " + count);
-                newItem.setDescription("Click to edit this task");
-                column.addItem(newItem);
+                column.addItem(new KanbanItem("new-" + count, "New Task " + count,
+                            "Click to edit this task"));
                 break;
             }
         }

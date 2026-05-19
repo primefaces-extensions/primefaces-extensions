@@ -75,25 +75,29 @@ if (PrimeFaces.widget) {
         }
 
         refresh(cfg) {
-            if (this.instance) {
-                this.instance = null;
-                var container = document.getElementById(this.id);
-                if (container) {
-                    container.innerHTML = '';
-                }
-            }
+            this._cleanup();
             super.refresh(cfg);
         }
 
         destroy() {
+            this._cleanup();
+            super.destroy();
+        }
+
+        _cleanup() {
             if (this.instance) {
+                if (this.instance.drake && this.instance.drake.destroy) {
+                    this.instance.drake.destroy();
+                }
+                if (this.instance.drakeBoard && this.instance.drakeBoard.destroy) {
+                    this.instance.drakeBoard.destroy();
+                }
                 this.instance = null;
                 var container = document.getElementById(this.id);
                 if (container) {
                     container.innerHTML = '';
                 }
             }
-            super.destroy();
         }
     };
 }
