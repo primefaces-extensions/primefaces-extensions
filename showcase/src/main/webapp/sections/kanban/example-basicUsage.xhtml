@@ -1,0 +1,26 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="jakarta.faces.html"
+    xmlns:ui="jakarta.faces.facelets" xmlns:p="primefaces"
+    xmlns:pe="primefaces.extensions" xmlns:f="jakarta.faces.core">
+
+    <style>
+        .kanban-board header.kanban-todo { background-color: #4f46e5; color: #fff; }
+        .kanban-board header.kanban-inprogress { background-color: #ea580c; color: #fff; }
+        .kanban-board header.kanban-done { background-color: #16a34a; color: #fff; }
+    </style>
+
+    <p:growl id="growl" showDetail="true" showSummary="true">
+        <p:autoUpdate />
+    </p:growl>
+
+<!-- EXAMPLE-SOURCE-START -->
+    <pe:kanban id="kanban"
+                widgetVar="kanbanWidget"
+                value="#{kanbanController.columns}"
+                draggable="true"
+                addItemButton="true"
+                style="height:400px">
+        <p:ajax event="drop" listener="#{kanbanController.onDrop}" update="growl" />
+        <p:ajax event="itemAdd" listener="#{kanbanController.onAddItem}" update="kanban growl" />
+    </pe:kanban>
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>
