@@ -34,6 +34,7 @@ import javax.faces.event.FacesEvent;
 
 import org.primefaces.extensions.event.KanbanAddEvent;
 import org.primefaces.extensions.event.KanbanDragEvent;
+import org.primefaces.extensions.event.KanbanItemClickEvent;
 import org.primefaces.util.Constants;
 
 /**
@@ -51,7 +52,7 @@ import org.primefaces.util.Constants;
 public class Kanban extends KanbanBase implements ClientBehaviorHolder {
 
     private static final Collection<String> EVENT_NAMES = Collections
-                .unmodifiableCollection(Arrays.asList(KanbanDragEvent.NAME, KanbanAddEvent.NAME));
+                .unmodifiableCollection(Arrays.asList(KanbanDragEvent.NAME, KanbanAddEvent.NAME, KanbanItemClickEvent.NAME));
 
     @Override
     public Collection<String> getEventNames() {
@@ -103,6 +104,16 @@ public class Kanban extends KanbanBase implements ClientBehaviorHolder {
                             behaviorEvent.getBehavior(), columnId);
                 addEvent.setPhaseId(behaviorEvent.getPhaseId());
                 super.queueEvent(addEvent);
+                return;
+            }
+
+            if (KanbanItemClickEvent.NAME.equals(eventName)) {
+                final String itemId = params.get(clientId + "_itemId");
+                final String columnId = params.get(clientId + "_columnId");
+                final KanbanItemClickEvent clickEvent = new KanbanItemClickEvent(this,
+                            behaviorEvent.getBehavior(), itemId, columnId);
+                clickEvent.setPhaseId(behaviorEvent.getPhaseId());
+                super.queueEvent(clickEvent);
                 return;
             }
         }

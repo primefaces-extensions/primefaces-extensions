@@ -33,6 +33,7 @@ import javax.inject.Named;
 
 import org.primefaces.extensions.event.KanbanAddEvent;
 import org.primefaces.extensions.event.KanbanDragEvent;
+import org.primefaces.extensions.event.KanbanItemClickEvent;
 import org.primefaces.extensions.model.kanban.KanbanColumn;
 import org.primefaces.extensions.model.kanban.KanbanItem;
 
@@ -49,6 +50,8 @@ public class KanbanController implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private List<KanbanColumn> columns;
+    private KanbanItem selectedItem;
+    private String selectedColumnId;
 
     @PostConstruct
     public void init() {
@@ -97,11 +100,56 @@ public class KanbanController implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
+    public void onItemClick(KanbanItemClickEvent event) {
+        String itemId = event.getItemId();
+        String columnId = event.getColumnId();
+
+        for (KanbanColumn col : columns) {
+            if (col.getId().equals(columnId)) {
+                for (KanbanItem item : col.getItems()) {
+                    if (item.getId().equals(itemId)) {
+                        this.selectedItem = item;
+                        this.selectedColumnId = columnId;
+                        break;
+                    }
+                }
+            }
+        }
+
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Item Clicked",
+                    "Loaded task: " + (selectedItem != null ? selectedItem.getTitle() : itemId));
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+
+    public void saveItem() {
+        if (selectedItem != null) {
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Item Updated",
+                        "Updated task: " + selectedItem.getTitle());
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+    }
+
     public List<KanbanColumn> getColumns() {
         return columns;
     }
 
     public void setColumns(List<KanbanColumn> columns) {
         this.columns = columns;
+    }
+
+    public KanbanItem getSelectedItem() {
+        return selectedItem;
+    }
+
+    public void setSelectedItem(KanbanItem selectedItem) {
+        this.selectedItem = selectedItem;
+    }
+
+    public String getSelectedColumnId() {
+        return selectedColumnId;
+    }
+
+    public void setSelectedColumnId(String selectedColumnId) {
+        this.selectedColumnId = selectedColumnId;
     }
 }
