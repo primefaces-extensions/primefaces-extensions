@@ -30,6 +30,7 @@ import org.primefaces.cdk.api.Property;
 import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.KanbanAddEvent;
 import org.primefaces.extensions.event.KanbanDragEvent;
+import org.primefaces.extensions.event.KanbanItemClickEvent;
 
 /**
  * Component base class for the <code>Kanban</code> component.
@@ -42,7 +43,9 @@ import org.primefaces.extensions.event.KanbanDragEvent;
             @FacesBehaviorEvent(name = "drop", event = KanbanDragEvent.class,
                         description = "Fires when a Kanban item is dropped onto a column.", defaultEvent = true),
             @FacesBehaviorEvent(name = "itemAdd", event = KanbanAddEvent.class,
-                        description = "Fires when the add item button is clicked.")
+                        description = "Fires when the add item button is clicked."),
+            @FacesBehaviorEvent(name = "itemClick", event = KanbanItemClickEvent.class,
+                        description = "Fires when a Kanban item is clicked.")
 })
 public abstract class KanbanBase extends UIComponentBase implements Widget {
 
