@@ -1,0 +1,46 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+    xmlns:pe="http://primefaces.org/ui/extensions" xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <style>
+        .kanban-board header.kanban-todo { background-color: #4f46e5; color: #fff; }
+        .kanban-board header.kanban-inprogress { background-color: #ea580c; color: #fff; }
+        .kanban-board header.kanban-done { background-color: #16a34a; color: #fff; }
+    </style>
+
+    <p:growl id="growl" showDetail="true" showSummary="true">
+        <p:autoUpdate />
+    </p:growl>
+
+<!-- EXAMPLE-SOURCE-START -->
+    <pe:kanban id="kanban"
+                widgetVar="kanbanWidget"
+                value="#{kanbanController.columns}"
+                draggable="true"
+                addItemButton="true"
+                style="height:400px">
+        <p:ajax event="drop" listener="#{kanbanController.onDrop}" update="growl" />
+        <p:ajax event="itemAdd" listener="#{kanbanController.onAddItem}" update="kanban growl" />
+        <p:ajax event="itemClick" listener="#{kanbanController.onItemClick}" update="dialogContent" oncomplete="PF('itemDialog').show()" />
+    </pe:kanban>
+
+    <p:dialog id="dialog" header="Task Details" widgetVar="itemDialog" modal="true" responsive="true" width="400">
+        <h:panelGroup id="dialogContent" layout="block" styleClass="ui-fluid">
+            <h:panelGroup rendered="#{not empty kanbanController.selectedItem}">
+                <div class="field mb-3">
+                    <p:outputLabel for="title" value="Title" styleClass="font-bold block mb-1" />
+                    <p:inputText id="title" value="#{kanbanController.selectedItem.title}" required="true" />
+                </div>
+                <div class="field mb-3">
+                    <p:outputLabel for="desc" value="Description" styleClass="font-bold block mb-1" />
+                    <p:inputTextarea id="desc" value="#{kanbanController.selectedItem.description}" rows="3" />
+                </div>
+                <div class="flex justify-content-end gap-2 mt-4">
+                    <p:commandButton value="Save" action="#{kanbanController.saveItem}" update="kanban growl" oncomplete="PF('itemDialog').hide()" styleClass="ui-button-primary mr-2" />
+                    <p:commandButton value="Cancel" onclick="PF('itemDialog').hide()" type="button" styleClass="ui-button-secondary" />
+                </div>
+            </h:panelGroup>
+        </h:panelGroup>
+    </p:dialog>
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

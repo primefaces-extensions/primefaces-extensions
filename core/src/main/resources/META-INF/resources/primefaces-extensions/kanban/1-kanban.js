@@ -41,6 +41,12 @@ if (PrimeFaces.widget) {
                 },
                 buttonClick: function(el, boardId) {
                     $this.onAddItem(boardId);
+                },
+                click: function(el) {
+                    var itemId = el.getAttribute('data-eid');
+                    var board = el.closest('.kanban-board');
+                    var columnId = board ? board.getAttribute('data-id') : null;
+                    $this.onItemClick(itemId, columnId);
                 }
             };
 
@@ -57,6 +63,19 @@ if (PrimeFaces.widget) {
                         {name: this.id + '_sourceColumnId', value: sourceColumnId},
                         {name: this.id + '_targetColumnId', value: targetColumnId},
                         {name: this.id + '_newPosition', value: newPosition}
+                    ]
+                });
+            }
+        }
+
+        onItemClick(itemId, columnId) {
+            if (this.hasBehavior('itemClick')) {
+                this.callBehavior('itemClick', {
+                    source: this.id,
+                    process: this.id,
+                    params: [
+                        {name: this.id + '_itemId', value: itemId},
+                        {name: this.id + '_columnId', value: columnId}
                     ]
                 });
             }
