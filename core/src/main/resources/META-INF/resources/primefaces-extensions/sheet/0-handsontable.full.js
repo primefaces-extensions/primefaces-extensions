@@ -67428,7 +67428,8 @@ function (_BasePlugin) {
         var fixedColumns = coords.col < priv.fixedColumns;
         var scrollableElement = this.hot.view.wt.wtOverlays.scrollableElement;
         var wrapperIsWindow = scrollableElement.scrollX ? scrollableElement.scrollX - priv.rootElementOffset : 0;
-        var mouseOffset = event.layerX - (fixedColumns ? wrapperIsWindow : 0);
+        // #911: use pageX+offset instead of layerX for reliable positioning with row headers
+        var mouseOffset = (event.pageX - (0, _element.offset)(TD).left) - (fixedColumns ? wrapperIsWindow : 0);
         var leftOffset = Math.abs(this.getColumnsWidth(start, coords.col) + mouseOffset);
         this.backlight.setPosition(topPos, this.getColumnsWidth(countColumnsFrom, start) + leftOffset);
         this.backlight.setSize(this.getColumnsWidth(start, end + 1), wtTable.hider.offsetHeight - topPos);
@@ -69256,7 +69257,8 @@ function (_BasePlugin) {
         var leftPos = wtTable.holder.scrollLeft + this.hot.view.wt.wtViewport.getRowHeaderWidth();
         this.backlight.setPosition(null, leftPos);
         this.backlight.setSize(wtTable.hider.offsetWidth - leftPos, this.getRowsHeight(start, end + 1));
-        this.backlight.setOffset((this.getRowsHeight(start, coords.row) + event.layerY) * -1, null);
+        // #911: use pageY+offset instead of layerY for reliable positioning
+        this.backlight.setOffset((this.getRowsHeight(start, coords.row) + (event.pageY - (0, _element.offset)(TD).top)) * -1, null);
         (0, _element.addClass)(this.hot.rootElement, CSS_ON_MOVING);
         this.refreshPositions();
       } else {
