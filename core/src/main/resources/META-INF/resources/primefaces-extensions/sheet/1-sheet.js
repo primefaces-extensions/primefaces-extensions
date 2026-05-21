@@ -202,17 +202,20 @@ PrimeFaces.widget.ExtSheet = class extends PrimeFaces.widget.DeferredWidget {
             afterGetColHeader: function (col, TH) {
                 let header = $(TH);
 
+                // #911: map visual column index to physical index for sort/filter lookup
+                let physicalCol = this.toPhysicalColumn ? this.toPhysicalColumn(col) : col;
+
                 // remove all current events
                 header.off();
 
                 // handle sorting
-                let sortable = $this.cfg.sortable[col];
+                let sortable = $this.cfg.sortable[physicalCol];
                 if (sortable) {
                     header.find('.relative .ui-sortable-column-icon').remove();
                     let sortCol = $this.sortByInput.val();
                     let sortOrder = $this.sortOrderInput.val();
                     let iconclass = 'ui-sortable-column-icon ui-icon ui-icon ui-icon-carat-2-n-s ';
-                    if (sortCol == col) {
+                    if (sortCol == physicalCol) {
                         iconclass = iconclass
                             + (sortOrder == 'ascending' ? 'ui-icon-triangle-1-n' : 'ui-icon-triangle-1-s');
                         header.addClass('ui-state-active');
@@ -222,25 +225,25 @@ PrimeFaces.widget.ExtSheet = class extends PrimeFaces.widget.DeferredWidget {
                     header.find('.relative').append("<span class='" + iconclass + "'></span>");
                     header.addClass('ui-sortable ui-sortable-column');
                     header.off().on("click.sheetheader", function (e) {
-                        $this.sortClick($this, e, col);
+                        $this.sortClick($this, e, physicalCol);
                     });
                 } else {
                     header.removeClass('ui-state-active');
                 }
 
                 // handle filtering
-                let f = $this.cfg.filters[col];
+                let f = $this.cfg.filters[physicalCol];
                 if (typeof (f) != "undefined" && f != 'false') {
                     header.addClass('ui-filter-column');
                     header.find('.handson-filter').remove();
-                    let v = $($this.jqId + '_filter_' + col).val();
+                    let v = $($this.jqId + '_filter_' + physicalCol).val();
                     if (f == 'true') {
                         header
                             .append(
                                 '<span class="handson-filter"><input type="text" class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all" role="textbox" aria-disabled="false" aria-readonly="false" aria-multiline="false" value="'
                                 + v + '"></input></span>');
                         header.find('input').off().on('change.sheetfilter', function () {
-                            $this.filterchange($this, col, this.value, false)
+                            $this.filterchange($this, physicalCol, this.value, false)
                         }).on('keydown.sheetfilter', function (e) {
                             $this.filterKeyDown($this, e)
                         }).on('keyup.sheetfilter', function (e) {
@@ -263,7 +266,7 @@ PrimeFaces.widget.ExtSheet = class extends PrimeFaces.widget.DeferredWidget {
                                 + '</option>');
                         }
                         selectInput.off().on('change.sheetfilter', function () {
-                            $this.filterchange($this, col, this.value, true)
+                            $this.filterchange($this, physicalCol, this.value, true)
                         }).on('keydown.sheetfilter', function (e) {
                             $this.filterKeyDown($this, e)
                         }).on('keyup.sheetfilter', function (e) {
@@ -304,7 +307,9 @@ PrimeFaces.widget.ExtSheet = class extends PrimeFaces.widget.DeferredWidget {
         // prevent column clicks from selecting entire column, we use it for sort
         // We were seeing an issue with this change and how it affected the columnSelect ajax action
         // so we needed to NOT enabled this behavior if the given sheet has the ajax function defined.
-        if (!($this.hasBehavior('columnSelect'))) {
+        // GitHub #911: also skip when manualColumnMove is enabled as the ManualColumnMove plugin
+        // needs mousedown on column headers to initiate drag
+        if (!($this.hasBehavior('columnSelect')) && !$this.cfg.manualColumnMove) {
             $this.ht.addHook('beforeOnCellMouseDown', $this.handleHotBeforeOnCellMouseDown);
         }
 
