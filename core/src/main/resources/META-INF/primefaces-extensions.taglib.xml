@@ -10265,6 +10265,30 @@ See showcase for an example. Default null.]]>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Gutter (spacing) between boards in CSS units, e.g. "15px". Default is 15px.]]>
+            </description>
+            <name>gutter</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Default width of each board in CSS units, e.g. "250px". Default is 250px.]]>
+            </description>
+            <name>widthBoard</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[If true, boards use percentage-based widths instead of fixed pixel widths. Default is false.]]>
+            </description>
+            <name>responsivePercentage</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
     </tag>
 
     <tag>

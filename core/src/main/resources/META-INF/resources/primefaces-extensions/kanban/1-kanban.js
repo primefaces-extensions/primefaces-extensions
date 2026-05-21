@@ -25,6 +25,9 @@ if (PrimeFaces.widget) {
                 boards: this.boards,
                 dragItems: this.cfg.draggable !== false,
                 dragBoards: false,
+                gutter: this.cfg.gutter || '15px',
+                widthBoard: this.cfg.widthBoard || '250px',
+                responsivePercentage: this.cfg.responsivePercentage === true,
                 itemAddOptions: {
                     enabled: this.cfg.addItemButton || false,
                     content: '+ Add Item',

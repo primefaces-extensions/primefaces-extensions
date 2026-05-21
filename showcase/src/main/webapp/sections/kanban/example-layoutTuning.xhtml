@@ -1,0 +1,45 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+    xmlns:pe="http://primefaces.org/ui/extensions" xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <style>
+        .kanban-board header.kanban-backlog { background-color: #6b7280; color: #fff; }
+        .kanban-board header.kanban-design { background-color: #8b5cf6; color: #fff; }
+        .kanban-board header.kanban-development { background-color: #f59e0b; color: #fff; }
+        .kanban-board header.kanban-testing { background-color: #10b981; color: #fff; }
+    </style>
+
+<!-- EXAMPLE-SOURCE-START -->
+    <h:panelGrid columns="3" styleClass="ui-fluid" columnClasses="p-2,p-2,p-2">
+        <p:outputLabel for="gutter" value="Gutter" styleClass="font-bold" />
+        <p:inputText id="gutter" value="#{kanbanLayoutController.gutter}" style="width:100px">
+            <p:ajax update="kanban" process="@this" />
+        </p:inputText>
+        <p:outputLabel value="Spacing between boards (e.g. 5px, 15px, 30px)" />
+
+        <p:outputLabel for="widthBoard" value="Board Width" styleClass="font-bold" />
+        <p:inputText id="widthBoard" value="#{kanbanLayoutController.widthBoard}" style="width:100px">
+            <p:ajax update="kanban" process="@this" />
+        </p:inputText>
+        <p:outputLabel value="Width of each board (e.g. 200px, 250px, 350px)" />
+
+        <p:outputLabel for="responsivePercentage" value="Responsive %" styleClass="font-bold" />
+        <p:selectOneMenu id="responsivePercentage" value="#{kanbanLayoutController.responsivePercentage}">
+            <f:selectItem itemLabel="false" itemValue="false" />
+            <f:selectItem itemLabel="true" itemValue="true" />
+            <p:ajax update="kanban" process="@this" />
+        </p:selectOneMenu>
+        <p:outputLabel value="Use percentage-based board widths" />
+    </h:panelGrid>
+
+    <pe:kanban id="kanban"
+                widgetVar="kanbanLayoutWidget"
+                value="#{kanbanLayoutController.columns}"
+                draggable="true"
+                gutter="#{kanbanLayoutController.gutter}"
+                widthBoard="#{kanbanLayoutController.widthBoard}"
+                responsivePercentage="#{kanbanLayoutController.responsivePercentage}"
+                style="height:400px;margin-top:12px">
+    </pe:kanban>
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>
