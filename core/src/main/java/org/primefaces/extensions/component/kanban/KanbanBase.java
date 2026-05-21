@@ -81,4 +81,13 @@ public abstract class KanbanBase extends UIComponentBase implements Widget {
 
     @Property(description = "JavaScript function to extend the widget configuration.")
     public abstract String getExtender();
+
+    @Property(description = "Gutter (spacing) between boards in CSS units, e.g. \"15px\".", defaultValue = "15px")
+    public abstract String getGutter();
+
+    @Property(description = "Default width of each board in CSS units, e.g. \"250px\".", defaultValue = "250px")
+    public abstract String getWidthBoard();
+
+    @Property(description = "If true, boards use percentage-based widths instead of fixed pixel widths.", defaultValue = "false")
+    public abstract boolean isResponsivePercentage();
 }
