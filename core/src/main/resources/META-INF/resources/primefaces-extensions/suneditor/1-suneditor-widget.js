@@ -203,14 +203,9 @@ PrimeFaces.widget.ExtSunEditor = class extends PrimeFaces.widget.DeferredWidget 
     }
 
     repositionDialog(dlgEl) {
-        for (const key in PrimeFaces.widgets) {
-            if (Object.prototype.hasOwnProperty.call(PrimeFaces.widgets, key)) {
-                const w = PrimeFaces.widgets[key];
-                if (w.jq && w.jq[0] === dlgEl && w.initPosition && w.isVisible()) {
-                    w.initPosition();
-                    break;
-                }
-            }
+        const dlgWidget = PrimeFaces.getWidgetById(dlgEl.id);
+        if (dlgWidget && dlgWidget.initPosition && dlgWidget.isVisible()) {
+            dlgWidget.initPosition();
         }
     }
 
