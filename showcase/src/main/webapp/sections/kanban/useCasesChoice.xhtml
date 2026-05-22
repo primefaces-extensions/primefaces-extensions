@@ -15,6 +15,10 @@
                     styleClass="#{navigationContext.getMenuitemStyleClass('layoutTuning')}"
                     onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
                     url="#{request.contextPath}/sections/kanban/layoutTuning.jsf"/>
+        <p:menuitem value="Board Dragging"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('boardDrag')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
+                    url="#{request.contextPath}/sections/kanban/boardDrag.jsf"/>
     </p:menu>
 </ui:composition>
 </html>

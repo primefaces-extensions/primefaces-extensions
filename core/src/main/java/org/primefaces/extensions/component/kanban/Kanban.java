@@ -31,6 +31,7 @@ import jakarta.faces.event.FacesEvent;
 
 import org.primefaces.cdk.api.FacesComponentInfo;
 import org.primefaces.extensions.event.KanbanAddEvent;
+import org.primefaces.extensions.event.KanbanBoardDragEvent;
 import org.primefaces.extensions.event.KanbanDragEvent;
 import org.primefaces.extensions.event.KanbanItemClickEvent;
 import org.primefaces.extensions.util.Constants;
@@ -89,6 +90,26 @@ public class Kanban extends KanbanBaseImpl {
                             behaviorEvent.getBehavior(), itemId, columnId);
                 clickEvent.setPhaseId(behaviorEvent.getPhaseId());
                 super.queueEvent(clickEvent);
+                return;
+            }
+
+            if (isAjaxBehaviorEvent(event, ClientBehaviorEventKeys.dragBoard)) {
+                final String boardId = params.get(clientId + "_boardId");
+                final KanbanBoardDragEvent dragBoardEvent = new KanbanBoardDragEvent(this,
+                            behaviorEvent.getBehavior(), boardId);
+                dragBoardEvent.setPhaseId(behaviorEvent.getPhaseId());
+                super.queueEvent(dragBoardEvent);
+                return;
+            }
+
+            if (isAjaxBehaviorEvent(event, ClientBehaviorEventKeys.dragendBoard)) {
+                final String boardId = params.get(clientId + "_boardId");
+                final String positionStr = params.get(clientId + "_newPosition");
+                final int newPosition = parsePosition(positionStr);
+                final KanbanBoardDragEvent dragendBoardEvent = new KanbanBoardDragEvent(this,
+                            behaviorEvent.getBehavior(), boardId, newPosition);
+                dragendBoardEvent.setPhaseId(behaviorEvent.getPhaseId());
+                super.queueEvent(dragendBoardEvent);
                 return;
             }
         }
