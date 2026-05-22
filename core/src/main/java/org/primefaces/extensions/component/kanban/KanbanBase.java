@@ -29,6 +29,7 @@ import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
 import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.KanbanAddEvent;
+import org.primefaces.extensions.event.KanbanBoardDragEvent;
 import org.primefaces.extensions.event.KanbanDragEvent;
 import org.primefaces.extensions.event.KanbanItemClickEvent;
 
@@ -45,7 +46,11 @@ import org.primefaces.extensions.event.KanbanItemClickEvent;
             @FacesBehaviorEvent(name = "itemAdd", event = KanbanAddEvent.class,
                         description = "Fires when the add item button is clicked."),
             @FacesBehaviorEvent(name = "itemClick", event = KanbanItemClickEvent.class,
-                        description = "Fires when a Kanban item is clicked.")
+                        description = "Fires when a Kanban item is clicked."),
+            @FacesBehaviorEvent(name = "dragBoard", event = KanbanBoardDragEvent.class,
+                        description = "Fires when a Kanban board starts being dragged."),
+            @FacesBehaviorEvent(name = "dragendBoard", event = KanbanBoardDragEvent.class,
+                        description = "Fires when a Kanban board drag operation ends.")
 })
 public abstract class KanbanBase extends UIComponentBase implements Widget {
 
@@ -75,6 +80,9 @@ public abstract class KanbanBase extends UIComponentBase implements Widget {
 
     @Property(description = "Enable drag-and-drop functionality.", defaultValue = "true")
     public abstract boolean isDraggable();
+
+    @Property(description = "Enable board (column) dragging and reordering.", defaultValue = "true")
+    public abstract boolean isDragBoards();
 
     @Property(description = "Enable add item button on each board.", defaultValue = "false")
     public abstract boolean isAddItemButton();

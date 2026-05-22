@@ -1,0 +1,35 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="jakarta.faces.html"
+    xmlns:ui="jakarta.faces.facelets" xmlns:p="primefaces"
+    xmlns:pe="primefaces.extensions" xmlns:f="jakarta.faces.core">
+
+    <style>
+        .kanban-board header.kanban-discovery { background-color: #8b5cf6; color: #fff; }
+        .kanban-board header.kanban-design { background-color: #f59e0b; color: #fff; }
+        .kanban-board header.kanban-development { background-color: #3b82f6; color: #fff; }
+        .kanban-board header.kanban-testing { background-color: #10b981; color: #fff; }
+    </style>
+
+<!-- EXAMPLE-SOURCE-START -->
+    <p:growl id="growl" showDetail="true" />
+
+    <div style="margin-bottom:8px">
+        <p:outputLabel for="dragBoards" value="Board Dragging" styleClass="font-bold" style="margin-right:8px" />
+        <p:selectOneMenu id="dragBoards" value="#{kanbanBoardDragController.dragBoards}" style="width:120px">
+            <f:selectItem itemLabel="Enabled" itemValue="true" />
+            <f:selectItem itemLabel="Disabled" itemValue="false" />
+            <p:ajax update="kanban" process="@this" />
+        </p:selectOneMenu>
+    </div>
+
+    <pe:kanban id="kanban"
+                widgetVar="kanbanBoardDragWidget"
+                value="#{kanbanBoardDragController.columns}"
+                draggable="true"
+                dragBoards="#{kanbanBoardDragController.dragBoards}"
+                style="height:450px">
+        <p:ajax event="drop" listener="#{kanbanBoardDragController.onDrop}" update="growl" />
+        <p:ajax event="dragBoard" listener="#{kanbanBoardDragController.onDragBoard}" update="growl" />
+        <p:ajax event="dragendBoard" listener="#{kanbanBoardDragController.onDragendBoard}" update="growl" />
+    </pe:kanban>
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>
