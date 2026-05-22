@@ -92,6 +92,11 @@ PrimeFaces.widget.ExtSunEditor = class extends PrimeFaces.widget.DeferredWidget 
 
         bind("onload", function () {
             $this.callBehavior('initialize');
+            // Reposition the containing dialog after editor is fully initialized
+            const dlgEl = $this.input[0].closest('.ui-dialog, .ui-sidebar');
+            if (dlgEl) {
+                $this.repositionDialog(dlgEl);
+            }
         });
         bind("onChange", function () {
             $this.syncInput();
@@ -194,6 +199,18 @@ PrimeFaces.widget.ExtSunEditor = class extends PrimeFaces.widget.DeferredWidget 
             dialog.find('.sun-editor .se-line-breaker').zIndex(9999);
             dialog.find('.sun-editor .se-line-breaker-component').zIndex(9999);
             dialog.find('.sun-editor .se-wrapper').zIndex(9998);
+        }
+    }
+
+    repositionDialog(dlgEl) {
+        for (const key in PrimeFaces.widgets) {
+            if (Object.prototype.hasOwnProperty.call(PrimeFaces.widgets, key)) {
+                const w = PrimeFaces.widgets[key];
+                if (w.jq && w.jq[0] === dlgEl && w.initPosition && w.isVisible()) {
+                    w.initPosition();
+                    break;
+                }
+            }
         }
     }
 
