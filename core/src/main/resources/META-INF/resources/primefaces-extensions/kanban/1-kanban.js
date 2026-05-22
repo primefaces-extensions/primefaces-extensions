@@ -24,7 +24,7 @@ if (PrimeFaces.widget) {
                 element: PrimeFaces.escapeClientId(this.id),
                 boards: this.boards,
                 dragItems: this.cfg.draggable !== false,
-                dragBoards: false,
+                dragBoards: this.cfg.dragBoards !== false,
                 gutter: this.cfg.gutter || '15px',
                 widthBoard: this.cfg.widthBoard || '250px',
                 responsivePercentage: this.cfg.responsivePercentage === true,
@@ -50,6 +50,17 @@ if (PrimeFaces.widget) {
                     var board = el.closest('.kanban-board');
                     var columnId = board ? board.getAttribute('data-id') : null;
                     $this.onItemClick(itemId, columnId);
+                },
+                dragBoard: function(el) {
+                    var boardId = el.getAttribute('data-id');
+                    $this.onDragBoard(boardId);
+                },
+                dragendBoard: function(el) {
+                    var boardId = el.getAttribute('data-id');
+                    var kanbanContainer = el.closest('.kanban-container');
+                    var boardElements = kanbanContainer ? Array.prototype.slice.call(kanbanContainer.querySelectorAll('.kanban-board')) : [];
+                    var newIndex = boardElements.indexOf(el);
+                    $this.onDragendBoard(boardId, newIndex);
                 }
             };
 
@@ -91,6 +102,31 @@ if (PrimeFaces.widget) {
                     process: this.id,
                     params: [
                         {name: this.id + '_columnId', value: columnId}
+                    ]
+                });
+            }
+        }
+
+        onDragBoard(boardId) {
+            if (this.hasBehavior('dragBoard')) {
+                this.callBehavior('dragBoard', {
+                    source: this.id,
+                    process: this.id,
+                    params: [
+                        {name: this.id + '_boardId', value: boardId}
+                    ]
+                });
+            }
+        }
+
+        onDragendBoard(boardId, newPosition) {
+            if (this.hasBehavior('dragendBoard')) {
+                this.callBehavior('dragendBoard', {
+                    source: this.id,
+                    process: this.id,
+                    params: [
+                        {name: this.id + '_boardId', value: boardId},
+                        {name: this.id + '_newPosition', value: newPosition}
                     ]
                 });
             }

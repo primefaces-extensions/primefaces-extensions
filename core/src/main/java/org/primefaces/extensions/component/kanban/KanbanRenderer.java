@@ -101,6 +101,7 @@ public class KanbanRenderer extends CoreRenderer {
         wb.attr("gutter", kanban.getGutter());
         wb.attr("widthBoard", kanban.getWidthBoard());
         wb.attr("responsivePercentage", kanban.isResponsivePercentage());
+        wb.attr("dragBoards", kanban.isDragBoards());
         wb.nativeAttr("extender", kanban.getExtender());
         wb.nativeAttr("boards", data);
 
