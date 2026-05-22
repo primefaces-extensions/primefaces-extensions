@@ -43,7 +43,7 @@ public abstract class KanbanBase extends UIComponentBase implements Widget {
 
     @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
-        value, style, styleClass, draggable, addItemButton, extender, gutter, widthBoard, responsivePercentage
+        value, style, styleClass, draggable, addItemButton, extender, gutter, widthBoard, responsivePercentage, dragBoards
     }
 
     public KanbanBase() {
@@ -125,5 +125,13 @@ public abstract class KanbanBase extends UIComponentBase implements Widget {
 
     public void setResponsivePercentage(boolean responsivePercentage) {
         getStateHelper().put(PropertyKeys.responsivePercentage, responsivePercentage);
+    }
+
+    public boolean isDragBoards() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.dragBoards, true);
+    }
+
+    public void setDragBoards(boolean dragBoards) {
+        getStateHelper().put(PropertyKeys.dragBoards, dragBoards);
     }
 }

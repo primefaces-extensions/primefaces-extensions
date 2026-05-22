@@ -33,6 +33,7 @@ import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.FacesEvent;
 
 import org.primefaces.extensions.event.KanbanAddEvent;
+import org.primefaces.extensions.event.KanbanBoardDragEvent;
 import org.primefaces.extensions.event.KanbanDragEvent;
 import org.primefaces.extensions.event.KanbanItemClickEvent;
 import org.primefaces.util.Constants;
@@ -52,7 +53,8 @@ import org.primefaces.util.Constants;
 public class Kanban extends KanbanBase implements ClientBehaviorHolder {
 
     private static final Collection<String> EVENT_NAMES = Collections
-                .unmodifiableCollection(Arrays.asList(KanbanDragEvent.NAME, KanbanAddEvent.NAME, KanbanItemClickEvent.NAME));
+                .unmodifiableCollection(Arrays.asList(KanbanDragEvent.NAME, KanbanAddEvent.NAME, KanbanItemClickEvent.NAME,
+                            KanbanBoardDragEvent.NAME, "dragendBoard"));
 
     @Override
     public Collection<String> getEventNames() {
@@ -114,6 +116,18 @@ public class Kanban extends KanbanBase implements ClientBehaviorHolder {
                             behaviorEvent.getBehavior(), itemId, columnId);
                 clickEvent.setPhaseId(behaviorEvent.getPhaseId());
                 super.queueEvent(clickEvent);
+                return;
+            }
+
+            if (KanbanBoardDragEvent.NAME.equals(eventName) || "dragendBoard".equals(eventName)) {
+                final String boardId = params.get(clientId + "_boardId");
+                final String positionStr = params.get(clientId + "_newPosition");
+                final int newPosition = parsePosition(positionStr);
+
+                final KanbanBoardDragEvent boardDragEvent = new KanbanBoardDragEvent(this,
+                            behaviorEvent.getBehavior(), boardId, newPosition);
+                boardDragEvent.setPhaseId(behaviorEvent.getPhaseId());
+                super.queueEvent(boardDragEvent);
                 return;
             }
         }

@@ -10178,7 +10178,9 @@ See showcase for an example. Default null.]]>
         <description>
             <![CDATA[Kanban board component for visualizing workflow and managing tasks with drag-and-drop functionality.
      Client behavior events: drop - fires when a Kanban item is dropped onto a column (org.primefaces.extensions.event.KanbanDragEvent), 
-                              itemAdd - fires when the add item button is clicked (org.primefaces.extensions.event.KanbanAddEvent).]]>
+                               itemAdd - fires when the add item button is clicked (org.primefaces.extensions.event.KanbanAddEvent),
+                               dragBoard - fires when a Kanban board starts being dragged (org.primefaces.extensions.event.KanbanBoardDragEvent),
+                               dragendBoard - fires when a Kanban board drag ends (org.primefaces.extensions.event.KanbanBoardDragEvent).]]>
         </description>
         <tag-name>kanban</tag-name>
         <component>
@@ -10286,6 +10288,14 @@ See showcase for an example. Default null.]]>
                 <![CDATA[If true, boards use percentage-based widths instead of fixed pixel widths. Default is false.]]>
             </description>
             <name>responsivePercentage</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Enable dragging of entire boards (columns) to reorder them. Default is true.]]>
+            </description>
+            <name>dragBoards</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
