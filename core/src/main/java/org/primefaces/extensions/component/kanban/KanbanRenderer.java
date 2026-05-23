@@ -123,6 +123,14 @@ public class KanbanRenderer extends CoreRenderer {
                 board.put("class", column.getCssClass().replaceAll("\\s+", ","));
             }
 
+            if (column.getDragTo() != null && !column.getDragTo().isEmpty()) {
+                final JSONArray dragTo = new JSONArray();
+                for (final String targetId : column.getDragTo()) {
+                    dragTo.put(targetId);
+                }
+                board.put("dragTo", dragTo);
+            }
+
             final JSONArray items = new JSONArray();
             for (final KanbanItem item : column.getItems()) {
                 final JSONObject itemJson = new JSONObject();

@@ -34,6 +34,9 @@ if (PrimeFaces.widget) {
                     footer: false
                 },
                 dropEl: function(el, target, source, sibling) {
+                    if (!target.contains(el)) {
+                        return;
+                    }
                     var itemId = el.getAttribute('data-eid');
                     var sourceBoard = source.closest('.kanban-board');
                     var targetBoard = target.closest('.kanban-board');

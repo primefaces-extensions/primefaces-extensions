@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.component.kanban;
 
+import java.util.List;
 import java.util.Map;
 
 import jakarta.faces.application.ResourceDependency;
@@ -34,6 +35,7 @@ import org.primefaces.extensions.event.KanbanAddEvent;
 import org.primefaces.extensions.event.KanbanBoardDragEvent;
 import org.primefaces.extensions.event.KanbanDragEvent;
 import org.primefaces.extensions.event.KanbanItemClickEvent;
+import org.primefaces.extensions.model.kanban.KanbanColumn;
 import org.primefaces.extensions.util.Constants;
 
 /**
@@ -64,6 +66,11 @@ public class Kanban extends KanbanBaseImpl {
                 final String itemId = params.get(clientId + "_itemId");
                 final String sourceColumnId = params.get(clientId + "_sourceColumnId");
                 final String targetColumnId = params.get(clientId + "_targetColumnId");
+
+                if (!isDropAllowed(sourceColumnId, targetColumnId)) {
+                    return;
+                }
+
                 final String positionStr = params.get(clientId + "_newPosition");
                 final int newPosition = parsePosition(positionStr);
 
@@ -114,6 +121,26 @@ public class Kanban extends KanbanBaseImpl {
             }
         }
         super.queueEvent(event);
+    }
+
+    private boolean isDropAllowed(final String sourceColumnId, final String targetColumnId) {
+        if (sourceColumnId == null || targetColumnId == null || sourceColumnId.equals(targetColumnId)) {
+            return true;
+        }
+        final Object value = getValue();
+        if (value instanceof List) {
+            final List<?> columns = (List<?>) value;
+            for (final Object obj : columns) {
+                if (obj instanceof KanbanColumn) {
+                    final KanbanColumn col = (KanbanColumn) obj;
+                    if (sourceColumnId.equals(col.getId()) && col.getDragTo() != null
+                                && !col.getDragTo().isEmpty()) {
+                        return col.getDragTo().contains(targetColumnId);
+                    }
+                }
+            }
+        }
+        return true;
     }
 
     private int parsePosition(final String positionStr) {
