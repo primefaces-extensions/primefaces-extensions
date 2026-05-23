@@ -1,0 +1,37 @@
+body .kanban-board header .kanban-title-button {
+  float: right;
+  display: inline-block;
+  position: relative;
+  padding: .25rem .625rem;
+  margin: 0;
+  cursor: pointer;
+  text-align: center;
+  overflow: visible;
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.5);
+  border-radius: 4px;
+  outline: 0 none;
+  font-family: var(--font-family, inherit);
+  font-size: .875rem;
+  line-height: normal;
+  transition: background-color .2s, color .2s, border-color .2s, box-shadow .2s, opacity .2s;
+}
+
+body .kanban-board header .kanban-title-button:hover {
+  background: rgba(255,255,255,.15);
+  border-color: #fff;
+  color: #fff;
+}
+
+body .kanban-board header .kanban-title-button:focus {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: 0 0 0 .15em rgba(255,255,255,.4);
+}
+
+body .kanban-board header .kanban-title-button:active {
+  background: rgba(255,255,255,.25);
+  border-color: #fff;
+  color: #fff;
+}
