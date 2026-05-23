@@ -61,7 +61,12 @@ PrimeFaces.widget.ExtCodeScanner = class extends PrimeFaces.widget.BaseWidget {
                 }
             }
         }
-        this.codeReader.decodeFromVideoDevice(this.cfg.deviceId, this.video, handleResult);
+        this.codeReader.decodeFromVideoDevice(this.cfg.deviceId, this.video, handleResult)
+            .catch(function(err) {
+                if ($this.cfg.onerror) {
+                    $this.cfg.onerror.call($this, err);
+                }
+            });
     }
 
     stop() {
