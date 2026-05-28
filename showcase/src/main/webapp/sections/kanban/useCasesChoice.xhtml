@@ -19,6 +19,10 @@
                     styleClass="#{navigationContext.getMenuitemStyleClass('boardDrag')}"
                     onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
                     url="#{request.contextPath}/sections/kanban/boardDrag.jsf"/>
+        <p:menuitem value="Drop Restrictions"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('dropRestrictions')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
+                    url="#{request.contextPath}/sections/kanban/dropRestrictions.jsf"/>
     </p:menu>
 </ui:composition>
 </html>

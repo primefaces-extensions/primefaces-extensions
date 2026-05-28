@@ -39,6 +39,7 @@ public class KanbanColumn implements Serializable {
     private String title;
     private String cssClass;
     private List<KanbanItem> items = new ArrayList<>();
+    private List<String> dragTo;
 
     public KanbanColumn() {
     }
@@ -82,5 +83,13 @@ public class KanbanColumn implements Serializable {
 
     public void addItem(KanbanItem item) {
         this.items.add(item);
+    }
+
+    public List<String> getDragTo() {
+        return dragTo;
+    }
+
+    public void setDragTo(List<String> dragTo) {
+        this.dragTo = dragTo;
     }
 }
