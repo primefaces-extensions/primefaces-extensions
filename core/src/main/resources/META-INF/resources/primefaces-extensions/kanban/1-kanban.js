@@ -54,6 +54,23 @@ if (PrimeFaces.widget) {
                     var columnId = board ? board.getAttribute('data-id') : null;
                     $this.onItemClick(itemId, columnId);
                 },
+                context: function(el, event) {
+                    var itemId = el.getAttribute('data-eid');
+                    var board = el.closest('.kanban-board');
+                    var columnId = board ? board.getAttribute('data-id') : null;
+                    event.preventDefault();
+                    $this.onItemRightClick(itemId, columnId, el);
+
+                    if ($this.cfg.bindContextMenu) {
+                        var menuEvent = $.extend(new $.Event('contextmenu'), {
+                            target: el,
+                            pageX: event.pageX,
+                            pageY: event.pageY,
+                            originalEvent: event
+                        });
+                        PF($this.cfg.bindContextMenu).show(menuEvent);
+                    }
+                },
                 dragBoard: function(el) {
                     var boardId = el.getAttribute('data-id');
                     $this.onDragBoard(boardId);
@@ -68,6 +85,20 @@ if (PrimeFaces.widget) {
             };
 
             this.instance = new jKanban(options);
+
+            if (options.context) {
+                var container = document.getElementById(this.id);
+                if (container) {
+                    container.addEventListener('contextmenu', function(event) {
+                        var item = event.target.closest('.kanban-item');
+                        if (item) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                            options.context(item, event);
+                        }
+                    });
+                }
+            }
         }
 
         onDrop(itemId, sourceColumnId, targetColumnId, newPosition) {
@@ -100,6 +131,19 @@ if (PrimeFaces.widget) {
         onItemClick(itemId, columnId) {
             if (this.hasBehavior('itemClick')) {
                 this.callBehavior('itemClick', {
+                    source: this.id,
+                    process: this.id,
+                    params: [
+                        {name: this.id + '_itemId', value: itemId},
+                        {name: this.id + '_columnId', value: columnId}
+                    ]
+                });
+            }
+        }
+
+        onItemRightClick(itemId, columnId, element) {
+            if (this.hasBehavior('itemRightClick')) {
+                this.callBehavior('itemRightClick', {
                     source: this.id,
                     process: this.id,
                     params: [

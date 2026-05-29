@@ -35,6 +35,7 @@ import org.primefaces.extensions.event.KanbanAddEvent;
 import org.primefaces.extensions.event.KanbanBoardDragEvent;
 import org.primefaces.extensions.event.KanbanDragEvent;
 import org.primefaces.extensions.event.KanbanItemClickEvent;
+import org.primefaces.extensions.event.KanbanItemRightClickEvent;
 import org.primefaces.extensions.model.kanban.KanbanColumn;
 import org.primefaces.extensions.util.Constants;
 
@@ -97,6 +98,16 @@ public class Kanban extends KanbanBaseImpl {
                             behaviorEvent.getBehavior(), itemId, columnId);
                 clickEvent.setPhaseId(behaviorEvent.getPhaseId());
                 super.queueEvent(clickEvent);
+                return;
+            }
+
+            if (isAjaxBehaviorEvent(event, ClientBehaviorEventKeys.itemRightClick)) {
+                final String itemId = params.get(clientId + "_itemId");
+                final String columnId = params.get(clientId + "_columnId");
+                final KanbanItemRightClickEvent rightClickEvent = new KanbanItemRightClickEvent(this,
+                            behaviorEvent.getBehavior(), itemId, columnId);
+                rightClickEvent.setPhaseId(behaviorEvent.getPhaseId());
+                super.queueEvent(rightClickEvent);
                 return;
             }
 

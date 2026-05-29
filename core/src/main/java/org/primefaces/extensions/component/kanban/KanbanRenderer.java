@@ -106,6 +106,7 @@ public class KanbanRenderer extends CoreRenderer {
         wb.attr("responsivePercentage", kanban.isResponsivePercentage());
         wb.nativeAttr("extender", kanban.getExtender());
         wb.nativeAttr("boards", data);
+        wb.attr("bindContextMenu", kanban.getBindContextMenu());
 
         encodeClientBehaviors(context, kanban);
         wb.finish();
