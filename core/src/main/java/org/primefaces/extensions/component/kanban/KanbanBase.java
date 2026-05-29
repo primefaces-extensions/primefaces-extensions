@@ -32,6 +32,7 @@ import org.primefaces.extensions.event.KanbanAddEvent;
 import org.primefaces.extensions.event.KanbanBoardDragEvent;
 import org.primefaces.extensions.event.KanbanDragEvent;
 import org.primefaces.extensions.event.KanbanItemClickEvent;
+import org.primefaces.extensions.event.KanbanItemRightClickEvent;
 
 /**
  * Component base class for the <code>Kanban</code> component.
@@ -47,6 +48,8 @@ import org.primefaces.extensions.event.KanbanItemClickEvent;
                         description = "Fires when the add item button is clicked."),
             @FacesBehaviorEvent(name = "itemClick", event = KanbanItemClickEvent.class,
                         description = "Fires when a Kanban item is clicked."),
+            @FacesBehaviorEvent(name = "itemRightClick", event = KanbanItemRightClickEvent.class,
+                        description = "Fires when a Kanban item is right-clicked. Can be used with bindContextMenu."),
             @FacesBehaviorEvent(name = "dragBoard", event = KanbanBoardDragEvent.class,
                         description = "Fires when a Kanban board starts being dragged."),
             @FacesBehaviorEvent(name = "dragendBoard", event = KanbanBoardDragEvent.class,
@@ -98,4 +101,7 @@ public abstract class KanbanBase extends UIComponentBase implements Widget {
 
     @Property(description = "If true, boards use percentage-based widths instead of fixed pixel widths.", defaultValue = "false")
     public abstract boolean isResponsivePercentage();
+
+    @Property(description = "Client-side id of a PrimeFaces contextMenu component to bind to right-click events.")
+    public abstract String getBindContextMenu();
 }
