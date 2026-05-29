@@ -86,7 +86,7 @@ if (PrimeFaces.widget) {
 
             this.instance = new jKanban(options);
 
-            if (options.context) {
+            if ($this.hasBehavior('itemRightClick') || $this.cfg.bindContextMenu) {
                 var container = document.getElementById(this.id);
                 if (container) {
                     container.addEventListener('contextmenu', function(event) {
