@@ -35,3 +35,27 @@ body .kanban-board header .kanban-title-button:active {
   border-color: #fff;
   color: #fff;
 }
+
+body .kanban-board {
+  background: var(--surface-d, #e2e4e6);
+  color: var(--text-color);
+}
+
+body .kanban-board header {
+  color: var(--text-color);
+}
+
+body .kanban-item {
+  background: var(--surface-card, #fff);
+  color: var(--text-color);
+}
+
+body .drag_handler {
+  background: var(--surface-card, #fff);
+}
+
+body .drag_handler_icon,
+body .drag_handler_icon:before,
+body .drag_handler_icon:after {
+  background: var(--text-color-secondary, #000);
+}
