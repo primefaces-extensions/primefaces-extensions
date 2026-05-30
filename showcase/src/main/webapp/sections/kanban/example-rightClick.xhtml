@@ -1,0 +1,104 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+    xmlns:pe="http://primefaces.org/ui/extensions" xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <style>
+        .kanban-board header { font-size: 1rem; }
+        .kanban-board header.kanban-todo { background-color: #4f46e5; color: #fff; }
+        .kanban-board header.kanban-inprogress { background-color: #ea580c; color: #fff; }
+        .kanban-board header.kanban-done { background-color: #16a34a; color: #fff; }
+        .kanban-item { font-size: 0.9rem; }
+    </style>
+
+    <p:growl id="growl" showDetail="true">
+        <p:autoUpdate />
+    </p:growl>
+
+<!-- EXAMPLE-SOURCE-START -->
+    <pe:kanban id="kanban"
+                widgetVar="kanbanWidget"
+                value="#{kanbanRightClickController.columns}"
+                draggable="true"
+                addItemButton="true"
+                style="height:420px"
+                bindContextMenu="contextMenu">
+        <p:ajax event="itemRightClick" listener="#{kanbanRightClickController.onItemRightClick}" />
+        <p:ajax event="itemAdd" listener="#{kanbanRightClickController.onItemAdd}" update="kanban growl" />
+    </pe:kanban>
+
+    <p:contextMenu id="contextMenu" widgetVar="contextMenu" targetFilter=".kanban-item">
+        <p:menuitem value="Edit Task"
+                    icon="pi pi-pencil"
+                    update="dialogContent"
+                    oncomplete="PF('taskDialog').show()" />
+        <p:divider />
+        <p:menuitem value="View History"
+                    icon="pi pi-clock"
+                    update="historyContent"
+                    oncomplete="PF('historyDialog').show()" />
+        <p:menuitem value="Delete Task"
+                    icon="pi pi-trash"
+                    styleClass="text-red-600"
+                    onclick="PF('confirmDelete').show()" />
+    </p:contextMenu>
+
+    <p:confirmDialog id="confirmDeleteDialog" widgetVar="confirmDelete"
+                     showEffect="fade" hideEffect="fade"
+                     message="Are you sure you want to delete this task?"
+                     header="Delete Task" icon="pi pi-exclamation-triangle"
+                     closeOnEscape="true" width="400">
+        <p:commandButton value="Delete"
+                         styleClass="ui-button-danger mr-2"
+                         actionListener="#{kanbanRightClickController.deleteSelectedItem}"
+                         process="@this"
+                         update="@(.ui-kanban) growl"
+                         oncomplete="PF('confirmDelete').hide()"
+                         icon="pi pi-check" />
+        <p:commandButton value="Cancel"
+                         onclick="PF('confirmDelete').hide()"
+                         type="button"
+                         styleClass="ui-button-secondary"
+                         icon="pi pi-times" />
+    </p:confirmDialog>
+
+    <p:dialog header="Task Details" widgetVar="taskDialog"
+              modal="true" responsive="true" width="400"
+              showEffect="fade" hideEffect="fade"
+              closeOnEscape="true">
+        <h:panelGroup id="dialogContent" layout="block" styleClass="ui-fluid">
+            <h:panelGroup rendered="#{not empty kanbanRightClickController.selectedItem}">
+                <div class="field mb-3">
+                    <p:outputLabel for="title" value="Title" styleClass="font-bold block mb-1" />
+                    <p:inputText id="title" value="#{kanbanRightClickController.selectedItem.title}" readonly="true" />
+                </div>
+                <div class="field mb-3">
+                    <p:outputLabel for="desc" value="Description" styleClass="font-bold block mb-1" />
+                    <p:inputTextarea id="desc" value="#{kanbanRightClickController.selectedItem.description}" rows="3" readonly="true" />
+                </div>
+            </h:panelGroup>
+            <h:panelGroup rendered="#{empty kanbanRightClickController.selectedItem}">
+                <p>Right-click on a task and select "Edit Task" to see its details here.</p>
+            </h:panelGroup>
+        </h:panelGroup>
+    </p:dialog>
+
+    <p:dialog header="Task History" widgetVar="historyDialog"
+              modal="true" responsive="true" width="400"
+              showEffect="fade" hideEffect="fade"
+              closeOnEscape="true">
+        <h:panelGroup id="historyContent" layout="block" styleClass="ui-fluid">
+            <h:panelGroup rendered="#{not empty kanbanRightClickController.selectedItem}">
+                <p>Activity history for <strong>#{kanbanRightClickController.selectedItem.title}</strong>:</p>
+                <ul>
+                    <li>Created - Jan 15, 2026</li>
+                    <li>Moved to #{kanbanRightClickController.selectedColumnId} - Jan 20, 2026</li>
+                    <li>Milestone updated - Feb 01, 2026</li>
+                </ul>
+            </h:panelGroup>
+            <h:panelGroup rendered="#{empty kanbanRightClickController.selectedItem}">
+                <p>Right-click on a task and select "View History" to see its activity timeline.</p>
+            </h:panelGroup>
+        </h:panelGroup>
+    </p:dialog>
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>
