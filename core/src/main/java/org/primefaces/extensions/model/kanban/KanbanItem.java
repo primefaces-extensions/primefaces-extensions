@@ -22,6 +22,8 @@
 package org.primefaces.extensions.model.kanban;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Model class for a Kanban item.
@@ -37,6 +39,7 @@ public class KanbanItem implements Serializable {
     private String title;
     private String description;
     private String cssClass;
+    private Map<String, Object> data;
 
     public KanbanItem() {
     }
@@ -82,5 +85,34 @@ public class KanbanItem implements Serializable {
 
     public void setCssClass(String cssClass) {
         this.cssClass = cssClass;
+    }
+
+    /**
+     * Returns a map of custom data attributes. Any entry in this map will be rendered as a <code>data-*</code> attribute on the item's DOM element. For
+     * example, an entry <code>"priority", "high"</code> yields <code>data-priority="high"</code> on the card element.
+     *
+     * @return the custom data map, never {@code null}
+     */
+    public Map<String, Object> getData() {
+        if (data == null) {
+            data = new HashMap<>();
+        }
+        return data;
+    }
+
+    public void setData(Map<String, Object> data) {
+        this.data = data;
+    }
+
+    /**
+     * Convenience method to add a single custom data attribute.
+     *
+     * @param key the attribute name (without the <code>data-</code> prefix)
+     * @param value the attribute value
+     * @return this instance for method chaining
+     */
+    public KanbanItem putData(String key, Object value) {
+        getData().put(key, value);
+        return this;
     }
 }

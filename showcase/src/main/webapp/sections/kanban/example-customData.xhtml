@@ -1,0 +1,69 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+    xmlns:pe="http://primefaces.org/ui/extensions" xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <style>
+        .kanban-board header.kanban-todo { background: #6366f1; color: #fff; }
+        .kanban-board header.kanban-inprogress { background: #f59e0b; color: #fff; }
+        .kanban-board header.kanban-done { background: #10b981; color: #fff; }
+
+        .kanban-item-title { font-weight: 600; }
+        .kanban-item-description { font-size: 0.8rem; opacity: 0.7; margin-top: 2px; }
+
+        .kanban-item[data-priority="high"] { border-left: 4px solid #ef4444; }
+        .kanban-item[data-priority="medium"] { border-left: 4px solid #f59e0b; }
+        .kanban-item[data-priority="low"] { border-left: 4px solid #10b981; }
+
+        .kanban-badges { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+        .kanban-badge { font-size: 0.65rem; padding: 1px 6px; border-radius: 3px; font-weight: 600; }
+        .kb-priority-high { background: #fef2f2; color: #dc2626; }
+        .kb-priority-medium { background: #fffbeb; color: #d97706; }
+        .kb-priority-low { background: #f0fdf4; color: #16a34a; }
+        .kb-assignee { background: #eef2ff; color: #4f46e5; }
+        .kb-duedate { background: #fef3c7; color: #92400e; }
+        .kb-points { background: #d1fae5; color: #065f46; }
+        .kb-label { background: #f3e8ff; color: #7c3aed; }
+    </style>
+
+<!-- EXAMPLE-SOURCE-START -->
+    <h:outputScript>
+        //<![CDATA[
+        function kanbanExtender() {
+            this.boards.forEach(function(board) {
+                (board.item || []).forEach(function(item) {
+                    var badges = [];
+
+                    if (item.priority) badges.push(
+                        '<span class="kanban-badge kb-priority-' + item.priority + '">' + item.priority + '</span>');
+
+                    if (item.assignee) badges.push(
+                        '<span class="kanban-badge kb-assignee">' + item.assignee + '</span>');
+
+                    if (item.dueDate) badges.push(
+                        '<span class="kanban-badge kb-duedate">' + item.dueDate + '</span>');
+
+                    if (item.storyPoints) badges.push(
+                        '<span class="kanban-badge kb-points">' + item.storyPoints + 'pts</span>');
+
+                    if (item.labels) {
+                        item.labels.split(',').forEach(function(l) {
+                            badges.push('<span class="kanban-badge kb-label">' + l.trim() + '</span>');
+                        });
+                    }
+
+                    if (badges.length) {
+                        item.title += '<div class="kanban-badges">' + badges.join('') + '</div>';
+                    }
+                });
+            });
+        }
+        //]]>
+    </h:outputScript>
+
+    <pe:kanban id="kanbanCustomData"
+                value="#{kanbanCustomDataController.columns}"
+                draggable="true"
+                extender="kanbanExtender"
+                style="height:400px" />
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

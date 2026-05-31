@@ -23,6 +23,7 @@ package org.primefaces.extensions.component.kanban;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
@@ -154,6 +155,16 @@ public class KanbanRenderer extends CoreRenderer {
                         }
                     }
                     itemJson.put("class", classes);
+                }
+
+                if (item.getData() != null && !item.getData().isEmpty()) {
+                    for (final Map.Entry<String, Object> entry : item.getData().entrySet()) {
+                        final String key = entry.getKey();
+                        final Object value = entry.getValue();
+                        if (value != null && !itemJson.has(key)) {
+                            itemJson.put(key, value);
+                        }
+                    }
                 }
 
                 items.put(itemJson);
