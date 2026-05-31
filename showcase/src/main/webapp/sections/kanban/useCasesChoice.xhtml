@@ -27,6 +27,10 @@
                     styleClass="#{navigationContext.getMenuitemStyleClass('rightClick')}"
                     onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
                     url="#{request.contextPath}/sections/kanban/rightClick.jsf"/>
+        <p:menuitem value="Client API"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('clientApi')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
+                    url="#{request.contextPath}/sections/kanban/clientApi.jsf"/>
     </p:menu>
 </ui:composition>
 </html>
