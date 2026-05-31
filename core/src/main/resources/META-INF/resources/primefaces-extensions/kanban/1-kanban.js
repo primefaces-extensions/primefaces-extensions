@@ -179,6 +179,44 @@ if (PrimeFaces.widget) {
             }
         }
 
+        addElement(boardId, itemConfig, position) {
+            return this.instance.addElement(boardId, itemConfig, position);
+        }
+
+        addForm(boardId, formElement) {
+            if (typeof formElement === 'string') {
+                var temp = document.createElement('div');
+                temp.innerHTML = formElement;
+                formElement = temp.firstElementChild;
+            }
+            return this.instance.addForm(boardId, formElement);
+        }
+
+        findElement(itemId) {
+            return this.instance.findElement(itemId);
+        }
+
+        findBoard(boardId) {
+            return this.instance.findBoard(boardId);
+        }
+
+        getParentBoardID(itemId) {
+            var el = this.instance.findElement(itemId);
+            return el ? this.instance.getParentBoardID(el) : null;
+        }
+
+        getBoardElements(boardId) {
+            return this.instance.getBoardElements(boardId);
+        }
+
+        replaceElement(itemId, itemConfig) {
+            return this.instance.replaceElement(itemId, itemConfig);
+        }
+
+        removeBoard(boardId) {
+            return this.instance.removeBoard(boardId);
+        }
+
         refresh(cfg) {
             this._cleanup();
             super.refresh(cfg);

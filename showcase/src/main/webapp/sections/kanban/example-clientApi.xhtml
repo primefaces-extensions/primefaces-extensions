@@ -1,0 +1,283 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="jakarta.faces.html"
+    xmlns:ui="jakarta.faces.facelets" xmlns:p="primefaces"
+    xmlns:pe="primefaces.extensions" xmlns:f="jakarta.faces.core">
+
+    <style>
+        .kanban-board header.kanban-backlog { background-color: #6366f1; color: #fff; }
+        .kanban-board header.kanban-inprogress { background-color: #f59e0b; color: #fff; }
+        .kanban-board header.kanban-done { background-color: #10b981; color: #fff; }
+        .api-toolbar { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 6px; padding: 12px; margin-bottom: 12px; }
+        .api-toolbar .row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+        .api-toolbar .row:last-child { margin-bottom: 0; }
+        .api-toolbar .sep { border-left: 1px solid #d1d5db; height: 24px; margin: 0 4px; }
+        .board-highlight { outline: 3px solid #6366f1; outline-offset: 2px; border-radius: 4px; }
+        .item-highlight { outline: 3px solid #f59e0b; outline-offset: 2px; border-radius: 4px; }
+        .selected-badge { background: #eef2ff; color: #4f46e5; padding: 2px 10px; border-radius: 4px; font-size: .8rem; font-weight: 600; }
+        .result-pill { background: #ecfdf5; color: #059669; padding: 2px 10px; border-radius: 4px; font-size: .8rem; font-weight: 600; display: none; }
+        .result-pill.visible { display: inline-block; }
+        .kanban-item-title { font-weight: 600; }
+        .kanban-item-description { font-size: 0.8rem; opacity: 0.7; margin-top: 2px; }
+    </style>
+
+    <p:growl id="growl" widgetVar="growl" showDetail="true" showSummary="true">
+        <p:autoUpdate />
+    </p:growl>
+
+<!-- EXAMPLE-SOURCE-START -->
+    <h:outputScript>
+        var KanbanDemo = KanbanDemo || {};
+
+        KanbanDemo.widget = function() {
+            return PF('kanbanWidget');
+        };
+
+        KanbanDemo.boardId = function() {
+            return $('#boardSelect_input').val();
+        };
+
+        KanbanDemo.itemId = function() {
+            return $('#itemIdInput').val();
+        };
+
+        KanbanDemo.notify = function(summary, detail, severity) {
+            severity = severity || 'info';
+            PF('growl').show([{
+                summary: summary,
+                detail: detail,
+                severity: severity
+            }]);
+        };
+
+        KanbanDemo.notifyError = function(summary, detail) {
+            KanbanDemo.notify(summary, detail, 'error');
+        };
+
+        KanbanDemo.notifyWarn = function(summary, detail) {
+            KanbanDemo.notify(summary, detail, 'warn');
+        };
+
+        KanbanDemo.flashBoard = function(boardEl) {
+            boardEl.classList.add('board-highlight');
+            setTimeout(function() {
+                boardEl.classList.remove('board-highlight');
+            }, 2000);
+        };
+
+        KanbanDemo.flashItem = function(itemEl) {
+            itemEl.classList.add('item-highlight');
+            setTimeout(function() {
+                itemEl.classList.remove('item-highlight');
+            }, 2000);
+        };
+
+        KanbanDemo.showPill = function(pillId, text) {
+            var $pill = $('#' + pillId);
+            $pill.text(text).addClass('visible');
+            setTimeout(function() {
+                $pill.removeClass('visible');
+            }, 3000);
+        };
+
+        KanbanDemo.hidePill = function(pillId) {
+            $('#' + pillId).removeClass('visible').text('');
+        };
+
+        KanbanDemo.assertItemId = function() {
+            var id = KanbanDemo.itemId();
+            if (!id) {
+                KanbanDemo.notifyError('No ID', 'Click a task or type an ID');
+                return null;
+            }
+            return id;
+        };
+
+        KanbanDemo.onAddItem = function() {
+            var widget = KanbanDemo.widget();
+            var board = KanbanDemo.boardId();
+
+            if (!widget.findBoard(board)) {
+                KanbanDemo.notifyError('Board not found', 'Board "' + board + '" no longer exists');
+                return;
+            }
+
+            widget.addElement(board, {
+                id: 't-' + Date.now(),
+                title: 'New Task',
+                description: 'Added via client API'
+            });
+
+            KanbanDemo.notify('Item Added', 'New task added to ' + board);
+        };
+
+        KanbanDemo.onRemoveBoard = function() {
+            var widget = KanbanDemo.widget();
+            var board = KanbanDemo.boardId();
+
+            if (!widget.findBoard(board)) {
+                KanbanDemo.notifyWarn('Already removed', 'Board "' + board + '" does not exist');
+                return;
+            }
+
+            widget.removeBoard(board);
+            KanbanDemo.notifyWarn('Board Removed', 'Board removed: ' + board);
+        };
+
+        KanbanDemo.onCountItems = function() {
+            var widget = KanbanDemo.widget();
+            var board = KanbanDemo.boardId();
+            var boardEl = widget.findBoard(board);
+            var pillId = 'countResult';
+
+            KanbanDemo.hidePill(pillId);
+
+            if (!boardEl) {
+                KanbanDemo.notifyError('Board not found', 'Board "' + board + '" no longer exists');
+                return;
+            }
+
+            var count = boardEl.querySelectorAll('.kanban-item').length;
+            KanbanDemo.flashBoard(boardEl);
+            KanbanDemo.showPill(pillId, count + ' items');
+            KanbanDemo.notify(count + ' items', 'Board "' + board + '" has ' + count + ' items');
+        };
+
+        KanbanDemo.onFindItem = function() {
+            var widget = KanbanDemo.widget();
+            var id = KanbanDemo.assertItemId();
+            if (!id) return;
+
+            var itemEl = widget.findElement(id);
+            if (itemEl) {
+                KanbanDemo.flashItem(itemEl);
+                KanbanDemo.notify('Found', 'Item "' + id + '" highlighted');
+            } else {
+                KanbanDemo.notifyError('Not found', 'No item with ID "' + id + '"');
+            }
+        };
+
+        KanbanDemo.onParentBoard = function() {
+            var widget = KanbanDemo.widget();
+            var id = KanbanDemo.assertItemId();
+            var pillId = 'parentResult';
+            KanbanDemo.hidePill(pillId);
+            if (!id) return;
+
+            var board = widget.getParentBoardID(id);
+            if (board) {
+                var boardEl = widget.findBoard(board);
+                if (boardEl) {
+                    KanbanDemo.flashBoard(boardEl);
+                    KanbanDemo.showPill(pillId, 'In: ' + board);
+                }
+            }
+
+            if (board) {
+                KanbanDemo.notify('Parent Board', 'Item "' + id + '" is in board "' + board + '"');
+            } else {
+                KanbanDemo.notifyError('Not found', 'Item "' + id + '" not found');
+            }
+        };
+
+        KanbanDemo.onReplaceItem = function() {
+            var widget = KanbanDemo.widget();
+            var id = KanbanDemo.assertItemId();
+            if (!id) return;
+
+            var itemEl = widget.findElement(id);
+            if (!itemEl) {
+                KanbanDemo.notifyError('Not found', 'No item with ID "' + id + '"');
+                return;
+            }
+
+            widget.replaceElement(id, {
+                title: 'Updated at ' + new Date().toLocaleTimeString()
+            });
+
+            KanbanDemo.notify('Replaced', 'Content replaced for "' + id + '"');
+        };
+
+        KanbanDemo.onHighlightBoard = function() {
+            var widget = KanbanDemo.widget();
+            var board = KanbanDemo.boardId();
+            var boardEl = widget.findBoard(board);
+
+            if (!boardEl) {
+                KanbanDemo.notifyError('Board not found', 'Board "' + board + '" no longer exists');
+                return;
+            }
+
+            KanbanDemo.flashBoard(boardEl);
+            KanbanDemo.notify('Board Found', 'Board "' + board + '" highlighted');
+        };
+
+        KanbanDemo.onItemClick = function(args) {
+            if (args.itemId) {
+                $('#itemIdInput').val(args.itemId);
+            }
+        };
+    </h:outputScript>
+
+    <p:remoteCommand name="rcAddItem"       actionListener="#{kanbanClientApiController.onClientApiCommand}" update="@none" process="@this" oncomplete="KanbanDemo.onAddItem()" />
+    <p:remoteCommand name="rcRemoveBoard"   actionListener="#{kanbanClientApiController.onClientApiCommand}" update="@none" process="@this" oncomplete="KanbanDemo.onRemoveBoard()" />
+    <p:remoteCommand name="rcCountItems"    actionListener="#{kanbanClientApiController.onClientApiCommand}" update="@none" process="@this" oncomplete="KanbanDemo.onCountItems()" />
+    <p:remoteCommand name="rcFindItem"      actionListener="#{kanbanClientApiController.onClientApiCommand}" update="@none" process="@this" oncomplete="KanbanDemo.onFindItem()" />
+    <p:remoteCommand name="rcParentBoard"   actionListener="#{kanbanClientApiController.onClientApiCommand}" update="@none" process="@this" oncomplete="KanbanDemo.onParentBoard()" />
+    <p:remoteCommand name="rcReplaceItem"   actionListener="#{kanbanClientApiController.onClientApiCommand}" update="@none" process="@this" oncomplete="KanbanDemo.onReplaceItem()" />
+    <p:remoteCommand name="rcHighlightBoard" actionListener="#{kanbanClientApiController.onClientApiCommand}" update="@none" process="@this" oncomplete="KanbanDemo.onHighlightBoard()" />
+
+    <div class="api-toolbar">
+        <div class="row">
+            <span style="font-weight:bold;min-width:50px">Board</span>
+            <p:selectOneMenu id="boardSelect" style="width:150px">
+                <f:selectItem itemLabel="Backlog" itemValue="backlog" />
+                <f:selectItem itemLabel="In Progress" itemValue="inprogress" />
+                <f:selectItem itemLabel="Done" itemValue="done" />
+            </p:selectOneMenu>
+            <p:commandButton value="Add Item" icon="pi pi-plus" type="button"
+                             styleClass="ui-button-sm"
+                             onclick="rcAddItem()" />
+            <p:commandButton value="Count Items" icon="pi pi-list" type="button"
+                             styleClass="ui-button-sm"
+                             onclick="rcCountItems()" />
+            <span class="result-pill" id="countResult"></span>
+            <p:commandButton value="Remove Board" icon="pi pi-trash" type="button"
+                             styleClass="ui-button-sm ui-button-danger"
+                             onclick="rcRemoveBoard()" />
+            <p:commandButton value="Highlight Board" icon="pi pi-eye" type="button"
+                             styleClass="ui-button-sm"
+                             onclick="rcHighlightBoard()" />
+        </div>
+        <div class="row">
+            <span style="font-weight:bold;min-width:50px">Item</span>
+            <p:inputText id="itemIdInput" placeholder="e.g. t-1" style="width:130px" />
+            <h:panelGroup id="selectedItemBadge" layout="block" style="display:inline">
+                <span class="selected-badge">
+                    Selected: #{kanbanClientApiController.lastClickedItemId != null ? kanbanClientApiController.lastClickedItemId : 'click a task'}
+                </span>
+            </h:panelGroup>
+            <span class="sep"></span>
+            <p:commandButton value="Find" icon="pi pi-search" type="button"
+                             styleClass="ui-button-sm"
+                             onclick="rcFindItem()" />
+            <p:commandButton value="Parent Board" icon="pi pi-arrow-right" type="button"
+                             styleClass="ui-button-sm"
+                             onclick="rcParentBoard()" />
+            <span class="result-pill" id="parentResult"></span>
+            <p:commandButton value="Replace Title" icon="pi pi-pencil" type="button"
+                             styleClass="ui-button-sm"
+                             onclick="rcReplaceItem()" />
+        </div>
+    </div>
+
+    <pe:kanban id="kanban"
+                widgetVar="kanbanWidget"
+                value="#{kanbanClientApiController.columns}"
+                draggable="true"
+                addItemButton="true"
+                style="height:400px">
+        <p:ajax event="itemClick" listener="#{kanbanClientApiController.onItemClick}" update="growl selectedItemBadge"
+                oncomplete="KanbanDemo.onItemClick(args)" />
+        <p:ajax event="itemAdd" update="kanban growl" />
+    </pe:kanban>
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>
