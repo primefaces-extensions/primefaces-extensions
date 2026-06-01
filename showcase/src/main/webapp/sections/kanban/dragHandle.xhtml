@@ -1,0 +1,37 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:showcase="primefaces.extensions.showcase">
+<ui:composition template="/templates/showcaseLayout.xhtml">
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="Kanban"/>
+        </f:facet>
+        <h:panelGroup layout="block" styleClass="centerContent">
+            Drag handles provide a dedicated area for grabbing and moving cards. When enabled, only the handle icon on each item is draggable, preventing accidental drags when clicking on card content. This is especially useful when items contain interactive elements or when precise click vs. drag distinction is needed.
+        </h:panelGroup>
+
+        <h:panelGroup layout="block" styleClass="centerExample">
+            <ui:include src="/sections/kanban/example-dragHandle.xhtml"/>
+        </h:panelGroup>
+
+        <ui:decorate template="/templates/twoTabsDecorator.xhtml">
+            <ui:define name="contentTab1">
+${showcase:getFileContent('/sections/kanban/example-dragHandle.xhtml')}
+            </ui:define>
+            <ui:define name="contentTab2">
+${showcase:getFileContent('/org/primefaces/extensions/showcase/controller/kanban/KanbanDragHandleController.java')}
+            </ui:define>
+        </ui:decorate>
+    </ui:define>
+    <ui:define name="useCases">
+        <ui:include src="/sections/kanban/useCasesChoice.xhtml"/>
+    </ui:define>
+    <ui:define name="docuTable">
+        <ui:include src="/sections/shared/documentation.xhtml">
+            <ui:param name="tagName" value="kanban"/>
+        </ui:include>
+    </ui:define>
+</ui:composition>
+</html>

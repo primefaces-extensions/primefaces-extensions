@@ -104,4 +104,8 @@ public abstract class KanbanBase extends UIComponentBase implements Widget {
 
     @Property(description = "Client-side id of a PrimeFaces contextMenu component to bind to right-click events.")
     public abstract String getBindContextMenu();
+
+    @Property(description = "Enable drag handle on items. When enabled, only the handle area is draggable, preventing accidental drags on the card body.",
+                defaultValue = "false")
+    public abstract boolean isDragHandle();
 }
