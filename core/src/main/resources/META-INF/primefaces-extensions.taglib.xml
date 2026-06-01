@@ -10299,6 +10299,22 @@ See showcase for an example. Default null.]]>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client-side id of a PrimeFaces contextMenu component to bind to right-click events.]]>
+            </description>
+            <name>bindContextMenu</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Enable drag handle on items. When enabled, only the handle area is draggable, preventing accidental drags on the card body. Default is false.]]>
+            </description>
+            <name>dragHandle</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
     </tag>
 
     <tag>
