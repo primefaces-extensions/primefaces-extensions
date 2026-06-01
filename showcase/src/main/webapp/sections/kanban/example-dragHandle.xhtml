@@ -1,0 +1,78 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="jakarta.faces.html"
+    xmlns:ui="jakarta.faces.facelets" xmlns:p="primefaces"
+    xmlns:pe="primefaces.extensions" xmlns:f="jakarta.faces.core">
+
+    <style>
+        .kanban-board header.kanban-todo { background-color: #4f46e5; color: #fff; }
+        .kanban-board header.kanban-inprogress { background-color: #ea580c; color: #fff; }
+        .kanban-board header.kanban-done { background-color: #16a34a; color: #fff; }
+        .kanban-item-title { font-weight: 600; }
+        .kanban-item-description { font-size: 0.8rem; opacity: 0.7; margin-top: 2px; }
+
+        .drag_handler { margin-right: 8px; float: left; }
+
+        .drag_handler_grip {
+            float: left;
+            width: 16px;
+            height: 24px;
+            margin-right: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: grab;
+            opacity: .3;
+            transition: opacity .15s;
+        }
+        .drag_handler_grip:hover { opacity: .7; }
+        .drag_handler_grip_icon {
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background: var(--text-color-secondary);
+            box-shadow: 0 -6px 0 var(--text-color-secondary), 0 6px 0 var(--text-color-secondary);
+        }
+    </style>
+
+    <p:growl id="growl" showDetail="true" showSummary="true">
+        <p:autoUpdate />
+    </p:growl>
+
+<!-- EXAMPLE-SOURCE-START -->
+    <h:outputScript>
+        function kanbanDragHandleDefault() {}
+
+        function kanbanDragHandleGrip() {
+            this.cfg.itemHandleOptions = {
+                customCssHandler: 'drag_handler_grip',
+                customCssIconHandler: 'drag_handler_grip_icon'
+            };
+        }
+    </h:outputScript>
+
+    <div style="margin-bottom:8px">
+        <p:outputLabel for="dragHandle" value="Drag Handle" styleClass="font-bold" style="margin-right:8px" />
+        <p:selectOneMenu id="dragHandle" value="#{kanbanDragHandleController.dragHandle}" style="width:120px">
+            <f:selectItem itemLabel="Enabled" itemValue="true" />
+            <f:selectItem itemLabel="Disabled" itemValue="false" />
+            <p:ajax update="kanban" process="@this" />
+        </p:selectOneMenu>
+
+        <p:outputLabel for="handleStyle" value="Handle Style" styleClass="font-bold" style="margin:0 8px 0 16px" />
+        <p:selectOneMenu id="handleStyle" value="#{kanbanDragHandleController.handleStyle}" style="width:140px">
+            <f:selectItem itemLabel="Default" itemValue="default" />
+            <f:selectItem itemLabel="Grip" itemValue="grip" />
+            <p:ajax update="kanban" process="@this" />
+        </p:selectOneMenu>
+    </div>
+
+    <pe:kanban id="kanban"
+                widgetVar="kanbanDragHandleWidget"
+                value="#{kanbanDragHandleController.columns}"
+                draggable="true"
+                dragHandle="#{kanbanDragHandleController.dragHandle}"
+                extender="#{kanbanDragHandleController.extender}"
+                style="height:400px">
+        <p:ajax event="drop" listener="#{kanbanDragHandleController.onDrop}" update="growl" />
+    </pe:kanban>
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

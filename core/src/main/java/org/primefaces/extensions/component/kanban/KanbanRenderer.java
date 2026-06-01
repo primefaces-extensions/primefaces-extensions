@@ -108,6 +108,7 @@ public class KanbanRenderer extends CoreRenderer {
         wb.nativeAttr("extender", kanban.getExtender());
         wb.nativeAttr("boards", data);
         wb.attr("bindContextMenu", kanban.getBindContextMenu());
+        wb.attr("dragHandle", kanban.isDragHandle());
 
         encodeClientBehaviors(context, kanban);
         wb.finish();

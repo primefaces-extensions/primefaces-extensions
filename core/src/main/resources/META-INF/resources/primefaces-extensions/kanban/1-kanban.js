@@ -33,6 +33,7 @@ if (PrimeFaces.widget) {
                     content: '+ Add Item',
                     footer: false
                 },
+                itemHandleOptions: this._buildHandleOptions(),
                 dropEl: function(el, target, source, sibling) {
                     if (!target.contains(el)) {
                         return;
@@ -241,6 +242,20 @@ if (PrimeFaces.widget) {
                     container.innerHTML = '';
                 }
             }
+        }
+
+        _buildHandleOptions() {
+            var opts = {
+                enabled: this.cfg.dragHandle === true
+            };
+            if (this.cfg.itemHandleOptions) {
+                for (var k in this.cfg.itemHandleOptions) {
+                    if (this.cfg.itemHandleOptions.hasOwnProperty(k)) {
+                        opts[k] = this.cfg.itemHandleOptions[k];
+                    }
+                }
+            }
+            return opts;
         }
     };
 }
