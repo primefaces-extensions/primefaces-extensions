@@ -35,6 +35,10 @@
                     styleClass="#{navigationContext.getMenuitemStyleClass('customData')}"
                     onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
                     url="#{request.contextPath}/sections/kanban/customData.jsf"/>
+        <p:menuitem value="Drag Handles"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('dragHandle')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
+                    url="#{request.contextPath}/sections/kanban/dragHandle.jsf"/>
     </p:menu>
 </ui:composition>
 </html>
