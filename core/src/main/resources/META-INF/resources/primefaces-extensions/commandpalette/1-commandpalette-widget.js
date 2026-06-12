@@ -9,6 +9,7 @@ PrimeFaces.widget.ExtCommandPalette = class extends PrimeFaces.widget.BaseWidget
         super.init(cfg);
         this.cfg = cfg;
         this.id = cfg.id;
+        this.ns = this.id.replace(/[.:]/g, '_');
 
         this.filterInput = this.jq.find('.ui-commandpalette-filter-input');
         this.groupsContainer = this.jq.find('.ui-commandpalette-groups');
@@ -27,7 +28,7 @@ PrimeFaces.widget.ExtCommandPalette = class extends PrimeFaces.widget.BaseWidget
 
         if (triggerEl && triggerEl.length) {
             var eventName = this.cfg.triggerEvent || 'contextmenu';
-            triggerEl.on(eventName + '.commandpalette', function (e) {
+            triggerEl.on(eventName + '.commandpalette_' + this.ns, function (e) {
                 $this.show(e);
                 e.preventDefault();
                 e.stopPropagation();
@@ -53,13 +54,13 @@ PrimeFaces.widget.ExtCommandPalette = class extends PrimeFaces.widget.BaseWidget
             });
         }
 
-        $(document).off('.commandpalette-close').on('mousedown.commandpalette-close', function (e) {
+        $(document).off('.commandpalette-close_' + this.ns).on('mousedown.commandpalette-close_' + this.ns, function (e) {
             if (!$this.jq.is(e.target) && !$this.jq.has(e.target).length) {
                 $this.hide();
             }
         });
 
-        $(document).off('.commandpalette-escape').on('keydown.commandpalette-escape', function (e) {
+        $(document).off('.commandpalette-escape_' + this.ns).on('keydown.commandpalette-escape_' + this.ns, function (e) {
             if (e.key === 'Escape') {
                 $this.hide();
             }
@@ -67,19 +68,23 @@ PrimeFaces.widget.ExtCommandPalette = class extends PrimeFaces.widget.BaseWidget
     }
 
     show(e) {
-        var pageX = e.pageX || 0;
-        var pageY = e.pageY || 0;
+        var clientX = e.clientX || 0;
+        var clientY = e.clientY || 0;
         var viewportWidth = $(window).width();
         var viewportHeight = $(window).height();
         var width = parseInt(this.cfg.width, 10) || 280;
+        var height = parseInt(this.cfg.height, 10) || 400;
 
         this.jq.show();
         this.jq.css({
-            left: Math.min(pageX, viewportWidth - width - 20) + 'px',
-            top: Math.min(pageY, viewportHeight - 200) + 'px',
+            left: Math.min(clientX, viewportWidth - width - 20) + 'px',
+            top: Math.min(clientY, viewportHeight - height - 20) + 'px',
+            width: width + 'px',
             position: 'fixed',
             zIndex: ++PrimeFaces.zindex
         });
+
+        this.groupsContainer.css('maxHeight', height + 'px');
 
         this.collapseAll();
 
@@ -191,10 +196,10 @@ PrimeFaces.widget.ExtCommandPalette = class extends PrimeFaces.widget.BaseWidget
     removeTriggers() {
         var triggerEl = this.resolveTrigger(this.cfg['for']);
         if (triggerEl && triggerEl.length) {
-            triggerEl.off('.commandpalette');
+            triggerEl.off('.commandpalette_' + this.ns);
         }
-        $(document).off('.commandpalette-close');
-        $(document).off('.commandpalette-escape');
+        $(document).off('.commandpalette-close_' + this.ns);
+        $(document).off('.commandpalette-escape_' + this.ns);
     }
 
     resolveTrigger(forValue) {
