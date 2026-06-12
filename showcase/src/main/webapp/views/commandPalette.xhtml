@@ -1,0 +1,26 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets">
+<ui:composition template="/templates/showcaseLayout.xhtml">
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="CommandPalette"/>
+        </f:facet>
+        <h:panelGroup layout="block" styleClass="centerContent">
+            CommandPalette is a filterable grouped context menu.
+            It provides a searchable popup with categorized options, triggered by right-click on a target element.
+            <p/>
+            Based on <h:outputLink id="lnkCommandPalette" value="https://github.com/newk5/stak-components">stak-grouplist</h:outputLink> by newk5.
+        </h:panelGroup>
+    </ui:define>
+    <ui:define name="useCases">
+        <ui:include src="/sections/commandPalette/useCasesChoice.xhtml"/>
+    </ui:define>
+    <ui:define name="docuTable">
+        <ui:include src="/sections/shared/documentation.xhtml">
+            <ui:param name="tagName" value="commandPalette"/>
+        </ui:include>
+    </ui:define>
+</ui:composition>
+</html>
