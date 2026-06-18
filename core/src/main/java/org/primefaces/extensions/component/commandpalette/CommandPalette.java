@@ -40,7 +40,7 @@ import org.primefaces.extensions.util.Constants;
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = "primefaces", name = "components.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "commandpalette/commandpalette.css")
-@ResourceDependency(library = Constants.LIBRARY, name = "commandpalette/1-commandpalette-widget.js")
+@ResourceDependency(library = Constants.LIBRARY, name = "commandpalette/commandpalette.js")
 public class CommandPalette extends CommandPaletteBaseImpl {
 
     public static final String STYLE_CLASS = "ui-commandpalette";

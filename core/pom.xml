@@ -190,6 +190,7 @@
                                 <include>calculator/**</include>
                                 <include>clipboard/**</include>
                                 <include>clockpicker/**</include>
+                                <include>commandpalette/**</include>
                                 <include>codescanner/codescanner-widget.js</include>
                                 <include>counter/**</include>
                                 <include>creditcard/1-card-widget.js</include>

@@ -11,6 +11,10 @@
                     styleClass="#{navigationContext.getMenuitemStyleClass('selectionEvent')}"
                     onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
                     url="#{request.contextPath}/sections/commandPalette/selectionEvent.jsf"/>
+        <p:menuitem value="Hotkey Trigger"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('hotkey')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
+                    url="#{request.contextPath}/sections/commandPalette/hotkey.jsf"/>
     </p:menu>
 </ui:composition>
 </html>

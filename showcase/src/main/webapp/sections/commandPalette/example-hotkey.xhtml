@@ -1,0 +1,45 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="jakarta.faces.html"
+        xmlns:ui="jakarta.faces.facelets"
+        xmlns:f="jakarta.faces.core"
+        xmlns:p="primefaces"
+        xmlns:pe="primefaces.extensions">
+
+    <p:messages id="messages" showSummary="true" showDetail="true">
+        <p:autoUpdate/>
+    </p:messages>
+
+    <!-- EXAMPLE-SOURCE-START -->
+    <h:panelGroup layout="block" style="margin-bottom:12px; font-size:14px; color:#555;">
+        Press <kbd>Ctrl+Shift+K</kbd> to open the CommandPalette via keyboard shortcut.
+    </h:panelGroup>
+
+    <h:panelGroup id="hotkeyTarget" layout="block"
+                  style="border:2px solid #c8c8c8; border-radius:3px; padding:40px; text-align:center;
+                         background:#f9f9f9; font-size:14px; color:#555; user-select:none;">
+        Right-click or press <kbd>Ctrl+Shift+K</kbd> to open the CommandPalette
+    </h:panelGroup>
+
+    <p:hotkey bind="ctrl+shift+k" handler="PF('hotkeyPaletteWidget').showCentered();" />
+
+    <pe:commandPalette id="hotkeyPalette" for="hotkeyTarget"
+                        label="Actions" filterPlaceholder="Search actions..." width="260" height="350"
+                        widgetVar="hotkeyPaletteWidget">
+        <pe:commandPaletteItem group="File" value="new" label="New File"/>
+        <pe:commandPaletteItem group="File" value="open" label="Open File"/>
+        <pe:commandPaletteItem group="File" value="save" label="Save"/>
+        <pe:commandPaletteItem group="File" value="saveAs" label="Save As..."/>
+        <pe:commandPaletteItem group="Edit" value="undo" label="Undo"/>
+        <pe:commandPaletteItem group="Edit" value="redo" label="Redo"/>
+        <pe:commandPaletteItem group="Edit" value="cut" label="Cut"/>
+        <pe:commandPaletteItem group="Edit" value="copy" label="Copy"/>
+        <pe:commandPaletteItem group="Edit" value="paste" label="Paste"/>
+        <pe:commandPaletteItem group="View" value="zoomIn" label="Zoom In"/>
+        <pe:commandPaletteItem group="View" value="zoomOut" label="Zoom Out"/>
+        <pe:commandPaletteItem group="View" value="fullscreen" label="Fullscreen"/>
+        <p:ajax event="select" listener="#{commandPaletteController.onItemSelect}"
+                update="messages"/>
+    </pe:commandPalette>
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

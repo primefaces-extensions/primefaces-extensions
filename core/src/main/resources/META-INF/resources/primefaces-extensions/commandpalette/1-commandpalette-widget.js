@@ -10,6 +10,8 @@ PrimeFaces.widget.ExtCommandPalette = class extends PrimeFaces.widget.BaseWidget
         this.cfg = cfg;
         this.id = cfg.id;
         this.ns = this.id.replace(/[.:]/g, '_');
+        this.paletteWidth = parseInt(cfg.width, 10) || 280;
+        this.paletteHeight = parseInt(cfg.height, 10) || 400;
 
         this.filterInput = this.jq.find('.ui-commandpalette-filter-input');
         this.groupsContainer = this.jq.find('.ui-commandpalette-groups');
@@ -68,23 +70,33 @@ PrimeFaces.widget.ExtCommandPalette = class extends PrimeFaces.widget.BaseWidget
     }
 
     show(e) {
-        var clientX = e.clientX || 0;
-        var clientY = e.clientY || 0;
+        var clientX = (e && e.clientX) || 0;
+        var clientY = (e && e.clientY) || 0;
+        this.showAt(clientX, clientY);
+    }
+
+    showCentered() {
         var viewportWidth = $(window).width();
         var viewportHeight = $(window).height();
-        var width = parseInt(this.cfg.width, 10) || 280;
-        var height = parseInt(this.cfg.height, 10) || 400;
+        var clientX = Math.max(0, (viewportWidth - this.paletteWidth) / 2);
+        var clientY = Math.max(0, (viewportHeight - this.paletteHeight) / 2);
+        this.showAt(clientX, clientY);
+    }
+
+    showAt(clientX, clientY) {
+        var viewportWidth = $(window).width();
+        var viewportHeight = $(window).height();
 
         this.jq.show();
         this.jq.css({
-            left: Math.min(clientX, viewportWidth - width - 20) + 'px',
-            top: Math.min(clientY, viewportHeight - height - 20) + 'px',
-            width: width + 'px',
+            left: Math.min(clientX, viewportWidth - this.paletteWidth - 20) + 'px',
+            top: Math.min(clientY, viewportHeight - this.paletteHeight - 20) + 'px',
+            width: this.paletteWidth + 'px',
             position: 'fixed',
             zIndex: ++PrimeFaces.zindex
         });
 
-        this.groupsContainer.css('maxHeight', height + 'px');
+        this.groupsContainer.css('maxHeight', this.paletteHeight + 'px');
 
         this.collapseAll();
 
