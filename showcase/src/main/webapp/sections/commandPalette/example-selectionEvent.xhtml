@@ -1,0 +1,34 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <p:messages id="messages" showSummary="true" showDetail="true">
+        <p:autoUpdate/>
+    </p:messages>
+
+    <!-- EXAMPLE-SOURCE-START -->
+    <h:panelGroup id="paletteTarget" layout="block"
+                  style="border:2px solid #c8c8c8; border-radius:3px; padding:40px; text-align:center; cursor:context-menu;
+                         background:#f9f9f9; font-size:14px; color:#555; user-select:none;">
+        Right-click here to select a Node action
+    </h:panelGroup>
+
+    <pe:commandPalette id="palette2" for="paletteTarget"
+                        label="Nodes" filterPlaceholder="Search nodes..." width="260">
+        <pe:commandPaletteItem group="Node1" value="1" label="Create Node1 Action1"
+                               itemTitle="Creates a new Node1 action"/>
+        <pe:commandPaletteItem group="Node1" value="2" label="Create Node1 Action2"
+                               itemTitle="Creates another Node1 action"/>
+        <pe:commandPaletteItem group="Node2" value="3" label="Create Node2 Action1"
+                               itemTitle="Creates a new Node2 action"/>
+        <pe:commandPaletteItem group="Node2" value="4" label="Create Node2 Action2"
+                               itemTitle="Creates another Node2 action"/>
+        <p:ajax event="select" listener="#{commandPaletteController.onItemSelect}"
+                update="messages"/>
+    </pe:commandPalette>
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>
