@@ -15,7 +15,7 @@ jobs:
     if: github.repository == 'primefaces-extensions/primefaces-extensions'
     name: Build
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Set up JDK
         uses: actions/setup-java@v5
         with:
@@ -29,7 +29,7 @@ jobs:
           key: ${{ runner.os }}-v3-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-v3
       - name: Checkout PrimeFaces
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: primefaces/primefaces
           path: primefaces
