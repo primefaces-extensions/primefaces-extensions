@@ -270,6 +270,14 @@
         <component-type>org.primefaces.extensions.component.Kanban</component-type>
         <component-class>org.primefaces.extensions.component.kanban.Kanban</component-class>
     </component>
+    <component>
+        <component-type>org.primefaces.extensions.component.CommandPalette</component-type>
+        <component-class>org.primefaces.extensions.component.commandpalette.CommandPalette</component-class>
+    </component>
+    <component>
+        <component-type>org.primefaces.extensions.component.CommandPaletteItem</component-type>
+        <component-class>org.primefaces.extensions.component.commandpalette.CommandPaletteItem</component-class>
+    </component>
 
     <converter>
         <converter-id>org.primefaces.extensions.converter.JsonConverter</converter-id>
@@ -548,6 +556,11 @@
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.kanban.KanbanRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.kanban.KanbanRenderer</renderer-class>
+        </renderer>
+        <renderer>
+            <component-family>org.primefaces.extensions.component</component-family>
+            <renderer-type>org.primefaces.extensions.component.CommandPaletteRenderer</renderer-type>
+            <renderer-class>org.primefaces.extensions.component.commandpalette.CommandPaletteRenderer</renderer-class>
         </renderer>
 
         <client-behavior-renderer>
