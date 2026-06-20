@@ -1,8 +1,8 @@
 .ui-commandpalette {
     display: none;
     position: fixed;
-    background: #ffffff;
-    border: 1px solid #c8c8c8;
+    background: var(--surface-overlay, var(--surface-a, #ffffff));
+    border: 1px solid var(--surface-border, var(--surface-d, #c8c8c8));
     border-radius: 3px;
     box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
     z-index: 1000;
@@ -12,10 +12,11 @@
 
 .ui-commandpalette-header {
     padding: 8px 12px;
-    background: #f5f5f5;
-    border-bottom: 1px solid #e0e0e0;
+    background: var(--surface-b, #f5f5f5);
+    border-bottom: 1px solid var(--surface-border, var(--surface-d, #e0e0e0));
     font-weight: bold;
     font-size: 14px;
+    color: var(--text-color, #333333);
 }
 
 .ui-commandpalette-title {
@@ -24,13 +25,15 @@
 
 .ui-commandpalette-filter {
     padding: 6px;
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1px solid var(--surface-border, var(--surface-d, #e0e0e0));
 }
 
 .ui-commandpalette-filter-input {
     width: 100%;
     padding: 6px 8px;
-    border: 1px solid #c8c8c8;
+    border: 1px solid var(--surface-border, var(--surface-d, #c8c8c8));
+    background: var(--surface-a, #ffffff);
+    color: var(--text-color, #495057);
     border-radius: 2px;
     box-sizing: border-box;
     font-size: 13px;
@@ -39,7 +42,7 @@
 }
 
 .ui-commandpalette-filter-input:focus {
-    border-color: #007ad9;
+    border-color: var(--primary-color, #007ad9);
 }
 
 .ui-commandpalette-groups {
@@ -48,7 +51,7 @@
 }
 
 .ui-commandpalette-group {
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid var(--surface-border, var(--surface-d, #f0f0f0));
 }
 
 .ui-commandpalette-group:last-child {
@@ -59,28 +62,36 @@
     padding: 8px 12px;
     cursor: pointer;
     user-select: none;
-    background: #fafafa;
+    background: var(--surface-a, #fafafa);
     transition: background-color 0.2s;
 }
 
 .ui-commandpalette-group-header:hover {
-    background: #eaeaea;
+    background: var(--surface-hover, var(--surface-b, #eaeaea));
 }
 
 .ui-commandpalette-group-header.ui-state-active {
-    background: #e3f0fa;
+    background: var(--highlight-bg, var(--primary-color, #e3f0fa));
+}
+
+.ui-commandpalette-group-header.ui-state-active .ui-commandpalette-group-label {
+    color: var(--highlight-text-color, var(--primary-color-text, #333));
+}
+
+.ui-commandpalette-group-header.ui-state-active .ui-commandpalette-group-toggle {
+    color: var(--highlight-text-color, var(--primary-color-text, #666));
 }
 
 .ui-commandpalette-group-toggle {
     font-size: 10px;
     margin-right: 6px;
-    color: #666;
+    color: var(--text-color-secondary, #666);
 }
 
 .ui-commandpalette-group-label {
     font-size: 13px;
     font-weight: 600;
-    color: #333;
+    color: var(--text-color, #333);
 }
 
 .ui-commandpalette-group-items {
@@ -92,14 +103,17 @@
     padding: 8px 12px 8px 28px;
     cursor: pointer;
     font-size: 13px;
-    color: #444;
+    color: var(--text-color, #444);
     transition: background-color 0.15s;
 }
 
 .ui-commandpalette-item:hover {
-    background: #d9edf7;
+    background: var(--highlight-bg, var(--primary-color, #d9edf7));
+    color: var(--highlight-text-color, var(--primary-color-text, #444));
 }
 
 .ui-commandpalette-item:active {
-    background: #b9ddee;
+    background: var(--highlight-bg, var(--primary-color, #b9ddee));
+    color: var(--highlight-text-color, var(--primary-color-text, #444));
 }
+
