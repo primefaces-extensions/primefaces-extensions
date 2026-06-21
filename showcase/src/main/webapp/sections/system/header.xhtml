@@ -6,13 +6,16 @@
 <ui:composition>
     <p:panel>
         <p:panelGrid columns="2" layout="flex">
-            <h:panelGrid columns="2" style="float:left;">
+            <h:panelGrid columns="3" style="float:left; display: flex; align-items: center;">
+                <p:commandButton icon="pi pi-bars" onclick="$('#layoutWest, .ui-layout-pane-west').toggleClass('mobile-open'); return false;"
+                                 styleClass="ui-button-flat mobile-menu-btn mobile-menu-btn-west"
+                                 style="display: none; margin-right: 10px;" title="Toggle Menu"/>
                 <p:link id="logo-link" href="#{request.contextPath}/views/home.jsf" title="PrimeFaces Extensions" styleClass="logo"/>
                 <p:link id="logo-text" href="#{request.contextPath}/views/home.jsf" title="PrimeFaces Extensions" styleClass="logo"/>
             </h:panelGrid>
 
 
-            <h:panelGrid columns="5" style="float:right;">
+            <h:panelGrid columns="6" style="float:right; display: flex; align-items: center;">
                 <p:ajaxStatus style="z-index:9999;">
                     <f:facet name="start">
                         <i class="pi pi-spin pi-spinner ajax-loader" aria-hidden="true"></i>
@@ -22,7 +25,7 @@
                     </f:facet>
                 </p:ajaxStatus>
 
-                <h:panelGrid columns="2" columnClasses="themeText,themeSelect">
+                <h:panelGrid columns="2" columnClasses="themeText,themeSelect" style="display: flex; align-items: center;">
                     <p:outputLabel for="themeSelectMenu" value="Theme"/>
                     <p:selectOneMenu id="themeSelectMenu" value="#{userSettings.currentTheme}" var="theme" effect="drop"
                                      converter="themeConverter">
@@ -41,6 +44,9 @@
                 <p:button href="https://github.com/primefaces-extensions/primefaces-extensions/issues" target="_blank" title="Issue Tracking"
                           icon="pi pi-exclamation-triangle" styleClass="ui-button-flat"/>
 
+                <p:commandButton icon="pi pi-list" onclick="$('#layoutEast, .ui-layout-pane-east').toggleClass('mobile-open'); return false;"
+                                 styleClass="ui-button-flat mobile-menu-btn mobile-menu-btn-east"
+                                 style="display: none; margin-left: 10px;" title="Toggle Use Cases"/>
             </h:panelGrid>
         </p:panelGrid>
     </p:panel>
