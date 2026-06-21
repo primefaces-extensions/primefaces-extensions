@@ -36,6 +36,21 @@ var Showcase = (function () {
                 // show the HTML pane after everything has been asjusted
                 // https://stackoverflow.com/questions/9550760/hide-page-until-everything-is-loaded-advanced/9551066
                 document.getElementsByTagName("html")[0].style.visibility = "visible";
+
+                $(document).on("click", function (event) {
+                    if (window.innerWidth < 991) {
+                        var westPane = $("#layoutWest, .ui-layout-pane-west");
+                        var eastPane = $("#layoutEast, .ui-layout-pane-east");
+                        
+                        if (westPane.hasClass("mobile-open") && !westPane.is(event.target) && westPane.has(event.target).length === 0 && !$(event.target).closest(".mobile-menu-btn-west").length) {
+                            westPane.removeClass("mobile-open");
+                        }
+                        
+                        if (eastPane.hasClass("mobile-open") && !eastPane.is(event.target) && eastPane.has(event.target).length === 0 && !$(event.target).closest(".mobile-menu-btn-east").length) {
+                            eastPane.removeClass("mobile-open");
+                        }
+                    }
+                });
             });
         },
 

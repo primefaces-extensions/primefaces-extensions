@@ -269,3 +269,169 @@ body .ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-menuitem-icon.ui-
     background-size: 200px 55px;
     left: -20px;
 }
+
+@media (max-width: 991px) {
+    html, body {
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+        height: auto !important;
+    }
+    
+    #fpl {
+        position: static !important;
+        height: auto !important;
+        width: 100% !important;
+        overflow: visible !important;
+    }
+    
+    .ui-layout-pane,
+    .ui-layout-content,
+    [id^="layout"] {
+        position: static !important;
+        width: 100% !important;
+        height: auto !important;
+        top: auto !important;
+        bottom: auto !important;
+        left: auto !important;
+        right: auto !important;
+        display: block !important;
+        box-sizing: border-box !important;
+    }
+    
+    #layoutNorth,
+    .ui-layout-north,
+    .ui-layout-pane-north {
+        position: static !important;
+        width: 100% !important;
+        height: auto !important;
+        padding: 5px !important;
+        display: block !important;
+    }
+    
+    #layoutSouth,
+    .ui-layout-south,
+    .ui-layout-pane-south {
+        position: static !important;
+        width: 100% !important;
+        height: auto !important;
+        margin-top: 15px !important;
+        text-align: center !important;
+        display: block !important;
+    }
+    
+    #layoutCenter,
+    .ui-layout-center,
+    .ui-layout-pane-center {
+        position: static !important;
+        width: 100% !important;
+        height: auto !important;
+        padding: 10px !important;
+        overflow: visible !important;
+        display: block !important;
+    }
+    
+    #layoutWest,
+    .ui-layout-west,
+    .ui-layout-pane-west {
+        display: block !important;
+        position: fixed !important;
+        top: 0 !important;
+        bottom: 0 !important;
+        left: -290px !important;
+        width: 280px !important;
+        height: 100% !important;
+        z-index: 10001 !important;
+        overflow-y: auto !important;
+        transition: left 0.3s ease !important;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.25) !important;
+        background-color: var(--card-background-color, #ffffff) !important;
+        border-right: 1px solid var(--divider-color, #dddddd) !important;
+    }
+    #layoutWest.mobile-open,
+    .ui-layout-west.mobile-open,
+    .ui-layout-pane-west.mobile-open {
+        left: 0 !important;
+    }
+    
+    #layoutEast,
+    .ui-layout-east,
+    .ui-layout-pane-east {
+        display: block !important;
+        position: fixed !important;
+        top: 0 !important;
+        bottom: 0 !important;
+        right: -330px !important;
+        width: 320px !important;
+        height: 100% !important;
+        z-index: 10001 !important;
+        overflow-y: auto !important;
+        transition: right 0.3s ease !important;
+        box-shadow: -2px 0 10px rgba(0, 0, 0, 0.25) !important;
+        background-color: var(--card-background-color, #ffffff) !important;
+        border-left: 1px solid var(--divider-color, #dddddd) !important;
+    }
+    #layoutEast.mobile-open,
+    .ui-layout-east.mobile-open,
+    .ui-layout-pane-east.mobile-open {
+        right: 0 !important;
+    }
+    
+    #layoutWest .ui-layout-pane,
+    #layoutEast .ui-layout-pane,
+    .ui-layout-pane-west .ui-layout-pane,
+    .ui-layout-pane-east .ui-layout-pane {
+        position: static !important;
+        width: 100% !important;
+        height: auto !important;
+        top: auto !important;
+        bottom: auto !important;
+        left: auto !important;
+        right: auto !important;
+        display: block !important;
+        overflow: visible !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+    
+    .ui-layout-resizer {
+        display: none !important;
+    }
+    
+    .mobile-menu-btn {
+        display: inline-block !important;
+    }
+    
+    .ui-panelgrid.ui-widget {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        flex-wrap: nowrap !important;
+        padding: 5px !important;
+    }
+    
+    .ui-panelgrid-cell {
+        width: auto !important;
+        padding: 0 !important;
+    }
+    
+    .ui-datatable {
+        width: 100% !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+    
+    div.centerContent,
+    div.centerExample {
+        padding: 10px 5px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    #logo-text {
+        display: none !important;
+    }
+    
+    .themeText {
+        display: none !important;
+    }
+}
