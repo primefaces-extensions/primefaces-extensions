@@ -1,7 +1,7 @@
 {
   "devDependencies": {
     "@types/jquery": "^4.0.0",
-    "@types/node": "^26.0.0",
+    "@types/node": "^26.0.1",
     "monaco-editor": "^0.55.1",
     "typescript": "^5.9.3"
   },
