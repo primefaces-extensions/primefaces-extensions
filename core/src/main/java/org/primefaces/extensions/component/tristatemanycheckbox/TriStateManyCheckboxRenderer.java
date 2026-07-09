@@ -260,8 +260,9 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
         String dataTitles = Constants.EMPTY_STRING;
         String titleAtt = Constants.EMPTY_STRING;
 
-        if (!checkbox.getStateOneTitle().isEmpty()
-                    || !checkbox.getStateTwoTitle().isEmpty() || !checkbox.getStateThreeTitle().isEmpty()) {
+        if ((checkbox.getStateOneTitle() != null && !checkbox.getStateOneTitle().isEmpty())
+                    || (checkbox.getStateTwoTitle() != null && !checkbox.getStateTwoTitle().isEmpty())
+                    || (checkbox.getStateThreeTitle() != null && !checkbox.getStateThreeTitle().isEmpty())) {
             // preparation with singe quotes for .data('titlestates')
             dataTitles = "data-titlestates='" + statesTitles + "' ";
             // active title Att
