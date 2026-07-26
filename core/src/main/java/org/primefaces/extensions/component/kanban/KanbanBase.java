@@ -108,4 +108,7 @@ public abstract class KanbanBase extends UIComponentBase implements Widget {
     @Property(description = "Enable drag handle on items. When enabled, only the handle area is draggable, preventing accidental drags on the card body.",
                 defaultValue = "false")
     public abstract boolean isDragHandle();
+
+    @Property(description = "Enable touch drag-and-drop on mobile devices.", defaultValue = "false")
+    public abstract boolean isTouchDraggable();
 }
