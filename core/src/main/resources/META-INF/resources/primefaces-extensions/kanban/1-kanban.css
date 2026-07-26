@@ -59,3 +59,16 @@ body .drag_handler_icon:before,
 body .drag_handler_icon:after {
   background: var(--text-color-secondary, #000);
 }
+
+body .ui-kanban-touch .kanban-item {
+  touch-action: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+body .ui-kanban-touch .drag_handler {
+  min-width: 44px;
+  min-height: 44px;
+  touch-action: manipulation;
+}
