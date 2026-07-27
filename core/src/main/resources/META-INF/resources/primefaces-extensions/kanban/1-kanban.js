@@ -87,6 +87,10 @@ if (PrimeFaces.widget) {
 
             this.instance = new jKanban(options);
 
+            if (this.cfg.touchDraggable === true) {
+                this._bindTouchEvents();
+            }
+
             if ($this.hasBehavior('itemRightClick') || $this.cfg.bindContextMenu) {
                 var container = document.getElementById(this.id);
                 if (container) {
@@ -228,6 +232,69 @@ if (PrimeFaces.widget) {
             super.destroy();
         }
 
+        _bindTouchEvents() {
+            var $this = this;
+            var container = document.getElementById(this.id);
+            if (!container) return;
+
+            container.classList.add('ui-kanban-touch');
+            this._touchDragging = false;
+
+            this._touchStartHandler = function(e) {
+                var item = e.target.closest('.kanban-item');
+                if (!item) return;
+                e.preventDefault();
+                $this._touchDragging = true;
+                var touch = e.touches[0];
+                var mouseEvent = new MouseEvent('mousedown', {
+                    bubbles: true,
+                    cancelable: true,
+                    view: window,
+                    clientX: touch.clientX,
+                    clientY: touch.clientY,
+                    screenX: touch.screenX,
+                    screenY: touch.screenY
+                });
+                item.dispatchEvent(mouseEvent);
+            };
+
+            this._touchMoveHandler = function(e) {
+                if (!$this._touchDragging) return;
+                e.preventDefault();
+                var touch = e.touches[0];
+                var mouseEvent = new MouseEvent('mousemove', {
+                    bubbles: true,
+                    cancelable: true,
+                    view: window,
+                    clientX: touch.clientX,
+                    clientY: touch.clientY,
+                    screenX: touch.screenX,
+                    screenY: touch.screenY
+                });
+                document.dispatchEvent(mouseEvent);
+            };
+
+            this._touchEndHandler = function(e) {
+                if (!$this._touchDragging) return;
+                $this._touchDragging = false;
+                var touch = e.changedTouches[0];
+                var mouseEvent = new MouseEvent('mouseup', {
+                    bubbles: true,
+                    cancelable: true,
+                    view: window,
+                    clientX: touch.clientX,
+                    clientY: touch.clientY,
+                    screenX: touch.screenX,
+                    screenY: touch.screenY
+                });
+                document.dispatchEvent(mouseEvent);
+            };
+
+            container.addEventListener('touchstart', this._touchStartHandler, { passive: false });
+            document.addEventListener('touchmove', this._touchMoveHandler, { passive: false });
+            document.addEventListener('touchend', this._touchEndHandler, { passive: false });
+        }
+
         _buildHandleOptions() {
             var opts = {
                 enabled: this.cfg.dragHandle === true
@@ -253,7 +320,18 @@ if (PrimeFaces.widget) {
                 this.instance = null;
                 var container = document.getElementById(this.id);
                 if (container) {
+                    container.classList.remove('ui-kanban-touch');
                     container.innerHTML = '';
+                }
+                if (this._touchStartHandler) {
+                    if (container) {
+                        container.removeEventListener('touchstart', this._touchStartHandler);
+                    }
+                    document.removeEventListener('touchmove', this._touchMoveHandler);
+                    document.removeEventListener('touchend', this._touchEndHandler);
+                    this._touchStartHandler = null;
+                    this._touchMoveHandler = null;
+                    this._touchEndHandler = null;
                 }
             }
         }
