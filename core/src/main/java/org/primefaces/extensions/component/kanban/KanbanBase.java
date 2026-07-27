@@ -41,10 +41,24 @@ public abstract class KanbanBase extends UIComponentBase implements Widget {
 
     public static final String STYLE_CLASS = "ui-kanban";
 
+    // @formatter:off
     @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
-        value, style, styleClass, draggable, addItemButton, extender, gutter, widthBoard, responsivePercentage, dragBoards, bindContextMenu, dragHandle
+         value,
+         style,
+         styleClass,
+         draggable,
+         addItemButton,
+         extender,
+         gutter,
+         widthBoard,
+         responsivePercentage,
+         dragBoards,
+         bindContextMenu,
+         dragHandle,
+         touchDraggable
     }
+    //@formatter:on
 
     public KanbanBase() {
         setRendererType(DEFAULT_RENDERER);
@@ -149,5 +163,13 @@ public abstract class KanbanBase extends UIComponentBase implements Widget {
 
     public void setDragHandle(boolean dragHandle) {
         getStateHelper().put(PropertyKeys.dragHandle, dragHandle);
+    }
+
+    public boolean isTouchDraggable() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.touchDraggable, false);
+    }
+
+    public void setTouchDraggable(boolean touchDraggable) {
+        getStateHelper().put(PropertyKeys.touchDraggable, touchDraggable);
     }
 }

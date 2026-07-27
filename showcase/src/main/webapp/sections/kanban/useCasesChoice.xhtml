@@ -39,6 +39,10 @@
                     styleClass="#{navigationContext.getMenuitemStyleClass('dragHandle')}"
                     onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
                     url="#{request.contextPath}/sections/kanban/dragHandle.jsf"/>
+        <p:menuitem value="Touch Drag"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('touchDrag')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
+                    url="#{request.contextPath}/sections/kanban/touchDrag.jsf"/>
     </p:menu>
 </ui:composition>
 </html>
