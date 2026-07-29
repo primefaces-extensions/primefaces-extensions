@@ -3,20 +3,20 @@ updates:
   - package-ecosystem: "maven"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
   - package-ecosystem: "npm"
     directory: "/monacoeditor/src/main/js"
     schedule:
-      interval: "daily"
+      interval: "weekly"
   - package-ecosystem: "npm"
     directory: "/core/src/main/resources/META-INF/resources/primefaces-extensions/monacoeditor"
     schedule:
-      interval: "daily"
+      interval: "weekly"
   - package-ecosystem: "npm"
     directory: "/monacoeditor"
     schedule:
-      interval: "daily"
+      interval: "weekly"
