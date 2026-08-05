@@ -24,6 +24,7 @@ package org.primefaces.extensions.component.session;
 import jakarta.faces.application.ResourceDependency;
 import jakarta.faces.component.FacesComponent;
 
+import org.primefaces.cdk.api.FacesComponentInfo;
 import org.primefaces.extensions.util.Constants;
 
 /**
@@ -32,6 +33,7 @@ import org.primefaces.extensions.util.Constants;
  * @since 12.0.4
  */
 @FacesComponent(value = SessionBase.COMPONENT_TYPE, namespace = SessionBase.COMPONENT_FAMILY)
+@FacesComponentInfo(description = "Gives client-side Javascript events when session will expire.")
 @ResourceDependency(library = "jakarta.faces", name = "faces.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
