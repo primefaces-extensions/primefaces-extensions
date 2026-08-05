@@ -47,6 +47,7 @@ import jakarta.faces.event.AjaxBehaviorEvent;
 import jakarta.faces.event.FacesEvent;
 
 import org.primefaces.PrimeFaces;
+import org.primefaces.cdk.api.FacesComponentInfo;
 import org.primefaces.extensions.event.SheetEvent;
 import org.primefaces.extensions.model.sheet.SheetRowColIndex;
 import org.primefaces.extensions.model.sheet.SheetUpdate;
@@ -65,6 +66,7 @@ import org.primefaces.util.LangUtils;
  * @since 6.2
  */
 @FacesComponent(value = Sheet.COMPONENT_TYPE, namespace = SheetBase.COMPONENT_FAMILY)
+@FacesComponentInfo(description = "Data sheet providing Excel like editing, frozen columns and rows, copy/paste, sorting, etc.")
 @ResourceDependency(library = "primefaces", name = "components.css")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
