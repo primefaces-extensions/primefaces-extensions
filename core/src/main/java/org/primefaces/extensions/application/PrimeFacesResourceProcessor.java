@@ -80,11 +80,15 @@ public class PrimeFacesResourceProcessor implements PhaseListener {
         String themeParamValue = applicationContext.getConfig().getTheme();
 
         if (themeParamValue != null) {
-            ELContext elContext = context.getELContext();
-            ExpressionFactory expressionFactory = context.getApplication().getExpressionFactory();
-            ValueExpression ve = expressionFactory.createValueExpression(elContext, themeParamValue, String.class);
-
-            theme = (String) ve.getValue(elContext);
+            if (themeParamValue.startsWith("#{") || themeParamValue.startsWith("${")) {
+                ELContext elContext = context.getELContext();
+                ExpressionFactory expressionFactory = context.getApplication().getExpressionFactory();
+                ValueExpression ve = expressionFactory.createValueExpression(elContext, themeParamValue, String.class);
+                theme = (String) ve.getValue(elContext);
+            }
+            else {
+                theme = themeParamValue;
+            }
         }
         else {
             theme = "saga-blue"; // default
