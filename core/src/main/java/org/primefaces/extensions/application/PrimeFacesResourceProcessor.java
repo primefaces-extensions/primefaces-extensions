@@ -23,9 +23,6 @@ package org.primefaces.extensions.application;
 
 import java.util.Map;
 
-import jakarta.el.ELContext;
-import jakarta.el.ExpressionFactory;
-import jakarta.el.ValueExpression;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.event.PhaseEvent;
 import jakarta.faces.event.PhaseId;
@@ -81,10 +78,7 @@ public class PrimeFacesResourceProcessor implements PhaseListener {
 
         if (themeParamValue != null) {
             if (themeParamValue.startsWith("#{") || themeParamValue.startsWith("${")) {
-                ELContext elContext = context.getELContext();
-                ExpressionFactory expressionFactory = context.getApplication().getExpressionFactory();
-                ValueExpression ve = expressionFactory.createValueExpression(elContext, themeParamValue, String.class);
-                theme = (String) ve.getValue(elContext);
+                theme = context.getApplication().evaluateExpressionGet(context, themeParamValue, String.class);
             }
             else {
                 theme = themeParamValue;
