@@ -483,6 +483,7 @@
                             <uri>http://primefaces.org/ui/extensions</uri>
                             <shortName>primefaces-extensions</shortName>
                             <displayName>PrimeFaces Extensions</displayName>
+                            <description>PrimeFaces Extensions UI components.</description>
                         </configuration>
                     </execution>
                 </executions>
