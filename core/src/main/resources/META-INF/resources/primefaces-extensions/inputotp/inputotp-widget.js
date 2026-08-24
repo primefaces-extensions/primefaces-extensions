@@ -23,7 +23,7 @@ PrimeFaces.widget.ExtInputOtp = class extends PrimeFaces.widget.BaseWidget {
         this.inputCount = this.inputsJq.length;
         this.hinput = $(this.jqId + '_hidden');
 
-        this.isComplete = false;
+        this.isComplete = this.inputsJq.toArray().every(input => input.value.length === 1);
 
         // pfs metadata
         this.inputsJq.data(PrimeFaces.CLIENT_ID_DATA, this.id);
