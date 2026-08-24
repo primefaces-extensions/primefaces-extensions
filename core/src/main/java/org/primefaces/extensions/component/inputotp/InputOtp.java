@@ -29,9 +29,12 @@ import jakarta.faces.application.ResourceDependency;
 import jakarta.faces.component.FacesComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.convert.NumberConverter;
+import jakarta.faces.event.AjaxBehaviorEvent;
+import jakarta.faces.event.FacesEvent;
 
 import org.primefaces.cdk.api.FacesComponentInfo;
 import org.primefaces.component.inputtext.InputText;
+import org.primefaces.event.SelectEvent;
 import org.primefaces.extensions.util.Constants;
 import org.primefaces.extensions.util.ExtLangUtils;
 import org.primefaces.extensions.util.MessageFactory;
@@ -77,6 +80,26 @@ public class InputOtp extends InputOtpBaseImpl {
     @Override
     public String getValidatableInputClientId() {
         return getClientId() + HIDDEN_SUFFIX;
+    }
+
+    @Override
+    public void queueEvent(final FacesEvent event) {
+        if (isAjaxBehaviorEventSource(event)) {
+            if (isAjaxBehaviorEvent(event, ClientBehaviorEventKeys.complete)) {
+                final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
+                final String value = getFacesContext().getExternalContext().getRequestParameterMap()
+                            .get(getClientId(getFacesContext()) + HIDDEN_SUFFIX);
+                final SelectEvent<String> selectEvent = new SelectEvent<>(this, behaviorEvent.getBehavior(), value);
+                selectEvent.setPhaseId(behaviorEvent.getPhaseId());
+                super.queueEvent(selectEvent);
+                return;
+            }
+            else {
+                super.queueEvent(event);
+                return;
+            }
+        }
+        super.queueEvent(event);
     }
 
     @Override

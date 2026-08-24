@@ -21,11 +21,14 @@
  */
 package org.primefaces.extensions.component.inputotp;
 
+import org.primefaces.cdk.api.FacesBehaviorEvent;
+import org.primefaces.cdk.api.FacesBehaviorEvents;
 import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
 import org.primefaces.component.api.AbstractPrimeHtmlInputText;
 import org.primefaces.component.api.InputHolder;
 import org.primefaces.component.api.Widget;
+import org.primefaces.event.SelectEvent;
 
 /**
  * <code>InputOtp</code> component base class.
@@ -33,6 +36,11 @@ import org.primefaces.component.api.Widget;
  * @since 14.0.0
  */
 @FacesComponentBase
+@FacesBehaviorEvents({
+            @FacesBehaviorEvent(name = "complete", event = SelectEvent.class,
+                        description = "Fires when the user fills the last empty slot, i.e. the OTP value transitions from incomplete to complete.",
+                        defaultEvent = false)
+})
 public abstract class InputOtpBase extends AbstractPrimeHtmlInputText implements Widget, InputHolder {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.InputOtp";
