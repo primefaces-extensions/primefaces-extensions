@@ -34,7 +34,7 @@ import jakarta.faces.event.FacesEvent;
 
 import org.primefaces.cdk.api.FacesComponentInfo;
 import org.primefaces.component.inputtext.InputText;
-import org.primefaces.extensions.event.OtpCompleteEvent;
+import org.primefaces.event.SelectEvent;
 import org.primefaces.extensions.util.Constants;
 import org.primefaces.extensions.util.ExtLangUtils;
 import org.primefaces.extensions.util.MessageFactory;
@@ -86,10 +86,12 @@ public class InputOtp extends InputOtpBaseImpl {
     public void queueEvent(final FacesEvent event) {
         if (isAjaxBehaviorEventSource(event)) {
             if (isAjaxBehaviorEvent(event, ClientBehaviorEventKeys.complete)) {
-                final OtpCompleteEvent completeEvent = new OtpCompleteEvent(this,
-                            ((AjaxBehaviorEvent) event).getBehavior());
-                completeEvent.setPhaseId(event.getPhaseId());
-                super.queueEvent(completeEvent);
+                final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
+                final String value = getFacesContext().getExternalContext().getRequestParameterMap()
+                            .get(getClientId(getFacesContext()) + HIDDEN_SUFFIX);
+                final SelectEvent<String> selectEvent = new SelectEvent<>(this, behaviorEvent.getBehavior(), value);
+                selectEvent.setPhaseId(behaviorEvent.getPhaseId());
+                super.queueEvent(selectEvent);
                 return;
             }
             else {

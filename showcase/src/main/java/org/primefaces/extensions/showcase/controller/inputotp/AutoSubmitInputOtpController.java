@@ -28,6 +28,8 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 
+import org.primefaces.event.SelectEvent;
+
 @Named
 @ViewScoped
 public class AutoSubmitInputOtpController implements Serializable {
@@ -36,9 +38,9 @@ public class AutoSubmitInputOtpController implements Serializable {
 
     private String code;
 
-    public void verify() {
+    public void verify(final SelectEvent<String> event) {
         FacesContext context = FacesContext.getCurrentInstance();
-        if ("1234".equals(code)) {
+        if ("1234".equals(event.getObject())) {
             context.addMessage(null,
                         new FacesMessage(FacesMessage.SEVERITY_INFO, "Code verified successfully!", null));
             code = null;
