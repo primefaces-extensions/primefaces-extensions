@@ -1,0 +1,28 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pe="http://primefaces.org/ui/extensions"
+    xmlns:jsf="http://xmlns.jcp.org/jsf"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <!-- EXAMPLE-SOURCE-START -->
+    <p:growl id="growl" showDetail="true" showSummary="true" globalOnly="false">
+        <p:autoUpdate />
+    </p:growl>
+
+    <h:panelGrid id="pnlOtp" columns="2" rowClasses="mb-2">
+        <p:outputLabel for="@next" value="Auto Submit"/>
+        <pe:inputOtp id="txtAutoSubmit" length="4" value="#{autoSubmitInputOtpController.code}"
+                     required="true">
+            <p:ajax event="complete" listener="#{autoSubmitInputOtpController.verify}"
+                    update="pnlOtp" />
+        </pe:inputOtp>
+    </h:panelGrid>
+    <div>
+        <p:commandButton value="Reset" actionListener="#{autoSubmitInputOtpController.reset}"
+                         update="pnlOtp" process="@this" icon="pi pi-refresh" />
+    </div>
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>
