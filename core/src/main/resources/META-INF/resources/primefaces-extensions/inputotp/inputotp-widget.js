@@ -23,6 +23,8 @@ PrimeFaces.widget.ExtInputOtp = PrimeFaces.widget.BaseWidget.extend({
         this.inputCount = this.inputsJq.length;
         this.hinput = $(this.jqId + '_hidden');
 
+        this.isComplete = this.inputsJq.toArray().every(input => input.value.length === 1);
+
         // pfs metadata
         this.inputsJq.data(PrimeFaces.CLIENT_ID_DATA, this.id);
         this.hinput.data(PrimeFaces.CLIENT_ID_DATA, this.id);
@@ -181,10 +183,26 @@ PrimeFaces.widget.ExtInputOtp = PrimeFaces.widget.BaseWidget.extend({
     updateInput: function () {
         let oldValue = this.hinput.val();
         let newValue = '';
+        let filledCount = 0;
         for (let i = 0; i < this.inputsJq.length; i++) {
-            newValue += this.inputsJq[i].value;
+            let cellValue = this.inputsJq[i].value;
+            newValue += cellValue;
+            if (cellValue.length === 1) {
+                filledCount++;
+            }
         }
         this.hinput.val(newValue);
+
+        if (filledCount === this.inputCount) {
+            if (!this.isComplete) {
+                this.isComplete = true;
+                this.callBehavior('complete');
+            }
+        }
+        else {
+            this.isComplete = false;
+        }
+
         return oldValue;
     },
 
@@ -202,11 +220,11 @@ PrimeFaces.widget.ExtInputOtp = PrimeFaces.widget.BaseWidget.extend({
         }
         const chars = value.split('');
 
-        for (let pos = 0; pos < chars.length; pos++) {
-            if (pos + i >= this.inputCount) {
-                this.inputsJq[pos + i].value = '';
+        for (let pos = 0; pos < this.inputCount; pos++) {
+            if (pos < chars.length) {
+                this.inputsJq[pos].value = chars[pos];
             } else {
-                this.inputsJq[pos + i].value = chars[pos];
+                this.inputsJq[pos].value = '';
             }
         }
         this.updateInput();

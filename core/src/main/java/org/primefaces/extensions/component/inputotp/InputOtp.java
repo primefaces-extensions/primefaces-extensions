@@ -21,19 +21,25 @@
  */
 package org.primefaces.extensions.component.inputotp;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.application.ResourceDependency;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.NumberConverter;
+import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.FacesEvent;
 
 import org.primefaces.component.api.AbstractPrimeHtmlInputText;
 import org.primefaces.component.api.InputHolder;
+import org.primefaces.component.api.MixedClientBehaviorHolder;
 import org.primefaces.component.api.RTLAware;
 import org.primefaces.component.api.Widget;
 import org.primefaces.component.inputtext.InputText;
+import org.primefaces.event.SelectEvent;
 import org.primefaces.extensions.component.inputphone.InputPhone;
 import org.primefaces.extensions.util.Constants;
 import org.primefaces.extensions.util.ExtLangUtils;
@@ -51,7 +57,7 @@ import org.primefaces.util.LangUtils;
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "inputotp/inputotp.css")
 @ResourceDependency(library = Constants.LIBRARY, name = "inputotp/inputotp.js")
-public class InputOtp extends AbstractPrimeHtmlInputText implements Widget, InputHolder, RTLAware {
+public class InputOtp extends AbstractPrimeHtmlInputText implements Widget, InputHolder, MixedClientBehaviorHolder, RTLAware {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.InputOtp";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -63,6 +69,7 @@ public class InputOtp extends AbstractPrimeHtmlInputText implements Widget, Inpu
     public static final String SEPARATOR_STYLE_CLASS = "ui-inputotp-separator";
     public static final String INPUT_SUFFIX = "_input";
     public static final String HIDDEN_SUFFIX = "_hidden";
+    public static final String EVENT_COMPLETE = "complete";
 
     // disabled, readonly, style, styleClass, size, placeholder handled by component renderer
     public static final List<String> INPUT_OTP_ATTRIBUTES_WITHOUT_EVENTS = List.of(
@@ -74,6 +81,9 @@ public class InputOtp extends AbstractPrimeHtmlInputText implements Widget, Inpu
                 "inputmode",
                 "tabindex",
                 "title");
+
+    private static final List<String> UNOBSTRUSIVE_EVENT_NAMES = LangUtils.unmodifiableList(EVENT_COMPLETE);
+    private static final Collection<String> EVENT_NAMES = LangUtils.concat(AbstractPrimeHtmlInputText.EVENT_NAMES, UNOBSTRUSIVE_EVENT_NAMES);
 
     // @formatter:off
     @SuppressWarnings("java:S115")
@@ -92,6 +102,40 @@ public class InputOtp extends AbstractPrimeHtmlInputText implements Widget, Inpu
 
     public InputOtp() {
         setRendererType(DEFAULT_RENDERER);
+    }
+
+    @Override
+    public Collection<String> getEventNames() {
+        return EVENT_NAMES;
+    }
+
+    @Override
+    public Collection<String> getUnobstrusiveEventNames() {
+        return UNOBSTRUSIVE_EVENT_NAMES;
+    }
+
+    @Override
+    public void queueEvent(final FacesEvent event) {
+        final FacesContext context = getFacesContext();
+        final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+        final String eventName = params.get(org.primefaces.util.Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+
+        if (eventName != null && event instanceof AjaxBehaviorEvent) {
+            final AjaxBehaviorEvent ajaxBehaviorEvent = (AjaxBehaviorEvent) event;
+
+            if (EVENT_COMPLETE.equals(eventName)) {
+                final String value = params.get(getClientId(context) + HIDDEN_SUFFIX);
+                final SelectEvent<String> selectEvent = new SelectEvent<>(this, ajaxBehaviorEvent.getBehavior(), value);
+                selectEvent.setPhaseId(ajaxBehaviorEvent.getPhaseId());
+                super.queueEvent(selectEvent);
+            }
+            else {
+                super.queueEvent(event);
+            }
+        }
+        else {
+            super.queueEvent(event);
+        }
     }
 
     @Override
