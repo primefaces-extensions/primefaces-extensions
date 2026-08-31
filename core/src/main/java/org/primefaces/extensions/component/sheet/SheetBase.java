@@ -202,6 +202,10 @@ public abstract class SheetBase extends UIInput implements ClientBehaviorHolder,
     @Property(description = "Allow tab off sheet.", defaultValue = "false")
     public abstract boolean isAllowTabOffSheet();
 
+    @Property(description = "Whether a click outside the sheet deselects the current selection. When false, the selection is only cleared when selecting another cell.",
+                defaultValue = "true")
+    public abstract boolean isOutsideClickDeselects();
+
     @Property(description = "Tab index.", defaultValue = "0")
     public abstract String getTabindex();
 

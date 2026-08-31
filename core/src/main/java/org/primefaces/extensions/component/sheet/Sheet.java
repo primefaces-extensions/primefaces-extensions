@@ -856,7 +856,10 @@ public class Sheet extends SheetBaseImpl {
         }
 
         if (restoredSortedList == null) {
-            getFilteredValue().clear();
+            final List<Object> filteredValue = getFilteredValue();
+            if (filteredValue != null) {
+                filteredValue.clear();
+            }
         }
         else {
             setFilteredValue((List<Object>) restoredSortedList);
