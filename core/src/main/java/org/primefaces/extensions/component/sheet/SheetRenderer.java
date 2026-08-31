@@ -228,6 +228,7 @@ public class SheetRenderer extends CoreRenderer<Sheet> {
         encodeOptionalNativeAttr(wb, "manualColumnMove", sheet.isMovableCols());
         encodeOptionalNativeAttr(wb, "manualRowMove", sheet.isMovableRows());
         encodeOptionalNativeAttr(wb, "allowTabOffSheet", sheet.isAllowTabOffSheet());
+        encodeOptionalNativeAttr(wb, "outsideClickDeselects", sheet.isOutsideClickDeselects());
         encodeOptionalNativeAttr(wb, "width", sheet.getWidth());
         encodeOptionalNativeAttr(wb, "height", sheet.getHeight());
         encodeOptionalNativeAttr(wb, "minRows", sheet.getMinRows());

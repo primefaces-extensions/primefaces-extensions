@@ -53,6 +53,7 @@ PrimeFaces.widget.ExtSheet = class extends PrimeFaces.widget.DeferredWidget {
             columns: $this.cfg.columns,
             stretchH: $this.cfg.stretchH || 'all',
             selectionMode: $this.cfg.selectionMode || 'multiple',
+            outsideClickDeselects: $this.cfg.outsideClickDeselects,
             contextMenu: false,
             allowInvalid: false,
             autoRowSize: !$this.cfg.rowHeaders,
