@@ -290,6 +290,10 @@ abstract class SheetBase extends UIInput implements ClientBehaviorHolder, Widget
          */
         allowTabOffSheet,
         /**
+         * Whether a click outside the sheet deselects the current selection. When false, the selection is only cleared when selecting another cell.
+         */
+        outsideClickDeselects,
+        /**
          * Keyboard focus tab index.
          */
         tabindex,
@@ -503,6 +507,14 @@ abstract class SheetBase extends UIInput implements ClientBehaviorHolder, Widget
 
     public boolean isAllowTabOffSheet() {
         return Boolean.valueOf(getStateHelper().eval(PropertyKeys.allowTabOffSheet, false).toString());
+    }
+
+    public void setOutsideClickDeselects(final boolean value) {
+        getStateHelper().put(PropertyKeys.outsideClickDeselects, value);
+    }
+
+    public boolean isOutsideClickDeselects() {
+        return Boolean.valueOf(getStateHelper().eval(PropertyKeys.outsideClickDeselects, true).toString());
     }
 
     public String getTabindex() {
