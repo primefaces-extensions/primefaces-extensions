@@ -35,8 +35,8 @@ jobs:
         with:
           repository: primefaces/primefaces
           path: primefaces
-      - name: Build PrimeFaces
-        run: cd primefaces && mvn -U install -Pquick && cd ..
+      #- name: Build PrimeFaces
+      #  run: cd primefaces && mvn -U install -Pquick && cd ..
       - name: Log github.ref
         run: echo "${{ github.ref }}"
       - name: Build with Maven
