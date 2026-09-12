@@ -23,7 +23,6 @@ package org.primefaces.extensions.util;
 
 import java.io.Serial;
 
-
 import jakarta.el.ELContext;
 import jakarta.el.ValueExpression;
 

@@ -23,7 +23,6 @@ package org.primefaces.extensions.event;
 
 import java.io.Serial;
 
-
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.component.behavior.Behavior;
 import jakarta.faces.event.AjaxBehaviorEvent;

@@ -23,7 +23,6 @@ package org.primefaces.extensions.converter;
 
 import java.io.Serial;
 
-
 import jakarta.faces.convert.FacesConverter;
 
 import org.owasp.html.PolicyFactory;
