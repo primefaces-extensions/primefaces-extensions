@@ -39,6 +39,7 @@ import jakarta.inject.Named;
 @ViewScoped
 public class AccessRightsController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 20111229L;
 
     private List<SelectItem> accessRights = new ArrayList<>();

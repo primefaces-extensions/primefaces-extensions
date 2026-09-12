@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller.gchart;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Locale;
@@ -38,6 +39,7 @@ import org.primefaces.extensions.component.gchart.model.GChartType;
 @RequestScoped
 public class GeoChartGChartController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 253762400419864192L;
 
     private GChartModel chartModel = null;

@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.model.layout;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -37,6 +38,7 @@ import org.primefaces.extensions.component.layout.GsonLayoutOptions;
  */
 public class LayoutOptions implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private String id;

@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.model.dynaform;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -33,6 +34,7 @@ import java.util.Date;
  */
 public class InventoryProperty implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 20120521L;
 
     private String position;

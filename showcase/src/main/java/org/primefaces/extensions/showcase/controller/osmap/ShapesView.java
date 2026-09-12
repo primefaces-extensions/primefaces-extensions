@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller.osmap;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import jakarta.annotation.PostConstruct;
@@ -40,6 +41,7 @@ import org.primefaces.model.map.Rectangle;
 @RequestScoped
 public class ShapesView implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private MapModel<Long> shapeModel;

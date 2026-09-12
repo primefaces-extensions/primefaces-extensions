@@ -119,8 +119,8 @@ public class CodeScannerRenderer extends CoreRenderer<CodeScanner> {
         if (forComponent == null) {
             return null;
         }
-        if (forComponent instanceof InputHolder) {
-            return ((InputHolder) forComponent).getInputClientId();
+        if (forComponent instanceof InputHolder holder) {
+            return holder.getInputClientId();
         }
         return forComponent.getClientId(context);
     }

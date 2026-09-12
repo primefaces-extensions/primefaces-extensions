@@ -21,6 +21,9 @@
  */
 package org.primefaces.extensions.component.masterdetail;
 
+import java.io.Serial;
+
+
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.event.FacesEvent;
 import jakarta.faces.event.FacesListener;
@@ -34,6 +37,7 @@ import jakarta.faces.event.FacesListener;
  */
 public class SelectLevelEvent extends FacesEvent {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private final int currentLevel;

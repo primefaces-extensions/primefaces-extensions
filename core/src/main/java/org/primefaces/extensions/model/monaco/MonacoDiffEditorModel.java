@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.model.monaco;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import org.primefaces.shaded.owasp.encoder.Encode;
@@ -31,6 +32,7 @@ import org.primefaces.shaded.owasp.encoder.Encode;
  * @since 11.1.0
  */
 public class MonacoDiffEditorModel implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private final static MonacoDiffEditorModel EMPTY = new MonacoDiffEditorModel();

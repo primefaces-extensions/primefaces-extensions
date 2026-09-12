@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller.suneditor;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,7 @@ import jakarta.inject.Named;
 @ViewScoped
 public class BasicSunEditorController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private String html = "<h1>SunEditor</h1><p>Lightweight, flexible, customizable <strong>WYSIWYG</strong> text editor.</p>";

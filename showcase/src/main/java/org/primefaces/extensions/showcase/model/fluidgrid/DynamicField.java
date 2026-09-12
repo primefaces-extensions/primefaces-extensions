@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.model.fluidgrid;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
@@ -34,6 +35,7 @@ import jakarta.faces.model.SelectItem;
  */
 public class DynamicField implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
     private String label;
     private Object value;

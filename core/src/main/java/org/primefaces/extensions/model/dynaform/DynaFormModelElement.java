@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.model.dynaform;
 
+import java.io.Serial;
 import java.util.Objects;
 
 /**
@@ -32,6 +33,7 @@ import java.util.Objects;
  */
 public class DynaFormModelElement extends AbstractDynaFormElement {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private final DynaFormModel model;

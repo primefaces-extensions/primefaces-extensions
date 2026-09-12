@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import jakarta.faces.application.FacesMessage;
@@ -40,6 +41,7 @@ import org.primefaces.extensions.component.commandpalette.CommandPaletteSelectio
 @ViewScoped
 public class CommandPaletteController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     public void onItemSelect(final SelectEvent<CommandPaletteSelection> event) {

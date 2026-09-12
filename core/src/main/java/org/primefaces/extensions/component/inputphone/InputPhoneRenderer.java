@@ -235,8 +235,8 @@ public class InputPhoneRenderer extends InputRenderer<InputPhone> {
 
     @SuppressWarnings("unchecked")
     private Collection<String> toCollection(final Object object) {
-        if (object instanceof String) {
-            final String string = ((String) object).replace(' ', ',').toLowerCase();
+        if (object instanceof String string1) {
+            final String string = string1.replace(' ', ',').toLowerCase();
             return Arrays.asList(string.split(","));
         }
         return (Collection<String>) object;

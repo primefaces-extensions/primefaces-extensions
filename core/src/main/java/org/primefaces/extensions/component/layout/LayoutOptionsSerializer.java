@@ -46,14 +46,14 @@ public class LayoutOptionsSerializer implements JsonSerializer<LayoutOptions> {
             final Object value = entry.getValue();
             JsonPrimitive jsonPrimitive = null;
 
-            if (value instanceof Boolean) {
-                jsonPrimitive = new JsonPrimitive((Boolean) value);
+            if (value instanceof Boolean boolean1) {
+                jsonPrimitive = new JsonPrimitive(boolean1);
             }
-            else if (value instanceof Number) {
-                jsonPrimitive = new JsonPrimitive((Number) value);
+            else if (value instanceof Number number) {
+                jsonPrimitive = new JsonPrimitive(number);
             }
-            else if (value instanceof String) {
-                jsonPrimitive = new JsonPrimitive((String) value);
+            else if (value instanceof String string) {
+                jsonPrimitive = new JsonPrimitive(string);
             }
 
             result.add(entry.getKey(), jsonPrimitive);

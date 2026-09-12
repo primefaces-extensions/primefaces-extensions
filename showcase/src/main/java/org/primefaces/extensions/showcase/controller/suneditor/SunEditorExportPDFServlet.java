@@ -21,10 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller.suneditor;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 
 import jakarta.servlet.ServletException;
@@ -41,6 +38,7 @@ import org.xhtmlrenderer.pdf.ITextRenderer;
 @WebServlet("/api/suneditor/export-pdf")
 public class SunEditorExportPDFServlet extends HttpServlet {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Override

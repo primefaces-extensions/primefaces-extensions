@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import jakarta.faces.view.ViewScoped;
@@ -37,6 +38,7 @@ import jakarta.inject.Named;
 @ViewScoped
 public class QRCodeController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 20120316L;
     private String renderMethod;
     private String text;

@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller.osmap;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import jakarta.enterprise.context.RequestScoped;
@@ -37,6 +38,7 @@ import org.primefaces.model.map.LatLngBounds;
 @RequestScoped
 public class EventView implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     public void onStateChange(StateChangeEvent event) {

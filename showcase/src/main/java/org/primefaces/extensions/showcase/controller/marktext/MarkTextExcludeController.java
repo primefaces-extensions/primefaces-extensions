@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller.marktext;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,6 +39,7 @@ import jakarta.inject.Named;
 @ViewScoped
 public class MarkTextExcludeController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private String searchTerm = "PrimeFaces";

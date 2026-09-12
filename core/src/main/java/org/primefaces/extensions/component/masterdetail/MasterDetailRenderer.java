@@ -239,8 +239,7 @@ public class MasterDetailRenderer extends CoreRenderer<MasterDetail> {
         final boolean isShowAllBreadcrumbItems = component.isShowAllBreadcrumbItems();
 
         for (final UIComponent child : component.getChildren()) {
-            if (child instanceof MasterDetailLevel) {
-                final MasterDetailLevel mdl = (MasterDetailLevel) child;
+            if (child instanceof MasterDetailLevel mdl) {
                 final DefaultMenuItem menuItem = getMenuItemByLevel(breadcrumb, component, mdl);
                 if (menuItem == null) {
                     // note: don't throw exception because menuItem can be null when MasterDetail is within DataTable
@@ -370,12 +369,12 @@ public class MasterDetailRenderer extends CoreRenderer<MasterDetail> {
                 // convert submitted value by renderer
                 return renderer.getConvertedValue(fc, component, submittedValue);
             }
-            else if (submittedValue instanceof String) {
+            else if (submittedValue instanceof String string) {
                 // convert submitted value by registered (implicit or explicit)
                 // converter
                 final Converter converter = ComponentUtils.getConverter(fc, component);
                 if (converter != null) {
-                    return converter.getAsObject(fc, component, (String) submittedValue);
+                    return converter.getAsObject(fc, component, string);
                 }
             }
         }

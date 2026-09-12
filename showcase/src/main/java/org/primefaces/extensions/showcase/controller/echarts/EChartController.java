@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller.echarts;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import jakarta.annotation.PostConstruct;
@@ -35,6 +36,7 @@ import org.primefaces.extensions.event.EChartEvent;
 @RequestScoped
 public class EChartController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private String json;
@@ -45,36 +47,38 @@ public class EChartController implements Serializable {
     }
 
     public void createJsonModel() {
-        json = "{\n" +
-                    "    \"title\": {\n" +
-                    "        \"text\": \"Apache ECharts Line Chart\"\n" +
-                    "    },\n" +
-                    "    \"xAxis\": {\n" +
-                    "        \"type\": \"category\",\n" +
-                    "        \"data\": [\"Mon\", \"Tue\", \"Wed\", \"Thu\", \"Fri\", \"Sat\", \"Sun\"]\n" +
-                    "    },\n" +
-                    "    \"yAxis\": {\n" +
-                    "        \"type\": \"value\"\n" +
-                    "    },\n" +
-                    "    \"series\": [\n" +
-                    "        {\n" +
-                    "            \"name\": \"Some data\",\n" +
-                    "            \"data\": [150, 230, 224, 218, 135, 147, 260],\n" +
-                    "            \"type\": \"line\"\n" +
-                    "        },\n" +
-                    "        {\n" +
-                    "            \"name\": \"Other data\",\n" +
-                    "            \"data\": [110, 260, 124, 118, 235, 100, 200],\n" +
-                    "            \"type\": \"line\"\n" +
-                    "        }\n" +
-                    "    ],\n" +
-                    "    \"legend\": {},\n" +
-                    "    \"dataZoom\": [\n" +
-                    "        {\n" +
-                    "            \"type\": \"slider\"\n" +
-                    "        }\n" +
-                    "    ]\n" +
-                    "}";
+        json = """
+                    {
+                        "title": {
+                            "text": "Apache ECharts Line Chart"
+                        },
+                        "xAxis": {
+                            "type": "category",
+                            "data": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+                        },
+                        "yAxis": {
+                            "type": "value"
+                        },
+                        "series": [
+                            {
+                                "name": "Some data",
+                                "data": [150, 230, 224, 218, 135, 147, 260],
+                                "type": "line"
+                            },
+                            {
+                                "name": "Other data",
+                                "data": [110, 260, 124, 118, 235, 100, 200],
+                                "type": "line"
+                            }
+                        ],
+                        "legend": {},
+                        "dataZoom": [
+                            {
+                                "type": "slider"
+                            }
+                        ]
+                    }\
+                    """;
     }
 
     public void itemSelect(EChartEvent event) {

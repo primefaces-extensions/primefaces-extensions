@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -43,6 +44,7 @@ import org.primefaces.extensions.event.CompleteEvent;
 @ViewScoped
 public class CodeMirrorController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 20111020L;
 
     private String content = "function test() { console.log('test'); }";

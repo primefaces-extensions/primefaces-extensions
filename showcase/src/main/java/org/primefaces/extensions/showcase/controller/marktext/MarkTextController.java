@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller.marktext;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +44,7 @@ import org.primefaces.extensions.model.marktext.MarkPosition;
 @ViewScoped
 public class MarkTextController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private String searchTerm = "ipsum";
@@ -61,12 +63,14 @@ public class MarkTextController implements Serializable {
 
     private String replaceTerm = "ipsum";
 
-    private String processedText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                + " Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-                + " Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
-                + " Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                + "\n\nPrimeFaces Extensions provides additional components for PrimeFaces."
-                + " MarkText is a new component that highlights search terms within specified containers using mark.js.";
+    private String processedText = """
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\
+                 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\
+                 Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\
+                 Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                
+                PrimeFaces Extensions provides additional components for PrimeFaces.\
+                 MarkText is a new component that highlights search terms within specified containers using mark.js.""";
 
     private List<String> lastMatchedTerms = new ArrayList<>();
 

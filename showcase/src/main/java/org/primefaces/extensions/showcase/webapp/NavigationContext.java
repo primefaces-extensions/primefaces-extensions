@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.webapp;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import jakarta.enterprise.context.SessionScoped;
@@ -37,6 +38,7 @@ import jakarta.inject.Named;
 @SessionScoped
 public class NavigationContext implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 20111020L;
 
     public String getMenuitemStyleClass(final String page) {

@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller.timer;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import jakarta.enterprise.context.RequestScoped;
@@ -32,6 +33,7 @@ import jakarta.inject.Named;
 @RequestScoped
 public class BasicTimerController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     public void onTimeout() {

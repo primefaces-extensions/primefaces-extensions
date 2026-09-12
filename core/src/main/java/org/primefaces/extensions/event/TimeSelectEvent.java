@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.event;
 
+import java.io.Serial;
 import java.util.Date;
 
 import jakarta.faces.component.UIComponent;
@@ -39,6 +40,7 @@ import org.primefaces.event.AbstractAjaxBehaviorEvent;
 public class TimeSelectEvent<T> extends AbstractAjaxBehaviorEvent {
 
     public static final String NAME = "timeSelect";
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private transient T time;
@@ -46,14 +48,14 @@ public class TimeSelectEvent<T> extends AbstractAjaxBehaviorEvent {
     public TimeSelectEvent(final UIComponent component, final Behavior behavior, final T time) {
         super(component, behavior);
         this.time = time;
-        if (time instanceof Date) {
-            this.time = (T) new Date(((Date) time).getTime()); // make copy to not have mutable ref
+        if (time instanceof Date date) {
+            this.time = (T) new Date(date.getTime()); // make copy to not have mutable ref
         }
     }
 
     public T getTime() {
-        if (time instanceof Date) {
-            return (T) new Date(((Date) time).getTime()); // make copy to not have mutable ref
+        if (time instanceof Date date) {
+            return (T) new Date(date.getTime()); // make copy to not have mutable ref
         }
         return time;
     }

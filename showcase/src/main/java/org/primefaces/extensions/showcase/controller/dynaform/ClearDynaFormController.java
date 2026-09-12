@@ -46,6 +46,7 @@ import org.primefaces.extensions.util.visitcallback.*;
 public class ClearDynaFormController implements Serializable {
 
     protected static final Set<VisitHint> VISIT_HINTS = EnumSet.of(VisitHint.SKIP_UNRENDERED);
+    @Serial
     private static final long serialVersionUID = 20130504L;
 
     private DynaFormModel model;

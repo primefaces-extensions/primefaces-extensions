@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller.markdowneditor;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import jakarta.annotation.PostConstruct;
@@ -34,6 +35,7 @@ import jakarta.inject.Named;
 @ViewScoped
 public class MarkdownEditorController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private String markdown;

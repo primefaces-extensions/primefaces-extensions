@@ -21,6 +21,9 @@
  */
 package org.primefaces.extensions.converter;
 
+import java.io.Serial;
+
+
 import jakarta.el.ValueExpression;
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
@@ -39,6 +42,7 @@ import org.primefaces.extensions.util.json.GsonExposeAwareConverter;
 @FacesConverterInfo(name = "convertGson", description = "Converter to convert JSON using GSON.")
 public class JsonExposeAwareConverter extends JsonConverter {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private boolean excludeFieldsWithoutExposeAnnotation = false;

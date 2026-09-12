@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.model.dynaform;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -33,6 +34,7 @@ import java.util.Objects;
  */
 public abstract class AbstractDynaFormElement implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 20120514L;
 
     private int colspan = 1;

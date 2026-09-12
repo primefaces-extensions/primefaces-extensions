@@ -42,6 +42,7 @@ import org.primefaces.model.TreeNode;
 @ViewScoped
 public class FileSystemController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 20111229L;
 
     private final TreeNode root;

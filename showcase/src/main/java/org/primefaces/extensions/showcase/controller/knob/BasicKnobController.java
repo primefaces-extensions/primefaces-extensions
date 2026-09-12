@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller.knob;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import jakarta.faces.application.FacesMessage;
@@ -30,6 +31,7 @@ import jakarta.inject.Named;
 @Named
 public class BasicKnobController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
     private int value = 50;
 

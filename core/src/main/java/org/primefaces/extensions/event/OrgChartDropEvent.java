@@ -21,6 +21,9 @@
  */
 package org.primefaces.extensions.event;
 
+import java.io.Serial;
+
+
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.component.behavior.Behavior;
 import jakarta.faces.event.AjaxBehaviorEvent;
@@ -37,6 +40,7 @@ import org.primefaces.shaded.json.JSONObject;
 public class OrgChartDropEvent extends AjaxBehaviorEvent {
 
     public static final String NAME = "drop";
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private transient JSONObject hierarchy;

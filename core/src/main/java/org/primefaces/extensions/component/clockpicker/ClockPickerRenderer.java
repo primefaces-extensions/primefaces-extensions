@@ -193,10 +193,10 @@ public class ClockPickerRenderer extends InputRenderer<ClockPicker> {
             if (component.getConverter() != null) {
                 return component.getConverter().getAsString(context, component, value);
             }
-            else if (value instanceof LocalTime) {
+            else if (value instanceof LocalTime time) {
                 return component.isTwelveHour()
-                            ? ((LocalTime) value).format(DateTimeFormatter.ofPattern("hh:mma").withLocale(component.calculateLocale(context)))
-                            : ((LocalTime) value).format(FORMATTER_24_HOUR);
+                            ? time.format(DateTimeFormatter.ofPattern("hh:mma").withLocale(component.calculateLocale(context)))
+                            : time.format(FORMATTER_24_HOUR);
             }
         }
         catch (Exception e) {

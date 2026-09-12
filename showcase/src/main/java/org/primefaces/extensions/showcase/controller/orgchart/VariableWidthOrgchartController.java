@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller.orgchart;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import jakarta.faces.view.ViewScoped;
@@ -39,6 +40,7 @@ import org.primefaces.extensions.component.orgchart.OrgChartNode;
 @ViewScoped
 public class VariableWidthOrgchartController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1648477595853984821L;
 
     public OrgChartNode getOrgChartModel() {

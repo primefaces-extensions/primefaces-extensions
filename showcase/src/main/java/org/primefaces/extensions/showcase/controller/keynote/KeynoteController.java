@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller.keynote;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,6 +40,7 @@ import org.primefaces.extensions.model.keynote.KeynoteItem;
 @ViewScoped
 public class KeynoteController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
     private List<KeynoteItem> items;
 

@@ -32,6 +32,12 @@
             <artifactId>resources-monacoeditor</artifactId>
             <optional>true</optional>
         </dependency>
+    <dependency>
+      <groupId>com.sun.xml.ws</groupId>
+      <artifactId>jaxws-rt</artifactId>
+      <version>2.3.7</version>
+      <scope>provided</scope>
+    </dependency>
         <!-- PROVIDED Java API's -->
         <dependency>
             <groupId>org.apache.tomee</groupId>

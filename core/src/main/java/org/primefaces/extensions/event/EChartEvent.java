@@ -21,12 +21,16 @@
  */
 package org.primefaces.extensions.event;
 
+import java.io.Serial;
+
+
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.component.behavior.Behavior;
 
 import org.primefaces.event.AbstractAjaxBehaviorEvent;
 
 public class EChartEvent extends AbstractAjaxBehaviorEvent {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private String name;

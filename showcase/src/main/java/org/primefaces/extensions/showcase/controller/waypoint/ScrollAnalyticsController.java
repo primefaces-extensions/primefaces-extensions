@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller.waypoint;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import jakarta.faces.application.FacesMessage;
@@ -43,6 +44,7 @@ import org.primefaces.extensions.event.WaypointEvent;
 @ViewScoped
 public class ScrollAnalyticsController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 20120816L;
 
     public void adInView(final WaypointEvent e) {

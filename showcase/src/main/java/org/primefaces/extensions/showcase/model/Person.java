@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.model;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
@@ -34,6 +35,7 @@ import java.util.Set;
  */
 public class Person implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 20111128L;
 
     private String id;

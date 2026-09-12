@@ -21,6 +21,9 @@
  */
 package org.primefaces.extensions.event;
 
+import java.io.Serial;
+
+
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.event.FacesEvent;
 import jakarta.faces.event.FacesListener;
@@ -37,6 +40,7 @@ import org.primefaces.extensions.model.common.KeyData;
  */
 public class EventDataWrapper extends FacesEvent {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private FacesEvent event = null;

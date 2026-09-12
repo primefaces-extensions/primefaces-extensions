@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.converter;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Locale;
 
@@ -47,6 +48,7 @@ import org.primefaces.util.LangUtils;
 @FacesConverterInfo(name = "convertLocale", description = "Converter to convert an ISO Locale.")
 public class LocaleConverter extends LocaleConverterBaseImpl implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 20121214L;
 
     @Override
@@ -69,11 +71,11 @@ public class LocaleConverter extends LocaleConverterBaseImpl implements Serializ
             return getLocaleString(defaultLocale, getSeparatorWithDefault());
         }
 
-        if (value instanceof String) {
-            return (String) value;
+        if (value instanceof String string) {
+            return string;
         }
-        else if (value instanceof Locale) {
-            return getLocaleString((Locale) value, getSeparatorWithDefault());
+        else if (value instanceof Locale locale) {
+            return getLocaleString(locale, getSeparatorWithDefault());
         }
         else {
             throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR,

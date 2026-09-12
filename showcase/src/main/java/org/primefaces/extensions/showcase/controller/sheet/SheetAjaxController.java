@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller.sheet;
 
+import java.io.Serial;
 import java.util.List;
 
 import jakarta.faces.application.FacesMessage;
@@ -45,6 +46,7 @@ import org.primefaces.extensions.showcase.model.sheet.Asset;
 @ViewScoped
 public class SheetAjaxController extends SheetController {
 
+    @Serial
     private static final long serialVersionUID = 20120224L;
 
     private Asset selectedAsset;

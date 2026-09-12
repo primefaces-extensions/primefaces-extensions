@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller.sheet;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -40,6 +41,7 @@ import org.primefaces.extensions.showcase.model.sheet.PlatformType;
 @ViewScoped
 public class SheetExportController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 20240224L;
 
     private List<Asset> assets = new ArrayList<>();

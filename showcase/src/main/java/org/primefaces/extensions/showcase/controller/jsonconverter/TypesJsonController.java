@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller.jsonconverter;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import jakarta.enterprise.context.SessionScoped;
@@ -36,6 +37,7 @@ import jakarta.inject.Named;
 @SessionScoped
 public class TypesJsonController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     public String getTypeGenericList() {

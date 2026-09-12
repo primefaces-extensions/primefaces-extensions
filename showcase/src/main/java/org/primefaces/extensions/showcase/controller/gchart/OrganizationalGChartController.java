@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller.gchart;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import jakarta.annotation.PostConstruct;
@@ -37,6 +38,7 @@ import org.primefaces.model.TreeNode;
 @RequestScoped
 public class OrganizationalGChartController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 253762400419864192L;
 
     private GChartModel standardModel = null;

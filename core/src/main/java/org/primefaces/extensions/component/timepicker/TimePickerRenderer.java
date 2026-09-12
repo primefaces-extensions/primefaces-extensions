@@ -311,9 +311,9 @@ public class TimePickerRenderer extends InputRenderer<TimePicker> {
             }
             else {
                 // use built-in converter
-                if (value instanceof LocalTime) {
+                if (value instanceof LocalTime time) {
                     final DateTimeFormatter formatter = getDateTimeFormatter(component);
-                    return formatter.format((LocalTime) value);
+                    return formatter.format(time);
                 }
                 else {
                     final SimpleDateFormat formatter = getSimpleDateFormat(component);

@@ -21,6 +21,9 @@
  */
 package org.primefaces.extensions.event;
 
+import java.io.Serial;
+
+
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.component.behavior.Behavior;
 import jakarta.faces.event.AjaxBehaviorEvent;
@@ -34,6 +37,7 @@ import jakarta.faces.event.AjaxBehaviorEvent;
 public class KanbanItemRightClickEvent extends AjaxBehaviorEvent {
 
     public static final String NAME = "itemRightClick";
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private String itemId;

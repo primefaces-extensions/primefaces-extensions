@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.model.masterdetail;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -31,6 +32,7 @@ import java.io.Serializable;
  */
 public class League implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 20111120L;
 
     private String name;

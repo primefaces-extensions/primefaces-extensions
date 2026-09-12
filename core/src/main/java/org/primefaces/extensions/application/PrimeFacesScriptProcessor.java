@@ -218,8 +218,7 @@ public class PrimeFacesScriptProcessor implements SystemEventListener {
             boolean initialRedirect = false;
             Object cookie = PrimeClientWindowUtils.getInitialRedirectCookie(context, clientWindow.getId());
 
-            if (cookie instanceof Cookie) {
-                Cookie servletCookie = (Cookie) cookie;
+            if (cookie instanceof Cookie servletCookie) {
                 initialRedirect = true;
                 servletCookie.setMaxAge(0);
                 ((HttpServletResponse) externalContext.getResponse()).addCookie(servletCookie);

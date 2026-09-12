@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import jakarta.faces.view.ViewScoped;
@@ -33,6 +34,7 @@ import org.owasp.html.PolicyFactory;
 @ViewScoped
 public class SanitizingController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private String defaultSanitizer = "<p>Test</p>";

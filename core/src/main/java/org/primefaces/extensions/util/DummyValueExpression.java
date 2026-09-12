@@ -21,6 +21,9 @@
  */
 package org.primefaces.extensions.util;
 
+import java.io.Serial;
+
+
 import jakarta.el.ELContext;
 import jakarta.el.ValueExpression;
 
@@ -33,6 +36,7 @@ import jakarta.el.ValueExpression;
  */
 public class DummyValueExpression extends ValueExpression {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private final Class<?> type;

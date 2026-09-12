@@ -106,8 +106,7 @@ public class CommandPaletteRenderer extends CoreRenderer<CommandPalette> {
     private Map<String, List<CommandPaletteItem>> buildGroupMap(final CommandPalette component) {
         final Map<String, List<CommandPaletteItem>> groups = new LinkedHashMap<>();
         for (final UIComponent child : component.getChildren()) {
-            if (child instanceof CommandPaletteItem && child.isRendered()) {
-                final CommandPaletteItem item = (CommandPaletteItem) child;
+            if (child instanceof CommandPaletteItem item && child.isRendered()) {
                 final String group = item.getGroup();
                 groups.computeIfAbsent(group, k -> new ArrayList<>()).add(item);
             }

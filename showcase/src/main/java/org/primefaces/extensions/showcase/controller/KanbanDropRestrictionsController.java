@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,6 +44,7 @@ import org.primefaces.extensions.model.kanban.KanbanItem;
 @ViewScoped
 public class KanbanDropRestrictionsController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private List<KanbanColumn> columns;

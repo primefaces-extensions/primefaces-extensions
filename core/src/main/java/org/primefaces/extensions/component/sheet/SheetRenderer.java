@@ -414,14 +414,12 @@ public class SheetRenderer extends CoreRenderer<Sheet> {
                 items.appendArrayValue(String.valueOf(item), true);
             }
         }
-        else if (value instanceof Collection) {
-            final Collection collection = (Collection) value;
+        else if (value instanceof Collection collection) {
             for (final Object item : collection) {
                 items.appendArrayValue(String.valueOf(item), true);
             }
         }
-        else if (value instanceof Map) {
-            final Map map = (Map) value;
+        else if (value instanceof Map map) {
 
             for (final Object item : map.keySet()) {
                 items.appendArrayValue(String.valueOf(item), true);

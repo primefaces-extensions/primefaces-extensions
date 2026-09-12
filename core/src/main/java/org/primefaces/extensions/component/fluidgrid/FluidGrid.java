@@ -95,8 +95,7 @@ public class FluidGrid extends FluidGridBaseImpl {
         if (items == null) {
             items = new HashMap<>();
             for (final UIComponent child : getChildren()) {
-                if (child instanceof UIFluidGridItem) {
-                    final UIFluidGridItem fluidGridItem = (UIFluidGridItem) child;
+                if (child instanceof UIFluidGridItem fluidGridItem) {
                     items.put(fluidGridItem.getType(), fluidGridItem);
                 }
             }
@@ -215,8 +214,8 @@ public class FluidGrid extends FluidGridBaseImpl {
                     UIFluidGridItem uiFluidGridItem = null;
                     if (getVar() == null) {
                         for (final UIComponent child : getChildren()) {
-                            if (child instanceof UIFluidGridItem && ((UIFluidGridItem) child).getType().equals(fluidGridItem.getType())) {
-                                uiFluidGridItem = (UIFluidGridItem) child;
+                            if (child instanceof UIFluidGridItem item && item.getType().equals(fluidGridItem.getType())) {
+                                uiFluidGridItem = item;
                             }
                         }
                     }
@@ -313,8 +312,8 @@ public class FluidGrid extends FluidGridBaseImpl {
                 final FluidGridItem fluidGridItem) {
         if (getChildCount() > 0) {
             for (final UIComponent child : getChildren()) {
-                if (child instanceof UIFluidGridItem
-                            && ((UIFluidGridItem) child).getType().equals(fluidGridItem.getType())) {
+                if (child instanceof UIFluidGridItem item
+                            && item.getType().equals(fluidGridItem.getType())) {
                     setData(fluidGridItem);
                     if (getData() == null) {
                         return false;

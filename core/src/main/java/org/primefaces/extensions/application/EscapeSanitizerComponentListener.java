@@ -93,16 +93,14 @@ public class EscapeSanitizerComponentListener implements SystemEventListener {
         String value = null;
 
         // Check if the component is HtmlOutputText and meets the sanitization criteria
-        if (component instanceof HtmlOutputText) {
-            HtmlOutputText htmlOutputText = (HtmlOutputText) component;
+        if (component instanceof HtmlOutputText htmlOutputText) {
             if (!htmlOutputText.isEscape() && isNotAlreadySanitized(component)) {
                 value = getValueAsString(htmlOutputText);
                 shouldSanitize = value != null;
             }
         }
         // Check if the component is OutputLabel and meets the sanitization criteria
-        else if (component instanceof OutputLabel) {
-            OutputLabel outputLabel = (OutputLabel) component;
+        else if (component instanceof OutputLabel outputLabel) {
             if (!outputLabel.isEscape() && isNotAlreadySanitized(component)) {
                 value = getValueAsString(outputLabel);
                 shouldSanitize = value != null;
@@ -147,7 +145,7 @@ public class EscapeSanitizerComponentListener implements SystemEventListener {
      */
     private String getValueAsString(UIComponent component) {
         Object value = component.getAttributes().get("value");
-        return (value instanceof String) ? (String) value : null;
+        return (value instanceof String s) ? s : null;
     }
 
     /**

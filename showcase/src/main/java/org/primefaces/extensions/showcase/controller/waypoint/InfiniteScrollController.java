@@ -38,6 +38,7 @@ import jakarta.inject.Named;
 @ViewScoped
 public class InfiniteScrollController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 20120810L;
 
     private static final String CONTENT_PATH_DUMMY = "/sections/waypoint/examples/remoteContentDummy.xhtml";

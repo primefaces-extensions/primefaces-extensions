@@ -67,8 +67,7 @@ public class JavascriptBehaviorRenderer extends ClientBehaviorRenderer {
 
         for (int i = 0; i < component.getChildCount(); i++) {
             final UIComponent child = component.getChildren().get(i);
-            if (child instanceof UIParameter) {
-                final UIParameter parameter = (UIParameter) child;
+            if (child instanceof UIParameter parameter) {
 
                 if (paramWritten) {
                     script.append(",");

@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -45,6 +46,7 @@ import org.primefaces.extensions.event.OpenEvent;
 @ViewScoped
 public class CalculatorController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 20120224L;
 
     private BigDecimal hInputText;

@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import jakarta.faces.application.FacesMessage;
@@ -39,6 +40,7 @@ import org.primefaces.event.SelectEvent;
 @ViewScoped
 public class CounterController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 20120224L;
 
     public void startListener(final SelectEvent<Double> event) {

@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.model.metergroup;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -31,6 +32,7 @@ import java.util.Objects;
  */
 public class MeterGroupItem implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private String label;

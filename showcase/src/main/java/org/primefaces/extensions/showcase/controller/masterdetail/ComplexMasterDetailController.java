@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller.masterdetail;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -46,6 +47,7 @@ import org.primefaces.extensions.showcase.model.Person;
 @ViewScoped
 public class ComplexMasterDetailController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 20111120L;
 
     private List<Person> persons;

@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.model.dynaform;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -36,6 +37,7 @@ import org.primefaces.extensions.model.common.KeyData;
 public class DynaFormControl extends AbstractDynaFormElement implements KeyData {
 
     public static final String DEFAULT_TYPE = "default";
+    @Serial
     private static final long serialVersionUID = 1L;
     private static final String KEY_PREFIX_ROW = "r";
     private static final String KEY_PREFIX_COLUMN = "c";
