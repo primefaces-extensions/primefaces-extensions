@@ -77,28 +77,28 @@ public class TimeAgo extends TimeAgoBaseImpl {
 
     protected final ZoneId getValueZoneId() {
         final Object value = getValue();
-        if (value instanceof ZonedDateTime) {
-            return ((ZonedDateTime) value).getZone();
+        if (value instanceof ZonedDateTime time) {
+            return time.getZone();
         }
-        if (value instanceof OffsetDateTime) {
-            return ((OffsetDateTime) value).getOffset();
+        if (value instanceof OffsetDateTime time1) {
+            return time1.getOffset();
         }
         return ZoneId.systemDefault();
     }
 
     protected String format(final String pattern, final ZoneId zone) {
         final Object value = getValue();
-        if (value instanceof Date) {
-            return format((Date) value, pattern, zone);
+        if (value instanceof Date date) {
+            return format(date, pattern, zone);
         }
-        if (value instanceof ZonedDateTime) {
-            return format((ZonedDateTime) value, pattern, zone);
+        if (value instanceof ZonedDateTime time) {
+            return format(time, pattern, zone);
         }
-        if (value instanceof LocalDateTime) {
-            return format((LocalDateTime) value, pattern, zone);
+        if (value instanceof LocalDateTime time1) {
+            return format(time1, pattern, zone);
         }
-        if (value instanceof OffsetDateTime) {
-            return format((OffsetDateTime) value, pattern, zone);
+        if (value instanceof OffsetDateTime time2) {
+            return format(time2, pattern, zone);
         }
         throw new IllegalArgumentException("Unsupported type");
     }

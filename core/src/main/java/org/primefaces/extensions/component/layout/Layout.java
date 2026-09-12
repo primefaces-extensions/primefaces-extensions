@@ -149,9 +149,9 @@ public class Layout extends LayoutBaseImpl {
 
     public static LayoutPane getLayoutPane(final UIComponent component, final String combinedPosition) {
         for (final UIComponent child : component.getChildren()) {
-            if (child instanceof LayoutPane) {
-                if (((LayoutPane) child).getCombinedPosition().equals(combinedPosition)) {
-                    return (LayoutPane) child;
+            if (child instanceof LayoutPane pane1) {
+                if (pane1.getCombinedPosition().equals(combinedPosition)) {
+                    return pane1;
                 }
                 else {
                     final LayoutPane pane = getLayoutPane(child, combinedPosition);

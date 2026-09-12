@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller.layout;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import jakarta.annotation.PostConstruct;
@@ -41,6 +42,7 @@ import org.primefaces.extensions.model.layout.LayoutOptions;
 @ViewScoped
 public class CustomContentLayoutController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 20120925L;
 
     private final String src = "/sections/layout/example-customContentOne.xhtml";

@@ -322,7 +322,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
             while (null != (parent = parent.getParent())) {
                 if (parent instanceof jakarta.faces.component.UIData ||
                             parent.getClass().getName().endsWith("UIRepeat") ||
-                            parent instanceof UITabPanel && ((UITabPanel) parent).isRepeating() ||
+                            parent instanceof UITabPanel panel && panel.isRepeating() ||
                             parent instanceof AbstractDynamicData) {
                     isNested = Boolean.TRUE;
                     break;
@@ -531,8 +531,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
         final Map<String, SavedEditableValueState> saved = (Map<String, SavedEditableValueState>) getStateHelper()
                     .get(PropertyKeys.saved);
 
-        if (component instanceof EditableValueHolder) {
-            final EditableValueHolder input = (EditableValueHolder) component;
+        if (component instanceof EditableValueHolder input) {
             SavedEditableValueState state = null;
             final String id = component.getClientId(context);
 
@@ -587,8 +586,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
         final Map<String, SavedEditableValueState> saved = (Map<String, SavedEditableValueState>) getStateHelper()
                     .get(PropertyKeys.saved);
 
-        if (component instanceof EditableValueHolder) {
-            final EditableValueHolder input = (EditableValueHolder) component;
+        if (component instanceof EditableValueHolder input) {
             final String id = component.getClientId(context);
 
             SavedEditableValueState state = saved.get(id);

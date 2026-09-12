@@ -113,9 +113,9 @@ public class FluidGridRenderer extends CoreRenderer<FluidGrid> {
             // static items
             for (final UIComponent kid : component.getChildren()) {
                 if (kid.isRendered()) {
-                    if (kid instanceof UIFluidGridItem) {
+                    if (kid instanceof UIFluidGridItem item) {
                         // render item
-                        renderItem(fc, writer, component, (UIFluidGridItem) kid);
+                        renderItem(fc, writer, component, item);
                     }
                     else {
                         // render a child like stamped element, etc.

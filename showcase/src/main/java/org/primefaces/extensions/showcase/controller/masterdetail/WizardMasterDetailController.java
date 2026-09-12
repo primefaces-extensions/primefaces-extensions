@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller.masterdetail;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import jakarta.faces.application.FacesMessage;
@@ -41,6 +42,7 @@ import org.primefaces.extensions.showcase.model.masterdetail.User;
 @ViewScoped
 public class WizardMasterDetailController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 20120209L;
 
     private User user = new User();

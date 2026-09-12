@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.util;
 
+import java.io.Serial;
 import java.util.Objects;
 
 import org.primefaces.component.api.SavedState;
@@ -35,6 +36,7 @@ import org.primefaces.extensions.component.api.AbstractDynamicData;
  */
 public class SavedEditableValueState extends SavedState {
 
+    @Serial
     private static final long serialVersionUID = 20120425L;
 
     private transient Object labelValue;

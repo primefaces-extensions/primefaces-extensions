@@ -61,10 +61,9 @@ public class RemoteCommandHandler extends ComponentHandler {
 
     private Class<?>[] getParameterTypes() {
         MethodSignatureTagHandler signatureTagHandler = null;
-        if (nextHandler instanceof CompositeFaceletHandler) {
-            final CompositeFaceletHandler handler = (CompositeFaceletHandler) nextHandler;
-            if (handler.getHandlers().length > 0 && handler.getHandlers()[0] instanceof MethodSignatureTagHandler) {
-                signatureTagHandler = (MethodSignatureTagHandler) handler.getHandlers()[0];
+        if (nextHandler instanceof CompositeFaceletHandler handler) {
+            if (handler.getHandlers().length > 0 && handler.getHandlers()[0] instanceof MethodSignatureTagHandler tagHandler) {
+                signatureTagHandler = tagHandler;
             }
         }
         if (signatureTagHandler == null) {

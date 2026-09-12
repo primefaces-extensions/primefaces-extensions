@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller.inputphone;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,6 +42,7 @@ import org.primefaces.extensions.model.inputphone.Country;
 @ViewScoped
 public class BasicInputPhoneController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
     private String phoneNumber;
     private Map<String, String> localizedCountries;

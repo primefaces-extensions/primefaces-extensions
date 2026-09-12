@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller.legend;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 
@@ -37,6 +38,7 @@ import jakarta.inject.Named;
 @ViewScoped
 public class LegendController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 20120224L;
 
     private LinkedHashMap<String, String> values;

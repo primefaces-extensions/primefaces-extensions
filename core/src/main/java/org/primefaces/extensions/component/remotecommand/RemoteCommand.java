@@ -80,7 +80,7 @@ public class RemoteCommand extends RemoteCommandBaseImpl {
             }
         }
 
-        if (event instanceof ActionEvent) {
+        if (event instanceof ActionEvent actionEvent) {
             final FacesContext context = getFacesContext();
             final MethodExpression listener = getActionListenerMethodExpression();
             if (listener != null) {
@@ -88,7 +88,7 @@ public class RemoteCommand extends RemoteCommandBaseImpl {
             }
             final ActionListener actionListener = context.getApplication().getActionListener();
             if (actionListener != null) {
-                actionListener.processAction((ActionEvent) event);
+                actionListener.processAction(actionEvent);
             }
         }
     }
@@ -100,13 +100,13 @@ public class RemoteCommand extends RemoteCommandBaseImpl {
             methodParameters = new ArrayList<>();
 
             for (final UIComponent child : super.getChildren()) {
-                if (child instanceof AbstractParameter) {
-                    allParameters.add((AbstractParameter) child);
-                    if (child instanceof AssignableParameter) {
-                        assignableParameters.add((AssignableParameter) child);
+                if (child instanceof AbstractParameter parameter2) {
+                    allParameters.add(parameter2);
+                    if (child instanceof AssignableParameter parameter1) {
+                        assignableParameters.add(parameter1);
                     }
-                    else if (child instanceof MethodParameter) {
-                        methodParameters.add((MethodParameter) child);
+                    else if (child instanceof MethodParameter parameter) {
+                        methodParameters.add(parameter);
                     }
                 }
             }

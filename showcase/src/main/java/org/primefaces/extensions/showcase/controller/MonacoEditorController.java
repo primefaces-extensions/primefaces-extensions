@@ -26,6 +26,7 @@ import static java.util.stream.Collectors.toList;
 import static org.apache.commons.lang3.StringUtils.abbreviate;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
@@ -60,6 +61,7 @@ import org.primefaces.extensions.showcase.util.MonacoEditorSettings;
 @Named
 @ViewScoped
 public class MonacoEditorController implements Serializable {
+    @Serial
     private static final long serialVersionUID = 20210216L;
 
     private static final String CUSTOM_CODE_EXTENDER_CODE = "custom_code.extender.code.";

@@ -21,8 +21,11 @@
  */
 package org.primefaces.extensions.component.gchart.model;
 
+import java.io.Serial;
+
 public class DefaultGChartModelColumn implements GChartModelColumn {
 
+    @Serial
     private static final long serialVersionUID = -4757917806522708660L;
 
     // column label

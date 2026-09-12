@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.model.inputplace;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Map;
 import java.util.Objects;
@@ -34,6 +35,7 @@ import java.util.StringJoiner;
  */
 public class Place implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private String placeId;

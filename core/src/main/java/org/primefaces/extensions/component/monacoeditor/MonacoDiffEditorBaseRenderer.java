@@ -197,8 +197,8 @@ abstract class MonacoDiffEditorBaseRenderer<TEditor extends MonacoDiffEditorBase
         }
         else {
             final Object value = component.getValue();
-            return value instanceof org.primefaces.extensions.model.monaco.MonacoDiffEditorModel
-                        ? (org.primefaces.extensions.model.monaco.MonacoDiffEditorModel) value
+            return value instanceof org.primefaces.extensions.model.monaco.MonacoDiffEditorModel mdem
+                        ? mdem
                         : org.primefaces.extensions.model.monaco.MonacoDiffEditorModel.empty();
         }
     }
@@ -208,8 +208,8 @@ abstract class MonacoDiffEditorBaseRenderer<TEditor extends MonacoDiffEditorBase
         if (submittedValue == null) {
             return org.primefaces.extensions.model.monaco.MonacoDiffEditorModel.empty();
         }
-        if (submittedValue instanceof org.primefaces.extensions.model.monaco.MonacoDiffEditorModel) {
-            return (org.primefaces.extensions.model.monaco.MonacoDiffEditorModel) submittedValue;
+        if (submittedValue instanceof org.primefaces.extensions.model.monaco.MonacoDiffEditorModel model) {
+            return model;
         }
         final MonacoDiffEditorBase editor = (MonacoDiffEditorBase) component;
         final org.primefaces.extensions.model.monaco.MonacoDiffEditorModel currentModel = editor.getValue() != null

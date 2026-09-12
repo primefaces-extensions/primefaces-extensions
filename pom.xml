@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.primefaces.extensions</groupId>
     <artifactId>primefaces-extensions-parent</artifactId>
-    <version>16.0.1-SNAPSHOT</version>
+    <version>17.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>PrimeFaces Extensions Parent</name>
     <description>
@@ -85,9 +85,9 @@
     </issueManagement>
     <properties>
         <resources.dir.compressed>${project.build.directory}/classes/META-INF/resources/primefaces-extensions</resources.dir.compressed>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-        <maven.compiler.release>11</maven.compiler.release>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.release>17</maven.compiler.release>
         <project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
         <main.basedir>${project.basedir}</main.basedir>
         <jsf.stage>Development</jsf.stage>

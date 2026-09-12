@@ -3,7 +3,7 @@
     <parent>
         <groupId>org.primefaces.extensions</groupId>
         <artifactId>primefaces-extensions-parent</artifactId>
-        <version>16.0.1-SNAPSHOT</version>
+        <version>17.0.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>primefaces-extensions-showcase</artifactId>
@@ -333,20 +333,6 @@
             <build>
                 <defaultGoal>clean jetty:run</defaultGoal>
             </build>
-        </profile>
-        <profile>
-            <id>jdk-11</id>
-            <activation>
-                <jdk>11</jdk>
-            </activation>
-            <properties>
-                <jakarta.version>10.0.0</jakarta.version>
-                <hibernate-validator.version>8.0.2.Final</hibernate-validator.version>
-                <myfaces.version>4.0.3</myfaces.version>
-                <omnifaces.version>4.7.1</omnifaces.version>
-                <resteasy.version>6.2.11.Final</resteasy.version>
-                <weld.version>5.1.5.Final</weld.version>
-            </properties>
         </profile>
         <profile>
             <id>jdk-17-or-greater</id>

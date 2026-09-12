@@ -21,12 +21,15 @@
  */
 package org.primefaces.extensions.event;
 
+import java.io.Serial;
+
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.event.FacesEvent;
 import jakarta.faces.event.FacesListener;
 
 public class CompleteEvent extends FacesEvent {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private final String token;

@@ -76,8 +76,7 @@ public class DynaForm extends DynaFormBaseImpl {
         if (cells == null) {
             cells = new HashMap<>();
             for (final UIComponent child : getChildren()) {
-                if (child instanceof UIDynaFormControl) {
-                    final UIDynaFormControl dynaFormCell = (UIDynaFormControl) child;
+                if (child instanceof UIDynaFormControl dynaFormCell) {
                     cells.put(dynaFormCell.getType(), dynaFormCell);
                 }
             }
@@ -234,8 +233,8 @@ public class DynaForm extends DynaFormBaseImpl {
     private boolean visitDynaFormCells(final VisitContext context, final VisitCallback callback, final DynaFormControl dynaFormControl) {
         if (getChildCount() > 0) {
             for (final UIComponent child : getChildren()) {
-                if (child instanceof UIDynaFormControl
-                            && ((UIDynaFormControl) child).getType().equals(dynaFormControl.getType())) {
+                if (child instanceof UIDynaFormControl control
+                            && control.getType().equals(dynaFormControl.getType())) {
                     setData(dynaFormControl);
                     if (getData() == null) {
                         return false;

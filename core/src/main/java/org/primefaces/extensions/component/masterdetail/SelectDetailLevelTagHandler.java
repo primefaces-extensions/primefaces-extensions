@@ -143,24 +143,24 @@ public class SelectDetailLevelTagHandler extends TagHandler {
         if (listener != null) {
             final MethodExpression me = listener.getMethodExpression(ctx, Object.class, new Class[] {Object.class});
 
-            if (parent instanceof ActionSource) {
-                ((ActionSource) parent).addActionListener(new SelectDetailLevelListener(me));
+            if (parent instanceof ActionSource source) {
+                source.addActionListener(new SelectDetailLevelListener(me));
             }
-            else if (parent instanceof ClientBehaviorHolder) {
+            else if (parent instanceof ClientBehaviorHolder holder) {
                 // find attached f:ajax / p:ajax corresponding to supported events
-                final Collection<List<ClientBehavior>> clientBehaviors = getClientBehaviors(ctx, event, (ClientBehaviorHolder) parent);
+                final Collection<List<ClientBehavior>> clientBehaviors = getClientBehaviors(ctx, event, holder);
                 if (clientBehaviors == null || clientBehaviors.isEmpty()) {
                     return;
                 }
 
                 for (final List<ClientBehavior> listBehaviors : clientBehaviors) {
                     for (final ClientBehavior clientBehavior : listBehaviors) {
-                        if (clientBehavior instanceof org.primefaces.behavior.ajax.AjaxBehavior) {
-                            ((org.primefaces.behavior.ajax.AjaxBehavior) clientBehavior).addAjaxBehaviorListener(
+                        if (clientBehavior instanceof org.primefaces.behavior.ajax.AjaxBehavior behavior1) {
+                            behavior1.addAjaxBehaviorListener(
                                         new SelectDetailLevelListener(me));
                         }
-                        else if (clientBehavior instanceof jakarta.faces.component.behavior.AjaxBehavior) {
-                            ((jakarta.faces.component.behavior.AjaxBehavior) clientBehavior).addAjaxBehaviorListener(
+                        else if (clientBehavior instanceof jakarta.faces.component.behavior.AjaxBehavior behavior) {
+                            behavior.addAjaxBehaviorListener(
                                         new SelectDetailLevelListener(me));
                         }
                     }
@@ -171,13 +171,13 @@ public class SelectDetailLevelTagHandler extends TagHandler {
 
     public static boolean isAjaxifiedComponent(final UIComponent component) {
         // check for ajax source
-        if (component instanceof AjaxSource && ((AjaxSource) component).isAjaxified()) {
+        if (component instanceof AjaxSource source && source.isAjaxified()) {
             return true;
         }
 
-        if (component instanceof ClientBehaviorHolder) {
+        if (component instanceof ClientBehaviorHolder holder) {
             // check for attached f:ajax / p:ajax
-            final Collection<List<ClientBehavior>> behaviors = ((ClientBehaviorHolder) component).getClientBehaviors()
+            final Collection<List<ClientBehavior>> behaviors = holder.getClientBehaviors()
                         .values();
             if (!behaviors.isEmpty()) {
                 for (final List<ClientBehavior> listBehaviors : behaviors) {

@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller.kanban;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +43,7 @@ import org.primefaces.extensions.model.kanban.KanbanItem;
 @ViewScoped
 public class KanbanClientApiController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private List<KanbanColumn> columns;

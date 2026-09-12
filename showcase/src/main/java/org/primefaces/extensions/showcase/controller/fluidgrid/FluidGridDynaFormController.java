@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller.fluidgrid;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,6 +45,7 @@ import org.primefaces.extensions.showcase.model.fluidgrid.DynamicField;
 @ViewScoped
 public class FluidGridDynaFormController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
     private List<FluidGridItem> items;
 

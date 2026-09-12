@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller.inputplace;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import jakarta.faces.application.FacesMessage;
@@ -35,6 +36,7 @@ import org.primefaces.extensions.model.inputplace.Place;
 @ViewScoped
 public class BasicInputPlaceController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private String input;

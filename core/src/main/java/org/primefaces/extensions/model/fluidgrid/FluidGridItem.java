@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.model.fluidgrid;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
@@ -36,6 +37,7 @@ import org.primefaces.extensions.model.common.KeyData;
 public class FluidGridItem implements KeyData, Serializable {
 
     public static final String DEFAULT_TYPE = "default";
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private String key;

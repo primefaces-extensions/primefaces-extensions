@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller.gchart;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.*;
 
@@ -43,6 +44,7 @@ import com.google.gson.JsonElement;
 @RequestScoped
 public class BasicGChartController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 253762400419864192L;
 
     private final Random random = new Random();

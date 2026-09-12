@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
@@ -49,6 +50,7 @@ import org.primefaces.extensions.event.TimeSelectEvent;
 @ViewScoped
 public class TimePickerController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 20120224L;
 
     private Date time1;

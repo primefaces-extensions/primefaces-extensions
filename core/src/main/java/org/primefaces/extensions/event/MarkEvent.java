@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.event;
 
+import java.io.Serial;
 import java.util.List;
 
 import jakarta.faces.component.UIComponent;
@@ -37,6 +38,7 @@ import org.primefaces.extensions.model.marktext.MarkPosition;
  */
 public class MarkEvent extends AbstractAjaxBehaviorEvent {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private final String value;

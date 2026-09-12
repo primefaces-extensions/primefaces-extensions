@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller.fuzzysearch;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
@@ -42,6 +43,7 @@ import org.primefaces.extensions.showcase.model.system.Theme;
 @ViewScoped
 public class FuzzySearchController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 20120224L;
 
     private List<Theme> themes;

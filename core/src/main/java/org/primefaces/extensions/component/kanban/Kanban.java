@@ -139,11 +139,9 @@ public class Kanban extends KanbanBaseImpl {
             return true;
         }
         final Object value = getValue();
-        if (value instanceof List) {
-            final List<?> columns = (List<?>) value;
+        if (value instanceof List<?> columns) {
             for (final Object obj : columns) {
-                if (obj instanceof KanbanColumn) {
-                    final KanbanColumn col = (KanbanColumn) obj;
+                if (obj instanceof KanbanColumn col) {
                     if (sourceColumnId.equals(col.getId()) && col.getDragTo() != null
                                 && !col.getDragTo().isEmpty()) {
                         return col.getDragTo().contains(targetColumnId);

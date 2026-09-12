@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,7 @@ import jakarta.inject.Named;
 @ViewScoped
 public class LocaleController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
     private List<Locale> selectedLocales;
     private Locale enteredLocale;

@@ -103,8 +103,7 @@ public class Keynote extends KeynoteBaseImpl {
         if (items == null) {
             items = new HashMap<>();
             for (final UIComponent child : getChildren()) {
-                if (child instanceof UIKeynoteItem) {
-                    final UIKeynoteItem keynoteItem = (UIKeynoteItem) child;
+                if (child instanceof UIKeynoteItem keynoteItem) {
                     items.put(keynoteItem.getType(), keynoteItem);
                 }
             }
@@ -207,9 +206,9 @@ public class Keynote extends KeynoteBaseImpl {
                     UIKeynoteItem uiKeynoteItem = null;
                     if (getVar() == null) {
                         for (final UIComponent child : getChildren()) {
-                            if (child instanceof UIKeynoteItem &&
-                                        ((UIKeynoteItem) child).getType().equals(keynoteItem.getType())) {
-                                uiKeynoteItem = (UIKeynoteItem) child;
+                            if (child instanceof UIKeynoteItem item &&
+                                        item.getType().equals(keynoteItem.getType())) {
+                                uiKeynoteItem = item;
                             }
                         }
                     }
@@ -304,8 +303,8 @@ public class Keynote extends KeynoteBaseImpl {
                 final KeynoteItem keynoteItem) {
         if (getChildCount() > 0) {
             for (final UIComponent child : getChildren()) {
-                if (child instanceof UIKeynoteItem
-                            && ((UIKeynoteItem) child).getType().equals(keynoteItem.getType())) {
+                if (child instanceof UIKeynoteItem item
+                            && item.getType().equals(keynoteItem.getType())) {
                     setData(keynoteItem);
                     if (getData() == null) {
                         return false;

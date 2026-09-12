@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.component.masterdetail;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
@@ -47,6 +48,7 @@ import org.primefaces.util.ComponentTraversalUtils;
  */
 public class PreRenderSourceListener implements ComponentSystemEventListener, Serializable {
 
+    @Serial
     private static final long serialVersionUID = 20111121L;
 
     @Override
@@ -140,8 +142,8 @@ public class PreRenderSourceListener implements ComponentSystemEventListener, Se
         UIComponent parent = component.getParent();
 
         while (parent != null) {
-            if (parent instanceof MasterDetail) {
-                return (MasterDetail) parent;
+            if (parent instanceof MasterDetail detail) {
+                return detail;
             }
 
             parent = parent.getParent();
@@ -154,8 +156,8 @@ public class PreRenderSourceListener implements ComponentSystemEventListener, Se
         UIComponent parent = component.getParent();
 
         while (parent != null) {
-            if (parent instanceof MasterDetailLevel) {
-                return (MasterDetailLevel) parent;
+            if (parent instanceof MasterDetailLevel level) {
+                return level;
             }
 
             parent = parent.getParent();
@@ -166,9 +168,9 @@ public class PreRenderSourceListener implements ComponentSystemEventListener, Se
 
     private void addUIParameter(FacesContext fc, UIComponent source, String paramName, Object paramValue) {
         for (final UIComponent child : source.getChildren()) {
-            if (child instanceof UIParameter && paramName.equals(((UIParameter) child).getName())) {
+            if (child instanceof UIParameter parameter && paramName.equals(parameter.getName())) {
                 // update value
-                ((UIParameter) child).setValue(paramValue);
+                parameter.setValue(paramValue);
 
                 return;
             }
@@ -189,7 +191,7 @@ public class PreRenderSourceListener implements ComponentSystemEventListener, Se
         }
 
         for (final UIComponent child : childs) {
-            if (child instanceof UIParameter && paramName.equals(((UIParameter) child).getName())) {
+            if (child instanceof UIParameter parameter && paramName.equals(parameter.getName())) {
                 childs.remove(child);
 
                 break;

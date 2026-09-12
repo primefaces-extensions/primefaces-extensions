@@ -36,6 +36,7 @@ import jakarta.inject.Named;
 @ViewScoped
 public class BlockUIController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 20130903L;
 
     public void doSomething() {

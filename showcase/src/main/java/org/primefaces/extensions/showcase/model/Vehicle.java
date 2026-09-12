@@ -33,6 +33,7 @@ import java.util.*;
  */
 public class Vehicle implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private int model;

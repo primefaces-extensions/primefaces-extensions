@@ -24,6 +24,7 @@ package org.primefaces.extensions.showcase.util;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -165,7 +166,7 @@ public class MonacoEditorSettings {
     private static String replaceRandomOccurence(String value, int count, Pattern search,
                 final Supplier<String> replacement) {
         for (int i = 1; i <= count; i += 1) {
-            final int pos = (int) Math.floor(Math.random() * value.length());
+            final int pos = (int) Math.floor(ThreadLocalRandom.current().nextDouble() * value.length());
             final Matcher matcher = search.matcher(value);
             boolean matches = matcher.find(pos);
             if (!matches) {

@@ -170,8 +170,7 @@ public class MasterDetail extends MasterDetailBaseImpl {
 
     public MasterDetailLevel getDetailLevelByLevel(final int level) {
         for (final UIComponent child : getChildren()) {
-            if (child instanceof MasterDetailLevel) {
-                final MasterDetailLevel mdl = (MasterDetailLevel) child;
+            if (child instanceof MasterDetailLevel mdl) {
                 if (mdl.getLevel() == level) {
                     return mdl;
                 }
@@ -241,8 +240,8 @@ public class MasterDetail extends MasterDetailBaseImpl {
     public BreadCrumb getBreadcrumb() {
         BreadCrumb breadCrumb = null;
         for (final UIComponent child : getChildren()) {
-            if (child instanceof BreadCrumb) {
-                breadCrumb = (BreadCrumb) child;
+            if (child instanceof BreadCrumb crumb) {
+                breadCrumb = crumb;
 
                 break;
             }
@@ -255,8 +254,8 @@ public class MasterDetail extends MasterDetailBaseImpl {
             final String menuItemIdPrefix = getId() + "_bcItem_";
 
             for (final UIComponent child : getChildren()) {
-                if (child instanceof MasterDetailLevel) {
-                    final int level = ((MasterDetailLevel) child).getLevel();
+                if (child instanceof MasterDetailLevel detailLevel) {
+                    final int level = detailLevel.getLevel();
 
                     final DefaultMenuItem menuItem = new DefaultMenuItem();
                     menuItem.setId(menuItemIdPrefix + level);
@@ -295,8 +294,7 @@ public class MasterDetail extends MasterDetailBaseImpl {
         int count = 0;
 
         for (final UIComponent child : getChildren()) {
-            if (child instanceof MasterDetailLevel) {
-                final MasterDetailLevel mdl = (MasterDetailLevel) child;
+            if (child instanceof MasterDetailLevel mdl) {
                 count++;
 
                 if (detailLevelToProcess == null && mdl.getLevel() != null && mdl.getLevel() == currentLevel) {
@@ -324,8 +322,7 @@ public class MasterDetail extends MasterDetailBaseImpl {
 
         int pos = 0;
         for (final UIComponent child : getChildren()) {
-            if (child instanceof MasterDetailLevel) {
-                final MasterDetailLevel mdl = (MasterDetailLevel) child;
+            if (child instanceof MasterDetailLevel mdl) {
                 pos++;
 
                 if (pos == levelPositionToGo) {

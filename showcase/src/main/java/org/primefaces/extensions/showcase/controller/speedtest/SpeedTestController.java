@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller.speedtest;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import jakarta.faces.application.FacesMessage;
@@ -42,6 +43,7 @@ import org.primefaces.extensions.event.SpeedTestEvent;
 @ViewScoped
 public class SpeedTestController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = -5297177555931103300L;
     private static final Integer ONEMB = 1024 * 1024;
     // Size of Download-File (Default=5)

@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import jakarta.faces.application.FacesMessage;
@@ -42,6 +43,7 @@ import org.primefaces.extensions.event.RotateEvent;
 @ViewScoped
 public class ImageController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 20111020L;
 
     private String imageUrl;

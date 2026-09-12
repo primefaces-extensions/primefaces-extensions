@@ -125,8 +125,8 @@ public class SelectDetailLevelListener implements AjaxBehaviorListener, ActionLi
         UIComponent parent = component.getParent();
 
         while (parent != null) {
-            if (parent instanceof MasterDetailLevel) {
-                return (MasterDetailLevel) parent;
+            if (parent instanceof MasterDetailLevel level) {
+                return level;
             }
 
             parent = parent.getParent();

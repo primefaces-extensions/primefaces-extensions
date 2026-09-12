@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller.timeago;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -38,6 +39,7 @@ import jakarta.inject.Named;
 @ViewScoped
 public class BasicTimeAgoController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private final OffsetDateTime created = OffsetDateTime.now();

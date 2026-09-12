@@ -51,8 +51,7 @@ public class Switch extends SwitchBaseImpl {
         for (final UIComponent child : getChildren()) {
             child.setRendered(false);
 
-            if (child instanceof Case) {
-                final Case caseComponent = (Case) child;
+            if (child instanceof Case caseComponent) {
                 final Object evaluate = getValue();
                 final Object caseValue = caseComponent.getValue();
 

@@ -144,8 +144,7 @@ public class DocumentViewerRenderer extends CoreRenderer<DocumentViewer> {
 
         final Object value = component.getValue();
         String downloadName = component.getDownload();
-        if (value instanceof StreamedContent) {
-            final StreamedContent streamedContent = (StreamedContent) value;
+        if (value instanceof StreamedContent streamedContent) {
             downloadName = Objects.toString(streamedContent.getName(), downloadName);
         }
         return DynamicContentSrcBuilder.build(context,

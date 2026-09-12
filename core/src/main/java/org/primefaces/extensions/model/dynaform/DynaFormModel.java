@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.model.dynaform;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,7 @@ import java.util.UUID;
  */
 public class DynaFormModel implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 20120514L;
 
     private final String uuid;
@@ -155,11 +157,11 @@ public class DynaFormModel implements Serializable {
         final List<DynaFormControl> controlsToBeRemoved = new ArrayList<>();
         final List<DynaFormLabel> labelsToBeRemoved = new ArrayList<>();
         for (final AbstractDynaFormElement element : rowToBeRemoved.getElements()) {
-            if (element instanceof DynaFormControl) {
-                controlsToBeRemoved.add((DynaFormControl) element);
+            if (element instanceof DynaFormControl control) {
+                controlsToBeRemoved.add(control);
             }
-            else if (element instanceof DynaFormLabel) {
-                labelsToBeRemoved.add((DynaFormLabel) element);
+            else if (element instanceof DynaFormLabel label) {
+                labelsToBeRemoved.add(label);
             }
         }
 
@@ -182,8 +184,7 @@ public class DynaFormModel implements Serializable {
             dynaFormRow.setRow(row);
             for (final AbstractDynaFormElement element : dynaFormRow.getElements()) {
                 element.setRow(row);
-                if (element instanceof DynaFormControl) {
-                    final DynaFormControl control = (DynaFormControl) element;
+                if (element instanceof DynaFormControl control) {
                     final int delta = rowToBeRemoved.getElements().size();
                     control.setPosition(control.getPosition() - delta);
                     control.generateKey();

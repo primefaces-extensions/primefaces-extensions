@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.webapp;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
@@ -41,6 +42,7 @@ import org.primefaces.extensions.showcase.model.system.Theme;
 @SessionScoped
 public class UserSettings implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 20111020L;
 
     private List<Theme> availableThemes;

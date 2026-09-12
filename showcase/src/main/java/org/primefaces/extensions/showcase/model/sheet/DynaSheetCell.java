@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.model.sheet;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import org.apache.commons.lang3.StringUtils;
@@ -33,6 +34,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  */
 public class DynaSheetCell implements Comparable<DynaSheetCell>, Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private Integer value;

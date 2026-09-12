@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.model.sheet;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -32,6 +33,7 @@ import java.util.Objects;
  */
 public class SheetUpdate implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private final transient Object rowData;

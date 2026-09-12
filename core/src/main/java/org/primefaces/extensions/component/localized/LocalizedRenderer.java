@@ -26,7 +26,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Locale;
 
 import jakarta.el.ExpressionFactory;
@@ -149,7 +148,7 @@ public class LocalizedRenderer extends CoreRenderer<Localized> {
     }
 
     protected Path existingPath(final String first, final String more) {
-        final Path path = Paths.get(first, more);
+        final Path path = Path.of(first, more);
         Path existingPath = path.toFile().exists() ? path : null;
         if (existingPath == null) {
             final String resourcePath = first + "/" + more;
@@ -157,7 +156,7 @@ public class LocalizedRenderer extends CoreRenderer<Localized> {
                 // Quarkus
                 final URL url = Thread.currentThread().getContextClassLoader().getResource(resourcePath);
                 if (url != null) {
-                    existingPath = Paths.get(url.toURI());
+                    existingPath = Path.of(url.toURI());
                 }
             }
             catch (final URISyntaxException e) {

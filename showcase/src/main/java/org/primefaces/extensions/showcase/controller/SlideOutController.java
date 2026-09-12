@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import jakarta.faces.application.FacesMessage;
@@ -40,6 +41,7 @@ import org.primefaces.extensions.event.OpenEvent;
 @ViewScoped
 public class SlideOutController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 20120224L;
 
     public void closeListener(final CloseEvent closeEvent) {

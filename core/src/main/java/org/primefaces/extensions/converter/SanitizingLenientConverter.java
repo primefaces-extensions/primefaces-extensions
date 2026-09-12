@@ -21,6 +21,8 @@
  */
 package org.primefaces.extensions.converter;
 
+import java.io.Serial;
+
 import jakarta.faces.convert.FacesConverter;
 
 import org.owasp.html.PolicyFactory;
@@ -34,6 +36,7 @@ import org.primefaces.extensions.util.HtmlSanitizer;
 @FacesConverterInfo(name = "sanitizerLenient", description = "Converter to sanitize HTML with an OWASP PolicyFactory.")
 public class SanitizingLenientConverter extends SanitizingConverter {
 
+    @Serial
     private static final long serialVersionUID = 20241116L;
 
     /**

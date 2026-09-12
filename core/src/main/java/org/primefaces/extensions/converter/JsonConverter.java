@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.converter;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -53,6 +54,7 @@ import org.primefaces.util.Constants;
 @FacesConverterInfo(name = "convertJson", description = "Converter to convert JSON.")
 public class JsonConverter extends JsonConverterBaseImpl implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 20121214L;
 
     private static final Map<String, Class<?>> PRIMITIVE_CLASSES = new HashMap<>();

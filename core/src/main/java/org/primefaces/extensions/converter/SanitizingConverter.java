@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.converter;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import jakarta.faces.component.UIComponent;
@@ -42,6 +43,7 @@ import org.primefaces.util.LangUtils;
 @FacesConverterInfo(name = "sanitizer", description = "Converter to sanitize HTML with an OWASP PolicyFactory.")
 public class SanitizingConverter extends SanitizingConverterBaseImpl implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 20121214L;
 
     /**

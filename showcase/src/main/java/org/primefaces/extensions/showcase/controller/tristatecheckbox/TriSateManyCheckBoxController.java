@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller.tristatecheckbox;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,6 +44,7 @@ import org.primefaces.extensions.showcase.model.State;
 @ViewScoped
 public class TriSateManyCheckBoxController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 20110302L;
 
     private Map<String, String> selectedOptionsTriStateBasic;

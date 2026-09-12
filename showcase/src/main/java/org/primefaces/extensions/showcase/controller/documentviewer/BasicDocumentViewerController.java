@@ -23,6 +23,7 @@ package org.primefaces.extensions.showcase.controller.documentviewer;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.Serial;
 import java.io.Serializable;
 
 import jakarta.enterprise.context.RequestScoped;
@@ -39,6 +40,7 @@ import com.lowagie.text.pdf.PdfWriter;
 @RequestScoped
 public class BasicDocumentViewerController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private String downloadFileName = "pfe-rocks.pdf";

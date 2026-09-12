@@ -251,14 +251,14 @@ public class DynaFormRenderer extends CoreRenderer<DynaForm> {
                     styleClass = styleClass + " " + CELL_LAST_CLASS;
                 }
 
-                if (element instanceof DynaFormLabel) {
-                    renderLabel(writer, labelCommonClass, (DynaFormLabel) element, styleClass, component);
+                if (element instanceof DynaFormLabel label) {
+                    renderLabel(writer, labelCommonClass, label, styleClass, component);
                 }
-                else if (element instanceof DynaFormControl) {
-                    renderControl(fc, component, writer, controlCommonClass, (DynaFormControl) element, styleClass);
+                else if (element instanceof DynaFormControl control) {
+                    renderControl(fc, component, writer, controlCommonClass, control, styleClass);
                 }
-                else if (element instanceof DynaFormModelElement) {
-                    renderNestedModel(fc, component, writer, (DynaFormModelElement) element, styleClass);
+                else if (element instanceof DynaFormModelElement modelElement) {
+                    renderNestedModel(fc, component, writer, modelElement, styleClass);
                 }
 
                 writer.endElement("td");
@@ -406,8 +406,8 @@ public class DynaFormRenderer extends CoreRenderer<DynaForm> {
                         continue;
                     }
 
-                    final String targetClientId = target instanceof InputHolder
-                                ? ((InputHolder) target).getInputClientId()
+                    final String targetClientId = target instanceof InputHolder ih
+                                ? ih.getInputClientId()
                                 : target.getClientId(fc);
                     label.setTargetClientId(targetClientId);
 

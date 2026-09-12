@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller.fluidgrid;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,7 @@ import org.primefaces.extensions.model.fluidgrid.FluidGridItem;
 @ViewScoped
 public class FluidGridDynamicLabelsController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private static int counter = 0;
@@ -75,6 +77,7 @@ public class FluidGridDynamicLabelsController implements Serializable {
     }
 
     public static class DynamicLabelField implements Serializable {
+        @Serial
         private static final long serialVersionUID = 1L;
         private String label;
         private String value;

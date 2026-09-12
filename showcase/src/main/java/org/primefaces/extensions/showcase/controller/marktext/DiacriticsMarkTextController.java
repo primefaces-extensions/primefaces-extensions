@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller.marktext;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +43,7 @@ import org.primefaces.extensions.model.marktext.MarkPosition;
 @ViewScoped
 public class DiacriticsMarkTextController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private String searchTerm = "cafe";

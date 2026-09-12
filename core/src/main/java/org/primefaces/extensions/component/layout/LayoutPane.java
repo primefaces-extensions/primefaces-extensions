@@ -174,18 +174,17 @@ public class LayoutPane extends LayoutPaneBaseImpl {
         final LayoutOptions thisLayoutOptions = getOptions();
         LayoutOptions parentOpts;
 
-        if (parent instanceof LayoutPane) {
-            final LayoutOptions parentLayoutOptions = ((LayoutPane) parent).getOptions();
+        if (parent instanceof LayoutPane pane) {
+            final LayoutOptions parentLayoutOptions = pane.getOptions();
             parentOpts = parentLayoutOptions.getChildOptions();
             if (parentOpts == null) {
                 parentOpts = new LayoutOptions();
                 parentLayoutOptions.setChildOptions(parentOpts);
             }
         }
-        else if (parent instanceof Layout) {
-            parentOpts = (LayoutOptions) ((Layout) parent).getOptions();
+        else if (parent instanceof Layout layout) {
+            parentOpts = (LayoutOptions) layout.getOptions();
             if (parentOpts == null) {
-                final Layout layout = (Layout) parent;
                 parentOpts = new LayoutOptions();
                 layout.setOptions(parentOpts);
 
@@ -219,11 +218,11 @@ public class LayoutPane extends LayoutPaneBaseImpl {
                 }
             }
         }
-        else if ((parent instanceof UIForm) || (parent instanceof HtmlPanelGroup
-                    && Layout.STYLE_CLASS_LAYOUT_CONTENT.equals(((HtmlPanelGroup) parent).getStyleClass())
-                    && "block".equals(((HtmlPanelGroup) parent).getLayout()))
-                    || (parent instanceof OutputPanel
-                                && Layout.STYLE_CLASS_LAYOUT_CONTENT.equals(((OutputPanel) parent).getStyleClass()))
+        else if ((parent instanceof UIForm) || (parent instanceof HtmlPanelGroup group
+                    && Layout.STYLE_CLASS_LAYOUT_CONTENT.equals(group.getStyleClass())
+                    && "block".equals(group.getLayout()))
+                    || (parent instanceof OutputPanel panel
+                                && Layout.STYLE_CLASS_LAYOUT_CONTENT.equals(panel.getStyleClass()))
                     ||
                     (parent != null && parent.toString().contains(Layout.STYLE_CLASS_LAYOUT_CONTENT))) {
             setOptions(parent.getParent());

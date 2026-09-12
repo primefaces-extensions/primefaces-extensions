@@ -24,6 +24,7 @@ package org.primefaces.extensions.showcase.controller;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
@@ -40,6 +41,7 @@ import jakarta.inject.Named;
 @ViewScoped
 public class DataTableController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 20111020L;
 
     private List<Message> messages;
@@ -123,6 +125,7 @@ public class DataTableController implements Serializable {
 
     public class Message implements Serializable {
 
+        @Serial
         private static final long serialVersionUID = 1L;
 
         private String subject;
@@ -130,7 +133,7 @@ public class DataTableController implements Serializable {
         private long time;
 
         public Message() {
-            time = System.currentTimeMillis() + (long) (Math.random() * 10);
+            time = System.currentTimeMillis() + (long) (ThreadLocalRandom.current().nextDouble() * 10);
         }
 
         public final String getSubject() {

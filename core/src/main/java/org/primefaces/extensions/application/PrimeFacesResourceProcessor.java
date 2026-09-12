@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.application;
 
+import java.io.Serial;
 import java.util.Map;
 
 import jakarta.faces.context.FacesContext;
@@ -53,6 +54,7 @@ import org.primefaces.util.MapBuilder;
  */
 public class PrimeFacesResourceProcessor implements PhaseListener {
 
+    @Serial
     private static final long serialVersionUID = 1L;
     private static final String LIBRARY = org.primefaces.util.Constants.LIBRARY;
     private static final Map<String, String> THEME_MAPPING = MapBuilder.<String, String> builder()

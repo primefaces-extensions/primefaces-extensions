@@ -52,8 +52,8 @@ public class MasterDetailLevelVisitCallback implements VisitCallback {
             return VisitResult.REJECT;
         }
 
-        if (target instanceof EditableValueHolder) {
-            editableValueHolders.add((EditableValueHolder) target);
+        if (target instanceof EditableValueHolder holder) {
+            editableValueHolders.add(holder);
         }
 
         return VisitResult.ACCEPT;

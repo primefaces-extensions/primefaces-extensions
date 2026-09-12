@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.model.masterdetail;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
@@ -32,6 +33,7 @@ import java.util.List;
  */
 public class Sport implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 20111120L;
 
     private String name;

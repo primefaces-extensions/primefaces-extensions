@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller.sheet;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +43,7 @@ import org.primefaces.extensions.showcase.model.sheet.DynaSheetRow;
 @ViewScoped
 public class SheetDynamicController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 20120224L;
 
     private List<DynaSheetRow> sheetRows = new ArrayList<>();

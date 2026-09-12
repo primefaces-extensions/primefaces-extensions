@@ -21,6 +21,8 @@
  */
 package org.primefaces.extensions.event;
 
+import java.io.Serial;
+
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.component.behavior.Behavior;
 
@@ -35,6 +37,7 @@ import org.primefaces.event.AbstractAjaxBehaviorEvent;
 public class SpeedTestEvent extends AbstractAjaxBehaviorEvent {
 
     public static final String NAME = "speedtest";
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private final Double pingTimeMS;

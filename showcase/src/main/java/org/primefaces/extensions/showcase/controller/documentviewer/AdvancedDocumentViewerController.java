@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller.documentviewer;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import jakarta.faces.view.ViewScoped;
@@ -30,6 +31,7 @@ import jakarta.inject.Named;
 @ViewScoped
 public class AdvancedDocumentViewerController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private int page = 2;

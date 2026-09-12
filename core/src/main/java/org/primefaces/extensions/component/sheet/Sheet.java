@@ -228,8 +228,8 @@ public class Sheet extends SheetBaseImpl {
      */
     private List<SheetColumn> getColumns(final UIComponent parent) {
         for (final UIComponent child : parent.getChildren()) {
-            if (child instanceof SheetColumn) {
-                columns.add((SheetColumn) child);
+            if (child instanceof SheetColumn column) {
+                columns.add(column);
             }
         }
         return columns;
@@ -451,8 +451,8 @@ public class Sheet extends SheetBaseImpl {
         String currentSortById = getCurrentSortBy();
         if (LangUtils.isEmpty(currentSortById)) {
             final Object sortBy = getSortBy();
-            if (sortBy instanceof String) {
-                currentSortById = (String) sortBy;
+            if (sortBy instanceof String string) {
+                currentSortById = string;
             }
         }
         else {

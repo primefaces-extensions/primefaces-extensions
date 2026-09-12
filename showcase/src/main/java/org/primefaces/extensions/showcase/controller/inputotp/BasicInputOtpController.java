@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller.inputotp;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import jakarta.faces.application.FacesMessage;
@@ -32,6 +33,7 @@ import jakarta.inject.Named;
 @ViewScoped
 public class BasicInputOtpController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private String normal;

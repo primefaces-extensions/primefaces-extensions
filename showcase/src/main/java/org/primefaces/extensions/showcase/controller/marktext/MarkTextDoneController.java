@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller.marktext;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import jakarta.faces.view.ViewScoped;
@@ -36,6 +37,7 @@ import jakarta.inject.Named;
 @ViewScoped
 public class MarkTextDoneController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private String searchTerm = "lorem";

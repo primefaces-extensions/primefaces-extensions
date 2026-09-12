@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.event;
 
+import java.io.Serial;
 import java.math.BigDecimal;
 
 import jakarta.faces.component.UIComponent;
@@ -37,6 +38,7 @@ import org.primefaces.event.AbstractAjaxBehaviorEvent;
 public class ButtonEvent extends AbstractAjaxBehaviorEvent {
 
     public static final String NAME = "button";
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private final String buttonName;

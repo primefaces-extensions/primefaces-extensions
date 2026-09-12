@@ -134,8 +134,7 @@ public class LayoutRenderer extends CoreRenderer<Layout> {
         }
 
         final Object layoutOptions = component.getOptions();
-        if (layoutOptions instanceof LayoutOptions) {
-            final LayoutOptions options = (LayoutOptions) layoutOptions;
+        if (layoutOptions instanceof LayoutOptions options) {
             wb.append(",options:" + options.toJson());
         }
         else if (layoutOptions instanceof String) {

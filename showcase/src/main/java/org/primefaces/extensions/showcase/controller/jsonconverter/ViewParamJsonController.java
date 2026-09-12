@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller.jsonconverter;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -51,6 +52,7 @@ import org.primefaces.extensions.util.RequestParameterBuilder;
 @ViewScoped
 public class ViewParamJsonController implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Inject
