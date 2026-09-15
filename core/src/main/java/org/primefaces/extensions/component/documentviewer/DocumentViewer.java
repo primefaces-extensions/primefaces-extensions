@@ -48,6 +48,23 @@ public class DocumentViewer extends DocumentViewerBaseImpl {
 
     private Locale appropriateLocale;
 
+    /**
+     * Restores the {@link jakarta.faces.component.UIGraphic} contract where <code>url</code> is a typesafe alias for <code>value</code>. The CDK generated base
+     * class stores <code>url</code> in its own state key, which would leave <code>value</code> (used by the renderer) empty when a literal <code>url</code> is
+     * set. See GitHub #2769.
+     *
+     * @return the URL of the document to view
+     */
+    @Override
+    public String getUrl() {
+        return (String) getValue();
+    }
+
+    @Override
+    public void setUrl(final String url) {
+        setValue(url);
+    }
+
     public Locale calculateLocale() {
         if (appropriateLocale == null) {
             final FacesContext fc = FacesContext.getCurrentInstance();
