@@ -605,7 +605,7 @@
                         </goals>
                         <phase>verify</phase>
                         <configuration>
-                            <arguments>install</arguments>
+                            <arguments>ci</arguments>
                             <testFailureIgnore>true</testFailureIgnore>
                         </configuration>
                     </execution>
