@@ -24,9 +24,13 @@
                     onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
                     url="#{request.contextPath}/sections/sheet/dynamicColumns.jsf"/>
         <p:menuitem value="Data Export"
-                    styleClass="#{navigationContext.getMenuitemStyleClass('dataExport')}"
-                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
-                    url="#{request.contextPath}/sections/sheet/dataExport.jsf"/>
+                     styleClass="#{navigationContext.getMenuitemStyleClass('dataExport')}"
+                     onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
+                     url="#{request.contextPath}/sections/sheet/dataExport.jsf"/>
+        <p:menuitem value="Outside Click Deselects"
+                     styleClass="#{navigationContext.getMenuitemStyleClass('outsideClickDeselects')}"
+                     onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
+                     url="#{request.contextPath}/sections/sheet/outsideClickDeselects.jsf"/>
     </p:menu>
 </ui:composition>
 </html>
