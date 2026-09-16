@@ -557,6 +557,15 @@ PrimeFaces.widget.ExtSheet = class extends PrimeFaces.widget.DeferredWidget {
     }
 
     handleHotBeforeKeyDown(e) {
+        // GitHub #2764: if focus is outside the sheet, don't process keyboard events
+        // This prevents typing in other components (e.g., selectOneMenu filter)
+        // from being captured by the sheet's autocomplete cells when outsideClickDeselects is false
+        let activeEl = document.activeElement;
+        if (activeEl && activeEl !== document.body && !$.contains(this.rootElement, activeEl)) {
+            e.stopImmediatePropagation();
+            return;
+        }
+
         var selectedLast = this.getSelectedLast();
 
         if (!selectedLast) {
