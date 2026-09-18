@@ -114,7 +114,7 @@
         <dependency>
             <groupId>org.xhtmlrenderer</groupId>
             <artifactId>flying-saucer-pdf</artifactId>
-            <version>9.13.3</version>
+            <version>10.5.0</version>
         </dependency>
         <!-- Sanitizing Converter -->
         <dependency>
