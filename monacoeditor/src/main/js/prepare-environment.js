@@ -3,3 +3,5 @@
 // https://github.com/microsoft/monaco-editor/blob/master/CHANGELOG.md#0220-29012021
 window.MonacoEnvironment = window.MonacoEnvironment || {};
 window.MonacoEnvironment.globalAPI = true;
+// Resolve Monaco's default worker URLs relative to the generated editor bundle.
+window.MonacoEnvironment.baseUrl = document.currentScript?.src || document.baseURI;

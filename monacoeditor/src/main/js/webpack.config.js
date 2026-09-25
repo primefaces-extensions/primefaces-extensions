@@ -22,11 +22,11 @@ export default function(env, argv) {
     devtool: env.production ? undefined : "inline-source-map",
     entry: {
       "editor": "./index.js",
-      "editor.worker": "monaco-editor-mod/esm/vs/editor/editor.worker.js",
-      "json.worker": "monaco-editor-mod/esm/vs/language/json/json.worker",
-      "css.worker": "monaco-editor-mod/esm/vs/language/css/css.worker",
-      "html.worker": "monaco-editor-mod/esm/vs/language/html/html.worker",
-      "ts.worker": "monaco-editor-mod/esm/vs/language/typescript/ts.worker",
+      "editor.worker": "monaco-editor-mod/editor/editor.worker",
+      "json.worker": "monaco-editor-mod/language/json/json.worker",
+      "css.worker": "monaco-editor-mod/language/css/css.worker",
+      "html.worker": "monaco-editor-mod/language/html/html.worker",
+      "ts.worker": "monaco-editor-mod/language/typescript/ts.worker",
     },
     output: {
       globalObject: "this",
