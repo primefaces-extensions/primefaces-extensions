@@ -148,6 +148,10 @@ async function injectSourcePath() {
             const transPath = vsPath + "/" + basename(file, ".js");
             await replaceInFile(file,
                 [
+                    /import\.meta\.url/g,
+                    "globalThis.MonacoEnvironment?.baseUrl || document.baseURI",
+                ],
+                [
                     /(?<!function\s+)localize\(/g,
                     `localize('${transPath}', `,
                 ],

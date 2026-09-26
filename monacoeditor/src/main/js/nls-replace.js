@@ -2,10 +2,13 @@
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-// eslint-disable-next-line local/code-import-patterns
-import { getNLSLanguage, getNLSMessages } from "./node_modules/monaco-editor-mod/esm/vs/nls.messages.js";
-// eslint-disable-next-line local/code-import-patterns
-export { getNLSLanguage, getNLSMessages } from "./node_modules/monaco-editor-mod/esm/vs/nls.messages.js";
+function getNLSMessages() {
+    return globalThis._VSCODE_NLS_MESSAGES;
+}
+function getNLSLanguage() {
+    return globalThis._VSCODE_NLS_LANGUAGE;
+}
+export { getNLSLanguage, getNLSMessages };
 const globalScope = typeof globalThis === "object" ? globalThis : typeof window === "object" ? window : typeof self === "object" ? self : global; 
 const isPseudo = getNLSLanguage() === 'pseudo' || (typeof document !== 'undefined' && document.location && document.location.hash.indexOf('pseudo=true') >= 0);
 const DEFAULT_TAG = 'i-default';
