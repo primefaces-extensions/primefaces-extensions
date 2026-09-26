@@ -249,14 +249,15 @@ window.monacoModule.helper = (function () {
    */
   async function loadEditorLib(options, forceLibReload) {
     if (!("monaco" in window) || forceLibReload) {
+      MonacoEnvironment = typeof MonacoEnvironment === "object" ? MonacoEnvironment : {};
       if (!options.locale) {
-        MonacoEnvironment = typeof MonacoEnvironment === "object" ? MonacoEnvironment : {};
         MonacoEnvironment.Locale = {
           language: "",
           data: {},
         };
       }
       const uriEditor = getMonacoResource("editor.js");
+      MonacoEnvironment.baseUrl = MonacoEnvironment.baseUrl || uriEditor;
       await getScript(uriEditor);
       return true;
     }
