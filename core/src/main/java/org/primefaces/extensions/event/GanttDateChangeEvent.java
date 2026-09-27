@@ -21,7 +21,6 @@
  */
 package org.primefaces.extensions.event;
 
-import java.io.Serial;
 import java.util.Date;
 
 import jakarta.faces.component.UIComponent;
@@ -34,7 +33,6 @@ import jakarta.faces.event.AjaxBehaviorEvent;
 public class GanttDateChangeEvent extends AjaxBehaviorEvent {
 
     public static final String NAME = "dateChange";
-    @Serial
     private static final long serialVersionUID = 1L;
 
     private String taskId;
