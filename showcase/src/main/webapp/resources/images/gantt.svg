@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="300" viewBox="0 0 600 300" role="img" aria-labelledby="ganttTitle ganttDesc">
+<title id="ganttTitle">Frappe Gantt chart example</title>
+<desc id="ganttDesc">Gantt timeline with task bars, dependency arrows and a today marker, in the style of Frappe Gantt.</desc>
+<rect x="1" y="1" width="598" height="298" rx="12" fill="#ffffff" stroke="#e5e7eb"/>
+<clipPath id="ganttClip"><rect x="1" y="1" width="598" height="298" rx="12"/></clipPath>
+<g clip-path="url(#ganttClip)">
+<rect x="1" y="1" width="598" height="62" fill="#ffffff"/>
+<rect x="14" y="12" width="24" height="24" rx="7" fill="#044d76"/>
+<path d="M20 19v10a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4v-3h-8" fill="none" stroke="#ddfdcc" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="46" y="30" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="600" fill="#111827">January</text>
+<rect x="528" y="12" width="58" height="24" rx="12" fill="#f1f2f4"/>
+<text x="557" y="28" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#111827" text-anchor="middle">Today</text>
+<g font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#9ca3af" text-anchor="middle">
+<text x="52" y="56">01</text><text x="94" y="56">02</text><text x="136" y="56">03</text><text x="178" y="56">04</text>
+<text x="220" y="56">05</text><text x="262" y="56">06</text><text x="304" y="56">07</text>
+<text x="388" y="56">09</text><text x="430" y="56">10</text><text x="472" y="56">11</text><text x="514" y="56">12</text>
+</g>
+<rect x="332" y="42" width="30" height="22" rx="6" fill="#111827"/>
+<text x="347" y="57" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="600" fill="#ffffff" text-anchor="middle">08</text>
+<g stroke="#eef1f4">
+<line x1="52" y1="66" x2="52" y2="299"/><line x1="94" y1="66" x2="94" y2="299"/><line x1="136" y1="66" x2="136" y2="299"/>
+<line x1="178" y1="66" x2="178" y2="299"/><line x1="220" y1="66" x2="220" y2="299"/><line x1="262" y1="66" x2="262" y2="299"/>
+<line x1="304" y1="66" x2="304" y2="299"/><line x1="346" y1="66" x2="346" y2="299"/><line x1="388" y1="66" x2="388" y2="299"/>
+<line x1="430" y1="66" x2="430" y2="299"/><line x1="472" y1="66" x2="472" y2="299"/><line x1="514" y1="66" x2="514" y2="299"/>
+<line x1="556" y1="66" x2="556" y2="299"/>
+<line x1="1" y1="112" x2="599" y2="112"/><line x1="1" y1="152" x2="599" y2="152"/><line x1="1" y1="192" x2="599" y2="192"/>
+<line x1="1" y1="232" x2="599" y2="232"/><line x1="1" y1="270" x2="599" y2="270"/>
+</g>
+<g font-family="Arial, Helvetica, sans-serif" font-size="10" fill="#374151">
+<rect x="14" y="78" width="108" height="24" rx="5" fill="#ffffff" stroke="#e5e7eb"/>
+<text x="68" y="93" text-anchor="middle">Initial brainstorming</text>
+<rect x="150" y="118" width="150" height="24" rx="5" fill="#ffffff" stroke="#e5e7eb"/>
+<rect x="150" y="118" width="60" height="24" rx="5" fill="#f1f2f4"/>
+<text x="225" y="133" text-anchor="middle">Develop wireframe</text>
+<rect x="234" y="158" width="150" height="24" rx="5" fill="#ffffff" stroke="#e5e7eb"/>
+<rect x="234" y="158" width="52" height="24" rx="5" fill="#f1f2f4"/>
+<text x="309" y="173" text-anchor="middle">Client meeting</text>
+<rect x="318" y="198" width="180" height="24" rx="5" fill="#ffffff" stroke="#e5e7eb"/>
+<rect x="318" y="198" width="86" height="24" rx="5" fill="#f1f2f4"/>
+<text x="408" y="213" text-anchor="middle">Create prototype</text>
+<rect x="402" y="238" width="150" height="24" rx="5" fill="#ffffff" stroke="#e5e7eb"/>
+<text x="477" y="253" text-anchor="middle">Test design with user</text>
+</g>
+<g stroke="#c8a24b" stroke-width="1.6" fill="none">
+<path d="M68 102v12a4 4 0 0 0 4 4h74"/><path d="M260 142v10a4 4 0 0 0 4 4h6" />
+<path d="M286 182v10a4 4 0 0 0 4 4h6"/><path d="M361 222v10a4 4 0 0 0 4 4h33"/>
+</g>
+<g fill="#c8a24b">
+<path d="M146 114l8 4-8 4z"/><path d="M270 152l8 4-8 4z"/><path d="M296 192l8 4-8 4z"/><path d="M398 232l8 4-8 4z"/>
+</g>
+<circle cx="347" cy="68" r="3" fill="#111827"/>
+<line x1="347" y1="70" x2="347" y2="299" stroke="#111827" stroke-width="1.4"/>
+</g>
+</svg>
