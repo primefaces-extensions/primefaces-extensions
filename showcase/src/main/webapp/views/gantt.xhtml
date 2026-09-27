@@ -1,0 +1,28 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets">
+<ui:composition template="/templates/showcaseLayout.xhtml">
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="Gantt"/>
+        </f:facet>
+        <h:panelGroup layout="block" styleClass="centerContent">
+            Gantt is a modern, interactive Gantt chart component based on frappe-gantt. It supports drag-and-drop task rescheduling,
+            progress editing, dependency arrows, and multiple view modes (Quarter Day, Half Day, Day, Week, Month, Year).
+            <p/>
+            Based on <h:outputLink id="lnkGantt" value="https://github.com/frappe/gantt">frappe-gantt</h:outputLink> by Frappe Technologies.
+        </h:panelGroup>
+
+        <h:graphicImage library="images" name="gantt.svg" alt="Gantt chart example" width="600" styleClass="centerExample"/>
+    </ui:define>
+    <ui:define name="useCases">
+        <ui:include src="/sections/gantt/useCasesChoice.xhtml"/>
+    </ui:define>
+    <ui:define name="docuTable">
+        <ui:include src="/sections/shared/documentation.xhtml">
+            <ui:param name="tagName" value="gantt"/>
+        </ui:include>
+    </ui:define>
+</ui:composition>
+</html>

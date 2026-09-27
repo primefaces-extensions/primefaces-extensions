@@ -1,0 +1,57 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="jakarta.faces.html"
+    xmlns:ui="jakarta.faces.facelets" xmlns:p="primefaces"
+    xmlns:pe="primefaces.extensions" xmlns:f="jakarta.faces.core">
+
+    <style>
+        .gantt-demo { border: 1px solid var(--surface-border, #dee2e6); border-radius: 10px; overflow: hidden; }
+        .gantt-demo-header { display: flex; align-items: center; justify-content: space-between; gap: .75rem;
+            padding: .8rem 1rem; background: var(--surface-50, #f8f9fa); border-bottom: 1px solid var(--surface-border, #dee2e6); }
+        .gantt-demo-title { font-weight: 600; font-size: 1.05rem; margin: 0; }
+        .gantt-demo-subtitle { font-size: .85rem; opacity: .7; margin: .15rem 0 0; }
+        .gantt-demo-body { padding: 0; }
+        .gantt-demo-status { display: flex; flex-wrap: wrap; gap: 1.5rem; padding: .7rem 1rem;
+            border-top: 1px solid var(--surface-border, #dee2e6); background: var(--surface-50, #f8f9fa); font-size: .9rem; }
+        .gantt-demo-status strong { margin-right: .35rem; }
+    </style>
+
+    <p:growl id="growl" showDetail="true" showSummary="true">
+        <p:autoUpdate />
+    </p:growl>
+
+<!-- EXAMPLE-SOURCE-START -->
+    <div class="gantt-demo">
+        <div class="gantt-demo-header">
+            <div>
+                <p class="gantt-demo-title">Website relaunch plan</p>
+                <p class="gantt-demo-subtitle">Drag bars to reschedule, stretch ends to resize, move the handle to update progress.</p>
+            </div>
+            <p:chip label="#{ganttController.viewMode} view" icon="pi pi-calendar" />
+        </div>
+        <div class="gantt-demo-body">
+            <pe:gantt id="gantt"
+                      widgetVar="ganttViewWidget"
+                      tasks="#{ganttController.tasks}"
+                      viewMode="#{ganttController.viewMode}"
+                      todayButton="true"
+                      viewModeSelect="true"
+                      showProgress="true"
+                      columnWidth="45"
+                      barHeight="30"
+                      dateFormat="YYYY-MM-DD"
+                      lang="en"
+                      style="height:400px">
+                <p:ajax event="click" listener="#{ganttController.onTaskClick}" update="lastAction selectedTask growl" />
+                <p:ajax event="dateChange" listener="#{ganttController.onDateChange}" update="lastAction selectedTask growl" />
+                <p:ajax event="progressChange" listener="#{ganttController.onProgressChange}" update="lastAction selectedTask growl" />
+                <p:ajax event="viewChange" listener="#{ganttController.onViewChange}" update="lastAction selectedTask growl" />
+                <p:ajax event="dateClick" listener="#{ganttController.onDateClick}" update="lastAction selectedTask growl" />
+            </pe:gantt>
+        </div>
+        <div class="gantt-demo-status">
+            <span><strong>Selected:</strong><h:outputText id="selectedTask" value="#{empty ganttController.selectedTaskId ? 'none' : ganttController.selectedTaskId}" /></span>
+            <span><strong>Last action:</strong><h:outputText id="lastAction" value="#{empty ganttController.lastAction ? 'interact with the chart' : ganttController.lastAction}" /></span>
+        </div>
+    </div>
+<!-- EXAMPLE-SOURCE-END -->
+
+</ui:composition>

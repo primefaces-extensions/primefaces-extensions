@@ -1,0 +1,39 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:showcase="primefaces.extensions.showcase">
+<ui:composition template="/templates/showcaseLayout.xhtml">
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="Gantt"/>
+        </f:facet>
+        <h:panelGroup layout="block" styleClass="centerContent">
+            This example shows a project plan with 8 tasks, dependencies and progress. Drag a bar to reschedule it,
+            drag its ends to resize it, drag the progress handle to change completion, click a task or a date cell,
+            or switch the view mode. Every interaction fires an ajax event shown below as "Last action".
+        </h:panelGroup>
+
+        <h:panelGroup layout="block" styleClass="centerExample">
+            <ui:include src="/sections/gantt/example-basicUsage.xhtml"/>
+        </h:panelGroup>
+
+        <ui:decorate template="/templates/twoTabsDecorator.xhtml">
+            <ui:define name="contentTab1">
+${showcase:getFileContent('/sections/gantt/example-basicUsage.xhtml')}
+            </ui:define>
+            <ui:define name="contentTab2">
+${showcase:getFileContent('/org/primefaces/extensions/showcase/controller/gantt/GanttController.java')}
+            </ui:define>
+        </ui:decorate>
+    </ui:define>
+    <ui:define name="useCases">
+        <ui:include src="/sections/gantt/useCasesChoice.xhtml"/>
+    </ui:define>
+    <ui:define name="docuTable">
+        <ui:include src="/sections/shared/documentation.xhtml">
+            <ui:param name="tagName" value="gantt"/>
+        </ui:include>
+    </ui:define>
+</ui:composition>
+</html>
