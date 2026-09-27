@@ -224,6 +224,7 @@
                                 <include>waypoint/**</include>
                                 <include>kanban/**</include>
                                 <include>metergroup/**</include>
+                                <include>gantt/**</include>
                             </includes>
                             <aggregations>
                                 <aggregation>
