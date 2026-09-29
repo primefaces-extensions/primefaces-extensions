@@ -43,6 +43,15 @@ PrimeFaces.widget.ExtOrgChart = class extends PrimeFaces.widget.BaseWidget {
         var opts = $.extend(true, {}, cfg);
         opts['data'] = JSON.parse(opts['data']);
 
+        if (opts.hasOwnProperty('depth')) {
+            opts['visibleLevel'] = opts['depth'];
+            delete opts['depth'];
+        }
+        if (opts.hasOwnProperty('verticalDepth')) {
+            opts['verticalLevel'] = opts['verticalDepth'];
+            delete opts['verticalDepth'];
+        }
+
         // Map parentNodeSymbol to icons.
         // If a Font Awesome symbol is configured for parent nodes, keep OCI for structural
         // controls (edge arrows, compact controls, toggle buttons, spinner) because the
@@ -77,7 +86,8 @@ PrimeFaces.widget.ExtOrgChart = class extends PrimeFaces.widget.BaseWidget {
             opts.icons = $.extend({}, defaults, opts.icons);
         }
 
-        this.orgchart = this.jq.orgchart(opts);
+        opts['chartContainer'] = this.jq[0];
+        this.orgchart = new OrgChart(opts);
 
         this._bindEvents();
         this._bindFilterControls();
@@ -147,13 +157,22 @@ PrimeFaces.widget.ExtOrgChart = class extends PrimeFaces.widget.BaseWidget {
     // @override
     refresh(cfg) {
         this._unbindFilterControls();
+        this._unbindDropEvent();
         super.refresh(cfg);
     }
 
     // @override
     destroy() {
         this._unbindFilterControls();
+        this._unbindDropEvent();
         super.destroy();
+    }
+
+    _unbindDropEvent() {
+        if (this._nodedropHandler && this.orgchart && this.orgchart.chart) {
+            this.orgchart.chart.removeEventListener('nodedrop.orgchart', this._nodedropHandler);
+            this._nodedropHandler = null;
+        }
     }
 
     /**
@@ -162,7 +181,7 @@ PrimeFaces.widget.ExtOrgChart = class extends PrimeFaces.widget.BaseWidget {
      * @returns {JQuery} The chart root element.
      */
     getOrgChartRoot() {
-        return this.jq.children('.orgchart').first();
+        return $(this.orgchart.chart);
     }
 
     _ensureFilterControls() {
@@ -323,22 +342,27 @@ PrimeFaces.widget.ExtOrgChart = class extends PrimeFaces.widget.BaseWidget {
             $this.callBehavior('click', options);
         });
 
-        this.jq.children('.orgchart').on('nodedropped.orgchart', function (event) {
-            var options = {
-                params: [{
-                    name: $this.id + '_draggedNodeId',
-                    value: event.draggedNode['context']['id']
-                }, {
-                    name: $this.id + '_droppedZoneId',
-                    value: event.dropZone['context']['id']
-                }, {
-                    name: $this.id + '_hierarchy',
-                    value: JSON.stringify($this.orgchart.getHierarchy())
-                }]
+        var chartEl = this.orgchart.chart;
+        if (chartEl) {
+            this._nodedropHandler = function (event) {
+                var detail = event.detail || {};
 
+                var options = {
+                    params: [{
+                        name: $this.id + '_draggedNodeId',
+                        value: detail.draggedNode ? detail.draggedNode.id : ''
+                    }, {
+                        name: $this.id + '_droppedZoneId',
+                        value: detail.dropZone ? detail.dropZone.id : ''
+                    }, {
+                        name: $this.id + '_hierarchy',
+                        value: JSON.stringify($this.orgchart.getHierarchy())
+                    }]
+
+                };
+                $this.callBehavior('drop', options);
             };
-            $this.callBehavior('drop', options);
-
-        });
+            chartEl.addEventListener('nodedrop.orgchart', this._nodedropHandler);
+        }
     }
 };
