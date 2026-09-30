@@ -77,4 +77,4 @@ jobs:
       - name: Build PrimeFaces
         run: cd primefaces && mvn -U install -Pquick && cd ..
       - name: Run integration tests
-        run: mvn -B -V -U -pl primefaces-extensions-integration-tests verify -P integration-tests,headless,chrome -Dspotless.check.skip=true --batch-mode --show-version  
+        run: mvn -B -V -U -pl primefaces-extensions-integration-tests verify -P integration-tests,headless,chrome -Dspotless.check.skip=true -am --batch-mode --show-version  
