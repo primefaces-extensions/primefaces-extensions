@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="primefaces"
+      xmlns:pe="primefaces.extensions">
+
+    <f:view contentType="text/html;charset=UTF-8" encoding="UTF-8">
+        <h:head/>
+
+        <h:body>
+            <h:form id="form">
+                <h:panelGroup id="clockpickerGroup" layout="block">
+
+                    <p>AM/PM with Auto-Close</p>
+                    <pe:clockpicker id="autoclose" widgetVar="autocloseWidget" autoClose="true"
+                                    twelveHour="true" locale="es"/>
+
+                    <p>24 Hour with Manual Close Mode</p>
+                    <pe:clockpicker id="closeable" widgetVar="closeableWidget" autoClose="false"
+                                    value="#{clockPickerController.time2}" showOn="button">
+                        <p:ajax listener="#{clockPickerController.showTime2}" />
+                    </pe:clockpicker>
+
+                    <p>Open In Dialog</p>
+                    <p:commandButton value="Open Dialog" type="button" icon="pi pi-external-link"
+                                     onclick="PF('dlg1').show()"/>
+                    <p:dialog header="ClockPicker" widgetVar="dlg1" height="350" width="350"
+                              showEffect="fade" closeOnEscape="true">
+                        <pe:clockpicker id="dlgClockPicker" widgetVar="dialogClockPickerWidget"
+                                        autoClose="false" value="#{clockPickerController.time3}" showOn="button">
+                            <p:ajax listener="#{clockPickerController.showTime3}" />
+                        </pe:clockpicker>
+                    </p:dialog>
+
+                </h:panelGroup>
+
+                <p:commandButton id="disableButton" type="button" value="Disable clock pickers" styleClass="mt-2 mr-2"
+                                 onclick="PF('autocloseWidget').disable();PF('closeableWidget').disable();"/>
+                <p:commandButton id="enableButton" type="button" value="Enable clock pickers" styleClass="mt-2 mr-2"
+                                 onclick="PF('autocloseWidget').enable();PF('closeableWidget').enable();"/>
+                <p:commandButton id="submitButton" value="Submit" actionListener="#{clockPickerController.showTime1}"
+                                 update="clockpickerGroup" styleClass="mt-2 mr-2" icon="pi pi-save"/>
+            </h:form>
+        </h:body>
+    </f:view>
+
+</html>
