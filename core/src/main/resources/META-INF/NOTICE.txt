@@ -31,3 +31,7 @@ This product includes software developed by Hakim El Hattab and reveal.js contri
 This product includes software developed by Yi JiHong (https://github.com/JiHong88/suneditor)
 This product includes software developed by Jeroen Akkerman (https://github.com/Ionaru/easy-markdown-editor)
 This product includes software developed by Apache Foundation (https://echarts.apache.org/)
+This product includes software developed by Riccardo Tartaglia (https://github.com/riktar/jkanban)
+This product includes software developed by Nicolas Bevacqua (https://github.com/bevacqua/dragula)
+This product includes software developed by Julian Kühnel (https://github.com/julkue/mark.js)
+This product includes software developed by Frappe (https://github.com/frappe/gantt)
