@@ -27,6 +27,9 @@
         <junit.jupiter.execution.parallel.enabled>false</junit.jupiter.execution.parallel.enabled>
         <jakarta.faces.STATE_SAVING_METHOD>server</jakarta.faces.STATE_SAVING_METHOD>
 
+        <tomcat.version>11.0.26</tomcat.version>
+        <jetty.version>12.1.13</jetty.version>
+
         <main.basedir>${project.parent.basedir}</main.basedir>
 
         <sonar.skip>true</sonar.skip>
