@@ -73,6 +73,7 @@ jobs:
         uses: actions/checkout@v7
         with:
           repository: primefaces/primefaces
+          ref: 16.X
           path: primefaces
       - name: Build PrimeFaces
         run: cd primefaces && mvn -U install -Pquick && cd ..
