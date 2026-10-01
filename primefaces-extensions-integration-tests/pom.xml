@@ -272,7 +272,7 @@
             <properties>
                 <jakarta.version>10.0.0</jakarta.version>
                 <weld.version>5.1.5.Final</weld.version>
-                <tomcat.version>10.1.33</tomcat.version>
+                <tomcat.version>10.1.43</tomcat.version>
                 <jetty.version>11.0.21</jetty.version>
             </properties>
         </profile>
