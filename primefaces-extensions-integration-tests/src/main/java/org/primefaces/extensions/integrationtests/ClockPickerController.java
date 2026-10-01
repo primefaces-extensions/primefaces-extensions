@@ -21,7 +21,6 @@
  */
 package org.primefaces.extensions.integrationtests;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalTime;
 
@@ -34,7 +33,6 @@ import jakarta.inject.Named;
 @ViewScoped
 public class ClockPickerController implements Serializable {
 
-    @Serial
     private static final long serialVersionUID = 897540091000342926L;
 
     private LocalTime time;
