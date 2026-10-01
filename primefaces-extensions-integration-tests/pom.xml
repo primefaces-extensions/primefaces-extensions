@@ -52,7 +52,7 @@
         <dependency>
             <groupId>jakarta.platform</groupId>
             <artifactId>jakarta.jakartaee-api</artifactId>
-            <version>11.0.0</version>
+            <version>${jakarta.version}</version>
             <scope>provided</scope>
         </dependency>
 
@@ -68,7 +68,7 @@
         <dependency>
             <groupId>org.jboss.weld.servlet</groupId>
             <artifactId>weld-servlet-core</artifactId>
-            <version>6.0.4.Final</version>
+            <version>${weld.version}</version>
         </dependency>
 
         <!-- Tomcat embedded -->
@@ -263,6 +263,26 @@
                     </plugin>
                 </plugins>
             </build>
+        </profile>
+        <profile>
+            <id>jdk-11</id>
+            <activation>
+                <jdk>11</jdk>
+            </activation>
+            <properties>
+                <jakarta.version>10.0.0</jakarta.version>
+                <weld.version>5.1.5.Final</weld.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>jdk-17-or-greater</id>
+            <activation>
+                <jdk>[17,)</jdk>
+            </activation>
+            <properties>
+                <jakarta.version>11.0.0</jakarta.version>
+                <weld.version>6.0.4.Final</weld.version>
+            </properties>
         </profile>
         <profile>
             <id>headless</id>
