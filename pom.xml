@@ -72,6 +72,8 @@
         <module>core</module>
         <module>monacoeditor</module>
         <module>showcase</module>
+        <module>primefaces-extensions-selenium</module>
+        <module>primefaces-extensions-integration-tests</module>
     </modules>
     <scm>
         <connection>scm:git:git@github.com:primefaces-extensions/primefaces-extensions.git</connection>
@@ -105,6 +107,8 @@
         <junit.version>5.13.4</junit.version>
         <primefaces.core.version>16.0.0</primefaces.core.version>
         <primefaces.optimizer.version>2.6.6</primefaces.optimizer.version>
+        <tomcat.version>11.0.26</tomcat.version>
+        <jetty.version>12.1.13</jetty.version>
         <withoutCompress>true</withoutCompress>
     </properties>
     <dependencyManagement>
