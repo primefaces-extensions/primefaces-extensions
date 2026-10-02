@@ -25,10 +25,12 @@ import java.io.IOException;
 import java.text.DateFormatSymbols;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Locale;
 import java.util.Objects;
 
 import jakarta.el.ValueExpression;
+import jakarta.faces.application.FacesMessage;
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
@@ -38,6 +40,7 @@ import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.extensions.util.Attrs;
+import org.primefaces.extensions.util.MessageFactory;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.util.HTML;
 import org.primefaces.util.LangUtils;
@@ -217,31 +220,33 @@ public class ClockPickerRenderer extends InputRenderer<ClockPicker> {
         }
 
         // Delegate to user supplied converter if defined
-        try {
-            Converter converter = clockPicker.getConverter();
-            if (converter != null) {
-                return converter.getAsObject(context, clockPicker, submittedValue);
-            }
-        }
-        catch (ConverterException e) {
-            return submittedValue;
+        final Converter converter = clockPicker.getConverter();
+        if (converter != null) {
+            return converter.getAsObject(context, clockPicker, submittedValue);
         }
 
         // Delegate to global defined converter (e.g. joda or java8)
-        try {
-            ValueExpression ve = clockPicker.getValueExpression("value");
-            if (ve != null) {
-                Class<?> type = ve.getType(context.getELContext());
-                if (type != null && submittedValue != null && type.isAssignableFrom(LocalTime.class)) {
-                    // Use built-in converter for LocalTime
-                    return clockPicker.isTwelveHour()
-                                ? LocalTime.parse(submittedValue, DateTimeFormatter.ofPattern("hh:mma").withLocale(clockPicker.calculateLocale(context)))
-                                : LocalTime.parse(submittedValue, FORMATTER_24_HOUR);
+        final ValueExpression ve = clockPicker.getValueExpression("value");
+        if (ve != null) {
+            final Class<?> type = ve.getType(context.getELContext());
+            if (type != null && type.isAssignableFrom(LocalTime.class)) {
+                // Use built-in converter for LocalTime
+                final DateTimeFormatter formatter = clockPicker.isTwelveHour()
+                            ? DateTimeFormatter.ofPattern("hh:mma").withLocale(clockPicker.calculateLocale(context))
+                            : FORMATTER_24_HOUR;
+                try {
+                    return LocalTime.parse(submittedValue, formatter);
+                }
+                catch (final DateTimeParseException e) {
+                    final FacesMessage message = MessageFactory.getMessage(clockPicker.calculateLocale(context),
+                                ClockPicker.TIME_MESSAGE_KEY,
+                                submittedValue,
+                                formatter.format(LocalTime.now()),
+                                MessageFactory.getLabel(context, component));
+                    message.setSeverity(FacesMessage.SEVERITY_ERROR);
+                    throw new ConverterException(message, e);
                 }
             }
-        }
-        catch (Exception e) {
-            return submittedValue;
         }
         return submittedValue;
     }
