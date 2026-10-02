@@ -345,7 +345,7 @@
                 <myfaces.version>4.1.4</myfaces.version>
                 <omnifaces.version>4.7.1</omnifaces.version>
                 <resteasy.version>7.0.5.Final</resteasy.version>
-                <weld.version>6.0.4.Final</weld.version>
+                <weld.version>7.0.0.Final</weld.version>
             </properties>
         </profile>
         <profile>
