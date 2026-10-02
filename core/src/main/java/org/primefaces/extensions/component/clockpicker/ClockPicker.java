@@ -52,6 +52,8 @@ public class ClockPicker extends ClockPickerBaseImpl {
     public static final String BUTTON_TRIGGER_ICON_CLASS = "ui-button-icon-left ui-icon ui-icon-clock";
     public static final String BUTTON_TRIGGER_TEXT_CLASS = "ui-button-text";
 
+    public static final String TIME_MESSAGE_KEY = "jakarta.faces.converter.DateTimeConverter.TIME";
+
     private Locale appropriateLocale;
 
     @Override
