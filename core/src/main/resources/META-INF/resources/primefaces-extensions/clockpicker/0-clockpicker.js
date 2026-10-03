@@ -467,7 +467,17 @@
 		this.spanMinutes.html(leadingZero(this.minutes));
 
 		if (this.options.twelvehour) {
-			if (this.hours === 12) {
+			// PFE patch #2825: upstream show() ignores AM/PM suffix, so 12:00AM is treated as PM.
+			let ampmValue = (value.length > 1 ? value[1] : '') + '',
+				pmtext = this.options.pmtext.toLowerCase(),
+				amtext = this.options.amtext.toLowerCase();
+			if (ampmValue.toLowerCase().indexOf(pmtext) !== -1) {
+				this.amOrPm = this.options.pmtext;
+			}
+			else if (ampmValue.toLowerCase().indexOf(amtext) !== -1) {
+				this.amOrPm = this.options.amtext;
+			}
+			else if (this.hours === 12) {
 				this.amOrPm = this.options.pmtext;
 			}
 			else if (this.hours > 12) {
