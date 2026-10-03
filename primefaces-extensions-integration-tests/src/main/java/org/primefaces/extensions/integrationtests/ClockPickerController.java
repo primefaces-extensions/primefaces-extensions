@@ -38,11 +38,13 @@ public class ClockPickerController implements Serializable {
     private LocalTime time;
     private LocalTime time2;
     private LocalTime time3;
+    private LocalTime time4;
 
     public ClockPickerController() {
         time = LocalTime.of(8, 15);
         time2 = LocalTime.of(9, 28);
         time3 = LocalTime.of(13, 44);
+        time4 = LocalTime.MIDNIGHT;
     }
 
     public void showTime1() {
@@ -101,5 +103,13 @@ public class ClockPickerController implements Serializable {
 
     public void setTime3(LocalTime time3) {
         this.time3 = time3;
+    }
+
+    public LocalTime getTime4() {
+        return time4;
+    }
+
+    public void setTime4(LocalTime time4) {
+        this.time4 = time4;
     }
 }
