@@ -37,6 +37,7 @@ public abstract class ClockPicker extends AbstractInputComponent {
     private static final String DONE_BUTTON_CLASS = "clockpicker-button";
     private static final String HOURS_SPAN_CLASS = "clockpicker-span-hours";
     private static final String MINUTES_SPAN_CLASS = "clockpicker-span-minutes";
+    private static final String AM_PM_SPAN_CLASS = "clockpicker-span-am-pm";
     private static final String AM_BUTTON_CLASS = "am-button";
     private static final String PM_BUTTON_CLASS = "pm-button";
     private static final String TICK_CLASS = "clockpicker-tick";
@@ -74,7 +75,7 @@ public abstract class ClockPicker extends AbstractInputComponent {
      * Gets the done/close button element.
      */
     public WebElement getDoneButton() {
-        return getPopover().findElement(By.className(DONE_BUTTON_CLASS));
+        return getPopover().findElement(By.cssSelector("." + DONE_BUTTON_CLASS + ".btn-block"));
     }
 
     /**
@@ -89,6 +90,13 @@ public abstract class ClockPicker extends AbstractInputComponent {
      */
     public String getMinutesText() {
         return getPopover().findElement(By.className(MINUTES_SPAN_CLASS)).getText();
+    }
+
+    /**
+     * Gets the current AM/PM text displayed in the popover (12-hour mode only).
+     */
+    public String getAmPmText() {
+        return getPopover().findElement(By.className(AM_PM_SPAN_CLASS)).getText();
     }
 
     /**
