@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="primefaces"
+      xmlns:pe="primefaces.extensions">
+
+    <f:view contentType="text/html;charset=UTF-8" encoding="UTF-8">
+        <h:head/>
+
+        <h:body>
+            <h:form id="form">
+                <p:messages id="msgs" showDetail="true" showSummary="true" autoUpdate="true"/>
+
+                <h:panelGroup id="clockpickerGroup" layout="block">
+
+                    <p>12 Hour with AM/PM Switching</p>
+                    <pe:clockpicker id="ampmSwitch" widgetVar="ampmSwitchWidget" autoClose="false"
+                                    value="#{clockPickerController.time5}" twelveHour="true" locale="en" showOn="button"/>
+
+                </h:panelGroup>
+
+                <p:commandButton id="submitButton" value="Submit" actionListener="#{clockPickerController.showTime5}"
+                                 update="clockpickerGroup msgs" styleClass="mt-2 mr-2" icon="pi pi-save"/>
+            </h:form>
+        </h:body>
+    </f:view>
+
+</html>
