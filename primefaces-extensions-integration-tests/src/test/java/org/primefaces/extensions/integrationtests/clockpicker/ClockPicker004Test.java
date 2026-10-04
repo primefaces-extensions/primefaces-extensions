@@ -33,6 +33,8 @@ import org.primefaces.extensions.integrationtests.AbstractPrimeExtensionsPageTes
 import org.primefaces.selenium.AbstractPrimePage;
 import org.primefaces.selenium.component.ClockPicker;
 import org.primefaces.selenium.component.CommandButton;
+import org.primefaces.selenium.component.Messages;
+import org.primefaces.selenium.component.model.Severity;
 
 public class ClockPicker004Test extends AbstractPrimeExtensionsPageTest {
 
@@ -42,6 +44,7 @@ public class ClockPicker004Test extends AbstractPrimeExtensionsPageTest {
     void amPmSwitchingRoundTrip(Page page) {
         ClockPicker ampmSwitch = page.ampmSwitch;
         CommandButton submit = page.submit;
+        Messages messages = page.messages;
 
         WebElement input = ampmSwitch.getRoot().findElement(By.tagName("input"));
 
@@ -68,6 +71,14 @@ public class ClockPicker004Test extends AbstractPrimeExtensionsPageTest {
         // Assert: the model value survives the round trip
         WebElement inputAfterSubmit = ampmSwitch.getRoot().findElement(By.tagName("input"));
         assertEquals("08:00PM", inputAfterSubmit.getAttribute("value"));
+
+        // Assert: the server-side LocalTime was converted back correctly from 08:00PM
+        assertFalse(messages.isEmpty(), "Expected an info message with the converted LocalTime value");
+        assertTrue(messages.getMessagesBySeverity(Severity.INFO).size() > 0,
+                    "Expected an INFO severity message after AM/PM submit");
+        assertTrue(messages.getAllMessages().stream()
+                    .anyMatch(msg -> Severity.INFO.equals(msg.getSeverity()) && msg.getDetail().contains("20:00")),
+                    "Expected server-side converted LocalTime to be 20:00 from 08:00PM");
     }
 
     public static class Page extends AbstractPrimePage {
@@ -77,6 +88,9 @@ public class ClockPicker004Test extends AbstractPrimeExtensionsPageTest {
 
         @FindBy(id = "form:submitButton")
         CommandButton submit;
+
+        @FindBy(id = "form:msgs")
+        Messages messages;
 
         @Override
         public String getLocation() {
