@@ -54,8 +54,9 @@ public class ClockPicker005Test extends AbstractPrimeExtensionsPageTest {
         // Arrange: rendered with initial 24-hour value 14:30
         assertEquals("14:30", input.getAttribute("value"));
 
-        // Act: open the picker via focus (showOn="focus") and verify initial popover state
-        focus24h.show();
+        // Act: trigger the picker through focus behavior by clicking the input,
+        // then verify the popover initializes with the current time
+        input.click();
         PrimeSelenium.waitGui().until((ExpectedCondition<Boolean>) driver -> {
             try {
                 return "14".equals(focus24h.getHoursText());
