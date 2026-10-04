@@ -21,8 +21,8 @@
 
                 </h:panelGroup>
 
-                <p:commandButton id="submitButton" value="Submit" update="clockpickerGroup msgs"
-                                 styleClass="mt-2 mr-2" icon="pi pi-save"/>
+                <p:commandButton id="submitButton" value="Submit" actionListener="#{clockPickerController.showTime5}"
+                                 update="clockpickerGroup msgs" styleClass="mt-2 mr-2" icon="pi pi-save"/>
             </h:form>
         </h:body>
     </f:view>
