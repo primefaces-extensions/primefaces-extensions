@@ -21,7 +21,6 @@
  */
 package org.primefaces.extensions.integrationtests;
 
-import java.io.Serial;
 import java.io.Serializable;
 
 import jakarta.faces.application.FacesMessage;
@@ -33,7 +32,6 @@ import jakarta.inject.Named;
 @ViewScoped
 public class SunEditorController implements Serializable {
 
-    @Serial
     private static final long serialVersionUID = 4172903358810045913L;
 
     private String value;
