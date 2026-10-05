@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="primefaces"
+      xmlns:pe="primefaces.extensions">
+
+    <f:view contentType="text/html;charset=UTF-8" encoding="UTF-8">
+        <h:head>
+            <link rel="icon" href="data:,"/>
+        </h:head>
+
+        <h:body>
+            <h:form id="form">
+                <p>Custom toolbar</p>
+                <pe:sunEditor id="toolbar" widgetVar="toolbarWidget" value="#{sunEditorController.toolbarValue}"
+                              toolbar="[['bold', 'underline']]"/>
+
+                <p>Read only</p>
+                <pe:sunEditor id="readonly" widgetVar="readonlyWidget" value="#{sunEditorController.readonlyValue}"
+                              readonly="true"/>
+
+                <p>Disabled</p>
+                <pe:sunEditor id="disabled" widgetVar="disabledWidget" value="#{sunEditorController.disabledValue}"
+                              disabled="true"/>
+
+                <p>Unsafe content is sanitized</p>
+                <pe:sunEditor id="unsafe" widgetVar="unsafeWidget" value="#{sunEditorController.unsafeValue}"/>
+            </h:form>
+        </h:body>
+    </f:view>
+
+</html>
