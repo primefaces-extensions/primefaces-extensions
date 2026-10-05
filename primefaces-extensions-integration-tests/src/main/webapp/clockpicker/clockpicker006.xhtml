@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="primefaces"
+      xmlns:pe="primefaces.extensions">
+
+    <f:view contentType="text/html;charset=UTF-8" encoding="UTF-8">
+        <h:head>
+            <link rel="icon" href="data:,"/>
+        </h:head>
+
+        <h:body>
+            <h:form id="form">
+                <p:messages id="msgs" showDetail="true" showSummary="true" autoUpdate="true"/>
+
+                <h:panelGroup id="clockpickerGroup" layout="block">
+
+                    <p>12 Hour with Client-Side Lifecycle Callbacks</p>
+                    <pe:clockpicker id="callbacks" widgetVar="callbacksWidget" autoClose="false"
+                                    value="#{clockPickerController.time7}" twelveHour="true" locale="en" showOn="button"
+                                    onbeforeshow="window.cpEvents.push('beforeshow')"
+                                    onaftershow="window.cpEvents.push('aftershow')"
+                                    onbeforehide="window.cpEvents.push('beforehide')"
+                                    onafterhide="window.cpEvents.push('afterhide')"
+                                    onbeforehourselect="window.cpEvents.push('beforehourselect')"
+                                    onafterhourselect="window.cpEvents.push('afterhourselect')"
+                                    onafterampmselect="window.cpEvents.push('afterampmselect')"
+                                    onbeforedone="window.cpEvents.push('beforedone')"
+                                    onafterdone="window.cpEvents.push('afterdone')"/>
+
+                </h:panelGroup>
+
+            </h:form>
+        </h:body>
+    </f:view>
+
+</html>
