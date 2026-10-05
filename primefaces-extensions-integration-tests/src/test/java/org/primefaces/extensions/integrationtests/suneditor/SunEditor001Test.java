@@ -43,6 +43,7 @@ public class SunEditor001Test extends AbstractPrimeExtensionsPageTest {
     @DisplayName("SunEditor: renders editor with initial value")
     void render(Page page) {
         SunEditor editor = page.basic;
+        editor.waitForEditor();
         assertTrue(editor.isEditorReady());
         assertTrue(editor.getEditorContainer().isDisplayed());
         assertTrue(editor.getToolbar().isDisplayed());
