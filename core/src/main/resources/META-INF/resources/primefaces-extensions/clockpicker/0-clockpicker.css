@@ -210,7 +210,7 @@
 	cursor: pointer;
 }
 .clockpicker.ui-inputgroup {
-	display: inline-block;
+	display: inline-flex;
 	width: auto;
 }
 .clockpicker-moving {

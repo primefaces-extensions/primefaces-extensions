@@ -59,8 +59,12 @@ public class ClockPicker007Test extends AbstractPrimeExtensionsPageTest {
         assertEquals("10:00", placementRight.getRoot().findElement(By.tagName("input")).getAttribute("value"));
 
         // Assert: each widget's rendered placement config matches the attribute.
+        // Note: placement="bottom" is the component default, so WidgetBuilder omits it
+        // from the widget cfg to save bytes (wb.attr with default). Fall back to 'bottom'
+        // when cfg.placement is undefined, mirroring ClockPicker.DEFAULTS on the client.
         assertEquals("top", PrimeSelenium.executeScript("return window.PF('placementTopWidget').cfg.placement;"));
-        assertEquals("bottom", PrimeSelenium.executeScript("return window.PF('placementBottomWidget').cfg.placement;"));
+        assertEquals("bottom",
+                    PrimeSelenium.executeScript("return window.PF('placementBottomWidget').cfg.placement || 'bottom';"));
         assertEquals("left", PrimeSelenium.executeScript("return window.PF('placementLeftWidget').cfg.placement;"));
         assertEquals("right", PrimeSelenium.executeScript("return window.PF('placementRightWidget').cfg.placement;"));
 
@@ -81,33 +85,44 @@ public class ClockPicker007Test extends AbstractPrimeExtensionsPageTest {
         assertPlacementPopover(placementLeft, "placementLeftWidget", "left");
         assertPlacementPopover(placementRight, "placementRightWidget", "right");
 
-        // Act: select a new time on the top picker and close via done button.
+        // Act: select a new time on the right picker and close via done button.
         // CommandButton.click() guards the Ajax round-trip internally.
-        placementTop.show();
-        placementTop.selectHour(11);
-        placementTop.selectMinute(30);
-        placementTop.clickDone();
+        // Use the right picker: placement="top" needs ~311px above the input,
+        // which is off-screen when inputs are near the top of the page, so its
+        // hour ticks are not clickable. The right popover opens to the side and
+        // stays visible. Right is also last in the form, which matters because
+        // all four pickers bind to the same time8 property: on submit the last
+        // component wins, so only the last picker can survive the round-trip.
+        // Use PF().show() and widget-owned popover lookups: the Selenium
+        // ClockPicker.show()/selectHour()/getPopover() always resolve the first
+        // .clockpicker-popover in the DOM, which is wrong with 4 pickers.
+        PrimeSelenium.executeScript("window.PF('placementRightWidget').show();");
+        selectHourInPopover("placementRightWidget", 11);
+        selectMinuteInPopover("placementRightWidget", 30);
+        clickDoneInPopover("placementRightWidget");
 
-        // Assert: only the top picker input reflects the new selection.
-        assertEquals("11:30", placementTop.getRoot().findElement(By.tagName("input")).getAttribute("value"));
+        // Assert: only the right picker input reflects the new selection.
+        assertEquals("10:00", placementTop.getRoot().findElement(By.tagName("input")).getAttribute("value"));
         assertEquals("10:00", placementBottom.getRoot().findElement(By.tagName("input")).getAttribute("value"));
         assertEquals("10:00", placementLeft.getRoot().findElement(By.tagName("input")).getAttribute("value"));
-        assertEquals("10:00", placementRight.getRoot().findElement(By.tagName("input")).getAttribute("value"));
+        assertEquals("11:30", placementRight.getRoot().findElement(By.tagName("input")).getAttribute("value"));
 
         // Act: submit the form to persist the value.
         submit.click();
 
         // Assert: re-acquire inputs after Ajax rerender. The component tree is replaced
         // on the server, so cached WebElement references become stale.
+        // All four pickers bind to the same time8 property, so after submit they
+        // all rerender the persisted model value 11:30.
         WebElement inputTopAfter = placementTop.getRoot().findElement(By.tagName("input"));
         WebElement inputBottomAfter = placementBottom.getRoot().findElement(By.tagName("input"));
         WebElement inputLeftAfter = placementLeft.getRoot().findElement(By.tagName("input"));
         WebElement inputRightAfter = placementRight.getRoot().findElement(By.tagName("input"));
 
         assertEquals("11:30", inputTopAfter.getAttribute("value"));
-        assertEquals("10:00", inputBottomAfter.getAttribute("value"));
-        assertEquals("10:00", inputLeftAfter.getAttribute("value"));
-        assertEquals("10:00", inputRightAfter.getAttribute("value"));
+        assertEquals("11:30", inputBottomAfter.getAttribute("value"));
+        assertEquals("11:30", inputLeftAfter.getAttribute("value"));
+        assertEquals("11:30", inputRightAfter.getAttribute("value"));
 
         // Assert: the server-side LocalTime was updated correctly.
         assertFalse(messages.isEmpty(), "Expected an info message after placement submit");
@@ -136,6 +151,12 @@ public class ClockPicker007Test extends AbstractPrimeExtensionsPageTest {
 
         assertPlacementCoordinates(input, popover, expectedPlacement);
         assertPlacementGap(input, popover, expectedPlacement);
+
+        // Hide again so subsequent placement checks and hour selection run with
+        // only one popover open. Otherwise getPopover() (first .clockpicker-popover
+        // in the DOM) can resolve to the wrong picker and off-screen top popovers
+        // make hour ticks unclickable.
+        PrimeSelenium.executeScript("window.PF('" + widgetVar + "').hide();");
     }
 
     // Returns the popover element owned by the widget instance.
@@ -148,6 +169,53 @@ public class ClockPicker007Test extends AbstractPrimeExtensionsPageTest {
                                 + "var instance = $(widget.jqId).data('clockpicker');"
                                 + "return instance && instance.popover ? instance.popover[0] : null;",
                     widgetVar);
+    }
+
+    // Clicks the hour tick inside the given widget's own popover.
+    // Cannot use ClockPicker.selectHour(): it resolves the first popover in the DOM.
+    private void selectHourInPopover(String widgetVar, int hour) {
+        WebElement popover = getWidgetPopover(widgetVar);
+        String hourText = hour == 0 ? "00" : String.valueOf(hour);
+        WebElement tick = popover.findElement(By.xpath(
+                    ".//div[contains(@class,'clockpicker-hours')]//div[contains(@class,'clockpicker-tick') and text()='"
+                                + hourText + "']"));
+        PrimeSelenium.waitGui().until(org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable(tick));
+        tick.click();
+        // Wait for the hours->minutes view transition (see ClockPicker005Test):
+        // minute ticks are not clickable while the hours dial is still visible.
+        PrimeSelenium.waitGui().until(driver -> {
+            try {
+                WebElement hoursView = getWidgetPopover(widgetVar)
+                            .findElement(By.cssSelector(".clockpicker-hours"));
+                return "hidden".equals(hoursView.getCssValue("visibility"));
+            }
+            catch (Exception e) {
+                return true;
+            }
+        });
+    }
+
+    // Clicks the minute tick inside the given widget's own popover.
+    private void selectMinuteInPopover(String widgetVar, int minute) {
+        int roundedMinute = Math.round(minute / 5.0f) * 5;
+        if (roundedMinute == 60) {
+            roundedMinute = 0;
+        }
+        String minuteText = roundedMinute < 10 ? "0" + roundedMinute : String.valueOf(roundedMinute);
+        WebElement popover = getWidgetPopover(widgetVar);
+        WebElement tick = popover.findElement(By.xpath(
+                    ".//div[contains(@class,'clockpicker-minutes')]//div[contains(@class,'clockpicker-tick') and text()='"
+                                + minuteText + "']"));
+        PrimeSelenium.waitGui().until(org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable(tick));
+        tick.click();
+    }
+
+    // Clicks done inside the given widget's own popover.
+    private void clickDoneInPopover(String widgetVar) {
+        WebElement popover = getWidgetPopover(widgetVar);
+        WebElement doneButton = popover.findElement(By.cssSelector(".clockpicker-button.btn-block"));
+        PrimeSelenium.waitGui().until(org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable(doneButton));
+        doneButton.click();
     }
 
     // Verifies that the popover is on the correct side of the input.
@@ -198,12 +266,12 @@ public class ClockPicker007Test extends AbstractPrimeExtensionsPageTest {
     // The picker container must not expand to full width in button-trigger mode.
     // This guards the CSS defect described in assertPlacementGap.
     private void assertContainerWidth(ClockPicker picker, String widgetVar) {
-        long width = (Long) PrimeSelenium.executeScript(
+        Number width = (Number) PrimeSelenium.executeScript(
                     "var w = window.PF('" + widgetVar + "');"
                                 + "if (!w) return -1;"
                                 + "var el = $(w.jqId);"
                                 + "return el ? el.outerWidth() : -1;");
-        assertTrue(width > 0 && width < 200,
+        assertTrue(width.doubleValue() > 0 && width.doubleValue() < 200,
                     "Expected picker container width to be under 200px for '" + widgetVar + "' but was " + width + "px");
     }
 
