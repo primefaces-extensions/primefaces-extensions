@@ -42,6 +42,7 @@ public class ClockPickerController implements Serializable {
     private LocalTime time5;
     private LocalTime time6;
     private LocalTime time7;
+    private LocalTime time8;
 
     public ClockPickerController() {
         time = LocalTime.of(8, 15);
@@ -51,6 +52,7 @@ public class ClockPickerController implements Serializable {
         time5 = LocalTime.of(8, 0);
         time6 = LocalTime.of(14, 30);
         time7 = LocalTime.of(8, 0);
+        time8 = LocalTime.of(10, 0);
     }
 
     public void showTime1() {
@@ -95,6 +97,15 @@ public class ClockPickerController implements Serializable {
     public void showTime6() {
         if (time6 != null) {
             addMessage(FacesMessage.SEVERITY_INFO, "Info Message", String.format("Selected 24h time: %s", time6));
+        }
+        else {
+            addMessage(FacesMessage.SEVERITY_ERROR, "Error Message", "Time is not selected.");
+        }
+    }
+
+    public void showTime8() {
+        if (time8 != null) {
+            addMessage(FacesMessage.SEVERITY_INFO, "Info Message", String.format("Ajax Event: %s", time8));
         }
         else {
             addMessage(FacesMessage.SEVERITY_ERROR, "Error Message", "Time is not selected.");
@@ -159,5 +170,13 @@ public class ClockPickerController implements Serializable {
 
     public void setTime7(LocalTime time7) {
         this.time7 = time7;
+    }
+
+    public LocalTime getTime8() {
+        return time8;
+    }
+
+    public void setTime8(LocalTime time8) {
+        this.time8 = time8;
     }
 }

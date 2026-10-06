@@ -1,0 +1,38 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="jakarta.faces.html"
+                xmlns:ui="jakarta.faces.facelets" xmlns:p="primefaces"
+                xmlns:pe="primefaces.extensions">
+
+    <!-- EXAMPLE-SOURCE-START -->
+<h:panelGroup id="placementGrid" layout="block" styleClass="placement-demo-grid">
+
+    <h:panelGroup layout="block" styleClass="placement-cell">
+        <p>Top</p>
+        <pe:clockpicker id="placementTop" widgetVar="placementTopWidget" autoClose="false"
+                        value="#{clockPickerPlacementController.timeTop}" showOn="button" locale="en"
+                        placement="top"/>
+    </h:panelGroup>
+
+    <h:panelGroup layout="block" styleClass="placement-cell">
+        <p>Bottom</p>
+        <pe:clockpicker id="placementBottom" widgetVar="placementBottomWidget" autoClose="false"
+                        value="#{clockPickerPlacementController.timeBottom}" showOn="button" locale="en"
+                        placement="bottom"/>
+    </h:panelGroup>
+
+    <h:panelGroup layout="block" styleClass="placement-cell">
+        <p>Left</p>
+        <pe:clockpicker id="placementLeft" widgetVar="placementLeftWidget" autoClose="false"
+                        value="#{clockPickerPlacementController.timeLeft}" showOn="button" locale="en"
+                        placement="left"/>
+    </h:panelGroup>
+
+    <h:panelGroup layout="block" styleClass="placement-cell">
+        <p>Right</p>
+        <pe:clockpicker id="placementRight" widgetVar="placementRightWidget" autoClose="false"
+                        value="#{clockPickerPlacementController.timeRight}" showOn="button" locale="en"
+                        placement="right"/>
+    </h:panelGroup>
+
+</h:panelGroup>
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

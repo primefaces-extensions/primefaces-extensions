@@ -209,6 +209,10 @@
 .clockpicker .input-group-addon {
 	cursor: pointer;
 }
+.clockpicker.ui-inputgroup {
+	display: inline-flex;
+	width: auto;
+}
 .clockpicker-moving {
 	cursor: move;
 }

@@ -387,12 +387,18 @@
 			height = element.outerHeight(),
 			placement = this.options.placement,
 			align = this.options.align,
-			appendToOffset = this.options.appendTo.offset(),
+			appendToOffset,
 			styles = {};
 
 		popover.show();
 
-		// Remove the referential offset
+		let offsetParent = popover.offsetParent();
+		if (!offsetParent || !offsetParent.length || offsetParent.is('body') || offsetParent.is('html')) {
+			appendToOffset = {left: 0, top: 0};
+		}
+		else {
+			appendToOffset = offsetParent.offset();
+		}
 		offset.left -= appendToOffset.left;
 		offset.top -= appendToOffset.top;
 
