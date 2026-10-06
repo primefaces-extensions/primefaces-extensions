@@ -224,23 +224,27 @@ public class ClockPicker007Test extends AbstractPrimeExtensionsPageTest {
         var popoverRect = popover.getRect();
 
         switch (expectedPlacement) {
-            case "top" ->
+            case "top":
                 assertTrue(popoverRect.y + popoverRect.height <= inputRect.y,
                             "Expected popover above input for placement='top', but popover top=" + popoverRect.y
                                         + " and input top=" + inputRect.y);
-            case "bottom" ->
+                break;
+            case "bottom":
                 assertTrue(popoverRect.y >= inputRect.y + inputRect.height,
                             "Expected popover below input for placement='bottom', but popover top=" + popoverRect.y
                                         + " and input bottom=" + (inputRect.y + inputRect.height));
-            case "left" ->
+                break;
+            case "left":
                 assertTrue(popoverRect.x + popoverRect.width <= inputRect.x,
                             "Expected popover left of input for placement='left', but popover left=" + popoverRect.x
                                         + " and input left=" + inputRect.x);
-            case "right" ->
+                break;
+            case "right":
                 assertTrue(popoverRect.x >= inputRect.x + inputRect.width,
                             "Expected popover right of input for placement='right', but popover left=" + popoverRect.x
                                         + " and input right=" + (inputRect.x + inputRect.width));
-            default ->
+                break;
+            default:
                 fail("Unexpected placement: " + expectedPlacement);
         }
     }
@@ -253,11 +257,20 @@ public class ClockPicker007Test extends AbstractPrimeExtensionsPageTest {
         var popoverRect = popover.getRect();
         int gap;
         switch (expectedPlacement) {
-            case "top" -> gap = inputRect.y - (popoverRect.y + popoverRect.height);
-            case "bottom" -> gap = popoverRect.y - (inputRect.y + inputRect.height);
-            case "left" -> gap = inputRect.x - (popoverRect.x + popoverRect.width);
-            case "right" -> gap = popoverRect.x - (inputRect.x + inputRect.width);
-            default -> throw new IllegalArgumentException("Unexpected placement: " + expectedPlacement);
+            case "top":
+                gap = inputRect.y - (popoverRect.y + popoverRect.height);
+                break;
+            case "bottom":
+                gap = popoverRect.y - (inputRect.y + inputRect.height);
+                break;
+            case "left":
+                gap = inputRect.x - (popoverRect.x + popoverRect.width);
+                break;
+            case "right":
+                gap = popoverRect.x - (inputRect.x + inputRect.width);
+                break;
+            default:
+                throw new IllegalArgumentException("Unexpected placement: " + expectedPlacement);
         }
         assertTrue(gap >= 0 && gap < 120,
                     "Expected popover gap for placement='" + expectedPlacement + "' to be under 120px but was " + gap + "px");
