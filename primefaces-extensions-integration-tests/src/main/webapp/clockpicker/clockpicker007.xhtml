@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="primefaces"
+      xmlns:pe="primefaces.extensions">
+
+    <f:view contentType="text/html;charset=UTF-8" encoding="UTF-8">
+        <h:head>
+            <link rel="icon" href="data:," />
+        </h:head>
+
+        <h:body>
+            <h:form id="form">
+                <p:messages id="msgs" showDetail="true" showSummary="true" autoUpdate="true"/>
+
+                <h:panelGroup id="clockpickerGroup" layout="block">
+
+                    <p>24 Hour with all placement directions</p>
+                    <pe:clockpicker id="placementTop" widgetVar="placementTopWidget" autoClose="false"
+                                    value="#{clockPickerController.time8}" showOn="button" locale="en"
+                                    placement="top"/>
+
+                    <pe:clockpicker id="placementBottom" widgetVar="placementBottomWidget" autoClose="false"
+                                    value="#{clockPickerController.time8}" showOn="button" locale="en"
+                                    placement="bottom"/>
+
+                    <pe:clockpicker id="placementLeft" widgetVar="placementLeftWidget" autoClose="false"
+                                    value="#{clockPickerController.time8}" showOn="button" locale="en"
+                                    placement="left"/>
+
+                    <pe:clockpicker id="placementRight" widgetVar="placementRightWidget" autoClose="false"
+                                    value="#{clockPickerController.time8}" showOn="button" locale="en"
+                                    placement="right"/>
+
+                </h:panelGroup>
+
+                <p:commandButton id="submitButton" value="Submit" actionListener="#{clockPickerController.showTime8}"
+                                 update="clockpickerGroup msgs" styleClass="mt-2 mr-2" icon="pi pi-save"/>
+            </h:form>
+        </h:body>
+    </f:view>
+
+</html>
