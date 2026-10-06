@@ -128,7 +128,7 @@ public class ClockPicker007Test extends AbstractPrimeExtensionsPageTest {
         PrimeSelenium.executeScript("window.PF('" + widgetVar + "').show();");
 
         WebElement input = picker.getRoot().findElement(By.tagName("input"));
-        WebElement popover = findPopoverNearInput(input);
+        WebElement popover = getWidgetPopover(widgetVar);
 
         assertTrue(popover.getAttribute("class").contains(expectedPlacement),
                     "Expected popover class to contain '" + expectedPlacement + "' for placement='" + expectedPlacement + "', got: "
@@ -138,22 +138,16 @@ public class ClockPicker007Test extends AbstractPrimeExtensionsPageTest {
         assertPlacementGap(input, popover, expectedPlacement);
     }
 
-    // The popover is appended to document.body, not the picker container.
-    // When multiple pickers are on the page, find the popover closest to this input.
-    private WebElement findPopoverNearInput(WebElement input) {
+    // Returns the popover element owned by the widget instance.
+    // This avoids matching an adjacent widget's popover when multiple pickers
+    // are present on the page.
+    private WebElement getWidgetPopover(String widgetVar) {
         return (WebElement) PrimeSelenium.executeScript(
-                    "var input = arguments[0];"
-                                + "var inputRect = input.getBoundingClientRect();"
-                                + "var allPopovers = document.querySelectorAll('.clockpicker-popover');"
-                                + "var best = null;"
-                                + "var bestDist = Infinity;"
-                                + "for (var i = 0; i < allPopovers.length; i++) {"
-                                + "  var rect = allPopovers[i].getBoundingClientRect();"
-                                + "  var dist = Math.abs(rect.top - inputRect.top) + Math.abs(rect.left - inputRect.left);"
-                                + "  if (dist < bestDist) { bestDist = dist; best = allPopovers[i]; }"
-                                + "}"
-                                + "return best;",
-                    input);
+                    "var widget = window.PF(arguments[0]);"
+                                + "if (!widget) return null;"
+                                + "var instance = $(widget.jqId).data('clockpicker');"
+                                + "return instance && instance.popover ? instance.popover[0] : null;",
+                    widgetVar);
     }
 
     // Verifies that the popover is on the correct side of the input.
