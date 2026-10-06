@@ -50,62 +50,66 @@ public class ClockPicker007Test extends AbstractPrimeExtensionsPageTest {
         CommandButton submit = page.submit;
         Messages messages = page.messages;
 
-        WebElement inputTop = placementTop.getRoot().findElement(By.tagName("input"));
-        WebElement inputBottom = placementBottom.getRoot().findElement(By.tagName("input"));
-        WebElement inputLeft = placementLeft.getRoot().findElement(By.tagName("input"));
-        WebElement inputRight = placementRight.getRoot().findElement(By.tagName("input"));
+        // Arrange: all four pickers share the same initial 24-hour value 10:00.
+        // The view binds every picker to time8 so we can verify selection isolation
+        // without introducing extra model properties.
+        assertEquals("10:00", placementTop.getRoot().findElement(By.tagName("input")).getAttribute("value"));
+        assertEquals("10:00", placementBottom.getRoot().findElement(By.tagName("input")).getAttribute("value"));
+        assertEquals("10:00", placementLeft.getRoot().findElement(By.tagName("input")).getAttribute("value"));
+        assertEquals("10:00", placementRight.getRoot().findElement(By.tagName("input")).getAttribute("value"));
 
-        // Arrange: all four pickers share the same initial 24-hour value 10:00
-        assertEquals("10:00", inputTop.getAttribute("value"));
-        assertEquals("10:00", inputBottom.getAttribute("value"));
-        assertEquals("10:00", inputLeft.getAttribute("value"));
-        assertEquals("10:00", inputRight.getAttribute("value"));
-
-        // Assert: widget configuration carries the correct placement for each picker
+        // Assert: each widget's rendered placement config matches the attribute.
         assertEquals("top", PrimeSelenium.executeScript("return window.PF('placementTopWidget').cfg.placement;"));
         assertEquals("bottom", PrimeSelenium.executeScript("return window.PF('placementBottomWidget').cfg.placement;"));
         assertEquals("left", PrimeSelenium.executeScript("return window.PF('placementLeftWidget').cfg.placement;"));
         assertEquals("right", PrimeSelenium.executeScript("return window.PF('placementRightWidget').cfg.placement;"));
 
         // Assert: showOn="button" containers must not stretch to full width.
-        // This guards the defect where .ui-inputgroup made the picker 660px wide,
-        // causing placement="right" to appear far away from its input.
+        // Without the CSS fix in 0-clockpicker.css, .ui-inputgroup forces a 660px width,
+        // which makes placement="right" appear far from its input.
         assertContainerWidth(placementTop, "placementTopWidget");
         assertContainerWidth(placementBottom, "placementBottomWidget");
         assertContainerWidth(placementLeft, "placementLeftWidget");
         assertContainerWidth(placementRight, "placementRightWidget");
 
-        // Act + Assert: open each picker and verify popover positioning class
+        // Act + Assert: verify each placement's popover class, coordinates, and proximity.
+        // We use window.PF(widgetVar).show() instead of picker.show() because the Selenium
+        // component's isShown()/getPopover() find the first .clockpicker-popover in the DOM,
+        // which breaks when multiple pickers exist on the same page.
+        assertPlacementPopover(placementTop, "placementTopWidget", "top");
+        assertPlacementPopover(placementBottom, "placementBottomWidget", "bottom");
+        assertPlacementPopover(placementLeft, "placementLeftWidget", "left");
+        assertPlacementPopover(placementRight, "placementRightWidget", "right");
+
+        // Act: select a new time on the top picker and close via done button.
+        // CommandButton.click() guards the Ajax round-trip internally.
         placementTop.show();
-        assertPopoverPlacement(placementTop, "top");
-
-        placementBottom.show();
-        assertPopoverPlacement(placementBottom, "bottom");
-
-        placementLeft.show();
-        assertPopoverPlacement(placementLeft, "left");
-
-        placementRight.show();
-        assertPopoverPlacement(placementRight, "right");
-
-        // Act: select a new time on the top picker and close via done button
         placementTop.selectHour(11);
         placementTop.selectMinute(30);
         placementTop.clickDone();
 
-        // Assert: only the top picker input reflects the new selection
-        assertEquals("11:30", inputTop.getAttribute("value"));
-        assertEquals("10:00", inputBottom.getAttribute("value"));
-        assertEquals("10:00", inputLeft.getAttribute("value"));
-        assertEquals("10:00", inputRight.getAttribute("value"));
+        // Assert: only the top picker input reflects the new selection.
+        assertEquals("11:30", placementTop.getRoot().findElement(By.tagName("input")).getAttribute("value"));
+        assertEquals("10:00", placementBottom.getRoot().findElement(By.tagName("input")).getAttribute("value"));
+        assertEquals("10:00", placementLeft.getRoot().findElement(By.tagName("input")).getAttribute("value"));
+        assertEquals("10:00", placementRight.getRoot().findElement(By.tagName("input")).getAttribute("value"));
 
-        // Act: submit the form to persist the value
+        // Act: submit the form to persist the value.
         submit.click();
 
-        // Assert: the model value survives the round trip on the top picker
-        assertEquals("11:30", inputTop.getAttribute("value"));
+        // Assert: re-acquire inputs after Ajax rerender. The component tree is replaced
+        // on the server, so cached WebElement references become stale.
+        WebElement inputTopAfter = placementTop.getRoot().findElement(By.tagName("input"));
+        WebElement inputBottomAfter = placementBottom.getRoot().findElement(By.tagName("input"));
+        WebElement inputLeftAfter = placementLeft.getRoot().findElement(By.tagName("input"));
+        WebElement inputRightAfter = placementRight.getRoot().findElement(By.tagName("input"));
 
-        // Assert: the server-side LocalTime was updated correctly
+        assertEquals("11:30", inputTopAfter.getAttribute("value"));
+        assertEquals("10:00", inputBottomAfter.getAttribute("value"));
+        assertEquals("10:00", inputLeftAfter.getAttribute("value"));
+        assertEquals("10:00", inputRightAfter.getAttribute("value"));
+
+        // Assert: the server-side LocalTime was updated correctly.
         assertFalse(messages.isEmpty(), "Expected an info message after placement submit");
         assertTrue(messages.getMessagesBySeverity(Severity.INFO).size() > 0,
                     "Expected an INFO severity message after placement selection submit");
@@ -116,13 +120,89 @@ public class ClockPicker007Test extends AbstractPrimeExtensionsPageTest {
         assertNoJavascriptErrors();
     }
 
-    private void assertPopoverPlacement(ClockPicker picker, String expectedPlacement) {
-        WebElement popover = picker.getPopover();
-        String popoverClass = popover.getAttribute("class");
-        assertTrue(popoverClass.contains(expectedPlacement),
-                    "Expected popover class to contain '" + expectedPlacement + "' for placement='" + expectedPlacement + "', got: " + popoverClass);
+    // Opens the picker via its widget instance and asserts popover placement.
+    // Uses window.PF() because the Selenium component's show()/getPopover() rely on
+    // querying the first .clockpicker-popover in the DOM, which is unreliable when
+    // multiple pickers are present.
+    private void assertPlacementPopover(ClockPicker picker, String widgetVar, String expectedPlacement) {
+        PrimeSelenium.executeScript("window.PF('" + widgetVar + "').show();");
+
+        WebElement input = picker.getRoot().findElement(By.tagName("input"));
+        WebElement popover = findPopoverNearInput(input);
+
+        assertTrue(popover.getAttribute("class").contains(expectedPlacement),
+                    "Expected popover class to contain '" + expectedPlacement + "' for placement='" + expectedPlacement + "', got: "
+                                + popover.getAttribute("class"));
+
+        assertPlacementCoordinates(input, popover, expectedPlacement);
+        assertPlacementGap(input, popover, expectedPlacement);
     }
 
+    // The popover is appended to document.body, not the picker container.
+    // When multiple pickers are on the page, find the popover closest to this input.
+    private WebElement findPopoverNearInput(WebElement input) {
+        return (WebElement) PrimeSelenium.executeScript(
+                    "var input = arguments[0];"
+                                + "var inputRect = input.getBoundingClientRect();"
+                                + "var allPopovers = document.querySelectorAll('.clockpicker-popover');"
+                                + "var best = null;"
+                                + "var bestDist = Infinity;"
+                                + "for (var i = 0; i < allPopovers.length; i++) {"
+                                + "  var rect = allPopovers[i].getBoundingClientRect();"
+                                + "  var dist = Math.abs(rect.top - inputRect.top) + Math.abs(rect.left - inputRect.left);"
+                                + "  if (dist < bestDist) { bestDist = dist; best = allPopovers[i]; }"
+                                + "}"
+                                + "return best;",
+                    input);
+    }
+
+    // Verifies that the popover is on the correct side of the input.
+    private void assertPlacementCoordinates(WebElement input, WebElement popover, String expectedPlacement) {
+        var inputRect = input.getRect();
+        var popoverRect = popover.getRect();
+
+        switch (expectedPlacement) {
+            case "top" ->
+                assertTrue(popoverRect.y + popoverRect.height <= inputRect.y,
+                            "Expected popover above input for placement='top', but popover top=" + popoverRect.y
+                                        + " and input top=" + inputRect.y);
+            case "bottom" ->
+                assertTrue(popoverRect.y >= inputRect.y + inputRect.height,
+                            "Expected popover below input for placement='bottom', but popover top=" + popoverRect.y
+                                        + " and input bottom=" + (inputRect.y + inputRect.height));
+            case "left" ->
+                assertTrue(popoverRect.x + popoverRect.width <= inputRect.x,
+                            "Expected popover left of input for placement='left', but popover left=" + popoverRect.x
+                                        + " and input left=" + inputRect.x);
+            case "right" ->
+                assertTrue(popoverRect.x >= inputRect.x + inputRect.width,
+                            "Expected popover right of input for placement='right', but popover left=" + popoverRect.x
+                                        + " and input right=" + (inputRect.x + inputRect.width));
+            default ->
+                fail("Unexpected placement: " + expectedPlacement);
+        }
+    }
+
+    // Verifies that the popover is close to the input, not positioned far away.
+    // Without the CSS fix, placement="right" gap is ~600px because .ui-inputgroup
+    // stretches the container to full width.
+    private void assertPlacementGap(WebElement input, WebElement popover, String expectedPlacement) {
+        var inputRect = input.getRect();
+        var popoverRect = popover.getRect();
+        int gap;
+        switch (expectedPlacement) {
+            case "top" -> gap = inputRect.y - (popoverRect.y + popoverRect.height);
+            case "bottom" -> gap = popoverRect.y - (inputRect.y + inputRect.height);
+            case "left" -> gap = inputRect.x - (popoverRect.x + popoverRect.width);
+            case "right" -> gap = popoverRect.x - (inputRect.x + inputRect.width);
+            default -> throw new IllegalArgumentException("Unexpected placement: " + expectedPlacement);
+        }
+        assertTrue(gap >= 0 && gap < 120,
+                    "Expected popover gap for placement='" + expectedPlacement + "' to be under 120px but was " + gap + "px");
+    }
+
+    // The picker container must not expand to full width in button-trigger mode.
+    // This guards the CSS defect described in assertPlacementGap.
     private void assertContainerWidth(ClockPicker picker, String widgetVar) {
         long width = (Long) PrimeSelenium.executeScript(
                     "var w = window.PF('" + widgetVar + "');"
