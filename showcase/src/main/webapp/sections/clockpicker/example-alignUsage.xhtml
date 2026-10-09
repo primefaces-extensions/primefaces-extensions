@@ -1,0 +1,45 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="jakarta.faces.html"
+                xmlns:ui="jakarta.faces.facelets" xmlns:p="primefaces"
+                xmlns:pe="primefaces.extensions">
+
+    <!-- EXAMPLE-SOURCE-START -->
+<h:panelGroup id="alignGrid" layout="block" styleClass="placement-demo-grid">
+
+    <h:panelGroup layout="block" styleClass="placement-cell">
+        <p>Left (default)</p>
+        <pe:clockpicker id="alignLeft" widgetVar="alignLeftWidget" autoClose="false"
+                        value="#{clockPickerAlignController.timeLeft}" showOn="button" locale="en"
+                        align="left" placement="bottom"/>
+    </h:panelGroup>
+
+    <h:panelGroup layout="block" styleClass="placement-cell">
+        <p>Center</p>
+        <pe:clockpicker id="alignCenter" widgetVar="alignCenterWidget" autoClose="false"
+                        value="#{clockPickerAlignController.timeCenter}" showOn="button" locale="en"
+                        align="center" placement="bottom"/>
+    </h:panelGroup>
+
+    <h:panelGroup layout="block" styleClass="placement-cell">
+        <p>Right</p>
+        <pe:clockpicker id="alignRight" widgetVar="alignRightWidget" autoClose="false"
+                        value="#{clockPickerAlignController.timeRight}" showOn="button" locale="en"
+                        align="right" placement="bottom"/>
+    </h:panelGroup>
+
+    <h:panelGroup layout="block" styleClass="placement-cell">
+        <p>Top</p>
+        <pe:clockpicker id="alignTop" widgetVar="alignTopWidget" autoClose="false"
+                        value="#{clockPickerAlignController.timeTop}" showOn="button" locale="en"
+                        align="top" placement="right"/>
+    </h:panelGroup>
+
+    <h:panelGroup layout="block" styleClass="placement-cell">
+        <p>Bottom</p>
+        <pe:clockpicker id="alignBottom" widgetVar="alignBottomWidget" autoClose="false"
+                        value="#{clockPickerAlignController.timeBottom}" showOn="button" locale="en"
+                        align="bottom" placement="right"/>
+    </h:panelGroup>
+
+</h:panelGroup>
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>
