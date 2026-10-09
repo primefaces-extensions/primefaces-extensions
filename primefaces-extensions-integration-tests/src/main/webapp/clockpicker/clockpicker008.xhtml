@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="primefaces"
+      xmlns:pe="primefaces.extensions">
+
+    <f:view contentType="text/html;charset=UTF-8" encoding="UTF-8">
+        <h:head>
+            <link rel="icon" href="data:," />
+        </h:head>
+
+        <h:body>
+            <h:form id="form">
+                <h:panelGroup id="clockpickerGroup" layout="block">
+
+                    <p>align="left" (default) with placement="bottom"</p>
+                    <pe:clockpicker id="alignLeft" widgetVar="alignLeftWidget" autoClose="false"
+                                    value="#{clockPickerController.time8}" showOn="button" locale="en"
+                                    align="left" placement="bottom"/>
+
+                    <p>align="center" with placement="bottom"</p>
+                    <pe:clockpicker id="alignCenter" widgetVar="alignCenterWidget" autoClose="false"
+                                    value="#{clockPickerController.time8}" showOn="button" locale="en"
+                                    align="center" placement="bottom"/>
+
+                    <p>align="right" with placement="bottom"</p>
+                    <pe:clockpicker id="alignRight" widgetVar="alignRightWidget" autoClose="false"
+                                    value="#{clockPickerController.time8}" showOn="button" locale="en"
+                                    align="right" placement="bottom"/>
+
+                    <p>align="top" with placement="right"</p>
+                    <pe:clockpicker id="alignTop" widgetVar="alignTopWidget" autoClose="false"
+                                    value="#{clockPickerController.time8}" showOn="button" locale="en"
+                                    align="top" placement="right"/>
+
+                    <p>align="bottom" with placement="right"</p>
+                    <pe:clockpicker id="alignBottom" widgetVar="alignBottomWidget" autoClose="false"
+                                    value="#{clockPickerController.time8}" showOn="button" locale="en"
+                                    align="bottom" placement="right"/>
+
+                </h:panelGroup>
+            </h:form>
+        </h:body>
+    </f:view>
+
+</html>

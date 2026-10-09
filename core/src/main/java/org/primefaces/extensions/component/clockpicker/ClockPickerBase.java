@@ -55,7 +55,7 @@ public abstract class ClockPickerBase extends AbstractPrimeHtmlInputText impleme
     @Property(description = "Position of the popup: 'bottom', 'top', 'left', 'right'.", defaultValue = "bottom")
     public abstract String getPlacement();
 
-    @Property(description = "Alignment of the popup: 'left', 'right', 'top', 'bottom'.", defaultValue = "left")
+    @Property(description = "Alignment of the popup: 'left', 'center', 'right', 'top', 'bottom'.", defaultValue = "left")
     public abstract String getAlign();
 
     @Property(description = "Whether to close the popup after selecting time.", defaultValue = "false")
