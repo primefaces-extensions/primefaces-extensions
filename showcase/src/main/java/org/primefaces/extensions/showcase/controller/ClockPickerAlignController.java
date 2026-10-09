@@ -21,7 +21,6 @@
  */
 package org.primefaces.extensions.showcase.controller;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalTime;
 
@@ -32,7 +31,6 @@ import jakarta.inject.Named;
 @ViewScoped
 public class ClockPickerAlignController implements Serializable {
 
-    @Serial
     private static final long serialVersionUID = 897540091000342926L;
 
     private LocalTime timeLeft;
