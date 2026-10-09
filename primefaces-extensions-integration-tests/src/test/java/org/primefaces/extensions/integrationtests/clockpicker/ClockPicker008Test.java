@@ -70,9 +70,9 @@ public class ClockPicker008Test extends AbstractPrimeExtensionsPageTest {
         // for placement="bottom". From ClockPicker.locate(): left anchors to the input
         // left, center subtracts half the width delta, right subtracts the full delta,
         // so with a popover wider than the input, left > center > right.
-        double leftPos = popoverX("alignLeftWidget", "left");
-        double centerPos = popoverX("alignCenterWidget", "center");
-        double rightPos = popoverX("alignRightWidget", "right");
+        double leftPos = popoverOffsetX(page.alignLeft, "alignLeftWidget", "left");
+        double centerPos = popoverOffsetX(page.alignCenter, "alignCenterWidget", "center");
+        double rightPos = popoverOffsetX(page.alignRight, "alignRightWidget", "right");
 
         assertTrue(leftPos > centerPos,
                     "Expected align='left' popover to be right of align='center', but left=" + leftPos + " center=" + centerPos);
@@ -83,8 +83,8 @@ public class ClockPicker008Test extends AbstractPrimeExtensionsPageTest {
         // for placement="right". From ClockPicker.locate(): top anchors to the input
         // top, bottom subtracts the height delta, so with a popover taller than the
         // input, top > bottom.
-        double topPos = popoverY("alignTopWidget", "top");
-        double bottomPos = popoverY("alignBottomWidget", "bottom");
+        double topPos = popoverOffsetY(page.alignTop, "alignTopWidget", "top");
+        double bottomPos = popoverOffsetY(page.alignBottom, "alignBottomWidget", "bottom");
 
         assertTrue(topPos > bottomPos,
                     "Expected align='top' popover top (" + topPos + ") to be below align='bottom' popover top ("
@@ -101,7 +101,7 @@ public class ClockPicker008Test extends AbstractPrimeExtensionsPageTest {
     // Uses window.PF() with a widget-owned popover lookup because the Selenium
     // component's show()/getPopover() resolve the first .clockpicker-popover in the
     // DOM, which is wrong with 5 pickers (see ClockPicker007Test).
-    private double popoverX(String widgetVar, String expectedAlign) {
+    private double popoverOffsetX(ClockPicker picker, String widgetVar, String expectedAlign) {
         showPopover(widgetVar);
         try {
             WebElement popover = getWidgetPopover(widgetVar);
@@ -109,7 +109,8 @@ public class ClockPicker008Test extends AbstractPrimeExtensionsPageTest {
             assertTrue(popover.getAttribute("class").contains("clockpicker-align-" + expectedAlign),
                         "Expected popover class to contain 'clockpicker-align-" + expectedAlign + "', got: "
                                     + popover.getAttribute("class"));
-            return popover.getRect().getX();
+            WebElement input = picker.getRoot().findElement(By.tagName("input"));
+            return popover.getRect().getX() - input.getRect().getX();
         }
         finally {
             hidePopover(widgetVar);
@@ -117,7 +118,7 @@ public class ClockPicker008Test extends AbstractPrimeExtensionsPageTest {
     }
 
     // Opens the picker via its widget instance and returns the popover viewport Y.
-    private double popoverY(String widgetVar, String expectedAlign) {
+    private double popoverOffsetY(ClockPicker picker, String widgetVar, String expectedAlign) {
         showPopover(widgetVar);
         try {
             WebElement popover = getWidgetPopover(widgetVar);
@@ -125,7 +126,8 @@ public class ClockPicker008Test extends AbstractPrimeExtensionsPageTest {
             assertTrue(popover.getAttribute("class").contains("clockpicker-align-" + expectedAlign),
                         "Expected popover class to contain 'clockpicker-align-" + expectedAlign + "', got: "
                                     + popover.getAttribute("class"));
-            return popover.getRect().getY();
+            WebElement input = picker.getRoot().findElement(By.tagName("input"));
+            return popover.getRect().getY() - input.getRect().getY();
         }
         finally {
             hidePopover(widgetVar);
