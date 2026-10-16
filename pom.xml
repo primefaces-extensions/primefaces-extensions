@@ -105,7 +105,7 @@
         <morphia.version>2.5.3</morphia.version>
         <owasp.version>20260313.1</owasp.version>
         <junit.version>5.13.4</junit.version>
-        <primefaces.core.version>16.0.0</primefaces.core.version>
+        <primefaces.core.version>16.0.1</primefaces.core.version>
         <primefaces.optimizer.version>2.6.6</primefaces.optimizer.version>
         <tomcat.version>11.0.26</tomcat.version>
         <jetty.version>12.1.13</jetty.version>
