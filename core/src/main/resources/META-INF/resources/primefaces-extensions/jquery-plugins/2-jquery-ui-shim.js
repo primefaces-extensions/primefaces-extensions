@@ -6,19 +6,19 @@
  * PrimeFaces.interactions, so existing code keeps working while it is migrated. Every plugin logs a deprecation
  * warning (development project stage only) the first time it is used.
  *
- * Include it after the PrimeFaces core:
- * <h:outputScript library="primefaces-extensions" name="jquery-ui-shim/jquery-ui-shim.js" />
+ * It is part of jquery-plugins.js, after the jQuery UI subset. Plugins that jQuery UI already defines are not replaced,
+ * so $.fn.draggable stays the jQuery UI draggable that the bundle ships for Layout and BlockUI.
  *
- * Not covered, see the PrimeFaces 17 migration guide: $.ui (e.g. $.ui.keyCode, $.ui.ddmanager), $.fn.position(options),
- * jQuery UI CSS classes (now prefixed with "p-", e.g. p-sortable-helper) and event.originalEvent, which is now the
- * native PointerEvent.
+ * Not covered, see the PrimeFaces 17 migration guide: $.fn.position(options) beyond the jQuery UI subset, jQuery UI CSS
+ * classes (now prefixed with "p-", e.g. p-sortable-helper) and event.originalEvent, which is now the native
+ * PointerEvent.
  *
  * @see https://github.com/primefaces-extensions/primefaces-extensions/issues/2868
  */
 (function ($) {
     "use strict";
 
-    if (!window.PrimeFaces || !PrimeFaces.interactions) {
+    if (!$ || !window.PrimeFaces || !PrimeFaces.interactions) {
         return;
     }
 
@@ -159,4 +159,4 @@
         });
     }
 
-})(jQuery);
+})(window.jQuery);

@@ -39,19 +39,20 @@ public class JqueryUiShim001Test extends AbstractPrimeExtensionsPageTest {
 
     @Test
     @Order(1)
-    @DisplayName("jQuery UI shim: $.fn plugins exist and create PrimeFaces interactions")
+    @DisplayName("jQuery UI shim: $.fn plugins exist, the missing ones create PrimeFaces interactions")
     void pluginsCreateInteractions(Page page) {
         assertEquals(true, PrimeSelenium.executeScript(
                     "return ['draggable', 'droppable', 'sortable', 'resizable'].every(function (t) { return typeof $.fn[t] === 'function'; });"));
 
         PrimeSelenium.executeScript("$('#drag').draggable({ axis: 'x' }); $('#drop').droppable(); $('#resize').resizable();");
 
-        assertEquals(true, PrimeSelenium.executeScript(
-                    "return PrimeFaces.interactions.instance($('#drag'), 'draggable') === $('#drag').draggable('instance');"));
+        // the bundle ships the jQuery UI draggable (Layout, BlockUI), the shim doesn't replace it
+        assertEquals(true, PrimeSelenium.executeScript("return $('#drag').draggable('instance') instanceof $.ui.draggable;"));
+        assertTrue(page.drag.getAttribute("class").contains("ui-draggable"));
+
         assertEquals(true, PrimeSelenium.executeScript(
                     "return $('#drop').data('ui-droppable') === PrimeFaces.interactions.instance($('#drop'), 'droppable');"));
         assertEquals(true, PrimeSelenium.executeScript("return !!PrimeFaces.interactions.instance($('#resize'), 'resizable');"));
-        assertTrue(page.drag.getAttribute("class").contains("p-draggable"));
         assertNoJavascriptErrors();
     }
 
