@@ -52,7 +52,6 @@ import org.primefaces.extensions.util.Constants;
 @FacesComponent(value = DynaForm.COMPONENT_TYPE, namespace = DynaForm.COMPONENT_FAMILY)
 @FacesComponentInfo(description = "DynaForm is a dynamic form component that renders based on a DynaFormModel.")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
-@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "dynaform/dynaform.css")

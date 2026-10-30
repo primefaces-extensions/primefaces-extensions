@@ -37,7 +37,6 @@ import org.primefaces.extensions.util.Constants;
 @FacesComponentInfo(description = "CreditCard displays a credit card input form with validation and formatting.")
 @ResourceDependency(library = "primefaces", name = "components.css")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
-@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "creditcard/creditcard.css")
 @ResourceDependency(library = Constants.LIBRARY, name = "creditcard/creditcard.js")

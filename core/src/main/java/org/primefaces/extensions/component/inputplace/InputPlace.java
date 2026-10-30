@@ -43,8 +43,8 @@ import org.primefaces.extensions.util.Constants;
 @FacesComponentInfo(description = "InputPlace is an address/place autocomplete input using Google or similar APIs.")
 @ResourceDependency(library = "primefaces", name = "components.css")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
-@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
+@ResourceDependency(library = Constants.LIBRARY, name = "jquery-plugins/jquery-plugins.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "inputplace/inputplace.css")
 @ResourceDependency(library = Constants.LIBRARY, name = "inputplace/inputplace.js")
 public class InputPlace extends InputPlaceBaseImpl {

@@ -42,7 +42,6 @@ import org.primefaces.extensions.util.Constants;
 @FacesComponent(value = ImageAreaSelect.COMPONENT_TYPE, namespace = ImageAreaSelect.COMPONENT_FAMILY)
 @FacesComponentInfo(description = "ImageAreaSelect allows selecting a rectangular area on an image.")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
-@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "imageareaselect/imageareaselect.css")

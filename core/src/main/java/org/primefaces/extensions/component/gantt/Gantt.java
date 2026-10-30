@@ -50,7 +50,6 @@ import org.primefaces.extensions.util.Constants;
 @FacesComponent(value = Gantt.COMPONENT_TYPE, namespace = Gantt.COMPONENT_FAMILY)
 @FacesComponentInfo(name = "gantt", description = "Gantt is a modern, interactive gantt chart component.")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
-@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "gantt/gantt.js")

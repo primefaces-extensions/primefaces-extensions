@@ -43,7 +43,6 @@ import org.primefaces.extensions.util.Constants;
 @FacesComponent(value = Waypoint.COMPONENT_TYPE, namespace = Waypoint.COMPONENT_FAMILY)
 @FacesComponentInfo(description = "Waypoint makes it easy to execute a custom logic whenever you scroll to an element.")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
-@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "waypoint/waypoint.js")

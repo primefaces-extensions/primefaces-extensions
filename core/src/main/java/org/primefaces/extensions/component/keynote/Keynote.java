@@ -46,7 +46,6 @@ import org.primefaces.extensions.model.keynote.KeynoteItem;
 @FacesComponent(value = Keynote.COMPONENT_TYPE, namespace = Keynote.COMPONENT_FAMILY)
 @FacesComponentInfo(description = "Keynote is a presentation component based on Reveal.js.")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
-@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "primefaces-extensions.js")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "keynote/keynote.js")

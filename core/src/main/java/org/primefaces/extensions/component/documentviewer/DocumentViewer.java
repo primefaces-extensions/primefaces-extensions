@@ -41,7 +41,6 @@ import org.primefaces.util.LocaleUtils;
 @FacesComponent(value = DocumentViewer.COMPONENT_TYPE, namespace = DocumentViewer.COMPONENT_FAMILY)
 @FacesComponentInfo(description = "DocumentViewer displays PDF documents in the browser using PDF.js.")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
-@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.js")
 public class DocumentViewer extends DocumentViewerBaseImpl {

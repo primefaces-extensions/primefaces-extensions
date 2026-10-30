@@ -44,8 +44,8 @@ import org.primefaces.util.ComponentUtils;
 @FacesComponentInfo(description = "FuzzySearch is a select-one input with fuzzy search and autocomplete.")
 @ResourceDependency(library = "primefaces", name = "components.css")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
-@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
+@ResourceDependency(library = Constants.LIBRARY, name = "jquery-plugins/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "components.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "fuzzysearch/fuzzysearch.js")
 public class FuzzySearch extends FuzzySearchBaseImpl {

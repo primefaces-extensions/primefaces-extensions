@@ -47,7 +47,6 @@ import org.primefaces.util.LocaleUtils;
 @FacesComponentInfo(description = "Calculator is a popup calculator component that attaches to an input field.")
 @ResourceDependency(library = "primefaces", name = "components.css")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
-@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "calculator/calculator.css")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "calculator/calculator.js")

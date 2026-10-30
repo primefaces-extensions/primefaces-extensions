@@ -47,7 +47,6 @@ import com.google.gson.reflect.TypeToken;
 @FacesComponent(value = MarkText.COMPONENT_TYPE, namespace = MarkText.COMPONENT_FAMILY)
 @FacesComponentInfo(description = "MarkText highlights search terms within specified containers using mark.js.")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
-@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = "primefaces", name = "components.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "mark/mark.js")

@@ -40,7 +40,6 @@ import org.primefaces.util.LocaleUtils;
 @FacesComponent(value = SunEditor.COMPONENT_TYPE, namespace = SunEditor.COMPONENT_FAMILY)
 @FacesComponentInfo(description = "SunEditor WYSIWYG editor component.")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
-@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "suneditor/suneditor.css")

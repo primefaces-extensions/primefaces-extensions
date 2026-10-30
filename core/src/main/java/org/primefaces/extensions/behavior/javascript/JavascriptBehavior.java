@@ -37,7 +37,6 @@ import org.primefaces.extensions.util.Constants;
 @FacesBehavior(JavascriptBehavior.BEHAVIOR_ID)
 @FacesBehaviorInfo(name = "javascript", description = "Behavior to intercept a Javascript event to prevent the AJAX from firing.")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
-@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.js")
 public class JavascriptBehavior extends JavascriptBehaviorBaseImpl {

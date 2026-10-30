@@ -36,7 +36,6 @@ import org.primefaces.extensions.util.Constants;
 @FacesComponentInfo(description = "Gives client-side Javascript events when session will expire.")
 @ResourceDependency(library = "jakarta.faces", name = "faces.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
-@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "session/session.js")
 public class Session extends SessionBaseImpl {

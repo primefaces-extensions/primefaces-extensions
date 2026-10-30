@@ -70,6 +70,7 @@ import org.primefaces.util.LangUtils;
 @ResourceDependency(library = "primefaces", name = "components.css")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
+@ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "jquery-plugins/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "components.js")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "primefaces-extensions.js")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, target = "head", name = "sheet/sheet.css")

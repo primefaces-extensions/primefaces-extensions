@@ -52,7 +52,6 @@ import org.primefaces.extensions.util.Constants;
 @FacesComponentInfo(description = "RemoteCommand provides a way to execute JSF backing bean methods directly from javascript.")
 @FacesComponentHandler(RemoteCommandHandler.class)
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
-@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.js")
 public class RemoteCommand extends RemoteCommandBaseImpl {

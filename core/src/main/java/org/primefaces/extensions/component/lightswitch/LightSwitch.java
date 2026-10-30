@@ -41,7 +41,6 @@ import org.primefaces.event.SelectEvent;
 @FacesComponent(value = LightSwitch.COMPONENT_TYPE, namespace = LightSwitch.COMPONENT_FAMILY)
 @FacesComponentInfo(description = "LightSwitch automatically switches to defined dark mode theme based on OS settings.")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
-@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "primefaces-extensions.js")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "lightswitch/lightswitch.js")

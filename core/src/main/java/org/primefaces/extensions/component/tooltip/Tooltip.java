@@ -36,7 +36,6 @@ import org.primefaces.extensions.util.Constants;
 @FacesComponent(value = Tooltip.COMPONENT_TYPE, namespace = Tooltip.COMPONENT_FAMILY)
 @FacesComponentInfo(description = "Advanced Tooltip component.")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
-@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "tooltip/tooltip.css")

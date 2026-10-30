@@ -52,7 +52,6 @@ import org.primefaces.extensions.model.fluidgrid.FluidGridItem;
 @FacesComponent(value = FluidGrid.COMPONENT_TYPE, namespace = FluidGrid.COMPONENT_FAMILY)
 @FacesComponentInfo(description = "FluidGrid is a masonry-style layout component that arranges items in an optimal position based on vertical space.")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
-@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "primefaces-extensions.js")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "fluidgrid/fluidgrid.css")

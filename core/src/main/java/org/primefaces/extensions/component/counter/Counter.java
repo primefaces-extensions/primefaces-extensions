@@ -45,7 +45,6 @@ import org.primefaces.util.LocaleUtils;
 @FacesComponentInfo(description = "Counter animates a number from a start value to an end value.")
 @ResourceDependency(library = "primefaces", name = "components.css")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
-@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = "primefaces", name = "components.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "counter/counter.js")

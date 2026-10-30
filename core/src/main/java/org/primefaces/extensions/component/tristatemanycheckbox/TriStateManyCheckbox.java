@@ -48,7 +48,6 @@ import org.primefaces.extensions.util.MessageFactory;
 @FacesComponentInfo(description = "Tri-State multiple checkbox component.")
 @ResourceDependency(library = "primefaces", name = "components.css")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
-@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "tristatemanycheckbox/tristatemanycheckbox.js")
