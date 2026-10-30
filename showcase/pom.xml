@@ -66,10 +66,6 @@
             <artifactId>primefaces</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.primefaces</groupId>
-            <artifactId>primefaces-themes</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.primefaces.extensions</groupId>
             <artifactId>primefaces-extensions</artifactId>
             <version>${project.version}</version>
