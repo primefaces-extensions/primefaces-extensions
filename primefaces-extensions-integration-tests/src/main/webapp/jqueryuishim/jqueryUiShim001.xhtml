@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+
+    <f:view contentType="text/html;charset=UTF-8" encoding="UTF-8">
+        <h:head>
+            <link rel="icon" href="data:,"/>
+            <h:outputStylesheet library="primefaces" name="components.css"/>
+            <h:outputScript library="primefaces" name="jquery/jquery.js"/>
+            <h:outputScript library="primefaces" name="core.js"/>
+            <h:outputScript library="primefaces-extensions" name="jquery-ui-shim/jquery-ui-shim.js"/>
+        </h:head>
+
+        <h:body>
+            <ul id="list" style="list-style: none; padding: 0; width: 200px;">
+                <li id="item_1" style="height: 40px; background: #ddd; margin: 2px;">Item 1</li>
+                <li id="item_2" style="height: 40px; background: #ccc; margin: 2px;">Item 2</li>
+                <li id="item_3" style="height: 40px; background: #bbb; margin: 2px;">Item 3</li>
+            </ul>
+
+            <div id="drag" style="width: 50px; height: 50px; background: #aaa;">Drag</div>
+            <div id="drop" style="width: 100px; height: 100px; background: #eee;">Drop</div>
+            <div id="resize" style="width: 100px; height: 100px; background: #999;">Resize</div>
+        </h:body>
+    </f:view>
+
+</html>
