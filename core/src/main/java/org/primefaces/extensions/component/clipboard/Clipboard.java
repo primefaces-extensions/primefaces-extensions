@@ -43,7 +43,6 @@ import org.primefaces.extensions.event.ClipboardSuccessEvent;
 @FacesComponentInfo(description = "Clipboard provides copy/cut to clipboard functionality for text or elements.")
 @ResourceDependency(library = "primefaces", name = "components.css")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
-@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "clipboard/clipboard.js")
 public class Clipboard extends ClipboardBaseImpl {

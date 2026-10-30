@@ -44,7 +44,6 @@ import org.primefaces.extensions.util.Constants;
 @FacesComponentInfo(name = "slideout", description = "SlideOut creates a sliding panel with a handle.")
 @ResourceDependency(library = "primefaces", name = "components.css")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
-@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "slideout/slideout.css")
 @ResourceDependency(library = Constants.LIBRARY, name = "slideout/slideout.js")

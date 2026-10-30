@@ -36,7 +36,6 @@ import org.primefaces.extensions.util.Constants;
 @FacesComponentInfo(description = "Markdown editor component for editing markdown content.")
 @ResourceDependency(library = "primefaces", name = "components.css")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
-@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "markdowneditor/markdowneditor.css")
 @ResourceDependency(library = Constants.LIBRARY, name = "markdowneditor/markdowneditor.js")

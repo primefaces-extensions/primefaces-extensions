@@ -35,7 +35,6 @@ import org.primefaces.extensions.util.Constants;
 @FacesComponent(value = QRCodeBase.COMPONENT_TYPE, namespace = QRCodeBase.COMPONENT_FAMILY)
 @FacesComponentInfo(name = "qrCode", description = "Generate QR codes dynamically")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
-@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "qrcode/qrcode.js")

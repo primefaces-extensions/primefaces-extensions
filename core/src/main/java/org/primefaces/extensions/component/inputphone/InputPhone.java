@@ -43,7 +43,6 @@ import org.primefaces.extensions.model.inputphone.Country;
 @FacesComponentInfo(description = "InputPhone is an international telephone input with country selector.")
 @ResourceDependency(library = "primefaces", name = "components.css")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
-@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "inputphone/inputphone.css")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "inputphone/inputphone.js")

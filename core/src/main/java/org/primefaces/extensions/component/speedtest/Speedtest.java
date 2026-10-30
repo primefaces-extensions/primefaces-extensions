@@ -42,7 +42,6 @@ import org.primefaces.extensions.event.SpeedTestEvent;
 @FacesComponent(value = Speedtest.COMPONENT_TYPE, namespace = Speedtest.COMPONENT_FAMILY)
 @FacesComponentInfo(description = "Speedtest allows to measure the network speed.")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
-@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "primefaces-extensions.js")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "echarts/echarts.js")

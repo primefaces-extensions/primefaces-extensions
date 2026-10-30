@@ -205,6 +205,7 @@
                                 <include>inputotp/**</include>
                                 <include>inputphone/1-inputphone-widget.js</include>
                                 <include>inputplace/**</include>
+                                <include>jquery-plugins/**</include>
                                 <include>layout/**</include>
                                 <include>legend/**</include>
                                 <include>mark/**</include>

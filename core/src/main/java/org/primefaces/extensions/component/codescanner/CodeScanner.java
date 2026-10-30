@@ -45,7 +45,6 @@ import org.primefaces.extensions.util.Constants;
 @FacesComponentInfo(description = "CodeScanner scans barcode and QR codes using the device camera.")
 @ResourceDependency(library = "primefaces", name = "components.css")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
-@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "codescanner/codescanner.js")
 public class CodeScanner extends CodeScannerBaseImpl {

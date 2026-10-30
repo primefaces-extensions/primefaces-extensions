@@ -42,7 +42,6 @@ import com.google.gson.JsonArray;
 @FacesComponent(value = GChart.COMPONENT_TYPE, namespace = GChart.COMPONENT_FAMILY)
 @FacesComponentInfo(description = "GChart is a Google Charts visualization component.")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
-@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "gchart/gchart.css")

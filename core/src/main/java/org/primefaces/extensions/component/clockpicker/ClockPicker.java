@@ -41,7 +41,6 @@ import org.primefaces.util.LocaleUtils;
 @FacesComponentInfo(name = "clockpicker", description = "ClockPicker is a time picker component with clock-style UI.")
 @ResourceDependency(library = "primefaces", name = "components.css")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
-@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "clockpicker/clockpicker.css")
 @ResourceDependency(library = Constants.LIBRARY, name = "clockpicker/clockpicker.js")

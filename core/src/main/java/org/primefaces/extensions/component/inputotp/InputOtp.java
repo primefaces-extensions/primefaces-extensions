@@ -49,7 +49,6 @@ import org.primefaces.util.LangUtils;
 @FacesComponentInfo(description = "InputOtp is a one-time password / verification code input with separate cells.")
 @ResourceDependency(library = "primefaces", name = "components.css")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
-@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "inputotp/inputotp.css")
 @ResourceDependency(library = Constants.LIBRARY, name = "inputotp/inputotp.js")

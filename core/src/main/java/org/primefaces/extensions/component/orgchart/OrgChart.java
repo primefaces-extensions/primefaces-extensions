@@ -44,7 +44,6 @@ import org.primefaces.extensions.util.Constants;
 @FacesComponent(value = OrgChart.COMPONENT_TYPE, namespace = OrgChart.COMPONENT_FAMILY)
 @FacesComponentInfo(name = "orgchart", description = "OrgChart is a simple and direct organization chart component.")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
-@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "orgchart/2-jspdf.js")

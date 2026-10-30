@@ -48,7 +48,6 @@ import org.primefaces.extensions.util.Constants;
 @FacesComponent(value = Kanban.COMPONENT_TYPE, namespace = Kanban.COMPONENT_FAMILY)
 @FacesComponentInfo(description = "Kanban board component for visualizing workflow and managing tasks with drag-and-drop functionality.")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
-@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "kanban/kanban.css")

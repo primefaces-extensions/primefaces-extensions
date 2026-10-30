@@ -37,7 +37,6 @@ import org.primefaces.extensions.util.Constants;
 @FacesComponentInfo(description = "Legend component for chart labels and colors.")
 @ResourceDependency(library = "primefaces", name = "components.css")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
-@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "legend/legend.css")
 @ResourceDependency(library = Constants.LIBRARY, name = "legend/legend.js")
