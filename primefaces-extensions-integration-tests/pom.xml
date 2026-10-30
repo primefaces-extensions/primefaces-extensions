@@ -23,7 +23,7 @@
         <webdriver.headless>false</webdriver.headless>
         <webdriver.browser>chrome</webdriver.browser>
         <primefaces.CSP>false</primefaces.CSP>
-        <primefaces.THEME>aura-light-emerald</primefaces.THEME>
+        <primefaces.THEME>aura</primefaces.THEME>
         <junit.jupiter.execution.parallel.enabled>false</junit.jupiter.execution.parallel.enabled>
         <jakarta.faces.STATE_SAVING_METHOD>server</jakarta.faces.STATE_SAVING_METHOD>
 
@@ -40,11 +40,6 @@
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
-            <version>${primefaces.core.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.primefaces</groupId>
-            <artifactId>primefaces-themes</artifactId>
             <version>${primefaces.core.version}</version>
         </dependency>
 
@@ -295,7 +290,7 @@
         <profile>
             <id>theme-aura</id>
             <properties>
-                <primefaces.THEME>aura-light-emerald</primefaces.THEME>
+                <primefaces.THEME>aura</primefaces.THEME>
             </properties>
         </profile>
     </profiles>
