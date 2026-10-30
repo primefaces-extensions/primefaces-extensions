@@ -24,6 +24,7 @@
     position: relative;
 }
 
-.ui-draggable .pe-blockui-titlebar {
+.ui-draggable .pe-blockui-titlebar,
+.p-draggable .pe-blockui-titlebar {
     cursor: move;
 }

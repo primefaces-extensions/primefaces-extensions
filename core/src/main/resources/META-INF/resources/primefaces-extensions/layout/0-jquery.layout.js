@@ -4525,7 +4525,7 @@
                         var pane = evtPane.call(this, evt_or_pane)
                             , $R = $Rs[pane]
                         ;
-                        if (!$R || !$R.data('draggable'))
+                        if (!$R || !$R.data('ui-draggable'))
                             return;
                         options[pane].slidable = true;
                         if (state[pane].isClosed)
@@ -4564,7 +4564,7 @@
                             , $R = $Rs[pane]
                             , o = options[pane]
                         ;
-                        if (!$R || !$R.data('draggable'))
+                        if (!$R || !$R.data('ui-draggable'))
                             return;
                         o.resizable = true;
                         $R.draggable("enable");
@@ -4581,7 +4581,7 @@
                         var pane = evtPane.call(this, evt_or_pane)
                             , $R = $Rs[pane]
                         ;
-                        if (!$R || !$R.data('draggable'))
+                        if (!$R || !$R.data('ui-draggable'))
                             return;
                         options[pane].resizable = false;
                         $R.draggable("disable")

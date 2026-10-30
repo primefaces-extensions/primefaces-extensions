@@ -6,8 +6,8 @@
  * PrimeFaces.interactions, so existing code keeps working while it is migrated. Every plugin logs a deprecation
  * warning (development project stage only) the first time it is used.
  *
- * It is part of jquery-plugins.js, after the jQuery UI subset. Plugins that jQuery UI already defines are not replaced,
- * so $.fn.draggable stays the jQuery UI draggable that the bundle ships for Layout and BlockUI.
+ * It is part of jquery-plugins.js, after the jQuery UI subset, and is also used by Layout and BlockUI. Plugins defined
+ * by a full jQuery UI that is loaded anyway are not replaced.
  *
  * Not covered, see the PrimeFaces 17 migration guide: $.fn.position(options) beyond the jQuery UI subset, jQuery UI CSS
  * classes (now prefixed with "p-", e.g. p-sortable-helper) and event.originalEvent, which is now the native
