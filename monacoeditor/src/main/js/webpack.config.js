@@ -2,8 +2,7 @@
 import { createRequire } from "node:module";
 import TerserPlugin from "terser-webpack-plugin";
 
-import LimitChunkCountPlugin from "webpack/lib/optimize/LimitChunkCountPlugin.js";
-import NormalModuleWebpackReplacementPlugin from "webpack/lib/NormalModuleReplacementPlugin.js";
+import webpack from "webpack";
 
 import { webpackOutputDir } from "./src/util/paths.js";
 
@@ -50,11 +49,11 @@ export default function(env, argv) {
       ]
     },
     plugins: [
-      new NormalModuleWebpackReplacementPlugin(/\/(vscode\-)?nls\.js/, function (resource) {
+      new webpack.NormalModuleReplacementPlugin(/\/(vscode\-)?nls\.js/, function (resource) {
         resource.request = nls;
         resource.resource = nls;
       }),
-      new LimitChunkCountPlugin({
+      new webpack.optimize.LimitChunkCountPlugin({
         maxChunks: 1,
       })
     ],
