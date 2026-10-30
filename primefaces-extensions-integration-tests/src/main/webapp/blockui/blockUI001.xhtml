@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:pe="primefaces.extensions">
+
+    <f:view contentType="text/html;charset=UTF-8" encoding="UTF-8">
+        <h:head>
+            <link rel="icon" href="data:,"/>
+        </h:head>
+
+        <h:body>
+            <h:panelGroup id="panel" layout="block" style="width: 300px; height: 150px;">
+                Blockable content
+            </h:panelGroup>
+            <h:panelGroup id="content" layout="block" style="display: none;">
+                Please wait
+            </h:panelGroup>
+            <pe:blockUI id="blocker" widgetVar="blockWidget" target="panel" content="content"/>
+        </h:body>
+    </f:view>
+
+</html>
