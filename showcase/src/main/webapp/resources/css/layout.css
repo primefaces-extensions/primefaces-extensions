@@ -9,13 +9,13 @@ body > .ui-layout-north {
 }
 
 body a {
-    color: var(--primary-color, rgb(0, 0, 238));
+    color: var(--p-primary-color);
 }
 
 body > form > .ui-layout-south {
     background: none;
     border: none;
-    color: #000000;
+    color: var(--p-text-color);
     overflow: hidden;
     vertical-align: middle;
     font-size: 11px !important;
@@ -25,7 +25,7 @@ body > form > .ui-layout-south {
 
 body .ajax-loader {
     font-size: 3rem;
-    color: var(--primary-color, orangered);
+    color: var(--p-primary-color);
 }
 
 #componentList,
@@ -35,35 +35,35 @@ body .ajax-loader {
     white-space: nowrap;
 }
 
-#componentList .ui-menuitem-link,
-#useCaseList .ui-menuitem-link {
+#componentList .p-menuitem-link,
+#useCaseList .p-menuitem-link {
     padding: 0.15em;
     float: left;
 }
 
-#componentList.ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-menuitem-text {
+#componentList.p-menu .p-menu-list .p-menuitem .p-menuitem-link .p-menuitem-text {
     width: 60px;
     float: left;
 }
 
-#componentList .ui-separator {
+#componentList .p-divider {
     margin: 5px 0;
     width: 120%;
 }
 
-#useCaseList .ui-menuitem {
+#useCaseList .p-menuitem {
     width: auto !important;
 }
 
-#useCaseList .ui-menuitem-text {
+#useCaseList .p-menuitem-text {
     padding-left: 3px;
 }
 
-#useCaseList .ui-menuitem-link {
+#useCaseList .p-menuitem-link {
     width: 200%;
 }
 
-body .ui-datatable.docuTable .ui-datatable-data > tr > td {
+body .p-datatable.docuTable .p-datatable-data > tr > td {
     word-break: normal;
     padding: 0.3rem;
 }
@@ -89,7 +89,7 @@ body .ui-datatable.docuTable .ui-datatable-data > tr > td {
     border: none;
 }
 
-#docuTabView .ui-tabs-panel {
+#docuTabView .p-tabs-panel {
     padding: 1em 0;
 }
 
@@ -112,7 +112,7 @@ div.source {
     font-size: 13px;
 }
 
-#sourceTabView .ui-tabs-panel {
+#sourceTabView .p-tabs-panel {
     padding: 0 1em;
 }
 
@@ -166,12 +166,12 @@ div.source {
     text-align: left;
 }
 
-html body .ui-panelgrid .ui-panelgrid-cell,
-html body .ui-panel.ui-layout-south .ui-panel-content {
+html body .p-panelgrid .p-panelgrid-cell,
+html body .p-panel.ui-layout-south .p-panel-content {
     padding: .25rem;
 }
 
-body .ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-menuitem-icon.ui-icon-none {
+body .p-menu .p-menu-list .p-menuitem .p-menuitem-link .p-menuitem-icon.p-none-comp {
     width: 9px;
     height: 16px;
     margin-right: 3px;
@@ -179,14 +179,14 @@ body .ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-menuitem-icon.ui-
     background-image: none !important;
 }
 
-body .ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-menuitem-icon.ui-icon-new-comp {
+body .p-menu .p-menu-list .p-menuitem .p-menuitem-link .p-menuitem-icon.p-new-comp {
     margin-right: 3px;
     font-size: 0.75em;
     float: left;
     color: green;
 }
 
-body .ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-menuitem-icon.ui-icon-new-comp:before {
+body .p-menu .p-menu-list .p-menuitem .p-menuitem-link .p-menuitem-icon.p-new-comp:before {
     font-family: 'primeicons', sans-serif;
     speak: none;
     font-style: normal;
@@ -200,14 +200,14 @@ body .ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-menuitem-icon.ui-
     content: "\e911";
 }
 
-body .ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-menuitem-icon.ui-icon-updated-comp {
+body .p-menu .p-menu-list .p-menuitem .p-menuitem-link .p-menuitem-icon.p-updated-comp {
     margin-right: 3px;
     font-size: 0.75em;
     float: left;
     color: #aaa;
 }
 
-body .ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-menuitem-icon.ui-icon-updated-comp:before {
+body .p-menu .p-menu-list .p-menuitem .p-menuitem-link .p-menuitem-icon.p-updated-comp:before {
     font-family: 'primeicons', sans-serif;
     speak: none;
     font-style: normal;
@@ -221,14 +221,14 @@ body .ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-menuitem-icon.ui-
     content: "\e911";
 }
 
-body .ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-menuitem-icon.ui-icon-deprecated-comp {
+body .p-menu .p-menu-list .p-menuitem .p-menuitem-link .p-menuitem-icon.p-deprecated-comp {
     margin-right: 3px;
     font-size: 0.75em;
     float: left;
     color: #D61F27;
 }
 
-body .ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-menuitem-icon.ui-icon-deprecated-comp:before {
+body .p-menu .p-menu-list .p-menuitem .p-menuitem-link .p-menuitem-icon.p-deprecated-comp:before {
     font-family: 'primeicons', sans-serif;
     speak: none;
     font-style: normal;
@@ -344,8 +344,8 @@ body .ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-menuitem-icon.ui-
         overflow-y: auto !important;
         transition: left 0.3s ease !important;
         box-shadow: 2px 0 10px rgba(0, 0, 0, 0.25) !important;
-        background-color: var(--card-background-color, #ffffff) !important;
-        border-right: 1px solid var(--divider-color, #dddddd) !important;
+        background-color: var(--p-content-background) !important;
+        border-right: 1px solid var(--p-content-border-color) !important;
     }
     #layoutWest.mobile-open,
     .ui-layout-west.mobile-open,
@@ -367,8 +367,8 @@ body .ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-menuitem-icon.ui-
         overflow-y: auto !important;
         transition: right 0.3s ease !important;
         box-shadow: -2px 0 10px rgba(0, 0, 0, 0.25) !important;
-        background-color: var(--card-background-color, #ffffff) !important;
-        border-left: 1px solid var(--divider-color, #dddddd) !important;
+        background-color: var(--p-content-background) !important;
+        border-left: 1px solid var(--p-content-border-color) !important;
     }
     #layoutEast.mobile-open,
     .ui-layout-east.mobile-open,
@@ -401,7 +401,7 @@ body .ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-menuitem-icon.ui-
         display: inline-block !important;
     }
     
-    .ui-panelgrid.ui-widget {
+    .p-panelgrid.p-widget {
         display: flex !important;
         justify-content: space-between !important;
         align-items: center !important;
@@ -409,12 +409,12 @@ body .ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-menuitem-icon.ui-
         padding: 5px !important;
     }
     
-    .ui-panelgrid-cell {
+    .p-panelgrid-cell {
         width: auto !important;
         padding: 0 !important;
     }
     
-    .ui-datatable {
+    .p-datatable {
         width: 100% !important;
         overflow-x: auto !important;
         -webkit-overflow-scrolling: touch !important;

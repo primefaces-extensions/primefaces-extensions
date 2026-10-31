@@ -1,14 +1,14 @@
-.ui-inputplace .ui-inputplace-item:hover,
-.ui-inputplace .ui-inputplace-item:focus {
-    background-color: var(--surface-hover);
-    color: var(--text-color);
+.p-inputplace .p-inputplace-item:hover,
+.p-inputplace .p-inputplace-item:focus {
+    background-color: var(--p-content-hover-background);
+    color: var(--p-content-hover-color);
 }
 
-.ui-menu .ui-state-focus,
-.ui-menu .ui-state-active {
+.ui-menu .p-state-focus,
+.ui-menu .p-state-active {
     margin: -1px;
-    background-color: var(--surface-hover);
-    color: var(--text-color);
+    background-color: var(--p-content-hover-background);
+    color: var(--p-content-hover-color);
 }
 
 .ui-menu .ui-menu {

@@ -1,42 +1,8 @@
-.pe-master-detail .ui-breadcrumb {
-    padding: 4px 5px 7px;
-}
-
-.pe-master-detail .ui-breadcrumb .ui-breadcrumb-chevron {
-    margin-top: 2px;
-}
-
-.pe-master-detail .ui-breadcrumb ul li a {
-    font-size: 1.1em;
-    text-decoration: none;
-    padding-left: 3px;
-    padding-right: 3px;
-}
-
-.pe-master-detail .ui-breadcrumb ul li a.ui-icon-home {
-    margin-top: 3px;
-}
-
-.pe-master-detail .ui-breadcrumb ul li:first-child a {
-    height: auto !important;
-    width: auto !important;
-    background: none;
-    padding-right: 3px;
-    text-indent: 0.5em;
-}
-
-.pe-master-detail .ui-breadcrumb ul li span.ui-state-disabled {
-    float: left;
-    font-size: 1.1em;
-    padding-left: 3px;
-    padding-right: 3px;
-}
-
-.pe-master-detail .ui-breadcrumb ul li a:hover {
+.pe-master-detail .p-breadcrumb .p-menuitem-link:not(.p-state-disabled):hover .p-menuitem-text {
     text-decoration: underline;
 }
 
-.pe-master-detail .ui-breadcrumb ul li img {
+.pe-master-detail .p-breadcrumb img {
     border: none;
 }
 

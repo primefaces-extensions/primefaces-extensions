@@ -44,7 +44,7 @@ public class NavigationContext implements Serializable {
     public String getMenuitemStyleClass(final String page) {
         final String viewId = getViewId();
         if (viewId != null && viewId.equalsIgnoreCase(page)) {
-            return "ui-state-active";
+            return "p-state-active";
         }
 
         return "";

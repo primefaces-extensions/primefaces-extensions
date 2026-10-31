@@ -83,8 +83,8 @@ public class FuzzySearchRenderer extends SelectOneRenderer<FuzzySearch> {
         final String styleClass = getStyleClassBuilder(context)
                     .add(FuzzySearch.STYLE_CLASS)
                     .add(component.getStyleClass())
-                    .add("ui-buttonset-" + selectItemsSize)
-                    .add(!component.isValid(), "ui-state-error")
+                    .add("p-buttonset-" + selectItemsSize)
+                    .add(!component.isValid(), "p-state-error")
                     .build();
 
         writer.startElement("div", component);

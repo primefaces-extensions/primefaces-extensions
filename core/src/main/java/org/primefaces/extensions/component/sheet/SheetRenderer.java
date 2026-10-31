@@ -113,14 +113,14 @@ public class SheetRenderer extends CoreRenderer<Sheet> {
         responseWriter.startElement("div", null);
         responseWriter.writeAttribute("id", clientId, "id");
         responseWriter.writeAttribute("name", clientId, "clientId");
-        // note: can't use ui-datatable here because it will mess with
+        // note: can't use p-datatable here because it will mess with
         // handsontable cell rendering
-        String divclass = "ui-handsontable ui-widget";
+        String divclass = "p-handsontable p-widget";
         if (styleClass != null) {
             divclass = divclass + " " + styleClass;
         }
         if (!sheet.isValid()) {
-            divclass = divclass + " ui-state-error";
+            divclass = divclass + " p-state-error";
         }
 
         responseWriter.writeAttribute(Attrs.CLASS, divclass, "styleClass");
@@ -553,7 +553,7 @@ public class SheetRenderer extends CoreRenderer<Sheet> {
         final String id = sheet.getClientId(context) + "_keyboard";
         final String widgetVar = sheet.resolveWidgetVar(context);
         writer.startElement("div", null);
-        writer.writeAttribute("class", "ui-helper-hidden-accessible", null);
+        writer.writeAttribute("class", "p-hidden-accessible", null);
         writer.startElement("input", null);
         writer.writeAttribute("id", id, null);
         writer.writeAttribute("name", id, null);
@@ -649,7 +649,7 @@ public class SheetRenderer extends CoreRenderer<Sheet> {
         final UIComponent footer = sheet.getFacet("footer");
         if (FacetUtils.shouldRenderFacet(footer)) {
             responseWriter.startElement("div", null);
-            responseWriter.writeAttribute(Attrs.CLASS, "ui-datatable-footer ui-widget-header ui-corner-bottom", null);
+            responseWriter.writeAttribute(Attrs.CLASS, "p-datatable-footer p-widget-header", null);
             footer.encodeAll(context);
             responseWriter.endElement("div");
         }
@@ -664,7 +664,7 @@ public class SheetRenderer extends CoreRenderer<Sheet> {
         final UIComponent header = sheet.getFacet("header");
         if (FacetUtils.shouldRenderFacet(header)) {
             responseWriter.startElement("div", null);
-            responseWriter.writeAttribute(Attrs.CLASS, "ui-datatable-header ui-widget-header ui-corner-top", null);
+            responseWriter.writeAttribute(Attrs.CLASS, "p-datatable-header p-widget-header", null);
             header.encodeAll(context);
             responseWriter.endElement("div");
         }

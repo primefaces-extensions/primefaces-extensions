@@ -16,28 +16,28 @@
     width: 160px;
 }
 
-#themeSelectMenu_panel .ui-selectonemenu-table {
+#themeSelectMenu_panel .p-selectonemenu-table {
 	border-collapse: separate !important;
     border-spacing: 0;
     margin: 3px 0;
 }
 
-#themeSelectMenu_panel .ui-selectonemenu-items {
+#themeSelectMenu_panel .p-selectonemenu-items {
 	white-space: nowrap !important;
 }
 
-#themeSelectMenu_panel .ui-selectonemenu-table td {
+#themeSelectMenu_panel .p-selectonemenu-table td {
     padding: 2px 4px 2px 6px;
     cursor: pointer;
     border: none !important;
 }
 
-#themeSelectMenu_panel .ui-selectonemenu-table td a {
+#themeSelectMenu_panel .p-selectonemenu-table td a {
     padding: 3px 4px !important;
     display: block;
 }
 
-#themeSelectMenu_panel .ui-selectonemenu-item img {
+#themeSelectMenu_panel .p-selectonemenu-item img {
     vertical-align: middle;
     border: 1px solid gray;
 }

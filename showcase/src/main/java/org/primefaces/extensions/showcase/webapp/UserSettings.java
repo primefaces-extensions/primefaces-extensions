@@ -48,11 +48,23 @@ public class UserSettings implements Serializable {
     private List<Theme> availableThemes;
     private Theme currentTheme;
     private String currentThemeName;
+    private String colorScheme;
 
     @PostConstruct
     public void init() {
-        setCurrentThemeByName("saga-blue");
+        setCurrentThemeByName("aura");
         availableThemes = AvailableThemes.getInstance().getThemes();
+    }
+
+    /**
+     * @return the CSS color-scheme selected by the LightSwitch: "light" or "dark" (null until the LightSwitch reported it)
+     */
+    public String getColorScheme() {
+        return colorScheme;
+    }
+
+    public void setColorScheme(String colorScheme) {
+        this.colorScheme = colorScheme;
     }
 
     public List<Theme> getAvailableThemes() {

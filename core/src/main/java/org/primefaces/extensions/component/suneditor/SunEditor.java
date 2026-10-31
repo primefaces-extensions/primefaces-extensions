@@ -41,12 +41,13 @@ import org.primefaces.util.LocaleUtils;
 @FacesComponentInfo(description = "SunEditor WYSIWYG editor component.")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
+@ResourceDependency(library = "primefaces", name = "components.css")
 @ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "suneditor/suneditor.css")
 @ResourceDependency(library = Constants.LIBRARY, name = "suneditor/suneditor.js")
 public class SunEditor extends SunEditorBaseImpl {
 
-    public static final String EDITOR_CLASS = "ui-suneditor";
+    public static final String EDITOR_CLASS = "p-suneditor";
 
     private Locale appropriateLocale;
 

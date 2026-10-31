@@ -33,7 +33,7 @@ import org.primefaces.renderkit.CoreRenderer;
 @FacesRenderer(rendererType = UIKeynoteItem.DEFAULT_RENDERER, componentFamily = UIKeynoteItem.COMPONENT_FAMILY)
 public class KeynoteItemRenderer extends CoreRenderer<UIKeynoteItem> {
 
-    public static final String ITEM_CLASS = "ui-keynote-item";
+    public static final String ITEM_CLASS = "p-keynote-item";
     public static final String SPEAKER_NOTE_CLASS = "notes";
 
     @Override

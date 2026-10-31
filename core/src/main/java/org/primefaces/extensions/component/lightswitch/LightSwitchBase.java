@@ -31,14 +31,15 @@ import org.primefaces.component.api.Widget;
 import org.primefaces.event.SelectEvent;
 
 /**
- * <code>LightSwitch</code> component base. Automatically switches to defined dark mode theme based on OS settings.
+ * <code>LightSwitch</code> component base. Switches the CSS <code>color-scheme</code> of the page between light and dark, automatically based on OS settings.
  *
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
  * @since 10.0
  */
 @FacesComponentBase
 @FacesBehaviorEvents({
-            @FacesBehaviorEvent(name = "switch", event = SelectEvent.class, description = "Fires when theme is switched.", defaultEvent = true)
+            @FacesBehaviorEvent(name = "switch", event = SelectEvent.class, description = "Fires when the color scheme is switched.",
+                        defaultEvent = true)
 })
 public abstract class LightSwitchBase extends UIComponentBase implements Widget {
 
@@ -61,15 +62,15 @@ public abstract class LightSwitchBase extends UIComponentBase implements Widget 
         return COMPONENT_FAMILY;
     }
 
-    @Property(description = "The currently selected theme name.", required = true)
+    @Property(description = "The currently selected color scheme: 'light' or 'dark'.", required = true)
     public abstract String getSelected();
 
-    @Property(description = "The light theme name.", defaultValue = "saga-blue")
+    @Property(description = "Optional theme name (e.g. 'aura') to switch to in light mode. When not set, only the color scheme changes.")
     public abstract String getLight();
 
-    @Property(description = "The dark theme name.", defaultValue = "arya-blue")
+    @Property(description = "Optional theme name (e.g. 'metal') to switch to in dark mode. When not set, only the color scheme changes.")
     public abstract String getDark();
 
-    @Property(description = "Whether to automatically switch themes based on OS settings.", defaultValue = "true")
+    @Property(description = "Whether to automatically switch the color scheme based on OS settings.", defaultValue = "true")
     public abstract boolean isAutomatic();
 }

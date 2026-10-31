@@ -212,36 +212,36 @@ PrimeFaces.widget.ExtSheet = class extends PrimeFaces.widget.DeferredWidget {
                 // handle sorting
                 let sortable = $this.cfg.sortable[physicalCol];
                 if (sortable) {
-                    header.find('.relative .ui-sortable-column-icon').remove();
+                    header.find('.relative .p-sortable-column-icon').remove();
                     let sortCol = $this.sortByInput.val();
                     let sortOrder = $this.sortOrderInput.val();
-                    let iconclass = 'ui-sortable-column-icon ui-icon ui-icon ui-icon-carat-2-n-s ';
+                    let iconclass = 'p-sortable-column-icon p-icon p-sort-icon p-sheet-sort-icon ';
                     if (sortCol == physicalCol) {
                         iconclass = iconclass
-                            + (sortOrder == 'ascending' ? 'ui-icon-triangle-1-n' : 'ui-icon-triangle-1-s');
-                        header.addClass('ui-state-active');
+                            + (sortOrder == 'ascending' ? 'p-sheet-sort-asc-icon' : 'p-sheet-sort-desc-icon');
+                        header.addClass('p-state-active');
                     } else {
-                        header.removeClass('ui-state-active');
+                        header.removeClass('p-state-active');
                     }
                     header.find('.relative').append("<span class='" + iconclass + "'></span>");
-                    header.addClass('ui-sortable ui-sortable-column');
+                    header.addClass('p-sortable-column');
                     header.off().on("click.sheetheader", function (e) {
                         $this.sortClick($this, e, physicalCol);
                     });
                 } else {
-                    header.removeClass('ui-state-active');
+                    header.removeClass('p-state-active');
                 }
 
                 // handle filtering
                 let f = $this.cfg.filters[physicalCol];
                 if (typeof (f) != "undefined" && f != 'false') {
-                    header.addClass('ui-filter-column');
+                    header.addClass('p-filter-column');
                     header.find('.handson-filter').remove();
                     let v = $($this.jqId + '_filter_' + physicalCol).val();
                     if (f == 'true') {
                         header
                             .append(
-                                '<span class="handson-filter"><input type="text" class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all" role="textbox" aria-disabled="false" aria-readonly="false" aria-multiline="false" value="'
+                                '<span class="handson-filter"><input type="text" class="p-inputfield p-inputtext p-widget p-state-default" role="textbox" aria-disabled="false" aria-readonly="false" aria-multiline="false" value="'
                                 + v + '"></input></span>');
                         header.find('input').off().on('change.sheetfilter', function () {
                             $this.filterchange($this, physicalCol, this.value, false)
@@ -259,7 +259,7 @@ PrimeFaces.widget.ExtSheet = class extends PrimeFaces.widget.DeferredWidget {
                     } else {
                         header
                             .append(
-                                '<span class="handson-filter"><select class="ui-column-filter ui-widget ui-state-default ui-corner-left" ></select></span>');
+                                '<span class="handson-filter"><select class="p-column-filter p-widget p-state-default" ></select></span>');
                         let selectInput = header.find('select');
                         for (let i = 0; i < f.length; i++) {
                             selectInput.append('<option value="' + f[i].value + '"'
@@ -319,7 +319,7 @@ PrimeFaces.widget.ExtSheet = class extends PrimeFaces.widget.DeferredWidget {
         $this.ht.addHook('beforeKeyDown', $this.handleHotBeforeKeyDown);
 
         // fix tbody
-        $('.htCore > tbody').addClass('ui-datatable-data ui-widget-content');
+        $('.htCore > tbody').addClass('p-datatable-data p-widget-content');
 
         // Check if data exist. If not insert No Records Found message
         if (options.data.length === 0) {
@@ -350,15 +350,15 @@ PrimeFaces.widget.ExtSheet = class extends PrimeFaces.widget.DeferredWidget {
         // check for errors
         let invalidMessage = this.cfg.errors[this.cfg.rowKeys[row] + '_c' + col];
         if (invalidMessage) {
-            styleClass = styleClass.concat(' ui-message-error');
-            td.innerHTML = "<span class='ui-sheet-error' title='" + invalidMessage
-                + "'><span class='ui-outputlabel-rfi'>*</span>" + value + "</span>";
+            styleClass = styleClass.concat(' p-message-error');
+            td.innerHTML = "<span class='p-sheet-error' title='" + invalidMessage
+                + "'><span class='p-outputlabel-rfi'>*</span>" + value + "</span>";
         }
         // every other row highlighting
         if (row % 2 == 1) {
-            styleClass = styleClass.concat(' ui-datatable-odd');
+            styleClass = styleClass.concat(' p-datatable-odd');
         } else {
-            styleClass = styleClass.concat(' ui-datatable-even');
+            styleClass = styleClass.concat(' p-datatable-even');
         }
         td.className = td.className.concat(' ').concat(styleClass);
     }
@@ -540,7 +540,7 @@ PrimeFaces.widget.ExtSheet = class extends PrimeFaces.widget.DeferredWidget {
     }
 
     focusFirstError() {
-        var errors = this.tableDiv.find('.ui-message-error');
+        var errors = this.tableDiv.find('.p-message-error');
         if (errors.length > 0) {
             let firstError = errors.first();
             let col = firstError.index() - 1;

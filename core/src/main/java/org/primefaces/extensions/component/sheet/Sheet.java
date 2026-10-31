@@ -1126,9 +1126,9 @@ public class Sheet extends SheetBaseImpl {
 
         sb = new StringBuilder();
         sb.append("PF('").append(widgetVar).append("')");
-        sb.append(".sheetDiv.removeClass('ui-state-error')");
+        sb.append(".sheetDiv.removeClass('p-state-error')");
         if (!getInvalidUpdates().isEmpty()) {
-            sb.append(".addClass('ui-state-error')");
+            sb.append(".addClass('p-state-error')");
         }
         PrimeFaces.current().executeScript(sb.toString());
     }

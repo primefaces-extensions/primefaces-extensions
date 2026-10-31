@@ -52,7 +52,7 @@ PrimeFaces.widget.ExtClockPicker = class extends PrimeFaces.widget.BaseWidget {
      * @private
      */
     setupDialogSupport() {
-        var dialog = this.input[0].closest('.ui-dialog');
+        var dialog = this.input[0].closest('.p-dialog');
         if (dialog) {
             this.cfg.appendTo = $(PrimeFaces.escapeClientId(dialog.id));
         }

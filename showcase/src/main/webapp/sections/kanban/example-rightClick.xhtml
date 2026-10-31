@@ -49,16 +49,16 @@
                      header="Delete Task" icon="pi pi-exclamation-triangle"
                      closeOnEscape="true" width="400">
         <p:commandButton value="Delete"
-                         styleClass="ui-button-danger mr-2"
+                         styleClass="p-button-danger mr-2"
                          actionListener="#{kanbanRightClickController.deleteSelectedItem}"
                          process="@this"
-                         update="@(.ui-kanban) growl"
+                         update="@(.p-kanban) growl"
                          oncomplete="PF('confirmDelete').hide()"
                          icon="pi pi-check" />
         <p:commandButton value="Cancel"
                          onclick="PF('confirmDelete').hide()"
                          type="button"
-                         styleClass="ui-button-secondary"
+                         styleClass="p-button-secondary"
                          icon="pi pi-times" />
     </p:confirmDialog>
 
@@ -66,7 +66,7 @@
               modal="true" responsive="true" width="400"
               showEffect="fade" hideEffect="fade"
               closeOnEscape="true">
-        <h:panelGroup id="dialogContent" layout="block" styleClass="ui-fluid">
+        <h:panelGroup id="dialogContent" layout="block" styleClass="p-fluid">
             <h:panelGroup rendered="#{not empty kanbanRightClickController.selectedItem}">
                 <div class="field mb-3">
                     <p:outputLabel for="title" value="Title" styleClass="font-bold block mb-1" />
@@ -87,7 +87,7 @@
               modal="true" responsive="true" width="400"
               showEffect="fade" hideEffect="fade"
               closeOnEscape="true">
-        <h:panelGroup id="historyContent" layout="block" styleClass="ui-fluid">
+        <h:panelGroup id="historyContent" layout="block" styleClass="p-fluid">
             <h:panelGroup rendered="#{not empty kanbanRightClickController.selectedItem}">
                 <p>Activity history for <strong>#{kanbanRightClickController.selectedItem.title}</strong>:</p>
                 <ul>

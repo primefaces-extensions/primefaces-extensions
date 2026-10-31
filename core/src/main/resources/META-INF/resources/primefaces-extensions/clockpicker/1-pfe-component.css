@@ -1,75 +1,57 @@
-body .pe-clockpicker .ui-icon,
-body .pe-clockpicker .ui-icon {
-    font-family: 'primeicons', sans-serif;
-    speak: none;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
-    display: inline-block;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-body .pe-clockpicker-trigger .ui-icon-clock:before {
-    content: "\e940";
-}
-
 body .popover,
 body .btn-default,
 body .clockpicker-plate {
-    border-color: var(--surface-d, #ddd);
+    border-color: var(--p-content-border-color);
 }
 
 body .popover,
 body .clockpicker-popover .popover-title,
 body .clockpicker-button,
 body .btn-default {
-    background-color: var(--surface-d, #eee);
+    background-color: var(--p-content-border-color);
 }
 
 body .clockpicker-plate {
-    background-color: var(--surface-d, #ddd);
+    background-color: var(--p-content-border-color);
 }
 
 body .popover.bottom > .arrow:after {
-    border-bottom-color: var(--surface-d, #fff);
+    border-bottom-color: var(--p-content-border-color);
 }
 body .btn-default,
 body .clockpicker-tick {
-    color: var(--text-color, #333) !important;
+    color: var(--p-text-color) !important;
 }
 body .popover-title .text-primary{
-    color: var(--primary-color, #333) !important;
+    color: var(--p-primary-color) !important;
 }
 body .clockpicker-popover .popover-title {
-    color: var(--text-color-secondary, #888);
+    color: var(--p-text-muted-color);
 }
 
 body .clockpicker-popover .popover-content {
-    background-color: var(--surface-b, #ddd);
+    background-color: light-dark(var(--p-surface-50), var(--p-surface-950));
 }
 
 body .popover-title {
-    border-color: var(--surface-d, #eee);
+    border-color: var(--p-content-border-color);
 }
 
 body .btn-default:hover, body .btn-default:focus, body .btn-default:active, body .btn-default.active,
 body .open .dropdown-toggle.btn-default {
-    border-color: var(--surface-d, #eee);
-    background-color: var(--surface-d, #eee);
+    border-color: var(--p-content-border-color);
+    background-color: var(--p-content-border-color);
 }
 
 body .clockpicker-canvas-bg,
 body .clockpicker-canvas-bearing, body .clockpicker-canvas-fg {
-    fill: var(--surface-b, #888);
+    fill: light-dark(var(--p-surface-50), var(--p-surface-950));
 }
 body .clockpicker-canvas line {
-    stroke: var(--surface-b, #888);
+    stroke: light-dark(var(--p-surface-50), var(--p-surface-950));
 }
 
 body .clockpicker-tick.active, body .clockpicker-tick:hover {
-    background-color: var(--surface-b, #888);
+    background-color: light-dark(var(--p-surface-50), var(--p-surface-950));
     opacity: .7;
 }

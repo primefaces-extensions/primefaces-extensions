@@ -63,7 +63,7 @@ public class MonacoEditorFramedRenderer extends MonacoEditorBaseRenderer<MonacoE
         final String clientId = monacoEditor.getClientId();
         writer.startElement("iframe", null);
         writer.writeAttribute("id", clientId + "_editor", null);
-        writer.writeAttribute("class", "ui-monaco-editor-ed", null);
+        writer.writeAttribute("class", "p-monaco-editor-ed", null);
         writer.writeAttribute("style", "width:100%;height:100%;border:0;margin:0;padding:0;overflow:hidden;", null);
         writer.endElement("iframe");
     }

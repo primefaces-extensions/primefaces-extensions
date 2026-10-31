@@ -86,7 +86,7 @@ public class ClockPickerRenderer extends InputRenderer<ClockPicker> {
         writer.writeAttribute("id", clientId, null);
         String containerClass = ClockPicker.CONTAINER_CLASS;
         if (component.isShowOnButton()) {
-            containerClass += " ui-inputgroup";
+            containerClass += " p-inputgroup";
         }
         writer.writeAttribute("class", containerClass, null);
 
@@ -97,7 +97,7 @@ public class ClockPickerRenderer extends InputRenderer<ClockPicker> {
         writer.writeAttribute("size", inputSize, null);
         writer.writeAttribute("maxlength", inputSize, null);
 
-        final String styleClass = createStyleClass(component, "ui-inputfield ui-widget ui-state-default ui-corner-all");
+        final String styleClass = createStyleClass(component, "p-inputfield p-widget p-state-default");
         writer.writeAttribute(Attrs.CLASS, styleClass, null);
 
         if (component.getStyle() != null) {
@@ -127,7 +127,7 @@ public class ClockPickerRenderer extends InputRenderer<ClockPicker> {
 
             writer.startElement("span", null);
             writer.writeAttribute(Attrs.CLASS, ClockPicker.BUTTON_TRIGGER_TEXT_CLASS, null);
-            writer.write("ui-button");
+            writer.write("p-button");
             writer.endElement("span");
             writer.endElement("button");
         }

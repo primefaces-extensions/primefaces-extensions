@@ -50,8 +50,8 @@ import org.primefaces.util.ComponentUtils;
 @ResourceDependency(library = Constants.LIBRARY, name = "fuzzysearch/fuzzysearch.js")
 public class FuzzySearch extends FuzzySearchBaseImpl {
 
-    public static final String STYLE_CLASS = "ui-fuzzysearch ui-widget ui-corner-all";
-    public static final String ITEM_CLASS = "ui-fuzzysearch-item";
+    public static final String STYLE_CLASS = "p-fuzzysearch p-widget";
+    public static final String ITEM_CLASS = "p-fuzzysearch-item";
 
     @Override
     public String getInputClientId() {

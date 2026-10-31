@@ -69,7 +69,7 @@ public class ClockPicker007Test extends AbstractPrimeExtensionsPageTest {
         assertEquals("right", PrimeSelenium.executeScript("return window.PF('placementRightWidget').cfg.placement;"));
 
         // Assert: showOn="button" containers must not stretch to full width.
-        // Without the CSS fix in 0-clockpicker.css, .ui-inputgroup forces a 660px width,
+        // Without the CSS fix in 0-clockpicker.css, .p-inputgroup forces a 660px width,
         // which makes placement="right" appear far from its input.
         assertContainerWidth(placementTop, "placementTopWidget");
         assertContainerWidth(placementBottom, "placementBottomWidget");
@@ -246,7 +246,7 @@ public class ClockPicker007Test extends AbstractPrimeExtensionsPageTest {
     }
 
     // Verifies that the popover is close to the input, not positioned far away.
-    // Without the CSS fix, placement="right" gap is ~600px because .ui-inputgroup
+    // Without the CSS fix, placement="right" gap is ~600px because .p-inputgroup
     // stretches the container to full width.
     private void assertPlacementGap(WebElement input, WebElement popover, String expectedPlacement) {
         var inputRect = input.getRect();

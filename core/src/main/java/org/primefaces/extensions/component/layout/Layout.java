@@ -50,6 +50,7 @@ import org.primefaces.util.LangUtils;
 @FacesComponentInfo(description = "Layout component for border layout with resizable panes.")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
+@ResourceDependency(library = "primefaces", name = "components.css")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "jquery-plugins/jquery-plugins.js")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "primefaces-extensions.js")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "layout/layout.css")
@@ -58,11 +59,11 @@ public class Layout extends LayoutBaseImpl {
 
     public static final String POSITION_SEPARATOR = "_";
     public static final String STYLE_CLASS = "ui-layout-";
-    public static final String STYLE_CLASS_PANE = "ui-layout-unit ui-panel ui-widget ui-widget-content ui-corner-all";
-    public static final String STYLE_CLASS_PANE_WITH_SUBPANES = "ui-corner-all pe-layout-pane-withsubpanes";
-    public static final String STYLE_CLASS_PANE_HEADER = "ui-layout-unit-header ui-panel-titlebar ui-widget-header ui-corner-top pe-layout-pane-header ";
-    public static final String STYLE_CLASS_PANE_CONTENT = "ui-layout-unit-content pe-layout-pane-content ui-panel-content";
-    public static final String STYLE_CLASS_LAYOUT_CONTENT = "ui-layout-content ui-panel-content";
+    public static final String STYLE_CLASS_PANE = "ui-layout-unit p-panel p-widget p-widget-content";
+    public static final String STYLE_CLASS_PANE_WITH_SUBPANES = "pe-layout-pane-withsubpanes";
+    public static final String STYLE_CLASS_PANE_HEADER = "ui-layout-unit-header p-panel-titlebar p-widget-header pe-layout-pane-header ";
+    public static final String STYLE_CLASS_PANE_CONTENT = "ui-layout-unit-content pe-layout-pane-content p-panel-content";
+    public static final String STYLE_CLASS_LAYOUT_CONTENT = "ui-layout-content p-panel-content";
 
     public static final String PANE_POSITION_CENTER = "center";
     public static final String PANE_POSITION_NORTH = "north";

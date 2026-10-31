@@ -47,8 +47,8 @@ public class MeterGroupRenderer extends CoreRenderer<MeterGroup> {
         String labelPosition = meterGroup.getLabelPosition();
 
         String styleClass = getStyleClassBuilder(context)
-                    .add("ui-metergroup", meterGroup.getStyleClass())
-                    .add("vertical".equals(orientation), " ui-metergroup-vertical", "ui-metergroup-horizontal")
+                    .add("p-metergroup", meterGroup.getStyleClass())
+                    .add("vertical".equals(orientation), " p-metergroup-vertical", "p-metergroup-horizontal")
                     .build();
 
         writer.startElement("div", meterGroup);
@@ -90,7 +90,7 @@ public class MeterGroupRenderer extends CoreRenderer<MeterGroup> {
         }
 
         writer.startElement("div", null);
-        writer.writeAttribute("class", "ui-metergroup-meters", null);
+        writer.writeAttribute("class", "p-metergroup-meters", null);
 
         for (MeterGroupItem item : value) {
             double percent = (item.getValue() / max) * 100.0;
@@ -98,7 +98,7 @@ public class MeterGroupRenderer extends CoreRenderer<MeterGroup> {
             percent = Math.min(100.0, Math.max(0.0, percent));
 
             writer.startElement("span", null);
-            writer.writeAttribute("class", "ui-metergroup-meter", null);
+            writer.writeAttribute("class", "p-metergroup-meter", null);
 
             String widthHeightSpanAttr = "horizontal".equals(meterGroup.getOrientation()) ? "width" : "height";
             String style = widthHeightSpanAttr + ": " + percent + "%;";
@@ -129,22 +129,22 @@ public class MeterGroupRenderer extends CoreRenderer<MeterGroup> {
         }
 
         writer.startElement("ul", null);
-        String labelListClass = "ui-metergroup-labels";
+        String labelListClass = "p-metergroup-labels";
         if ("vertical".equals(labelOrientation)) {
-            labelListClass += " ui-metergroup-labels-vertical";
+            labelListClass += " p-metergroup-labels-vertical";
         }
         else {
-            labelListClass += " ui-metergroup-labels-horizontal";
+            labelListClass += " p-metergroup-labels-horizontal";
         }
         writer.writeAttribute("class", labelListClass, null);
 
         for (MeterGroupItem item : value) {
             writer.startElement("li", null);
-            writer.writeAttribute("class", "ui-metergroup-label", null);
+            writer.writeAttribute("class", "p-metergroup-label", null);
 
             if (item.getIcon() != null) {
                 writer.startElement("i", null);
-                writer.writeAttribute("class", "ui-metergroup-label-icon " + item.getIcon(), null);
+                writer.writeAttribute("class", "p-metergroup-label-icon " + item.getIcon(), null);
                 if (item.getColor() != null) {
                     writer.writeAttribute("style", "color: " + item.getColor() + ";", null);
                 }
@@ -152,13 +152,13 @@ public class MeterGroupRenderer extends CoreRenderer<MeterGroup> {
             }
             else if (item.getColor() != null) {
                 writer.startElement("span", null);
-                writer.writeAttribute("class", "ui-metergroup-label-color", null);
+                writer.writeAttribute("class", "p-metergroup-label-color", null);
                 writer.writeAttribute("style", "background-color: " + item.getColor() + ";", null);
                 writer.endElement("span");
             }
 
             writer.startElement("span", null);
-            writer.writeAttribute("class", "ui-metergroup-label-text", null);
+            writer.writeAttribute("class", "p-metergroup-label-text", null);
 
             double percent = (item.getValue() / max) * 100.0;
             String text = "";

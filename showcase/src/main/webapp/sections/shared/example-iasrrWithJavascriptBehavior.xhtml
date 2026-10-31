@@ -45,13 +45,13 @@
         <p:callback event="resize" execute="PF('areaSelectWidget').reload();"/>
     </pe:imageRotateAndResize>
 
-    <p:commandButton icon="ui-icon-arrowreturnthick-1-w" value="Rotate Left"
+    <p:commandButton icon="pi pi-replay" value="Rotate Left"
         onclick="PF('rotateAndResizeWidget').rotateLeft(90);return false;"/>
-    <p:commandButton icon="ui-icon-arrowreturnthick-1-e" value="Rotate Right"
+    <p:commandButton icon="pi pi-refresh" value="Rotate Right"
         onclick="PF('rotateAndResizeWidget').rotateRight(90);return false;"/>
-    <p:commandButton icon="ui-icon-zoomin" value="Scale +"
+    <p:commandButton icon="pi pi-search-plus" value="Scale +"
         onclick="PF('rotateAndResizeWidget').scale(1.05);return false;"/>
-    <p:commandButton icon="ui-icon-zoomout" value="Scale -"
+    <p:commandButton icon="pi pi-search-minus" value="Scale -"
         onclick="PF('rotateAndResizeWidget').scale(0.95);return false;"/>
 </p:outputPanel>
 

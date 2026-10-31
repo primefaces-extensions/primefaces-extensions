@@ -4,16 +4,16 @@
 }
 
 body.ui-layout-container, body .ui-layout-container {
-    background-color: var(--surface-a, #fff);
+    background-color: var(--p-content-background);
 }
 
 body .ui-layout-container .ui-layout-unit {
-    border: 1px solid var(--surface-d, #dee2e6);
-    background-color: var(--surface-a, #fff);
+    border: 1px solid var(--p-content-border-color);
+    background-color: var(--p-content-background);
 }
 
 body .ui-layout-resizer {
-    background-color: var(--surface-b, #c8c8c8);
+    background-color: light-dark(var(--p-surface-50), var(--p-surface-950));
 }
 
 .ui-layout-resizer-west-dragging,
@@ -85,7 +85,7 @@ body .ui-layout-resizer {
 }
 
 .ui-layout-resizer-dragging-limit {
-    border: 1px solid #E27D7D;
+    border: 1px solid var(--p-red-400);
 }
 
 .pe-layout-pane-withsubpanes {
@@ -93,6 +93,7 @@ body .ui-layout-resizer {
 }
 
 .pe-layout-pane-header {
+    display: block;
     padding: 4px 1em;
     border-width: 0 0 1px;
 }
@@ -104,10 +105,8 @@ body .ui-layout-resizer {
 
 /** From Primefaces Themes */
 body .ui-layout-unit {
-    -moz-border-radius: 0;
-    -webkit-border-radius: 0;
     border-radius: 0;
-    background-color: var(--surface-a, #fff);
+    background-color: var(--p-content-background);
 }
 
 body .ui-layout-unit .ui-layout-unit-header {

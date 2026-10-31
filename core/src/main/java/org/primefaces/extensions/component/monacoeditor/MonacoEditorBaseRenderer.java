@@ -83,7 +83,7 @@ abstract class MonacoEditorBaseRenderer<TEditor extends MonacoEditorBase>
         final String clientId = monacoEditor.getClientId();
 
         writer.startElement("div", null);
-        writer.writeAttribute("class", "ui-helper-hidden-accessible", null);
+        writer.writeAttribute("class", "p-hidden-accessible", null);
 
         writer.startElement("textarea", null);
         writer.writeAttribute("id", clientId + INPUT_SUFFIX, null);

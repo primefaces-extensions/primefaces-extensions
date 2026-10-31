@@ -67,31 +67,32 @@
 
 		* html .qtip-titlebar .qtip-close{ top: 16px; } /* IE fix */
 
-		.qtip-titlebar .ui-icon,
-		.qtip-icon .ui-icon{
+		.qtip-titlebar .p-icon,
+		.qtip-icon .p-icon{
 			display: block;
-			text-indent: -1000em;
 			direction: ltr;
 		}
 
-		.qtip-icon, .qtip-icon .ui-icon{
-			-moz-border-radius: 3px;
-			-webkit-border-radius: 3px;
+		/* close icon of the theme (PrimeFaces icon token) */
+		.qtip-close .p-tooltip-close-icon{
+			--_icon: var(--p-icon-close);
+		}
+
+		.qtip-icon, .qtip-icon .p-icon{
 			border-radius: 3px;
 			text-decoration: none;
 		}
 
-			.qtip-icon .ui-icon{
+			.qtip-icon .p-icon{
 				width: 18px;
 				height: 14px;
 
+				font-size: 12px;
 				line-height: 14px;
 				text-align: center;
-				text-indent: 0;
-				font: normal bold 10px/13px Tahoma,sans-serif;
 
 				color: inherit;
-				background: transparent none no-repeat -100em -100em;
+				background: transparent;
 			}
 
 /* Applied to 'focused' tooltips e.g. most recently displayed/interacted with */
@@ -151,7 +152,7 @@
 		border-color: #444;
 	}
 
-	.qtip-dark .qtip-titlebar .ui-state-hover{
+	.qtip-dark .qtip-titlebar .p-state-hover{
 		border-color: #303030;
 	}
 
@@ -191,7 +192,7 @@
 		border-color: #D95252;
 	}
 
-	.qtip-red .qtip-titlebar .ui-state-hover{
+	.qtip-red .qtip-titlebar .p-state-hover{
 		border-color: #D95252;
 	}
 
@@ -287,7 +288,7 @@
 		border-color: #222;
 	}
 
-	.qtip-youtube .qtip-titlebar .ui-state-hover{
+	.qtip-youtube .qtip-titlebar .p-state-hover{
 		border-color: #303030;
 	}
 
@@ -336,7 +337,7 @@
 		border-color: #555;
 	}
 
-	.qtip-jtools .qtip-titlebar .ui-state-hover{
+	.qtip-jtools .qtip-titlebar .p-state-hover{
 		border-color: #333;
 	}
 
@@ -362,7 +363,7 @@
 		border-color: #808064;
 	}
 
-	.qtip-cluetip .qtip-titlebar .ui-state-hover{
+	.qtip-cluetip .qtip-titlebar .p-state-hover{
 		border-color: #696952;
 		color: #696952;
 	}
@@ -397,7 +398,7 @@
 		text-shadow: none;
 	}
 
-	.qtip-tipsy .qtip-titlebar .ui-state-hover{
+	.qtip-tipsy .qtip-titlebar .p-state-hover{
 		border-color: #303030;
 	}
 
@@ -436,7 +437,7 @@
 		background: #285589;
 	}
 
-		.qtip-tipped .qtip-icon .ui-icon{
+		.qtip-tipped .qtip-icon .p-icon{
 			background-color: #FBFBFB;
 			color: #555;
 		}
@@ -517,10 +518,10 @@
 		background: transparent;
 	}
 
-		.qtip-bootstrap .qtip-icon .ui-icon{
+		.qtip-bootstrap .qtip-icon .p-icon{
 			/**
 			 * Overrides qTip2:
-			 * .qtip-icon .ui-icon{
+			 * .qtip-icon .p-icon{
 			 *   width: 18px;
 			 *   height: 14px;
 			 * }
@@ -539,7 +540,7 @@
 			filter: alpha(opacity=20);
 		}
 
-		.qtip-bootstrap .qtip-icon .ui-icon:hover{
+		.qtip-bootstrap .qtip-icon .p-icon:hover{
 			/* Taken from Bootstrap .close:hover */
 			color: #000000;
 			text-decoration: none;
@@ -609,4 +610,23 @@
 		opacity: 0.7;
 		filter:alpha(opacity=70);
 		-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
+	}
+
+/* PrimeFaces Extensions: ThemeRoller style (style.widget, the default without styleClass) with the PrimeFaces tokens */
+.qtip.ui-tooltip{
+	background: var(--p-popover-background);
+	color: var(--p-popover-color);
+	border: 1px solid var(--p-popover-border-color);
+	border-radius: var(--p-popover-border-radius);
+	box-shadow: var(--p-popover-shadow);
+}
+
+	.qtip.ui-tooltip .qtip-content{
+		background: transparent;
+		color: inherit;
+	}
+
+	.qtip.ui-tooltip .qtip-titlebar{
+		border-style: solid;
+		border-radius: var(--p-popover-border-radius) var(--p-popover-border-radius) 0 0;
 	}

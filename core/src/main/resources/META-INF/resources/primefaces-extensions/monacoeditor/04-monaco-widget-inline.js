@@ -388,7 +388,7 @@ window.monacoModule = window.monacoModule || {};
      * @returns {Promise<RenderedArgs<TEditor, TEditorOpts, TContext, Partial<TExtender>, TCustomInitData>>} A promise that resolves when the render method was called.
      */
     _renderDeferredAsync(args) {
-      if (this.jq.closest(".ui-hidden-container").length === 0) {
+      if (this.jq.closest(".p-hidden-container").length === 0) {
         return Promise.reject("No hidden container found");
       }
       return new Promise((resolve, reject) => {
@@ -651,7 +651,7 @@ window.monacoModule = window.monacoModule || {};
       super.init(cfg);
 
       // Textarea with the value for the original editor
-      this._originalInput = this.jq.find(".ui-helper-hidden-accessible textarea").eq(1);
+      this._originalInput = this.jq.find(".p-hidden-accessible textarea").eq(1);
 
       // Default to the given value for the original editor
       this._originalEditorValue = String(this._originalInput.val() || "");

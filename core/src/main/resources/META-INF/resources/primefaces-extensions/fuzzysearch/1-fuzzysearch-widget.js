@@ -47,16 +47,16 @@ PrimeFaces.widget.FuzzySearch = class extends PrimeFaces.widget.BaseWidget {
         buttons.off()
             .on('mouseover.fuzzySearch', function () {
                 var button = $(this);
-                button.addClass('ui-state-hover');
+                button.addClass('p-state-hover');
             })
             .on('mouseout.fuzzySearch', function () {
-                $(this).removeClass('ui-state-hover');
+                $(this).removeClass('p-state-hover');
             })
             .on('click.fuzzySearch', function () {
                 var button = $(this),
                     radio = button.children(':radio');
 
-                if (button.hasClass('ui-state-active') || radio.prop('checked')) {
+                if (button.hasClass('p-state-active') || radio.prop('checked')) {
                     $this.unselect(button);
                 } else {
                     $this.select(button);
@@ -67,11 +67,11 @@ PrimeFaces.widget.FuzzySearch = class extends PrimeFaces.widget.BaseWidget {
         buttons
             .on('focus.fuzzySearch', function () {
                 var button = $(this);
-                button.addClass('ui-state-focus');
+                button.addClass('p-state-focus');
             })
             .on('blur.fuzzySearch', function () {
                 var button = $(this);
-                button.removeClass('ui-state-focus');
+                button.removeClass('p-state-focus');
             })
             .on('keydown.fuzzySearch', function (e) {
                 var keyCode = $.ui.keyCode,
@@ -103,7 +103,7 @@ PrimeFaces.widget.FuzzySearch = class extends PrimeFaces.widget.BaseWidget {
             $.each(fuzzysearch.go(query, $this.datasource, {keys: $this.keys}), function (index, element) {
                 itemDisplayMarkup += '<div';
                 itemDisplayMarkup += (resultStyle === '' ? '' : ' style="' + resultStyle + '"');
-                itemDisplayMarkup += ' class="ui-fuzzysearch-item';
+                itemDisplayMarkup += ' class="p-fuzzysearch-item';
                 itemDisplayMarkup += (resultStyleClass === '' ? '' : ' ' + resultStyleClass) + '"';
                 itemDisplayMarkup += ' data-item-value="' + element.obj.label + '">';
                 if ($this.cfg.highlight) {
@@ -117,7 +117,7 @@ PrimeFaces.widget.FuzzySearch = class extends PrimeFaces.widget.BaseWidget {
             $.each($this.datasource, function (index, element) {
                 itemDisplayMarkup += '<div';
                 itemDisplayMarkup += (resultStyle === '' ? '' : ' style="' + resultStyle + '"');
-                itemDisplayMarkup += ' class="ui-fuzzysearch-item';
+                itemDisplayMarkup += ' class="p-fuzzysearch-item';
                 itemDisplayMarkup += (resultStyleClass === '' ? '' : ' ' + resultStyleClass) + '"';
                 itemDisplayMarkup += ' data-item-value="' + element.value.name + '">';
                 itemDisplayMarkup += element.value.name;
@@ -131,16 +131,16 @@ PrimeFaces.widget.FuzzySearch = class extends PrimeFaces.widget.BaseWidget {
     }
 
     select(button) {
-        this.buttons.filter('.ui-state-active').removeClass('ui-state-active ui-state-hover').children(':radio').prop('checked', false);
+        this.buttons.filter('.p-state-active').removeClass('p-state-active p-state-hover').children(':radio').prop('checked', false);
 
-        button.addClass('ui-state-active').children(':radio').prop('checked', true);
+        button.addClass('p-state-active').children(':radio').prop('checked', true);
 
         this.triggerChange(button);
     }
 
     unselect(button) {
         if (this.cfg.unselectable) {
-            button.removeClass('ui-state-active ui-state-hover').children(':radio').prop('checked', false).change();
+            button.removeClass('p-state-active p-state-hover').children(':radio').prop('checked', false).change();
 
             this.triggerChange(button);
         }
@@ -164,12 +164,12 @@ PrimeFaces.widget.FuzzySearch = class extends PrimeFaces.widget.BaseWidget {
     }
 
     disable() {
-        this.buttons.removeClass('ui-state-hover ui-state-focus ui-state-active')
-            .addClass('ui-state-disabled').attr('disabled', 'disabled');
+        this.buttons.removeClass('p-state-hover p-state-focus p-state-active')
+            .addClass('p-state-disabled').attr('disabled', 'disabled');
     }
 
     enable() {
-        this.buttons.removeClass('ui-state-disabled').removeAttr('disabled');
+        this.buttons.removeClass('p-state-disabled').removeAttr('disabled');
     }
 
 };

@@ -15,9 +15,9 @@
         <p:ajax event="open" listener="#{slideOutController.openListener}" update="growl"/> 
         <p:ajax event="close" listener="#{slideOutController.closeListener}" update="growl"/> 
         
-        <p:panelGrid styleClass="ui-noborder" layout="tabular" columns="0">
+        <p:panelGrid styleClass="p-noborder" layout="tabular" columns="0">
             <p:row>
-                <p:column styleClass="ui-widget-header">
+                <p:column styleClass="p-widget-header">
                     <p:outputLabel for="txtMessage" value="Message"></p:outputLabel>
                 </p:column>
             </p:row>
@@ -27,7 +27,7 @@
                 </p:column>
             </p:row>
             <p:row>
-                <p:column styleClass="ui-widget-header">
+                <p:column styleClass="p-widget-header">
                     <p:outputLabel for="txtEmail" value="Email address (optional)"></p:outputLabel>
                 </p:column>
             </p:row>

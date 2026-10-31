@@ -6,7 +6,8 @@
 */
 
 .ui-slideouttab-panel, .ui-slideouttab-handle {
-    background-color: white;
+    background-color: var(--p-content-background);
+    color: var(--p-content-color);
     padding: 0.4em;
     box-sizing: border-box;
     z-index: 999;

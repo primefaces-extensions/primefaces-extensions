@@ -43,7 +43,7 @@ import org.primefaces.extensions.util.Constants;
 @ResourceDependency(library = Constants.LIBRARY, name = "commandpalette/commandpalette.js")
 public class CommandPalette extends CommandPaletteBaseImpl {
 
-    public static final String STYLE_CLASS = "ui-commandpalette";
+    public static final String STYLE_CLASS = "p-commandpalette";
 
     @Override
     public void queueEvent(final FacesEvent event) {

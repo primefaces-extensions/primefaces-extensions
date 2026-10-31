@@ -243,7 +243,7 @@ if (PrimeFaces.widget) {
                 this.instance = null;
                 var container = document.getElementById(this.id);
                 if (container) {
-                    container.classList.remove('ui-kanban-touch');
+                    container.classList.remove('p-kanban-touch');
                     container.innerHTML = '';
                 }
                 if (this._touchStartHandler) {
@@ -264,7 +264,7 @@ if (PrimeFaces.widget) {
             var container = document.getElementById(this.id);
             if (!container) return;
 
-            container.classList.add('ui-kanban-touch');
+            container.classList.add('p-kanban-touch');
             this._touchDragging = false;
 
             this._touchStartHandler = function(e) {

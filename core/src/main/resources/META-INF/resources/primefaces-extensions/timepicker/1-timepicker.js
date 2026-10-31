@@ -195,20 +195,20 @@ PrimeFaces.widget.ExtTimePicker = class extends PrimeFaces.widget.BaseWidget {
     enableSpinner() {
         let $this = this;
 
-        $(this.jqId).children('.ui-spinner-button')
-            .removeClass('ui-state-disabled')
+        $(this.jqId).children('.p-spinner-button')
+            .removeClass('p-state-disabled')
             .off('mouseover mouseout mouseup mousedown')
             .on({
                 mouseover: function () {
-                    $(this).addClass('ui-state-hover');
+                    $(this).addClass('p-state-hover');
                 },
                 mouseout: function () {
-                    $(this).removeClass('ui-state-hover');
+                    $(this).removeClass('p-state-hover');
 
                     clearInterval($this.spinnerInterval);
                 },
                 mouseup: function () {
-                    $(this).removeClass('ui-state-active');
+                    $(this).removeClass('p-state-active');
 
                     clearInterval($this.spinnerInterval);
                 },
@@ -218,9 +218,9 @@ PrimeFaces.widget.ExtTimePicker = class extends PrimeFaces.widget.BaseWidget {
                         return;
                     }
                     let el = $(this);
-                    el.addClass('ui-state-active');
+                    el.addClass('p-state-active');
 
-                    let dir = el.hasClass('ui-spinner-up') ? 1 : -1;
+                    let dir = el.hasClass('p-spinner-up') ? 1 : -1;
                     $this.spin(dir);
 
                     $this.spinnerInterval = setInterval(function () {
@@ -233,9 +233,9 @@ PrimeFaces.widget.ExtTimePicker = class extends PrimeFaces.widget.BaseWidget {
     }
 
     disableSpinner() {
-        $(this.jqId).children('.ui-spinner-button')
-            .removeClass('ui-state-hover ui-state-active')
-            .addClass('ui-state-disabled')
+        $(this.jqId).children('.p-spinner-button')
+            .removeClass('p-state-hover p-state-active')
+            .addClass('p-state-disabled')
             .off();
     }
 
@@ -527,7 +527,7 @@ PrimeFaces.widget.ExtTimePicker = class extends PrimeFaces.widget.BaseWidget {
         this.jq.fgtimepicker('disable');
 
         if (!this.cfg.modeInline) {
-            this.jq.addClass('ui-state-disabled');
+            this.jq.addClass('p-state-disabled');
         }
 
         if (this.cfg.modeSpinner) {
@@ -542,7 +542,7 @@ PrimeFaces.widget.ExtTimePicker = class extends PrimeFaces.widget.BaseWidget {
         this.jq.fgtimepicker('enable');
 
         if (!this.cfg.modeInline) {
-            this.jq.removeClass('ui-state-disabled');
+            this.jq.removeClass('p-state-disabled');
         }
 
         if (this.cfg.modeSpinner) {

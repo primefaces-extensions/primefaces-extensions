@@ -98,7 +98,7 @@ abstract class MonacoDiffEditorBaseRenderer<TEditor extends MonacoDiffEditorBase
         final String clientId = monacoEditor.getClientId();
 
         writer.startElement("div", null);
-        writer.writeAttribute("class", "ui-helper-hidden-accessible", null);
+        writer.writeAttribute("class", "p-hidden-accessible", null);
         renderPassThruAttributes(context, monacoEditor, PASSTHROUGH_ATTRS);
 
         final org.primefaces.extensions.model.monaco.MonacoDiffEditorModel valueToRender;

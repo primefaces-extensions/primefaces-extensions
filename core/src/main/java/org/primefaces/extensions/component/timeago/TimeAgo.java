@@ -47,13 +47,14 @@ import org.primefaces.util.LocaleUtils;
  */
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
+@ResourceDependency(library = "primefaces", name = "components.css")
 @ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "timeago/timeago.js")
 @FacesComponent(value = TimeAgo.COMPONENT_TYPE, namespace = TimeAgo.COMPONENT_FAMILY)
 @FacesComponentInfo(description = "TimeAgo displays relative time for a given date/time value.")
 public class TimeAgo extends TimeAgoBaseImpl {
 
-    public static final String STYLE_CLASS = "ui-timeago ui-widget";
+    public static final String STYLE_CLASS = "p-timeago p-widget";
 
     private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
 

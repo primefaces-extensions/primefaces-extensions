@@ -62,7 +62,7 @@ public class MonacoDiffEditorInlineRenderer extends MonacoDiffEditorBaseRenderer
 
         writer.startElement("div", null);
         writer.writeAttribute("id", clientId + "_editor", null);
-        writer.writeAttribute("class", "ui-monaco-editor-ed", null);
+        writer.writeAttribute("class", "p-monaco-editor-ed", null);
         writer.writeAttribute("style", "width:100%;height:100%;", null);
         writer.endElement("div");
     }

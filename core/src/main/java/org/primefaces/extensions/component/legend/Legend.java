@@ -42,11 +42,11 @@ import org.primefaces.extensions.util.Constants;
 @ResourceDependency(library = Constants.LIBRARY, name = "legend/legend.js")
 public class Legend extends LegendBaseImpl {
 
-    public static final String STYLE_CLASS_VERTICAL = "ui-legend-vertical ";
-    public static final String STYLE_CLASS_HORIZONTAL = "ui-legend-horizontal ";
-    public static final String SCALE_STYLE = "ui-legend-scale";
-    public static final String LABELS_STYLE = "ui-legend-labels";
-    public static final String TITLE_STYLE = "ui-legend-title";
-    public static final String FOOTER_STYLE = "ui-legend-footer";
+    public static final String STYLE_CLASS_VERTICAL = "p-legend-vertical ";
+    public static final String STYLE_CLASS_HORIZONTAL = "p-legend-horizontal ";
+    public static final String SCALE_STYLE = "p-legend-scale";
+    public static final String LABELS_STYLE = "p-legend-labels";
+    public static final String TITLE_STYLE = "p-legend-title";
+    public static final String FOOTER_STYLE = "p-legend-footer";
 
 }

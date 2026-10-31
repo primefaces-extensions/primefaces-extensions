@@ -55,16 +55,16 @@ var Showcase = (function () {
         },
 
         selectComponentLink: function (link) {
-            $("#componentList").find(".ui-state-active").removeClass("ui-state-active");
+            $("#componentList").find(".p-state-active").removeClass("p-state-active");
             if (link) {
-                $(link).addClass("ui-state-active");
+                $(link).addClass("p-state-active");
             }
         },
 
         selectUseCaseLink: function (link) {
-            $("#useCaseList").find(".ui-state-active").removeClass("ui-state-active");
+            $("#useCaseList").find(".p-state-active").removeClass("p-state-active");
             if (link) {
-                $(link).addClass("ui-state-active");
+                $(link).addClass("p-state-active");
             }
         }
     };

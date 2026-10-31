@@ -53,7 +53,7 @@ public class EChartRenderer extends CoreRenderer<EChart> {
         ResponseWriter writer = context.getResponseWriter();
         String clientId = chart.getClientId(context);
         String style = chart.getStyle();
-        String styleClass = getStyleClassBuilder(context).add("ui-chart").add(chart.getStyleClass()).build();
+        String styleClass = getStyleClassBuilder(context).add("p-chart").add(chart.getStyleClass()).build();
 
         writer.startElement("div", null);
         writer.writeAttribute("id", clientId, null);

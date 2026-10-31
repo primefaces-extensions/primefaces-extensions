@@ -43,9 +43,9 @@ window.monacoModule = window.monacoModule || {};
       this.jq.data("initialized", false);
 
       // Get elements
-      this._input = this.jq.find(".ui-helper-hidden-accessible textarea").first();
+      this._input = this.jq.find(".p-hidden-accessible textarea").first();
 
-      this._editorContainer = this.jq.children(".ui-monaco-editor-ed");
+      this._editorContainer = this.jq.children(".p-monaco-editor-ed");
 
       // Default to the given value
       this._editorValue = String(this.getInput().val() || "");

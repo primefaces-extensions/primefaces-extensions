@@ -133,10 +133,10 @@ public class TimePickerRenderer extends InputRenderer<TimePicker> {
 
         String containerClass = TimePicker.CONTAINER_CLASS;
         if (component.isSpinner()) {
-            containerClass += " ui-spinner";
+            containerClass += " p-spinner p-spinner-stacked";
         }
         if (component.isShowOnButton()) {
-            containerClass += " ui-inputgroup";
+            containerClass += " p-inputgroup";
         }
         writer.writeAttribute(Attrs.CLASS, containerClass, null);
 
@@ -168,9 +168,9 @@ public class TimePickerRenderer extends InputRenderer<TimePicker> {
             final String styleClass = getStyleClassBuilder(fc)
                         .add(TimePicker.INPUT_CLASS)
                         .add(component.getStyleClass())
-                        .add(component.isSpinner(), "ui-spinner-input")
-                        .add(component.isShowOnButton(), "ui-inputtext")
-                        .add(!component.isValid(), "ui-state-error")
+                        .add(component.isSpinner(), "p-spinner-input")
+                        .add(component.isShowOnButton(), "p-inputtext")
+                        .add(!component.isValid(), "p-state-error")
                         .build();
 
             writer.writeAttribute(Attrs.CLASS, styleClass, null);
@@ -205,7 +205,7 @@ public class TimePickerRenderer extends InputRenderer<TimePicker> {
 
             writer.startElement("span", null);
             writer.writeAttribute(Attrs.CLASS, TimePicker.BUTTON_TRIGGER_TEXT_CLASS, null);
-            writer.write("ui-button");
+            writer.write("p-button");
             writer.endElement("span");
 
             writer.endElement(BUTTON);
@@ -279,13 +279,13 @@ public class TimePickerRenderer extends InputRenderer<TimePicker> {
                 final boolean disabled)
                 throws IOException {
         final ResponseWriter writer = fc.getResponseWriter();
-        styleClass = disabled ? styleClass + " ui-state-disabled" : styleClass;
+        styleClass = disabled ? styleClass + " p-state-disabled" : styleClass;
 
         writer.startElement("a", null);
 
         writer.writeAttribute(Attrs.CLASS, styleClass, null);
         writer.startElement("span", null);
-        writer.writeAttribute(Attrs.CLASS, "ui-button-text", null);
+        writer.writeAttribute(Attrs.CLASS, "p-button-text p-c", null);
         writer.startElement("span", null);
         writer.writeAttribute(Attrs.CLASS, iconClass, null);
         writer.endElement("span");

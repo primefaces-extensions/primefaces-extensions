@@ -73,7 +73,7 @@ public class DynaFormRenderer extends CoreRenderer<DynaForm> {
     public static final String CELL_FIRST_CLASS = "pe-dynaform-cell-first";
     public static final String CELL_LAST_CLASS = "pe-dynaform-cell-last";
     public static final String LABEL_CLASS = "pe-dynaform-label";
-    public static final String LABEL_INVALID_CLASS = "ui-state-error ui-corner-all";
+    public static final String LABEL_INVALID_CLASS = "p-state-error";
     public static final String LABEL_INDICATOR_CLASS = "pe-dynaform-label-rfi";
     public static final String LABEL_CONTROL_TYPE_CLASS_FORMAT = "pe-dynaform-%s-label";
 

@@ -90,9 +90,9 @@ abstract class MonacoEditorCommonRenderer<TEditor extends MonacoEditorCommon<TEd
             style = style.concat("height:" + monacoEditor.getHeight() + ";");
         }
         final StringBuilder styleClass = new StringBuilder();
-        styleClass.append(getMainStyleClass() + " ui-hidden-container ");
+        styleClass.append(getMainStyleClass() + " p-hidden-container ");
         if (isEntireEditorDisabled(monacoEditor)) {
-            styleClass.append("ui-state-disabled ");
+            styleClass.append("p-state-disabled ");
         }
         if (monacoEditor.getStyleClass() != null) {
             styleClass.append(monacoEditor.getStyleClass());

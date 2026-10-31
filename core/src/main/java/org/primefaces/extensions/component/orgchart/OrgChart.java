@@ -52,7 +52,7 @@ import org.primefaces.extensions.util.Constants;
 @ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.css")
 public class OrgChart extends OrgChartBaseImpl {
 
-    public static final String STYLE_CLASS = "ui-orgchart ";
+    public static final String STYLE_CLASS = "p-orgchart ";
 
     @Override
     public void processDecodes(final FacesContext fc) {

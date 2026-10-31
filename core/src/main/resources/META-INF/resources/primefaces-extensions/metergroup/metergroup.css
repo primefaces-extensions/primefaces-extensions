@@ -1,47 +1,47 @@
-.ui-metergroup {
+.p-metergroup {
     display: flex;
     gap: 1rem;
 }
 
-.ui-metergroup-horizontal {
+.p-metergroup-horizontal {
     flex-direction: column;
 }
 
-.ui-metergroup-vertical {
+.p-metergroup-vertical {
     flex-direction: row;
 }
 
-.ui-metergroup-meters {
+.p-metergroup-meters {
     display: flex;
-    border-radius: 6px;
+    border-radius: var(--p-progressbar-border-radius);
     overflow: hidden;
-    background: #e5e7eb;
+    background: var(--p-progressbar-background);
 }
 
-.ui-metergroup-horizontal .ui-metergroup-meters {
+.p-metergroup-horizontal .p-metergroup-meters {
     height: 0.5rem;
     flex-direction: row;
 }
 
-.ui-metergroup-vertical .ui-metergroup-meters {
+.p-metergroup-vertical .p-metergroup-meters {
     width: 0.5rem;
     flex-direction: column;
     height: 100%;
 }
 
-.ui-metergroup-meter {
+.p-metergroup-meter {
     transition: width 0.5s ease-in-out, height 0.5s ease-in-out;
 }
 
-.ui-metergroup-horizontal .ui-metergroup-meter {
+.p-metergroup-horizontal .p-metergroup-meter {
     height: 100%;
 }
 
-.ui-metergroup-vertical .ui-metergroup-meter {
+.p-metergroup-vertical .p-metergroup-meter {
     width: 100%;
 }
 
-.ui-metergroup-labels {
+.p-metergroup-labels {
     display: flex;
     flex-wrap: wrap;
     margin: 0;
@@ -50,28 +50,28 @@
     gap: 1rem;
 }
 
-.ui-metergroup-labels-vertical {
+.p-metergroup-labels-vertical {
     flex-direction: column;
 }
 
-.ui-metergroup-labels-horizontal {
+.p-metergroup-labels-horizontal {
     flex-direction: row;
 }
 
-.ui-metergroup-label {
+.p-metergroup-label {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
 }
 
-.ui-metergroup-label-icon,
-.ui-metergroup-label-color {
+.p-metergroup-label-icon,
+.p-metergroup-label-color {
     display: inline-flex;
     justify-content: center;
     align-items: center;
 }
 
-.ui-metergroup-label-color {
+.p-metergroup-label-color {
     width: 0.75rem;
     height: 0.75rem;
     border-radius: 50%;

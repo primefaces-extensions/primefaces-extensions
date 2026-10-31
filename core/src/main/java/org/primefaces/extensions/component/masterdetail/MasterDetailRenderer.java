@@ -214,7 +214,7 @@ public class MasterDetailRenderer extends CoreRenderer<MasterDetail> {
         if (!component.isShowBreadcrumbFirstLevel()) {
             final int levelToRender = mdl.getLevel();
             if (levelToRender == 1) {
-                breadcrumb.setStyleClass("ui-helper-hidden");
+                breadcrumb.setStyleClass("p-hidden");
             }
             else {
                 breadcrumb.setStyleClass("");

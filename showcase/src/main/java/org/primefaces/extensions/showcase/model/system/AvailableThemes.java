@@ -41,15 +41,12 @@ public class AvailableThemes {
     private AvailableThemes() {
         final List<String> themeNames = new ArrayList<>();
 
-        themeNames.add("arya-blue");
-        themeNames.add("luna-amber");
-        themeNames.add("luna-blue");
-        themeNames.add("luna-green");
-        themeNames.add("luna-pink");
-        themeNames.add("nova-dark");
-        themeNames.add("nova-light");
-        themeNames.add("saga-blue");
-        themeNames.add("vela-blue");
+        // PrimeFaces 17 design token themes, each supports light and dark mode (CSS color-scheme)
+        themeNames.add("aura");
+        themeNames.add("glass");
+        themeNames.add("lara");
+        themeNames.add("metal");
+        themeNames.add("nora");
 
         themesAsMap = new HashMap<>();
         themes = new ArrayList<>();

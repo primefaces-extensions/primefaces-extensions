@@ -1,62 +1,62 @@
 /* Custom CSS to make EasyMDE play nice with PrimeFaces colors */
 
 /* Remove padding so it does not have rounded corners */
-.EasyMDEContainer.ui-inputfield.ui-inputtextarea {
+.EasyMDEContainer.p-inputfield.p-inputtextarea {
     padding: 0;
 }
 
 .EasyMDEContainer .CodeMirror {
-    color: var(--text-color);
-    border-color: var(--surface-border);
-    background-color: var(--surface-section);
+    color: var(--p-text-color);
+    border-color: var(--p-content-border-color);
+    background-color: var(--p-content-background);
 }
 .EasyMDEContainer .cm-s-easymde .CodeMirror-cursor {
-    border-color: var(--text-color);
+    border-color: var(--p-text-color);
 }
 
 .CodeMirror-cursor {
-    border-left:1px solid var(--text-color);
+    border-left:1px solid var(--p-text-color);
     border-right:none;width:0;
 }
 
 .EasyMDEContainer .editor-toolbar > * {
-    border-color: var(--surface-section);
+    border-color: var(--p-content-background);
 }
 
 .CodeMirror-gutters {
-    border-right: 1px solid var(--surface-border);
-    background-color: var(--surface-card);
+    border-right: 1px solid var(--p-content-border-color);
+    background-color: var(--p-content-background);
 }
 
 .editor-toolbar {
-    border-top: 1px solid var(--surface-border);
-    border-left: 1px solid var(--surface-border);
-    border-right: 1px solid var(--surface-border);
+    border-top: 1px solid var(--p-content-border-color);
+    border-left: 1px solid var(--p-content-border-color);
+    border-right: 1px solid var(--p-content-border-color);
 }
 
 .editor-toolbar i.separator {
-    border-left: 1px solid var(--surface-border);
-    border-right: 1px solid var(--surface-border);
+    border-left: 1px solid var(--p-content-border-color);
+    border-right: 1px solid var(--p-content-border-color);
 }
 
 .EasyMDEContainer .editor-toolbar > .active, .editor-toolbar > button:hover, .editor-preview pre, .cm-s-easymde .cm-comment,
 .CodeMirror-gutter-filler, .CodeMirror-scrollbar-filler {
-    background-color: var(--surface-section);
+    background-color: var(--p-content-background);
 }
 
 .EasyMDEContainer .CodeMirror-fullscreen {
-    background: var(--surface-section);
+    background: var(--p-content-background);
 }
 .editor-toolbar.fullscreen {
-    background: var(--surface-section);
+    background: var(--p-content-background);
 }
 
 .editor-preview {
-    background: var(--surface-section);
+    background: var(--p-content-background);
 }
 
 .editor-preview-side {
-    border-color: var(--surface-border);
+    border-color: var(--p-content-border-color);
 }
 
 .CodeMirror-selected,
@@ -64,6 +64,6 @@
 .CodeMirror-focused .CodeMirror-selected,
 .CodeMirror-line::selection,.CodeMirror-line>span::selection,.CodeMirror-line>span>span::selection,
 .CodeMirror-line::-moz-selection,.CodeMirror-line>span::-moz-selection,.CodeMirror-line>span>span::-moz-selection {
-    color: var(--primary-color-text);
-    background: var(--primary-color);
+    color: var(--p-primary-contrast-color);
+    background: var(--p-primary-color);
 }

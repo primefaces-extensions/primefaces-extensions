@@ -13,7 +13,7 @@ PrimeFaces.widget.ExtCreditCard = class extends PrimeFaces.widget.BaseWidget {
      */
     init(cfg) {
         super.init(cfg);
-        this.cfg.container = '.ui-credit-card';
+        this.cfg.container = '.p-credit-card';
         this.form = this.jq.closest('form');
         this.cfg.form = PrimeFaces.escapeClientId(this.form.attr('id'))
         this.card = new Card(this.cfg)
@@ -32,7 +32,7 @@ PrimeFaces.widget.ExtCreditCard = class extends PrimeFaces.widget.BaseWidget {
             $(document).ready(function () {
                 var blur = new Event('blur');
                 var change = new Event('change');
-                $this.form.find('.ui-state-filled').each(function () {
+                $this.form.find('.p-state-filled').each(function () {
                     if ($this.isInput(this, 'number') ||
                         $this.isInput(this, 'name') ||
                         $this.isInput(this, 'expiry') ||
