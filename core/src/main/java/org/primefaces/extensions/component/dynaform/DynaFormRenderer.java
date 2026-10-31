@@ -33,6 +33,7 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
 import jakarta.faces.render.FacesRenderer;
 
+import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.component.api.InputHolder;
 import org.primefaces.component.row.Row;
 import org.primefaces.extensions.model.dynaform.AbstractDynaFormElement;
@@ -57,6 +58,7 @@ import org.primefaces.util.WidgetBuilder;
  * @since 0.5
  */
 @FacesRenderer(rendererType = DynaForm.DEFAULT_RENDERER, componentFamily = DynaForm.COMPONENT_FAMILY)
+@FacesRendererInfo
 public class DynaFormRenderer extends CoreRenderer<DynaForm> {
 
     public static final String FACET_HEADER_REGULAR = "headerRegular";

@@ -36,6 +36,7 @@ import jakarta.faces.event.ActionEvent;
 import jakarta.faces.event.PhaseId;
 import jakarta.faces.render.FacesRenderer;
 
+import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.extensions.component.api.AbstractParameter;
 import org.primefaces.extensions.component.parameters.AssignableParameter;
 import org.primefaces.extensions.util.ExtAjaxRequestBuilder;
@@ -48,6 +49,7 @@ import org.primefaces.util.ComponentTraversalUtils;
  * @since 0.2
  */
 @FacesRenderer(rendererType = RemoteCommandBase.DEFAULT_RENDERER, componentFamily = RemoteCommandBase.COMPONENT_FAMILY)
+@FacesRendererInfo
 public class RemoteCommandRenderer extends CoreRenderer<RemoteCommand> {
 
     @Override

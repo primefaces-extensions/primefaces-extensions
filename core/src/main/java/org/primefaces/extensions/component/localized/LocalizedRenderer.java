@@ -35,6 +35,7 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.render.FacesRenderer;
 import jakarta.servlet.ServletContext;
 
+import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.extensions.config.PrimeExtensionsEnvironment;
 import org.primefaces.extensions.util.CommonMarkWrapper;
 import org.primefaces.renderkit.CoreRenderer;
@@ -49,6 +50,7 @@ import org.primefaces.util.LangUtils;
  * @since 11.0.3
  */
 @FacesRenderer(rendererType = Localized.DEFAULT_RENDERER, componentFamily = Localized.COMPONENT_FAMILY)
+@FacesRendererInfo
 public class LocalizedRenderer extends CoreRenderer<Localized> {
 
     public static final String WEB_FOLDER = "WEB-INF/pfe-localized";

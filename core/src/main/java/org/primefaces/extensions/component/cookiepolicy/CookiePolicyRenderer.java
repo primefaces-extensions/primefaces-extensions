@@ -28,6 +28,7 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
 import jakarta.faces.render.FacesRenderer;
 
+import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.renderkit.CoreRenderer;
 
 /**
@@ -37,6 +38,7 @@ import org.primefaces.renderkit.CoreRenderer;
  * @since 11.0.3
  */
 @FacesRenderer(rendererType = CookiePolicy.DEFAULT_RENDERER, componentFamily = CookiePolicy.COMPONENT_FAMILY)
+@FacesRendererInfo
 public class CookiePolicyRenderer extends CoreRenderer<CookiePolicy> {
 
     @Override

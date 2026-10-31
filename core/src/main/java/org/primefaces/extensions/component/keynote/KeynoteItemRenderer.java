@@ -27,10 +27,12 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
 import jakarta.faces.render.FacesRenderer;
 
+import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
 
 @FacesRenderer(rendererType = UIKeynoteItem.DEFAULT_RENDERER, componentFamily = UIKeynoteItem.COMPONENT_FAMILY)
+@FacesRendererInfo
 public class KeynoteItemRenderer extends CoreRenderer<UIKeynoteItem> {
 
     public static final String ITEM_CLASS = "p-keynote-item";

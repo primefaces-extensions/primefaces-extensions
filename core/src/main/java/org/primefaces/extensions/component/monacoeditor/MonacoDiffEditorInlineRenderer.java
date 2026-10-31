@@ -27,6 +27,7 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
 import jakarta.faces.render.FacesRenderer;
 
+import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.util.WidgetBuilder;
 
@@ -36,6 +37,7 @@ import org.primefaces.util.WidgetBuilder;
  * @since 11.1.0
  */
 @FacesRenderer(rendererType = MonacoDiffEditorInlineBase.DEFAULT_RENDERER, componentFamily = MonacoEditorCommonBase.COMPONENT_FAMILY)
+@FacesRendererInfo
 public class MonacoDiffEditorInlineRenderer extends MonacoDiffEditorBaseRenderer<MonacoDiffEditorInline> {
 
     /**

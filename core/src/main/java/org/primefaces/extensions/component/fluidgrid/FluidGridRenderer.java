@@ -30,6 +30,7 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
 import jakarta.faces.render.FacesRenderer;
 
+import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.extensions.model.fluidgrid.FluidGridItem;
 import org.primefaces.extensions.util.Attrs;
@@ -43,6 +44,7 @@ import org.primefaces.util.WidgetBuilder;
  * @since 0.5
  */
 @FacesRenderer(rendererType = FluidGrid.DEFAULT_RENDERER, componentFamily = FluidGrid.COMPONENT_FAMILY)
+@FacesRendererInfo
 public class FluidGridRenderer extends CoreRenderer<FluidGrid> {
 
     private static final String GRID_CLASS = "pe-fluidgrid";

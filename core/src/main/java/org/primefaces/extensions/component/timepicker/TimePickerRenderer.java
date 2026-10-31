@@ -36,6 +36,7 @@ import jakarta.faces.convert.Converter;
 import jakarta.faces.convert.ConverterException;
 import jakarta.faces.render.FacesRenderer;
 
+import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.extensions.util.MessageFactory;
 import org.primefaces.renderkit.InputRenderer;
@@ -52,6 +53,7 @@ import org.primefaces.util.WidgetBuilder;
  * @since 0.3
  */
 @FacesRenderer(rendererType = TimePicker.DEFAULT_RENDERER, componentFamily = TimePicker.COMPONENT_FAMILY)
+@FacesRendererInfo
 public class TimePickerRenderer extends InputRenderer<TimePicker> {
 
     private static final String BUTTON = "button";

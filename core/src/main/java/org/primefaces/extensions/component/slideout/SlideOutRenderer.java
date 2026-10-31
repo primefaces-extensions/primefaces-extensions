@@ -27,6 +27,7 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
 import jakarta.faces.render.FacesRenderer;
 
+import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.extensions.util.ExtLangUtils;
 import org.primefaces.renderkit.CoreRenderer;
@@ -40,6 +41,7 @@ import org.primefaces.util.WidgetBuilder;
  * @since 6.1
  */
 @FacesRenderer(rendererType = SlideOut.DEFAULT_RENDERER, componentFamily = SlideOut.COMPONENT_FAMILY)
+@FacesRendererInfo
 public class SlideOutRenderer extends CoreRenderer<SlideOut> {
 
     /**

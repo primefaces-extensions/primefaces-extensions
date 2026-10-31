@@ -39,6 +39,7 @@ import jakarta.faces.model.SelectItem;
 import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.behavior.ajax.AjaxBehavior;
+import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.component.export.DataExporters;
 import org.primefaces.extensions.component.sheet.export.SheetCSVExporter;
 import org.primefaces.extensions.component.sheet.export.SheetXMLExporter;
@@ -62,6 +63,7 @@ import org.primefaces.util.WidgetBuilder;
  * @since 6.2
  */
 @FacesRenderer(rendererType = SheetBase.DEFAULT_RENDERER, componentFamily = SheetBase.COMPONENT_FAMILY)
+@FacesRendererInfo
 public class SheetRenderer extends CoreRenderer<Sheet> {
 
     private static final AtomicBoolean EXPORTERS_REGISTERED = new AtomicBoolean(false);

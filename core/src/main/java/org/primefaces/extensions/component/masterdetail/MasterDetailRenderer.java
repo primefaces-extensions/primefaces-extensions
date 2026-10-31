@@ -35,6 +35,7 @@ import jakarta.faces.convert.Converter;
 import jakarta.faces.render.FacesRenderer;
 import jakarta.faces.render.Renderer;
 
+import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.component.breadcrumb.BreadCrumb;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.extensions.util.ExtLangUtils;
@@ -55,6 +56,7 @@ import org.primefaces.util.LangUtils;
  * @since 0.2
  */
 @FacesRenderer(rendererType = MasterDetail.DEFAULT_RENDERER, componentFamily = MasterDetail.COMPONENT_FAMILY)
+@FacesRendererInfo
 public class MasterDetailRenderer extends CoreRenderer<MasterDetail> {
 
     private static final String FACET_HEADER = "header";

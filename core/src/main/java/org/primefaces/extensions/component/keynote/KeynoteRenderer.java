@@ -33,12 +33,14 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
 import jakarta.faces.render.FacesRenderer;
 
+import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.extensions.model.keynote.KeynoteItem;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.WidgetBuilder;
 
 @FacesRenderer(rendererType = Keynote.DEFAULT_RENDERER, componentFamily = Keynote.COMPONENT_FAMILY)
+@FacesRendererInfo
 public class KeynoteRenderer extends CoreRenderer<Keynote> {
 
     public static final String CONTAINER_CLASS = "p-keynote reveal";

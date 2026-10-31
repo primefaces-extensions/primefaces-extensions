@@ -34,6 +34,7 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
 import jakarta.faces.render.FacesRenderer;
 
+import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.context.PrimeRequestContext;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.extensions.util.ExtLangUtils;
@@ -52,6 +53,7 @@ import org.primefaces.util.Lazy;
  * @since 3.0.0
  */
 @FacesRenderer(rendererType = DocumentViewer.DEFAULT_RENDERER, componentFamily = DocumentViewer.COMPONENT_FAMILY)
+@FacesRendererInfo
 public class DocumentViewerRenderer extends CoreRenderer<DocumentViewer> {
 
     @Override

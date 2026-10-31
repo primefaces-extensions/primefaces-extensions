@@ -30,6 +30,7 @@ import jakarta.faces.context.ResponseWriter;
 import jakarta.faces.convert.Converter;
 import jakarta.faces.render.FacesRenderer;
 
+import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.component.inputtextarea.InputTextarea;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.util.ComponentUtils;
@@ -42,6 +43,7 @@ import org.primefaces.util.WidgetBuilder;
  * @since 14.0.0
  */
 @FacesRenderer(rendererType = MarkdownEditor.DEFAULT_RENDERER, componentFamily = MarkdownEditor.COMPONENT_FAMILY)
+@FacesRendererInfo
 public class MarkdownEditorRenderer extends InputRenderer<MarkdownEditor> {
 
     @Override
