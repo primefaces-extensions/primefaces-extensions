@@ -28,6 +28,7 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.render.FacesRenderer;
 import jakarta.servlet.http.HttpSession;
 
+import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.WidgetBuilder;
 
@@ -37,6 +38,7 @@ import org.primefaces.util.WidgetBuilder;
  * @since 12.0.4
  */
 @FacesRenderer(rendererType = SessionBase.DEFAULT_RENDERER, componentFamily = SessionBase.COMPONENT_FAMILY)
+@FacesRendererInfo
 public class SessionRenderer extends CoreRenderer<Session> {
 
     @Override

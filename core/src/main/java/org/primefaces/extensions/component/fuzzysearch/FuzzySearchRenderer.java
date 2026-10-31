@@ -30,6 +30,7 @@ import jakarta.faces.context.ResponseWriter;
 import jakarta.faces.model.SelectItem;
 import jakarta.faces.render.FacesRenderer;
 
+import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.component.inputtext.InputText;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.SelectOneRenderer;
@@ -46,6 +47,7 @@ import org.primefaces.util.WidgetBuilder;
  * @since 8.0.1
  */
 @FacesRenderer(rendererType = FuzzySearch.DEFAULT_RENDERER, componentFamily = FuzzySearch.COMPONENT_FAMILY)
+@FacesRendererInfo
 public class FuzzySearchRenderer extends SelectOneRenderer<FuzzySearch> {
 
     private static final String INPUT = "_input";

@@ -29,6 +29,7 @@ import jakarta.faces.component.UIInput;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.render.FacesRenderer;
 
+import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.extensions.util.ExtLangUtils;
 import org.primefaces.renderkit.CoreRenderer;
@@ -42,6 +43,7 @@ import org.primefaces.util.WidgetBuilder;
  * @since 6.1
  */
 @FacesRenderer(rendererType = Calculator.DEFAULT_RENDERER, componentFamily = Calculator.COMPONENT_FAMILY)
+@FacesRendererInfo
 public class CalculatorRenderer extends CoreRenderer<Calculator> {
 
     @Override

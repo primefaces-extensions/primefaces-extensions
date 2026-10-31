@@ -30,11 +30,13 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
 import jakarta.faces.render.FacesRenderer;
 
+import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.model.map.*;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.WidgetBuilder;
 
 @FacesRenderer(rendererType = OSMapBase.DEFAULT_RENDERER, componentFamily = OSMapBase.COMPONENT_FAMILY)
+@FacesRendererInfo
 public class OSMapRenderer extends CoreRenderer<OSMap> {
 
     @Override

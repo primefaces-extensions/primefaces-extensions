@@ -28,10 +28,12 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
 import jakarta.faces.render.FacesRenderer;
 
+import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.extensions.model.metergroup.MeterGroupItem;
 import org.primefaces.renderkit.CoreRenderer;
 
 @FacesRenderer(rendererType = MeterGroup.DEFAULT_RENDERER, componentFamily = MeterGroup.COMPONENT_FAMILY)
+@FacesRendererInfo
 public class MeterGroupRenderer extends CoreRenderer<MeterGroup> {
 
     @Override

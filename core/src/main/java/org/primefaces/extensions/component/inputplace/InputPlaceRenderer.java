@@ -28,6 +28,7 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
 import jakarta.faces.render.FacesRenderer;
 
+import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.HTML;
@@ -40,6 +41,7 @@ import org.primefaces.util.WidgetBuilder;
  * @since 14.0.0
  */
 @FacesRenderer(rendererType = InputPlace.DEFAULT_RENDERER, componentFamily = InputPlace.COMPONENT_FAMILY)
+@FacesRendererInfo
 public class InputPlaceRenderer extends InputRenderer<InputPlace> {
 
     @Override

@@ -28,6 +28,7 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
 import jakarta.faces.render.FacesRenderer;
 
+import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.LangUtils;
@@ -42,6 +43,7 @@ import com.google.gson.Gson;
  * @since 16.0.0
  */
 @FacesRenderer(rendererType = MarkText.DEFAULT_RENDERER, componentFamily = MarkText.COMPONENT_FAMILY)
+@FacesRendererInfo
 public class MarkTextRenderer extends CoreRenderer<MarkText> {
 
     @Override

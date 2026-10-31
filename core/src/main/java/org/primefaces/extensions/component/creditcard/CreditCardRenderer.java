@@ -27,6 +27,7 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
 import jakarta.faces.render.FacesRenderer;
 
+import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.HTML;
@@ -40,6 +41,7 @@ import org.primefaces.util.WidgetBuilder;
  * @since 8.0.1
  */
 @FacesRenderer(rendererType = CreditCard.DEFAULT_RENDERER, componentFamily = CreditCard.COMPONENT_FAMILY)
+@FacesRendererInfo
 public class CreditCardRenderer extends CoreRenderer<CreditCard> {
 
     @Override

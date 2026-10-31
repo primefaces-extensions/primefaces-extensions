@@ -27,6 +27,7 @@ import java.util.Map;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.render.FacesRenderer;
 
+import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.Constants;
 import org.primefaces.util.WidgetBuilder;
@@ -38,6 +39,7 @@ import org.primefaces.util.WidgetBuilder;
  * @since 10.0
  */
 @FacesRenderer(componentFamily = LightSwitchBase.COMPONENT_FAMILY, rendererType = LightSwitchBase.DEFAULT_RENDERER)
+@FacesRendererInfo
 public class LightSwitchRenderer extends CoreRenderer<LightSwitch> {
 
     @Override

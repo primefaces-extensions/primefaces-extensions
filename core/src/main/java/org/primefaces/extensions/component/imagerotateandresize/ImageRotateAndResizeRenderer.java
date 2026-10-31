@@ -26,6 +26,7 @@ import java.io.IOException;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.render.FacesRenderer;
 
+import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.WidgetBuilder;
@@ -38,6 +39,7 @@ import org.primefaces.util.WidgetBuilder;
  * @since 0.1
  */
 @FacesRenderer(rendererType = ImageRotateAndResize.DEFAULT_RENDERER, componentFamily = ImageRotateAndResize.COMPONENT_FAMILY)
+@FacesRendererInfo
 public class ImageRotateAndResizeRenderer extends CoreRenderer<ImageRotateAndResize> {
 
     @Override

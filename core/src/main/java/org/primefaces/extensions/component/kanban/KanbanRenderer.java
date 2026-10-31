@@ -31,6 +31,7 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
 import jakarta.faces.render.FacesRenderer;
 
+import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.extensions.model.kanban.KanbanColumn;
 import org.primefaces.extensions.model.kanban.KanbanItem;
 import org.primefaces.extensions.util.Attrs;
@@ -48,6 +49,7 @@ import org.primefaces.util.WidgetBuilder;
  * @since 16.0.0
  */
 @FacesRenderer(componentFamily = KanbanBase.COMPONENT_FAMILY, rendererType = KanbanBase.DEFAULT_RENDERER)
+@FacesRendererInfo
 public class KanbanRenderer extends CoreRenderer {
 
     @Override

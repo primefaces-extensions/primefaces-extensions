@@ -28,12 +28,14 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
 import jakarta.faces.render.FacesRenderer;
 
+import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.FacetUtils;
 import org.primefaces.util.FastStringWriter;
 import org.primefaces.util.WidgetBuilder;
 
 @FacesRenderer(rendererType = EChart.DEFAULT_RENDERER, componentFamily = EChart.COMPONENT_FAMILY)
+@FacesRendererInfo
 public class EChartRenderer extends CoreRenderer<EChart> {
 
     @Override

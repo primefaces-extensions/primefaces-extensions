@@ -28,6 +28,7 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
 import jakarta.faces.render.FacesRenderer;
 
+import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.component.api.InputHolder;
 import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.extensions.util.Attrs;
@@ -41,6 +42,7 @@ import org.primefaces.util.WidgetBuilder;
  * @since 10.0
  */
 @FacesRenderer(rendererType = CodeScanner.DEFAULT_RENDERER, componentFamily = CodeScanner.COMPONENT_FAMILY)
+@FacesRendererInfo
 public class CodeScannerRenderer extends CoreRenderer<CodeScanner> {
 
     @Override

@@ -32,6 +32,7 @@ import jakarta.faces.convert.Converter;
 import jakarta.faces.event.PhaseId;
 import jakarta.faces.render.FacesRenderer;
 
+import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.extensions.event.CompleteEvent;
 import org.primefaces.extensions.util.Attrs;
@@ -48,6 +49,7 @@ import org.primefaces.util.WidgetBuilder;
  * @since 0.3
  */
 @FacesRenderer(rendererType = CodeMirror.DEFAULT_RENDERER, componentFamily = CodeMirror.COMPONENT_FAMILY)
+@FacesRendererInfo
 public class CodeMirrorRenderer extends InputRenderer<CodeMirror> {
 
     @Override

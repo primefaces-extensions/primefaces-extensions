@@ -34,6 +34,7 @@ import jakarta.faces.context.ResponseWriter;
 import jakarta.faces.convert.Converter;
 import jakarta.faces.render.FacesRenderer;
 
+import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.HTML;
@@ -47,6 +48,7 @@ import org.primefaces.util.WidgetBuilder;
  * @since 12.0.6
  */
 @FacesRenderer(rendererType = SunEditor.DEFAULT_RENDERER, componentFamily = SunEditor.COMPONENT_FAMILY)
+@FacesRendererInfo
 public class SunEditorRenderer extends InputRenderer<SunEditor> {
 
     @Override

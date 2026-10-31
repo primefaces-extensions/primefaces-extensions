@@ -29,6 +29,7 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
 import jakarta.faces.render.FacesRenderer;
 
+import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.Constants;
@@ -42,6 +43,7 @@ import org.primefaces.util.WidgetBuilder;
  * @since 8.0.1
  */
 @FacesRenderer(rendererType = Counter.DEFAULT_RENDERER, componentFamily = Counter.COMPONENT_FAMILY)
+@FacesRendererInfo
 public class CounterRenderer extends CoreRenderer<Counter> {
 
     @Override

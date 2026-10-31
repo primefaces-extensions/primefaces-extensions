@@ -31,6 +31,7 @@ import jakarta.faces.event.ActionEvent;
 import jakarta.faces.event.PhaseId;
 import jakarta.faces.render.FacesRenderer;
 
+import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.context.PrimeRequestContext;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
@@ -47,6 +48,7 @@ import org.primefaces.util.WidgetBuilder;
  * @since 3.0.0
  */
 @FacesRenderer(rendererType = Timer.DEFAULT_RENDERER, componentFamily = Timer.COMPONENT_FAMILY)
+@FacesRendererInfo
 public class TimerRenderer extends CoreRenderer<Timer> {
 
     @Override

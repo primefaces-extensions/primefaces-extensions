@@ -24,12 +24,15 @@ package org.primefaces.extensions.component.metergroup;
 import jakarta.faces.application.ResourceDependency;
 import jakarta.faces.component.FacesComponent;
 
+import org.primefaces.cdk.api.FacesComponentInfo;
+
 /**
  * <code>MeterGroup</code> component.
  *
  * @since 16.0.0
  */
 @FacesComponent(value = MeterGroupBase.COMPONENT_TYPE, namespace = MeterGroupBase.COMPONENT_FAMILY)
+@FacesComponentInfo(description = "MeterGroup displays scalar measurements within a known range as a group of meters.")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "metergroup/metergroup.css")
 public class MeterGroup extends MeterGroupBaseImpl {
 

@@ -32,6 +32,7 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
 import jakarta.faces.render.FacesRenderer;
 
+import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.shaded.json.JSONArray;
@@ -47,6 +48,7 @@ import org.primefaces.util.WidgetBuilder;
  * @since 7.0
  */
 @FacesRenderer(rendererType = OrgChart.DEFAULT_RENDERER, componentFamily = OrgChart.COMPONENT_FAMILY)
+@FacesRendererInfo
 public class OrgChartRenderer extends CoreRenderer<OrgChart> {
 
     private static final String JSON_CHILDREN = "children";

@@ -28,6 +28,7 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
 import jakarta.faces.render.FacesRenderer;
 
+import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
 
@@ -39,6 +40,7 @@ import org.primefaces.renderkit.CoreRenderer;
  * @since 0.6.0
  */
 @FacesRenderer(rendererType = LayoutPane.DEFAULT_RENDERER, componentFamily = LayoutPane.COMPONENT_FAMILY)
+@FacesRendererInfo
 public class LayoutPaneRenderer extends CoreRenderer<LayoutPane> {
 
     @Override

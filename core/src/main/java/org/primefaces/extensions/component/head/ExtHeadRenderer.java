@@ -29,6 +29,7 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
 import jakarta.faces.render.FacesRenderer;
 
+import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.extensions.util.Attrs;
 
 /**
@@ -53,6 +54,7 @@ import org.primefaces.extensions.util.Attrs;
  * @since 0.2
  */
 @FacesRenderer(rendererType = ExtHead.DEFAULT_RENDERER, componentFamily = ExtHead.COMPONENT_FAMILY)
+@FacesRendererInfo
 public class ExtHeadRenderer extends org.primefaces.renderkit.HeadRenderer {
 
     @Override

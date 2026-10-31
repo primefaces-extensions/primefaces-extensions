@@ -28,6 +28,7 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
 import jakarta.faces.render.FacesRenderer;
 
+import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.shaded.json.JSONWriter;
 import org.primefaces.util.WidgetBuilder;
 
@@ -37,6 +38,7 @@ import org.primefaces.util.WidgetBuilder;
  * @since 11.1.0
  */
 @FacesRenderer(rendererType = MonacoDiffEditorFramedBase.DEFAULT_RENDERER, componentFamily = MonacoEditorCommonBase.COMPONENT_FAMILY)
+@FacesRendererInfo
 public class MonacoDiffEditorFramedRenderer extends MonacoDiffEditorBaseRenderer<MonacoDiffEditorFramed> {
 
     /**

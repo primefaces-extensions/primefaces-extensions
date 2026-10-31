@@ -38,6 +38,7 @@ import jakarta.faces.convert.Converter;
 import jakarta.faces.convert.ConverterException;
 import jakarta.faces.render.FacesRenderer;
 
+import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.extensions.util.MessageFactory;
@@ -47,6 +48,7 @@ import org.primefaces.util.LangUtils;
 import org.primefaces.util.WidgetBuilder;
 
 @FacesRenderer(rendererType = ClockPicker.DEFAULT_RENDERER, componentFamily = ClockPicker.COMPONENT_FAMILY)
+@FacesRendererInfo
 public class ClockPickerRenderer extends InputRenderer<ClockPicker> {
 
     private static final DateTimeFormatter FORMATTER_24_HOUR = DateTimeFormatter.ofPattern("HH:mm");

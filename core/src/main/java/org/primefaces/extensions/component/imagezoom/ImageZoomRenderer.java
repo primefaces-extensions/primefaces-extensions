@@ -26,6 +26,7 @@ import java.io.IOException;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.render.FacesRenderer;
 
+import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.WidgetBuilder;
@@ -37,6 +38,7 @@ import org.primefaces.util.WidgetBuilder;
  * @since 11.0.3
  */
 @FacesRenderer(rendererType = ImageZoom.DEFAULT_RENDERER, componentFamily = ImageZoom.COMPONENT_FAMILY)
+@FacesRendererInfo
 public class ImageZoomRenderer extends CoreRenderer<ImageZoom> {
 
     @Override
