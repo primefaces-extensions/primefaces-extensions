@@ -20,7 +20,7 @@
     </h:head>
     <h:body>
         <pe:layout id="fpl" widgetVar="fullLayoutWidget" options="#{showcaseLayout.options}">
-            <pe:javascript event="resize" execute="#{resizeFunction}" disabled="#{empty resizeFunction}"/>
+            <p:callback event="resize" execute="#{resizeFunction}" disabled="#{empty resizeFunction}"/>
 
             <pe:layoutPane position="north" id="layoutNorth">
                 <h:form id="headerForm" prependId="false">

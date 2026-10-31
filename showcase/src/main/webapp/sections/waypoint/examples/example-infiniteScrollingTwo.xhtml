@@ -2,6 +2,7 @@
         xmlns="http://www.w3.org/1999/xhtml"
         xmlns:h="jakarta.faces.html"
         xmlns:ui="jakarta.faces.facelets"
+        xmlns:p="primefaces"
         xmlns:pe="primefaces.extensions">
 <!-- EXAMPLE-SOURCE-START -->
 
@@ -129,7 +130,7 @@
      data-src="http://farm4.static.flickr.com/3133/3145677692_79763f61a5_m.jpg" width="240" height="180"/>
 
 <pe:waypoint id="waypoint" for="@(img[data-src])" offset="'100%'">
-    <pe:javascript event="reached" execute="handleWaypoint(ext);"/>
+    <p:callback event="reached" execute="handleWaypoint(ext);"/>
 </pe:waypoint>
 
 <h:outputScript id="waypointScript" target="body">

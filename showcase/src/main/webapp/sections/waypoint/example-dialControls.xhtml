@@ -65,7 +65,7 @@
 </h:panelGroup>    
 
 <pe:waypoint id="waypoint" for="@(.dial li)" forContext="@(.dial ul)" offset="25">
-    <pe:javascript event="reached" execute="handleWaypoint(ext);"/>
+    <p:callback event="reached" execute="handleWaypoint(ext);"/>
 </pe:waypoint>
     
 <h:outputScript id="waypointScript" target="body">

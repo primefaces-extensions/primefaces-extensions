@@ -175,7 +175,7 @@
                 <artifactId>gson</artifactId>
                 <version>${gson.version}</version>
             </dependency>
-            <!-- InputPhone dependencies -->
+            <!-- PrimeFaces InputPhone dependencies (showcase) -->
             <dependency>
                 <groupId>com.googlecode.libphonenumber</groupId>
                 <artifactId>libphonenumber</artifactId>
