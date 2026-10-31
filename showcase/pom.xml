@@ -90,11 +90,6 @@
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
         </dependency>
-        <!-- PrimeFaces InputPhone server-side validation -->
-        <dependency>
-            <groupId>com.googlecode.libphonenumber</groupId>
-            <artifactId>libphonenumber</artifactId>
-        </dependency>
         <!-- Sheet -->
         <dependency>
             <groupId>org.apache.commons</groupId>
