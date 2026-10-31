@@ -26,9 +26,6 @@
                 <h:outputText value="Components and more"/>
             </f:facet>
             <p:menu id="componentList">
-                <p:menuitem value="ClientBehaviours" styleClass="#{navigationContext.getMenuitemStyleClass('clientBehaviours')}"
-                            icon="#{technicalInfo.getMenuitemIconStyleClass('clientBehaviours')}"
-                            onclick="Showcase.selectComponentLink(this)" ajax="false" url="#{request.contextPath}/views/clientBehaviours.jsf"/>
                 <p:menuitem value="Converters" styleClass="#{navigationContext.getMenuitemStyleClass('converters')}"
                             icon="#{technicalInfo.getMenuitemIconStyleClass('converters')}"
                             onclick="Showcase.selectComponentLink(this)" ajax="false" url="#{request.contextPath}/views/converters.jsf"/>
@@ -98,12 +95,6 @@
                             styleClass="#{navigationContext.getMenuitemStyleClass('imageZoom')}"
                             icon="#{technicalInfo.getMenuitemIconStyleClass('imageZoom')}"
                             onclick="Showcase.selectComponentLink(this)" ajax="false" url="#{request.contextPath}/views/imageZoom.jsf"/>
-                <p:menuitem value="InputOtp" styleClass="#{navigationContext.getMenuitemStyleClass('inputotp')}"
-                            icon="#{technicalInfo.getMenuitemIconStyleClass('inputotp')}"
-                            onclick="Showcase.selectComponentLink(this)" ajax="false" url="#{request.contextPath}/views/inputotp.jsf"/>
-                <p:menuitem value="InputPhone" styleClass="#{navigationContext.getMenuitemStyleClass('inputphone')}"
-                            icon="#{technicalInfo.getMenuitemIconStyleClass('inputphone')}"
-                            onclick="Showcase.selectComponentLink(this)" ajax="false" url="#{request.contextPath}/views/inputphone.jsf"/>
                 <p:menuitem value="InputPlace" styleClass="#{navigationContext.getMenuitemStyleClass('inputplace')}"
                             icon="#{technicalInfo.getMenuitemIconStyleClass('inputplace')}"
                             onclick="Showcase.selectComponentLink(this)" ajax="false" url="#{request.contextPath}/views/inputplace.jsf"/>
@@ -179,10 +170,6 @@
                 <p:menuitem value="Tooltip" styleClass="#{navigationContext.getMenuitemStyleClass('tooltip')}"
                             icon="#{technicalInfo.getMenuitemIconStyleClass('tooltip')}"
                             onclick="Showcase.selectComponentLink(this)" ajax="false" url="#{request.contextPath}/views/tooltip.jsf"/>
-                <p:menuitem value="TriStateManyCheckbox"
-                            styleClass="#{navigationContext.getMenuitemStyleClass('triStateManyCheckbox')}"
-                            icon="#{technicalInfo.getMenuitemIconStyleClass('triStateManyCheckbox')}"
-                            onclick="Showcase.selectComponentLink(this)" ajax="false" url="#{request.contextPath}/views/triStateManyCheckbox.jsf"/>
                 <p:menuitem value="Waypoint"
                             styleClass="#{navigationContext.getMenuitemStyleClass('waypoint')}"
                             icon="#{technicalInfo.getMenuitemIconStyleClass('waypoint')}"

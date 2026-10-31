@@ -127,7 +127,7 @@
     
 <pe:waypoint id="waypoint2" for="container" forContext="@(#mainForm .pe-layout-pane-content)"
              offset="function(){return $.waypoints('viewportHeight') - $(this).height()}">
-    <pe:javascript event="reached" execute="$('#article-finished').toggleClass('hiding', ext.direction === 'up');"/>
+    <p:callback event="reached" execute="$('#article-finished').toggleClass('hiding', ext.direction === 'up');"/>
 </pe:waypoint>
 
 <h:outputScript id="waypointScript" target="body">

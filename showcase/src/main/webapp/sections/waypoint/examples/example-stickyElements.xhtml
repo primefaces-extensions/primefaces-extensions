@@ -130,11 +130,11 @@
 </h:panelGroup>
 
 <pe:waypoint id="waypoint1" for="wrapper" offset="'-100%'">
-    <pe:javascript event="reached" execute="$('#topLink').toggleClass('hidden', ext.direction === 'up');"/>
+    <p:callback event="reached" execute="$('#topLink').toggleClass('hidden', ext.direction === 'up');"/>
 </pe:waypoint>
 
 <pe:waypoint id="waypoint2" for="main-nav-holder">
-    <pe:javascript event="reached" execute="$(ext.waypoint).toggleClass('sticky', ext.direction === 'down');"/>
+    <p:callback event="reached" execute="$(ext.waypoint).toggleClass('sticky', ext.direction === 'down');"/>
 </pe:waypoint>
 
 <h:outputStylesheet id="waypointCSS">

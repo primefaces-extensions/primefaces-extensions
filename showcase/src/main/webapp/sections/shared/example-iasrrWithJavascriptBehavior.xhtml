@@ -42,7 +42,7 @@
     <pe:imageRotateAndResize id="rotateAndResize" for="myImage" widgetVar="rotateAndResizeWidget">
         <p:ajax event="rotate" listener="#{imageController.rotateListener}"
                 update="growl" oncomplete="PF('areaSelectWidget').reload();"/>
-        <pe:javascript event="resize" execute="PF('areaSelectWidget').reload();"/>
+        <p:callback event="resize" execute="PF('areaSelectWidget').reload();"/>
     </pe:imageRotateAndResize>
 
     <p:commandButton icon="ui-icon-arrowreturnthick-1-w" value="Rotate Left"

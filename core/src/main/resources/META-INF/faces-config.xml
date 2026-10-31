@@ -38,11 +38,4 @@
         <converter-class>org.primefaces.extensions.converter.SanitizingLenientConverter</converter-class>
     </converter>
 
-    <render-kit>
-        <client-behavior-renderer>
-            <client-behavior-renderer-type>org.primefaces.extensions.behavior.JavascriptBehaviorRenderer</client-behavior-renderer-type>
-            <client-behavior-renderer-class>org.primefaces.extensions.behavior.javascript.JavascriptBehaviorRenderer</client-behavior-renderer-class>
-        </client-behavior-renderer>
-    </render-kit>
-
 </faces-config>

@@ -98,7 +98,7 @@
         
         <pe:waypoint id="waypoint" widgetVar="waypointWidget"
                      offset="function(){return $.waypoints('viewportHeight') - $(this).outerHeight()}">
-            <pe:javascript event="reached" execute="handleLoadStart(ext);"/>
+            <p:callback event="reached" execute="handleLoadStart(ext);"/>
         </pe:waypoint>
     </h:panelGroup>
 </h:panelGroup>
