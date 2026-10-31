@@ -65,7 +65,49 @@ PrimeFaces.widget.ExtCalculator = class extends PrimeFaces.widget.BaseWidget {
     _remove() {
         if (this.input && this.input.data().calculator) {
             this.input.calculator('destroy');
+            this._removeInputGroup(this.input);
             this.input = null;
+        }
+    }
+
+    /**
+     * Joins the input and the trigger button of the calculator into a PrimeFaces input group, so the button is attached
+     * to the input like the buttons of the other PrimeFaces inputs. The trigger stays a sibling of the input because
+     * the calculator plugin finds it that way (enable, disable, destroy).
+     *
+     * - PF InputNumber: the calculator is attached to its hidden input and the trigger is inserted inside the
+     *   `.p-inputnumber` element next to the visible input, so that element becomes the input group.
+     * - Any other input: the input and the trigger are wrapped in a new input group element.
+     *
+     * @param {JQuery} input the input the calculator is attached to.
+     * @private
+     */
+    _applyInputGroup(input) {
+        var trigger = input.siblings('button.calculator-trigger');
+        if (trigger.length === 0) {
+            return; // no button (showOn="focus" / "operator") or an image only trigger
+        }
+
+        var inputNumber = input.parent('.p-inputnumber');
+        if (inputNumber.length) {
+            inputNumber.addClass('p-inputgroup pe-calculator-inputgroup');
+        } else {
+            input.add(trigger).wrapAll('<span class="p-inputgroup pe-calculator-inputgroup pe-calculator-wrapper"></span>');
+        }
+    }
+
+    /**
+     * Reverts {@link _applyInputGroup} after the calculator (and its trigger) was destroyed.
+     *
+     * @param {JQuery} input the input the calculator was attached to.
+     * @private
+     */
+    _removeInputGroup(input) {
+        var group = input.parent('.pe-calculator-inputgroup');
+        if (group.hasClass('pe-calculator-wrapper')) {
+            input.unwrap();
+        } else {
+            group.removeClass('p-inputgroup pe-calculator-inputgroup');
         }
     }
 
@@ -133,7 +175,10 @@ PrimeFaces.widget.ExtCalculator = class extends PrimeFaces.widget.BaseWidget {
         }
 
         // create the calculator
-        input.calculator('destroy').calculator(opts);
+        input.calculator('destroy');
+        this._removeInputGroup(input);
+        input.calculator(opts);
+        this._applyInputGroup(input);
 
         // bind "open", "close" events
         this._bindEvents();

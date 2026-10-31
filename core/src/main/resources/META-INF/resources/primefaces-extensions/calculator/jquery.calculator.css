@@ -3,9 +3,15 @@ div.is-calculator, span.is-calculator {
     position: relative;
 }
 
-button.calculator-trigger {
-    width: 25px;
-    padding: 0;
+/* input + trigger button joined like the other PrimeFaces inputs with a button (see 3-calculator.js) */
+.pe-calculator-inputgroup.p-inputgroup {
+    display: inline-flex;
+    width: auto;
+    vertical-align: middle;
+}
+
+.pe-calculator-inputgroup.p-inputgroup > .p-inputfield {
+    width: auto;
 }
 
 img.calculator-trigger {
