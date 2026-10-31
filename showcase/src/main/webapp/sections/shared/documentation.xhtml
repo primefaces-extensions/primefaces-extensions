@@ -9,7 +9,7 @@
         <h:outputText value="Documentation pe:#{tagName}"/>
     </f:facet>
 
-    <h:panelGroup layout="block" styleClass="ui-state-default docuCaption">
+    <h:panelGroup layout="block" styleClass="p-state-default docuCaption">
         Attributes (move mouse over the names to see data types)
     </h:panelGroup>
     <p:dataTable id="docuDataTable" var="attribute" value="#{docuPreparer.getDocuAttributes(tagName)}"
@@ -29,7 +29,7 @@
         </p:column>
     </p:dataTable>
 
-    <h:panelGroup layout="block" styleClass="ui-state-default docuEventCaption" rendered="#{docuPreparer.getDocuEvents(tagName).size() > 0}">
+    <h:panelGroup layout="block" styleClass="p-state-default docuEventCaption" rendered="#{docuPreparer.getDocuEvents(tagName).size() > 0}">
         Events (move mouse over the names to see classes)
     </h:panelGroup>
     <p:dataTable id="docuEventsDataTable" var="event" value="#{docuPreparer.getDocuEvents(tagName)}"

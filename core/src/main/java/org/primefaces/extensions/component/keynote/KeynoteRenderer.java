@@ -41,7 +41,7 @@ import org.primefaces.util.WidgetBuilder;
 @FacesRenderer(rendererType = Keynote.DEFAULT_RENDERER, componentFamily = Keynote.COMPONENT_FAMILY)
 public class KeynoteRenderer extends CoreRenderer<Keynote> {
 
-    public static final String CONTAINER_CLASS = "ui-keynote reveal";
+    public static final String CONTAINER_CLASS = "p-keynote reveal";
     public static final String SLIDES_CLASS = "slides";
 
     /**

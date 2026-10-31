@@ -131,18 +131,18 @@ public class TechnicalInfo {
     public String getMenuitemIconStyleClass(final String page) {
         final String check = page.toLowerCase();
         if (newComponents.contains(check)) {
-            return "ui-icon-new-comp";
+            return "p-new-comp";
         }
 
         if (updatedComponents.contains(check)) {
-            return "ui-icon-updated-comp";
+            return "p-updated-comp";
         }
 
         if (deprecatedComponents.contains(check)) {
-            return "ui-icon-deprecated-comp";
+            return "p-deprecated-comp";
         }
 
-        return "ui-icon-none";
+        return "p-none-comp";
     }
 
     private void processComponentTypes(final String newComp, final String updatedComp, final String deprecatedComp) {

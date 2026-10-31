@@ -18,12 +18,12 @@ img.calculator-trigger {
     z-index: 10;
     margin: 0;
     padding: 0;
-    border: 1px solid var(--surface-b, #888);
+    border: 1px solid var(--p-content-border-color);
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
     border-radius: 4px;
-    color: var(--text-color, #000);
-    background-color: var(--surface-e, #f4f4f4);
+    color: var(--p-text-color);
+    background-color: var(--p-content-background);
     font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -36,11 +36,11 @@ img.calculator-trigger {
 
 .calculator-inline {
     position: relative;
-    border: 1px solid var(--surface-b, #888);
+    border: 1px solid var(--p-content-border-color);
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
     border-radius: 4px;
-    background-color: var(--surface-e, #f4f4f4);
+    background-color: var(--p-content-background);
 }
 
 .calculator-inline .calculator-close {
@@ -50,7 +50,7 @@ img.calculator-trigger {
 .calculator-disabled {
     position: absolute;
     z-index: 100;
-    background-color: white;
+    background-color: var(--p-content-background);
     opacity: 0.5;
     filter: alpha(opacity=50);
 }
@@ -64,7 +64,7 @@ img.calculator-trigger {
     text-align: center;
 }
 
-.calculator-prompt.ui-widget-header {
+.calculator-prompt.p-widget-header {
     margin: 2px;
 }
 
@@ -73,8 +73,8 @@ img.calculator-trigger {
     margin: 2px;
     padding: 0 2px;
     text-align: right;
-    background-color: var(--surface-e, #fff);
-    border: 1px inset var(--text-color, #000);
+    background-color: var(--p-content-background);
+    border: 1px inset var(--p-content-border-color);
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
     border-radius: 4px;
@@ -138,7 +138,7 @@ img.calculator-trigger {
 }
 
 .calculator-row .calculator-base-active, .calculator-row .calculator-angle-active {
-    border: 2px inset var(--surface-e, #fff);
+    border: 2px inset var(--p-content-border-color);
 }
 
 .calculator-digit, .calculator-oper {
@@ -146,7 +146,7 @@ img.calculator-trigger {
 }
 
 .calculator-mem-empty, .calculator-digit[disabled] {
-    color: var(--surface-b, #888);
+    color: var(--p-text-muted-color);
 }
 
 .calculator-row .calculator-trig {
@@ -172,9 +172,9 @@ img.calculator-trigger {
     position: absolute;
     left: -1px;
     top: -1px;
-    color: var(--text-color, #000);
-    background-color: var(--surface-e, #fff);
-    border: 1px solid var(--surface-b, #888);
+    color: var(--p-text-color);
+    background-color: var(--p-content-background);
+    border: 1px solid var(--p-content-border-color);
     font-size: 80%;
 }
 
@@ -186,22 +186,4 @@ img.calculator-trigger {
 .calculator-keyname {
     width: 22px;
     font-size: 70%;
-}
-
-body .calculator-trigger .ui-icon {
-    font-family: 'primeicons', sans-serif;
-    speak: none;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
-    display: inline-block;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-/* Percentage Icon because PrimeIcons has no calculator! */
-body .calculator-trigger .ui-icon-calculator:before {
-    content: "\e9be";
 }

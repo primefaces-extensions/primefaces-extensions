@@ -49,7 +49,7 @@ import org.primefaces.extensions.util.Constants;
 @ResourceDependency(library = Constants.LIBRARY, name = "inputplace/inputplace.js")
 public class InputPlace extends InputPlaceBaseImpl {
 
-    public static final String STYLE_CLASS = "ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all";
+    public static final String STYLE_CLASS = "p-inputfield p-inputtext p-widget p-state-default";
     /** @deprecated Use {@link InputPlaceBaseImpl.ClientBehaviorEventKeys#placeChanged} */
     @Deprecated
     public static final String EVENT_PLACE_CHANGED = "placeChanged";

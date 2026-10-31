@@ -135,7 +135,7 @@
         };
         $.extend(this._defaults, this.regional['']);
 
-        this.tpDiv = $('<div id="' + this._mainDivId + '" class="ui-timepicker ui-widget ui-helper-clearfix ui-corner-all " style="display: none"></div>');
+        this.tpDiv = $('<div id="' + this._mainDivId + '" class="ui-timepicker p-widget " style="display: none"></div>');
     }
 
     $.extend(FGTimepicker.prototype, {
@@ -204,7 +204,7 @@
                 id: id, input: target, // associated target
                 inline: inline, // is timepicker inline or not :
                 tpDiv: (!inline ? this.tpDiv : // presentation div
-                    $('<div class="' + this._inlineClass + ' ui-timepicker ui-widget  ui-helper-clearfix"></div>'))
+                    $('<div class="' + this._inlineClass + ' ui-timepicker p-widget "></div>'))
             };
         },
 
@@ -372,8 +372,8 @@
             var isFixed = false;
             $(input).parents().each(function () {
                 var $el = $(this);
-                if ($el.hasClass('ui-dialog')) {
-                    return false; // Exit early if `ui-dialog` class is found
+                if ($el.hasClass('p-dialog')) {
+                    return false; // Exit early if `p-dialog` class is found
                 }
                 if ($el.css('position') === 'fixed') {
                     isFixed = true; // Set isFixed to true if position is fixed
@@ -516,14 +516,14 @@
                 .find('.ui-timepicker td a')
                 .off()
                 .on('mouseout', function () {
-                    $(this).removeClass('ui-state-hover');
+                    $(this).removeClass('p-state-hover');
                     if (this.className.indexOf('ui-timepicker-prev') != -1) $(this).removeClass('ui-timepicker-prev-hover');
                     if (this.className.indexOf('ui-timepicker-next') != -1) $(this).removeClass('ui-timepicker-next-hover');
                 })
                 .on('mouseover', function () {
                     if (!self._isDisabledTimepicker(inst.inline ? inst.tpDiv.parent()[0] : inst.input[0])) {
-                        $(this).parents('.ui-timepicker-calendar').find('a').removeClass('ui-state-hover');
-                        $(this).addClass('ui-state-hover');
+                        $(this).parents('.ui-timepicker-calendar').find('a').removeClass('p-state-hover');
+                        $(this).addClass('p-state-hover');
                         if (this.className.indexOf('ui-timepicker-prev') != -1) $(this).addClass('ui-timepicker-prev-hover');
                         if (this.className.indexOf('ui-timepicker-next') != -1) $(this).addClass('ui-timepicker-next-hover');
                     }
@@ -615,12 +615,12 @@
             }
 
 
-            html = '<table class="ui-timepicker-table ui-widget-content ui-corner-all"><tr>';
+            html = '<table class="ui-timepicker-table p-widget-content"><tr>';
 
             if (showHours) {
 
                 html += '<td class="ui-timepicker-hours">' +
-                    '<div class="ui-timepicker-title ui-widget-header ui-helper-clearfix ui-corner-all">' +
+                    '<div class="ui-timepicker-title p-widget-header">' +
                     hourLabel +
                     '</div>' +
                     '<table class="ui-timepicker">';
@@ -659,9 +659,9 @@
 
 
             if (showButtonPanel) {
-                var buttonPanel = '<tr><td colspan="3"><div class="ui-timepicker-buttonpane ui-widget-content">';
-                var btnClasses = 'ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only';
-                var btnSpan = '<span class="ui-button-text" data-timepicker-instance-id="#' + inst.id.replace(/\\\\/g, "\\") + '">';
+                var buttonPanel = '<tr><td colspan="3"><div class="ui-timepicker-buttonpane p-widget-content">';
+                var btnClasses = 'p-button p-widget p-state-default p-button-text-only';
+                var btnSpan = '<span class="p-button-text" data-timepicker-instance-id="#' + inst.id.replace(/\\\\/g, "\\") + '">';
                 if (showNowButton) {
                     buttonPanel += '<button type="button" class="ui-timepicker-now ' + btnClasses + '" '
                         + ' data-timepicker-instance-id="#' + inst.id.replace(/\\\\/g, "\\") + '" >'
@@ -764,7 +764,7 @@
             }
 
 
-            html += '<div class="ui-timepicker-title ui-widget-header ui-helper-clearfix ui-corner-all">' +
+            html += '<div class="ui-timepicker-title p-widget-header">' +
                 minuteLabel +
                 '</div>' +
                 '<table class="ui-timepicker">';
@@ -810,7 +810,7 @@
             var minTime = this._get(inst, 'minTime');
 
             if (hour == undefined) {
-                html = '<td><span class="ui-state-default ui-state-disabled">&nbsp;</span></td>';
+                html = '<td><span class="p-state-default p-state-disabled">&nbsp;</span></td>';
                 return html;
             }
 
@@ -825,16 +825,16 @@
 
             if (enabled) {
                 html = '<td class="ui-timepicker-hour-cell" data-timepicker-instance-id="#' + inst.id.replace(/\\\\/g, "\\") + '" data-hour="' + hour.toString() + '">' +
-                    '<a class="ui-state-default ' +
-                    (hour == inst.hours ? 'ui-state-active' : '') +
+                    '<a class="p-state-default ' +
+                    (hour == inst.hours ? 'p-state-active' : '') +
                     '">' +
                     displayHour.toString() +
                     '</a></td>';
             } else {
                 html =
                     '<td>' +
-                    '<span class="ui-state-default ui-state-disabled ' +
-                    (hour == inst.hours ? ' ui-state-active ' : ' ') +
+                    '<span class="p-state-default p-state-disabled ' +
+                    (hour == inst.hours ? ' p-state-active ' : ' ') +
                     '">' +
                     displayHour.toString() +
                     '</span>' +
@@ -858,7 +858,7 @@
             }
 
             if (minute == undefined) {
-                html = '<td><span class="ui-state-default ui-state-disabled">&nbsp;</span></td>';
+                html = '<td><span class="p-state-default p-state-disabled">&nbsp;</span></td>';
                 return html;
             }
 
@@ -869,15 +869,15 @@
 
             if (enabled) {
                 html = '<td class="ui-timepicker-minute-cell" data-timepicker-instance-id="#' + inst.id.replace(/\\\\/g, "\\") + '" data-minute="' + minute.toString() + '" >' +
-                    '<a class="ui-state-default ' +
-                    (minute == inst.minutes ? 'ui-state-active' : '') +
+                    '<a class="p-state-default ' +
+                    (minute == inst.minutes ? 'p-state-active' : '') +
                     '" >' +
                     displayText +
                     '</a></td>';
             } else {
 
                 html = '<td>' +
-                    '<span class="ui-state-default ui-state-disabled" >' +
+                    '<span class="p-state-default p-state-disabled" >' +
                     displayText +
                     '</span>' +
                     '</td>';
@@ -920,13 +920,13 @@
             if (nodeName == 'input') {
                 target.disabled = false;
                 var button = this._get(inst, 'button');
-                $(button).removeClass('ui-state-disabled').disabled = false;
+                $(button).removeClass('p-state-disabled').disabled = false;
                 inst.trigger.filter('button').each(function () {
                     this.disabled = false;
                 }).end();
             } else if (nodeName == 'div' || nodeName == 'span') {
                 var inline = $target.children('.' + this._inlineClass);
-                inline.children().removeClass('ui-state-disabled');
+                inline.children().removeClass('p-state-disabled');
                 inline.find('button').each(
                     function () {
                         this.disabled = false
@@ -951,7 +951,7 @@
             if (nodeName == 'input') {
                 var button = this._get(inst, 'button');
 
-                $(button).addClass('ui-state-disabled').disabled = true;
+                $(button).addClass('p-state-disabled').disabled = true;
                 target.disabled = true;
 
                 inst.trigger.filter('button').each(function () {
@@ -960,7 +960,7 @@
 
             } else if (nodeName == 'div' || nodeName == 'span') {
                 var inline = $target.children('.' + this._inlineClass);
-                inline.children().addClass('ui-state-disabled');
+                inline.children().addClass('p-state-disabled');
                 inline.find('button').each(
                     function () {
                         this.disabled = true
@@ -1304,8 +1304,8 @@
                 return false
             }
 
-            $td.parents('.ui-timepicker-hours:first').find('a').removeClass('ui-state-active');
-            $td.children('a').addClass('ui-state-active');
+            $td.parents('.ui-timepicker-hours:first').find('a').removeClass('p-state-active');
+            $td.children('a').addClass('p-state-active');
             inst.hours = newHours;
 
             // added for onMinuteShow callback
@@ -1341,8 +1341,8 @@
                 return false
             }
 
-            $td.parents('.ui-timepicker-minutes:first').find('a').removeClass('ui-state-active');
-            $td.children('a').addClass('ui-state-active');
+            $td.parents('.ui-timepicker-minutes:first').find('a').removeClass('p-state-active');
+            $td.children('a').addClass('p-state-active');
 
             inst.minutes = newMinutes;
             this._updateSelectedValue(inst);

@@ -17,8 +17,8 @@
     <div jsf:id="inputGroup" class="field grid">
         <p:outputLabel for="txtPlace" value="Location:" styleClass="col-12 md:col-1"/>
         <div class="col-12 md:col-6">
-            <div  class="ui-inputgroup">
-                <div class="ui-inputgroup-addon"><i class="fa-solid fa-location-dot"></i></div>
+            <div  class="p-inputgroup">
+                <div class="p-inputgroup-addon"><i class="fa-solid fa-location-dot"></i></div>
                 <pe:inputPlace id="txtPlace" widgetVar="place" value="#{basicInputPlaceController.input}" required="true"
                                placeholder="Enter a location" styleClass="w-full" restrictCountries="us,ca">
                     <p:ajax event="placeChanged" listener="#{basicInputPlaceController.onPlaceChanged}" update="selectedPlace"/>

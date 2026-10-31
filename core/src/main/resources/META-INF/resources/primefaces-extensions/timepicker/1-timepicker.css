@@ -1,36 +1,43 @@
-.pe-timepicker, body .pe-timepicker.ui-spinner {
+.pe-timepicker, body .pe-timepicker.p-spinner {
     display: inline-flex;
 }
 
-body .pe-timepicker .ui-inputfield {
+body .pe-timepicker .p-inputfield {
     text-align: left;
     box-sizing: border-box;
 }
 
-.pe-timepicker-trigger .ui-icon-clock {
-    left: 50%;
+body .p-button-icon-only.pe-timepicker-trigger {
+    flex: 0 0 auto;
 }
 
-body .ui-button-icon-only.pe-timepicker-trigger {
-    flex: 0 0 28px;
-}
-
-.pe-timepicker.ui-spinner.ui-inputgroup .ui-spinner-button {
-    right: 29px;
+/* spinner buttons sit left of the trigger button when both are shown */
+.pe-timepicker.p-spinner.p-inputgroup .p-spinner-button.p-button {
+    right: calc(var(--p-button-icon-only-width) + 1px);
 }
 
 body .ui-timepicker {
     z-index: 999;
 }
 
+/* replaces the removed jQuery UI clearfix helper class of the popup, its title and button pane */
+.ui-timepicker::after,
+.ui-timepicker-title::after,
+.ui-timepicker-buttonpane::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
 body .ui-timepicker-table {
-    background-color: var(--surface-f, #fff);
+    background-color: var(--p-content-background);
     border-collapse: collapse;
-    outline: 1px solid var(--surface-d, #ced4da);
+    border-radius: var(--p-content-border-radius);
+    outline: 1px solid var(--p-content-border-color);
 }
 
 body .ui-timepicker-table > tbody {
-    border: .5rem solid var(--surface-f, #fff);
+    border: .5rem solid var(--p-content-background);
 }
 
 body .ui-timepicker-table td {
@@ -39,7 +46,7 @@ body .ui-timepicker-table td {
 
 body .ui-timepicker .ui-timepicker-table td a {
     display: inline-block;
-    color: var(--text-color, #333);
+    color: var(--p-text-color);
     padding: 0;
     width: 2.5rem;
     height: 2.5rem;
@@ -48,19 +55,20 @@ body .ui-timepicker .ui-timepicker-table td a {
     line-height: 2.5rem;
 }
 
-body .ui-timepicker .ui-timepicker-table td a:hover {
-    background-color: var(--surface-c, #f8f8f8);
+body .ui-timepicker .ui-timepicker-table td a:hover,
+body .ui-timepicker .ui-timepicker-table td a.p-state-hover {
+    background-color: var(--p-content-hover-background);
 }
 
-body .ui-timepicker .ui-timepicker-table td a.ui-state-default.ui-state-active {
-    color: var(--surface-f, #fff);
-    background-color: var(--primary-color, #3373a0);
+body .ui-timepicker .ui-timepicker-table td a.p-state-default.p-state-active {
+    color: var(--p-primary-contrast-color);
+    background-color: var(--p-primary-color);
 }
 
 body .ui-timepicker .ui-timepicker-title {
     padding: 0 1em;
-    color: var(--text-color, #333);
-    background-color: var(--surface-a, #fff);
+    color: var(--p-text-color);
+    background-color: var(--p-content-background);
 }
 
 body .ui-timepicker td.ui-timepicker-hours,
@@ -70,35 +78,9 @@ body .ui-timepicker td.ui-timepicker-minutes {
 }
 
 body .ui-timepicker td.ui-timepicker-minutes {
-    border-left: 1px solid var(--surface-d, #3373a0);
+    border-left: 1px solid var(--p-content-border-color);
 }
 
 .ui-timepicker-table th.periods {
-    color: var(--text-color, #333);
-}
-
-body .ui-timepicker .ui-icon,
-body .pe-timepicker-trigger .ui-icon {
-    font-family: 'primeicons', sans-serif;
-    speak: none;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
-    display: inline-block;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-body .pe-timepicker-trigger .ui-icon-clock:before {
-    content: "\e940";
-}
-
-body .ui-timepicker .ui-icon-triangle-1-n:before {
-    content: "\e933";
-}
-
-body .ui-timepicker .ui-icon-triangle-1-s:before {
-    content: "\e930";
+    color: var(--p-text-color);
 }

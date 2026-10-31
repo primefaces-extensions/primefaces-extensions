@@ -21,8 +21,8 @@
     <div jsf:id="inputGroup" class="field grid ">
         <p:outputLabel for="txtApiKey" value="API Key:" styleClass="col-12 md:col-1"/>
         <div class="col-12 md:col-8 mb-2">
-            <div class="ui-inputgroup">
-                <div class="ui-inputgroup-addon"><i class="fa-solid fa-key"></i></div>
+            <div class="p-inputgroup">
+                <div class="p-inputgroup-addon"><i class="fa-solid fa-key"></i></div>
                 <p:inputText id="txtApiKey" value="#{basicInputPlaceController.azureApiKey}"
                              placeholder="Enter your Azure API Key" styleClass="w-full" required="true"
                              onkeydown="if(event.key=='Enter') return false;">
@@ -36,8 +36,8 @@
                        rendered="#{basicInputPlaceController.azureApiKey != null}"/>
         <div class="col-12 md:col-8" jsf:id="inputPlace"
              jsf:rendered="#{basicInputPlaceController.azureApiKey != null}">
-            <div class="ui-inputgroup">
-                <div class="ui-inputgroup-addon"><i class="fa-solid fa-location-dot"></i></div>
+            <div class="p-inputgroup">
+                <div class="p-inputgroup-addon"><i class="fa-solid fa-location-dot"></i></div>
                 <pe:inputPlace id="txtPlace" widgetVar="place" value="#{basicInputPlaceController.input}"
                                required="true" placeholder="Enter a location" styleClass="w-full" restrictTypes="poi"
                                apiType="azure" apiKey="#{basicInputPlaceController.azureApiKey}">

@@ -1,4 +1,4 @@
-#sharedTooltipTable th .ui-column-filter {
+#sharedTooltipTable th .p-column-filter {
     display: inline;
     margin-left: 5px;
 }
@@ -8,7 +8,7 @@
     margin-bottom: 8px;
 }
 
-#layoutsContainer .ui-menu .ui-menuitem-link {
+#layoutsContainer .p-menu .p-menuitem-link {
     width: auto;
 }
 
@@ -17,7 +17,7 @@
     margin-right: 3px;
 }
 
-#personDetail .ui-datalist {
+#personDetail .p-datalist {
     width: 200px;
 }
 
@@ -66,7 +66,7 @@ table .timePickerColumn {
     white-space: break-spaces;
 }
 
-.monacoEditorMessage.ui-message {
+.monacoEditorMessage.p-message {
 	width: 100%;
 	padding: 1em;
 	margin: 1em;

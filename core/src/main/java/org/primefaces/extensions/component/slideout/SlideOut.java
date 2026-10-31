@@ -49,7 +49,7 @@ import org.primefaces.extensions.util.Constants;
 @ResourceDependency(library = Constants.LIBRARY, name = "slideout/slideout.js")
 public class SlideOut extends SlideOutBaseImpl {
 
-    public static final String HANDLE_CLASS = "ui-slideout-handle ui-slideouttab-handle-rounded";
+    public static final String HANDLE_CLASS = "p-slideout-handle ui-slideouttab-handle-rounded";
 
     @Override
     public void processDecodes(final FacesContext fc) {

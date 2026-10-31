@@ -36,13 +36,14 @@ import org.primefaces.extensions.util.Constants;
 @FacesComponentInfo(description = "Framed Monaco code editor (iframe).")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
+@ResourceDependency(library = "primefaces", name = "components.css")
 @ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "monacoeditor/widget-framed.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "monacoeditor/monacoeditor.css")
 public class MonacoEditorFramed extends MonacoEditorFramedBaseImpl {
 
     public static final String COMPONENT_TYPE = MonacoEditorFramedBase.COMPONENT_TYPE;
-    public static final String STYLE_CLASS = "ui-monaco-editor ui-monaco-editor-code ui-monaco-editor-framed ";
+    public static final String STYLE_CLASS = "p-monaco-editor p-monaco-editor-code p-monaco-editor-framed ";
     public static final String WIDGET_NAME = "ExtMonacoCodeEditorFramed";
 
 }

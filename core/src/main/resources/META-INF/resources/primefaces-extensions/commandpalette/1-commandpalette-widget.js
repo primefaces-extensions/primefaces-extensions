@@ -13,8 +13,8 @@ PrimeFaces.widget.ExtCommandPalette = class extends PrimeFaces.widget.BaseWidget
         this.paletteWidth = parseInt(cfg.width, 10) || 280;
         this.paletteHeight = parseInt(cfg.height, 10) || 400;
 
-        this.filterInput = this.jq.find('.ui-commandpalette-filter-input');
-        this.groupsContainer = this.jq.find('.ui-commandpalette-groups');
+        this.filterInput = this.jq.find('.p-commandpalette-filter-input');
+        this.groupsContainer = this.jq.find('.p-commandpalette-groups');
 
         this.bindTriggers();
         this.bindEvents();
@@ -42,11 +42,11 @@ PrimeFaces.widget.ExtCommandPalette = class extends PrimeFaces.widget.BaseWidget
     bindEvents() {
         var $this = this;
 
-        this.jq.off('.commandpalette-group').on('click.commandpalette-group', '.ui-commandpalette-group-header', function () {
+        this.jq.off('.commandpalette-group').on('click.commandpalette-group', '.p-commandpalette-group-header', function () {
             $this.toggleGroup($(this));
         });
 
-        this.jq.off('.commandpalette-item').on('click.commandpalette-item', '.ui-commandpalette-item', function () {
+        this.jq.off('.commandpalette-item').on('click.commandpalette-item', '.p-commandpalette-item', function () {
             $this.selectItem($(this));
         });
 
@@ -111,33 +111,33 @@ PrimeFaces.widget.ExtCommandPalette = class extends PrimeFaces.widget.BaseWidget
         if (this.filterInput.length) {
             this.filterInput.val('');
         }
-        this.groupsContainer.find('.ui-commandpalette-item').show();
-        this.groupsContainer.find('.ui-commandpalette-group').show();
+        this.groupsContainer.find('.p-commandpalette-item').show();
+        this.groupsContainer.find('.p-commandpalette-group').show();
     }
 
     toggleGroup(header) {
-        var items = header.next('.ui-commandpalette-group-items');
-        var toggle = header.find('.ui-commandpalette-group-toggle');
+        var items = header.next('.p-commandpalette-group-items');
+        var toggle = header.find('.p-commandpalette-group-toggle');
 
         if (items.is(':visible')) {
             items.slideUp();
             toggle.html('\u25B6');
-            header.removeClass('ui-state-active');
+            header.removeClass('p-state-active');
         } else {
             items.slideDown();
             toggle.html('\u25BC');
-            header.addClass('ui-state-active');
+            header.addClass('p-state-active');
         }
     }
 
     collapseAll() {
         var $this = this;
-        this.jq.find('.ui-commandpalette-group-header').each(function () {
-            var items = $(this).next('.ui-commandpalette-group-items');
-            var toggle = $(this).find('.ui-commandpalette-group-toggle');
+        this.jq.find('.p-commandpalette-group-header').each(function () {
+            var items = $(this).next('.p-commandpalette-group-items');
+            var toggle = $(this).find('.p-commandpalette-group-toggle');
             items.hide();
             toggle.html('\u25B6');
-            $(this).removeClass('ui-state-active');
+            $(this).removeClass('p-state-active');
         });
     }
 
@@ -170,11 +170,11 @@ PrimeFaces.widget.ExtCommandPalette = class extends PrimeFaces.widget.BaseWidget
         var expr = value.toLowerCase().trim();
         var showAll = expr === '';
 
-        this.jq.find('.ui-commandpalette-group').each(function () {
+        this.jq.find('.p-commandpalette-group').each(function () {
             var group = $(this);
-            var items = group.find('.ui-commandpalette-item');
-            var header = group.find('.ui-commandpalette-group-header');
-            var itemsContainer = group.find('.ui-commandpalette-group-items');
+            var items = group.find('.p-commandpalette-item');
+            var header = group.find('.p-commandpalette-group-header');
+            var itemsContainer = group.find('.p-commandpalette-group-items');
             var found = false;
 
             items.each(function () {
@@ -191,8 +191,8 @@ PrimeFaces.widget.ExtCommandPalette = class extends PrimeFaces.widget.BaseWidget
                 group.show();
                 if (!showAll && itemsContainer.is(':hidden')) {
                     itemsContainer.show();
-                    header.find('.ui-commandpalette-group-toggle').html('\u25BC');
-                    header.addClass('ui-state-active');
+                    header.find('.p-commandpalette-group-toggle').html('\u25BC');
+                    header.addClass('p-state-active');
                 }
             } else {
                 group.hide();

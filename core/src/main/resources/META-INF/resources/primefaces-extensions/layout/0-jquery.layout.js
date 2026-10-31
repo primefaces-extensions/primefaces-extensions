@@ -3258,7 +3258,7 @@
                         if (o.resizable && $.layout.plugins.draggable)
                             $R
                                 .draggable("disable")
-                                .removeClass("ui-state-disabled") // do NOT apply disabled styling - not suitable here
+                                .removeClass("p-state-disabled") // do NOT apply disabled styling - not suitable here
                                 .css("cursor", "default")
                                 .attr("title", "")
                             ;

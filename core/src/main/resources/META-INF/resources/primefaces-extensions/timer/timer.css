@@ -1,3 +1,4 @@
-.ui-timer{
-    padding:4px 10px;
+.p-timer {
+    padding: 4px 10px;
+    border-radius: var(--p-content-border-radius);
 }

@@ -41,7 +41,7 @@ public abstract class TimerBase extends UIComponentBase implements Widget, AjaxS
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Timer";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
     public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.TimerRenderer";
-    public static final String STYLE_CLASS = "ui-timer ui-widget ui-widget-header ui-corner-all";
+    public static final String STYLE_CLASS = "p-timer p-widget p-widget-header";
 
     public TimerBase() {
         setRendererType(DEFAULT_RENDERER);

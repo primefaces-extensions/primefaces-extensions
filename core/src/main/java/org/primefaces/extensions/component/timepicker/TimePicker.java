@@ -55,15 +55,15 @@ import org.primefaces.util.LocaleUtils;
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "timepicker/timepicker.js")
 public class TimePicker extends TimePickerBaseImpl {
 
-    public static final String CONTAINER_CLASS = "pe-timepicker ui-widget ui-corner-all";
-    public static final String INPUT_CLASS = "ui-inputfield ui-state-default ui-corner-all";
-    public static final String UP_BUTTON_CLASS = "ui-spinner-button ui-spinner-up ui-corner-tr ui-button ui-widget ui-state-default";
-    public static final String DOWN_BUTTON_CLASS = "ui-spinner-button ui-spinner-down ui-corner-br ui-button ui-widget ui-state-default";
-    public static final String UP_ICON_CLASS = "ui-icon ui-icon-triangle-1-n";
-    public static final String DOWN_ICON_CLASS = "ui-icon ui-icon-triangle-1-s";
-    public static final String BUTTON_TRIGGER_CLASS = "pe-timepicker-trigger ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only";
-    public static final String BUTTON_TRIGGER_ICON_CLASS = "ui-button-icon-left ui-icon ui-icon-clock";
-    public static final String BUTTON_TRIGGER_TEXT_CLASS = "ui-button-text";
+    public static final String CONTAINER_CLASS = "pe-timepicker p-widget";
+    public static final String INPUT_CLASS = "p-inputfield p-state-default";
+    public static final String UP_BUTTON_CLASS = "p-spinner-button p-spinner-up p-button p-widget p-state-default p-button-text-only";
+    public static final String DOWN_BUTTON_CLASS = "p-spinner-button p-spinner-down p-button p-widget p-state-default p-button-text-only";
+    public static final String UP_ICON_CLASS = "p-icon p-up-icon p-spinner-increment-icon p-c";
+    public static final String DOWN_ICON_CLASS = "p-icon p-down-icon p-spinner-decrement-icon p-c";
+    public static final String BUTTON_TRIGGER_CLASS = "pe-timepicker-trigger p-button p-widget p-state-default p-button-icon-only";
+    public static final String BUTTON_TRIGGER_ICON_CLASS = "p-button-icon-left pi pi-clock";
+    public static final String BUTTON_TRIGGER_TEXT_CLASS = "p-button-text";
 
     public static final String TIME_MESSAGE_KEY = "jakarta.faces.converter.DateTimeConverter.TIME";
 

@@ -50,6 +50,7 @@ import org.primefaces.util.LangUtils;
 @FacesComponent(value = MasterDetail.COMPONENT_TYPE, namespace = MasterDetail.COMPONENT_FAMILY)
 @FacesComponentInfo(description = "Master-detail navigation with levels and optional breadcrumb.")
 @FacesComponentHandler(MasterDetailTagHandler.class)
+@ResourceDependency(library = "primefaces", name = "components.css")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "primefaces-extensions.css")
 public class MasterDetail extends MasterDetailBaseImpl {
 

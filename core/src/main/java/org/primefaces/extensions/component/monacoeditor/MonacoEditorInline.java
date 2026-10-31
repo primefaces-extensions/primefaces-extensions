@@ -36,13 +36,14 @@ import org.primefaces.extensions.util.Constants;
 @FacesComponentInfo(name = "monacoEditor", description = "Inline Monaco code editor (no iframe).")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
+@ResourceDependency(library = "primefaces", name = "components.css")
 @ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "monacoeditor/widget-inline.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "monacoeditor/monacoeditor.css")
 public class MonacoEditorInline extends MonacoEditorInlineBaseImpl {
 
     public static final String COMPONENT_TYPE = MonacoEditorInlineBase.COMPONENT_TYPE;
-    public static final String STYLE_CLASS = "ui-monaco-editor ui-monaco-editor-code ui-monaco-editor-inline ";
+    public static final String STYLE_CLASS = "p-monaco-editor p-monaco-editor-code p-monaco-editor-inline ";
     public static final String WIDGET_NAME = "ExtMonacoCodeEditorInline";
 
 }

@@ -129,11 +129,11 @@
 
 <h:panelGrid columns="4">
   <!-- Apply the selected extender -->
-  <p:commandLink id="applyExtender" partialSubmit="true" styleClass="ui-button ui-button-text-icon-right"
+  <p:commandLink id="applyExtender" partialSubmit="true" styleClass="p-button p-button-text-icon-right"
     actionListener="#{monacoEditorController.onMonacoExtenderRun}"
     process="@this,extenderTabs:monacoExtender,extenderTabs:monacoCss,monacoEditorWrapper" update="customExtenderInline,monacoEditorWrapper">
-    <span class="ui-button-icon-right ui-icon ui-c pi pi-play" style="color:white"></span>
-    <span class="ui-button-text ui-c" style="color:white">Run</span>
+    <span class="p-button-icon-right p-c pi pi-play" style="color:white"></span>
+    <span class="p-button-text p-c" style="color:white">Run</span>
   </p:commandLink>
 
   <!-- Select extender example -->

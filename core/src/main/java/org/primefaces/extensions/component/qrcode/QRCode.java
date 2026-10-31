@@ -40,5 +40,5 @@ import org.primefaces.extensions.util.Constants;
 @ResourceDependency(library = Constants.LIBRARY, name = "qrcode/qrcode.js")
 public class QRCode extends QRCodeBaseImpl {
 
-    public static final String STYLE_CLASS = "ui-qrcode";
+    public static final String STYLE_CLASS = "p-qrcode";
 }

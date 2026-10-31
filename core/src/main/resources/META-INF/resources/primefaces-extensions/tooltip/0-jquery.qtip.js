@@ -55,7 +55,7 @@ PLUGINS = {},
 NAMESPACE = 'qtip',
 ATTR_HAS = 'data-hasqtip',
 ATTR_ID = 'data-qtip-id',
-WIDGET = ['ui-widget', 'ui-tooltip'],
+WIDGET = ['p-widget', 'ui-tooltip'],
 SELECTOR = '.'+NAMESPACE,
 INACTIVE_EVENTS = 'click dblclick mousedown mouseup mousemove mouseleave mouseenter'.split(' '),
 
@@ -682,10 +682,10 @@ PROTOTYPE._createTitle = function()
 
 	// Button-specific events
 	.on('mousedown keydown mouseup keyup mouseout', '.qtip-close', function(event) {
-		$(this).toggleClass('ui-state-active ui-state-focus', event.type.substr(-4) === 'down');
+		$(this).toggleClass('p-state-active p-state-focus', event.type.substr(-4) === 'down');
 	})
 	.on('mouseover mouseout', '.qtip-close', function(event){
-		$(this).toggleClass('ui-state-hover', event.type === 'mouseover');
+		$(this).toggleClass('p-state-hover', event.type === 'mouseover');
 	});
 
 	// Create button if enabled
@@ -1243,8 +1243,7 @@ PROTOTYPE.enable = function() { return this.disable(FALSE); };
 		})
 		.prepend(
 			$('<span></span>', {
-				'class': 'ui-icon ui-icon-close',
-				'html': '&times;'
+				'class': 'p-icon p-close-icon p-tooltip-close-icon'
 			})
 		);
 	}
@@ -1281,10 +1280,10 @@ PROTOTYPE._setWidget = function()
 		disabled = tooltip.hasClass(CLASS_DISABLED);
 
 	tooltip.removeClass(CLASS_DISABLED);
-	CLASS_DISABLED = on ? 'ui-state-disabled' : 'qtip-disabled';
+	CLASS_DISABLED = on ? 'p-state-disabled' : 'qtip-disabled';
 	tooltip.toggleClass(CLASS_DISABLED, disabled);
 
-	tooltip.toggleClass('ui-helper-reset '+createWidgetClass(), on).toggleClass(CLASS_DEFAULT, this.options.style.def && !on);
+	tooltip.toggleClass(createWidgetClass(), on).toggleClass(CLASS_DEFAULT, this.options.style.def && !on);
 
 	if(elements.content) {
 		elements.content.toggleClass( createWidgetClass('content'), on);

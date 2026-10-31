@@ -33,13 +33,14 @@ import org.primefaces.cdk.api.FacesComponentInfo;
 import org.primefaces.event.SelectEvent;
 
 /**
- * <code>LightSwitch</code> component. Automatically switches to defined dark mode theme based on OS settings.
+ * <code>LightSwitch</code> component. Switches the CSS <code>color-scheme</code> of the page between light and dark (the PrimeFaces 17 design token themes
+ * support both modes), automatically based on OS settings or by the JavaScript API.
  *
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
  * @since 10.0
  */
 @FacesComponent(value = LightSwitch.COMPONENT_TYPE, namespace = LightSwitch.COMPONENT_FAMILY)
-@FacesComponentInfo(description = "LightSwitch automatically switches to defined dark mode theme based on OS settings.")
+@FacesComponentInfo(description = "LightSwitch switches the color scheme of the page between light and dark, automatically based on OS settings.")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "primefaces-extensions.js")
@@ -47,6 +48,7 @@ import org.primefaces.event.SelectEvent;
 public class LightSwitch extends LightSwitchBaseImpl {
 
     public static final String EVENT_SWITCH = "switch";
+    public static final String PARAM_SCHEME = "_scheme";
 
     @Override
     public void queueEvent(final FacesEvent event) {
@@ -57,10 +59,10 @@ public class LightSwitch extends LightSwitchBaseImpl {
             final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
 
             if (isAjaxBehaviorEvent(event, ClientBehaviorEventKeys._switch)) {
-                final String theme = params.get(getClientId(context) + "_theme");
-                final SelectEvent<String> selectEvent = new SelectEvent<>(this, behaviorEvent.getBehavior(), theme);
+                final String scheme = params.get(getClientId(context) + PARAM_SCHEME);
+                final SelectEvent<String> selectEvent = new SelectEvent<>(this, behaviorEvent.getBehavior(), scheme);
                 selectEvent.setPhaseId(behaviorEvent.getPhaseId());
-                setSelectedByValueExpression(context, theme);
+                setSelectedByValueExpression(context, scheme);
                 super.queueEvent(selectEvent);
                 return;
             }

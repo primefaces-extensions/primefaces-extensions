@@ -50,7 +50,7 @@ import org.primefaces.util.LocaleUtils;
 @ResourceDependency(library = Constants.LIBRARY, name = "counter/counter.js")
 public class Counter extends CounterBaseImpl {
 
-    public static final String STYLE_CLASS = "ui-counter";
+    public static final String STYLE_CLASS = "p-counter";
 
     private Locale appropriateLocale;
 

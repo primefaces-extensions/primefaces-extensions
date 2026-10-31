@@ -10,20 +10,20 @@
     <f:facet name="header">
         <p:messages showDetail="true"/>
         <h:panelGroup layout="block" style="margin-top: 10px;">
-            <h:panelGroup styleClass="levelTitle ui-state-default ui-corner-all
-                                  #{wizardMasterDetailController.currentLevel eq 1 ? 'ui-state-hover' : ''}">
+            <h:panelGroup styleClass="levelTitle p-state-default
+                                  #{wizardMasterDetailController.currentLevel eq 1 ? 'p-state-hover' : ''}">
                 <h:outputText value="Personal"/>
             </h:panelGroup>
-            <h:panelGroup styleClass="levelTitle ui-state-default ui-corner-all
-                                  #{wizardMasterDetailController.currentLevel eq 2 ? 'ui-state-hover' : ''}">
+            <h:panelGroup styleClass="levelTitle p-state-default
+                                  #{wizardMasterDetailController.currentLevel eq 2 ? 'p-state-hover' : ''}">
                 <h:outputText value="Address"/>
             </h:panelGroup>
-            <h:panelGroup styleClass="levelTitle ui-state-default ui-corner-all
-                                  #{wizardMasterDetailController.currentLevel eq 3 ? 'ui-state-hover' : ''}">
+            <h:panelGroup styleClass="levelTitle p-state-default
+                                  #{wizardMasterDetailController.currentLevel eq 3 ? 'p-state-hover' : ''}">
                 <h:outputText value="Contact"/>
             </h:panelGroup>
-            <h:panelGroup styleClass="levelTitle ui-state-default ui-corner-all
-                                  #{wizardMasterDetailController.currentLevel eq 4 ? 'ui-state-hover' : ''}">
+            <h:panelGroup styleClass="levelTitle p-state-default
+                                  #{wizardMasterDetailController.currentLevel eq 4 ? 'p-state-hover' : ''}">
                 <h:outputText value="Confirmation"/>
             </h:panelGroup>
         </h:panelGroup>
@@ -43,11 +43,11 @@
             </h:panelGrid>
         </p:panel>
         <p:commandButton value="Next" process="masterDetail"
-                         style="margin-top: 10px;" icon="ui-icon-arrowthick-1-e">
+                         style="margin-top: 10px;" icon="pi pi-arrow-right">
             <pe:selectDetailLevel step="1"/>
         </p:commandButton>
         <p:commandButton value="Go to Save" process="masterDetail"
-                         style="margin-top: 10px;" icon="ui-icon-arrowthickstop-1-e">
+                         style="margin-top: 10px;" icon="pi pi-step-forward">
             <pe:selectDetailLevel level="4"/>
         </p:commandButton>
     </pe:masterDetailLevel>
@@ -63,12 +63,12 @@
                 <p:inputText value="#{wizardMasterDetailController.user.city}"/>
             </h:panelGrid>
         </p:panel>
-        <p:commandButton value="Back" style="margin-top: 10px;" icon="ui-icon-arrowthick-1-w"
+        <p:commandButton value="Back" style="margin-top: 10px;" icon="pi pi-arrow-left"
                          process="@this" immediate="true">
             <pe:selectDetailLevel step="-1"/>
         </p:commandButton>
         <p:commandButton value="Next" process="masterDetail"
-                         style="margin-top: 10px;" icon="ui-icon-arrowthick-1-e">
+                         style="margin-top: 10px;" icon="pi pi-arrow-right">
             <pe:selectDetailLevel step="1"/>
         </p:commandButton>
     </pe:masterDetailLevel>
@@ -85,12 +85,12 @@
                 <p:inputText value="#{wizardMasterDetailController.user.info}"/>
             </h:panelGrid>
         </p:panel>
-        <p:commandButton value="Back" style="margin-top: 10px;" icon="ui-icon-arrowthick-1-w"
+        <p:commandButton value="Back" style="margin-top: 10px;" icon="pi pi-arrow-left"
                          process="@this" immediate="true">
             <pe:selectDetailLevel step="-1"/>
         </p:commandButton>
         <p:commandButton value="Next" process="masterDetail"
-                         style="margin-top: 10px;" icon="ui-icon-arrowthick-1-e">
+                         style="margin-top: 10px;" icon="pi pi-arrow-right">
             <pe:selectDetailLevel step="1"/>
         </p:commandButton>
     </pe:masterDetailLevel>
@@ -118,7 +118,7 @@
                 <h:outputText value="#{wizardMasterDetailController.user.info}"/>
             </h:panelGrid>
         </p:panel>
-        <p:commandButton value="Back" style="margin-top: 10px;" icon="ui-icon-arrowthick-1-w"
+        <p:commandButton value="Back" style="margin-top: 10px;" icon="pi pi-arrow-left"
                          process="@this" immediate="true">
             <pe:selectDetailLevel step="-1"/>
         </p:commandButton>

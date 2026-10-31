@@ -12,7 +12,7 @@ body .kanban-board header .kanban-title-button {
   border: 1px solid rgba(255,255,255,.5);
   border-radius: 4px;
   outline: 0 none;
-  font-family: var(--font-family, inherit);
+  font-family: var(--p-typography-font-family);
   font-size: .875rem;
   line-height: normal;
   transition: background-color .2s, color .2s, border-color .2s, box-shadow .2s, opacity .2s;
@@ -37,37 +37,37 @@ body .kanban-board header .kanban-title-button:active {
 }
 
 body .kanban-board {
-  background: var(--surface-d, #e2e4e6);
-  color: var(--text-color);
+  background: var(--p-content-border-color);
+  color: var(--p-text-color);
 }
 
 body .kanban-board header {
-  color: var(--text-color);
+  color: var(--p-text-color);
 }
 
 body .kanban-item {
-  background: var(--surface-card, #fff);
-  color: var(--text-color);
+  background: var(--p-content-background);
+  color: var(--p-text-color);
 }
 
 body .drag_handler {
-  background: var(--surface-card, #fff);
+  background: var(--p-content-background);
 }
 
 body .drag_handler_icon,
 body .drag_handler_icon:before,
 body .drag_handler_icon:after {
-  background: var(--text-color-secondary, #000);
+  background: var(--p-text-muted-color);
 }
 
-body .ui-kanban-touch .kanban-item {
+body .p-kanban-touch .kanban-item {
   touch-action: none;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   user-select: none;
 }
 
-body .ui-kanban-touch .drag_handler {
+body .p-kanban-touch .drag_handler {
   min-width: 44px;
   min-height: 44px;
   touch-action: manipulation;

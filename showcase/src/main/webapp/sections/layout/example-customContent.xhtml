@@ -14,8 +14,8 @@
         </pe:layoutPane>
         <pe:layoutPane position="center">
             
-            <div style="padding:10px; margin-bottom:6px; border:1px solid red;"
-                 class="ui-widget-content ui-corner-all">
+            <div style="padding:10px; margin-bottom:6px; border:1px solid red; border-radius: var(--p-content-border-radius);"
+                 class="p-widget-content">
                  This is a custom content between layout panes.
                  <br/><br/>
                  Any elements can be placed here.
@@ -91,7 +91,7 @@
     body > form > .ui-layout-north {
         background: none;
         border: none;
-        color: #000000;
+        color: var(--p-text-color);
         padding: 4px;
         overflow: hidden;
     }
@@ -99,21 +99,21 @@
     body > form > .ui-layout-south {
         background: none;
         border: none;
-        color: #000000;
+        color: var(--p-text-color);
         overflow: hidden;
         vertical-align: middle;
     }
     
-    .ui-datatable thead th,
-    .ui-datatable tbody td,
-    .ui-datatable tfoot td {
+    .p-datatable thead th,
+    .p-datatable tbody td,
+    .p-datatable tfoot td {
         white-space: nowrap;
     }
     
-    .ui-messages-info,
-    .ui-messages-warn,
-    .ui-messages-error,
-    .ui-messages-fatal {
+    .p-messages-info,
+    .p-messages-warn,
+    .p-messages-error,
+    .p-messages-fatal {
         margin: 0;
     }
     

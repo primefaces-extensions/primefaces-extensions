@@ -1,4 +1,4 @@
-.ui-orgchart  {
+.p-orgchart {
   position: relative;
   overflow: auto;
   text-align: center;
@@ -23,7 +23,7 @@
 }
 
 .pfe-orgchart-filter-controls {
-  border: 1px solid #ddd;
+  border: 1px solid var(--p-content-border-color);
   margin: 0.75rem 0;
   padding: 0.75rem;
   text-align: center;

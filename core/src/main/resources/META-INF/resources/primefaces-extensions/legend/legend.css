@@ -1,18 +1,18 @@
-.ui-legend-horizontal .ui-legend-title {
+.p-legend-horizontal .p-legend-title {
    text-align: left;
    margin-bottom: 8px;
    font-weight: bold;
    font-size: 90%;
 }
 
-.ui-legend-horizontal .ui-legend-scale ul {
+.p-legend-horizontal .p-legend-scale ul {
    margin: 0;
    padding: 0;
    float: left;
    list-style: none;
 }
 
-.ui-legend-horizontal .ui-legend-scale ul li {
+.p-legend-horizontal .p-legend-scale ul li {
    display: block;
    float: left;
    width: 50px;
@@ -22,31 +22,31 @@
    list-style: none;
 }
 
-.ui-legend-horizontal ul.ui-legend-labels li span {
+.p-legend-horizontal ul.p-legend-labels li span {
    display: block;
    float: left;
    height: 15px;
    width: 50px;
 }
 
-.ui-legend-horizontal .ui-legend-footer {
+.p-legend-horizontal .p-legend-footer {
    font-size: 70%;
-   color: #999;
+   color: var(--p-text-muted-color);
    clear: both;
 }
 
-.ui-legend-horizontal a {
-   color: #777;
+.p-legend-horizontal a {
+   color: var(--p-text-muted-color);
 }
 
-.ui-legend-vertical .ui-legend-title {
+.p-legend-vertical .p-legend-title {
    text-align: left;
    margin-bottom: 5px;
    font-weight: bold;
    font-size: 90%;
 }
 
-.ui-legend-vertical .ui-legend-scale ul {
+.p-legend-vertical .p-legend-scale ul {
    margin: 0;
    margin-bottom: 5px;
    padding: 0;
@@ -54,7 +54,7 @@
    list-style: none;
 }
 
-.ui-legend-vertical .ui-legend-scale ul li {
+.p-legend-vertical .p-legend-scale ul li {
    font-size: 80%;
    list-style: none;
    margin-left: 0;
@@ -62,22 +62,22 @@
    margin-bottom: 2px;
 }
 
-.ui-legend-vertical  ul.ui-legend-labels li span {
+.p-legend-vertical  ul.p-legend-labels li span {
    display: block;
    float: left;
    height: 16px;
    width: 30px;
    margin-right: 5px;
    margin-left: 0;
-   border: 1px solid #999;
+   border: 1px solid var(--p-content-border-color);
 }
 
-.ui-legend-vertical .ui-legend-footer {
+.p-legend-vertical .p-legend-footer {
    font-size: 70%;
-   color: #999;
+   color: var(--p-text-muted-color);
    clear: both;
 }
 
-.ui-legend-vertical a {
-   color: #777;
+.p-legend-vertical a {
+   color: var(--p-text-muted-color);
 }

@@ -25,7 +25,7 @@ PrimeFaces.widget.ExtSunEditor = class extends PrimeFaces.widget.DeferredWidget 
 
         if (this.disabled) {
             this.input.attr("disabled", "disabled");
-            this.jq.addClass("ui-state-disabled");
+            this.jq.addClass("p-state-disabled");
             this.cfg.readOnly = true;
         }
 
@@ -91,7 +91,7 @@ PrimeFaces.widget.ExtSunEditor = class extends PrimeFaces.widget.DeferredWidget 
         bind("onload", function () {
             $this.callBehavior('initialize');
             // Reposition the containing dialog after editor is fully initialized
-            const dlgEl = $this.input[0].closest('.ui-dialog, .ui-sidebar');
+            const dlgEl = $this.input[0].closest('.p-dialog, .p-sidebar');
             if (dlgEl) {
                 $this.repositionDialog(dlgEl);
             }
@@ -189,7 +189,7 @@ PrimeFaces.widget.ExtSunEditor = class extends PrimeFaces.widget.DeferredWidget 
      * @private
      */
     setupDialogSupport() {
-        const dlg = this.input[0].closest('.ui-dialog, .ui-sidebar');
+        const dlg = this.input[0].closest('.p-dialog, .p-sidebar');
         if (dlg) {
             const dialog = $(dlg);
             dialog.find('.sun-editor .se-toolbar').zIndex(9999);

@@ -5,7 +5,8 @@
       xmlns:ui="jakarta.faces.facelets"
       xmlns:p="primefaces"
       xmlns:pe="primefaces.extensions"
-      lang="en">
+      lang="en"
+      style="color-scheme: #{empty userSettings.colorScheme ? 'light dark' : userSettings.colorScheme}">
 <f:view contentType="text/html" locale="en">
     <ui:insert name="metadata"/>
     <h:head>
@@ -36,9 +37,7 @@
         </pe:layout>
 
         <h:form id="switchForm">
-            <pe:lightSwitch id="lightSwitch" widgetVar="lightSwitch" selected="#{userSettings.currentThemeName}">
-                <p:ajax event="switch" update="themeSelectMenu" ignoreComponentNotFound="true"/>
-            </pe:lightSwitch>
+            <pe:lightSwitch id="lightSwitch" widgetVar="lightSwitch" selected="#{userSettings.colorScheme}"/>
         </h:form>
 
         <p:ajaxExceptionHandler type="jakarta.faces.application.ViewExpiredException"

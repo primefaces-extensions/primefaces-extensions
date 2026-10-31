@@ -2,9 +2,8 @@
     position: absolute;
     overflow: hidden;
     padding: 0;
-    -moz-box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.8);
-    -webkit-box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.8);
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.8);
+    border-radius: var(--p-content-border-radius);
+    box-shadow: var(--p-overlay-modal-shadow);
 }
 
 .pe-blockui .pe-blockui-content {
@@ -24,7 +23,6 @@
     position: relative;
 }
 
-.ui-draggable .pe-blockui-titlebar,
 .p-draggable .pe-blockui-titlebar {
     cursor: move;
 }

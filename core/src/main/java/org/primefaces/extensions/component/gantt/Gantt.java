@@ -57,7 +57,7 @@ import org.primefaces.extensions.util.Constants;
 @ResourceDependency(library = Constants.LIBRARY, name = "primefaces-extensions.css")
 public class Gantt extends GanttBaseImpl {
 
-    public static final String STYLE_CLASS = "ui-gantt ";
+    public static final String STYLE_CLASS = "p-gantt ";
 
     @Override
     public void processDecodes(final FacesContext fc) {

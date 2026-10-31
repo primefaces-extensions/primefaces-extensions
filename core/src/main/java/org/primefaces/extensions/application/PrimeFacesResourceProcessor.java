@@ -22,7 +22,6 @@
 package org.primefaces.extensions.application;
 
 import java.io.Serial;
-import java.util.Map;
 
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.event.PhaseEvent;
@@ -33,7 +32,7 @@ import org.primefaces.config.PrimeConfiguration;
 import org.primefaces.context.PrimeApplicationContext;
 import org.primefaces.context.PrimeRequestContext;
 import org.primefaces.extensions.util.ResourceExtUtils;
-import org.primefaces.util.MapBuilder;
+import org.primefaces.util.LangUtils;
 
 /**
  * Creates a custom PhaseListener for RENDER_RESPONSE phase which will during beforePhase() dynamically add those PrimeFaces resources via
@@ -57,11 +56,6 @@ public class PrimeFacesResourceProcessor implements PhaseListener {
     @Serial
     private static final long serialVersionUID = 1L;
     private static final String LIBRARY = org.primefaces.util.Constants.LIBRARY;
-    private static final Map<String, String> THEME_MAPPING = MapBuilder.<String, String> builder()
-                .put("saga", "saga-blue")
-                .put("arya", "arya-blue")
-                .put("vela", "vela-blue")
-                .build();
 
     @Override
     public PhaseId getPhaseId() {
@@ -80,16 +74,16 @@ public class PrimeFacesResourceProcessor implements PhaseListener {
 
         if (themeParamValue != null) {
             theme = context.getApplication().evaluateExpressionGet(context, themeParamValue, String.class);
+            if (LangUtils.isNotBlank(theme)) {
+                theme = theme.trim();
+            }
         }
         else {
-            theme = "saga-blue"; // default
+            theme = "aura"; // default (PrimeFaces 17 design token theme)
         }
 
-        if (theme != null && !"none".equals(theme)) {
-            if (THEME_MAPPING.containsKey(theme)) {
-                theme = THEME_MAPPING.get(theme);
-            }
-
+        // the tokens of the theme (aura, lara, nora, metal, glass or a custom primefaces-<name>/theme.css), see PrimeFaces HeadRenderer
+        if (LangUtils.isNotBlank(theme) && !"none".equals(theme)) {
             ResourceExtUtils.addCssResource(context, LIBRARY + "-" + theme, "theme.css");
         }
 

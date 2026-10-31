@@ -11,13 +11,13 @@ PrimeFaces.widget.ImageZoom = class extends PrimeFaces.widget.BaseWidget {
 
         // default background to theme background if not user defined
         if (!this.cfg.background) {
-            this.cfg.background = 'var(--surface-a)';
+            this.cfg.background = 'var(--p-content-background)';
         }
 
         var selector = PrimeFaces.escapeClientId(this.cfg.target);
         var targetWidget = PrimeFaces.getWidgetById(this.cfg.target);
         if (targetWidget && targetWidget instanceof PrimeFaces.widget.Galleria) {
-            selector = selector + " li[class='ui-galleria-item'] > img";
+            selector = selector + " li[class='p-galleria-item'] > img";
         }
 
         this.zoom = mediumZoom(selector, this.cfg);

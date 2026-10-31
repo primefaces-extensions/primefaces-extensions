@@ -53,7 +53,7 @@ var widgetsMenu = $.widget( "ui.menu", {
 				tabIndex: 0
 			} );
 
-		this._addClass( "ui-menu", "ui-widget ui-widget-content" );
+		this._addClass( "ui-menu", "p-widget p-widget-content" );
 		this._on( {
 
 			// Prevent focus from sticking to links inside menu after clicking
@@ -66,7 +66,7 @@ var widgetsMenu = $.widget( "ui.menu", {
 			"click .ui-menu-item": function( event ) {
 				var target = $( event.target );
 				var active = $( this.document[ 0 ].activeElement );
-				if ( !this.mouseHandled && target.not( ".ui-state-disabled" ).length ) {
+				if ( !this.mouseHandled && target.not( ".p-state-disabled" ).length ) {
 					this.select( event );
 
 					// Only set the mouseHandled flag if the event will bubble, see #9469.
@@ -163,14 +163,14 @@ var widgetsMenu = $.widget( "ui.menu", {
 		}
 
 		// If the item is already active, there's nothing to do
-		if ( target.is( ".ui-state-active" ) ) {
+		if ( target.is( ".p-state-active" ) ) {
 			return;
 		}
 
-		// Remove ui-state-active class from siblings of the newly focused menu item
+		// Remove p-state-active class from siblings of the newly focused menu item
 		// to avoid a jump caused by adjacent elements both having a class with a border
-		this._removeClass( target.siblings().children( ".ui-state-active" ),
-			null, "ui-state-active" );
+		this._removeClass( target.siblings().children( ".p-state-active" ),
+			null, "p-state-active" );
 		this.focus( event, target );
 	},
 
@@ -225,7 +225,7 @@ var widgetsMenu = $.widget( "ui.menu", {
 			this.collapse( event );
 			break;
 		case $.ui.keyCode.RIGHT:
-			if ( this.active && !this.active.is( ".ui-state-disabled" ) ) {
+			if ( this.active && !this.active.is( ".p-state-disabled" ) ) {
 				this.expand( event );
 			}
 			break;
@@ -282,7 +282,7 @@ var widgetsMenu = $.widget( "ui.menu", {
 	},
 
 	_activate: function( event ) {
-		if ( this.active && !this.active.is( ".ui-state-disabled" ) ) {
+		if ( this.active && !this.active.is( ".p-state-disabled" ) ) {
 			if ( this.active.children( "[aria-haspopup='true']" ).length ) {
 				this.expand( event );
 			} else {
@@ -319,7 +319,7 @@ var widgetsMenu = $.widget( "ui.menu", {
 				menu.attr( "aria-labelledby", item.attr( "id" ) );
 			} );
 
-		this._addClass( newSubmenus, "ui-menu", "ui-widget ui-widget-content ui-front" );
+		this._addClass( newSubmenus, "ui-menu", "p-widget p-widget-content ui-front" );
 
 		menus = submenus.add( this.element );
 		items = menus.find( this.options.items );
@@ -328,7 +328,7 @@ var widgetsMenu = $.widget( "ui.menu", {
 		items.not( ".ui-menu-item" ).each( function() {
 			var item = $( this );
 			if ( that._isDivider( item ) ) {
-				that._addClass( item, "ui-menu-divider", "ui-widget-content" );
+				that._addClass( item, "ui-menu-divider", "p-widget-content" );
 			}
 		} );
 
@@ -345,7 +345,7 @@ var widgetsMenu = $.widget( "ui.menu", {
 			._addClass( newWrappers, "ui-menu-item-wrapper" );
 
 		// Add aria-disabled attribute to any disabled menu item
-		items.filter( ".ui-state-disabled" ).attr( "aria-disabled", "true" );
+		items.filter( ".p-state-disabled" ).attr( "aria-disabled", "true" );
 
 		// If the active item has been removed, blur the menu
 		if ( this.active && !$.contains( this.element[ 0 ], this.active[ 0 ] ) ) {
@@ -373,7 +373,7 @@ var widgetsMenu = $.widget( "ui.menu", {
 		this._super( value );
 
 		this.element.attr( "aria-disabled", String( value ) );
-		this._toggleClass( null, "ui-state-disabled", !!value );
+		this._toggleClass( null, "p-state-disabled", !!value );
 	},
 
 	focus: function( event, item ) {
@@ -385,7 +385,7 @@ var widgetsMenu = $.widget( "ui.menu", {
 		this.active = item.first();
 
 		focused = this.active.children( ".ui-menu-item-wrapper" );
-		this._addClass( focused, null, "ui-state-active" );
+		this._addClass( focused, null, "p-state-active" );
 
 		// Only update aria-activedescendant if there's a role
 		// otherwise we assume focus is managed elsewhere
@@ -398,7 +398,7 @@ var widgetsMenu = $.widget( "ui.menu", {
 			.parent()
 				.closest( ".ui-menu-item" )
 					.children( ".ui-menu-item-wrapper" );
-		this._addClass( activeParent, null, "ui-state-active" );
+		this._addClass( activeParent, null, "p-state-active" );
 
 		if ( event && event.type === "keydown" ) {
 			this._close();
@@ -445,7 +445,7 @@ var widgetsMenu = $.widget( "ui.menu", {
 		}
 
 		this._removeClass( this.active.children( ".ui-menu-item-wrapper" ),
-			null, "ui-state-active" );
+			null, "p-state-active" );
 
 		this._trigger( "blur", event, { item: this.active } );
 		this.active = null;
@@ -502,7 +502,7 @@ var widgetsMenu = $.widget( "ui.menu", {
 			this.blur( event );
 
 			// Work around active item staying active after menu is blurred
-			this._removeClass( currentMenu.find( ".ui-state-active" ), null, "ui-state-active" );
+			this._removeClass( currentMenu.find( ".p-state-active" ), null, "p-state-active" );
 
 			this.activeMenu = currentMenu;
 		}, all ? 0 : this.delay );
@@ -962,7 +962,7 @@ $.widget( "ui.autocomplete", {
 		} )
 			.appendTo( this.document[ 0 ].body );
 
-		this._addClass( this.liveRegion, null, "ui-helper-hidden-accessible" );
+		this._addClass( this.liveRegion, null, "p-hidden-accessible" );
 
 		// Turning off autocomplete prevents the browser from remembering the
 		// value when navigating through history, so we re-enable autocomplete

@@ -27,7 +27,7 @@
     </pe:kanban>
 
     <p:dialog id="dialog" header="Task Details" widgetVar="itemDialog" modal="true" responsive="true" width="400">
-        <h:panelGroup id="dialogContent" layout="block" styleClass="ui-fluid">
+        <h:panelGroup id="dialogContent" layout="block" styleClass="p-fluid">
             <h:panelGroup rendered="#{not empty kanbanController.selectedItem}">
                 <div class="field mb-3">
                     <p:outputLabel for="title" value="Title" styleClass="font-bold block mb-1" />
@@ -38,8 +38,8 @@
                     <p:inputTextarea id="desc" value="#{kanbanController.selectedItem.description}" rows="3" />
                 </div>
                 <div class="flex justify-content-end gap-2 mt-4">
-                    <p:commandButton value="Save" action="#{kanbanController.saveItem}" update="kanban growl" oncomplete="PF('itemDialog').hide()" styleClass="ui-button-primary mr-2" />
-                    <p:commandButton value="Cancel" onclick="PF('itemDialog').hide()" type="button" styleClass="ui-button-secondary" />
+                    <p:commandButton value="Save" action="#{kanbanController.saveItem}" update="kanban growl" oncomplete="PF('itemDialog').hide()" styleClass="p-button-primary mr-2" />
+                    <p:commandButton value="Cancel" onclick="PF('itemDialog').hide()" type="button" styleClass="p-button-secondary" />
                 </div>
             </h:panelGroup>
         </h:panelGroup>

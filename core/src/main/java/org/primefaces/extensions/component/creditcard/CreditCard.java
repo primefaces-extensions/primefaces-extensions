@@ -42,5 +42,5 @@ import org.primefaces.extensions.util.Constants;
 @ResourceDependency(library = Constants.LIBRARY, name = "creditcard/creditcard.js")
 public class CreditCard extends CreditCardBaseImpl {
 
-    public static final String STYLE_CLASS = "ui-credit-card ";
+    public static final String STYLE_CLASS = "p-credit-card ";
 }

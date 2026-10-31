@@ -20,7 +20,7 @@ PrimeFaces.widget.ExtLayout = class extends PrimeFaces.widget.DeferredWidget {
         this.jqId = PrimeFaces.escapeClientId(this.id);
 
         if (this.cfg.full) {                                                 //full
-            var dialog = $(this.cfg.centerSelector).parents('.ui-dialog-content');
+            var dialog = $(this.cfg.centerSelector).parents('.p-dialog-content');
             if (dialog.length == 1) {                                         // full + dialog
                 this.jq = dialog;
             } else {

@@ -1,15 +1,15 @@
 /*
  * PrimeFaces Extensions Gantt custom styling.
  */
-.ui-gantt {
+.p-gantt {
     overflow: auto;
     width: 100%;
     max-width: 100%;
-    border: 1px solid #dee2e6;
-    border-radius: 4px;
-    background: #fff;
+    border: 1px solid var(--p-content-border-color);
+    border-radius: var(--p-content-border-radius);
+    background: var(--p-content-background);
 }
 
-.ui-gantt .gantt-container {
-    border-radius: 4px;
+.p-gantt .gantt-container {
+    border-radius: var(--p-content-border-radius);
 }

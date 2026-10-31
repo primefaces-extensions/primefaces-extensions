@@ -601,7 +601,7 @@ window.monacoModule = window.monacoModule || {};
       super.init(cfg);
 
       // Textarea with the value for the original editor
-      this._originalInput = this.jq.find(".ui-helper-hidden-accessible textarea").eq(1);
+      this._originalInput = this.jq.find(".p-hidden-accessible textarea").eq(1);
 
       // Default to the given value for the original editor
       this._originalEditorValue = String(this._originalInput.val() || "");

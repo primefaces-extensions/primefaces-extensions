@@ -49,7 +49,7 @@ import org.primefaces.extensions.util.Constants;
 @ResourceDependency(library = Constants.LIBRARY, name = "codescanner/codescanner.js")
 public class CodeScanner extends CodeScannerBaseImpl {
 
-    public static final String STYLE_CLASS = "ui-codescanner ui-widget";
+    public static final String STYLE_CLASS = "p-codescanner p-widget";
     public static final String EVENT_CODE_SCANNED = "codeScanned";
 
     public CodeScannerBase.ReaderType getTypeEnum() {

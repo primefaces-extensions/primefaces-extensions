@@ -139,13 +139,9 @@ public class SlideOutRenderer extends CoreRenderer<SlideOut> {
             return;
         }
 
-        // fontawesome icons are OK but themeroller we need to add styles
-        String icon = component.getIcon().trim();
-        if (icon.startsWith("ui")) {
-            icon = "ui-icon " + icon + " ui-slideouttab-icon";
-        }
+        // icon classes of an icon library, e.g. "pi pi-desktop" or "fa fa-television"
+        final String icon = component.getIcon().trim();
 
-        // <i class="ui-icon fa fa-television"></i>
         final ResponseWriter writer = context.getResponseWriter();
         writer.startElement("span", null);
         writer.writeAttribute(Attrs.CLASS, icon, null);

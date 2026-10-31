@@ -52,7 +52,7 @@ import com.google.gson.reflect.TypeToken;
 @ResourceDependency(library = Constants.LIBRARY, name = "mark/mark.js")
 public class MarkText extends MarkTextBaseImpl {
 
-    public static final String STYLE_CLASS = "ui-marktext";
+    public static final String STYLE_CLASS = "p-marktext";
 
     @Override
     public void queueEvent(final FacesEvent event) {

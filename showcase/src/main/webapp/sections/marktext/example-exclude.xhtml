@@ -26,7 +26,7 @@
     </style>
 
     <!-- EXAMPLE-SOURCE-START -->
-    <h:panelGrid columns="2" columnClasses="label,value" styleClass="ui-fluid">
+    <h:panelGrid columns="2" columnClasses="label,value" styleClass="p-fluid">
         <h:outputText value="Search term:"/>
         <p:inputText id="searchInput" value="#{markTextExcludeController.searchTerm}" placeholder="Enter search term">
             <p:ajax event="keyup" delay="300" update="markText activeExcludes" process="@this"/>

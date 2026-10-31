@@ -8,25 +8,38 @@
             <h:outputText value="LightSwitch"/>
         </f:facet>
         <h:panelGroup layout="block" styleClass="centerContent">
-            <p>Automatically sets a light or dark theme based on the OS settings. Put it in your template like:</p>
+            <p>The PrimeFaces 17 themes support light and dark mode, selected by the CSS <code>color-scheme</code> of the page.
+                LightSwitch sets the <code>color-scheme</code> to <code>light</code> or <code>dark</code>, automatically based on
+                the OS settings or with its JavaScript API, and remembers the selection on the server. Put it in your template like:</p>
             <pre>
-&lt;pe:lightSwitch selected="\#{userBean.theme}"/&gt;
+&lt;html style="color-scheme: \#{empty userBean.colorScheme ? 'light dark' : userBean.colorScheme}"&gt;
+...
+&lt;pe:lightSwitch selected="\#{userBean.colorScheme}"/&gt;
             </pre>
-            <p><code>userBean</code> should be a session scoped bean with a <code>String</code> type theme property
-            (with both getter and setter). Then set the theme in your <code>web.xml</code> like:</p>
+            <p><code>userBean</code> should be a session scoped bean with a <code>String</code> type <code>colorScheme</code> property
+            (with both getter and setter). Its value is <code>light</code> or <code>dark</code>. Rendering it on the <code>html</code>
+            element avoids a flash of the other mode on page load.</p>
+
+            <h3>A different theme per mode</h3>
+            <p>Optionally, the <code>light</code> and <code>dark</code> attributes name a theme to switch to as well, e.g.
+                <code>&lt;pe:lightSwitch selected="\#{userBean.colorScheme}" light="aura" dark="metal"/&gt;</code>.
+                Then also bind the theme in your <code>web.xml</code>:</p>
             <pre>
 &lt;context-param&gt;
     &lt;param-name&gt;primefaces.THEME&lt;/param-name&gt;
     &lt;param-value&gt;\#{userBean.theme}&lt;/param-value&gt;
 &lt;/context-param&gt;
             </pre>
-            <p>This showcase <a href="https://github.com/primefaces-extensions/primefaces-extensions/blob/fbbdfd3ee809886646f191b00977d881ee94ee52/showcase/src/main/webapp/templates/masterLayout.xhtml#L37-L41">uses the LightSwitch component</a>.</p>
-            <p>See also the <a href="https://primefaces.github.io/primefaces/10_0_0/#/core/themes">PrimeFaces themes documentation</a>.</p>
+            <p><strong>Migration from PrimeFaces Extensions 16:</strong> <code>selected</code> holds the color scheme
+                (<code>light</code> / <code>dark</code>) instead of a theme name, the <code>light</code> / <code>dark</code>
+                attributes have no default anymore (formerly <code>saga-blue</code> / <code>arya-blue</code>), and the
+                <code>switch</code> event carries the color scheme.</p>
+            <p>This showcase <a href="https://github.com/primefaces-extensions/primefaces-extensions/blob/master/showcase/src/main/webapp/templates/masterLayout.xhtml">uses the LightSwitch component</a>.</p>
+            <p>See also the <a href="https://primefaces.github.io/primefaces/17_0_0/#/core/theming">PrimeFaces theming documentation</a>.</p>
 
             <h3><a href="https://showcase.omnifaces.org/resourcehandlers/CombinedResourceHandler">OmniFaces <code>CombinedResourceHandler</code></a></h3>
-            <p>With combined resources, we cannot find the theme link in the DOM tree. Therefor we need to add a node for the new theme.<br/>
-                <strong>Important:</strong> this node will be added as the last element in the body. If you added a custom style sheet with overrides,
-                make sure to use more specific rules. Equal rules will be overruled by the switched theme.</p>
+            <p>When a theme is switched with combined resources, we cannot find the theme link in the DOM tree. Therefore we need to add a node for the new theme.<br/>
+                <strong>Important:</strong> this node will be added as the last element in the body.</p>
         </h:panelGroup>
     </ui:define>
     <ui:define name="useCases">

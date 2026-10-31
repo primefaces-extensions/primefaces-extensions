@@ -53,9 +53,9 @@ public class LightSwitchRenderer extends CoreRenderer<LightSwitch> {
             return;
         }
 
-        String theme = params.get(component.getClientId(context) + "_theme");
-        if (theme != null) {
-            component.setSelectedByValueExpression(context, theme);
+        String scheme = params.get(component.getClientId(context) + LightSwitch.PARAM_SCHEME);
+        if (scheme != null) {
+            component.setSelectedByValueExpression(context, scheme);
             return;
         }
 
