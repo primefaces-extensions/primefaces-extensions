@@ -161,4 +161,7 @@ tooltip/mouseTracking
 tooltip/sharedTooltips
 utils/switch
 waypoint/dialControls
+waypoint/infiniteScrollingOne
+waypoint/infiniteScrollingTwo
 waypoint/scrollAnalytics
+waypoint/stickyElements

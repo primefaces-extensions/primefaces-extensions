@@ -64,7 +64,8 @@ class ExampleCoverageTest {
             return Files.exists(ShowcaseFiles.webappRoot().resolve("views/fileDownload.xhtml"));
         }
         return Files.exists(sections.resolve("example-" + useCase + ".xhtml"))
-                    || (("fluidgrid".equals(dir) || "keynote".equals(dir)) && Files.exists(sections.resolve(useCase + ".xhtml")));
+                    || Files.exists(sections.resolve("examples/example-" + useCase + ".xhtml"))
+                    || ("fluidgrid".equals(dir) && Files.exists(sections.resolve(useCase + ".xhtml")));
     }
 
     private static List<String> markersIn(final Path page) {
