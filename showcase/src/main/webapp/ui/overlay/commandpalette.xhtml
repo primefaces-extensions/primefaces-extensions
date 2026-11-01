@@ -1,0 +1,122 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        CommandPalette
+    </ui:define>
+
+    <ui:define name="description">
+        CommandPalette is a filterable grouped context menu: a searchable popup with categorized options, triggered by right-click on a target element.
+        Based on <a href="https://github.com/newk5/stak-components" target="_blank" rel="noopener noreferrer">stak-grouplist</a> by newk5.
+    </ui:define>
+
+    <ui:param name="tagName" value="commandPalette"/>
+    <ui:param name="tagName2" value="commandPaletteItem"/>
+    <ui:param name="widgetLink" value="commandpalette"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <style>
+            .palette-target {
+                border: 2px solid var(--p-content-border-color);
+                border-radius: 3px;
+                padding: 40px;
+                text-align: center;
+                cursor: context-menu;
+                background: light-dark(var(--p-surface-50), var(--p-surface-950));
+                font-size: 14px;
+                color: var(--p-text-color);
+                user-select: none;
+            }
+        </style>
+
+        <div class="card">
+            <!-- EXAMPLE: commandPalette/basicUsage -->
+            <h5>Basic usage</h5>
+            <p>Basic usage with right-click trigger and grouped items.</p>
+            <h:form id="formBasicUsage">
+                <h:panelGroup id="commandPaletteTarget" layout="block" styleClass="palette-target">
+                    Right-click here to open the CommandPalette
+                </h:panelGroup>
+                <pe:commandPalette id="palette" for="commandPaletteTarget"
+                                   label="Actions" filterPlaceholder="Search actions..." width="260" height="350">
+                    <pe:commandPaletteItem group="File" value="new" label="New File"/>
+                    <pe:commandPaletteItem group="File" value="open" label="Open File"/>
+                    <pe:commandPaletteItem group="File" value="save" label="Save"/>
+                    <pe:commandPaletteItem group="File" value="saveAs" label="Save As..."/>
+                    <pe:commandPaletteItem group="Edit" value="undo" label="Undo"/>
+                    <pe:commandPaletteItem group="Edit" value="redo" label="Redo"/>
+                    <pe:commandPaletteItem group="Edit" value="cut" label="Cut"/>
+                    <pe:commandPaletteItem group="Edit" value="copy" label="Copy"/>
+                    <pe:commandPaletteItem group="Edit" value="paste" label="Paste"/>
+                    <pe:commandPaletteItem group="View" value="zoomIn" label="Zoom In"/>
+                    <pe:commandPaletteItem group="View" value="zoomOut" label="Zoom Out"/>
+                    <pe:commandPaletteItem group="View" value="fullscreen" label="Fullscreen"/>
+                </pe:commandPalette>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: commandPalette/selectionEvent -->
+            <h5>Selection Event</h5>
+            <p>Using the <i>select</i> AJAX event to handle item selection on the server side.</p>
+            <h:form id="formSelectionEvent">
+                <p:messages id="messages" showSummary="true" showDetail="true"/>
+                <h:panelGroup id="paletteTarget" layout="block" styleClass="palette-target">
+                    Right-click here to select a Node action
+                </h:panelGroup>
+                <pe:commandPalette id="palette2" for="paletteTarget"
+                                   label="Nodes" filterPlaceholder="Search nodes..." width="260">
+                    <pe:commandPaletteItem group="Node1" value="1" label="Create Node1 Action1"
+                                           itemTitle="Creates a new Node1 action"/>
+                    <pe:commandPaletteItem group="Node1" value="2" label="Create Node1 Action2"
+                                           itemTitle="Creates another Node1 action"/>
+                    <pe:commandPaletteItem group="Node2" value="3" label="Create Node2 Action1"
+                                           itemTitle="Creates a new Node2 action"/>
+                    <pe:commandPaletteItem group="Node2" value="4" label="Create Node2 Action2"
+                                           itemTitle="Creates another Node2 action"/>
+                    <p:ajax event="select" listener="#{commandPaletteController.onItemSelect}"
+                            update="messages"/>
+                </pe:commandPalette>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: commandPalette/hotkey -->
+            <h5>Hotkey Trigger</h5>
+            <p>Trigger the CommandPalette via a keyboard shortcut using <code>p:hotkey</code> (<kbd>Ctrl+Shift+K</kbd>). The palette also remains available via right-click on the target element.</p>
+            <h:form id="formHotkey">
+                <p:messages id="messages" showSummary="true" showDetail="true"/>
+                <h:panelGroup id="hotkeyTarget" layout="block" styleClass="palette-target">
+                    Right-click or press <kbd>Ctrl+Shift+K</kbd> to open the CommandPalette
+                </h:panelGroup>
+                <p:hotkey bind="ctrl+shift+k" handler="PF('hotkeyPaletteWidget').showCentered();"/>
+                <pe:commandPalette id="hotkeyPalette" for="hotkeyTarget"
+                                   label="Actions" filterPlaceholder="Search actions..." width="260" height="350"
+                                   widgetVar="hotkeyPaletteWidget">
+                    <pe:commandPaletteItem group="File" value="new" label="New File"/>
+                    <pe:commandPaletteItem group="File" value="open" label="Open File"/>
+                    <pe:commandPaletteItem group="File" value="save" label="Save"/>
+                    <pe:commandPaletteItem group="File" value="saveAs" label="Save As..."/>
+                    <pe:commandPaletteItem group="Edit" value="undo" label="Undo"/>
+                    <pe:commandPaletteItem group="Edit" value="redo" label="Redo"/>
+                    <pe:commandPaletteItem group="Edit" value="cut" label="Cut"/>
+                    <pe:commandPaletteItem group="Edit" value="copy" label="Copy"/>
+                    <pe:commandPaletteItem group="Edit" value="paste" label="Paste"/>
+                    <pe:commandPaletteItem group="View" value="zoomIn" label="Zoom In"/>
+                    <pe:commandPaletteItem group="View" value="zoomOut" label="Zoom Out"/>
+                    <pe:commandPaletteItem group="View" value="fullscreen" label="Fullscreen"/>
+                    <p:ajax event="select" listener="#{commandPaletteController.onItemSelect}"
+                            update="messages"/>
+                </pe:commandPalette>
+            </h:form>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+</ui:composition>

@@ -135,6 +135,15 @@ public class AppMenu {
         add(PANEL, new MenuItem("SlideOut", "/ui/panel/slideout"));
         add(PANEL, new MenuItem("Waypoint", "/ui/panel/waypoint"));
 
+        add(OVERLAY, new MenuItem("BlockUI", "/ui/overlay/blockui"));
+        add(OVERLAY, new MenuItem("CommandPalette", "/ui/overlay/commandpalette", "New"));
+        add(OVERLAY, new MenuItem("CookiePolicy", "/ui/overlay/cookiepolicy"));
+        add(OVERLAY, new MenuItem("Session", "/ui/overlay/session"));
+        add(OVERLAY, new MenuItem("Tooltip", List.of(
+                    new MenuItem("Customized", "/ui/overlay/tooltip/customized"),
+                    new MenuItem("Auto Shown", "/ui/overlay/tooltip/autoshow"),
+                    new MenuItem("Global", "/ui/overlay/tooltip/global"))));
+
         add(MISC, new MenuItem("MarkText", List.of(
                     new MenuItem("Basic", "/ui/misc/marktext/basic"),
                     new MenuItem("Matching", "/ui/misc/marktext/matching"),

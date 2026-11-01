@@ -1,0 +1,190 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        BlockUI
+    </ui:define>
+
+    <ui:define name="description">
+        BlockUI blocks any piece(s) of a page, or the entire page, during Ajax calls. A "source" component blocks one or more "target" components with an overlay and custom content.
+    </ui:define>
+
+    <ui:define name="static-documentation">
+        <h2>Usage modes</h2>
+        <div class="card">
+            <p>There are two ways to use BlockUI. The first uses the widget's JavaScript API (<code>block()</code> / <code>unblock()</code>) in <code>onstart</code> / <code>oncomplete</code> callbacks.
+                The second, so-called <code>autoShow</code> mode, hooks into jQuery global Ajax callbacks so no explicit calls are needed.
+                Components and <code>p:ajax</code> with <code>global="false"</code> do not trigger BlockUI in autoShow mode.</p>
+            <p>Some HTML elements such as <code>table</code> or <code>span</code> cannot be blocked; wrap them in a <code>div</code> (<code>h:panelGroup layout="block"</code>).
+                Multiple blockings of the same element by different Ajax calls are tracked: the element is unblocked only after all calls have finished.</p>
+        </div>
+    </ui:define>
+
+    <ui:param name="tagName" value="blockUI"/>
+    <ui:param name="widgetLink" value="blockui"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <style>
+            #formBlockUIAjax\:blockUIContent td {
+                border: none !important;
+                padding: 0 !important;
+            }
+        </style>
+
+        <div class="card">
+            <!-- EXAMPLE: blockui/blockUIAjax -->
+            <h5>Basic usage with p:ajax</h5>
+            <p>Uses the widget's <code>block()</code> / <code>unblock()</code> as <code>onstart</code> / <code>oncomplete</code> callbacks. Add a message, or page and sort the table.</p>
+            <h:form id="formBlockUIAjax">
+                <p:messages id="messages"/>
+                <div class="grid">
+                    <div class="col-12 md:col-4">
+                        <h:panelGroup id="messageDetailGroup" layout="block">
+                            <h:panelGrid id="messageDetail" columns="1">
+                                <h:outputText value="Subject *"/>
+                                <h:inputText value="#{dataTableController.newSubject}" required="true" label="Subject"/>
+                                <h:outputText value="Text *"/>
+                                <h:inputText value="#{dataTableController.newText}" required="true" label="Text"/>
+                            </h:panelGrid>
+                            <p:commandButton id="addMsgButton" value="Add message" action="#{dataTableController.addMessage}"
+                                             process="messageDetailGroup" update="messageDetail dataTable messages"
+                                             style="margin-top: 20px;" icon="pi pi-plus"
+                                             onstart="PF('blockUIWidget1').block()" oncomplete="PF('blockUIWidget1').unblock()"/>
+                        </h:panelGroup>
+                    </div>
+                    <div class="col-12 md:col-8">
+                        <p:dataTable id="dataTable" var="message" value="#{dataTableController.messages}" paginator="true"
+                                     paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     rows="5" rowsPerPageTemplate="5,10,15" paginatorPosition="bottom">
+                            <p:ajax event="page" listener="#{dataTableController.doSomething}" update="messages"
+                                    onstart="PF('blockUIWidget2').block()" oncomplete="PF('blockUIWidget2').unblock()"/>
+                            <p:ajax event="sort" listener="#{dataTableController.doSomething}" update="messages"
+                                    onstart="PF('blockUIWidget2').block()" oncomplete="PF('blockUIWidget2').unblock()"/>
+                            <p:column sortBy="#{message.subject}" headerText="Subject">
+                                <h:outputText value="#{message.subject}"/>
+                            </p:column>
+                            <p:column sortBy="#{message.text}" headerText="Text">
+                                <h:outputText value="#{message.text}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                </div>
+                <pe:blockUI target="messageDetailGroup" widgetVar="blockUIWidget1">
+                    <h:panelGrid columns="2">
+                        <h:graphicImage library="images" name="ajax-loader1.gif"
+                                        style="margin-right: 12px; vertical-align: middle;"/>
+                        <h:outputText value="Adding message..." style="white-space: nowrap;"/>
+                    </h:panelGrid>
+                </pe:blockUI>
+                <pe:blockUI target="dataTable" content="blockUIContent" widgetVar="blockUIWidget2"/>
+                <h:panelGrid id="blockUIContent" columns="2" style="display:none;table-layout:auto;">
+                    <h:graphicImage library="images" name="ajax-loader1.gif"
+                                    style="margin-right: 12px; vertical-align: middle;"/>
+                    <h:outputText value="Please wait, data is being processed..." style="white-space: nowrap;"/>
+                </h:panelGrid>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: blockui/blockUIAutoShow -->
+            <h5>AutoShow mode and more</h5>
+            <p>With <code>autoShow="true"</code> the <code>source</code> component's Ajax events (see <code>event</code>) block the <code>target</code> component(s) automatically.
+                Only events defined by <code>p:ajax</code> are supported. Expand, select or unselect a tree node, or click a checkbox.</p>
+            <h:form id="formBlockUIAutoShow">
+                <h:panelGroup id="viewArea" layout="block">
+                    <div class="grid">
+                        <div class="col-12 md:col-6">
+                            <h:panelGroup layout="block" styleClass="blockable">
+                                <p:tree id="fileSystem" value="#{fileSystemController.root}" var="node" dynamic="true"
+                                        cache="false" selectionMode="single" selection="#{fileSystemController.selectedNode}">
+                                    <p:ajax event="expand" update="accessRightsGroup"
+                                            listener="#{fileSystemController.onNodeExpand}"/>
+                                    <p:ajax event="select" update="accessRightsGroup"
+                                            listener="#{fileSystemController.onNodeSelect}"/>
+                                    <p:ajax event="unselect" update="accessRightsGroup"
+                                            listener="#{fileSystemController.onNodeUnselect}"/>
+                                    <p:treeNode>
+                                        <h:outputText value="#{node}"/>
+                                    </p:treeNode>
+                                </p:tree>
+                            </h:panelGroup>
+                        </div>
+                        <div class="col-12 md:col-6">
+                            <h:panelGroup layout="block" id="accessRightsGroup" styleClass="blockable">
+                                <h:outputText value="Access rights for #{fileSystemController.selectedNode.data}"
+                                              rendered="#{not empty fileSystemController.selectedNode}"/>
+                                <h:outputText value="No tree node is selected" rendered="#{empty fileSystemController.selectedNode}"/>
+                                <h:selectManyCheckbox id="accessRights" value="#{accessRightsController.selectedAccessRights}"
+                                                      styleClass="checkBoxes" layout="pageDirection" style="margin-top: 10px;">
+                                    <f:selectItems value="#{accessRightsController.accessRights}"/>
+                                    <p:ajax process="@this"/>
+                                </h:selectManyCheckbox>
+                                <pe:blockUI source="accessRights" target="@(.blockable)" autoShow="true">
+                                    <h:panelGrid columns="2">
+                                        <h:graphicImage library="images" name="ajax-loader1.gif"
+                                                        style="margin-right: 12px; vertical-align: middle;"/>
+                                        <h:outputText value="Checkbox clicked..." style="white-space: nowrap;"/>
+                                    </h:panelGrid>
+                                </pe:blockUI>
+                            </h:panelGroup>
+                        </div>
+                    </div>
+                </h:panelGroup>
+                <pe:blockUI source="fileSystem" target="viewArea" event="expand,select,unselect" autoShow="true">
+                    <h:panelGrid columns="2">
+                        <h:graphicImage library="images" name="ajax-loader1.gif"
+                                        style="margin-right: 12px; vertical-align: middle;"/>
+                        <h:outputText value="Tree event is running..." style="white-space: nowrap;"/>
+                    </h:panelGrid>
+                </pe:blockUI>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: blockui/blockPage -->
+            <h5>Page Blocking</h5>
+            <p>The entire page is blocked when the <code>target</code> attribute is omitted. The button blocks the whole page for the duration of the Ajax call.</p>
+            <h:form id="formBlockPage">
+                <p:commandButton value="Block this page!" action="#{blockUIController.doSomething}" update="@none"
+                                 onstart="PF('blockUIWidgetPage').block()" oncomplete="PF('blockUIWidgetPage').unblock()"/>
+                <pe:blockUI widgetVar="blockUIWidgetPage" cssOverlay="{opacity:0.5}">
+                    <h:panelGrid columns="2">
+                        <h:graphicImage library="images" name="ajax-loader1.gif"
+                                        style="margin-right: 12px; vertical-align: middle;"/>
+                        <h:outputText value="Please wait..." style="white-space: nowrap;"/>
+                    </h:panelGrid>
+                </pe:blockUI>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: blockui/blockCustom -->
+            <h5>Non-centered message, auto-unblock and more</h5>
+            <p>A non-centered message defined by <code>css</code> and <code>centerX</code> / <code>centerY</code>, a styled overlay via <code>cssOverlay</code>,
+                and auto-unblocking after <code>timeout</code> milliseconds. The whole page is blocked for two seconds.</p>
+            <h:form id="formBlockCustom">
+                <p:commandButton value="Block this page!" type="button"
+                                 onclick="PF('blockUIWidgetCustom').block()"/>
+                <pe:blockUI widgetVar="blockUIWidgetCustom"
+                            css="{top: '10px', left: '', right: '10px', cursor: 'wait'}"
+                            cssOverlay="{backgroundColor: 'red'}"
+                            timeout="2000"
+                            centerY="false">
+                    <h:panelGrid columns="2">
+                        <h:graphicImage library="images" name="ajax-loader1.gif"
+                                        style="margin-right: 12px; vertical-align: middle;"/>
+                        <h:outputText value="This is a non-centered message. Please wait..." style="white-space: nowrap;"/>
+                    </h:panelGrid>
+                </pe:blockUI>
+            </h:form>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+</ui:composition>

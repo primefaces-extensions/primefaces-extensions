@@ -1,0 +1,75 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        Tooltip <span class="subitem">Auto Shown</span>
+    </ui:define>
+
+    <ui:define name="description">
+        The autoShow feature shows tooltips automatically after the page has loaded, and the widget API can hide, show, reposition or destroy them.
+        Based on <a href="http://qtip2.com/" target="_blank" rel="noopener noreferrer">qTip2</a> - Pretty powerful tooltips.
+    </ui:define>
+
+    <ui:param name="tagName" value="tooltip"/>
+    <ui:param name="widgetLink" value="tooltip"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <div class="card">
+            <!-- EXAMPLE: tooltip/autoShownTooltips -->
+            <h5>Auto shown tooltips and widget API</h5>
+            <p>All tooltips below are shown directly after page load. Their position is adjusted when the window is resized, or with the widget's <code>reposition()</code> method (scroll the page and press "Reposition").</p>
+            <h:form id="formAutoShownTooltips">
+                <h:panelGrid id="details" columns="2" cellpadding="4">
+                    <f:facet name="header">
+                        <h:panelGroup layout="block" style="text-align:left;margin-bottom:10px;">
+                            <p:commandButton value="Hide" type="button"
+                                             onclick="PF('tip1').hide();PF('tip2').hide();PF('tip3').hide();PF('tip4').hide()"/>
+                            <p:commandButton value="Show" type="button"
+                                             onclick="PF('tip1').show();PF('tip2').show();PF('tip3').show();PF('tip4').show()"/>
+                            <p:commandButton value="Reposition" type="button"
+                                             onclick="PF('tip1').reposition();PF('tip2').reposition();PF('tip3').reposition();PF('tip4').reposition()"/>
+                            <p:commandButton value="Destroy" type="button"
+                                             onclick="PF('tip1').destroy();PF('tip2').destroy();PF('tip3').destroy();PF('tip4').destroy()">
+                                <pe:tooltip value="Once destroyed, tooltip's markup doesn't exist anymore"
+                                            autoShow="true" widgetVar="tip4"
+                                            myPosition="left center" atPosition="right center"/>
+                            </p:commandButton>
+                        </h:panelGroup>
+                    </f:facet>
+                    <h:outputLabel value="Tooltip on InputText: "/>
+                    <h:panelGroup layout="block" style="padding: 0 0 3px 0;">
+                        <p:inputText id="txt" title="Type something into this field"/>
+                        <pe:tooltip for="txt" autoShow="true" widgetVar="tip1"
+                                    myPosition="left center" atPosition="right center"/>
+                    </h:panelGroup>
+                    <h:outputText value="Tooltip on OutputLink: "/>
+                    <h:panelGroup layout="block" style="padding: 3px 0 3px 0;">
+                        <h:outputLink id="olink" value="#">
+                            <h:outputText value="Link to something"/>
+                        </h:outputLink>
+                        <pe:tooltip for="olink" value="Follow this link please"
+                                    autoShow="true" widgetVar="tip2"
+                                    myPosition="left center" atPosition="right center"/>
+                    </h:panelGroup>
+                    <h:outputText value="Tooltip with content: "/>
+                    <h:panelGroup layout="block" style="padding: 3px 0 3px 0;">
+                        <h:outputLink id="olink2" value="#">
+                            <h:outputText value="PrimeFaces Extensions"/>
+                        </h:outputLink>
+                        <pe:tooltip for="olink2" autoShow="true" widgetVar="tip3">
+                            <p:graphicImage value="/resources/images/logo.png"/>
+                        </pe:tooltip>
+                    </h:panelGroup>
+                </h:panelGrid>
+            </h:form>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,53 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        Tooltip <span class="subitem">Global</span>
+    </ui:define>
+
+    <ui:define name="description">
+        In global mode a single tooltip uses the <code>title</code> values of all (or selected) components on the page and survives Ajax updates.
+        Based on <a href="http://qtip2.com/" target="_blank" rel="noopener noreferrer">qTip2</a> - Pretty powerful tooltips.
+    </ui:define>
+
+    <ui:param name="tagName" value="tooltip"/>
+    <ui:param name="widgetLink" value="tooltip"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <div class="card">
+            <!-- EXAMPLE: tooltip/globalLimitedTooltips -->
+            <h5>Global limited tooltips</h5>
+            <p>Global tooltips can be limited to specific components with the <code>for</code> attribute. Here tooltips only appear for inputs that failed validation, a nice replacement for regular error messages. Submit the empty form.</p>
+            <h:form id="formGlobalLimitedTooltips">
+                <h:panelGrid id="details" columns="2" cellpadding="4">
+                    <p:outputLabel for="firstName" value="First Name: "/>
+                    <p:inputText id="firstName" required="true" title="#{component.valid ? '' : 'First Name can not be empty'}"/>
+                    <p:outputLabel for="lastName" value="Last Name: "/>
+                    <p:inputText id="lastName" required="true" title="#{component.valid ? '' : 'Last Name can not be empty'}"/>
+                </h:panelGrid>
+                <p:commandButton value="Submit" process="details" update="details tooltip" style="margin-top: 10px;"/>
+                <pe:tooltip id="tooltip" global="true" for="@(.p-state-error)" header="Error" styleClass="qtip qtip-red qtip-rounded qtip-shadow" myPosition="left center" atPosition="right center"/>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: tooltip/globalTooltips -->
+            <h5>Global tooltips</h5>
+            <p>A global tooltip without <code>for</code> applies to every element with a <code>title</code> on the page, including the showcase shell. It is therefore shown on its own standalone page.</p>
+            <p:linkButton value="Show global tooltips" icon="pi pi-external-link" target="_blank"
+                          href="#{request.contextPath}/ui/overlay/tooltip/standalone/global"/>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+    <ui:define name="more-source-tabs">
+        <p:tab title="/ui/overlay/tooltip/standalone/global.xhtml" flatten="true"/>
+    </ui:define>
+
+</ui:composition>

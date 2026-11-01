@@ -1,0 +1,120 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        Tooltip <span class="subitem">Customized</span>
+    </ui:define>
+
+    <ui:define name="description">
+        Tooltips are speech bubble tips with positioning using corners, effects, shared and mouse tracking modes. They are highly configurable and support Ajax updates.
+        Based on <a href="http://qtip2.com/" target="_blank" rel="noopener noreferrer">qTip2</a> - Pretty powerful tooltips.
+    </ui:define>
+
+    <ui:param name="tagName" value="tooltip"/>
+    <ui:param name="widgetLink" value="tooltip"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <div class="card">
+            <!-- EXAMPLE: tooltip/customizedTooltips -->
+            <h5>Customized tooltips</h5>
+            <p>Positioning, delay, effects and events can be customized.</p>
+            <h:form id="formCustomizedTooltips">
+                <h:panelGrid id="details" columns="2" cellpadding="4">
+                    <h:outputLabel value="Focus / Blur: "/>
+                    <h:panelGroup layout="block" style="padding: 0 0 3px 0;">
+                        <p:inputText id="focus" title="This tooltip is displayed when input gets the focus"/>
+                        <pe:tooltip for="focus" showEvent="focus" hideEvent="blur" styleClass="qtip-default"/>
+                    </h:panelGroup>
+                    <h:outputText value="Styled "/>
+                    <h:panelGroup layout="block" style="padding: 3px 0 3px 0;">
+                        <h:outputLink id="styled" value="#">
+                            <h:outputText value="Styled with custom header"/>
+                        </h:outputLink>
+                        <pe:tooltip for="styled" value="Override style by using styleClass" header="Style Override" styleClass="qtip qtip-green qtip-rounded qtip-shadow"/>
+                    </h:panelGroup>
+                    <h:outputText value="Fade: "/>
+                    <h:panelGroup layout="block" style="padding: 3px 0 3px 0;">
+                        <h:outputLink id="fade" value="#">
+                            <h:outputText value="Fade Effect"/>
+                        </h:outputLink>
+                        <pe:tooltip for="fade" value="Fade effect is used by default" header="Fade" showEffect="fadeIn" hideEffect="fadeIn"/>
+                    </h:panelGroup>
+                    <h:outputText value="Position: "/>
+                    <h:panelGroup layout="block" style="padding: 3px 0 3px 0;">
+                        <h:outputLink id="pos" value="#">
+                            <h:outputText value="Position (top, right)"/>
+                        </h:outputLink>
+                        <pe:tooltip for="pos" value="This tooltip positioned at top right" myPosition="top, right" header="Position"/>
+                    </h:panelGroup>
+                    <h:outputText value="Slide: "/>
+                    <h:panelGroup layout="block" style="padding: 3px 0 3px 0;">
+                        <h:outputLink id="slide" value="#">
+                            <h:outputText value="Slide Effect with custom position"/>
+                        </h:outputLink>
+                        <pe:tooltip for="slide" value="This tooltip uses slide effect for the animation" showEffect="slideToggle"
+                                    hideEffect="slideToggle" showDelay="0" myPosition="left center" atPosition="right center" header="Slide"/>
+                    </h:panelGroup>
+                    <h:outputText value="Content: "/>
+                    <h:panelGroup layout="block" style="padding: 3px 0 3px 0;">
+                        <h:outputLink id="lnk" value="#">
+                            <h:outputText value="PrimeFaces Extensions"/>
+                        </h:outputLink>
+                        <pe:tooltip for="lnk">
+                            <p:graphicImage value="/resources/images/logo.png"/>
+                        </pe:tooltip>
+                    </h:panelGroup>
+                </h:panelGrid>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: tooltip/mouseTracking -->
+            <h5>Mouse tracking</h5>
+            <p>Mouse tracking positions the tooltip in relation to the mouse.</p>
+            <h:form id="formMouseTracking">
+                <h:panelGroup id="demoMouse" layout="block"
+                              style="height:200px; line-height:200px; max-width:550px; border:dotted 2px #7F0055; vertical-align:middle; text-align:center">
+                    <div style="font-weight:bold;">
+                        Hover over this box to see mouse tracking in action
+                    </div>
+                </h:panelGroup>
+                <pe:tooltip for="demoMouse" value="I position myself at the current mouse position"
+                            mouseTracking="true" myPosition="top left" adjustX="10" adjustY="10"/>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: tooltip/sharedTooltips -->
+            <h5>Shared tooltip</h5>
+            <p>In shared mode a single tooltip is shared between multiple targets, which reduces markup. A typical case is the same tooltip text for each filter field of a datatable.</p>
+            <h:form id="formSharedTooltips">
+                <p:dataTable id="sharedTooltipTable" var="message" value="#{dataTableController.messages}"
+                             paginator="true" rows="5" paginatorPosition="bottom"
+                             filteredValue="#{dataTableController.filteredMessages}">
+                    <f:facet name="header">
+                        Please move mouse over filter input fields
+                    </f:facet>
+                    <p:column filterBy="#{message.subject}" headerText="Subject">
+                        <h:outputText value="#{message.subject}"/>
+                    </p:column>
+                    <p:column filterBy="#{message.text}" headerText="Text">
+                        <h:outputText value="#{message.text}"/>
+                    </p:column>
+                    <p:column filterBy="#{message.time}" headerText="Time">
+                        <h:outputText value="#{message.time}"/>
+                    </p:column>
+                </p:dataTable>
+                <pe:tooltip value="Type any value to filter datatable" for="@(#formSharedTooltips\:sharedTooltipTable th .p-column-filter)"
+                            shared="true" atPosition="top center" myPosition="bottom center" styleClass="qtip-default"/>
+            </h:form>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+</ui:composition>

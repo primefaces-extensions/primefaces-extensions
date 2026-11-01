@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="primefaces"
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      lang="en" data-preset="#{app.theme}">
+<!-- Standalone demo of /ui/overlay/tooltip/global: a global tooltip applies to every title on the page, so it gets its own page (no showcase template). -->
+<h:head>
+    <title>PrimeFaces Extensions - Global Tooltips</title>
+</h:head>
+<h:body>
+    <!-- EXAMPLE-SOURCE-START -->
+        <div style="padding: 2rem; max-width: 600px;">
+            <h:form id="formGlobalTooltips">
+                <h:panelGrid id="details" columns="2" cellpadding="4">
+                    <h:outputLabel value="First Name: "/>
+                    <p:inputText title="Enter First Name"/>
+                    <h:outputLabel value="Last Name: "/>
+                    <p:inputText title="Enter Last Name"/>
+                </h:panelGrid>
+                <p:commandButton value="Submit and see that global tooltips are still here" process="details" update="details"
+                                 title="Click to submit the form per ajax" style="margin-top: 10px;"/>
+                <pe:tooltip global="true" myPosition="left center" atPosition="right center" header="Global"/>
+            </h:form>
+        </div>
+    <!-- EXAMPLE-SOURCE-END -->
+</h:body>
+</html>
