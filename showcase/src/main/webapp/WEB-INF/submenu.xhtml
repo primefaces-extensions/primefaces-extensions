@@ -2,7 +2,8 @@
                 xmlns:h="jakarta.faces.html"
                 xmlns:f="jakarta.faces.core"
                 xmlns:ui="jakarta.faces.facelets"
-                xmlns:p="primefaces">
+                xmlns:p="primefaces"
+                xmlns:mycomposites="jakarta.faces.composite/composite">
 
     <ui:fragment rendered="#{not empty tagName or not empty documentationLink or not empty widgetLink or not empty appSubMenu.subMenuItems}">
     <div class="layout-submenu">
@@ -14,12 +15,7 @@
                     <ui:repeat value="#{[tagName, tagName2, tagName3]}" var="tag">
                         <ui:fragment rendered="#{not empty tag}">
                             <h3>#{tagLibController.getTagName(tag)} Tag Documentation</h3>
-                            <!--
-                                TASK-6: the tagDocumentation composite and tagLibProvider do not exist yet. MyFaces compiles
-                                tags even inside ui:remove, so this is an XML comment (dropped by FACELETS_SKIP_COMMENTS);
-                                Task 6: uncomment and declare xmlns:mycomposites="jakarta.faces.composite/composite" on the root.
-                                <mycomposites:tagDocumentation value="#{tagLibProvider.tags[tag]}" />
-                            -->
+                            <mycomposites:tagDocumentation value="#{tagLibProvider.tags[tag]}" />
                         </ui:fragment>
                     </ui:repeat>
                 </h:form>

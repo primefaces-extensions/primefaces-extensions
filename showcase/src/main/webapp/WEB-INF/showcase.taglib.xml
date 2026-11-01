@@ -8,9 +8,20 @@
 
     <function>
         <function-name>getFileContent</function-name>
-        <function-class>org.primefaces.extensions.showcase.util.ShowcaseUtil</function-class>
+        <function-class>org.primefaces.extensions.showcase.util.LegacyShowcaseUtil</function-class>
         <function-signature>java.lang.String getFileContent(java.lang.String)</function-signature>
     </function>
+
+    <function>
+        <function-name>getFilesContent</function-name>
+        <function-class>org.primefaces.extensions.showcase.util.ShowcaseUtil</function-class>
+        <function-signature>java.util.List getFilesContent(java.lang.String,java.lang.Boolean)</function-signature>
+    </function>
+
+    <tag>
+        <tag-name>tabscode</tag-name>
+        <source>tags/tabscode.xhtml</source>
+    </tag>
 
     <tag>
         <tag-name>convertOrder</tag-name>

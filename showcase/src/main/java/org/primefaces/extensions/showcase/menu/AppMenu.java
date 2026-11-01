@@ -64,6 +64,7 @@ public class AppMenu {
         // Component entries are added by the migration tasks, e.g.:
         // add(INPUT, new MenuItem("<Label>", "<url>"));
 
+        add(RESOURCES, new MenuItem("Tag Library", "/taglib"));
         add(RESOURCES, new MenuItem("GitHub", "https://github.com/primefaces-extensions/primefaces-extensions"));
         add(RESOURCES, new MenuItem("Issues", "https://github.com/primefaces-extensions/primefaces-extensions/issues"));
         add(RESOURCES, new MenuItem("Website", "https://primefaces-extensions.github.io"));

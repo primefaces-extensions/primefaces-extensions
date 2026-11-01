@@ -21,120 +21,240 @@
  */
 package org.primefaces.extensions.showcase.util;
 
-import java.io.*;
-import java.nio.charset.*;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import org.apache.commons.lang3.*;
+import jakarta.el.ELException;
+import jakarta.faces.context.FacesContext;
 
-/**
- * FileContentMarkerUtil
- *
- * @author Pavol Slany / last modified by $Author$
- * @version $Revision$
- * @since 0.5
- */
+import org.primefaces.util.LangUtils;
+
 public class FileContentMarkerUtil {
 
-    private static final String LINE_SEPARATOR_WINDOWS = "\r\n";
+    private static final FileContentSettings JAVA_FILE_SETTINGS = new FileContentSettings()
+                .setType("java")
+                .setStartMarkers(
+                            Marker.of("package "),
+                            Marker.of("EXCLUDE-SOURCE-END").excluded())
+                .setEndMarkers(Marker.of("EXCLUDE-SOURCE-START").excluded());
 
-    private static final FileContentSettings JAVA_SETTINGS = new FileContentSettings()
-                .setStartMarkers("@Named", "@RequestScoped", "@ViewScoped", "@SessionScoped",
-                            "@FacesConverter", " class ", " enum ")
-                .setShowLineWithMarker(true);
+    private static final FileContentSettings XHTML_FILE_SETTINGS = new FileContentSettings()
+                .setType("xml")
+                .setStartMarkers(
+                            Marker.of("EXAMPLE-SOURCE-START").excluded(),
+                            Marker.of("EXCLUDE-SOURCE-END").excluded(),
+                            Marker.of("<ui:define name=\"implementation\">").excluded(),
+                            Marker.of("<ui:define name=\"head\">").excluded())
+                .setEndMarkers(
+                            Marker.of("EXAMPLE-SOURCE-END").excluded(),
+                            Marker.of("EXCLUDE-SOURCE-START").excluded(),
+                            Marker.of("</ui:define>").excluded());
 
-    private static final FileContentSettings XHTML_SETTINGS = new FileContentSettings().setStartMarkers("EXAMPLE_SOURCE_START", "EXAMPLE-SOURCE-START")
-                .setEndMarkers("EXAMPLE_SOURCE_END", "EXAMPLE-SOURCE-END").setShowLineWithMarker(false);
+    private static final Pattern SC_BEAN_PATTERN = Pattern.compile("#\\{([^.]*)\\.?.*?}");
 
-    public static String readFileContent(final String fileName, final InputStream is) {
+    private static final String SC_PREFIX = "org.primefaces.extensions.showcase";
+
+    private FileContentMarkerUtil() {
+
+    }
+
+    public static FileContent readFileContent(String fullPathToFile, InputStream is, boolean readBeans) {
         try {
-            if (Strings.CI.endsWith(fileName, ".java")) {
-                return readFileContent(is, JAVA_SETTINGS);
+            String fileName = fullPathToFile.substring(fullPathToFile.lastIndexOf("/") + 1);
+            if (fullPathToFile.endsWith(".java")) {
+                return readFileContent(fileName, is, JAVA_FILE_SETTINGS, readBeans);
             }
 
-            if (Strings.CI.endsWith(fileName, ".xhtml")) {
-                return readFileContent(is, XHTML_SETTINGS);
+            if (fullPathToFile.endsWith(".xhtml")) {
+                return readFileContent(fileName, is, XHTML_FILE_SETTINGS, readBeans);
             }
 
-            // Show all files
-            return readFileContent(is, new FileContentSettings());
+            throw new UnsupportedOperationException();
         }
-        catch (final Exception e) {
-            throw new IllegalStateException("Internal error: file " + fileName + " could not be read", e);
+        catch (Exception e) {
+            throw new IllegalStateException("Internal error: file " + fullPathToFile + " could not be read", e);
         }
     }
 
-    private static String readFileContent(final InputStream inputStream, final FileContentSettings settings) throws IOException {
-        if (inputStream == null) {
-            return null;
-        }
+    private static FileContent readFileContent(String fileName, InputStream inputStream, FileContentSettings settings, boolean readBeans) throws Exception {
+        StringBuilder content = new StringBuilder();
+        Set<FileContent> javaFiles = new LinkedHashSet<>();
+        FacesContext facesContext = FacesContext.getCurrentInstance();
 
-        final StringBuilder sbBeforeStartMarker = new StringBuilder(5000);
-        final StringBuilder sbBeforeEndMarker = new StringBuilder(5000);
-        String markerLineStart = null;
-        String markerLineEnd = null;
+        try (InputStreamReader ir = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+                    BufferedReader br = new BufferedReader(ir)) {
+            String line;
+            boolean started = false;
 
-        final BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
-        String line;
+            while ((line = br.readLine()) != null) {
+                if (!started) {
+                    Marker marker = getMatchingMarker(line, settings.getStartMarkers());
+                    started = marker != null;
+                    if (!started || marker.isExcluded()) {
+                        continue;
+                    }
+                }
 
-        StringBuilder sb = sbBeforeStartMarker;
-        while ((line = br.readLine()) != null) {
-            // if is before first start marker
-            if (markerLineStart == null && containMarker(line, settings.getStartMarkers())) {
-                markerLineStart = LINE_SEPARATOR_WINDOWS + line;
-                sb = sbBeforeEndMarker;
+                // if is before first end marker
+                if (started && getMatchingMarker(line, settings.getEndMarkers()) != null) {
+                    started = false;
+                    content.append("\n");
+                    continue;
+                }
 
-                continue;
+                content.append("\n");
+                content.append(line);
+
+                if (readBeans && line.contains("#{")) {
+                    Matcher m = SC_BEAN_PATTERN.matcher(line.trim());
+                    while (m.find()) {
+                        String group = m.group(1);
+                        addBean(facesContext, javaFiles, group);
+                    }
+                }
             }
-
-            // if is before first end marker
-            if (containMarker(line, settings.getEndMarkers())) {
-                markerLineEnd = LINE_SEPARATOR_WINDOWS + line;
-
-                break; // other content file is ignored
-            }
-
-            sb.append(LINE_SEPARATOR_WINDOWS);
-            sb.append(line);
         }
 
-        // if both (START and END) markers are in file
-        if (markerLineStart != null && markerLineEnd != null) {
-            if (settings.isShowLineWithMarker()) {
-                sbBeforeEndMarker.append(markerLineEnd);
-                sbBeforeEndMarker.insert(0, markerLineStart);
-            }
-
-            return sbBeforeEndMarker.toString().trim();
+        String value = content.toString().trim();
+        if ("xml".equalsIgnoreCase(settings.getType())) {
+            value = prettyFormat(value);
         }
-
-        // if only START marker is in file
-        if (markerLineStart != null) {
-            if (settings.isShowLineWithMarker()) {
-                sbBeforeEndMarker.insert(0, markerLineStart);
-            }
-
-            return sbBeforeEndMarker.toString().trim();
-        }
-
-        // if only END marker is in file
-        if (settings.isShowLineWithMarker()) {
-            sbBeforeStartMarker.append(markerLineEnd);
-        }
-
-        return sbBeforeStartMarker.toString().trim();
+        return new FileContent(fileName, value, settings.getType(), javaFiles);
     }
 
-    private static boolean containMarker(final String line, final String[] markers) {
-        for (final String marker : markers) {
-            if (StringUtils.isEmpty(marker)) {
-                continue;
+    private static void addBean(FacesContext facesContext, Set<FileContent> javaFiles, String group) throws Exception {
+        Object bean;
+        try {
+            bean = facesContext.getApplication().evaluateExpressionGet(facesContext, "#{" + group + "}", Object.class);
+        }
+        catch (ELException e) {
+            return;
+        }
+        if (bean == null) {
+            return;
+        }
+
+        Class<?> beanClass = LangUtils.getUnproxiedClass(bean.getClass());
+        if (isEligibleFile(beanClass.getName())) {
+            // special handling for member classes (like ColumnsView and ColumnsView$ColumnModel)
+            String className = beanClass.getName();
+            if (beanClass.isMemberClass()) {
+                className = className.substring(0, className.indexOf("$"));
             }
 
-            if (Strings.CS.contains(line, marker)) {
-                return true;
+            String javaFileName = packageToPathAccess(className);
+            if (isFileNotContainedIn(javaFileName, javaFiles)) {
+                javaFiles.add(createFileContent(className));
+            }
+
+            for (Field field : beanClass.getDeclaredFields()) {
+                addDeclaredField(javaFiles, field);
+            }
+        }
+    }
+
+    private static void addDeclaredField(Set<FileContent> javaFiles, Field field) throws Exception {
+        String typeName = getTypeName(field);
+        String javaFileName = packageToPathAccess(typeName);
+        if (isEligibleFile(typeName) && isFileNotContainedIn(javaFileName, javaFiles)) {
+            FileContent content = createFileContent(typeName);
+            javaFiles.add(content);
+
+            try {
+                Class<?> subType = Class.forName(typeName);
+                for (Field subField : subType.getDeclaredFields()) {
+                    addDeclaredField(javaFiles, subField);
+                }
+            }
+            catch (Exception e) {
+                // class could not be instantiated so move on
+            }
+        }
+    }
+
+    private static String getTypeName(Field field) {
+        String typeName = field.getType().getTypeName();
+
+        // get Product from `List<Product>` because of type erasure
+        try {
+            Type genericFieldType = field.getGenericType();
+            if (genericFieldType instanceof ParameterizedType parameterizedType) {
+                Type[] fieldArgTypes = parameterizedType.getActualTypeArguments();
+                for (Type fieldArgType : fieldArgTypes) {
+                    Class<?> fieldArgClass = (Class<?>) fieldArgType;
+                    typeName = fieldArgClass.getName();
+                }
+            }
+        }
+        catch (Exception e) {
+            // just use the original type name if any error
+        }
+        return typeName;
+    }
+
+    private static FileContent createFileContent(String fileName) throws Exception {
+        String path = createFullPath(fileName);
+        InputStream is = FileContentMarkerUtil.class.getResourceAsStream(path);
+
+        if (is == null) {
+            throw new FileNotFoundException("File " + path + " could not be found");
+        }
+
+        return readFileContent(fileName.substring(fileName.lastIndexOf(".") + 1) + ".java",
+                    is,
+                    JAVA_FILE_SETTINGS,
+                    false);
+    }
+
+    private static Marker getMatchingMarker(String line, Marker[] markers) {
+        for (Marker marker : markers) {
+            if (line.contains(marker.getName())) {
+                return marker;
             }
         }
 
-        return false;
+        return null;
+    }
+
+    private static String prettyFormat(String value) {
+        String[] chunks = value.split("(?<=\\n)");
+        String pretty = "";
+        for (String chunk : chunks) {
+            pretty += chunk.replaceFirst("\\s{8}", "");
+        }
+        return pretty;
+    }
+
+    /**
+     * Determines if a given file is eligible for processing.
+     *
+     * @param file The file name or path to check
+     * @return true if the file is eligible, false otherwise
+     */
+    private static boolean isEligibleFile(String file) {
+        // Check the file is a Showcase file, is not an array "[]", and is not an inner class "$"
+        return file != null && file.startsWith(SC_PREFIX) && !file.endsWith("[]") && !file.contains("$");
+    }
+
+    private static String packageToPathAccess(String pkg) {
+        return pkg.substring(pkg.lastIndexOf(".") + 1) + ".java";
+    }
+
+    private static boolean isFileNotContainedIn(String filename, Set<FileContent> javaFiles) {
+        return !javaFiles.contains(new FileContent(filename, null, null, null));
+    }
+
+    private static String createFullPath(String filename) {
+        return "/" + filename.replaceAll("\\.", "/") + ".java";
     }
 }

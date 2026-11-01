@@ -68,12 +68,8 @@
                         </div>
                         <div class="content-section documentation">
                             <ui:insert name="static-documentation"/>
+                            <!-- tagName is required whenever tagName2/tagName3 are used: the Tag Documentation sidebar only renders when tagName is set -->
                             <ui:insert name="source">
-                                <!--
-                                    TASK-6: PF's default "Usage" block, commented out until Task 6 adds the source viewer
-                                    (sc:tabscode, sc:getFilesContent). MyFaces compiles unknown tags even inside ui:remove,
-                                    so it has to be an XML comment (dropped by FACELETS_SKIP_COMMENTS). Task 6: uncomment.
-
                                 <h2>Usage</h2>
                                 <div class="card">
                                     <sc:tabscode
@@ -81,7 +77,6 @@
                                         <ui:insert name="more-source-tabs"/>
                                     </sc:tabscode>
                                 </div>
-                                -->
                             </ui:insert>
                         </div>
                     </ui:insert>
