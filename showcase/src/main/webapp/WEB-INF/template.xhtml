@@ -61,6 +61,7 @@
                             <ui:param name="tagName" value="#{tagName}" />
                             <ui:param name="tagName2" value="#{tagName2}" />
                             <ui:param name="tagName3" value="#{tagName3}" />
+                            <ui:param name="tagName4" value="#{tagName4}" />
                         </ui:include>
 
                         <div class="content-section implementation">
@@ -68,7 +69,7 @@
                         </div>
                         <div class="content-section documentation">
                             <ui:insert name="static-documentation"/>
-                            <!-- tagName is required whenever tagName2/tagName3 are used: the Tag Documentation sidebar only renders when tagName is set -->
+                            <!-- tagName is required whenever tagName2/tagName3/tagName4 are used: the Tag Documentation sidebar only renders when tagName is set -->
                             <ui:insert name="source">
                                 <h2>Usage</h2>
                                 <div class="card">

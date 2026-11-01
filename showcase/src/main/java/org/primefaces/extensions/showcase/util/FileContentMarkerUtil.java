@@ -79,10 +79,35 @@ public class FileContentMarkerUtil {
                 return readFileContent(fileName, is, XHTML_FILE_SETTINGS, readBeans);
             }
 
+            // other text files (e.g. a JavaScript extender or a properties file in more-source-tabs) are shown as they are
+            final String plainType = getPlainTextType(fullPathToFile);
+            if (plainType != null) {
+                return readPlainFileContent(fileName, is, plainType);
+            }
+
             throw new UnsupportedOperationException();
         }
         catch (Exception e) {
             throw new IllegalStateException("Internal error: file " + fullPathToFile + " could not be read", e);
+        }
+    }
+
+    private static String getPlainTextType(final String path) {
+        if (path.endsWith(".js")) {
+            return "javascript";
+        }
+        if (path.endsWith(".css")) {
+            return "css";
+        }
+        if (path.endsWith(".properties")) {
+            return "properties";
+        }
+        return null;
+    }
+
+    private static FileContent readPlainFileContent(final String fileName, final InputStream inputStream, final String type) throws Exception {
+        try (InputStream in = inputStream) {
+            return new FileContent(fileName, new String(in.readAllBytes(), StandardCharsets.UTF_8).trim(), type, new LinkedHashSet<>());
         }
     }
 

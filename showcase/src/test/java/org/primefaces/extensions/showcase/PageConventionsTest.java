@@ -45,7 +45,7 @@ class PageConventionsTest {
     private static final Pattern WIDGET_VAR = Pattern.compile("\\bwidgetVar=\"([^\"#$]+)\"");
     private static final Pattern FORM_ID = Pattern.compile("<h:form\\b[^>]*?\\sid=\"([^\"#$]+)\"");
     private static final Pattern PARAM = Pattern.compile("<ui:param\\b([^>]*)>");
-    private static final Pattern ATTR_NAME = Pattern.compile("\\bname=\"(tagName[23]?)\"");
+    private static final Pattern ATTR_NAME = Pattern.compile("\\bname=\"(tagName[234]?)\"");
     private static final Pattern ATTR_VALUE = Pattern.compile("\\bvalue=\"([^\"]*)\"");
     private static final Pattern LINK_ATTR = Pattern.compile("\\b(?:href|url|outcome)=\"([^\"]*/standalone/[^\"]*)\"");
     private static final Pattern MORE_SOURCE_TABS = Pattern.compile("<ui:define\\s+name=\"more-source-tabs\"[^>]*>(.*?)</ui:define>", Pattern.DOTALL);
@@ -159,7 +159,11 @@ class PageConventionsTest {
             return false;
         }
         final Path root = ShowcaseFiles.webappRoot();
-        return Files.isRegularFile(root.resolve(path.substring(1))) || Files.isRegularFile(root.resolve(path.substring(1) + ".xhtml"));
+        // webapp files, or classpath files of the showcase module (bean sources, properties)
+        final Path main = root.getParent();
+        return Files.isRegularFile(root.resolve(path.substring(1))) || Files.isRegularFile(root.resolve(path.substring(1) + ".xhtml"))
+                    || Files.isRegularFile(main.resolve("java").resolve(path.substring(1)))
+                    || Files.isRegularFile(main.resolve("resources").resolve(path.substring(1)));
     }
 
     @Test

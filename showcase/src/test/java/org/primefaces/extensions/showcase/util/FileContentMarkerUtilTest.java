@@ -42,6 +42,15 @@ class FileContentMarkerUtilTest {
     }
 
     @Test
+    void plainTextFilesAreShownAsTheyAre() {
+        final FileContent js = FileContentMarkerUtil.readFileContent("/resources/js/x.js", stream("// comment\nfunction x() {}\n"), false);
+        assertEquals("x.js", js.getTitle());
+        assertEquals("javascript", js.getType());
+        assertEquals("// comment\nfunction x() {}", js.getValue());
+        assertEquals("properties", FileContentMarkerUtil.readFileContent("/a.properties", stream("a = b"), false).getType());
+    }
+
+    @Test
     void xhtmlKeepsOnlyExampleRegion() {
         final String xhtml = "<ui:composition>\nbefore\n<!-- EXAMPLE-SOURCE-START -->\n<div>inside</div>\n"
                     + "<!-- EXAMPLE-SOURCE-END -->\nafter\n</ui:composition>";

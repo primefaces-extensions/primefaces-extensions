@@ -8,11 +8,11 @@
     <ui:fragment rendered="#{not empty tagName or not empty documentationLink or not empty widgetLink or not empty appSubMenu.subMenuItems}">
     <div class="layout-submenu">
 
-        <!-- one tagDocumentation per tag of the page: tagName, tagName2, tagName3 (components made of several tags) -->
+        <!-- one tagDocumentation per tag of the page: tagName, tagName2, tagName3, tagName4 (components made of several tags) -->
         <ui:fragment rendered="#{not empty tagName}">
             <p:sidebar widgetVar="currentTagLib" styleClass="taglib-sidebar" appendTo="@(body)" modal="true" position="right" blockScroll="true">
                 <h:form>
-                    <ui:repeat value="#{[tagName, tagName2, tagName3]}" var="tag">
+                    <ui:repeat value="#{[tagName, tagName2, tagName3, tagName4]}" var="tag">
                         <ui:fragment rendered="#{not empty tag}">
                             <h3>#{tagLibController.getTagName(tag)} Tag Documentation</h3>
                             <mycomposites:tagDocumentation value="#{tagLibProvider.tags[tag]}" />
