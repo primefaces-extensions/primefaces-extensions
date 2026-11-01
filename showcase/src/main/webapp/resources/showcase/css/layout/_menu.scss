@@ -1,0 +1,167 @@
+@use "core";
+
+.layout-sidebar {
+    position: sticky;
+    left: auto;
+    top: var(--layout-topbar-height);
+    height: calc(100vh - var(--layout-topbar-height));
+    background-color: transparent;
+    width: var(--layout-sidebar-width);
+    border-right: 0 none;
+    user-select: none;
+    transition: transform .4s cubic-bezier(.05,.74,.2,.99);
+    display: flex;
+    flex-direction: column;
+
+    .layout-sidebar-filter {
+        padding: 1.25rem 1rem;
+        border-bottom: 1px solid var(--surface-d);
+        background-color: transparent;
+    }
+
+    .layout-menu {
+        padding: 0 1rem;
+        overflow-y: auto;
+        flex-grow: 1;
+
+        .menu-category {
+            display: block;
+            color: var(--text-color-secondary);
+            font-weight: 700;
+            user-select: none;
+            padding: 1.2rem 0 0.8rem 0;
+            font-size: 0.857rem;
+            text-transform: uppercase;
+            border-top: 1px solid var(--surface-d);
+
+            &:first-child {
+                border-top: 0 none;
+                padding-top: 1rem;
+            }
+        }
+
+        .menu-items {
+            padding: 0 0 1rem 0;
+            display: flex;
+            flex-direction: column;
+
+            a {
+                color: var(--text-color);
+                display: flex;
+                align-items: center;
+                padding: .5rem;
+                border-radius: 3px;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: var(--surface-c);
+                }
+
+                &:focus {
+                    z-index: 1;
+                    outline: 0 none;
+                    transition: box-shadow .2s;
+                    box-shadow: 0 0 0 0.2em core.$focusBorderColor;
+                }
+
+                &.router-link-active {
+                    font-weight: 700;
+                    color: var(--primary-color);
+                }
+
+                .p-tag {
+                    padding-top:.125rem;
+                    padding-bottom: .125rem;
+                    margin-left: .5rem;
+                }
+
+                &.hidden {
+                    pointer-events: none;
+                }
+            }
+
+            .submenu {
+                display: none;
+                
+                ul {
+                    padding: .5rem 0;
+                    margin: 0;
+                    list-style-type: none;
+
+                    a {
+                        font-size: .875rem;
+                        padding: .475rem .5rem .475rem 2rem;
+                    }
+                }
+            }
+        }
+        
+        .menu-image {
+            &.menu-banner {
+                a {
+                    padding: 0;
+
+                    &:hover {
+                        background-color: transparent;
+
+                        img {
+                            background-color: var(--surface-c);
+                        }
+                    }
+
+                    &:focus {
+                        box-shadow: none;
+                    }
+                }
+            }
+
+            padding: 0 0 1rem 0;
+
+            img {
+                width: 100%;
+            }
+        }
+    }
+}
+
+.layout-sidebar-filter-panel {
+    &.p-autocomplete-panel {
+        padding: 0.5rem 0;
+
+        .p-autocomplete-table {
+            .p-widget-header td {
+                border: 1px solid transparent;
+                padding: 3px 5px;
+            }
+
+            .p-autocomplete-item.p-autocomplete-row {
+                > td {
+                    border: 1px solid transparent;
+                    padding: 0;
+
+                    a {
+                        display: flex;
+                        align-items: center;
+                        padding: 0.5rem 1rem;
+                        color: var(--text-color);
+
+                        .p-tag {
+                            padding-top:.125rem;
+                            padding-bottom: .125rem;
+                            margin-left: .5rem;
+                        }
+                    }
+                }
+
+                &.p-state-highlight {
+                    > td {
+                        a {
+                            background: var(--primary-color);
+                            color: var(--primary-color-text);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -72,7 +72,7 @@ public class AppMenu {
         menuCategories = new ArrayList<>();
         for (final Map.Entry<String, List<MenuItem>> e : categoryItems.entrySet()) {
             if (!e.getValue().isEmpty()) {
-                menuCategories.add(new MenuCategory(e.getKey(), e.getValue(), RESOURCES.equals(e.getKey())));
+                menuCategories.add(new MenuCategory(e.getKey(), e.getValue()));
             }
         }
     }
@@ -134,6 +134,18 @@ public class AppMenu {
 
     public List<MenuCategory> getMenuCategories() {
         return menuCategories;
+    }
+
+    /**
+     * The first internal page of a category, used by the landing page to link its category cards.
+     *
+     * @param category the category label, e.g. "Input"
+     * @return the URL (starting with "/") or null when the category has no internal page (yet)
+     */
+    public String getCategoryUrl(final String category) {
+        final List<String> urls = new ArrayList<>();
+        collectUrls(categoryItems.get(category), urls);
+        return urls.isEmpty() ? null : urls.get(0);
     }
 
     /** Flattened internal URLs (starting with "/") of all menu items; external links are excluded. */

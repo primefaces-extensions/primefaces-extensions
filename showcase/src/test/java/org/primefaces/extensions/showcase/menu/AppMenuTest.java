@@ -127,6 +127,22 @@ class AppMenuTest {
     }
 
     @Test
+    void categoryUrlIsFirstInternalPageOrNull() {
+        final AppMenu menu = menu();
+        final List<String> urls = menu.allUrls();
+        for (final String category : new String[] {AppMenu.INPUT, AppMenu.EDITORS, AppMenu.DATA, AppMenu.CHARTS, AppMenu.PANEL,
+                    AppMenu.OVERLAY, AppMenu.MEDIA, AppMenu.MISC}) {
+            final String url = menu.getCategoryUrl(category);
+            if (url != null) {
+                Assertions.assertTrue(urls.contains(url), category + ": " + url);
+            }
+        }
+        // external links only
+        Assertions.assertNull(menu.getCategoryUrl(AppMenu.RESOURCES));
+        Assertions.assertNull(menu.getCategoryUrl("Unknown"));
+    }
+
+    @Test
     void findMenuItemByUrlFindsItemsAndSetsParents() {
         final AppMenu menu = menu();
         Assertions.assertNull(menu.findMenuItemByUrl("/nope"));

@@ -45,14 +45,6 @@
         <exception-handler-factory>org.primefaces.application.exceptionhandler.PrimeExceptionHandlerFactory</exception-handler-factory>
     </factory>
 
-    <render-kit>
-        <renderer>
-            <component-family>jakarta.faces.Output</component-family>
-            <renderer-type>jakarta.faces.Head</renderer-type>
-            <renderer-class>org.apache.myfaces.renderkit.html.HtmlHeadRenderer</renderer-class>
-        </renderer>
-    </render-kit>
-
     <faces-config-extension>
         <facelets-processing>
             <file-extension>.xhtml</file-extension>

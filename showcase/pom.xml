@@ -25,6 +25,7 @@
         <primefaces-extensions.deprecated-components/>
         <jetty.version>12.1.14</jetty.version>
         <font-awesome.version>7.2.0</font-awesome.version>
+        <dart-sass.version>1.79.6</dart-sass.version>
     </properties>
     <dependencies>
         <dependency>
@@ -164,6 +165,29 @@
         </resources>
         <plugins>
             <plugin>
+                <groupId>io.github.cleydyr</groupId>
+                <artifactId>dart-sass-maven-plugin</artifactId>
+                <version>1.5.0</version>
+                <executions>
+                    <execution>
+                        <id>generate-css-using-sass</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>compile-sass</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <inputFolder>${basedir}/src/main/webapp/resources/showcase/css/layout</inputFolder>
+                    <outputFolder>${basedir}/src/main/webapp/resources/showcase/css/layout</outputFolder>
+
+                    <noSourceMap>true</noSourceMap>
+                    <style>COMPRESSED</style>
+                    <quiet>false</quiet>
+                    <version>${dart-sass.version}</version>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.eclipse.jetty.ee10</groupId>
                 <artifactId>jetty-ee10-maven-plugin</artifactId>
                 <version>${jetty.version}</version>
@@ -202,6 +226,17 @@
                             <directory>${project.basedir}/src/main/webapp</directory>
                             <filtering>true</filtering>
                             <includes>**/resources-app.xhtml</includes>
+                        </resource>
+                        <!-- showcase shell (layout, configurator, highlighter): copied as is, neither filtered nor optimized -->
+                        <resource>
+                            <directory>${project.basedir}/src/main/webapp/resources</directory>
+                            <targetPath>resources</targetPath>
+                            <includes>
+                                <include>showcase/**/*.css</include>
+                                <include>showcase/**/*.js</include>
+                                <include>theming/**/*.css</include>
+                                <include>theming/**/*.js</include>
+                            </includes>
                         </resource>
                     </webResources>
                     <packagingExcludes>**/web-overwrite.xml,WEB-INF/web.xml</packagingExcludes>
@@ -256,6 +291,11 @@
                                         <include>**/*.ico</include>
                                         <include>**/*.bmp</include>
                                     </includes>
+                                    <excludes>
+                                        <!-- copied unfiltered by the war plugin (webResources) -->
+                                        <exclude>showcase/**</exclude>
+                                        <exclude>theming/**</exclude>
+                                    </excludes>
                                 </resource>
                             </resources>
                         </configuration>

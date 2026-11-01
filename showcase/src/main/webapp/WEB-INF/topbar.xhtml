@@ -1,0 +1,55 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="jakarta.faces.html" xmlns:f="jakarta.faces.core"
+                xmlns:ui="jakarta.faces.facelets" xmlns:p="primefaces">
+
+    <div class="layout-topbar">
+        <div class="layout-topbar-inner">
+            <a class="menu-button" tabindex="0">
+                <i class="pi pi-bars"></i>
+            </a>
+            <h:link styleClass="logo" outcome="/index.xhtml" title="Showcase Home">
+                <p:graphicImage name="images/logo.png" library="showcase" alt="PrimeFaces Extensions" />
+            </h:link>
+
+            <h:form styleClass="topbar-form">
+                <ul class="topbar-menu">
+                <li class="topbar-submenu">
+                        <a tabindex="0">
+                            <i class="pi pi-cog"></i>
+                            Settings
+                        </a>
+                        <ul class="connected-overlay-in">
+                            <li class="topbar-submenu-header">Locale</li>
+                            <p>Change the locale of the datepicker, schedule and client side validation messages.</p>
+                            <p:selectOneMenu id="locale" value="#{app.locale}" converter="#{localeConverter}"
+                                             style="width:300px" panelStyle="width:300px;height:350px;" height="350px"
+                                             var="l" filter="true" filterMatchMode="startsWith">
+                                <f:selectItems value="#{countryService.locales}" var="locale"
+                                               itemLabel="#{locale.displayLanguage}" itemValue="#{locale}"/>
+                                <p:ajax oncomplete="window.location.reload();"/>
+                                <p:column style="width:10%">
+                                    <span class="flag flag-#{l.code}" style="width: 30px; height: 20px"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Language"/>
+                                    </f:facet>
+                                    <h:outputText value="#{l.displayLanguage}"/>
+                                </p:column>
+                            </p:selectOneMenu>
+                        </ul>
+                    </li>
+                <li class="topbar-submenu">
+                    <a tabindex="0"><i class="pi pi-graduation-cap"></i>Resources</a>
+                    <ul class="connected-overlay-in">
+                        <li><a href="https://github.com/primefaces-extensions/primefaces-extensions" target="_blank" rel="noopener noreferrer"><i class="pi pi-github"></i><span>Source Code</span></a></li>
+                        <li><a href="https://github.com/primefaces-extensions/primefaces-extensions/issues" target="_blank" rel="noopener noreferrer"><i class="pi pi-exclamation-circle"></i><span>Issues</span></a></li>
+                        <li><a href="https://primefaces-extensions.github.io" target="_blank" rel="noopener noreferrer"><i class="pi pi-book"></i><span>Website</span></a></li>
+                        <li><a href="https://www.primefaces.org/showcase/" target="_blank" rel="noopener noreferrer"><i class="pi pi-desktop"></i><span>PrimeFaces Showcase</span></a></li>
+                        <li><a href="https://github.com/primefaces/primefaces" target="_blank" rel="noopener noreferrer"><i class="pi pi-github"></i><span>PrimeFaces GitHub</span></a></li>
+                    </ul>
+                </li>
+                </ul>
+            </h:form>
+        </div>
+    </div>
+</ui:composition>
