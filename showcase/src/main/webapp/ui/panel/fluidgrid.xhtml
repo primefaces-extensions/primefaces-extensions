@@ -1,0 +1,360 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        FluidGrid
+    </ui:define>
+
+    <ui:define name="description">
+        FluidGrid is a cascading grid layout component. It places elements in the optimal position based on the available vertical space,
+        like a mason fitting stones in a wall, and is responsive: the grid reflows as the window size changes. Based on the
+        <a href="https://masonry.desandro.com/" target="_blank" rel="noopener noreferrer">Masonry JavaScript library</a>.
+    </ui:define>
+
+    <ui:param name="tagName" value="fluidGrid"/>
+    <ui:param name="tagName2" value="fluidGridItem"/>
+    <ui:param name="widgetLink" value="fluidgrid"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <div class="card">
+            <!-- EXAMPLE: fluidgrid/static -->
+            <h5>Static items</h5>
+            <p>
+                Static items are defined by <code>pe:fluidGridItem</code> placed multiple times below <code>pe:fluidGrid</code>. Items can have
+                different widths and heights set by style classes. The container has the style class <code>pe-fluidgrid</code> and each item
+                <code>pe-fluidgrid-item</code>. The attributes <code>hGutter</code> and <code>vGutter</code> set the horizontal and vertical
+                space between items. Resize the browser window to test the fluid grid.
+            </p>
+            <style>
+                .fg-static .pe-fluidgrid {
+                    max-width: 900px;
+                }
+
+                .fg-static .pe-fluidgrid .pe-fluidgrid-item {
+                    width: 60px;
+                    height: 60px;
+                    border-radius: 5px;
+                    padding-top: 0.5em;
+                    text-align: center;
+                }
+
+                .fg-static .pe-fluidgrid-item.w2 {width: 130px;}
+                .fg-static .pe-fluidgrid-item.w3 {width: 200px;}
+                .fg-static .pe-fluidgrid-item.h2 {height: 100px;}
+                .fg-static .pe-fluidgrid-item.h3 {height: 130px;}
+            </style>
+            <h:form id="formStatic">
+                <div class="fg-static">
+                    <pe:fluidGrid hGutter="10" vGutter="10">
+                        <pe:fluidGridItem styleClass="p-widget-header">Item 1</pe:fluidGridItem>
+                        <pe:fluidGridItem styleClass="p-widget-header w2 h2">Item 2</pe:fluidGridItem>
+                        <pe:fluidGridItem styleClass="p-widget-header h3">Item 3</pe:fluidGridItem>
+                        <pe:fluidGridItem styleClass="p-widget-header h2">Item 4</pe:fluidGridItem>
+                        <pe:fluidGridItem styleClass="p-widget-header w3">Item 5</pe:fluidGridItem>
+                        <pe:fluidGridItem styleClass="p-widget-header">Item 6</pe:fluidGridItem>
+                        <pe:fluidGridItem styleClass="p-widget-header">Item 7</pe:fluidGridItem>
+                        <pe:fluidGridItem styleClass="p-widget-header h2">Item 8</pe:fluidGridItem>
+                        <pe:fluidGridItem styleClass="p-widget-header w2 h3">Item 9</pe:fluidGridItem>
+                        <pe:fluidGridItem styleClass="p-widget-header">Item 10</pe:fluidGridItem>
+                        <pe:fluidGridItem styleClass="p-widget-header h2">Item 11</pe:fluidGridItem>
+                        <pe:fluidGridItem styleClass="p-widget-header">Item 12</pe:fluidGridItem>
+                        <pe:fluidGridItem styleClass="p-widget-header w2 h2">Item 13</pe:fluidGridItem>
+                        <pe:fluidGridItem styleClass="p-widget-header w2">Item 14</pe:fluidGridItem>
+                        <pe:fluidGridItem styleClass="p-widget-header">Item 15</pe:fluidGridItem>
+                        <pe:fluidGridItem styleClass="p-widget-header h2">Item 16</pe:fluidGridItem>
+                        <pe:fluidGridItem styleClass="p-widget-header">Item 17</pe:fluidGridItem>
+                        <pe:fluidGridItem styleClass="p-widget-header">Item 18</pe:fluidGridItem>
+                        <pe:fluidGridItem styleClass="p-widget-header h3">Item 19</pe:fluidGridItem>
+                        <pe:fluidGridItem styleClass="p-widget-header h2">Item 20</pe:fluidGridItem>
+                        <pe:fluidGridItem styleClass="p-widget-header">Item 21</pe:fluidGridItem>
+                        <pe:fluidGridItem styleClass="p-widget-header">Item 22</pe:fluidGridItem>
+                        <pe:fluidGridItem styleClass="p-widget-header h2">Item 23</pe:fluidGridItem>
+                        <pe:fluidGridItem styleClass="p-widget-header w2 h2">Item 24</pe:fluidGridItem>
+                        <pe:fluidGridItem styleClass="p-widget-header">Item 25</pe:fluidGridItem>
+                        <pe:fluidGridItem styleClass="p-widget-header">Item 26</pe:fluidGridItem>
+                        <pe:fluidGridItem styleClass="p-widget-header h3">Item 27</pe:fluidGridItem>
+                        <pe:fluidGridItem styleClass="p-widget-header">Item 28</pe:fluidGridItem>
+                        <pe:fluidGridItem styleClass="p-widget-header w3">Item 29</pe:fluidGridItem>
+                        <pe:fluidGridItem styleClass="p-widget-header">Item 30</pe:fluidGridItem>
+                        <pe:fluidGridItem styleClass="p-widget-header">Item 31</pe:fluidGridItem>
+                        <pe:fluidGridItem styleClass="p-widget-header w2">Item 32</pe:fluidGridItem>
+                        <pe:fluidGridItem styleClass="p-widget-header">Item 33</pe:fluidGridItem>
+                        <pe:fluidGridItem styleClass="p-widget-header">Item 34</pe:fluidGridItem>
+                        <pe:fluidGridItem styleClass="p-widget-header">Item 35</pe:fluidGridItem>
+                    </pe:fluidGrid>
+                </div>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: fluidgrid/dynamic -->
+            <h5>Dynamic items</h5>
+            <p>
+                Dynamic items are put in a collection of <code>FluidGridItem</code> instances; each holds a data object and an optional
+                <code>type</code> that matches the <code>type</code> attribute of <code>pe:fluidGridItem</code>. The items are exposed via
+                <code>value</code> and <code>var</code>. <code>hasImages="true"</code> re-layouts the grid after all images have been loaded, so
+                items do not overlap. The event <i>layoutComplete</i> is fired after the layout and all transitions have completed.
+            </p>
+            <style>
+                .fg-dynamic img {
+                    margin-top: -4px;
+                }
+            </style>
+            <h:form id="formDynamic">
+                <p:growl id="growl" showDetail="true" showSummary="true"/>
+
+                <div class="fg-dynamic">
+                    <pe:fluidGrid value="#{fluidGridDynamicController.images}" var="image"
+                                  fitWidth="true" hasImages="true">
+                        <p:ajax event="layoutComplete" update="growl"
+                                listener="#{fluidGridDynamicController.fireLayoutComplete}"/>
+
+                        <pe:fluidGridItem>
+                            <h:graphicImage library="images" name="fluidgrid/#{image.name}"/>
+                        </pe:fluidGridItem>
+                    </pe:fluidGrid>
+                </div>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: fluidgrid/stamped -->
+            <h5>Stamped elements within layout</h5>
+            <p>
+                Stamped elements are special layout elements that are not laid out by the grid; items are placed below them. They are set by
+                the <code>stamp</code> attribute, which can be any PrimeFaces search expression. The widget methods <code>stamp()</code> and
+                <code>unstamp()</code> toggle a stamped element and <code>layout()</code> triggers the layout. Inside a layout pane, set
+                <code>resizeBound="false"</code> to deactivate re-layouting on browser resize.
+            </p>
+            <style>
+                .fg-stamped .pe-fluidgrid {
+                    max-width: 1000px;
+                    position: relative;
+                }
+
+                .fg-stamped .pe-fluidgrid .pe-fluidgrid-item {
+                    width: 60px;
+                    height: 60px;
+                    background: #D26;
+                    border: 1px solid orange;
+                    border-radius: 5px;
+                    opacity: 0.7;
+                }
+
+                .fg-stamped .pe-fluidgrid-item.w2 {width: 120px;}
+                .fg-stamped .pe-fluidgrid-item.w3 {width: 180px;}
+                .fg-stamped .pe-fluidgrid-item.h2 {height: 100px;}
+                .fg-stamped .pe-fluidgrid-item.h3 {height: 130px;}
+
+                .fg-stamped .pe-fluidgrid .stamp {
+                    position: absolute;
+                    right: 15%;
+                    top: 10px;
+                    width: 50%;
+                    height: 70px;
+                    background: orange;
+                    border: 4px dotted black;
+                }
+            </style>
+            <h:form id="formStamped">
+                <div class="fg-stamped">
+                    <pe:fluidGrid stamp="@(.fg-stamped .stamp)" resizeBound="false" widgetVar="fluidGridStampedWdgt">
+                        <div class="stamp"></div>
+
+                        <pe:fluidGridItem styleClass="p-widget-header"/>
+                        <pe:fluidGridItem styleClass="p-widget-header w2 h2"/>
+                        <pe:fluidGridItem styleClass="p-widget-header h3"/>
+                        <pe:fluidGridItem styleClass="p-widget-header h2"/>
+                        <pe:fluidGridItem styleClass="p-widget-header w3"/>
+                        <pe:fluidGridItem styleClass="p-widget-header"/>
+                        <pe:fluidGridItem styleClass="p-widget-header"/>
+                        <pe:fluidGridItem styleClass="p-widget-header h2"/>
+                        <pe:fluidGridItem styleClass="p-widget-header w2 h3"/>
+                        <pe:fluidGridItem styleClass="p-widget-header"/>
+                        <pe:fluidGridItem styleClass="p-widget-header h2"/>
+                        <pe:fluidGridItem styleClass="p-widget-header"/>
+                        <pe:fluidGridItem styleClass="p-widget-header w2 h2"/>
+                        <pe:fluidGridItem styleClass="p-widget-header w2"/>
+                        <pe:fluidGridItem styleClass="p-widget-header"/>
+                        <pe:fluidGridItem styleClass="p-widget-header h2"/>
+                        <pe:fluidGridItem styleClass="p-widget-header"/>
+                        <pe:fluidGridItem styleClass="p-widget-header"/>
+                        <pe:fluidGridItem styleClass="p-widget-header h3"/>
+                        <pe:fluidGridItem styleClass="p-widget-header h2"/>
+                        <pe:fluidGridItem styleClass="p-widget-header"/>
+                        <pe:fluidGridItem styleClass="p-widget-header"/>
+                        <pe:fluidGridItem styleClass="p-widget-header h2"/>
+                        <pe:fluidGridItem styleClass="p-widget-header w2 h2"/>
+                        <pe:fluidGridItem styleClass="p-widget-header"/>
+                        <pe:fluidGridItem styleClass="p-widget-header"/>
+                        <pe:fluidGridItem styleClass="p-widget-header h3"/>
+                        <pe:fluidGridItem styleClass="p-widget-header"/>
+                        <pe:fluidGridItem styleClass="p-widget-header w3"/>
+                        <pe:fluidGridItem styleClass="p-widget-header"/>
+                        <pe:fluidGridItem styleClass="p-widget-header"/>
+                        <pe:fluidGridItem styleClass="p-widget-header w2"/>
+                        <pe:fluidGridItem styleClass="p-widget-header"/>
+                        <pe:fluidGridItem styleClass="p-widget-header"/>
+                        <pe:fluidGridItem styleClass="p-widget-header"/>
+                    </pe:fluidGrid>
+                </div>
+
+                <p:commandButton value="Toggle stamped" type="button" style="margin-top:15px;"
+                                 onclick="toggleFluidGridStamped()"/>
+            </h:form>
+            <script>
+                /* <![CDATA[ */
+                window.fluidGridIsStamped = true;
+
+                function toggleFluidGridStamped() {
+                    // stamp or unstamp element
+                    if (window.fluidGridIsStamped) {
+                        PF('fluidGridStampedWdgt').unstamp($(".fg-stamped .stamp").get());
+                    } else {
+                        PF('fluidGridStampedWdgt').stamp($(".fg-stamped .stamp").get());
+                    }
+
+                    // trigger layout
+                    PF('fluidGridStampedWdgt').layout();
+
+                    window.fluidGridIsStamped = !window.fluidGridIsStamped;
+                }
+                /* ]]> */
+            </script>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: fluidgrid/dynaform -->
+            <h5>Dynamic form</h5>
+            <p>
+                A responsive dynamic grid with input fields, similar to DynaForm but not a fixed table: resize the browser window. Place the labels
+                above the input fields for a consistent alignment. The <code>type</code> of <code>pe:fluidGridItem</code> must match the
+                <code>type</code> property of <code>FluidGridItem</code>.
+            </p>
+            <style>
+                .fg-dynaform .pe-fluidgrid-item {
+                    width: 160px;
+                    height: 60px;
+                }
+
+                .fg-dynaform .pe-fluidgrid-item input {
+                    width: 150px;
+                }
+
+                .fg-dynaform .pe-fluidgrid-item.calendar input {
+                    width: 120px;
+                }
+
+                .fg-dynaform .pe-fluidgrid-item.select .p-selectonemenu {
+                    width: 134px !important;
+                }
+
+                .fg-dynaform .dynaFormLabel {
+                    font-weight: bold;
+                    margin-bottom: 7px;
+                }
+            </style>
+            <h:form id="formDynaform">
+                <p:growl id="growl" showDetail="true" showSummary="true"/>
+
+                <div class="fg-dynaform">
+                    <pe:fluidGrid id="fluidGrid" value="#{fluidGridDynaFormController.items}" var="data"
+                                  resizeBound="false" hGutter="20" widgetVar="fluidGridDynaformWdgt" style="width:600px">
+                        <pe:fluidGridItem type="input">
+                            <div class="dynaFormLabel">
+                                <p:outputLabel for="txt" value="#{data.label}"/>
+                            </div>
+                            <p:inputText id="txt" value="#{data.value}" required="#{data.required}"/>
+                        </pe:fluidGridItem>
+                        <pe:fluidGridItem type="select" styleClass="select">
+                            <div class="dynaFormLabel">
+                                <p:outputLabel for="menu" value="#{data.label}"/>
+                            </div>
+                            <p:selectOneMenu id="menu" value="#{data.value}" required="#{data.required}">
+                                <f:selectItems value="#{data.selectItems}"/>
+                            </p:selectOneMenu>
+                        </pe:fluidGridItem>
+                        <pe:fluidGridItem type="calendar" styleClass="calendar">
+                            <div class="dynaFormLabel">
+                                <p:outputLabel for="cal" value="#{data.label}"/>
+                            </div>
+                            <p:datePicker id="cal" value="#{data.value}" required="#{data.required}" showIcon="true"/>
+                        </pe:fluidGridItem>
+                    </pe:fluidGrid>
+                </div>
+
+                <p:commandButton value="Submit" style="margin-top: 10px;"
+                                 process="fluidGrid" update="fluidGrid inputValues growl"
+                                 oncomplete="if(!args.validationFailed) {PF('dynaformValuesWidget').show();}"/>
+
+                <p:dialog header="Input values" widgetVar="dynaformValuesWidget">
+                    <p:dataList id="inputValues" value="#{fluidGridDynaFormController.items}" var="item"
+                                style="margin:10px;">
+                        <h:outputText value="#{item.data.label} : #{item.data.value}" style="margin-right:15px;"/>
+                    </p:dataList>
+                </p:dialog>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: fluidgrid/dynamiclabels -->
+            <h5>Dynamic labels</h5>
+            <p>
+                Dynamic items whose <code>label</code> attribute on input components is bound to the data model via <code>var</code>.
+                <b>Change Items</b> replaces the grid's items to verify that labels are preserved across dynamic updates. Click <b>Submit</b>
+                with empty required fields: each validation message shows its own component's label.
+            </p>
+            <style>
+                .fg-dynlabels .pe-fluidgrid-item {
+                    width: 180px;
+                    height: 65px;
+                }
+
+                .fg-dynlabels .pe-fluidgrid-item input {
+                    width: 170px;
+                }
+
+                .fg-dynlabels .dynLabel {
+                    font-weight: bold;
+                    margin-bottom: 5px;
+                }
+            </style>
+            <h:form id="formDynamicLabels">
+                <p:growl id="growl" showDetail="true" showSummary="true"/>
+
+                <p:commandButton value="Change Items" action="#{fluidGridDynamicLabelsController.changeItems}"
+                                 process="@this" update="fluidGrid" style="margin-bottom:10px"/>
+
+                <div class="fg-dynlabels">
+                    <pe:fluidGrid id="fluidGrid" value="#{fluidGridDynamicLabelsController.items}" var="data"
+                                  resizeBound="false" hGutter="20" style="width:450px">
+                        <pe:fluidGridItem type="input">
+                            <div class="dynLabel">
+                                <p:outputLabel for="txt" value="#{data.label}"/>
+                            </div>
+                            <p:inputText id="txt" value="#{data.value}" label="#{data.label}" required="#{data.required}"/>
+                        </pe:fluidGridItem>
+                    </pe:fluidGrid>
+                </div>
+
+                <p:commandButton value="Submit" style="margin-top: 10px;"
+                                 process="fluidGrid" update="fluidGrid inputValues growl"
+                                 oncomplete="if(!args.validationFailed) {PF('dynamicLabelsValuesWidget').show();}"/>
+
+                <p:dialog header="Submitted Values" widgetVar="dynamicLabelsValuesWidget">
+                    <p:dataList id="inputValues" value="#{fluidGridDynamicLabelsController.items}" var="item"
+                                style="margin:10px;">
+                        <h:outputText value="#{item.data.label} : #{item.data.value}" style="margin-right:15px;"/>
+                    </p:dataList>
+                </p:dialog>
+            </h:form>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+</ui:composition>

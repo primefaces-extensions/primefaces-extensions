@@ -41,9 +41,9 @@ public class InfiniteScrollController implements Serializable {
     @Serial
     private static final long serialVersionUID = 20120810L;
 
-    private static final String CONTENT_PATH_DUMMY = "/sections/waypoint/examples/remoteContentDummy.xhtml";
-    private static final String CONTENT_PATH_FIRST = "/sections/waypoint/examples/remoteContentOne.xhtml";
-    private static final String CONTENT_PATH_SECOND = "/sections/waypoint/examples/remoteContentSecond.xhtml";
+    private static final String CONTENT_PATH_DUMMY = "/ui/panel/waypoint/standalone/remoteContentDummy.xhtml";
+    private static final String CONTENT_PATH_FIRST = "/ui/panel/waypoint/standalone/remoteContentOne.xhtml";
+    private static final String CONTENT_PATH_SECOND = "/ui/panel/waypoint/standalone/remoteContentSecond.xhtml";
 
     private String src;
 

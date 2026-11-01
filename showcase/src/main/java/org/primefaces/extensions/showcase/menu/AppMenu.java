@@ -123,7 +123,17 @@ public class AppMenu {
                     new MenuItem("Markers", "/ui/charts/osmap/markers")), "New"));
         add(CHARTS, new MenuItem("QRCode", "/ui/charts/qrcode"));
 
+        add(PANEL, new MenuItem("FluidGrid", "/ui/panel/fluidgrid"));
+        add(PANEL, new MenuItem("Keynote", List.of(
+                    new MenuItem("Basic", "/ui/panel/keynote/basic"),
+                    new MenuItem("Speaker View", "/ui/panel/keynote/speakerview"),
+                    new MenuItem("Theming", "/ui/panel/keynote/theming"),
+                    new MenuItem("Markdown", "/ui/panel/keynote/markdown"),
+                    new MenuItem("Dynamic", "/ui/panel/keynote/dynamic"),
+                    new MenuItem("Event", "/ui/panel/keynote/event"))));
         add(PANEL, new MenuItem("Layout", "/ui/panel/layout"));
+        add(PANEL, new MenuItem("SlideOut", "/ui/panel/slideout"));
+        add(PANEL, new MenuItem("Waypoint", "/ui/panel/waypoint"));
 
         add(MISC, new MenuItem("MarkText", List.of(
                     new MenuItem("Basic", "/ui/misc/marktext/basic"),
