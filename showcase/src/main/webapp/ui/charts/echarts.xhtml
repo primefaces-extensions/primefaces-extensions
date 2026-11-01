@@ -20,26 +20,26 @@
 
     <ui:define name="implementation">
         <!-- EXAMPLE-SOURCE-START -->
+        <!-- CDATA: the script contains && -->
         <script>
             //<![CDATA[
-            // Charts with the default theme follow the color scheme of the page (data-dark on html, set by the theme
-            // configurator): ECharts has the built-in themes "light" and "dark". A chart with its own theme keeps it.
+            // Charts without their own theme follow the color scheme of the page (data-dark on html, set by the theme
+            // configurator): the widget renders with PrimeFaces.env.getThemeContrast() and is refreshed when it changes.
+            var echartSchemes = new WeakMap();
             function echartFollowScheme() {
-                var theme = document.documentElement.getAttribute('data-dark') === 'true' ? 'dark' : 'light';
+                var scheme = PrimeFaces.env.getThemeContrast();
                 Object.values(PrimeFaces.widgets).forEach(function (widget) {
-                    var own = widget.cfg && widget.cfg.theme;
-                    if (widget instanceof PrimeFaces.widget.ExtEChart && (!own || own === 'light' || own === 'dark') && own !== theme) {
-                        widget.cfg.theme = theme;
-                        if (widget.chart) {
-                            widget._remove();
-                            widget._render();
+                    if (widget instanceof PrimeFaces.widget.ExtEChart && !widget.cfg.theme) {
+                        if (echartSchemes.has(widget) && echartSchemes.get(widget) !== scheme && widget.chart) {
+                            widget.refresh(widget.cfg);
                         }
+                        echartSchemes.set(widget, scheme);
                     }
                 });
             }
             $(window).on('load', echartFollowScheme);
             $(document).on('pfAjaxComplete', echartFollowScheme);
-            new MutationObserver(echartFollowScheme).observe(document.documentElement, {attributes: true, attributeFilter: ['data-dark']});
+            new MutationObserver(echartFollowScheme).observe(document.documentElement, {attributes: true, attributeFilter: ['data-dark', 'style']});
             //]]>
         </script>
 

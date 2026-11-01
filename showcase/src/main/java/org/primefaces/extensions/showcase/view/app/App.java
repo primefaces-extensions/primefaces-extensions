@@ -130,6 +130,18 @@ public class App implements Serializable {
     }
 
     /**
+     * The Faces implementation in use, e.g. "Mojarra 4.1.0".
+     *
+     * @return the implementation title and version, or "unknown"
+     */
+    public String getFacesImplementation() {
+        final Package pkg = FacesContext.class.getPackage();
+        final String title = pkg == null ? null : pkg.getImplementationTitle();
+        final String version = pkg == null ? null : pkg.getImplementationVersion();
+        return title == null ? UNKNOWN : title + (version == null ? "" : " " + version);
+    }
+
+    /**
      * The build timestamp from pe-showcase.properties, formatted as yyyy-MM-dd HH:mm.
      *
      * @return the build time or "unknown"

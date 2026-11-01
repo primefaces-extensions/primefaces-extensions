@@ -51,16 +51,17 @@
             <h5>Localization and RTL</h5>
             <p>Calculator can be localized. Select a language to change the text and tooltips. RTL (right to left) is supported as well.</p>
             <h:form id="formLocalization">
+                <p:messages id="msgLocalization"/>
                 <h:panelGrid columns="6" id="pnlDetails" cellpadding="4">
                     <p:outputLabel value="Locale:" for="cboLocale"/>
                     <p:selectOneMenu id="cboLocale" value="#{calculatorController.language}" style="width:200px" required="true">
                         <f:selectItems value="#{calculatorController.languages}"/>
-                        <p:ajax update="pInputText" process="@this"/>
+                        <p:ajax update="pInputText msgLocalization" process="@this"/>
                     </p:selectOneMenu>
 
                     <p:outputLabel value="RTL:" for="chkRtl"/>
                     <p:selectBooleanCheckbox id="chkRtl" value="#{calculatorController.rtl}">
-                        <p:ajax update="pInputText" process="@this"/>
+                        <p:ajax update="pInputText msgLocalization" process="@this"/>
                     </p:selectBooleanCheckbox>
 
                     <p:outputLabel value="Calc:" for="pInputText"/>

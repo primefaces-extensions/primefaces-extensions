@@ -21,6 +21,8 @@
  */
 package org.primefaces.extensions.showcase.util;
 
+import java.util.Locale;
+
 import jakarta.faces.application.Resource;
 import jakarta.faces.application.ResourceHandler;
 import jakarta.faces.application.ResourceHandlerWrapper;
@@ -49,7 +51,7 @@ public class ShowcaseResourceHandler extends ResourceHandlerWrapper {
     }
 
     private Resource wrapResource(final Resource resource, final String libraryName) {
-        if (resource == null || (libraryName != null && libraryName.toLowerCase().startsWith(Constants.LIBRARY))) {
+        if (resource == null || (libraryName != null && libraryName.toLowerCase(Locale.ROOT).startsWith(Constants.LIBRARY))) {
             return resource;
         }
         return new PrimeResource(resource);
