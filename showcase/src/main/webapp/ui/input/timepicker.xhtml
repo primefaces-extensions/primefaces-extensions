@@ -1,0 +1,279 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        TimePicker
+    </ui:define>
+
+    <ui:define name="description">
+        TimePicker is a highly configurable component to integrate time inputs (hours / minutes) in a convenient way.
+        A typical area of application is working time registration, expense and travel accounts.
+        See the <a href="https://github.com/primefaces-extensions/primefaces-extensions.github.com/wiki/PrimeFaces-Extensions-Locales" target="_blank" rel="noopener noreferrer">Internationalisation page</a>
+        for how to localize the component in multi-language applications.
+    </ui:define>
+
+    <ui:param name="tagName" value="timePicker"/>
+    <ui:param name="widgetLink" value="timepicker"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <style>
+            .timepicker-column {
+                padding: 0 1rem 1rem 0;
+                vertical-align: top;
+            }
+        </style>
+
+        <div class="card">
+            <!-- EXAMPLE: timePicker/basicUsage -->
+            <h5>Basic usage and three modes</h5>
+            <p>Time picker has three modes: <code>inline</code>, <code>popup</code> and <code>spinner</code>. The spinner is the most convenient because it increments / decrements hours and minutes, but it is not compatible with <code>onHourShow</code> / <code>onMinuteShow</code>. The customized picker sets the time separator, start / end hours and minutes, the minute interval, buttons and more.</p>
+            <h:form id="formBasicUsage">
+                <p:messages id="messages"/>
+
+                <h:panelGroup id="timePickerGroup" layout="block">
+                    <p>
+                        Inline mode
+                        <pe:timePicker value="#{timePickerController.time1}" mode="inline" widgetVar="inlineTimeWidget"
+                                       label="Inline time picker"/>
+                    </p>
+
+                    <p>
+                        Popup mode
+                        <pe:timePicker value="#{timePickerController.time2}" mode="popup" widgetVar="popupTimeWidget"
+                                       label="Popup time picker"/>
+                    </p>
+
+                    <p>
+                        Spinner mode
+                        <pe:timePicker value="#{timePickerController.time3}" widgetVar="spinnerTimeWidget"
+                                       label="Spinner time picker"/>
+                    </p>
+
+                    <p>
+                        Customization
+                        <pe:timePicker value="#{timePickerController.time4}" timeSeparator="-" startHours="8" endHours="20"
+                                       startMinutes="10" endMinutes="40" intervalMinutes="10" showCloseButton="true"
+                                       showDeselectButton="true" showNowButton="true" rows="3" showPeriod="true" size="8"
+                                       widgetVar="customTimeWidget" label="Custom time picker" required="true" requiredMessage="Customization is required!"/>
+                    </p>
+
+                    <p>
+                        Show popup by button
+                        <pe:timePicker value="#{timePickerController.time5}" mode="popup" widgetVar="popupBtnTimeWidget"
+                                       showOn="button" label="Popup time picker with button"/>
+                    </p>
+
+                    <p>
+                        Spinner with button
+                        <pe:timePicker value="#{timePickerController.time6}" mode="spinner" widgetVar="spinnerBtnTimeWidget"
+                                       showOn="button" label="Spinner time picker with button"/>
+                    </p>
+                </h:panelGroup>
+
+                <p:commandButton type="button" value="Disable time pickers" styleClass="mt-2 mr-2"
+                                 onclick="PF('inlineTimeWidget').disable();PF('popupTimeWidget').disable();
+                                     PF('spinnerTimeWidget').disable();PF('customTimeWidget').disable();
+                                     PF('popupBtnTimeWidget').disable();PF('spinnerBtnTimeWidget').disable();"/>
+                <p:commandButton type="button" value="Enable time pickers" styleClass="mt-2 mr-2"
+                                 onclick="PF('inlineTimeWidget').enable();PF('popupTimeWidget').enable();
+                                     PF('spinnerTimeWidget').enable();PF('customTimeWidget').enable();
+                                     PF('popupBtnTimeWidget').enable();PF('spinnerBtnTimeWidget').enable();"/>
+                <p:commandButton id="submitButton" value="Submit" actionListener="#{timePickerController.showTime}"
+                                 process="@this timePickerGroup" update="messages timeDialog timePickerGroup"
+                                 styleClass="mt-2 mr-2" icon="pi pi-save"/>
+
+                <p:dialog id="timeDialog" header="Selected Values" visible="#{timePickerController.showTimeDialog}">
+                    <h:panelGrid columns="1" style="margin: 10px;">
+                        <h:outputText value="Inline: #{timePickerController.formattedTime1}"/>
+                        <h:outputText value="Popup: #{timePickerController.formattedTime2}"/>
+                        <h:outputText value="Spinner: #{timePickerController.formattedTime3}"/>
+                        <h:outputText value="Custom: #{timePickerController.formattedTime4}"/>
+                        <h:outputText value="Button: #{timePickerController.formattedTime5}"/>
+                        <h:outputText value="Spinner and Button: #{timePickerController.formattedTime6}"/>
+                    </h:panelGrid>
+                </p:dialog>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: timePicker/advancedUsage -->
+            <h5>Advanced usage, events and callbacks</h5>
+            <p>AJAX events <i>timeSelect</i>, <i>beforeShow</i> and <i>close</i>, hours-only and minutes-only pickers, restricted time via <code>onHourShow</code> / <code>onMinuteShow</code> callbacks, and a custom locale (try "Change Locale").</p>
+            <h:form id="formAdvancedUsage">
+                <p:growl id="growl" showDetail="true" showSummary="true"/>
+
+                <h:panelGrid id="timePickerGrid" columns="5" columnClasses="timepicker-column">
+                    <h:outputText value="TimeSelect event"/>
+                    <h:outputText value="BeforeShow / Close events"/>
+                    <h:outputText value="Only hours"/>
+                    <h:outputText value="Only minutes"/>
+                    <h:outputText value="Restricted time"/>
+
+                    <pe:timePicker id="inlineTime" value="#{timePickerController.time1}" mode="inline" locale="#{timePickerController.locale}">
+                        <p:ajax event="timeSelect" listener="#{timePickerController.timeSelectListener}" update="growl"/>
+                    </pe:timePicker>
+                    <pe:timePicker id="spinnerTime" value="#{timePickerController.time2}" showPeriod="true" style="width: 100px;" locale="#{timePickerController.locale}">
+                        <p:ajax event="beforeShow" listener="#{timePickerController.beforeShowListener}" update="growl"/>
+                        <p:ajax event="close" listener="#{timePickerController.closeListener}" update="growl"/>
+                    </pe:timePicker>
+                    <pe:timePicker value="#{timePickerController.time4}" showMinutes="false" locale="#{timePickerController.locale}"/>
+                    <pe:timePicker value="#{timePickerController.time4}" showHours="false" locale="#{timePickerController.locale}"/>
+                    <pe:timePicker value="#{timePickerController.time4}" mode="popup" locale="#{timePickerController.locale}"
+                                   onHourShow="onHourShowCallback" onMinuteShow="onMinuteShowCallback"/>
+
+                    <p:commandButton id="localeButton" value="Change Locale" actionListener="#{timePickerController.changeLocale}"
+                                     process="@this" update="@parent" style="margin-top:10px;" icon="pi pi-save"/>
+                </h:panelGrid>
+            </h:form>
+
+            <script>
+                PrimeFacesExt.locales.TimePicker['pt_BR'] = {
+                    hourText: 'Horas',
+                    minuteText: 'Minutos',
+                    amPmText: ['AM', 'PM'],
+                    closeButtonText: 'Fechar',
+                    nowButtonText: 'Agora',
+                    deselectButtonText: 'Limpar seleção'
+                };
+            </script>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: timePicker/minMaxTime -->
+            <h5>Setting min. / max. time</h5>
+            <p>Time picker supports minimum and maximum hours and minutes. They can also be set from JavaScript with the widget methods <code>setMinTime(hour, minute)</code> and <code>setMaxTime(hour, minute)</code>.</p>
+            <h:form id="formMinMaxTime">
+                <pe:timePicker mode="inline" minHour="9" minMinute="15"
+                               maxHour="16" maxMinute="30"/>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: timePicker/timeRange -->
+            <!-- EXAMPLE: timePicker/timeRangeJS -->
+            <h5>Time range</h5>
+            <p>Two time pickers select a chronological time range: the first is restricted to times before the one selected in the second, and vice versa. The JavaScript callbacks below also provide the restricted time used by the previous card.</p>
+            <h:form id="formTimeRange">
+                <h:panelGrid columns="5" cellpadding="4">
+                    <h:outputText value="Start time"/>
+                    <pe:timePicker value="#{timePickerController.time1}" mode="popup" onHourShow="tpStartOnHourShowCallback"
+                                   onMinuteShow="tpStartOnMinuteShowCallback" widgetVar="startTimeWidget"/>
+
+                    <h:panelGroup layout="block" style="width:20px;"/>
+
+                    <h:outputText value="End time"/>
+                    <pe:timePicker value="#{timePickerController.time2}" mode="popup" onHourShow="tpEndOnHourShowCallback"
+                                   onMinuteShow="tpEndOnMinuteShowCallback" widgetVar="endTimeWidget"/>
+                </h:panelGrid>
+            </h:form>
+
+            <script>
+                /* <![CDATA[ */
+                function onHourShowCallback(hour) {
+                    if ((hour > 20) || (hour < 6)) {
+                        return false; // not valid
+                    }
+
+                    return true; // valid
+                }
+
+                function onMinuteShowCallback(hour, minute) {
+                    if ((hour == 20) && (minute >= 30)) {
+                        return false; // not valid
+                    }
+
+                    if ((hour == 6) && (minute < 30)) {
+                        return false; // not valid
+                    }
+
+                    return true;  // valid
+                }
+
+                function tpStartOnHourShowCallback(hour) {
+                    if (!PrimeFaces.widgets['endTimeWidget']) {
+                        return false;
+                    }
+
+                    var tpEndHour = parseInt(PF('endTimeWidget').getHours());
+
+                    // Check if proposed hour is prior or equal to selected end time hour
+                    if (parseInt(hour) <= tpEndHour) {
+                        return true;
+                    }
+
+                    // if hour did not match, it can not be selected
+                    return false;
+                }
+
+                function tpStartOnMinuteShowCallback(hour, minute) {
+                    if (!PrimeFaces.widgets['endTimeWidget']) {
+                        return false;
+                    }
+
+                    var tpEndHour = parseInt(PF('endTimeWidget').getHours());
+                    var tpEndMinute = parseInt(PF('endTimeWidget').getMinutes());
+
+                    // Check if proposed hour is prior to selected end time hour
+                    if (parseInt(hour) < tpEndHour) {
+                        return true;
+                    }
+
+                    // Check if proposed hour is equal to selected end time hour and minutes is prior
+                    if ((parseInt(hour) == tpEndHour) && (parseInt(minute) < tpEndMinute)) {
+                        return true;
+                    }
+
+                    // if minute did not match, it can not be selected
+                    return false;
+                }
+
+                function tpEndOnHourShowCallback(hour) {
+                    if (!PrimeFaces.widgets['startTimeWidget']) {
+                        return false;
+                    }
+
+                    var tpStartHour = parseInt(PF('startTimeWidget').getHours());
+
+                    // Check if proposed hour is after or equal to selected start time hour
+                    if (parseInt(hour) >= tpStartHour) {
+                        return true;
+                    }
+
+                    // if hour did not match, it can not be selected
+                    return false;
+                }
+
+                function tpEndOnMinuteShowCallback(hour, minute) {
+                    if (!PrimeFaces.widgets['startTimeWidget']) {
+                        return false;
+                    }
+
+                    var tpStartHour = parseInt(PF('startTimeWidget').getHours());
+                    var tpStartMinute = parseInt(PF('startTimeWidget').getMinutes());
+
+                    // Check if proposed hour is after selected start time hour
+                    if (parseInt(hour) > tpStartHour) {
+                        return true;
+                    }
+
+                    // Check if proposed hour is equal to selected start time hour and minutes is after
+                    if ((parseInt(hour) == tpStartHour) && (parseInt(minute) > tpStartMinute)) {
+                        return true;
+                    }
+
+                    // if minute did not match, it can not be selected
+                    return false;
+                }
+                /* ]]> */
+            </script>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+</ui:composition>

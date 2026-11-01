@@ -64,6 +64,22 @@ public class AppMenu {
         // Component entries are added by the migration tasks, e.g.:
         // add(INPUT, new MenuItem("<Label>", "<url>"));
 
+        add(INPUT, new MenuItem("Calculator", "/ui/input/calculator"));
+        add(INPUT, new MenuItem("ClockPicker", "/ui/input/clockpicker"));
+        add(INPUT, new MenuItem("CodeScanner", "/ui/input/codescanner"));
+        add(INPUT, new MenuItem("Converters", "/ui/input/converters"));
+        add(INPUT, new MenuItem("CreditCard", "/ui/input/creditcard"));
+        add(INPUT, new MenuItem("DynaForm", List.of(
+                    new MenuItem("Basic", "/ui/input/dynaform/basic"),
+                    new MenuItem("Features", "/ui/input/dynaform/features"),
+                    new MenuItem("Controls", "/ui/input/dynaform/controls"))));
+        add(INPUT, new MenuItem("FuzzySearch", "/ui/input/fuzzysearch"));
+        add(INPUT, new MenuItem("InputPlace", List.of(
+                    new MenuItem("Google", "/ui/input/inputplace/google"),
+                    new MenuItem("Azure", "/ui/input/inputplace/azure"),
+                    new MenuItem("Linked Map", "/ui/input/inputplace/map"))));
+        add(INPUT, new MenuItem("TimePicker", "/ui/input/timepicker"));
+
         add(DATA, new MenuItem("Counter", "/ui/data/counter"));
 
         add(PANEL, new MenuItem("Layout", "/ui/panel/layout"));

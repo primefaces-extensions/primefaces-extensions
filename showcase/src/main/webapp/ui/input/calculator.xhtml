@@ -1,0 +1,116 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        Calculator
+    </ui:define>
+
+    <ui:define name="description">
+        Calculator is a highly configurable component that attaches a popup calculator to an input field.
+        Features include a Scientific or Standard button layout, localization and RTL support, and it works with any input field including InputNumber.
+        Based on <a href="http://keith-wood.name/calculator.html" target="_blank" rel="noopener noreferrer">jQuery Calculator</a> by Keith Wood.
+    </ui:define>
+
+    <ui:param name="tagName" value="calculator"/>
+    <ui:param name="widgetLink" value="calculator"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <div class="card">
+            <!-- EXAMPLE: calculator/basicUsage -->
+            <h5>Basic Usage</h5>
+            <p>Attach a calculator to <code>h:inputText</code>, <code>p:inputText</code> and <code>p:inputNumber</code>. It can be embedded in the input component or configured externally with <code>for</code>.</p>
+            <h:form id="formBasicUsage">
+                <h:panelGrid columns="2" cellpadding="4">
+                    <h:outputText value="Calculator with defaults on h:inputText"/>
+                    <h:inputText id="hInputText" value="#{calculatorController.hInputText}">
+                        <pe:calculator/>
+                    </h:inputText>
+
+                    <h:outputText value="Calculator scientific layout on a p:inputText"/>
+                    <p:inputText id="pInputText" value="#{calculatorController.pInputText}">
+                        <pe:calculator layout="scientific"/>
+                    </p:inputText>
+
+                    <h:outputText value="Calculator with button on a p:inputNumber"/>
+                    <p:inputNumber id="pInputNumber" value="#{calculatorController.pInputNumber}" symbol=" $USD" symbolPosition="s"
+                                   decimalSeparator="." thousandSeparator="," decimalPlaces="2"/>
+                </h:panelGrid>
+
+                <pe:calculator for="pInputNumber" showOn="both" precision="2"/>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: calculator/localization -->
+            <h5>Localization and RTL</h5>
+            <p>Calculator can be localized. Select a language to change the text and tooltips. RTL (right to left) is supported as well.</p>
+            <h:form id="formLocalization">
+                <h:panelGrid columns="6" id="pnlDetails" cellpadding="4">
+                    <p:outputLabel value="Locale:" for="cboLocale"/>
+                    <p:selectOneMenu id="cboLocale" value="#{calculatorController.language}" style="width:200px" required="true">
+                        <f:selectItems value="#{calculatorController.languages}"/>
+                        <p:ajax update="pInputText" process="@this"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="RTL:" for="chkRtl"/>
+                    <p:selectBooleanCheckbox id="chkRtl" value="#{calculatorController.rtl}">
+                        <p:ajax update="pInputText" process="@this"/>
+                    </p:selectBooleanCheckbox>
+
+                    <p:outputLabel value="Calc:" for="pInputText"/>
+                    <p:inputText id="pInputText" value="#{calculatorController.pInputText}">
+                        <pe:calculator dir="#{calculatorController.rtl ? 'rtl' : 'ltr'}" locale="#{calculatorController.language}" showOn="both"/>
+                    </p:inputText>
+                </h:panelGrid>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: calculator/javascript -->
+            <h5>Advanced Usage, events and callbacks</h5>
+            <p>Control the calculator from JavaScript, use the <code>onopen</code>, <code>onclose</code> and <code>onbutton</code> callbacks and handle the server side <i>open</i>, <i>close</i> and <i>button</i> events with <code>p:ajax</code>.</p>
+            <h:form id="formJavascript">
+                <p:growl id="growl" showDetail="true" showSummary="true"/>
+
+                <h:panelGrid columns="3" cellpadding="4">
+                    <p:outputLabel value="Callback: onOpen and onClose"/>
+                    <p:inputText id="txtOnOpenClose" value="867">
+                        <pe:calculator id="calculator1" widgetVar="calc1" showOn="both"
+                                       onopen="$(PrimeFaces.escapeClientId('formJavascript:lblOnOpenClose')).text('Open Event: ' + value);"
+                                       onclose="$(PrimeFaces.escapeClientId('formJavascript:lblOnOpenClose')).text('Close Event: ' + value);">
+                            <p:ajax event="open" listener="#{calculatorController.openListener}" update="growl"/>
+                            <p:ajax event="close" listener="#{calculatorController.closeListener}" update="growl"/>
+                            <p:ajax event="button" listener="#{calculatorController.buttonListener}" update="growl"/>
+                        </pe:calculator>
+                    </p:inputText>
+                    <h:outputText id="lblOnOpenClose" value="Event Result" style="font-weight:bold"/>
+
+                    <p:outputLabel value="Callback: onButton"/>
+                    <p:inputText widgetVar="txtOnButton" value="5309">
+                        <pe:calculator id="calculator2" widgetVar="calc2" showOn="both"
+                                       onbutton="$(PrimeFaces.escapeClientId('formJavascript:lblOnButton')).text('Button: ' + label + ' Current Value: ' + value)">
+                            <p:ajax event="button" listener="#{calculatorController.buttonListener}" update="growl"/>
+                        </pe:calculator>
+                    </p:inputText>
+                    <h:outputText id="lblOnButton" value="Event Result" style="font-weight:bold"/>
+                </h:panelGrid>
+
+                <div class="mt-3">
+                    <p:commandButton value="Show" type="button" onclick="PF('calc1').show();"/>
+                    <p:commandButton value="Hide" type="button" onclick="PF('calc1').hide();"/>
+                    <p:commandButton value="Disable" type="button" onclick="PF('calc1').disable();PF('calc2').disable();"/>
+                    <p:commandButton value="Enable" type="button" onclick="PF('calc1').enable();PF('calc2').enable();"/>
+                    <p:commandButton value="Destroy" type="button" onclick="PF('calc1').destroy();PF('calc2').destroy();"/>
+                </div>
+            </h:form>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+</ui:composition>

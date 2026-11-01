@@ -1,0 +1,49 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        CodeScanner
+    </ui:define>
+
+    <ui:define name="description">
+        CodeScanner is a multi-format 1D/2D barcode image scanner that scans bar and QR codes using a client side video input device.
+        Based on <a href="https://github.com/zxing-js/library" target="_blank" rel="noopener noreferrer">ZXing for JS</a>.
+    </ui:define>
+
+    <ui:param name="tagName" value="codeScanner"/>
+    <ui:param name="widgetLink" value="codescanner"/>
+
+    <ui:define name="static-documentation">
+        <h2>Requirements</h2>
+        <div class="card">
+            <p><strong>Important:</strong> parts of the JavaScript of this component require <strong>https</strong> (or <code>localhost</code>).
+                If the component is not working for you on a remote server, try running the showcase on localhost.</p>
+        </div>
+    </ui:define>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <div class="card">
+            <!-- EXAMPLE: codeScanner/basicUsage -->
+            <h5>Basic Usage</h5>
+            <p>Scan a bar or QR code with your camera. The scanned text is written to the input field (<code>for</code>) and the <i>codeScanned</i> event is sent to the server.</p>
+            <h:form id="formBasicUsage">
+                <p:growl id="growl" showDetail="true" showSummary="true" globalOnly="false"/>
+
+                <p><p:inputText id="input" style="width:530px"/></p>
+                <pe:codeScanner width="530"
+                                height="400"
+                                for="input">
+                    <p:ajax event="codeScanned" listener="#{codeScannerController.onCodeScanned}" update="growl"/>
+                </pe:codeScanner>
+            </h:form>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+</ui:composition>

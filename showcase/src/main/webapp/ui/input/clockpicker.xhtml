@@ -1,0 +1,172 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        ClockPicker
+    </ui:define>
+
+    <ui:define name="description">
+        ClockPicker is a highly configurable component to integrate time inputs (hours / minutes) in a convenient way.
+        Based on <a href="https://weareoutman.github.io/clockpicker/" target="_blank" rel="noopener noreferrer">clockpicker</a> by weareoutman.
+    </ui:define>
+
+    <ui:param name="tagName" value="clockpicker"/>
+    <ui:param name="widgetLink" value="clockpicker"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <style>
+            .placement-demo-grid {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 2rem;
+            }
+        </style>
+
+        <div class="card">
+            <!-- EXAMPLE: clockpicker/basicUsage -->
+            <h5>Basic Usage</h5>
+            <p>A 12 hour picker with auto-close, a 24 hour picker with manual close and AJAX, and a picker inside a dialog.</p>
+            <h:form id="formBasicUsage">
+                <p:growl id="growl" showDetail="true" showSummary="true"/>
+
+                <h:panelGroup id="timePickerGroup" layout="block">
+                    <p>AM/PM with Auto-Close</p>
+                    <pe:clockpicker id="autoclose" widgetVar="autocloseWidget" autoClose="true" value="#{clockPickerController.time}"
+                                    twelveHour="true" locale="es"/>
+
+                    <p>24 Hour with Manual Close Mode</p>
+                    <pe:clockpicker id="closeable" widgetVar="closeableWidget" autoClose="false" value="#{clockPickerController.time2}" showOn="button">
+                        <p:ajax listener="#{clockPickerController.showTime2}" update="growl"/>
+                    </pe:clockpicker>
+
+                    <p>Open In Dialog</p>
+                    <p:commandButton value="Open Dialog" type="button" icon="pi pi-external-link" onclick="PF('dlg1').show()"/>
+                    <p:dialog header="ClockPicker" widgetVar="dlg1" height="350" width="350" showEffect="fade" closeOnEscape="true">
+                        <pe:clockpicker id="dlgClockPicker" widgetVar="dialogClockPickerWidget" autoClose="false" value="#{clockPickerController.time3}" showOn="button">
+                            <p:ajax listener="#{clockPickerController.showTime3}" update="growl"/>
+                        </pe:clockpicker>
+                    </p:dialog>
+                </h:panelGroup>
+
+                <p:commandButton type="button" value="Disable clock pickers" styleClass="mt-2 mr-2"
+                                 onclick="PF('autocloseWidget').disable();PF('closeableWidget').disable();"/>
+                <p:commandButton type="button" value="Enable clock pickers" styleClass="mt-2 mr-2"
+                                 onclick="PF('autocloseWidget').enable();PF('closeableWidget').enable();"/>
+                <p:commandButton id="submitButton" value="Submit" actionListener="#{clockPickerController.showTime1}" update="timePickerGroup growl"
+                                 styleClass="mt-2 mr-2" icon="pi pi-save"/>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: clockpicker/midnightUsage -->
+            <h5>12 Hour with Midnight Value</h5>
+            <p>ClockPicker in 12-hour mode with a midnight value (12:00 AM). Open the picker and verify that the AM indicator is preserved.</p>
+            <h:form id="formMidnightUsage">
+                <p:growl id="midnightGrowl" showDetail="true" showSummary="true"/>
+
+                <h:panelGroup id="timePickerGroup" layout="block">
+                    <p>12 Hour with Midnight Value (12:00 AM)</p>
+                    <pe:clockpicker id="midnight" widgetVar="midnightWidget" autoClose="false"
+                                    value="#{clockPickerMidnightController.time}" twelveHour="true" showOn="button"/>
+
+                    <h:panelGroup id="messagePanel">
+                        <h:outputText value="#{clockPickerMidnightController.message}" styleClass="p-message-info"
+                                      rendered="#{not empty clockPickerMidnightController.message}"/>
+                    </h:panelGroup>
+                </h:panelGroup>
+
+                <p:commandButton id="submitButton" value="Submit" action="#{clockPickerMidnightController.submit}"
+                                 update="timePickerGroup midnightGrowl" styleClass="mt-2 mr-2" icon="pi pi-save"/>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: clockpicker/placementUsage -->
+            <h5>Placement</h5>
+            <p>The <code>placement</code> attribute controls which direction the popover opens: top, bottom, left, or right.</p>
+            <h:form id="formPlacementUsage">
+                <h:panelGroup id="placementGrid" layout="block" styleClass="placement-demo-grid">
+                    <h:panelGroup layout="block" styleClass="placement-cell">
+                        <p>Top</p>
+                        <pe:clockpicker id="placementTop" widgetVar="placementTopWidget" autoClose="false"
+                                        value="#{clockPickerPlacementController.timeTop}" showOn="button" locale="en"
+                                        placement="top"/>
+                    </h:panelGroup>
+
+                    <h:panelGroup layout="block" styleClass="placement-cell">
+                        <p>Bottom</p>
+                        <pe:clockpicker id="placementBottom" widgetVar="placementBottomWidget" autoClose="false"
+                                        value="#{clockPickerPlacementController.timeBottom}" showOn="button" locale="en"
+                                        placement="bottom"/>
+                    </h:panelGroup>
+
+                    <h:panelGroup layout="block" styleClass="placement-cell">
+                        <p>Left</p>
+                        <pe:clockpicker id="placementLeft" widgetVar="placementLeftWidget" autoClose="false"
+                                        value="#{clockPickerPlacementController.timeLeft}" showOn="button" locale="en"
+                                        placement="left"/>
+                    </h:panelGroup>
+
+                    <h:panelGroup layout="block" styleClass="placement-cell">
+                        <p>Right</p>
+                        <pe:clockpicker id="placementRight" widgetVar="placementRightWidget" autoClose="false"
+                                        value="#{clockPickerPlacementController.timeRight}" showOn="button" locale="en"
+                                        placement="right"/>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: clockpicker/alignUsage -->
+            <h5>Align</h5>
+            <p>The <code>align</code> attribute controls which edge of the popover aligns with the input. For <code>placement="top"</code> or <code>"bottom"</code> use <code>left</code> (default), <code>center</code> or <code>right</code>. For <code>placement="left"</code> or <code>"right"</code> use <code>top</code> or <code>bottom</code>.</p>
+            <h:form id="formAlignUsage">
+                <h:panelGroup id="alignGrid" layout="block" styleClass="placement-demo-grid">
+                    <h:panelGroup layout="block" styleClass="placement-cell">
+                        <p>Left (default)</p>
+                        <pe:clockpicker id="alignLeft" widgetVar="alignLeftWidget" autoClose="false"
+                                        value="#{clockPickerAlignController.timeLeft}" showOn="button" locale="en"
+                                        align="left" placement="bottom"/>
+                    </h:panelGroup>
+
+                    <h:panelGroup layout="block" styleClass="placement-cell">
+                        <p>Center</p>
+                        <pe:clockpicker id="alignCenter" widgetVar="alignCenterWidget" autoClose="false"
+                                        value="#{clockPickerAlignController.timeCenter}" showOn="button" locale="en"
+                                        align="center" placement="bottom"/>
+                    </h:panelGroup>
+
+                    <h:panelGroup layout="block" styleClass="placement-cell">
+                        <p>Right</p>
+                        <pe:clockpicker id="alignRight" widgetVar="alignRightWidget" autoClose="false"
+                                        value="#{clockPickerAlignController.timeRight}" showOn="button" locale="en"
+                                        align="right" placement="bottom"/>
+                    </h:panelGroup>
+
+                    <h:panelGroup layout="block" styleClass="placement-cell">
+                        <p>Top</p>
+                        <pe:clockpicker id="alignTop" widgetVar="alignTopWidget" autoClose="false"
+                                        value="#{clockPickerAlignController.timeTop}" showOn="button" locale="en"
+                                        align="top" placement="right"/>
+                    </h:panelGroup>
+
+                    <h:panelGroup layout="block" styleClass="placement-cell">
+                        <p>Bottom</p>
+                        <pe:clockpicker id="alignBottom" widgetVar="alignBottomWidget" autoClose="false"
+                                        value="#{clockPickerAlignController.timeBottom}" showOn="button" locale="en"
+                                        align="bottom" placement="right"/>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </h:form>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+</ui:composition>
