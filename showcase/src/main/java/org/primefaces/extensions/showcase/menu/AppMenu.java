@@ -80,6 +80,17 @@ public class AppMenu {
                     new MenuItem("Linked Map", "/ui/input/inputplace/map"))));
         add(INPUT, new MenuItem("TimePicker", "/ui/input/timepicker"));
 
+        add(EDITORS, new MenuItem("CodeMirror", "/ui/editors/codemirror"));
+        add(EDITORS, new MenuItem("MarkdownEditor", "/ui/editors/markdowneditor"));
+        add(EDITORS, new MenuItem("MonacoEditor", List.of(
+                    new MenuItem("Basic", "/ui/editors/monacoeditor/basic"),
+                    new MenuItem("Theme", "/ui/editors/monacoeditor/theme"),
+                    new MenuItem("Extender", "/ui/editors/monacoeditor/extender"),
+                    new MenuItem("Diff", "/ui/editors/monacoeditor/diff"),
+                    new MenuItem("Diff Theme", "/ui/editors/monacoeditor/difftheme"),
+                    new MenuItem("Diff Extender", "/ui/editors/monacoeditor/diffextender")), "Updated"));
+        add(EDITORS, new MenuItem("SunEditor", "/ui/editors/suneditor", "Updated"));
+
         add(DATA, new MenuItem("Counter", "/ui/data/counter"));
 
         add(PANEL, new MenuItem("Layout", "/ui/panel/layout"));

@@ -1,0 +1,125 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        CodeMirror
+    </ui:define>
+
+    <ui:define name="description">
+        CodeMirror is a JavaScript library that can be used to create a relatively pleasant editor interface for code-like content: computer programs,
+        HTML markup and similar. If a mode has been written for the language you are editing, the code is coloured and the editor helps with indentation.
+        Based on <a href="https://codemirror.net/" target="_blank" rel="noopener noreferrer">CodeMirror.js</a> by Marijn Haverbeke.
+    </ui:define>
+
+    <ui:param name="tagName" value="codeMirror"/>
+    <ui:param name="widgetLink" value="codemirror"/>
+
+    <ui:define name="static-documentation">
+        <h2>Available modes</h2>
+        <div class="card">
+            <p>CodeMirror provides many languages for markup and themes for styling. The following modes are available:</p>
+            <ul>
+                <ui:repeat var="language" value="#{codeMirrorController.modes}">
+                    <li>#{language}</li>
+                </ui:repeat>
+            </ul>
+        </div>
+    </ui:define>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <script>
+            // The CodeMirror theme is an option of the editor: the editors marked with cm-follow-scheme use a light or a
+            // dark theme depending on the color scheme of the page (data-dark on html, set by the theme configurator).
+            function followColorScheme() {
+                var dark = document.documentElement.getAttribute('data-dark') === 'true';
+                document.querySelectorAll('.cm-follow-scheme .CodeMirror').forEach(function (el) {
+                    el.CodeMirror.setOption('theme', dark ? 'blackboard' : 'eclipse');
+                });
+            }
+            $(window).on('load', followColorScheme);
+            $(document).on('pfAjaxComplete', followColorScheme);
+            new MutationObserver(followColorScheme).observe(document.documentElement, {attributes: true, attributeFilter: ['data-dark']});
+        </script>
+
+        <div class="card">
+            <!-- EXAMPLE: codeMirror/basicUsage -->
+            <h5>Basic Usage</h5>
+            <p>CodeMirror is fully updateable via AJAX as you can see with the select menus below: change the theme, the mode or the keymap.</p>
+            <h:form id="formBasicUsage">
+                <p:messages id="messages" showSummary="true" showDetail="true"/>
+
+                <pe:codeMirror id="codeMirror" mode="#{codeMirrorController.mode}" theme="#{codeMirrorController.theme}"
+                               value="#{codeMirrorController.content}" keyMap="#{codeMirrorController.keymap}" lineNumbers="true"
+                               matchBrackets="true"/>
+
+                <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+                    <p:outputLabel for="theme" value="Theme: "/>
+                    <p:selectOneMenu id="theme" value="#{codeMirrorController.theme}">
+                        <f:selectItem itemLabel="Select One" itemValue=""/>
+                        <f:selectItems value="#{codeMirrorController.themes}"/>
+                        <p:ajax update="codeMirror"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel for="mode" value="Mode: "/>
+                    <p:selectOneMenu id="mode" value="#{codeMirrorController.mode}">
+                        <f:selectItem itemLabel="Select One" itemValue=""/>
+                        <f:selectItems value="#{codeMirrorController.modes}"/>
+                        <p:ajax update="codeMirror"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel for="keymap" value="Keymap: "/>
+                    <p:selectOneMenu id="keymap" value="#{codeMirrorController.keymap}">
+                        <f:selectItem itemLabel="Select One" itemValue=""/>
+                        <f:selectItems value="#{codeMirrorController.keymaps}"/>
+                        <p:ajax update="codeMirror"/>
+                    </p:selectOneMenu>
+
+                    <p:commandButton id="btnSubmit" value="Submit" icon="pi pi-save" actionListener="#{codeMirrorController.submitContent()}"
+                                     update="messages"/>
+                </h:panelGrid>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: codeMirror/codeCompletion -->
+            <h5>Code Completion</h5>
+            <p>
+                Set <code>completeMethod</code> to a server-side method that returns suggestions. Press <i>Ctrl-Space</i> in the editor
+                to open the proposals; the mode can be changed with AJAX.
+            </p>
+            <h:form id="formCodeCompletion" styleClass="cm-follow-scheme">
+                <pe:codeMirror id="codeMirror" mode="#{codeMirrorController.mode}" widgetVar="codeMirrorCompletion"
+                               theme="eclipse" value="#{codeMirrorController.content}" lineNumbers="true"
+                               completeMethod="#{codeMirrorController.complete}"
+                               extraKeys="{ 'Ctrl-Space': function(cm) { PF('codeMirrorCompletion').complete(); }}"/>
+
+                <p:commandButton actionListener="#{codeMirrorController.changeMode}" update="codeMirror"
+                                 value="Change mode with AJAX" style="margin-top:10px;"/>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: codeMirror/jsCodeCompletion -->
+            <h5>JS Code Completion</h5>
+            <p>
+                The JavaScript hint add-on of CodeMirror can be bound with <code>extraKeys</code>. Press <i>Ctrl-Space</i> in the editor
+                to complete JavaScript code on the client.
+            </p>
+            <h:form id="formJsCodeCompletion" styleClass="cm-follow-scheme">
+                <pe:codeMirror id="codeMirror" mode="#{codeMirrorController.mode}"
+                               theme="eclipse" value="#{codeMirrorController.content}" lineNumbers="true"
+                               extraKeys="{ 'Ctrl-Space': function(cm) {CodeMirror.showHint(cm, CodeMirror.hint.javascriptHint);}}"/>
+
+                <p:commandButton actionListener="#{codeMirrorController.changeMode}" update="codeMirror"
+                                 value="Change mode with AJAX" style="margin-top:10px;"/>
+            </h:form>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+</ui:composition>

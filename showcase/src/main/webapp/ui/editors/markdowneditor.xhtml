@@ -1,0 +1,100 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        MarkdownEditor
+    </ui:define>
+
+    <ui:define name="description">
+        MarkdownEditor is a text area replacement for writing beautiful and understandable Markdown. It allows users who may be less experienced
+        with Markdown to use familiar toolbar buttons and shortcuts, and renders the syntax while editing.
+        Based on <a href="https://github.com/Ionaru/easy-markdown-editor" target="_blank" rel="noopener noreferrer">Easy MDE</a>
+        by Sparksuite, Inc, Jeroen Akkerman.
+    </ui:define>
+
+    <ui:param name="tagName" value="markdownEditor"/>
+    <ui:param name="widgetLink" value="markdowneditor"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <div class="card">
+            <!-- EXAMPLE: markdownEditor/basicUsage -->
+            <h5>Basic Usage</h5>
+            <p>A lightweight, flexible and customizable Markdown editor with a configurable toolbar, side-by-side mode and RTL support. The paste, copy and cut events are sent to the server.</p>
+            <h:form id="formBasicUsage">
+                <p:messages id="messages" showSummary="true" showDetail="true"/>
+
+                <h:panelGrid columns="2" id="pnlDetails" styleClass="p-4">
+                    <p:outputLabel value="RTL:" for="@next" styleClass="mr-2"/>
+                    <p:selectBooleanCheckbox id="chkRtl" value="#{markdownEditorController.rtl}" styleClass="mr-2">
+                        <p:ajax update="txtMarkdown"/>
+                    </p:selectBooleanCheckbox>
+                </h:panelGrid>
+
+                <pe:markdownEditor id="txtMarkdown" widgetVar="mdeBasic" value="#{markdownEditorController.markdown}"
+                                   maxHeight="300px" sideBySideFullscreen="false" required="true" mode="sidebyside"
+                                   dir="#{markdownEditorController.rtl ? 'rtl' : 'ltr'}"
+                                   toolbar="bold, italic, strikethrough, |, heading-1, heading-2, heading-3,|, code, quote, unordered-list, ordered-list,|, clean-block, link, image, table, horizontal-rule,|, preview, side-by-side, fullscreen, |, guide">
+                    <p:ajax event="paste" listener="#{markdownEditorController.onPaste}" update="messages"/>
+                    <p:ajax event="copy" listener="#{markdownEditorController.onCopy}" update="messages"/>
+                    <p:ajax event="cut" listener="#{markdownEditorController.onCut}" update="messages"/>
+                </pe:markdownEditor>
+
+                <p:commandButton value="Submit" actionListener="#{markdownEditorController.submit}" update="txtMarkdown messages"
+                                 styleClass="mt-4"/>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: markdownEditor/dialog -->
+            <h5>Dialog</h5>
+            <p>A popular use case is an editor inside a PrimeFaces dialog. This example is for both demonstration and testing.</p>
+            <h:form id="formDialog">
+                <h:panelGrid columns="6" id="pnlDetails" styleClass="p-4">
+                    <p:commandButton value="Open Dialog" type="button" icon="pi pi-external-link" onclick="PF('dlgMarkdown').show()"/>
+                </h:panelGrid>
+
+                <p:dialog header="Header" widgetVar="dlgMarkdown" minHeight="40" width="60vw" showEffect="fade" closable="true" closeOnEscape="true" modal="true">
+                    <pe:markdownEditor id="txtMarkdown" widgetVar="mdeDialog" value="#{markdownEditorController.markdown}"
+                                       maxHeight="200px" sideBySideFullscreen="false"
+                                       toolbar="bold, italic, |, guide">
+                    </pe:markdownEditor>
+                </p:dialog>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: markdownEditor/extender -->
+            <h5>Extender</h5>
+            <p>
+                Use the <code>extender</code> attribute to extend the underlying editor: the function below enables line numbers
+                and custom prompts for links and images (<code>this</code> is the widget, <code>this.cfg</code> its JSON configuration).
+            </p>
+            <h:form id="formExtender">
+                <pe:markdownEditor id="txtMarkdown" widgetVar="mdeExtender" value="#{markdownEditorController.markdown}"
+                                   maxHeight="200px" toolbar="bold, italic, link, |, guide"
+                                   extender="editorExtender">
+                </pe:markdownEditor>
+            </h:form>
+
+            <script type="text/javascript">
+                function editorExtender() {
+                    // this = widget
+                    // this.cfg = JSON configuration
+                    this.cfg.lineNumbers = true;
+                    this.cfg.promptURLs = true;
+                    this.cfg.promptTexts = {
+                        image: "Custom prompt for URL:",
+                        link: "Custom prompt for URL:",
+                    };
+                };
+            </script>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+</ui:composition>
