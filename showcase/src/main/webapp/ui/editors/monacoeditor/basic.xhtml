@@ -213,43 +213,6 @@
         </div>
 
         <div class="card">
-            <!-- EXAMPLE: monacoEditor/customLocalization -->
-            <h5>Custom Localization</h5>
-            <p>
-                Monaco comes with translations for most major languages. To provide your own, set <code>localeUrl</code> to a JavaScript file that writes the translation to <code>window.MonacoEnvironment.Locale</code>, see the <a href="#{resource['primefaces-extensions:monacoeditor/locale/ja.js']}" target="_blank" rel="noopener noreferrer">Japanese localization file</a>. The editor below is in Hindi (right click to open the context menu); the translation is nonsensical and only illustrates how to create your own.
-            </p>
-            <h:form id="formCustomLocalization">
-                <p:selectOneButton id="type" value="#{monacoEditorController.type}" styleClass="monacoSync">
-                    <f:selectItem itemLabel="Inline" itemValue="inline" />
-                    <f:selectItem itemLabel="Iframe" itemValue="framed" />
-                    <p:ajax process="@form" update="@(.monacoSync)" />
-                </p:selectOneButton>
-
-                <h:panelGroup id="monacoEditorWrapper" layout="block" styleClass="monacoEditorBox monacoSync">
-                    <pe:monacoEditor id="monacoEditor" widgetVar="monacoEditorLocalization"
-                        oninitialized="monacoFollowScheme.call(this)"
-                        rendered="#{monacoEditorController.type eq 'inline'}"
-                        value="#{monacoEditorController.value}"
-                        locale="hi"
-                        localeUrl="#{resource['other/hindi.js']}"
-                        editorOptions="#{monacoEditorController.editorOptions}"
-                        width="100%" height="400px"
-                        autoResize="true"/>
-
-                    <pe:monacoEditorFramed id="monacoEditorFramed" widgetVar="monacoEditorFramedLocalization"
-                        oninitialized="monacoFollowScheme.call(this)"
-                        rendered="#{monacoEditorController.type eq 'framed'}"
-                        value="#{monacoEditorController.valueFramed}"
-                        locale="hi"
-                        localeUrl="#{resource['other/hindi.js']}"
-                        editorOptions="#{monacoEditorController.editorOptionsFramed}"
-                        width="100%" height="400px"
-                        autoResize="true"/>
-                </h:panelGroup>
-            </h:form>
-        </div>
-
-        <div class="card">
             <!-- EXAMPLE: monacoEditor/events -->
             <h5>Events</h5>
             <p>
