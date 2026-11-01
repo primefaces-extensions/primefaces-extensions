@@ -96,6 +96,24 @@ public class AppMenu {
         add(EDITORS, new MenuItem("SunEditor", "/ui/editors/suneditor", "Updated"));
 
         add(DATA, new MenuItem("Counter", "/ui/data/counter"));
+        add(DATA, new MenuItem("Gantt", "/ui/data/gantt", "New"));
+        add(DATA, new MenuItem("Kanban", List.of(
+                    new MenuItem("Basic", "/ui/data/kanban/basic"),
+                    new MenuItem("Interaction", "/ui/data/kanban/interaction"),
+                    new MenuItem("Dragging", "/ui/data/kanban/dragging")), "New"));
+        add(DATA, new MenuItem("MasterDetail", "/ui/data/masterdetail"));
+        add(DATA, new MenuItem("MeterGroup", "/ui/data/metergroup", "New"));
+        add(DATA, new MenuItem("OrgChart", "/ui/data/orgchart", "Updated"));
+        add(DATA, new MenuItem("Sheet", List.of(
+                    new MenuItem("Basic", "/ui/data/sheet/basic"),
+                    new MenuItem("Events", "/ui/data/sheet/events"),
+                    new MenuItem("Columns", "/ui/data/sheet/columns"))));
+        add(DATA, new MenuItem("TimeAgo", List.of(
+                    new MenuItem("Basic", "/ui/data/timeago/basic"),
+                    new MenuItem("Localized", "/ui/data/timeago/localized"))));
+        add(DATA, new MenuItem("Timer", List.of(
+                    new MenuItem("Basic", "/ui/data/timer/basic"),
+                    new MenuItem("Display", "/ui/data/timer/display"))));
 
         add(PANEL, new MenuItem("Layout", "/ui/panel/layout"));
 

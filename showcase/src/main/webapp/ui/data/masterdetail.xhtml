@@ -1,0 +1,371 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        MasterDetail
+    </ui:define>
+
+    <ui:define name="description">
+        MasterDetail groups contents into levels (sections) and saves page space. Smart and flexible navigation between levels via built-in breadcrumbs or command components gives users a neat and stylish interface.
+    </ui:define>
+
+    <ui:param name="tagName" value="masterDetail"/>
+    <ui:param name="tagName2" value="masterDetailLevel"/>
+    <ui:param name="tagName3" value="selectDetailLevel"/>
+    <ui:param name="widgetLink" value="masterdetail"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <style>
+            .levelTitle {
+                padding: 4px 6px 4px 6px;
+                margin-right: 3px;
+                border-radius: 4px;
+            }
+
+            .levelTitle.p-state-hover {
+                background: var(--p-primary-color);
+                color: var(--p-primary-contrast-color);
+            }
+
+            table .formColumn1 {
+                padding-right: 10px;
+                text-align: right;
+                white-space: nowrap;
+                width: 1%;
+            }
+
+            table .formColumn2 input {
+                width: 200px;
+            }
+
+            [id$="personDetail"] .p-datalist {
+                width: 200px;
+            }
+        </style>
+
+        <div class="card">
+            <!-- EXAMPLE: masterDetail/basicNavigation -->
+            <h5>Basic navigation level by level</h5>
+            <p>Straightforward navigation by means of the <code>pe:selectDetailLevel</code> handler. Context values (any objects) are passed from level to level and available via context variables. The level to go to is set via <code>level</code> or <code>step</code> (default <code>step=1</code>); the breadcrumb text via <code>levelLabel</code> or the <code>label</code> facet.</p>
+            <h:form id="formBasicNavigation">
+                <pe:masterDetail id="masterDetail" level="#{simpleMasterDetailController.currentLevel}">
+
+                    <pe:masterDetailLevel level="1" levelLabel="Sports">
+                        <p:dataTable id="sports" value="#{simpleMasterDetailController.sports}" var="sport">
+                            <p:column headerText="Sport">
+                                <p:commandLink value="#{sport.name}">
+                                    <pe:selectDetailLevel contextValue="#{sport}"/>
+                                </p:commandLink>
+                            </p:column>
+                            <p:column headerText="Number of countries with leagues">
+                                <h:outputText value="#{sport.countriesWithLeague.size()}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </pe:masterDetailLevel>
+
+                    <pe:masterDetailLevel level="2" contextVar="sport" levelLabel="Countries having #{sport.name} leagues">
+                        <p:dataTable id="countries" value="#{sport.countriesWithLeague}" var="country">
+                            <p:column headerText="Country">
+                                <p:commandLink value="#{country.name}">
+                                    <pe:selectDetailLevel contextValue="#{country}"/>
+                                </p:commandLink>
+                            </p:column>
+                            <p:column headerText="Code">
+                                <h:outputText value="#{country.code}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </pe:masterDetailLevel>
+
+                    <pe:masterDetailLevel level="3" contextVar="country" levelLabel="#{country.sport} leagues of #{country.name}">
+                        <p:dataTable id="leauges" value="#{country.leagues}" var="league">
+                            <p:column headerText="League">
+                                <h:outputText value="#{league.name}"/>
+                            </p:column>
+                            <p:column headerText="Number of teams">
+                                <h:outputText value="#{league.numberOfTeam}"/>
+                            </p:column>
+                        </p:dataTable>
+                        <h:panelGrid columns="2" style="margin-top: 10px">
+                            <p:commandButton value="Go to Sports" icon="pi pi-fast-backward">
+                                <pe:selectDetailLevel level="1"/>
+                            </p:commandButton>
+                            <p:commandButton value="Go to Countries" icon="pi pi-step-backward">
+                                <pe:selectDetailLevel step="-1"/>
+                            </p:commandButton>
+                        </h:panelGrid>
+                    </pe:masterDetailLevel>
+
+                </pe:masterDetail>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: masterDetail/wizardLikeNavigation -->
+            <h5>Wizard-like navigation with forms</h5>
+            <p>Wizard-like navigation with form fields. The <code>header</code> and <code>footer</code> facets render content above and below the levels, shared between all levels, which allows a custom title bar instead of the built-in breadcrumbs.</p>
+            <h:form id="formWizardLikeNavigation">
+                <pe:masterDetail id="masterDetail" level="#{wizardMasterDetailController.currentLevel}" showBreadcrumb="false">
+                    <f:facet name="header">
+                        <p:messages showDetail="true"/>
+                        <h:panelGroup layout="block" style="margin-top: 10px;">
+                            <h:panelGroup styleClass="levelTitle p-state-default
+                                                  #{wizardMasterDetailController.currentLevel eq 1 ? 'p-state-hover' : ''}">
+                                <h:outputText value="Personal"/>
+                            </h:panelGroup>
+                            <h:panelGroup styleClass="levelTitle p-state-default
+                                                  #{wizardMasterDetailController.currentLevel eq 2 ? 'p-state-hover' : ''}">
+                                <h:outputText value="Address"/>
+                            </h:panelGroup>
+                            <h:panelGroup styleClass="levelTitle p-state-default
+                                                  #{wizardMasterDetailController.currentLevel eq 3 ? 'p-state-hover' : ''}">
+                                <h:outputText value="Contact"/>
+                            </h:panelGroup>
+                            <h:panelGroup styleClass="levelTitle p-state-default
+                                                  #{wizardMasterDetailController.currentLevel eq 4 ? 'p-state-hover' : ''}">
+                                <h:outputText value="Confirmation"/>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                    </f:facet>
+
+                    <pe:masterDetailLevel level="1">
+                        <p:panel header="Personal Details">
+                            <h:panelGrid columns="2" columnClasses="formColumn1,formColumn2">
+                                <h:outputText value="Firstname: *"/>
+                                <p:inputText required="true" label="Firstname"
+                                             value="#{wizardMasterDetailController.user.firstname}"/>
+                                <h:outputText value="Lastname: *"/>
+                                <p:inputText required="true" label="Lastname"
+                                             value="#{wizardMasterDetailController.user.lastname}"/>
+                                <h:outputText value="Age: "/>
+                                <p:inputText value="#{wizardMasterDetailController.user.age}"/>
+                            </h:panelGrid>
+                        </p:panel>
+                        <p:commandButton value="Next" process="masterDetail"
+                                         style="margin-top: 10px;" icon="pi pi-arrow-right">
+                            <pe:selectDetailLevel step="1"/>
+                        </p:commandButton>
+                        <p:commandButton value="Go to Save" process="masterDetail"
+                                         style="margin-top: 10px;" icon="pi pi-step-forward">
+                            <pe:selectDetailLevel level="4"/>
+                        </p:commandButton>
+                    </pe:masterDetailLevel>
+
+                    <pe:masterDetailLevel level="2">
+                        <p:panel header="Adress Details">
+                            <h:panelGrid columns="2" columnClasses="formColumn1,formColumn2">
+                                <h:outputText value="Street: "/>
+                                <p:inputText value="#{wizardMasterDetailController.user.street}"/>
+                                <h:outputText value="Postal Code: "/>
+                                <p:inputText value="#{wizardMasterDetailController.user.postalCode}"/>
+                                <h:outputText value="City: "/>
+                                <p:inputText value="#{wizardMasterDetailController.user.city}"/>
+                            </h:panelGrid>
+                        </p:panel>
+                        <p:commandButton value="Back" style="margin-top: 10px;" icon="pi pi-arrow-left"
+                                         process="@this" immediate="true">
+                            <pe:selectDetailLevel step="-1"/>
+                        </p:commandButton>
+                        <p:commandButton value="Next" process="masterDetail"
+                                         style="margin-top: 10px;" icon="pi pi-arrow-right">
+                            <pe:selectDetailLevel step="1"/>
+                        </p:commandButton>
+                    </pe:masterDetailLevel>
+
+                    <pe:masterDetailLevel level="3">
+                        <p:panel header="Contact Information">
+                            <h:panelGrid columns="2" columnClasses="formColumn1,formColumn2">
+                                <h:outputText value="Email: *"/>
+                                <p:inputText required="true" label="Email"
+                                             value="#{wizardMasterDetailController.user.email}"/>
+                                <h:outputText value="Phone: "/>
+                                <p:inputText value="#{wizardMasterDetailController.user.phone}"/>
+                                <h:outputText value="Additional Info: "/>
+                                <p:inputText value="#{wizardMasterDetailController.user.info}"/>
+                            </h:panelGrid>
+                        </p:panel>
+                        <p:commandButton value="Back" style="margin-top: 10px;" icon="pi pi-arrow-left"
+                                         process="@this" immediate="true">
+                            <pe:selectDetailLevel step="-1"/>
+                        </p:commandButton>
+                        <p:commandButton value="Next" process="masterDetail"
+                                         style="margin-top: 10px;" icon="pi pi-arrow-right">
+                            <pe:selectDetailLevel step="1"/>
+                        </p:commandButton>
+                    </pe:masterDetailLevel>
+
+                    <pe:masterDetailLevel level="4">
+                        <p:panel header="Confirmation">
+                            <h:panelGrid id="confirmation" columns="2" columnClasses="formColumn1,formColumn2">
+                                <h:outputText value="Firstname: "/>
+                                <h:outputText value="#{wizardMasterDetailController.user.firstname}"/>
+                                <h:outputText value="Lastname: "/>
+                                <h:outputText value="#{wizardMasterDetailController.user.lastname}"/>
+                                <h:outputText value="Age: "/>
+                                <h:outputText value="#{wizardMasterDetailController.user.age}"/>
+                                <h:outputText value="Street: "/>
+                                <h:outputText value="#{wizardMasterDetailController.user.street}"/>
+                                <h:outputText value="Postal Code: "/>
+                                <h:outputText value="#{wizardMasterDetailController.user.postalCode}"/>
+                                <h:outputText value="City: "/>
+                                <h:outputText value="#{wizardMasterDetailController.user.city}"/>
+                                <h:outputText value="Email: "/>
+                                <h:outputText value="#{wizardMasterDetailController.user.email}"/>
+                                <h:outputText value="Phone "/>
+                                <h:outputText value="#{wizardMasterDetailController.user.phone}"/>
+                                <h:outputText value="Info: "/>
+                                <h:outputText value="#{wizardMasterDetailController.user.info}"/>
+                            </h:panelGrid>
+                        </p:panel>
+                        <p:commandButton value="Back" style="margin-top: 10px;" icon="pi pi-arrow-left"
+                                         process="@this" immediate="true">
+                            <pe:selectDetailLevel step="-1"/>
+                        </p:commandButton>
+                        <p:commandButton value="Submit" process="masterDetail"
+                                         actionListener="#{wizardMasterDetailController.save}"
+                                         style="margin-top: 10px;" icon="pi pi-save">
+                            <pe:selectDetailLevel level="1"/>
+                        </p:commandButton>
+                    </pe:masterDetailLevel>
+                </pe:masterDetail>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: masterDetail/complexNavigation -->
+            <h5>Master-detail views with CRUD operations</h5>
+            <p>Complex master-detail views with CRUD operations and a server-side flow listener. The <code>SelectLevelEvent</code> passed into the listener and its return value control the level to navigate to: after a successful save of the detail view (level 2) go back to the master view (level 1), otherwise stay.</p>
+            <h:form id="formComplexNavigation">
+                <pe:masterDetail id="masterDetail" selectLevelListener="#{selectLevelListener.handleNavigation}"
+                                 showAllBreadcrumbItems="true">
+                    <f:facet name="header">
+                        <p:messages showDetail="false" showSummary="true"/>
+                    </f:facet>
+
+                    <pe:masterDetailLevel level="1">
+                        <f:facet name="label">
+                            <h:outputFormat value="Overview {0}">
+                                <f:param value="Persons"/>
+                            </h:outputFormat>
+                        </f:facet>
+
+                        <p:dataTable id="persons" value="#{complexMasterDetailController.persons}" var="pers">
+                            <p:column headerText="Name">
+                                <p:commandLink value="#{pers.name}">
+                                    <pe:selectDetailLevel contextValue="#{pers}"/>
+                                </p:commandLink>
+                            </p:column>
+                            <p:column headerText="Tax Class">
+                                <h:outputText value="#{pers.taxClass}"/>
+                            </p:column>
+                            <p:column headerText="Birth Date">
+                                <h:outputText value="#{pers.birthDate}">
+                                    <f:convertDateTime pattern="dd.MM.yyyy"/>
+                                </h:outputText>
+                            </p:column>
+                        </p:dataTable>
+                    </pe:masterDetailLevel>
+
+                    <pe:masterDetailLevel level="2" contextVar="person" levelLabel="Person Detail">
+                        <h:panelGrid id="personDetail" columns="2" columnClasses="formColumn1,formColumn2">
+                            <h:outputText value="Name (string)"/>
+                            <p:inputText value="#{person.name}" required="true" label="Name"/>
+                            <h:outputText value="Tax Class (number)"/>
+                            <p:inputText value="#{person.taxClass}" required="true" label="Tax Class">
+                                <f:validateLength maximum="1"/>
+                            </p:inputText>
+                            <h:outputText value="Birth Date (date dd.MM.yyyy)"/>
+                            <p:inputText value="#{person.birthDate}" required="true" label="Birth Date">
+                                <f:convertDateTime pattern="dd.MM.yyyy"/>
+                            </p:inputText>
+                            <h:outputText value="Language skills"/>
+                            <h:panelGrid columns="2" style="vertical-align: middle;">
+                                <p:dataList value="#{person.languageSkills}" var="skill" itemType="circle">
+                                    <h:outputText value="#{skill}"/>
+                                </p:dataList>
+                                <p:commandLink immediate="true" style="padding:5px 0 0 8px; vertical-align:middle;">
+                                    <h:graphicImage library="images" name="flashlight_plus.png" style="border:none;"/>
+                                    <pe:selectDetailLevel contextValue="#{person}" preserveInputs="@all"/>
+                                    <pe:tooltip value="Add language skills"/>
+                                </p:commandLink>
+                            </h:panelGrid>
+                        </h:panelGrid>
+
+                        <p:commandButton value="Save with success" process="masterDetail"
+                                         action="#{complexMasterDetailController.saveSuccess(person)}"
+                                         style="margin-top:10px;" icon="pi pi-save">
+                            <pe:selectDetailLevel level="1"/>
+                        </p:commandButton>
+                        <p:commandButton value="Save with failure" process="masterDetail"
+                                         action="#{complexMasterDetailController.saveFailure(person)}"
+                                         style="margin-top:10px;" icon="pi pi-save">
+                            <pe:selectDetailLevel level="1"/>
+                        </p:commandButton>
+                        <p:commandButton type="button" value="Delete" onclick="PF('deletedDlg').show()" style="margin-top:10px;"/>
+
+                        <p:dialog header="Delete confirmation" widgetVar="deletedDlg" resizable="false">
+                            <h:panelGroup layout="block" style="padding:5px;">
+                                <h:outputText value="Are you sure you want to delete this person?"/>
+                            </h:panelGroup>
+                            <p:commandButton id="deleteBtn" value="Delete"
+                                             action="#{complexMasterDetailController.delete(person)}" process="@this"
+                                             style="margin-top:10px;">
+                                <pe:selectDetailLevel level="1"/>
+                            </p:commandButton>
+                            <p:commandButton value="Cancel" type="button" onclick="PF('deletedDlg').hide();"
+                                             style="margin-top:10px;"/>
+                        </p:dialog>
+                    </pe:masterDetailLevel>
+
+                    <pe:masterDetailLevel level="3" contextVar="person" levelLabel="Language skills">
+                        <h:panelGrid columns="2" columnClasses="formColumn1,formColumn2">
+                            <h:outputText value="Choose language skill"/>
+                            <p:selectOneMenu id="languageSkills" value="#{complexMasterDetailController.languageSkillToAdd}"
+                                             style="width:200px;">
+                                <f:selectItems value="#{complexMasterDetailController.availableLanguageSkills}"/>
+                                <p:ajax event="valueChange" process="masterDetail"
+                                        listener="#{complexMasterDetailController.addLanguageSkill(person)}"/>
+                                <pe:selectDetailLevel step="-1"/>
+                            </p:selectOneMenu>
+                        </h:panelGrid>
+                    </pe:masterDetailLevel>
+                </pe:masterDetail>
+            </h:form>
+        </div>
+
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+    <ui:define name="static-documentation">
+        <h2>Overview</h2>
+        <div class="card">
+            <p>
+                Each level in the flow is represented by a <code>pe:masterDetailLevel</code> component. Switching between levels is done
+                by the <code>pe:selectDetailLevel</code> handler and is based on AJAX, so each level is loaded dynamically.
+                <code>pe:selectDetailLevel</code> can be attached to any ajaxified PrimeFaces or non-PrimeFaces component, typically
+                CommandLink, CommandButton, MenuItem, RemoteCommand, HotKey and any component with an attached <code>f:ajax</code> / <code>p:ajax</code>.
+            </p>
+            <p>
+                This gives flexible control over partial validation and over calling <code>action</code> / <code>actionListener</code> during
+                navigation. The area updated during navigation is set automatically to the <code>pe:masterDetail</code> component; processed
+                and updated areas can be controlled more precisely by <code>process</code> / <code>update</code>. Partial validation can be
+                skipped by <code>process="@none"</code> or <code>immediate="true"</code>, and is always skipped for navigation via breadcrumbs.
+                Other features are a server-side listener invoked when a navigation attempt takes place and the <code>header</code> / <code>footer</code> facets.
+            </p>
+            <p>
+                <strong>Attention:</strong> reference the <code>pe:masterDetail</code> in the <code>update</code> attribute of command components
+                manually if the page has auto-updating components such as <code>p:growl</code> or <code>p:message</code> with <code>p:autoUpdate</code>.
+            </p>
+            <p>
+                <strong>Known limitation:</strong> MasterDetail does not work inside data iteration components extending <code>UIData</code>,
+                e.g. inside a DataTable: navigation will not work there.
+            </p>
+        </div>
+    </ui:define>
+
+</ui:composition>

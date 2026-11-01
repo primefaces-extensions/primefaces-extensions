@@ -1,0 +1,81 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        Timer <span class="subitem">Basic</span>
+    </ui:define>
+
+    <ui:define name="description">
+        Timer fires a JSF listener after a customizable interval. It also provides a JavaScript API to start, pause and stop the timer.
+    </ui:define>
+
+    <ui:param name="tagName" value="timer"/>
+    <ui:param name="widgetLink" value="timer"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <div class="card">
+            <!-- EXAMPLE: timer/basic -->
+            <h5>Basic usage</h5>
+            <p>The interval is set via <code>timeout</code>. Set <code>singleRun</code> to <code>false</code> to make it periodic; the listener fires every 5 seconds here.</p>
+            <h:form id="formBasic">
+                <p:messages id="messages" showSummary="true" showDetail="true"/>
+
+                <pe:timer
+                    timeout="5"
+                    singleRun="false"
+                    listener="#{basicTimerController.onTimeout}"
+                    update="messages"
+                    style="color: red;"/>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: timer/direction -->
+            <h5>Direction</h5>
+            <p>Choose the direction of the timer with the <code>forward</code> attribute.</p>
+            <h:form id="formDirection">
+                <h:panelGrid columns="2">
+                    <h:outputText value="Forward"/>
+                    <h:outputText value="Backward"/>
+                    <pe:timer
+                        timeout="1000"
+                        forward="true"/>
+                    <pe:timer
+                        timeout="1000"
+                        forward="false"/>
+                </h:panelGrid>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: timer/jsapi -->
+            <h5>JS Api</h5>
+            <p>The timer can be controlled from JavaScript: start, pause, restart and stop. When stopping, pass <code>true</code> to stop silently and skip the JSF listener.</p>
+            <h:form id="formJsApi">
+                <p:messages id="messages" showSummary="true" showDetail="true"/>
+
+                <pe:timer
+                    widgetVar="timerJsApi"
+                    timeout="10000"
+                    forward="true"
+                    listener="#{jsApiTimerController.listener}" update="messages"
+                    singleRun="false"/>
+                <hr/>
+                <p:commandButton value="Start" onclick="PF('timerJsApi').start()" type="button"/>
+                <p:commandButton value="Pause" onclick="PF('timerJsApi').pause()" type="button"/>
+                <p:commandButton value="Restart" onclick="PF('timerJsApi').restart()" type="button"/>
+                <p:commandButton value="Stop" onclick="PF('timerJsApi').stop()" type="button"/>
+                <p:commandButton value="Stop (Silent)" onclick="PF('timerJsApi').stop(true)" type="button"/>
+            </h:form>
+        </div>
+
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+</ui:composition>

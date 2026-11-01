@@ -1,0 +1,63 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        TimeAgo <span class="subitem">Localized</span>
+    </ui:define>
+
+    <ui:define name="description">
+        TimeAgo texts can be localized with the <code>locale</code> attribute. TimeAgo generates automatically updating fuzzy timestamps (e.g. "4 minutes ago"). Based on <a href="https://github.com/rmm5t/jquery-timeago" target="_blank" rel="noopener noreferrer">jquery-timeago</a> by Ryan McGeary.
+    </ui:define>
+
+    <ui:param name="tagName" value="timeAgo"/>
+    <ui:param name="widgetLink" value="timeago"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <div class="card">
+            <!-- EXAMPLE: timeago/localized -->
+            <h5>Localized</h5>
+            <p>Register the strings of a locale in <code>PrimeFacesExt.locales.TimeAgo</code> and select it with <code>locale</code>. The locale is applied to the whole jquery-timeago plugin, which is why this example is on its own page.</p>
+            <script>
+              PrimeFacesExt.locales.TimeAgo['nl'] = {
+                prefixAgo: null,
+                prefixFromNow: "over",
+                suffixAgo: "geleden",
+                suffixFromNow: null,
+                seconds: "minder dan een minuut",
+                minute: "ongeveer een minuut",
+                minutes: "%d minuten",
+                hour: "ongeveer een uur",
+                hours: "ongeveer %d uur",
+                day: "een dag",
+                days: "%d dagen",
+                month: "ongeveer een maand",
+                months: "%d maanden",
+                year: "ongeveer een jaar",
+                years: "%d jaar",
+                wordSeparator: " ",
+                numbers: []
+              }
+            </script>
+
+            <p>
+                You've opened this page
+                <pe:timeAgo value="#{basicTimeAgoController.created}"
+                            locale="nl" style="font-weight:bold"/>.
+            </p>
+            <p>
+                PrimeFaces Extensions was first released
+                <pe:timeAgo value="#{basicTimeAgoController.firstRelease}"
+                            locale="nl" style="font-weight:bold"/>.
+            </p>
+        </div>
+
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+</ui:composition>

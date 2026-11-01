@@ -1,0 +1,95 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        Timer <span class="subitem">Display</span>
+    </ui:define>
+
+    <ui:define name="description">
+        The value of the Timer can be formatted or hidden. Timer fires a JSF listener after a customizable interval. It also provides a JavaScript API to start, pause and stop the timer.
+    </ui:define>
+
+    <ui:param name="tagName" value="timer"/>
+    <ui:param name="widgetLink" value="timer"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <div class="card">
+            <!-- EXAMPLE: timer/format -->
+            <h5>Interval format</h5>
+            <p>Display the remaining time as seconds (default), <code>percentage</code>, <code>human</code> text, localized, with a custom moment.js pattern, or via a <code>formatFunction</code>. The script below sets moment.js locales globally, which is why this example is on a page without other formatted timers.</p>
+            <h:form id="formFormat">
+                <h:panelGrid columns="7">
+                    <h:outputText value="Default"/>
+                    <h:outputText value="Percentage"/>
+                    <h:outputText value="Human"/>
+                    <h:outputText value="Locale (de)"/>
+                    <h:outputText value="Custom"/>
+                    <h:outputText value="Custom with locale (fr)"/>
+                    <h:outputText value="Function"/>
+                    <pe:timer
+                        timeout="1000"/>
+                    <pe:timer
+                        timeout="1000"
+                        format="percentage"/>
+                    <pe:timer
+                        timeout="1000"
+                        format="human"/>
+                    <pe:timer
+                        timeout="1000"
+                        format="human"
+                        locale="de"/>
+                    <pe:timer
+                        timeout="1000"
+                        format="HH:mm:ss"/>
+                    <pe:timer
+                        timeout="1000"
+                        format="MMMM"
+                        locale="fr_FR"/>
+                    <pe:timer
+                        timeout="1000"
+                        formatFunction="return formatMe(value);"/>
+                </h:panelGrid>
+            </h:form>
+            <script>
+                window.formatMe = function(value){
+                    return "The End is near (" + value + ")";
+                };
+                moment.locale('de', { relativeTime : { mm : '%d minuten' } });
+                moment.locale('fr', { months : 'janvier_février_mars_avril_mai_juin_juillet_août_septembre_octobre_novembre_décembre'.split('_') });
+            </script>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: timer/invisible -->
+            <h5>Invisible</h5>
+            <p>With <code>visible="false"</code> the timer is rendered but hidden. Use the <code>ontimerstep</code> client callback to update your view, here a Knob that acts like a timer.</p>
+            <h:form id="formInvisible">
+                <pe:timer
+                    visible="false"
+                    ontimerstep="sync(intervalData)"
+                    ontimercomplete="alert('BOOM')"
+                    timeout="100"/>
+                <p:knob
+                    min="0"
+                    max="100"
+                    widgetVar="knobInvisible"
+                    disabled="true"
+                    value="0"/>
+            </h:form>
+            <script>
+                window.sync = function(t){
+                    PF('knobInvisible').setValue(t.current);
+                }
+            </script>
+        </div>
+
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+</ui:composition>

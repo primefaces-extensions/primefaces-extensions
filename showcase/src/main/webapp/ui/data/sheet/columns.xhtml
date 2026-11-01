@@ -1,0 +1,140 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        Sheet <span class="subitem">Columns</span>
+    </ui:define>
+
+    <ui:define name="description">
+        Columns can be moved and validated individually. Sheet is a spreadsheet-like in-cell editing component based on <a href="https://handsontable.com/" target="_blank" rel="noopener noreferrer">Handsontable</a> by Handsoncode.
+    </ui:define>
+
+    <ui:param name="tagName" value="sheet"/>
+    <ui:param name="tagName2" value="sheetcolumn"/>
+    <ui:param name="widgetLink" value="sheet"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <div class="card">
+            <!-- EXAMPLE: sheet/movableColumns -->
+            <h5>Movable Columns</h5>
+            <p>Sheet supports <strong>movable columns and rows</strong> with sorting and filtering. Drag a column header to reorder; sort and filter elements follow the column, and columns without them (like Icon) can be moved freely.</p>
+            <h:form id="formMovableColumns">
+                <p:messages id="messages" showSummary="true" showDetail="true"/>
+
+                <p:importEnum type="org.primefaces.extensions.showcase.model.sheet.AssetType" var="AssetType"/>
+                <p:importEnum type="org.primefaces.extensions.showcase.model.sheet.PlatformType" var="PlatformType"/>
+
+                <pe:sheet id="sheet" widgetVar="sheetMovableWidget" value="#{sheetController.assets}" var="row"
+                          height="400" rowKey="#{row.assetId}" showRowHeaders="true"
+                          resizableCols="true" resizableRows="true"
+                          movableCols="true" movableRows="true"
+                          filteredValue="#{sheetController.filteredAssets}"
+                          sortBy="#{row.assetId}" sortOrder="ascending">
+
+                    <p:ajax event="change" listener="#{sheetController.cellChangeEvent}" update="messages"/>
+
+                    <f:facet name="header">
+                        <h:outputText value="Assets (drag columns to reorder)"/>
+                    </f:facet>
+
+                    <f:facet name="footer">
+                        <h:outputText id="footer" value="#{sheetController.filteredAssets.size()} Records"/>
+                    </f:facet>
+
+                    <pe:sheetcolumn headerText="Id" readOnly="true" value="#{row.assetId}"
+                                    sortBy="#{row.assetId}" filterBy="#{row.assetId}" colWidth="150"/>
+                    <pe:sheetcolumn headerText="Icon" readOnly="true" styleClass="text-center"
+                                    value="#{row.icon}" colWidth="80"/>
+                    <pe:sheetcolumn headerText="Type" value="#{row.assetType}" colWidth="100"
+                                    sortBy="#{row.assetType}" filterBy="#{row.assetType}"
+                                    filterOptions="#{sheetOptionProducer.assetTypes}"
+                                    colType="dropdown" selectItems="#{AssetType.ALL_VALUES}"/>
+                    <pe:sheetcolumn headerText="Platform" value="#{row.platform}" colWidth="100"
+                                    sortBy="#{row.platform}" filterBy="#{row.platform}"
+                                    filterOptions="#{sheetOptionProducer.platformTypes}"
+                                    colType="autocomplete" selectItems="#{PlatformType.ALL_VALUES}"
+                                    autoCompleteStrict="false" autoCompleteVisibleRows="4"/>
+                    <pe:sheetcolumn headerText="Arch" value="#{row.platformArch}" readOnly="true"
+                                    colWidth="100" sortBy="#{row.platformArch}"
+                                    filterBy="#{row.platformArch}"
+                                    filterOptions="#{sheetOptionProducer.archTypes}"/>
+                    <pe:sheetcolumn headerText="Active" value="#{row.active}" colWidth="60" colType="checkbox"/>
+                    <pe:sheetcolumn headerText="Price" value="#{row.purchasePrice}" colWidth="100"
+                                    styleClass="htRight" colType="numeric"
+                                    numericLocale="de-DE" numericPattern="$0,0.00" required="true"
+                                    requiredMessage="Price is required!"/>
+                    <pe:sheetcolumn headerText="Date" value="#{row.purchaseDate}" colWidth="110"
+                                    sortBy="#{row.purchaseDate}" styleClass="htCenter"
+                                    colType="date" dateFormat="YYYY-MM-DD">
+                        <f:convertDateTime type="date" pattern="yyyy-MM-dd"/>
+                    </pe:sheetcolumn>
+
+                </pe:sheet>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: sheet/validation -->
+            <h5>Validation</h5>
+            <p>Cells and columns can be validated individually as well as marked required: converters, range validators, JavaScript validators (<code>onvalidate</code>) and Faces validators.</p>
+            <h:form id="formValidation">
+                <p:messages id="messages" showSummary="true" showDetail="true"/>
+
+                <pe:sheet id="sheet" value="#{sheetAjaxController.assets}" var="row" height="400" rowKey="#{row.assetId}"
+                          showRowHeaders="true" sortBy="#{row.assetId}" sortOrder="ascending" width="1000"
+                          widgetVar="sheetValidationWidget">
+                    <p:ajax event="change" listener="#{sheetAjaxController.cellChangeEvent}" update="messages"/>
+
+                    <f:facet name="header">
+                        <h:outputText value="Assets"/>
+                    </f:facet>
+
+                    <pe:sheetcolumn headerText="Id (readOnly)" readOnly="true" value="#{row.assetId}" colWidth="150"/>
+                    <pe:sheetcolumn headerText="Required" value="#{row.hostName}" colWidth="140"
+                                    required="true" requiredMessage="This field is required!"/>
+                    <pe:sheetcolumn id="colBigDecimal" headerText="BigDecimal(1-10)" value="#{row.purchasePrice}" colWidth="100" styleClass="htRight">
+                        <f:converter converterId="jakarta.faces.BigDecimal"/>
+                        <f:validateDoubleRange minimum="1.7" maximum="10.5" for="sheet"/>
+                    </pe:sheetcolumn>
+                    <pe:sheetcolumn headerText="Integer" value="#{row.value1}" colWidth="100" styleClass="htRight" onvalidate="numeric">
+                        <f:converter converterId="jakarta.faces.Integer"/>
+                    </pe:sheetcolumn>
+                    <pe:sheetcolumn headerText="Regex" value="#{row.value2}" colWidth="100" styleClass="htRight" onvalidate="myRegex">
+                        <f:converter converterId="jakarta.faces.Integer"/>
+                    </pe:sheetcolumn>
+                    <pe:sheetcolumn headerText="JS Exactly 6" value="#{row.value3}" colWidth="100" styleClass="htRight" onvalidate="validateEquals6">
+                        <f:converter converterId="jakarta.faces.Integer"/>
+                    </pe:sheetcolumn>
+                    <pe:sheetcolumn headerText="Faces Exactly 5" value="#{row.value4}" colWidth="100" styleClass="htRight"
+                                    validator="#{sheetAjaxController.validateExactly5}">
+                        <f:converter converterId="jakarta.faces.Integer"/>
+                    </pe:sheetcolumn>
+                    <f:facet name="footer">
+                        <h:outputText value="#{sheetAjaxController.assets.size()} Records"/>
+                    </f:facet>
+                </pe:sheet>
+            </h:form>
+            <script type="text/javascript">
+                var myRegex = /^\d+$/; // regex only digits
+
+                // function must return callback(bool)
+                function validateEquals6(value, callback) {
+                    if (value != 6) {
+                        callback(false);
+                    } else {
+                        callback(true);
+                    }
+                }
+            </script>
+        </div>
+
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+</ui:composition>

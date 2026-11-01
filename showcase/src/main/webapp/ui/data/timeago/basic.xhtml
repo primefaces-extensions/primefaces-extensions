@@ -1,0 +1,46 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        TimeAgo <span class="subitem">Basic</span>
+    </ui:define>
+
+    <ui:define name="description">
+        TimeAgo generates automatically updating fuzzy timestamps (e.g. "4 minutes ago"). Based on <a href="https://github.com/rmm5t/jquery-timeago" target="_blank" rel="noopener noreferrer">jquery-timeago</a> by Ryan McGeary.
+    </ui:define>
+
+    <ui:param name="tagName" value="timeAgo"/>
+    <ui:param name="widgetLink" value="timeago"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <div class="card">
+            <!-- EXAMPLE: timeago/basicUsage -->
+            <h5>Basic Usage</h5>
+            <p>Fuzzy timestamps for dates in the past and in the future. The <code>titlePattern</code> sets the tooltip with the exact date.</p>
+            <p>
+                You've opened this page
+                <pe:timeAgo value="#{basicTimeAgoController.created}"
+                            titlePattern="MMMM dd yyyy hh:mm a" style="font-weight:bold" />.
+            </p>
+            <p>
+                PrimeFaces Extensions was first released
+                <pe:timeAgo value="#{basicTimeAgoController.firstRelease}"
+                            titlePattern="MMMM dd yyyy" style="font-weight:bold"/>.
+            </p>
+            <p>
+                The next month is
+                <pe:timeAgo value="#{basicTimeAgoController.nextMonth}"
+                            titlePattern="MMMM dd yyyy" style="font-weight:bold"/>.
+            </p>
+        </div>
+
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+</ui:composition>

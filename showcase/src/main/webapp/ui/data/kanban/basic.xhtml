@@ -1,0 +1,168 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        Kanban <span class="subitem">Basic</span>
+    </ui:define>
+
+    <ui:define name="description">
+        Kanban is a board component for visualizing workflow and managing tasks with drag-and-drop, including touch drag-and-drop on mobile devices.
+        Based on <a href="https://github.com/riktar/jkanban" target="_blank" rel="noopener noreferrer">jkanban</a> by Riktar.
+    </ui:define>
+
+    <ui:param name="tagName" value="kanban"/>
+    <ui:param name="widgetLink" value="kanban"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <style>
+            .kanban-item-title {
+                font-weight: 600;
+            }
+
+            .kanban-item-description {
+                font-size: 0.8rem;
+                opacity: 0.7;
+                margin-top: 2px;
+            }
+
+            #formBasicUsage .kanban-board header.kanban-todo { background-color: #4f46e5; color: #fff; }
+            #formBasicUsage .kanban-board header.kanban-inprogress { background-color: #ea580c; color: #fff; }
+            #formBasicUsage .kanban-board header.kanban-done { background-color: #16a34a; color: #fff; }
+
+            #formCustomData .kanban-board header.kanban-todo { background: #6366f1; color: #fff; }
+            #formCustomData .kanban-board header.kanban-inprogress { background: #f59e0b; color: #fff; }
+            #formCustomData .kanban-board header.kanban-done { background: #10b981; color: #fff; }
+            .kanban-item[data-priority="high"] { border-left: 4px solid #ef4444; }
+            .kanban-item[data-priority="medium"] { border-left: 4px solid #f59e0b; }
+            .kanban-item[data-priority="low"] { border-left: 4px solid #10b981; }
+            .kanban-badges { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+            .kanban-badge { font-size: 0.65rem; padding: 1px 6px; border-radius: 3px; font-weight: 600; }
+            .kb-priority-high { background: #fef2f2; color: #dc2626; }
+            .kb-priority-medium { background: #fffbeb; color: #d97706; }
+            .kb-priority-low { background: #f0fdf4; color: #16a34a; }
+            .kb-assignee { background: #eef2ff; color: #4f46e5; }
+            .kb-duedate { background: #fef3c7; color: #92400e; }
+            .kb-points { background: #d1fae5; color: #065f46; }
+            .kb-label { background: #f3e8ff; color: #7c3aed; }
+
+            #formLayoutTuning .kanban-board header.kanban-backlog { background-color: #6b7280; color: #fff; }
+            #formLayoutTuning .kanban-board header.kanban-design { background-color: #8b5cf6; color: #fff; }
+            #formLayoutTuning .kanban-board header.kanban-development { background-color: #f59e0b; color: #fff; }
+            #formLayoutTuning .kanban-board header.kanban-testing { background-color: #10b981; color: #fff; }
+        </style>
+
+        <div class="card">
+            <!-- EXAMPLE: kanban/basicUsage -->
+            <h5>Basic Usage</h5>
+            <p>A board with three columns bound to a list of <code>KanbanColumn</code>. Drag items between columns and add new ones with <code>addItemButton</code>; <i>drop</i> and <i>itemAdd</i> fire ajax events.</p>
+            <h:form id="formBasicUsage">
+                <p:messages id="messages" showSummary="true" showDetail="true"/>
+
+                <pe:kanban id="kanban"
+                            widgetVar="kanbanBasicWidget"
+                            value="#{kanbanController.columns}"
+                            draggable="true"
+                            addItemButton="true"
+                            style="height:400px">
+                    <p:ajax event="drop" listener="#{kanbanController.onDrop}" update="messages" />
+                    <p:ajax event="itemAdd" listener="#{kanbanController.onAddItem}" update="kanban messages" />
+                </pe:kanban>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: kanban/customData -->
+            <h5>Custom Data Attributes</h5>
+            <p>Any key-value data added to a <code>KanbanItem</code> via <code>putData(key, value)</code> is rendered as a <code>data-*</code> attribute on the card. Here the <code>extender</code> turns them into badges and CSS attribute selectors color the priority; inspect a card to see the attributes.</p>
+            <h:form id="formCustomData">
+
+                <pe:kanban id="kanbanCustomData"
+                            value="#{kanbanCustomDataController.columns}"
+                            draggable="true"
+                            extender="kanbanExtender"
+                            style="height:400px" />
+            </h:form>
+            <h:outputScript>
+                //<![CDATA[
+                function kanbanExtender() {
+                    this.boards.forEach(function(board) {
+                        (board.item || []).forEach(function(item) {
+                            var badges = [];
+
+                            if (item.priority) badges.push(
+                                '<span class="kanban-badge kb-priority-' + item.priority + '">' + item.priority + '</span>');
+
+                            if (item.assignee) badges.push(
+                                '<span class="kanban-badge kb-assignee">' + item.assignee + '</span>');
+
+                            if (item.dueDate) badges.push(
+                                '<span class="kanban-badge kb-duedate">' + item.dueDate + '</span>');
+
+                            if (item.storyPoints) badges.push(
+                                '<span class="kanban-badge kb-points">' + item.storyPoints + 'pts</span>');
+
+                            if (item.labels) {
+                                item.labels.split(',').forEach(function(l) {
+                                    badges.push('<span class="kanban-badge kb-label">' + l.trim() + '</span>');
+                                });
+                            }
+
+                            if (badges.length) {
+                                item.title += '<div class="kanban-badges">' + badges.join('') + '</div>';
+                            }
+                        });
+                    });
+                }
+                //]]>
+            </h:outputScript>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: kanban/layoutTuning -->
+            <h5>Layout Tuning</h5>
+            <p>Control the spacing between boards (<code>gutter</code>), the width of each board (<code>widthBoard</code>) and whether boards use percentage-based widths (<code>responsivePercentage</code>).</p>
+            <h:form id="formLayoutTuning">
+                <h:panelGrid columns="3" styleClass="p-fluid" columnClasses="p-2,p-2,p-2">
+                    <p:outputLabel for="gutter" value="Gutter" styleClass="font-bold" />
+                    <p:inputText id="gutter" value="#{kanbanLayoutController.gutter}" style="width:100px">
+                        <p:ajax update="kanban" process="@this" />
+                    </p:inputText>
+                    <p:outputLabel value="Spacing between boards (e.g. 5px, 15px, 30px)" />
+
+                    <p:outputLabel for="widthBoard" value="Board Width" styleClass="font-bold" />
+                    <p:inputText id="widthBoard" value="#{kanbanLayoutController.widthBoard}" style="width:100px">
+                        <p:ajax update="kanban" process="@this" />
+                    </p:inputText>
+                    <p:outputLabel value="Width of each board (e.g. 200px, 250px, 350px)" />
+
+                    <p:outputLabel for="responsivePercentage" value="Responsive %" styleClass="font-bold" />
+                    <p:selectOneMenu id="responsivePercentage" value="#{kanbanLayoutController.responsivePercentage}">
+                        <f:selectItem itemLabel="false" itemValue="false" />
+                        <f:selectItem itemLabel="true" itemValue="true" />
+                        <p:ajax update="kanban" process="@this" />
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Use percentage-based board widths" />
+                </h:panelGrid>
+
+                <pe:kanban id="kanban"
+                            widgetVar="kanbanLayoutWidget"
+                            value="#{kanbanLayoutController.columns}"
+                            draggable="true"
+                            gutter="#{kanbanLayoutController.gutter}"
+                            widthBoard="#{kanbanLayoutController.widthBoard}"
+                            responsivePercentage="#{kanbanLayoutController.responsivePercentage}"
+                            style="height:400px;margin-top:12px">
+                </pe:kanban>
+            </h:form>
+        </div>
+
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+</ui:composition>
