@@ -32,10 +32,16 @@ trap 'rm -rf "$TMP"' EXIT
 for u in "${URLS[@]}"; do
   jar="$TMP/jar.txt"; body="$TMP/body.html"
   rm -f "$jar"
-  code=$(curl -s --max-time 60 -L -c "$jar" -b "$jar" -o "$body" -w '%{http_code}' "$BASE$u")
+  out=$(curl -s --max-time 60 -L -c "$jar" -b "$jar" -o "$body" -w '%{http_code} %{url_effective}' "$BASE$u")
+  code="${out%% *}"; final="${out#* }"
+  finalpath="${final%%\?*}"; finalpath="${finalpath%%;*}"
   reason=""
   if [ "$code" != "200" ]; then
     reason="HTTP $code"
+  elif case "$finalpath" in */views/error/*|*/error|*/viewExpired*) true;; *) false;; esac; then
+    reason="redirected to error page: $finalpath"
+  elif [ "$u" != "/" ] && [ "$finalpath" != "$BASE$u" ]; then
+    reason="unexpected redirect to $finalpath"
   else
     skip=0
     for w in "${WHITELIST[@]}"; do [ "$w" = "$u" ] && skip=1; done
