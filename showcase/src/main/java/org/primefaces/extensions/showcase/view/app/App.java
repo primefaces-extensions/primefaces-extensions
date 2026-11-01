@@ -119,8 +119,8 @@ public class App implements Serializable {
     }
 
     /**
-     * The PrimeFaces Extensions version: the Implementation-Version of the core jar manifest (as TechnicalInfo does). Without a manifest (e.g. classes
-     * directory) it falls back to "dev", so the value is never blank.
+     * The PrimeFaces Extensions version: the Implementation-Version of the core jar manifest. Without a manifest (e.g. classes directory) it falls back to
+     * "dev", so the value is never blank.
      *
      * @return never blank
      */
@@ -130,7 +130,7 @@ public class App implements Serializable {
     }
 
     /**
-     * The build timestamp from pe-showcase.properties (as TechnicalInfo), formatted as yyyy-MM-dd HH:mm.
+     * The build timestamp from pe-showcase.properties, formatted as yyyy-MM-dd HH:mm.
      *
      * @return the build time or "unknown"
      */
@@ -153,7 +153,7 @@ public class App implements Serializable {
     }
 
     /**
-     * Reads a key out of the Maven-filtered "application.properties={k=v, ...}" entry of pe-showcase.properties, the same format TechnicalInfo parses.
+     * Reads a key out of the Maven-filtered "application.properties={k=v, ...}" entry of pe-showcase.properties.
      */
     private static String applicationProperty(final String key) {
         final Properties props = new Properties();

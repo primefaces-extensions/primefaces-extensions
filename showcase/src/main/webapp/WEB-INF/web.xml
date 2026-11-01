@@ -242,10 +242,14 @@
 
     <error-page>
         <exception-type>java.lang.Throwable</exception-type>
-        <location>/views/error/throwable.jsf</location>
+        <location>/error</location>
     </error-page>
     <error-page>
         <exception-type>jakarta.faces.application.ViewExpiredException</exception-type>
-        <location>/views/error/viewExpired.jsf</location>
+        <location>/viewExpired</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error</location>
     </error-page>
 </web-app>

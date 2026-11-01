@@ -24,7 +24,6 @@ package org.primefaces.extensions.showcase;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,18 +55,6 @@ class ExampleCoverageTest {
         return lines;
     }
 
-    private static boolean legacyExists(final String entry) {
-        final String dir = entry.substring(0, entry.indexOf('/'));
-        final String useCase = entry.substring(entry.indexOf('/') + 1);
-        final Path sections = ShowcaseFiles.webappRoot().resolve("sections").resolve(dir);
-        if ("fileDownload/basic".equals(entry)) {
-            return Files.exists(ShowcaseFiles.webappRoot().resolve("views/fileDownload.xhtml"));
-        }
-        return Files.exists(sections.resolve("example-" + useCase + ".xhtml"))
-                    || Files.exists(sections.resolve("examples/example-" + useCase + ".xhtml"))
-                    || ("fluidgrid".equals(dir) && Files.exists(sections.resolve(useCase + ".xhtml")));
-    }
-
     private static List<String> markersIn(final Path page) {
         final List<String> found = new ArrayList<>();
         final Matcher m = MARKER.matcher(ShowcaseFiles.read(page));
@@ -78,18 +65,18 @@ class ExampleCoverageTest {
     }
 
     @Test
-    void everyLegacyExampleStillExists() throws IOException {
+    void everyInventoryExampleIsMigrated() throws IOException {
         final Set<String> covered = new LinkedHashSet<>();
         for (final Path page : ShowcaseFiles.uiPages()) {
             covered.addAll(markersIn(page));
         }
         final List<String> missing = new ArrayList<>();
         for (final String entry : inventory()) {
-            if (!legacyExists(entry) && !covered.contains(entry)) {
+            if (!covered.contains(entry)) {
                 missing.add(entry);
             }
         }
-        Assertions.assertTrue(missing.isEmpty(), "Examples neither in legacy files nor in ui pages: " + missing);
+        Assertions.assertTrue(missing.isEmpty(), "Inventory examples without an EXAMPLE marker in a ui page: " + missing);
     }
 
     @Test

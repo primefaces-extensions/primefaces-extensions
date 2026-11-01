@@ -38,7 +38,7 @@ for u in "${URLS[@]}"; do
   reason=""
   if [ "$code" != "200" ]; then
     reason="HTTP $code"
-  elif case "$finalpath" in */views/error/*|*/error|*/viewExpired*) true;; *) false;; esac; then
+  elif case "$finalpath" in */error|*/viewExpired*) true;; *) false;; esac; then
     reason="redirected to error page: $finalpath"
   elif [ "$u" != "/" ] && [ "$finalpath" != "$BASE$u" ]; then
     reason="unexpected redirect to $finalpath"

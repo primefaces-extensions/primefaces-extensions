@@ -20,9 +20,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <main.basedir>${project.parent.basedir}</main.basedir>
         <primefaces-extensions.core.version>${project.version}</primefaces-extensions.core.version>
-        <primefaces-extensions.new-components>echart;osmap;marktext;kanban;meterGroup;commandPalette;gantt</primefaces-extensions.new-components>
-        <primefaces-extensions.updated-components>monacoEditor;orgchart;sunEditor</primefaces-extensions.updated-components>
-        <primefaces-extensions.deprecated-components/>
         <jetty.version>12.1.14</jetty.version>
         <font-awesome.version>7.2.0</font-awesome.version>
         <dart-sass.version>1.79.6</dart-sass.version>
@@ -146,7 +143,6 @@
                 <directory>src/main/webapp</directory>
                 <includes>
                     <include>**/*.xml</include>
-                    <include>**/resources-app.xhtml</include>
                 </includes>
                 <filtering>true</filtering>
             </resource>
@@ -222,12 +218,7 @@
                         <resource>
                             <directory>${project.build.directory}/webapp-resources</directory>
                         </resource>
-                        <resource>
-                            <directory>${project.basedir}/src/main/webapp</directory>
-                            <filtering>true</filtering>
-                            <includes>**/resources-app.xhtml</includes>
-                        </resource>
-                        <!-- showcase shell (layout, configurator, highlighter): copied as is, neither filtered nor optimized -->
+                        <!-- showcase shell (layout, configurator): copied as is, neither filtered nor optimized -->
                         <resource>
                             <directory>${project.basedir}/src/main/webapp/resources</directory>
                             <targetPath>resources</targetPath>

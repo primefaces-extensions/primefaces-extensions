@@ -92,6 +92,13 @@ class AppMenuTest {
         for (final MenuCategory c : menu().getMenuCategories()) {
             collect(c.getMenuItems(), all);
         }
+        final Set<String> labels = new HashSet<>();
+        for (final MenuItem item : all) {
+            labels.add(item.getLabel());
+        }
+        final Set<String> missing = new HashSet<>(EXPECTED_BADGES.keySet());
+        missing.removeAll(labels);
+        Assertions.assertTrue(labels.containsAll(EXPECTED_BADGES.keySet()), "Menu is missing badge components: " + missing);
         for (final MenuItem item : all) {
             final String expected = EXPECTED_BADGES.get(item.getLabel());
             if (expected != null) {

@@ -6,11 +6,6 @@
 
     <namespace>primefaces.extensions.showcase</namespace>
 
-    <function>
-        <function-name>getFileContent</function-name>
-        <function-class>org.primefaces.extensions.showcase.util.LegacyShowcaseUtil</function-class>
-        <function-signature>java.lang.String getFileContent(java.lang.String)</function-signature>
-    </function>
 
     <function>
         <function-name>getFilesContent</function-name>
