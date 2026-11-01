@@ -16,6 +16,13 @@ URLS=("/")
 [ -f "$MODULE_DIR/src/main/webapp/taglib.xhtml" ] && URLS+=("/taglib")
 while IFS= read -r u; do URLS+=("$u"); done < <(grep -o '"/ui/[^"]*"' "$MENU" | tr -d '"' | sort -u)
 
+# standalone demo pages linked from ui pages: .../standalone/<name> -> extensionless URL. Include fragments (no <html>) are not pages and are skipped.
+while IFS= read -r u; do
+  f="$MODULE_DIR/src/main/webapp$u.xhtml"
+  [ -f "$f" ] && ! grep -q '<html' "$f" && continue
+  URLS+=("$u")
+done < <(grep -rhoE "/ui/[^\"'# ]*/standalone/[^\"'# ?]+" "$MODULE_DIR/src/main/webapp/ui" --include=*.xhtml | sed -E 's/\.xhtml$//' | sort -u)
+
 TOTAL=${#URLS[@]}
 OK=0
 FAIL=0

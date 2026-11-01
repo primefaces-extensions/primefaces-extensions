@@ -46,7 +46,7 @@
                 <code>&lt;em&gt;</code> would otherwise not be matched. Use the checkbox to compare.
             </p>
             <h:form id="formAcrossElements">
-                <h:panelGrid columns="5" cellpadding="4">
+                <h:panelGrid columns="4" cellpadding="4">
                     <h:outputText value="Search term:"/>
                     <p:inputText id="searchInput" value="#{acrossElementsMarkTextController.searchTermAcrossElements}" placeholder="Enter search term">
                         <p:ajax event="keyup" delay="500" update="searchContainer markText"/>
@@ -87,7 +87,7 @@
             <h5>Exclude Selectors</h5>
             <p>The <code>exclude</code> attribute skips highlighting inside selected elements, such as headings or regions marked with CSS classes.</p>
             <h:form id="formExclude">
-                <h:panelGrid columns="2" columnClasses="label,value" cellpadding="4">
+                <h:panelGrid columns="2" styleClass="p-fluid" columnClasses="label,value" cellpadding="4">
                     <h:outputText value="Search term:"/>
                     <p:inputText id="searchInput" value="#{markTextExcludeController.searchTerm}" placeholder="Enter search term">
                         <p:ajax event="keyup" delay="300" update="markText activeExcludes" process="@this"/>

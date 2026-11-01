@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.showcase;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -43,7 +44,13 @@ class PageConventionsTest {
 
     private static final Pattern WIDGET_VAR = Pattern.compile("\\bwidgetVar=\"([^\"#$]+)\"");
     private static final Pattern FORM_ID = Pattern.compile("<h:form\\b[^>]*?\\sid=\"([^\"#$]+)\"");
-    private static final Pattern TAG_NAME = Pattern.compile("<ui:param\\s+name=\"tagName[23]?\"\\s+value=\"([^\"]*)\"");
+    private static final Pattern PARAM = Pattern.compile("<ui:param\\b([^>]*)>");
+    private static final Pattern ATTR_NAME = Pattern.compile("\\bname=\"(tagName[23]?)\"");
+    private static final Pattern ATTR_VALUE = Pattern.compile("\\bvalue=\"([^\"]*)\"");
+    private static final Pattern LINK_ATTR = Pattern.compile("\\b(?:href|url|outcome)=\"([^\"]*/standalone/[^\"]*)\"");
+    private static final Pattern MORE_SOURCE_TABS = Pattern.compile("<ui:define\\s+name=\"more-source-tabs\"[^>]*>(.*?)</ui:define>", Pattern.DOTALL);
+    private static final Pattern TAB_TITLE = Pattern.compile("<p:tab\\b[^>]*?\\btitle=\"(/[^\"]*)\"");
+    private static final Pattern FORM_TAG = Pattern.compile("<h:form\\b[^>]*>");
     private static final Pattern LEGACY_INCLUDE = Pattern.compile("<ui:include\\b[^>]*src=\"[^\"]*/sections/");
 
     private static List<Path> pages() {
@@ -133,10 +140,67 @@ class PageConventionsTest {
         final Map<String, TagInfo> tags = TagLibTestSupport.provider().getTags();
         final List<String> problems = new ArrayList<>();
         for (final Path page : pages) {
-            final Matcher m = TAG_NAME.matcher(ShowcaseFiles.read(page));
+            final Matcher m = PARAM.matcher(ShowcaseFiles.read(page));
             while (m.find()) {
-                if (!tags.containsKey(m.group(1))) {
-                    problems.add(page.getFileName() + ": unknown tag '" + m.group(1) + "'");
+                final Matcher name = ATTR_NAME.matcher(m.group(1));
+                final Matcher value = ATTR_VALUE.matcher(m.group(1));
+                if (name.find() && value.find() && !tags.containsKey(value.group(1))) {
+                    problems.add(page.getFileName() + ": unknown tag '" + value.group(1) + "'");
+                }
+            }
+        }
+        Assertions.assertTrue(problems.isEmpty(), String.join("\n", problems));
+    }
+
+    private static boolean exists(final String webPath) {
+        // strip an EL context path prefix such as #{request.contextPath}
+        final String path = webPath.replaceFirst("^#\\{[^}]*\\}", "");
+        if (!path.startsWith("/")) {
+            return false;
+        }
+        final Path root = ShowcaseFiles.webappRoot();
+        return Files.isRegularFile(root.resolve(path.substring(1))) || Files.isRegularFile(root.resolve(path.substring(1) + ".xhtml"));
+    }
+
+    @Test
+    void standaloneLinksResolve() {
+        final List<String> problems = new ArrayList<>();
+        for (final Path page : ShowcaseFiles.uiPages()) {
+            final String content = ShowcaseFiles.read(page);
+            final Matcher links = LINK_ATTR.matcher(content);
+            while (links.find()) {
+                if (!exists(links.group(1))) {
+                    problems.add(page.getFileName() + ": broken standalone link '" + links.group(1) + "'");
+                }
+            }
+            final Matcher blocks = MORE_SOURCE_TABS.matcher(content);
+            while (blocks.find()) {
+                final Matcher tabs = TAB_TITLE.matcher(blocks.group(1));
+                while (tabs.find()) {
+                    if (!exists(tabs.group(1))) {
+                        problems.add(page.getFileName() + ": more-source-tabs file not found '" + tabs.group(1) + "'");
+                    }
+                }
+            }
+        }
+        Assertions.assertTrue(problems.isEmpty(), String.join("\n", problems));
+    }
+
+    @Test
+    void noGlobalFormAssumptions() {
+        final List<String> problems = new ArrayList<>();
+        for (final Path page : ShowcaseFiles.uiPages()) {
+            final String content = ShowcaseFiles.read(page);
+            if (content.contains("mainForm")) {
+                problems.add(page.getFileName() + ": references mainForm");
+            }
+            if (content.contains("prependId")) {
+                problems.add(page.getFileName() + ": uses prependId");
+            }
+            final Matcher forms = FORM_TAG.matcher(content);
+            while (forms.find()) {
+                if (!forms.group().matches("(?s).*\\sid=\".+\".*")) {
+                    problems.add(page.getFileName() + ": h:form without id");
                 }
             }
         }
