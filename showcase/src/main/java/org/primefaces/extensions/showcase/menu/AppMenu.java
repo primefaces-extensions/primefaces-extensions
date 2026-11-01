@@ -85,10 +85,12 @@ public class AppMenu {
         add(EDITORS, new MenuItem("MonacoEditor", List.of(
                     new MenuItem("Basic", "/ui/editors/monacoeditor/basic"),
                     new MenuItem("Localization", "/ui/editors/monacoeditor/localization"),
+                    new MenuItem("Events", "/ui/editors/monacoeditor/events"),
                     new MenuItem("Theme", "/ui/editors/monacoeditor/theme"),
                     new MenuItem("Extender", "/ui/editors/monacoeditor/extender"),
                     new MenuItem("Diff", "/ui/editors/monacoeditor/diff"),
                     new MenuItem("Diff Localization", "/ui/editors/monacoeditor/difflocalization"),
+                    new MenuItem("Diff Events", "/ui/editors/monacoeditor/diffevents"),
                     new MenuItem("Diff Theme", "/ui/editors/monacoeditor/difftheme"),
                     new MenuItem("Diff Extender", "/ui/editors/monacoeditor/diffextender")), "Updated"));
         add(EDITORS, new MenuItem("SunEditor", "/ui/editors/suneditor", "Updated"));
