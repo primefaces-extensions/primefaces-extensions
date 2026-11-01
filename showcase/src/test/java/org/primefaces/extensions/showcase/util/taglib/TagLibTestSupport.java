@@ -72,12 +72,7 @@ public final class TagLibTestSupport {
 
         @Override
         public Application getApplication() {
-            return new ApplicationWrapper() {
-                @Override
-                public Application getWrapped() {
-                    return null;
-                }
-
+            return new ApplicationWrapper(null) {
                 @Override
                 public UIComponent createComponent(final String componentType) {
                     return (UIComponent) newInstance(COMPONENTS.get(componentType));
@@ -92,12 +87,7 @@ public final class TagLibTestSupport {
 
         @Override
         public ExternalContext getExternalContext() {
-            return new ExternalContextWrapper() {
-                @Override
-                public ExternalContext getWrapped() {
-                    return null;
-                }
-
+            return new ExternalContextWrapper(null) {
                 @Override
                 public Map<String, Object> getApplicationMap() {
                     return appMap;
@@ -107,12 +97,7 @@ public final class TagLibTestSupport {
 
         @Override
         public RenderKit getRenderKit() {
-            return new RenderKitWrapper() {
-                @Override
-                public RenderKit getWrapped() {
-                    return null;
-                }
-
+            return new RenderKitWrapper(null) {
                 @Override
                 public Renderer<?> getRenderer(final String family, final String rendererType) {
                     return null;
