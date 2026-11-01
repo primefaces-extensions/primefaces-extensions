@@ -103,7 +103,7 @@ public class TagInfo {
                             .collect(Collectors.toList());
             }
             else if (tag.getType() == TagType.CONVERTER) {
-                PrimeConverter<?> instance = createConverter(context, tag.getConverterId());
+                PrimeConverter<?> instance = (PrimeConverter<?>) context.getApplication().createConverter(tag.getConverterId());
                 properties = Arrays.asList(instance.getPropertyKeys());
                 converterClass = instance.getClass().getName();
             }
@@ -122,19 +122,6 @@ public class TagInfo {
         }
         catch (Exception e) {
             throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Creates the converter via the application; falls back to the converter id as class name for converters (like JsonExposeAwareConverter) that are not
-     * registered with Faces.
-     */
-    private static PrimeConverter<?> createConverter(final FacesContext context, final String converterId) throws ReflectiveOperationException {
-        try {
-            return (PrimeConverter<?>) context.getApplication().createConverter(converterId);
-        }
-        catch (final RuntimeException e) {
-            return (PrimeConverter<?>) ReflectionUtils.loadClassForName(converterId).getDeclaredConstructor().newInstance();
         }
     }
 

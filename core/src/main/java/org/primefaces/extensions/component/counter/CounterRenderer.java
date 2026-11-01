@@ -109,9 +109,11 @@ public class CounterRenderer extends CoreRenderer<Counter> {
         writer.startElement("span", component);
         writer.writeAttribute("id", component.getClientId(context), "id");
         writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
-        writer.writeAttribute(Attrs.STYLE,
-                    (!component.isVisible() ? "display:none;" : Constants.EMPTY_STRING) + component.getStyle(),
-                    Attrs.STYLE);
+        final String style = (!component.isVisible() ? "display:none;" : Constants.EMPTY_STRING)
+                    + (component.getStyle() != null ? component.getStyle() : Constants.EMPTY_STRING);
+        if (!style.isEmpty()) {
+            writer.writeAttribute(Attrs.STYLE, style, Attrs.STYLE);
+        }
         writer.endElement("span");
     }
 }
