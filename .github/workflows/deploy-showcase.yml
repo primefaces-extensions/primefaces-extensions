@@ -6,7 +6,7 @@ on:
       - '**/**.md'
     branches:
       - master
-      - 15.X
+      - 16.X
   workflow_dispatch:
 
 jobs:
