@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      lang="en" data-preset="#{app.theme}">
+<!-- Standalone full page demo of /ui/panel/layout (no showcase template); the source tab shows the region between the markers. -->
+<h:head>
+    <title>PrimeFaces Extensions - Full Page Layout with iframe</title>
+</h:head>
+<h:body>
+    <!-- EXAMPLE-SOURCE-START -->
+        <h:form id="formIframe">
+            <pe:layout maskPanesEarly="true">
+                <pe:layoutPane position="north" size="85">
+                    North
+                </pe:layoutPane>
+                <pe:layoutPane position="center" maskContents="true">
+                    <iframe id="iframeCenter"
+                            src="https://primefaces-extensions.github.io"
+                            title="PFE Layout"
+                            width="100%"
+                            height="100%">
+                    </iframe>
+                </pe:layoutPane>
+                <pe:layoutPane position="west" size="250" resizeWhileDragging="false"
+                               maxSize="500" minSize="100" resizable="true" closable="true">
+                    West
+                </pe:layoutPane>
+            </pe:layout>
+        </h:form>
+
+        <style>
+            body {
+                margin: 4px !important;
+            }
+
+            /* masks are usually transparent, but we make them visible here */
+            .ui-layout-mask {
+                background: #C00 !important;
+                opacity: .20 !important;
+            }
+        </style>
+    <!-- EXAMPLE-SOURCE-END -->
+</h:body>
+</html>

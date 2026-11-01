@@ -26,6 +26,10 @@
         <converter-class>org.primefaces.extensions.converter.JsonConverter</converter-class>
     </converter>
     <converter>
+        <converter-id>org.primefaces.extensions.converter.JsonExposeAwareConverter</converter-id>
+        <converter-class>org.primefaces.extensions.converter.JsonExposeAwareConverter</converter-class>
+    </converter>
+    <converter>
         <converter-id>org.primefaces.extensions.converter.LocaleConverter</converter-id>
         <converter-class>org.primefaces.extensions.converter.LocaleConverter</converter-class>
     </converter>

@@ -1,0 +1,89 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        Document Viewer
+    </ui:define>
+
+    <ui:define name="description">
+        DocumentViewer is a JSF wrapper of the <a href="https://mozilla.github.io/pdf.js/" target="_blank" rel="noopener noreferrer">PDF.js</a>
+        project of the Mozilla Foundation, a general-purpose, web standards-based platform for parsing and rendering PDFs.
+        It displays PDF documents inline without a browser plugin and supports localized languages
+        (<a href="https://github.com/mozilla/pdf.js/wiki/Frequently-Asked-Questions#faq-support" target="_blank" rel="noopener noreferrer">supported browsers</a>).
+    </ui:define>
+
+    <ui:param name="tagName" value="documentViewer"/>
+    <ui:param name="widgetLink" value="documentviewer"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <div class="card">
+            <!-- EXAMPLE: documentviewer/basic -->
+            <h5>Basic usage</h5>
+            <p>DocumentViewer can be used in three modes: a <code>url</code>, a JSF resource (<code>library</code> and <code>name</code>)
+                or a PrimeFaces <code>StreamedContent</code> (<code>value</code>).</p>
+            <h:form id="formBasic">
+                <p:outputPanel deferred="true">
+                    <p:tabView>
+                        <p:tab title="URL">
+                            <pe:documentViewer height="500" url="/ui/media/documentviewer/book.pdf"/>
+                        </p:tab>
+                        <p:tab title="Resource">
+                            <pe:documentViewer height="500" library="books" name="hood.pdf" zoom="page-width"/>
+                        </p:tab>
+                        <p:tab title="StreamedContent">
+                            <pe:documentViewer height="500" value="#{basicDocumentViewerController.content}" zoom="page-width"/>
+                        </p:tab>
+                    </p:tabView>
+                </p:outputPanel>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: documentviewer/advanced -->
+            <h5>Advanced Usage</h5>
+            <p>It is also possible to set the <code>locale</code> and the starting <code>page</code> of the DocumentViewer.</p>
+            <h:form id="formAdvanced">
+                <p:outputPanel layout="block" id="container" deferred="true">
+                    <p:panelGrid columns="2" layout="tabular">
+                        <h:outputLabel value="Page"/>
+                        <p:spinner min="1" max="69" value="#{advancedDocumentViewerController.page}">
+                            <p:ajax update="container"/>
+                        </p:spinner>
+                        <h:outputLabel value="Locale"/>
+                        <p:selectOneRadio value="#{advancedDocumentViewerController.locale}">
+                            <f:selectItem itemValue="en" itemLabel="English"/>
+                            <f:selectItem itemValue="de" itemLabel="German"/>
+                            <f:selectItem itemValue="it" itemLabel="Italian"/>
+                            <f:selectItem itemValue="pt_BR" itemLabel="Portuguese"/>
+                            <p:ajax update="container"/>
+                        </p:selectOneRadio>
+                    </p:panelGrid>
+                    <pe:documentViewer
+                            height="500"
+                            locale="#{advancedDocumentViewerController.locale}"
+                            page="#{advancedDocumentViewerController.page}"
+                            url="/ui/media/documentviewer/book.pdf"/>
+                </p:outputPanel>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: documentviewer/embedded -->
+            <h5>Embedded Fonts</h5>
+            <p>DocumentViewer has some complicated font handling: this tests a PDF with an embedded font.</p>
+            <h:form id="formEmbedded">
+                <p:outputPanel deferred="true">
+                    <pe:documentViewer height="500" url="/ui/media/documentviewer/japanese.pdf"/>
+                </p:outputPanel>
+            </h:form>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+</ui:composition>

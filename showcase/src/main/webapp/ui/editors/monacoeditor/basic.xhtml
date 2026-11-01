@@ -1,0 +1,217 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:of="http://omnifaces.org/functions"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <f:metadata>
+        <f:viewAction action="#{monacoEditorController.initBasicUsage('code')}"/>
+    </f:metadata>
+
+    <ui:define name="title">
+        MonacoEditor <span class="subitem">Basic</span>
+    </ui:define>
+
+    <ui:define name="description">
+        MonacoEditor is the code editor which powers VS Code, as a JSF component: inline (<code>pe:monacoEditor</code>) or in an iframe (<code>pe:monacoEditorFramed</code>).
+    </ui:define>
+
+    <ui:param name="tagName" value="monacoEditor"/>
+    <ui:param name="tagName2" value="monacoEditorFramed"/>
+    <ui:param name="widgetLink" value="monacoeditor"/>
+
+    <ui:define name="static-documentation">
+        <h2>Component variants</h2>
+        <div class="card">
+            <p>The Monaco Editor is the code editor which powers <a href="https://github.com/Microsoft/vscode" target="_blank" rel="noopener noreferrer">VS Code</a>.
+                It offers IntelliSense and validation for JavaScript/TypeScript, CSS/LESS/SCSS and JSON, syntax highlighting for many more languages,
+                and comes with localization for a few major languages. This component is a wrapper that allows Monaco Editor to be used as a JSF component
+                and comes in four varieties:</p>
+            <ul>
+                <li><code>pe:monacoEditor</code> renders the editor inline in the page. This is usually more efficient and the preferred way when you do not need
+                    different editors with a different global configuration.</li>
+                <li><code>pe:monacoEditorFramed</code> renders the editor in an iframe for improved encapsulation. Part of the Monaco configuration is window global,
+                    such as the loaded TypeScript declaration files; use the framed variant for multiple editors with a completely different setup.</li>
+                <li><code>pe:monacoDiffEditor</code> renders a diff editor for comparing two files inline in the page.</li>
+                <li><code>pe:monacoDiffEditorFramed</code> renders a diff editor in an iframe.</li>
+            </ul>
+            <p>All variants share almost the same API. The diff editor has additional properties for the settings of the original (left) editor. The framed variant is controlled with
+                <code>postMessage</code> and its client-side API is therefore asynchronous (Promises). The client-side API is fully typed, see
+                <a href="https://github.com/primefaces-extensions/primefaces-extensions/blob/master/core/src/main/resources/META-INF/resources/primefaces-extensions/monacoeditor/primefaces-monaco-global.d.ts" target="_blank" rel="noopener noreferrer">primefaces-monaco-global.d.ts</a> and
+                <a href="https://github.com/primefaces-extensions/primefaces-extensions/blob/master/core/src/main/resources/META-INF/resources/primefaces-extensions/monacoeditor/primefaces-monaco-module.d.ts" target="_blank" rel="noopener noreferrer">primefaces-monaco-module.d.ts</a>.
+                See also the <a href="https://microsoft.github.io/monaco-editor/api/index.html" target="_blank" rel="noopener noreferrer">official client-side API</a>
+                and the <a href="https://github.com/Microsoft/monaco-editor" target="_blank" rel="noopener noreferrer">Monaco Editor repository</a> (MIT License) by Microsoft.</p>
+            <p>Keep in mind that Monaco is not supported in mobile browsers or mobile web frameworks, and that the Promise API is required (every current browser supports it).</p>
+            <p>The editors follow the color scheme of the page: <code>monacoColorScheme.js</code> sets the theme <code>vs-dark</code> in dark mode while the configured theme is the default <code>vs</code>.</p>
+        </div>
+        <h2>Languages</h2>
+        <div class="card">
+            <p>Basic support including syntax highlighting is available for the following languages (check the official docs, more languages may have been added in the meantime):</p>
+            <ul>
+                <ui:repeat var="language" value="#{monacoEditorController.languages}">
+                    <li>#{language.toString()}</li>
+                </ui:repeat>
+            </ul>
+        </div>
+    </ui:define>
+
+    <ui:define name="more-source-tabs">
+        <p:tab title="/resources/js/monacoColorScheme.js"/>
+    </ui:define>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <style>
+            .monacoEditorBox {
+                border: 1px solid var(--p-content-border-color);
+                min-width: 0;
+            }
+        </style>
+        <h:outputScript library="js" name="monacoColorScheme.js"/>
+
+        <div class="card">
+            <!-- EXAMPLE: monacoEditor/basicUsage -->
+            <h5>Basic Usage</h5>
+            <p>
+                MonacoEditor is fully updateable via AJAX as you can see with the select options below. It also keeps its scroll position during an AJAX update. Switch between the inline and the iframe variant of the editor.
+            </p>
+            <h:form id="formBasicUsage">
+                <p:messages id="messages" showSummary="true" showDetail="true"/>
+
+                <p:selectOneButton id="type" value="#{monacoEditorController.type}" styleClass="monacoSync">
+                    <f:selectItem itemLabel="Inline" itemValue="inline" />
+                    <f:selectItem itemLabel="Iframe" itemValue="framed" />
+                    <p:ajax process="@form" update="@(.monacoSync)" />
+                </p:selectOneButton>
+
+                <h:panelGroup id="basicOptionsWrapper" layout="block" styleClass="monacoSync">
+
+                    <h:panelGrid id="basicOptions" rendered="#{monacoEditorController.type eq 'inline'}"
+                        columns="14" style="margin-bottom:10px" cellpadding="5"
+                    >
+                        <p:outputLabel for="language" value="Code language: " />
+                        <p:selectOneMenu id="language" value="#{monacoEditorController.language}" filter="true">
+                            <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+                            <f:selectItems value="#{monacoEditorController.languages}" />
+                            <p:ajax listener="#{monacoEditorController.onLanguageChange}" process="monacoEditorWrapper" update="monacoEditorWrapper" />
+                        </p:selectOneMenu>
+
+                        <p:outputLabel for="theme" value="Theme: " />
+                        <p:selectOneMenu id="theme" value="#{monacoEditorController.theme}">
+                            <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+                            <f:selectItems value="#{monacoEditorController.themes}" />
+                            <p:ajax process="monacoEditorWrapper" update="monacoEditorWrapper" />
+                        </p:selectOneMenu>
+
+                        <p:outputLabel for="locale" value="Locale: " />
+                        <p:selectOneMenu id="locale" value="#{monacoEditorController.locale}" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="(Default)" itemValue="#{null}" noSelectionOption="true" />
+                            <f:selectItems value="#{monacoEditorController.locales}" var="locale"
+                                itemLabel="#{locale.displayName}" itemValue="#{locale}" />
+                            <p:ajax process="monacoEditorWrapper" update="monacoEditorWrapper" />
+                        </p:selectOneMenu>
+
+                        <p:selectBooleanCheckbox id="required" value="#{monacoEditorController.required}">
+                            <p:ajax process="monacoEditorWrapper" update="monacoEditorWrapper" />
+                        </p:selectBooleanCheckbox>
+                        <p:outputLabel for="required" value="Required" />
+
+                        <p:selectBooleanCheckbox id="disabled" value="#{monacoEditorController.disabled}">
+                            <p:ajax process="monacoEditorWrapper" update="monacoEditorWrapper" />
+                        </p:selectBooleanCheckbox>
+                        <p:outputLabel for="disabled" value="Disabled" />
+
+                        <p:selectBooleanCheckbox id="readOnly" value="#{monacoEditorController.readOnly}">
+                            <p:ajax process="monacoEditorWrapper" update="monacoEditorWrapper" />
+                        </p:selectBooleanCheckbox>
+                        <p:outputLabel for="readOnly" value="Read-only" />
+                    </h:panelGrid>
+
+                    <h:panelGrid id="basicOptionsFramed" rendered="#{monacoEditorController.type eq 'framed'}"
+                        columns="14" style="margin-bottom:10px" cellpadding="5"
+                    >
+                        <p:outputLabel for="languageFramed" value="Code language: " />
+                        <p:selectOneMenu id="languageFramed" value="#{monacoEditorController.languageFramed}" filter="true">
+                            <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+                            <f:selectItems value="#{monacoEditorController.languages}" />
+                            <p:ajax listener="#{monacoEditorController.onLanguageChange}" process="monacoEditorWrapper" update="monacoEditorWrapper" />
+                        </p:selectOneMenu>
+
+                        <p:outputLabel for="themeFramed" value="Theme: " />
+                        <p:selectOneMenu id="themeFramed" value="#{monacoEditorController.themeFramed}">
+                            <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+                            <f:selectItems value="#{monacoEditorController.themes}" />
+                            <p:ajax process="monacoEditorWrapper" update="monacoEditorWrapper" />
+                        </p:selectOneMenu>
+
+                        <p:outputLabel for="localeFramed" value="Locale: " />
+                        <p:selectOneMenu id="localeFramed" value="#{monacoEditorController.localeFramed}" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="(Default)" itemValue="#{null}" noSelectionOption="true" />
+                            <f:selectItems value="#{monacoEditorController.locales}" var="locale"
+                                itemLabel="#{locale.displayName}" itemValue="#{locale}" />
+                            <p:ajax process="monacoEditorWrapper" update="monacoEditorWrapper" />
+                        </p:selectOneMenu>
+
+                        <p:selectBooleanCheckbox id="requiredFramed" value="#{monacoEditorController.requiredFramed}">
+                            <p:ajax process="monacoEditorWrapper" update="monacoEditorWrapper" />
+                        </p:selectBooleanCheckbox>
+                        <p:outputLabel for="requiredFramed" value="Required" />
+
+                        <p:selectBooleanCheckbox id="disabledFramed" value="#{monacoEditorController.disabledFramed}">
+                            <p:ajax process="monacoEditorWrapper" update="monacoEditorWrapper" />
+                        </p:selectBooleanCheckbox>
+                        <p:outputLabel for="disabledFramed" value="Disabled" />
+
+                        <p:selectBooleanCheckbox id="readOnlyFramed" value="#{monacoEditorController.readOnlyFramed}">
+                            <p:ajax process="monacoEditorWrapper" update="monacoEditorWrapper" />
+                        </p:selectBooleanCheckbox>
+                        <p:outputLabel for="readOnlyFramed" value="Read-only" />
+                    </h:panelGrid>
+                </h:panelGroup>
+
+                <h:panelGroup id="monacoEditorWrapper" layout="block" styleClass="monacoEditorBox monacoSync">
+
+                    <pe:monacoEditor id="monacoEditor" widgetVar="monacoEditorBasic"
+                        oninitialized="monacoFollowScheme.call(this)"
+                        rendered="#{monacoEditorController.type eq 'inline'}"
+                        value="#{monacoEditorController.value}"
+                        required="#{monacoEditorController.required}"
+                        disabled="#{monacoEditorController.disabled}"
+                        readonly="#{monacoEditorController.readOnly}"
+                        locale="#{monacoEditorController.locale}"
+                        placeholder="enter your code... (inline)"
+                        editorOptions="#{monacoEditorController.editorOptions}"
+                        width="100%" height="400px" autoResize="true" />
+
+                    <pe:monacoEditorFramed id="monacoEditorFramed" widgetVar="monacoEditorFramedBasic"
+                        oninitialized="monacoFollowScheme.call(this)"
+                        rendered="#{monacoEditorController.type eq 'framed'}"
+                        value="#{monacoEditorController.valueFramed}"
+                        required="#{monacoEditorController.requiredFramed}"
+                        disabled="#{monacoEditorController.disabledFramed}"
+                        readonly="#{monacoEditorController.readOnlyFramed}"
+                        locale="#{monacoEditorController.localeFramed}"
+                        placeholder="enter your code... (framed)"
+                        editorOptions="#{monacoEditorController.editorOptionsFramed}"
+                        width="100%" height="400px" autoResize="true" />
+
+                    <p:commandButton id="btnSubmit" value="Submit" icon="pi pi-save"
+                        rendered="#{monacoEditorController.type eq 'inline'}"
+                        process="monacoEditor" update="monacoEditor messages"
+                        actionListener="#{monacoEditorController.submitContent}" />
+
+                    <p:commandButton id="btnSubmitFramed" value="Submit" icon="pi pi-save"
+                        rendered="#{monacoEditorController.type eq 'framed'}"
+                        process="monacoEditorFramed" update="monacoEditorFramed messages"
+                        actionListener="#{monacoEditorController.submitContent}" />
+
+                </h:panelGroup>
+            </h:form>
+        </div>
+
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+</ui:composition>

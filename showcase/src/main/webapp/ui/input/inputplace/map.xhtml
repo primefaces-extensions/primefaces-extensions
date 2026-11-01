@@ -1,0 +1,68 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:jsf="jakarta.faces"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        InputPlace <span class="subitem">Linked Map</span>
+    </ui:define>
+
+    <ui:define name="description">
+        InputPlace can be linked to a Google Map to control the map from the selected place.
+        Based on <a href="https://developers.google.com/maps/documentation/javascript/place-autocomplete" target="_blank" rel="noopener noreferrer">Google Places AutoComplete</a> by Google.
+    </ui:define>
+
+    <ui:param name="tagName" value="inputPlace"/>
+    <ui:param name="widgetLink" value="inputplace"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <div class="card">
+            <!-- EXAMPLE: inputplace/mapUsage -->
+            <h5>Linked Map</h5>
+            <p>Link the InputPlace to a Google Map to control the map with the <code>onplacechanged</code> callback. Do not forget to include the <code>&lt;script&gt;</code> with your <strong>Google API Key</strong>.</p>
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvCDkYieuUBmMWon_mfLAfjuaeuosuqow&amp;libraries=places"></script>
+
+            <script>
+                function updateMap(place) {
+                    const map = PF('googleMap').getMap();
+                    if (!map || !place.geometry) {
+                        return;
+                    }
+
+                    // drop a pin
+                    const marker = new google.maps.Marker({
+                        map,
+                        position: place.geometry.location,
+                    });
+
+                    // If the place has a geometry, then present it on a map.
+                    map.panTo(place.geometry.location);
+                    map.setZoom(17);
+                }
+            </script>
+
+            <h:form id="formMapUsage">
+                <p:growl id="growl" showDetail="true" showSummary="true" globalOnly="false"/>
+
+                <div jsf:id="inputGroup" class="field grid">
+                    <div class="col-12">
+                        <div class="p-inputgroup mb-4">
+                            <div class="p-inputgroup-addon"><i class="fa-solid fa-location-dot"></i></div>
+                            <pe:inputPlace widgetVar="place" placeholder="Enter a location" styleClass="w-full" onplacechanged="updateMap(place)"/>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <p:gmap widgetVar="googleMap" center="41.381542, 2.122893" zoom="15" type="ROADMAP" style="width:100%;height:400px"/>
+                    </div>
+                </div>
+            </h:form>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+</ui:composition>

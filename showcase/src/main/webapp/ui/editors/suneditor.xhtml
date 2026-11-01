@@ -1,0 +1,139 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        SunEditor
+    </ui:define>
+
+    <ui:define name="description">
+        SunEditor is a lightweight, flexible, customizable WYSIWYG text editor for your web applications.
+        Based on <a href="https://github.com/JiHong88/suneditor" target="_blank" rel="noopener noreferrer">SunEditor</a> by Yi JiHong.
+        With the default theme <code>auto</code> the editor follows the color scheme of the page.
+    </ui:define>
+
+    <ui:param name="tagName" value="sunEditor"/>
+    <ui:param name="widgetLink" value="suneditor"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <div class="card">
+            <!-- EXAMPLE: sunEditor/basicUsage -->
+            <h5>Basic Usage</h5>
+            <p>
+                A WYSIWYG editor with a configurable toolbar. Change the mode, theme, locale and direction with AJAX; the paste, copy, cut,
+                drop and save events are sent to the server. The theme <i>Auto</i> picks the light or dark theme from the page.
+            </p>
+            <h:form id="formBasicUsage">
+                <p:messages id="messages" showSummary="true" showDetail="true"/>
+
+                <h:panelGrid columns="8" id="pnlDetails" styleClass="p-4">
+                    <p:outputLabel value="Mode:" for="@next" styleClass="mr-2"/>
+                    <p:selectOneMenu id="cboMode" value="#{basicSunEditorController.mode}" styleClass="w-12rem mr-2"
+                                     required="true">
+                        <f:selectItems value="#{basicSunEditorController.modes}"/>
+                        <p:ajax update="sunEditor"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="Theme:" for="@next" styleClass="mr-2"/>
+                    <p:selectOneMenu id="cboTheme" value="#{basicSunEditorController.theme}" styleClass="w-12rem mr-2"
+                                     required="true">
+                        <f:selectItems value="#{basicSunEditorController.themes}"/>
+                        <p:ajax update="sunEditor"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="Locale:" for="@next" styleClass="mr-2"/>
+                    <p:selectOneMenu id="cboLocale" value="#{basicSunEditorController.language}" styleClass="w-12rem mr-2"
+                                     required="true">
+                        <f:selectItems value="#{basicSunEditorController.languages}"/>
+                        <p:ajax update="sunEditor"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="RTL:" for="@next" styleClass="mr-2"/>
+                    <p:selectBooleanCheckbox id="chkRtl" value="#{basicSunEditorController.rtl}" styleClass="mr-2">
+                        <p:ajax update="sunEditor"/>
+                    </p:selectBooleanCheckbox>
+                </h:panelGrid>
+
+                <pe:sunEditor id="sunEditor" widgetVar="sunEditorBasic" value="#{basicSunEditorController.html}"
+                              mode="#{basicSunEditorController.mode}" dir="#{basicSunEditorController.rtl ? 'rtl' : 'ltr'}"
+                              theme="#{basicSunEditorController.theme}" locale="#{basicSunEditorController.language}"
+                              toolbar="[['font','fontSize','blockStyle'],['paragraphStyle','blockquote'], ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'],
+                              '/'
+                              ,['fontColor', 'backgroundColor', 'outdent', 'indent', 'align', 'hr', 'list', 'table'],
+                               ['link', 'image', 'audio', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview', 'exportPDF', 'save']]">
+                    <p:ajax event="paste" listener="#{basicSunEditorController.onPaste}" update="messages"/>
+                    <p:ajax event="copy" listener="#{basicSunEditorController.onCopy}" update="messages"/>
+                    <p:ajax event="cut" listener="#{basicSunEditorController.onCut}" update="messages"/>
+                    <p:ajax event="drop" listener="#{basicSunEditorController.onDrop}" update="messages"/>
+                    <p:ajax event="save" listener="#{basicSunEditorController.onSave}" update="@this messages"/>
+                    <f:attribute name="widgetPostConstruct" value="widget.editor.onPaste = function (e, cleanData, maxCharCount) {console.log('onpaste event detected!'); };"/>
+                </pe:sunEditor>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: sunEditor/dialog -->
+            <h5>Dialog</h5>
+            <p>A popular use case is an editor inside a PrimeFaces dialog. This example is for both demonstration and testing.</p>
+            <h:form id="formDialog">
+                <p:messages id="messages" showSummary="true" showDetail="true"/>
+
+                <h:panelGrid columns="6" id="pnlDetails" styleClass="p-4">
+                    <p:commandButton value="Open Dialog" type="button" icon="pi pi-external-link" onclick="PF('dlgSunEditor').show()"/>
+                </h:panelGrid>
+
+                <p:dialog header="Header" widgetVar="dlgSunEditor" minHeight="40" width="60vw" showEffect="fade" closable="true" closeOnEscape="true" modal="true">
+                    <pe:sunEditor id="sunEditor" widgetVar="sunEditorDialog" value="#{basicSunEditorController.htmlDialog}"
+                                  mode="classic" dir="#{basicSunEditorController.rtl ? 'rtl' : 'ltr'}"
+                                  theme="#{basicSunEditorController.theme}" locale="#{basicSunEditorController.language}"
+                                  toolbar="[['font','fontSize','blockStyle'],['paragraphStyle','blockquote'], ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'],
+                              '/'
+                              ,['fontColor', 'backgroundColor', 'outdent', 'indent', 'align', 'hr', 'list', 'table'],
+                               ['link', 'image', 'audio', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview', 'exportPDF', 'save']]">
+                        <p:ajax event="save" listener="#{basicSunEditorController.onSave}" update="@this messages"/>
+                    </pe:sunEditor>
+                </p:dialog>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: sunEditor/extender -->
+            <h5>Extender</h5>
+            <p>
+                Use the <code>extender</code> attribute to extend the editor, here with the KaTeX math plugin (KaTeX CSS and JavaScript must be loaded).
+                <code>this</code> is the widget and <code>this.cfg</code> its JSON configuration.
+            </p>
+            <h:form id="formExtender">
+                <!-- Must load Katext CSS and JS (here using OmniFaces CDN handler) -->
+                <h:outputStylesheet library="cdn" name="katex.css"/>
+                <h:outputScript library="cdn" name="katex.js"/>
+
+                <!-- Google Fonts can be used "Roboto", "Bruno Ace SC"
+                <link rel="preconnect" href="https://fonts.googleapis.com">
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+                <link href="https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&amp;family=Roboto&amp;display=swap" rel="stylesheet" />
+                -->
+
+                <pe:sunEditor id="sunEditor" widgetVar="sunEditorExtender" value="#{basicSunEditorController.html}"
+                              theme="#{basicSunEditorController.theme}" extender="editorExtender" toolbar="[['font','fontSize','blockStyle'],['math']]">
+                </pe:sunEditor>
+            </h:form>
+
+            <script type="text/javascript">
+                function editorExtender() {
+                    // this = widget
+                    // this.cfg = JSON configuration
+                    this.cfg.katex = window.katex;
+                    this.cfg.font = ["Serif", "Sans-Serif", "Monospace", "Roboto", "Bruno Ace SC"];
+                    this.cfg.defaultStyle = "font-family:Serif;";
+                };
+            </script>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+</ui:composition>

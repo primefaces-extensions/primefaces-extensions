@@ -1,0 +1,138 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        MarkText <span class="subitem">Search Terms</span>
+    </ui:define>
+
+    <ui:define name="description">
+        MarkText highlights search terms within specified containers using
+        <a href="https://markjs.io/" target="_blank" rel="noopener noreferrer">mark.js</a> by Julien Royer.
+        These examples widen a search term with wildcards, synonyms and diacritics.
+    </ui:define>
+
+    <ui:param name="tagName" value="markText"/>
+    <ui:param name="widgetLink" value="mark"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <style>
+            .marktext-highlight,
+            mark {
+                background-color: yellow !important;
+                color: black !important;
+            }
+        </style>
+
+        <div class="card">
+            <!-- EXAMPLE: marktext/wildcard -->
+            <h5>Wildcard Search</h5>
+            <p>The <code>wildcards</code> attribute: <code>?</code> matches one character, <code>*</code> any number of characters.</p>
+            <h:form id="formWildcard">
+                <p:messages id="messages" showSummary="true" showDetail="true"/>
+
+                <h:panelGrid columns="2" columnClasses="label,value" cellpadding="4">
+                    <h:outputText value="Search term:"/>
+                    <p:inputText id="searchInput" value="#{markTextWildcardController.searchTerm}" placeholder="Enter search term">
+                        <p:ajax event="keyup" delay="300" update="markText" process="@this"/>
+                    </p:inputText>
+
+                    <h:outputText value="Wildcard Mode:"/>
+                    <p:selectOneMenu id="wildcards" value="#{markTextWildcardController.wildcards}">
+                        <f:selectItem itemValue="disabled" itemLabel="Disabled"/>
+                        <f:selectItem itemValue="enabled" itemLabel="Enabled (no spaces)"/>
+                        <f:selectItem itemValue="withSpaces" itemLabel="Enabled (with spaces)"/>
+                        <p:ajax event="change" update="markText" process="@this"/>
+                    </p:selectOneMenu>
+                </h:panelGrid>
+
+                <p:panel id="searchContainer" header="Searchable Content" style="margin-top: 20px">
+                    <p>#{markTextWildcardController.processedText}</p>
+                </p:panel>
+
+                <p:panel id="backendDataPanel" header="Backend Data from Mark Event Listener" style="margin-top: 20px">
+                    <h:outputText value="Last Matched Terms: #{empty markTextWildcardController.lastMatchedTerms ? 'No data received yet' : markTextWildcardController.lastMatchedTerms}"/>
+                    <br/>
+                    <h:outputText value="Last Positions: #{empty markTextWildcardController.lastPositions ? 'No data received yet' : markTextWildcardController.lastPositions}"/>
+                </p:panel>
+
+                <pe:markText id="markText" for="searchContainer" value="#{markTextWildcardController.searchTerm}"
+                             wildcards="#{markTextWildcardController.wildcards}" styleClass="marktext-highlight" caseSensitive="false">
+                    <p:ajax event="mark" listener="#{markTextWildcardController.onHighlight}" update="backendDataPanel messages"/>
+                </pe:markText>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: marktext/synonyms -->
+            <h5>Synonyms</h5>
+            <p>
+                The <code>synonyms</code> map highlights synonymous terms in both directions: searching for "one" also highlights "1",
+                and vice versa.
+            </p>
+            <h:form id="formSynonyms">
+                <p:messages id="messages" showSummary="true" showDetail="true"/>
+
+                <h:panelGrid columns="3" cellpadding="4">
+                    <h:outputText value="Search term:"/>
+                    <p:inputText id="searchInput" value="#{synonymsMarkTextController.searchTerm}" placeholder="Enter search term">
+                        <p:ajax event="keyup" delay="500" update="searchContainer markText"/>
+                    </p:inputText>
+                    <p:commandButton value="Highlight" update="searchContainer markText" icon="pi pi-search"/>
+                </h:panelGrid>
+
+                <p:panel id="searchContainer" header="Searchable Content" style="margin-top: 20px">
+                    <h:panelGroup id="searchContent" layout="block">
+                        #{synonymsMarkTextController.processedText}
+                    </h:panelGroup>
+                </p:panel>
+
+                <pe:markText id="markText" for="searchContent" value="#{synonymsMarkTextController.searchTerm}" synonyms="#{synonymsMarkTextController.synonyms}" styleClass="marktext-highlight">
+                    <p:ajax event="mark" listener="#{synonymsMarkTextController.onHighlight}" update="messages"/>
+                </pe:markText>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: marktext/diacritics -->
+            <h5>Diacritics</h5>
+            <p>With <code>diacritics="true"</code> characters with and without diacritics match each other, e.g. "e" matches "é".</p>
+            <h:form id="formDiacritics">
+                <p:messages id="messages" showSummary="true" showDetail="true"/>
+
+                <h:panelGrid columns="3" cellpadding="4">
+                    <h:outputText value="Search term:"/>
+                    <p:inputText id="searchInput" value="#{diacriticsMarkTextController.searchTerm}" placeholder="Enter search term">
+                        <p:ajax event="keyup" delay="500" update="searchContainer markText"/>
+                    </p:inputText>
+                    <p:commandButton value="Highlight" update="searchContainer markText" icon="pi pi-search"/>
+                </h:panelGrid>
+
+                <h:panelGrid columns="2" style="margin-top:10px" cellpadding="4">
+                    <h:outputText value="Consider diacritics:"/>
+                    <p:selectBooleanCheckbox value="#{diacriticsMarkTextController.diacritics}">
+                        <p:ajax update="markText searchContainer" process="@this"/>
+                    </p:selectBooleanCheckbox>
+                </h:panelGrid>
+
+                <p:panel id="searchContainer" header="Searchable Content" style="margin-top: 20px">
+                    <h:panelGroup id="searchContent" layout="block">
+                        <p>#{diacriticsMarkTextController.processedText}</p>
+                    </h:panelGroup>
+                </p:panel>
+
+                <pe:markText id="markText" widgetVar="markTextWidget" for="searchContent" value="#{diacriticsMarkTextController.searchTerm}"
+                             diacritics="#{diacriticsMarkTextController.diacritics}" styleClass="marktext-highlight">
+                    <p:ajax event="mark" listener="#{diacriticsMarkTextController.onHighlight}" update="messages"/>
+                </pe:markText>
+            </h:form>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+</ui:composition>

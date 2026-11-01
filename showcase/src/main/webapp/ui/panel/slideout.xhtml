@@ -1,0 +1,295 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        SlideOut
+    </ui:define>
+
+    <ui:define name="description">
+        SlideOut creates tabs that slide out from the window edges to show a feedback form, contact form, live chat, etc.
+        Tabs can be attached to the top, bottom, left or right edge, can be sticky, are easily styled with CSS and support JavaScript
+        callbacks and Ajax behaviors for the open and close events. Based on the
+        <a href="https://github.com/hawk-ip/jquery.tabSlideOut.js" target="_blank" rel="noopener noreferrer">jQuery TabSlideOut Plugin</a>.
+    </ui:define>
+
+    <ui:param name="tagName" value="slideout"/>
+    <ui:param name="widgetLink" value="slideout"/>
+
+    <ui:define name="static-documentation">
+        <h2>Notes</h2>
+        <div class="card">
+            <p>
+                A slide out tab is attached to an edge of the browser window. All demos on this page are attached to the <b>top</b> edge, each at a
+                different <code>offset</code> so that the tabs sit next to each other below the page header. Be careful where you place the
+                component in your own layout: the tab is positioned relative to its container, so it cannot be drawn on top of the panes of a
+                <code>pe:layout</code>.
+            </p>
+        </div>
+    </ui:define>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <style>
+            /* Custom styles for the SlideOut tabs */
+            .contact-panel {
+                border-color: green;
+                border-width: 5px;
+            }
+
+            .contact-handle {
+                padding: 8px;
+                font-size: 14px;
+                color: white !important;
+                background-color: green;
+            }
+
+            .feedback-panel {
+                border-color: DeepPink;
+                border-width: 1px;
+            }
+
+            /* Handle defaults and "closed" state */
+            .feedback-handle {
+                padding: 8px;
+                font-size: 14px;
+                border-width: 1px;
+                border-style: solid;
+                border-color: #FF3366;
+                color: DeepPink !important;
+                background-color: white;
+            }
+
+            /* Style applied to handle "open" state */
+            .ui-slideouttab-open > .feedback-handle {
+                color: white !important;
+                background-color: DeepPink;
+            }
+
+            .hover-panel {
+                border-color: red;
+                border-width: 5px;
+            }
+
+            .hover-handle {
+                padding: 8px;
+                font-size: 14px;
+                color: white !important;
+                background-color: red;
+            }
+
+            .reverse-panel {
+                border-color: blue;
+                border-width: 5px;
+            }
+
+            .reverse-handle {
+                padding: 8px;
+                font-size: 14px;
+                color: white !important;
+                background-color: blue;
+            }
+
+            .auto-panel {
+                border-color: orange;
+                border-width: 5px;
+            }
+
+            .auto-handle {
+                padding: 8px;
+                font-size: 14px;
+                color: white !important;
+                background-color: orange;
+            }
+        </style>
+
+        <div class="card">
+            <!-- EXAMPLE: slideout/basicUsage -->
+            <h5>Basic Usage</h5>
+            <p>
+                SlideOut attaches nice forms to the edge of the screen. Click on the green "Contact" tab attached to the top edge of the screen.
+                The slideout is controlled in JavaScript by its <code>widgetVar</code> with <code>open()</code>, <code>close()</code>,
+                <code>toggle()</code> and <code>bounce()</code>.
+            </p>
+            <h:form id="formBasicUsage">
+                <pe:slideout id="slideoutContact" title="Contact" icon="pi pi-envelope" location="top" widgetVar="slideoutBasic"
+                             handleStyleClass="contact-handle" panelStyleClass="contact-panel" offset="550px" bounceTimes="5"
+                             bounceDistance="100px">
+                    <p:panelGrid styleClass="p-noborder" layout="tabular" columns="0">
+                        <p:row>
+                            <p:column styleClass="p-widget-header">
+                                <p:outputLabel for="txtMessage" value="Message"/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:inputTextarea id="txtMessage" rows="5" cols="43" autoResize="false" placeholder="Send us a message if you have something to say."/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column styleClass="p-widget-header">
+                                <p:outputLabel for="txtEmail" value="Email address (optional)"/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:inputText id="txtEmail" size="40" placeholder="Email address (optional)"/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column style="font-style: italic;">
+                                If you provide your email address above, then by submitting<br/>
+                                this form you agree that we may contact you by email<br/>
+                                to follow up on your feedback.<br/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:outputPanel style="text-align:right;">
+                                    <p:commandButton value="Send" type="button" onclick="PF('slideoutBasic').close();"/>
+                                </p:outputPanel>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                </pe:slideout>
+
+                <div class="flex flex-wrap gap-2">
+                    <p:commandButton value="Open" type="button" onclick="PF('slideoutBasic').open();"/>
+                    <p:commandButton value="Close" type="button" onclick="PF('slideoutBasic').close();"/>
+                    <p:commandButton value="Toggle" type="button" onclick="PF('slideoutBasic').toggle();"/>
+                    <p:commandButton value="Bounce" type="button" onclick="PF('slideoutBasic').bounce();"/>
+                </div>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: slideout/multipleTabs -->
+            <h5>Multiple Tabs</h5>
+            <p>
+                Multiple slideouts can be on one page and even be opened by default: <code>autoOpen="true"</code> opens the orange tab after the
+                DOM is loaded, <code>showOn="hover"</code> opens the red tab when you hover over it and <code>handleOffsetReverse="true"</code>
+                places the handle of the blue tab on the other side of the tab.
+            </p>
+            <h:form id="formMultipleTabs">
+                <pe:slideout id="soAuto" title="AutoOpen" icon="pi pi-folder-open" location="top" widgetVar="slideoutAuto"
+                             handleStyleClass="auto-handle" panelStyleClass="auto-panel" showOn="click" offset="250px" autoOpen="true">
+                    <p:panelGrid styleClass="p-noborder" layout="tabular" columns="0">
+                        <p:row>
+                            <p:column styleClass="p-widget-header">
+                                <h:outputText value="Auto Open"/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <h:outputText value="Tab opens after DOM is done loading!"/>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                </pe:slideout>
+
+                <pe:slideout id="soHover" title="Hover" icon="pi pi-arrow-right" location="top" widgetVar="slideoutHover"
+                             handleStyleClass="hover-handle" panelStyleClass="hover-panel" showOn="hover" offset="350px">
+                    <p:panelGrid styleClass="p-noborder" layout="tabular" columns="0">
+                        <p:row>
+                            <p:column styleClass="p-widget-header">
+                                <h:outputText value="Hover"/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <h:outputText value="Hover over the tab with your mouse to open instead of a click!"/>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                </pe:slideout>
+
+                <pe:slideout id="soReverse" title="Reverse" icon="pi pi-backward" location="top" widgetVar="slideoutReverse"
+                             handleStyleClass="reverse-handle" panelStyleClass="reverse-panel" showOn="click" offset="450px"
+                             handleOffsetReverse="true">
+                    <p:panelGrid styleClass="p-noborder" layout="tabular" columns="0">
+                        <p:row>
+                            <p:column styleClass="p-widget-header">
+                                <h:outputText value="Reverse"/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <h:outputText value="Handle is on the other side of the tab!"/>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                </pe:slideout>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: slideout/advancedUsage -->
+            <h5>Advanced Usage, events and callbacks</h5>
+            <p>
+                Demonstrates JavaScript callbacks (<code>onopen</code>, <code>onclose</code>), the server-side Ajax events <i>open</i> and
+                <i>close</i> (<code>p:ajax</code>), and a different handle style for the open state via the
+                <code>ui-slideouttab-open</code> style class. Open and close the pink "Feedback" tab.
+            </p>
+            <h:form id="formAdvancedUsage">
+                <p:growl id="growl" showDetail="true" showSummary="true"/>
+
+                <pe:slideout id="slideoutFeedback" title="Feedback" icon="pi pi-thumbs-up" location="top" widgetVar="slideoutAdvanced"
+                             handleStyleClass="feedback-handle" panelStyleClass="feedback-panel" offset="700px" bounceTimes="5"
+                             bounceDistance="100px"
+                             onopen="document.getElementById('formAdvancedUsage:lblOnOpenClose').textContent = 'Open Event!';"
+                             onclose="document.getElementById('formAdvancedUsage:lblOnOpenClose').textContent = 'Close Event!';">
+
+                    <p:ajax event="open" listener="#{slideOutController.openListener}" update="growl"/>
+                    <p:ajax event="close" listener="#{slideOutController.closeListener}" update="growl"/>
+
+                    <p:panelGrid styleClass="p-noborder" layout="tabular" columns="0">
+                        <p:row>
+                            <p:column styleClass="p-widget-header">
+                                <p:outputLabel for="txtMessage" value="Message"/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:inputTextarea id="txtMessage" rows="5" cols="43" autoResize="false" placeholder="Send us a message if you have something to say."/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column styleClass="p-widget-header">
+                                <p:outputLabel for="txtEmail" value="Email address (optional)"/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:inputText id="txtEmail" size="40" placeholder="Email address (optional)"/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column style="font-style: italic;">
+                                If you provide your email address above, then by submitting<br/>
+                                this form you agree that we may contact you by email<br/>
+                                to follow up on your feedback.<br/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:outputPanel style="text-align:right;">
+                                    <p:commandButton value="Send" type="button" onclick="PF('slideoutAdvanced').close();"/>
+                                </p:outputPanel>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                </pe:slideout>
+
+                <p>
+                    <h:outputText id="lblResult" value="JavaScript Callback Result: "/>
+                    <h:outputText id="lblOnOpenClose" value="Event Result" style="font-weight:bold; color: DeepPink;"/>
+                </p>
+            </h:form>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,103 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        LightSwitch
+    </ui:define>
+
+    <ui:define name="description">
+        The PrimeFaces 17 themes support light and dark mode, selected by the CSS <code>color-scheme</code> of the page.
+        LightSwitch sets the <code>color-scheme</code> to <code>light</code> or <code>dark</code>, automatically based on the OS settings
+        or with its JavaScript API, and can remember the selection on the server.
+    </ui:define>
+
+    <ui:param name="tagName" value="lightSwitch"/>
+    <ui:param name="widgetLink" value="lightswitch"/>
+
+    <ui:define name="static-documentation">
+        <h2>Setup</h2>
+        <div class="card">
+            <p>Put LightSwitch in your template like:</p>
+            <pre>
+&lt;html style="color-scheme: \#{empty userBean.colorScheme ? 'light dark' : userBean.colorScheme}"&gt;
+...
+&lt;pe:lightSwitch selected="\#{userBean.colorScheme}"/&gt;
+            </pre>
+            <p><code>userBean</code> should be a session scoped bean with a <code>String</code> type <code>colorScheme</code> property
+                (with both getter and setter). Its value is <code>light</code> or <code>dark</code>. Rendering it on the <code>html</code>
+                element avoids a flash of the other mode on page load.</p>
+            <p>This showcase does not bind <code>selected</code>: the theme configurator (palette button at the right edge) keeps the
+                color scheme in the <code>localStorage</code> of the browser and applies it before the first paint, so the choice of the
+                configurator and of the demo below always agree and survive a reload.</p>
+
+            <h3>A different theme per mode</h3>
+            <p>Optionally, the <code>light</code> and <code>dark</code> attributes name a theme to switch to as well, e.g.
+                <code>&lt;pe:lightSwitch selected="\#{userBean.colorScheme}" light="aura" dark="metal"/&gt;</code>.
+                Then also bind the theme in your <code>web.xml</code>:</p>
+            <pre>
+&lt;context-param&gt;
+    &lt;param-name&gt;primefaces.THEME&lt;/param-name&gt;
+    &lt;param-value&gt;\#{userBean.theme}&lt;/param-value&gt;
+&lt;/context-param&gt;
+            </pre>
+            <p><strong>Migration from PrimeFaces Extensions 16:</strong> <code>selected</code> holds the color scheme
+                (<code>light</code> / <code>dark</code>) instead of a theme name, the <code>light</code> / <code>dark</code>
+                attributes have no default anymore (formerly <code>saga-blue</code> / <code>arya-blue</code>), and the
+                <code>switch</code> event carries the color scheme.</p>
+            <p>See also the
+                <a href="https://primefaces.github.io/primefaces/17_0_0/#/core/theming" target="_blank" rel="noopener noreferrer">PrimeFaces theming documentation</a>.</p>
+
+            <h3><a href="https://showcase.omnifaces.org/resourcehandlers/CombinedResourceHandler" target="_blank" rel="noopener noreferrer">OmniFaces <code>CombinedResourceHandler</code></a></h3>
+            <p>When a theme is switched with combined resources, we cannot find the theme link in the DOM tree. Therefore we need to add a node
+                for the new theme. <strong>Important:</strong> this node will be added as the last element in the body.</p>
+        </div>
+    </ui:define>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <div class="card">
+            <!-- EXAMPLE: lightSwitch/jsAPI -->
+            <h5>JavaScript API</h5>
+            <p>The widget methods <code>light()</code>, <code>dark()</code>, <code>toggle()</code> and <code>automatic()</code> switch
+                the whole site. Open the theme configurator: its color scheme buttons follow the switch. <code>automatic="false"</code> keeps the switch from applying the OS setting on page load, so the stored choice wins.</p>
+            <h:form id="formJsAPI">
+                <pe:lightSwitch id="lightSwitch" widgetVar="lightSwitch" automatic="false"/>
+
+                <p><p:toggleSwitch widgetVar="schemeToggle"
+                                   onchange="PF('lightSwitch').changeColorScheme(PF('schemeToggle').input.prop('checked') ? 'dark' : 'light')"/></p>
+
+                <p><p:button value="Dark" onclick="PF('lightSwitch').dark();return false"/></p>
+
+                <p><p:button value="Light" onclick="PF('lightSwitch').light();return false"/></p>
+
+                <p><p:button value="Automatic (OS setting)" onclick="PF('lightSwitch').automatic();return false"/></p>
+            </h:form>
+            <script type="text/javascript">
+                // keeps the toggle in sync when the scheme is changed by the buttons or by the theme configurator
+                $(function () {
+                    var root = document.documentElement;
+                    function sync() {
+                        var toggle = PF('schemeToggle');
+                        if (!toggle) {
+                            return;
+                        }
+                        var scheme = root.style.colorScheme;
+                        var dark = scheme ? scheme === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+                        if (toggle.input.prop('checked') !== dark) {
+                            dark ? toggle.check() : toggle.uncheck();
+                        }
+                    }
+                    new MutationObserver(sync).observe(root, {attributes: true, attributeFilter: ['style']});
+                    setTimeout(sync, 0);
+                });
+            </script>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+</ui:composition>

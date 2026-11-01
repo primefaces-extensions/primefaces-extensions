@@ -1,0 +1,178 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        OrgChart
+    </ui:define>
+
+    <ui:define name="description">
+        OrgChart is a simple and direct organization chart component. Anytime you want a tree-like chart, you can turn to OrgChart.
+        Based on <a href="https://github.com/dabeng/OrgChart" target="_blank" rel="noopener noreferrer">orgchart</a> by Xuebin Dong (dabeng).
+    </ui:define>
+
+    <ui:param name="tagName" value="orgchart"/>
+    <ui:param name="widgetLink" value="orgchart"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <style>
+            .orgchart .gold-level .title { background-color: #DAA520; }
+            .orgchart .gold-level .content { border-color: #DAA520; }
+            .orgchart .green-level .title { background-color: #228B22; }
+            .orgchart .green-level .content { border-color: #228B22; }
+            .orgchart .blue-level .title { background-color: #4169E1; }
+            .orgchart .blue-level .content { border-color: #4169E1; }
+            .orgchart .red-level .title { background-color: #DC143C; }
+            .orgchart .red-level .content { border-color: #DC143C; }
+            .orgchart .purple-level .title { background-color: #8B008B; }
+            .orgchart .purple-level .content { border-color: #8B008B; }
+
+            .orgchart .wide-node .title,
+            .orgchart .wide-node .content {
+                width: 240px;
+            }
+
+            .orgchart .standard-node .title,
+            .orgchart .standard-node .content {
+                width: 160px;
+            }
+
+            .orgchart .narrow-node .title,
+            .orgchart .narrow-node .content {
+                width: 100px;
+            }
+
+            .compact-demo .orgchart {
+                background: unset;
+            }
+        </style>
+
+        <div class="card">
+            <!-- EXAMPLE: orgchart/basicUsage -->
+            <h5>Basic Usage</h5>
+            <p>A tree-like chart with dragging, panning, zooming and export to PDF.</p>
+            <h:form id="formBasicUsage">
+                <pe:orgchart id="orgChart"
+                            widgetVar="orgChartBasicWidget"
+                            value="#{orgchartController.orgChartNode}"
+                            draggable="true"
+                            exportButton="true"
+                            pan="true"
+                            parentNodeSymbol="fa-folder-open"
+                            zoom="true"
+                            exportFileextension="pdf"
+                            direction="#{orgchartController.direction}"
+                            toggleSiblingsResp="true"
+                            style="height:350px">
+                </pe:orgchart>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: orgchart/colorCoded -->
+            <h5>Color Coded</h5>
+            <p>Use CSS classes to color-code nodes by department, role or any other criteria. Set the <code>className</code> property on each node to apply custom styling.</p>
+            <h:form id="formColorCoded">
+                <pe:orgchart id="orgChart"
+                             widgetVar="colorWidget"
+                             value="#{colorCodedOrgchartController.colorCodedChart}"
+                             nodeId="id"
+                             nodeContent="title"
+                             nodeTitle="name"
+                             style="height:400px">
+                </pe:orgchart>
+
+                <ul>
+                    <li><span style="color:#DAA520">&#9632;</span> gold-level - Executive Team</li>
+                    <li><span style="color:#228B22">&#9632;</span> green-level - Middle Management</li>
+                    <li><span style="color:#4169E1">&#9632;</span> blue-level - Tech Staff</li>
+                    <li><span style="color:#DC143C">&#9632;</span> red-level - Sales Staff</li>
+                    <li><span style="color:#8B008B">&#9632;</span> purple-level - Support Staff</li>
+                </ul>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: orgchart/variableWidth -->
+            <h5>Variable Width Nodes</h5>
+            <p>Nodes can have different widths to accommodate varying content lengths. Use the <code>className</code> property and custom CSS on <code>.orgchart .your-class .title</code> and <code>.content</code> to set the widths (default 130px): <code>wide-node</code> 240px, <code>standard-node</code> 160px, <code>narrow-node</code> 100px.</p>
+            <h:form id="formVariableWidth">
+                <pe:orgchart id="orgChart"
+                             widgetVar="variableWidthWidget"
+                             value="#{variableWidthOrgchartController.orgChartModel}"
+                             nodeId="id"
+                             nodeContent="title"
+                             nodeTitle="name"
+                             style="height:400px">
+                </pe:orgchart>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: orgchart/filterNode -->
+            <h5>Filter Node</h5>
+            <p>Client-side node filtering through the widget API: the quick action buttons call <code>filterNodes</code> and <code>clearFilter</code>, the filter input of the chart works as well.</p>
+            <h:form id="formFilterNode">
+                <h:panelGroup layout="block" style="margin:0 0 0.75rem 0;">
+                    <p:commandButton type="button" value="Quick Filter: VP"
+                                     onclick="PF('orgChartFilterWidget').filterNodes('VP', false); return false;" style="margin-right:0.5rem;" />
+                    <p:commandButton type="button" value="Quick Filter: Developer"
+                                     onclick="PF('orgChartFilterWidget').filterNodes('Developer', false); return false;" style="margin-right:0.5rem;" />
+                    <p:commandButton type="button" value="Clear Programmatically"
+                                     onclick="PF('orgChartFilterWidget').clearFilter(); return false;" />
+                </h:panelGroup>
+
+                <pe:orgchart id="orgChart"
+                             widgetVar="orgChartFilterWidget"
+                             value="#{filterOrgchartController.orgChartNode}"
+                             filterable="true"
+                             draggable="true"
+                             exportButton="true"
+                             pan="true"
+                             zoom="true"
+                             direction="t2b"
+                             style="height:420px">
+                </pe:orgchart>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: orgchart/compactMode -->
+            <h5>Compact Mode</h5>
+            <p>Nodes marked <code>compact=true</code> render their children in a grid inside the parent node, which helps when many children exist. Bo Miao is compact and includes a nested compact node (Si Xuan); use the green corner controls to switch between compact and loose layouts.</p>
+            <h:form id="formCompactMode">
+                <h:panelGroup layout="block" styleClass="compact-demo">
+                    <pe:orgchart id="orgChart"
+                                 widgetVar="orgChartCompact"
+                                 value="#{compactOrgchartController.orgChartNode}"
+                                 nodeContent="title"
+                                 parentNodeSymbol="fa-users"
+                                 pan="true"
+                                 zoom="true"
+                                 direction="t2b"
+                                 style="height:480px">
+                    </pe:orgchart>
+                </h:panelGroup>
+            </h:form>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+    <ui:define name="static-documentation">
+        <h2>Icons</h2>
+        <div class="card">
+            <p>
+                OrgChart uses Font Awesome for its icons (for example <code>parentNodeSymbol="fa-folder-open"</code>).
+                As Font Awesome is no longer included in PrimeFaces,
+                <a href="https://primefaces.github.io/primefaces/10_0_0/#/core/fonticons?id=fontawesome-5x-or-higher" target="_blank" rel="noopener noreferrer">include Font Awesome</a>
+                in the pages that use OrgChart. The showcase already does.
+            </p>
+        </div>
+    </ui:define>
+
+</ui:composition>

@@ -45,7 +45,7 @@ public class CustomContentLayoutController implements Serializable {
     @Serial
     private static final long serialVersionUID = 20120925L;
 
-    private final String src = "/sections/layout/example-customContentOne.xhtml";
+    private final String src = "/ui/panel/layout/standalone/customContentNested.xhtml";
     private LayoutOptions layoutOptions;
 
     @PostConstruct

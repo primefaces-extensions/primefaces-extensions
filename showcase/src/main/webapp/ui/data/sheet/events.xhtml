@@ -1,0 +1,160 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        Sheet <span class="subitem">Events</span>
+    </ui:define>
+
+    <ui:define name="description">
+        Sheet fires ajax events for cell selection, changes, sorting, filtering and row or column selection. Sheet is a spreadsheet-like in-cell editing component based on <a href="https://handsontable.com/" target="_blank" rel="noopener noreferrer">Handsontable</a> by Handsoncode.
+    </ui:define>
+
+    <ui:param name="tagName" value="sheet"/>
+    <ui:param name="tagName2" value="sheetcolumn"/>
+    <ui:param name="widgetLink" value="sheet"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <style>
+            .positive {
+                color: Green !important;
+            }
+
+            .negative {
+                color: Red !important;
+            }
+        </style>
+
+        <div class="card">
+            <!-- EXAMPLE: sheet/ajaxEvents -->
+            <h5>Ajax Events</h5>
+            <p>Sheet provides the ajax events <i>cellSelect</i>, <i>change</i>, <i>sort</i>, <i>filter</i>, <i>columnSelect</i> and <i>rowSelect</i>. Click a header once to select it, then you may move columns around when the hand icon appears.</p>
+            <h:form id="formAjaxEvents">
+                <p:messages id="messages" showSummary="true" showDetail="true"/>
+
+                <pe:sheet id="sheet" widgetVar="sheetEventsWidget" value="#{sheetAjaxController.assets}"
+                          var="row" height="400" rowKey="#{row.assetId}" showRowHeaders="true"
+                          sortBy="#{row.assetId}" sortOrder="ascending" width="1000"
+                          stretchH="all" movableCols="true" movableRows="true"
+                          filteredValue="#{sheetAjaxController.filteredAssets}">
+
+                    <p:ajax event="change" listener="#{sheetAjaxController.cellChangeEvent}" update="messages"/>
+                    <p:ajax event="columnSelect" listener="#{sheetAjaxController.columnSelectEvent}" update="messages"/>
+                    <p:ajax event="rowSelect" listener="#{sheetAjaxController.rowSelectEvent}" update="detailPanel messages"/>
+
+                    <f:facet name="header">
+                        <h:outputText value="Assets"/>
+                    </f:facet>
+
+                    <f:facet name="footer">
+                        <h:outputText value="#{sheetAjaxController.filteredAssets.size()} Records"/>
+                    </f:facet>
+
+                    <pe:sheetcolumn headerText="Id (readOnly)" readOnly="true" value="#{row.assetId}" colWidth="150"/>
+                    <pe:sheetcolumn headerText="Type (readOnly)" value="#{row.assetType}" readOnly="true" colWidth="100"/>
+                    <pe:sheetcolumn headerText="Platform (readOnly)" value="#{row.platform}" readOnly="true" colWidth="100"/>
+                    <pe:sheetcolumn headerText="Arch (readOnly)" value="#{row.platformArch}" readOnly="true" colWidth="100"/>
+                    <pe:sheetcolumn headerText="Editable" value="#{row.value1}" colWidth="100" styleClass="htRight" colType="numeric"/>
+                </pe:sheet>
+
+                <p:panel id="detailPanel" header="Selected Row Details" style="margin-top:1rem">
+                    <h:panelGrid columns="2" rendered="#{sheetAjaxController.selectedAsset != null}">
+                        <h:outputText value="ID:"/>
+                        <h:outputText value="#{sheetAjaxController.selectedAsset.assetId}"/>
+                        <h:outputText value="Host Name:"/>
+                        <h:outputText value="#{sheetAjaxController.selectedAsset.hostName}"/>
+                        <h:outputText value="Platform:"/>
+                        <h:outputText value="#{sheetAjaxController.selectedAsset.platform}"/>
+                        <h:outputText value="Type:"/>
+                        <h:outputText value="#{sheetAjaxController.selectedAsset.assetType}"/>
+                        <h:outputText value="Arch:"/>
+                        <h:outputText value="#{sheetAjaxController.selectedAsset.platformArch}"/>
+                        <h:outputText value="Purchase Price:"/>
+                        <h:outputText value="#{sheetAjaxController.selectedAsset.purchasePrice}"/>
+                        <h:outputText value="Active:"/>
+                        <h:outputText value="#{sheetAjaxController.selectedAsset.active}"/>
+                    </h:panelGrid>
+                    <h:outputText value="Click a row to see details." rendered="#{sheetAjaxController.selectedAsset == null}"
+                                  style="color:#888"/>
+                </p:panel>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: sheet/outsideClickDeselects -->
+            <h5>Outside Click Deselects</h5>
+            <p>When <code>outsideClickDeselects</code> is <code>false</code>, clicking outside the sheet keeps the current selection.</p>
+            <h:form id="formOutsideClickDeselects">
+                <p:importEnum type="org.primefaces.extensions.showcase.model.sheet.AssetType" var="AssetType"/>
+                <p:importEnum type="org.primefaces.extensions.showcase.model.sheet.PlatformType" var="PlatformType"/>
+
+                <h:panelGroup style="display:block; margin-bottom: 1rem;">
+                    <p:outputLabel for="platformFilter" value="Filter Platform: " style="margin-right: 0.5rem;"/>
+                    <p:selectOneMenu id="platformFilter" filter="true" style="width: 200px;">
+                        <f:selectItem itemLabel="All" itemValue=""/>
+                        <f:selectItems value="#{PlatformType.ALL_VALUES}" var="pt" itemLabel="#{pt}" itemValue="#{pt}"/>
+                    </p:selectOneMenu>
+                </h:panelGroup>
+
+                <pe:sheet id="sheet" widgetVar="sheetOutsideWidget" value="#{sheetController.assets}" var="row" height="400"
+                          rowKey="#{row.assetId}" showRowHeaders="true" sortBy="#{row.assetId}" sortOrder="ascending"
+                          outsideClickDeselects="false" filteredValue="#{sheetController.filteredAssets}">
+
+                    <f:facet name="header">
+                        <h:outputText value="Assets"/>
+                    </f:facet>
+
+                    <f:facet name="footer">
+                        <h:outputText value="#{sheetController.filteredAssets.size()} Records"/>
+                    </f:facet>
+
+                    <pe:sheetcolumn headerText="Id (read-only)"
+                                    readOnly="true"
+                                    value="#{row.assetId}"
+                                    sortBy="#{row.assetId}"
+                                    colWidth="150"
+                                    filterBy="#{row.assetId}"/>
+                    <pe:sheetcolumn headerText="Icon"
+                                    readOnly="true"
+                                    styleClass="text-center"
+                                    value="#{row.icon}"
+                                    colWidth="80"/>
+                    <pe:sheetcolumn headerText="Type" value="#{row.assetType}" colWidth="100"
+                                    sortBy="#{row.assetType}" filterBy="#{row.assetType}"
+                                    filterOptions="#{sheetOptionProducer.assetTypes}"
+                                    colType="dropdown"
+                                    selectItems="#{AssetType.ALL_VALUES}"/>
+                    <pe:sheetcolumn headerText="Platform" value="#{row.platform}" colWidth="100"
+                                    sortBy="#{row.platform}" filterBy="#{row.platform}"
+                                    filterOptions="#{sheetOptionProducer.platformTypes}"
+                                    colType="autocomplete"
+                                    selectItems="#{PlatformType.ALL_VALUES}"
+                                    autoCompleteStrict="false"
+                                    autoCompleteVisibleRows="4"/>
+                    <pe:sheetcolumn headerText="Arch" value="#{row.platformArch}" readOnly="true"
+                                    colWidth="100" sortBy="#{row.platformArch}"
+                                    filterBy="#{row.platformArch}"
+                                    filterOptions="#{sheetOptionProducer.archTypes}"/>
+                    <pe:sheetcolumn headerText="Active" value="#{row.active}" colWidth="60" colType="checkbox"/>
+                    <pe:sheetcolumn headerText="Price" value="#{row.purchasePrice}" colWidth="100"
+                                    styleClass="htRight #{row.purchasePrice gt 0 ? 'positive' : 'negative'}"
+                                    colType="numeric"
+                                    numericLocale="de-DE"
+                                    numericPattern="$0,0.00"
+                                    required="true"
+                                    requiredMessage="Price is required!">
+                        <f:converter converterId="jakarta.faces.BigDecimal"/>
+                    </pe:sheetcolumn>
+                </pe:sheet>
+            </h:form>
+        </div>
+
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+</ui:composition>

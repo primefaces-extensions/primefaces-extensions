@@ -1,0 +1,165 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        Layout
+    </ui:define>
+
+    <ui:define name="description">
+        Layout creates a border layout that has an auto-sizing 'center pane' surrounded by up to four closable and resizable 'border panes'
+        (north, south, east and west). Layouts can be nested, used for an entire page (full page layout) or for a region of the page
+        (element layout), and have client-side and server-side state management.
+    </ui:define>
+
+    <ui:param name="tagName" value="layout"/>
+    <ui:param name="tagName2" value="layoutPane"/>
+    <ui:param name="widgetLink" value="layout"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <div class="card">
+            <!-- EXAMPLE: layout/elementLayout -->
+            <h5>Element layout and server-side state management</h5>
+            <p>
+                Setting <code>fullPage="false"</code> creates an element layout. Two element layouts with server-side state management
+                are shown below: resize, open or close panes and switch between the layouts. Both are described by
+                <code>LayoutOptions</code> bound to the <code>options</code> attribute; options can also be set as attributes of
+                <code>pe:layoutPane</code> (the Java model takes precedence).
+            </p>
+            <h:form id="formElementLayout">
+                <h:panelGroup id="layoutsContainer">
+                    <p:commandButton value="Switch between element layouts" actionListener="#{elementLayoutController.toogleLayout}"
+                                     process="layoutsContainer" update="layoutsContainer" icon="pi pi-external-link"/>
+
+                    <h:panelGrid id="layoutsGrid" columns="2" style="margin-top: 15px;" cellpadding="0" cellspacing="0">
+                        <pe:layout fullPage="false" style="width:450px; height:220px;"
+                                   options="#{elementLayoutController.layoutOptionsOne}"
+                                   rendered="#{elementLayoutController.layoutOneShown}"
+                                   state="#{elementLayoutController.stateOne}">
+                            <pe:layoutPane position="west">
+                                Left
+                            </pe:layoutPane>
+                            <pe:layoutPane position="center">
+                                Center
+                            </pe:layoutPane>
+                        </pe:layout>
+
+                        <pe:layout fullPage="false" style="width:450px; height:220px;"
+                                   options="#{elementLayoutController.layoutOptionsTwo}"
+                                   rendered="#{!elementLayoutController.layoutOneShown}"
+                                   state="#{elementLayoutController.stateTwo}">
+                            <pe:layoutPane position="east">
+                                <pe:layoutPane position="center">
+                                    <f:facet name="header">
+                                        Header East-Center
+                                    </f:facet>
+                                    East-Center
+                                </pe:layoutPane>
+                                <pe:layoutPane position="south">
+                                    <f:facet name="header">
+                                        Header East-South
+                                    </f:facet>
+                                    East-South
+                                </pe:layoutPane>
+                            </pe:layoutPane>
+                            <pe:layoutPane position="center">
+                                Center
+                            </pe:layoutPane>
+                        </pe:layout>
+                    </h:panelGrid>
+                </h:panelGroup>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: layout/fullPage -->
+            <h5>Full page layout, events and client-side state management</h5>
+            <p>
+                A full page layout with nested panes, the AJAX events <i>open</i>, <i>close</i> and <i>resize</i> and client-side state
+                management (<code>stateCookie="true"</code>). The buttons in the north pane call the widget methods
+                <code>sizePane()</code>, <code>toggle()</code>, <code>close()</code> and <code>open()</code>; nested panes are addressed
+                with <code>_</code>, e.g. <code>sizePane('center_north', 300)</code>. The "center" pane itself can not be manipulated.
+                Source: <i>fullPage.xhtml</i> below.
+            </p>
+            <p:linkButton value="Show full page layout" icon="pi pi-external-link" target="_blank"
+                          href="#{request.contextPath}/ui/panel/layout/standalone/fullPage"/>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: layout/fullPageAttr -->
+            <h5>Layout created by options as tag attributes</h5>
+            <p>
+                The layout is created by options defined as attributes of <code>pe:layoutPane</code>, without a <code>LayoutOptions</code>
+                model. Default tooltips (resize, open, close, slide) are redefined on <code>pe:layout</code> and per pane. Layout panes
+                support a limited set of options compared to <code>LayoutOptions</code>. Source: <i>fullPageAttr.xhtml</i> below.
+            </p>
+            <p:linkButton value="Show layout created by pane options" icon="pi pi-external-link" target="_blank"
+                          href="#{request.contextPath}/ui/panel/layout/standalone/fullPageAttr"/>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: layout/customContent -->
+            <!-- EXAMPLE: layout/customContentOne -->
+            <h5>Custom content between layout panes</h5>
+            <p>
+                Custom content can be placed between layout panes by putting nested panes in a <code>div</code> with the class
+                <code>ui-layout-content</code> (shown here, the nested panes come from an included page), by the option
+                <code>containerSelector</code> of the child options, or in the <code>header</code> facet of a pane, which stays fixed
+                while the pane content scrolls (shown here with messages). Call the widget method <code>sizeContent(pane)</code> when
+                custom content changes its height. Source: <i>customContent.xhtml</i> and <i>customContentNested.xhtml</i> below.
+            </p>
+            <p:linkButton value="Show full page layout with custom content" icon="pi pi-external-link" target="_blank"
+                          href="#{request.contextPath}/ui/panel/layout/standalone/customContent"/>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: layout/iframe -->
+            <h5>IFrame acting as layout pane (tips to objects within panes)</h5>
+            <p>
+                An iframe can be a direct child of a layout pane. Set <code>maskContents="true"</code> on the pane to avoid resizing
+                issues with iframes (<code>maskObjects="true"</code> for objects such as maps), and consider
+                <code>maskPanesEarly="true"</code> on <code>pe:layout</code>. The style class <code>.ui-layout-mask</code> is made
+                visible in this example. Source: <i>iframe.xhtml</i> below.
+            </p>
+            <p:linkButton value="Show full page layout with iframe" icon="pi pi-external-link" target="_blank"
+                          href="#{request.contextPath}/ui/panel/layout/standalone/iframe"/>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+    <ui:define name="static-documentation">
+        <h2>Layout Options</h2>
+        <div class="card">
+            <p>
+                The layout is described by a model which binds all layout options together: the class <code>LayoutOptions</code>.
+                This way all options of the underlying jQuery layout plugin are available, see the
+                <a href="https://web.archive.org/web/20200330073317/http://layout.jquery-dev.com/documentation.cfm#Options" target="_blank" rel="noopener noreferrer">overview of layout options</a>,
+                the <a href="https://gedmarc.github.io/layout/demos/" target="_blank" rel="noopener noreferrer">layout examples site</a> and the
+                <a href="https://github.com/GedMarc/layout" target="_blank" rel="noopener noreferrer">changelog</a>.
+            </p>
+            <p>
+                Alternatively the mostly used options can be set as tag attributes of <code>pe:layoutPane</code>; no
+                <code>LayoutOptions</code> is needed then, but the possibilities are limited.
+            </p>
+            <p>
+                The <code>options</code> attribute points to an instance of <code>LayoutOptions</code> or to a JSON string of serialized
+                <code>LayoutOptions</code>. LayoutOptions are always serialized to JSON for the widget; when the layout is built once in an
+                application scoped bean, use <code>toJson()</code> to serialize the options once and pass the string.
+            </p>
+        </div>
+    </ui:define>
+
+    <ui:define name="more-source-tabs">
+        <p:tab title="/ui/panel/layout/standalone/fullPage.xhtml" flatten="true"/>
+        <p:tab title="/ui/panel/layout/standalone/fullPageAttr.xhtml" flatten="true"/>
+        <p:tab title="/ui/panel/layout/standalone/customContent.xhtml" flatten="true"/>
+        <p:tab title="/ui/panel/layout/standalone/customContentNested.xhtml"/>
+        <p:tab title="/ui/panel/layout/standalone/iframe.xhtml"/>
+    </ui:define>
+
+</ui:composition>

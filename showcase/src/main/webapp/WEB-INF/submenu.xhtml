@@ -1,0 +1,66 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:p="primefaces"
+                xmlns:mycomposites="jakarta.faces.composite/composite">
+
+    <ui:fragment rendered="#{not empty tagName or not empty documentationLink or not empty widgetLink or not empty appSubMenu.subMenuItems}">
+    <div class="layout-submenu">
+
+        <!-- one tagDocumentation per tag of the page: tagName, tagName2, tagName3, tagName4 (components made of several tags) -->
+        <ui:fragment rendered="#{not empty tagName}">
+            <p:sidebar widgetVar="currentTagLib" styleClass="taglib-sidebar" appendTo="@(body)" modal="true" position="right" blockScroll="true">
+                <h:form>
+                    <ui:repeat value="#{[tagName, tagName2, tagName3, tagName4]}" var="tag">
+                        <ui:fragment rendered="#{not empty tag}">
+                            <h3>#{tagLibController.getTagName(tag)} Tag Documentation</h3>
+                            <mycomposites:tagDocumentation value="#{tagLibProvider.tags[tag]}" />
+                        </ui:fragment>
+                    </ui:repeat>
+                </h:form>
+            </p:sidebar>
+        </ui:fragment>
+
+        <!-- RESOURCES -->
+        <ui:fragment rendered="#{not empty tagName or not empty documentationLink or not empty widgetLink}">
+            <div class="submenu-section-title">RESOURCES</div>
+
+            <ui:fragment rendered="#{not empty tagName}">
+                <a class="submenu-resource-link" href="#" onclick="PF('currentTagLib').show(); return false;" target="_blank" rel="noopener noreferrer">
+                    <i class="pi pi-sliders-h"></i>
+                    <span>Tag Documentation</span>
+                </a>
+            </ui:fragment>
+
+            <!-- documentationLink: a page of the PrimeFaces Extensions website / wiki (absolute URL) -->
+            <ui:fragment rendered="#{not empty documentationLink}">
+                <a class="submenu-resource-link" href="#{documentationLink}" target="_blank" rel="noopener noreferrer">
+                    <i class="pi pi-external-link"></i>
+                    <span>Documentation</span>
+                </a>
+            </ui:fragment>
+
+            <!-- widgetLink: the widget source in GitHub, path below core/src/main/resources/META-INF/resources/primefaces-extensions/ -->
+            <ui:fragment rendered="#{not empty widgetLink}">
+                <a class="submenu-resource-link" href="https://github.com/primefaces-extensions/primefaces-extensions/tree/master/core/src/main/resources/META-INF/resources/primefaces-extensions/#{widgetLink}" target="_blank" rel="noopener noreferrer">
+                    <i class="pi pi-external-link"></i>
+                    <span>Widget Source</span>
+                </a>
+            </ui:fragment>
+        </ui:fragment>
+
+        <!-- ON THIS PAGE -->
+        <ui:fragment rendered="#{not empty appSubMenu.subMenuItems}">
+            <div class="submenu-section-title">ON THIS PAGE</div>
+            <ui:repeat value="#{appSubMenu.subMenuItems}" var="sub">
+                <h:link outcome="#{sub.url}" styleClass="#{sub eq appSubMenu.currentMenuItem ? 'active' : ''}">
+                    #{sub.label}
+                </h:link>
+            </ui:repeat>
+        </ui:fragment>
+
+    </div>
+    </ui:fragment>
+
+</ui:composition>

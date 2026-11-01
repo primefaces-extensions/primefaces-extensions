@@ -1,0 +1,289 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:c="jakarta.tags.core"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        Sheet <span class="subitem">Basic</span>
+    </ui:define>
+
+    <ui:define name="description">
+        Sheet fills a need that the PrimeFaces DataTable with in-cell editing does not fill. It handles a large amount of data and edits single cells without submitting the entire sheet.
+        Based on <a href="https://handsontable.com/" target="_blank" rel="noopener noreferrer">Handsontable</a> by Handsoncode.
+    </ui:define>
+
+    <ui:param name="tagName" value="sheet"/>
+    <ui:param name="tagName2" value="sheetcolumn"/>
+    <ui:param name="widgetLink" value="sheet"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <style>
+            .positive {
+                color: Green !important;
+            }
+
+            .negative {
+                color: Red !important;
+            }
+
+            .password {
+                color: DarkViolet !important;
+            }
+
+            .cell-blue {
+                color: blue;
+            }
+
+            .cell-orange {
+                color: darkorange;
+            }
+        </style>
+
+        <div class="card">
+            <!-- EXAMPLE: sheet/basicUsage -->
+            <h5>Basic Usage</h5>
+            <p>Fixed columns and rows, custom cell styling, sorting, filtering and per-cell validation. Enter "abc" into the Price column, which expects a <code>BigDecimal</code>.</p>
+            <h:form id="formBasicUsage">
+                <p:messages id="messages" showSummary="true" showDetail="true"/>
+
+                <p:importEnum type="org.primefaces.extensions.showcase.model.sheet.AssetType" var="AssetType"/>
+                <p:importEnum type="org.primefaces.extensions.showcase.model.sheet.PlatformType" var="PlatformType"/>
+
+                <pe:sheet id="sheet" widgetVar="sheetBasicWidget" value="#{sheetController.assets}" var="row"
+                          height="400" rowKey="#{row.assetId}" fixedCols="2" fixedRows="3" showRowHeaders="true"
+                          resizableCols="true" resizableRows="true" filteredValue="#{sheetController.filteredAssets}"
+                          sortBy="#{row.assetId}" sortOrder="ascending" readOnly="false" rowStyleClass="#{row.purchasePrice gt 0 ? 'positive' : 'negative'}">
+
+                    <p:ajax event="change" listener="#{sheetController.cellChangeEvent}" update="messages"/>
+
+                    <f:facet name="header">
+                        <h:outputText value="Assets"/>
+                    </f:facet>
+
+                    <f:facet name="footer">
+                        <h:outputText id="footer" value="#{sheetController.filteredAssets.size()} Records"/>
+                    </f:facet>
+
+                    <pe:sheetcolumn headerText="Id (read-only)"
+                                    readOnly="true"
+                                    value="#{row.assetId}"
+                                    sortBy="#{row.assetId}"
+                                    colWidth="150"
+                                    filterBy="#{row.assetId}"/>
+                    <pe:sheetcolumn headerText="Icon"
+                                    readOnly="true"
+                                    styleClass="text-center"
+                                    value="#{row.icon}"
+                                    colWidth="80"/>
+                    <pe:sheetcolumn headerText="Type" value="#{row.assetType}" colWidth="100"
+                                    sortBy="#{row.assetType}" filterBy="#{row.assetType}"
+                                    filterOptions="#{sheetOptionProducer.assetTypes}"
+                                    colType="dropdown"
+                                    selectItems="#{AssetType.ALL_VALUES}"/>
+                    <pe:sheetcolumn headerText="Platform" value="#{row.platform}" colWidth="100"
+                                    sortBy="#{row.platform}" filterBy="#{row.platform}"
+                                    filterOptions="#{sheetOptionProducer.platformTypes}"
+                                    colType="autocomplete"
+                                    selectItems="#{PlatformType.ALL_VALUES}"
+                                    autoCompleteStrict="false"
+                                    autoCompleteVisibleRows="4"/>
+                    <pe:sheetcolumn headerText="Arch" value="#{row.platformArch}" readOnly="true"
+                                    colWidth="100" sortBy="#{row.platformArch}"
+                                    filterBy="#{row.platformArch}"
+                                    filterOptions="#{sheetOptionProducer.archTypes}"/>
+                    <pe:sheetcolumn headerText="Active" value="#{row.active}" colWidth="60" colType="checkbox"/>
+                    <pe:sheetcolumn headerText="Price" value="#{row.purchasePrice}" colWidth="100"
+                                    styleClass="htRight #{row.purchasePrice gt 0 ? 'positive' : 'negative'}"
+                                    colType="numeric"
+                                    numericLocale="de-DE"
+                                    numericPattern="$0,0.00"
+                                    required="true"
+                                    requiredMessage="Price is required!">
+                        <f:converter converterId="jakarta.faces.BigDecimal"/>
+                    </pe:sheetcolumn>
+                    <pe:sheetcolumn headerText="Password" value="#{row.password}" colWidth="100" styleClass="password"
+                                    colType="password"
+                                    passwordHashSymbol="*"
+                                    passwordHashLength="8"/>
+                    <pe:sheetcolumn headerText="Date" value="#{row.purchaseDate}" colWidth="110"
+                                    sortBy="#{row.purchaseDate}"
+                                    styleClass="htCenter"
+                                    colType="date"
+                                    dateFormat="YYYY-MM-DD">
+                        <f:convertDateTime type="date" pattern="yyyy-MM-dd"/>
+                    </pe:sheetcolumn>
+                    <pe:sheetcolumn headerText="Time" value="#{row.purchaseTime}" colWidth="110"
+                                    sortBy="#{row.purchaseTime}"
+                                    styleClass="htCenter"
+                                    colType="time"
+                                    timeFormat="h:mm:ss a">
+                        <f:convertDateTime type="time" pattern="h:mm:ss a"/>
+                    </pe:sheetcolumn>
+                    <pe:sheetcolumn headerText="Value 1" value="#{row.value1}" colWidth="100" colType="numeric"/>
+                    <pe:sheetcolumn headerText="Value 2" value="#{row.value2}" colWidth="100" colType="numeric"/>
+                    <pe:sheetcolumn headerText="Value 3" value="#{row.value3}" colWidth="100" colType="numeric"/>
+                    <pe:sheetcolumn headerText="Value 4" value="#{row.value4}" colWidth="100" colType="numeric"/>
+                    <pe:sheetcolumn headerText="Value 5" value="#{row.value5}" colWidth="100" colType="numeric"/>
+                    <pe:sheetcolumn headerText="Value 6" value="#{row.value6}" colWidth="100" colType="numeric"/>
+                    <pe:sheetcolumn headerText="Value 7" value="#{row.value7}" colWidth="100" colType="numeric"/>
+                    <pe:sheetcolumn headerText="Value 8" value="#{row.value8}" colWidth="100" colType="numeric"/>
+                    <pe:sheetcolumn headerText="Value 9" value="#{row.value9}" colWidth="100" colType="numeric"/>
+                    <pe:sheetcolumn headerText="Value 10" value="#{row.value10}" colWidth="100" colType="numeric"/>
+                </pe:sheet>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: sheet/dataExport -->
+            <h5>Data Export</h5>
+            <p>Sheet data can be exported with <code>p:dataExporter</code> just like a DataTable. Use the toolbar buttons to export CSV or XML; the exporter respects the current sort and filter state.</p>
+            <h:form id="formDataExport">
+                <p:importEnum type="org.primefaces.extensions.showcase.model.sheet.AssetType" var="AssetType"/>
+                <p:importEnum type="org.primefaces.extensions.showcase.model.sheet.PlatformType" var="PlatformType"/>
+
+                <p:toolbar>
+                    <p:toolbarGroup align="left">
+                        <p:commandButton icon="pi pi-file" value="CSV">
+                            <p:dataExporter type="csv" target="sheet" fileName="sheet-export"/>
+                        </p:commandButton>
+                        <p:commandButton icon="pi pi-file" value="XML">
+                            <p:dataExporter type="xml" target="sheet" fileName="sheet-export"/>
+                        </p:commandButton>
+                    </p:toolbarGroup>
+                </p:toolbar>
+
+                <pe:sheet id="sheet" widgetVar="sheetExportWidget" value="#{sheetExportController.assets}" var="row"
+                          height="400" rowKey="#{row.assetId}" fixedCols="2" showRowHeaders="true"
+                          resizableCols="true" filteredValue="#{sheetExportController.filteredAssets}"
+                          sortBy="#{row.assetId}" sortOrder="ascending">
+
+                    <f:facet name="header">
+                        <h:outputText value="Assets"/>
+                    </f:facet>
+
+                    <f:facet name="footer">
+                        <h:outputText id="footer" value="#{sheetExportController.filteredAssets.size()} Records"/>
+                    </f:facet>
+
+                    <pe:sheetcolumn headerText="Id" readOnly="true" value="#{row.assetId}"
+                                    sortBy="#{row.assetId}" colWidth="100"/>
+                    <pe:sheetcolumn headerText="Type" value="#{row.assetType}" colWidth="120"
+                                    sortBy="#{row.assetType}" filterBy="#{row.assetType}"
+                                    colType="dropdown" selectItems="#{AssetType.ALL_VALUES}"/>
+                    <pe:sheetcolumn headerText="Platform" value="#{row.platform}" colWidth="120"
+                                    sortBy="#{row.platform}" filterBy="#{row.platform}"
+                                    colType="autocomplete" selectItems="#{PlatformType.ALL_VALUES}"
+                                    autoCompleteStrict="false" autoCompleteVisibleRows="4"/>
+                    <pe:sheetcolumn headerText="Active" value="#{row.active}" colWidth="80" colType="checkbox"/>
+                    <pe:sheetcolumn headerText="Price" value="#{row.purchasePrice}" colWidth="120"
+                                    colType="numeric" numericLocale="de-DE" numericPattern="$0,0.00">
+                        <f:converter converterId="jakarta.faces.BigDecimal"/>
+                    </pe:sheetcolumn>
+                    <pe:sheetcolumn headerText="Date" value="#{row.purchaseDate}" colWidth="120"
+                                    sortBy="#{row.purchaseDate}" colType="date" dateFormat="YYYY-MM-DD">
+                        <f:convertDateTime type="date" pattern="yyyy-MM-dd"/>
+                    </pe:sheetcolumn>
+                </pe:sheet>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: sheet/dynamicColumns -->
+            <h5>Dynamic Columns</h5>
+            <p>Create columns dynamically and render their style and other attributes from backing beans. Also shows how to customize the Handsontable instance with <code>updateSettings</code> and the <code>extender</code> JavaScript.</p>
+            <h:form id="formDynamicColumns">
+                <pe:sheet id="sheet" value="#{sheetDynamicController.sheetRows}" var="row" height="400" rowKey="#{row.id}"
+                          showRowHeaders="true" sortBy="#{row.id}" sortOrder="ascending" width="1000"
+                          widgetVar="sheetDynamicWidget" filteredValue="#{sheetDynamicController.filteredSheetRows}"
+                          extender="sheetExtender">
+
+                    <f:facet name="header">
+                        <h:outputText value="Dynamic Columns"/>
+                    </f:facet>
+
+                    <pe:sheetcolumn headerText="Id (readOnly)" readOnly="true" value="#{row.id}" colWidth="150"/>
+                    <c:forEach items="#{sheetDynamicController.hoursOfDay}" var="hourOfDay" varStatus="status">
+                        <pe:sheetcolumn styleClass="htRight #{row.cells[status.index].style}"
+                                        headerText="#{hourOfDay}"
+                                        value="#{row.cells[status.index].value}"
+                                        readonlyCell="#{row.readOnly}"
+                                        colType="numeric">
+                            <f:converter converterId="jakarta.faces.Integer"/>
+                        </pe:sheetcolumn>
+                    </c:forEach>
+
+                    <f:facet name="footer">
+                        <h:outputText value="#{sheetDynamicController.filteredSheetRows.size()} Records"/>
+                    </f:facet>
+                </pe:sheet>
+            </h:form>
+            <script type="text/javascript">
+                function sheetExtender() {
+                    // this = widget
+                    // this.cfg = JSON configuration
+                    this.cfg.trimWhitespace = true;
+                };
+
+                $(document).ready(function () {
+                    var $hot = PF('sheetDynamicWidget').ht;
+                    $hot.updateSettings({
+                        contextMenu: {
+                            callback: function (key, options) {
+                                if (key === 'about') {
+                                    setTimeout(function () {
+                                        // timeout is used to make sure the menu collapsed before alert is shown
+                                        alert("PrimeFaces Extensions Rocks! This is a context menu with default and custom options mixed");
+                                    }, 100);
+                                }
+                            },
+                            items: {
+                                "row_above": {
+                                    disabled: function () {
+                                        // if first row, disable this option
+                                        return $hot.getSelected()[0] === 0;
+                                    }
+                                },
+                                "row_below": {},
+                                "hsep1": "---------",
+                                "remove_row": {
+                                    name: 'Remove this row, ok?',
+                                    disabled: function () {
+                                        // if first row, disable this option
+                                        return $hot.getSelected()[0] === 0
+                                    }
+                                },
+                                "hsep2": "---------",
+                                "about": {name: 'About...'}
+                            }
+                        }
+                    });
+                });
+            </script>
+        </div>
+
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+    <ui:define name="static-documentation">
+        <h2>Features</h2>
+        <div class="card">
+            <ul>
+                <li>Fast in-cell editing and validation</li>
+                <li>Copy/Paste</li>
+                <li>Range selection including copy/paste and fill</li>
+                <li>Sorting</li>
+                <li>Filtering</li>
+                <li>Fixed columns and rows</li>
+                <li>Resizable columns and rows</li>
+                <li>Movable columns and rows</li>
+                <li>Ajax updates and validation</li>
+            </ul>
+        </div>
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,60 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        Keynote <span class="subitem">Basic</span>
+    </ui:define>
+
+    <ui:define name="description">
+        Keynote is an HTML presentation component to create fully-featured and beautiful presentations. Presentations made with
+        <a href="https://revealjs.com" target="_blank" rel="noopener noreferrer">reveal.js</a> are built on open web technologies.
+    </ui:define>
+
+    <ui:param name="tagName" value="keynote"/>
+    <ui:param name="tagName2" value="keynoteItem"/>
+    <ui:param name="widgetLink" value="keynote"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <div class="card">
+            <!-- EXAMPLE: keynote/basicUsage -->
+            <h5>Basic Usage</h5>
+            <p>
+                Slides are defined by <code>pe:keynoteItem</code>; nested items create vertical slides, and <code>visibility="uncounted"</code> or
+                <code>visibility="hidden"</code> control how a slide is counted (<code>slideNumber="c/t"</code>). Use the arrow keys or the
+                controls to navigate.
+            </p>
+            <h:form id="formBasicUsage">
+                <pe:keynote slideNumber="c/t" width="480" height="350" style="width: 50vw; height: 50vh;">
+                    <pe:keynoteItem>
+                        <h2>Slide 1</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    </pe:keynoteItem>
+                    <pe:keynoteItem>
+                        <pe:keynoteItem>
+                            <h2>Vertical Slide 1</h2>
+                        </pe:keynoteItem>
+                        <pe:keynoteItem>
+                            <h2>Vertical Slide 2</h2>
+                        </pe:keynoteItem>
+                    </pe:keynoteItem>
+                    <pe:keynoteItem visibility="uncounted">
+                        <h2>Slide 3</h2>
+                    </pe:keynoteItem>
+                    <pe:keynoteItem visibility="hidden">
+                        <h2>Slide 4</h2>
+                    </pe:keynoteItem>
+                    <pe:keynoteItem>
+                        <h2>Slide 5</h2>
+                    </pe:keynoteItem>
+                </pe:keynote>
+            </h:form>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+</ui:composition>

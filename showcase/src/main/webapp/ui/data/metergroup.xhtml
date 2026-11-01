@@ -1,0 +1,42 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        MeterGroup
+    </ui:define>
+
+    <ui:define name="description">
+        MeterGroup visualizes data spread as a segmented progress bar, with multiple segments in a single bar, horizontal or vertical orientation and configurable labels with icons or colors.
+    </ui:define>
+
+    <ui:param name="tagName" value="meterGroup"/>
+    <ui:param name="widgetLink" value="metergroup"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <div class="card">
+            <!-- EXAMPLE: metergroup/basicUsage -->
+            <h5>Basic Usage</h5>
+            <p>Horizontal and vertical layouts, labels at the start and vertical labels.</p>
+
+            <h6>Basic</h6>
+            <pe:meterGroup value="#{meterGroupController.meters}" />
+
+            <h6>Vertical</h6>
+            <pe:meterGroup value="#{meterGroupController.meters}" orientation="vertical" style="height: 300px" />
+
+            <h6>Labels at Start</h6>
+            <pe:meterGroup value="#{meterGroupController.meters}" labelPosition="start" />
+
+            <h6>Vertical Labels</h6>
+            <pe:meterGroup value="#{meterGroupController.meters}" labelOrientation="vertical" />
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+</ui:composition>

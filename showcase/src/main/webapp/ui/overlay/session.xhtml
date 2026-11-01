@@ -1,0 +1,48 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        Session
+    </ui:define>
+
+    <ui:define name="description">
+        Session provides client-side callbacks to inform users about session timeout events within your web application.
+    </ui:define>
+
+    <ui:param name="tagName" value="session"/>
+    <ui:param name="widgetLink" value="session"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <div class="card">
+            <!-- EXAMPLE: session/basic -->
+            <h5>Basic usage</h5>
+            <p>The basic configuration for client-side session management. A warning dialog is shown <code>reactionPeriod</code> (60 s) before the session expires, followed by an expiry dialog.
+                The showcase session timeout is 60 minutes, so the dialogs only appear after a long idle time. After expiry, reload the page to continue.</p>
+            <pe:session onexpire="PF('sessionDialog').show()"
+                        onexpired="PF('sessionDialog').hide();PF('sessionExpiredDialog').show()"
+                        reactionPeriod="60"
+                        multiWindowSupport="true"/>
+            <p:dialog widgetVar="sessionDialog" header="Session Warning">
+                <p>
+                    Your session is about to expire.
+                </p>
+                <h:form id="formBasic">
+                    <p:commandButton value="Keep my session alive." update="@none" onsuccess="PF('sessionDialog').hide()"/>
+                </h:form>
+            </p:dialog>
+            <p:dialog widgetVar="sessionExpiredDialog" header="Session Expired">
+                <p>
+                    Your session has expired. Reload the page to continue.
+                </p>
+            </p:dialog>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+</ui:composition>

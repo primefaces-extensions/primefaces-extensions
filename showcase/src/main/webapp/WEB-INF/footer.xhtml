@@ -1,0 +1,16 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="jakarta.faces.html" xmlns:f="jakarta.faces.core"
+    xmlns:ui="jakarta.faces.facelets" xmlns:p="primefaces">
+    <div class="layout-footer">
+        <div class="layout-footer-inner">
+            <div class="layout-footer-left">
+                <span title="Built #{app.buildTime}">PrimeFaces Extensions v#{app.extensionsVersion} on PrimeFaces v#{app.primeFacesVersion} | #{app.facesImplementation}</span>
+            </div>
+
+            <div class="layout-footer-right">
+                <a href="https://github.com/primefaces-extensions/primefaces-extensions" title="GitHub">
+                    <i class="pi pi-github"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</ui:composition>

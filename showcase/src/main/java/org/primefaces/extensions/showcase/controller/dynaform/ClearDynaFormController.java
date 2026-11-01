@@ -93,7 +93,7 @@ public class ClearDynaFormController implements Serializable {
 
     public static void clearInputs(final int index) {
         final FacesContext fc = FacesContext.getCurrentInstance();
-        final DynaForm dynaForm = (DynaForm) fc.getViewRoot().findComponent(":mainForm:dynaForm");
+        final DynaForm dynaForm = (DynaForm) fc.getViewRoot().findComponent(":formVisitCallback:dynaForm");
 
         // Ids of components to be visited
         final String[] ids = new String[] {"tableColumn", "inputValue", "inputOffset", "valueOperator"};

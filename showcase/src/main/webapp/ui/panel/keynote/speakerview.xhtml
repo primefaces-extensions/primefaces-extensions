@@ -1,0 +1,55 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        Keynote <span class="subitem">Speaker View</span>
+    </ui:define>
+
+    <ui:define name="description">
+        The speaker view presents per-slide notes in a separate browser window, together with a preview of the next slide.
+        Presentations are made with <a href="https://revealjs.com" target="_blank" rel="noopener noreferrer">reveal.js</a>.
+    </ui:define>
+
+    <ui:param name="tagName" value="keynote"/>
+    <ui:param name="tagName2" value="keynoteItem"/>
+    <ui:param name="widgetLink" value="keynote"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <div class="card">
+            <!-- EXAMPLE: keynote/speakerView -->
+            <h5>Speaker View</h5>
+            <p>
+                <code>showNotes="true"</code> enables the notes, which are set per slide by the <code>note</code> attribute of
+                <code>pe:keynoteItem</code>. The notes window also gives a preview of the next upcoming slide, so it may be helpful even without
+                notes. Press <i>S</i> while the presentation has the focus to open it.
+            </p>
+            <h:form id="formSpeakerView">
+                <pe:keynote showNotes="true" width="480" height="350" style="width: 50vw; height: 50vh;">
+                    <pe:keynoteItem note="Lorem ipsum dolor sit amet, consectetur adipiscing elit.">
+                        <h2>Slide A</h2>
+                        <p>Slide Content A</p>
+                    </pe:keynoteItem>
+                    <pe:keynoteItem note="Vivamus magna lorem, fermentum eu pellentesque a, gravida at neque.">
+                        <h2>Slide B</h2>
+                        <p>Slide Content B</p>
+                    </pe:keynoteItem>
+                    <pe:keynoteItem note="Suspendisse lacinia dui sed efficitur luctus.">
+                        <h2>Slide C</h2>
+                        <p>Slide Content C</p>
+                    </pe:keynoteItem>
+                    <pe:keynoteItem>
+                        <h2>Slide D</h2>
+                        <p>Slide Content D</p>
+                    </pe:keynoteItem>
+                </pe:keynote>
+            </h:form>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+</ui:composition>

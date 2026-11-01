@@ -1,0 +1,60 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        FuzzySearch
+    </ui:define>
+
+    <ui:define name="description">
+        Fuzzy Search is a fast SublimeText-like fuzzy search for JavaScript.
+    </ui:define>
+
+    <ui:param name="tagName" value="fuzzySearch"/>
+    <ui:param name="widgetLink" value="fuzzysearch"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <style>
+            .p-fuzzysearch-item b {
+                color: red;
+            }
+        </style>
+
+        <div class="card">
+            <!-- EXAMPLE: fuzzysearch/basicUsage -->
+            <h5>Basic Usage</h5>
+            <p>Type in the fields to search the themes and time zones. The first search uses a converter and fires an AJAX <i>change</i> event.</p>
+            <h:form id="formBasicUsage">
+                <p:growl id="messages"/>
+
+                <h:panelGrid columns="2" cellpadding="4">
+                    <p:outputLabel value="Themes" for="@next"/>
+                    <pe:fuzzySearch id="txtTheme"
+                                    value="#{fuzzySearchController.selectedTheme}"
+                                    label="Theme"
+                                    placeholder="Search theme" listItemsAtTheBeginning="true"
+                                    converter="themeConverter">
+                        <p:ajax event="change" listener="#{fuzzySearchController.onChange}" update="messages"/>
+                        <f:selectItems value="#{fuzzySearchController.themes}" var="theme" itemLabel="#{theme.name}" itemValue="#{theme}"/>
+                    </pe:fuzzySearch>
+                    <p:spacer/>
+                    <p:spacer/>
+                    <p:outputLabel value="TimeZones" for="@next"/>
+                    <pe:fuzzySearch id="txtTimeZone" value="#{fuzzySearchController.selectedTimezone}"
+                                    placeholder="Search timezones">
+                        <f:selectItems value="#{fuzzySearchController.timezones}" var="timezone" itemLabel="#{timezone}" itemValue="#{timezone}"/>
+                    </pe:fuzzySearch>
+                    <p:spacer/>
+                    <p:commandButton value="Submit" actionListener="#{fuzzySearchController.onSubmit}" update="messages" process="@form" icon="pi pi-check"/>
+                </h:panelGrid>
+            </h:form>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,82 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        Localized
+    </ui:define>
+
+    <ui:define name="description">
+        Localized includes <strong>large</strong> content blocks based on the view <code>Locale</code> or a provided <code>Locale</code>,
+        with fallbacks to default content. It is not recommended for small messages such as labels or headers: use resource bundles there.
+    </ui:define>
+
+    <ui:param name="tagName" value="localized"/>
+
+    <ui:define name="static-documentation">
+        <h2>Content files</h2>
+        <div class="card">
+            <p>
+                Files should be put in the <code>WEB-INF/pfe-localized</code> folder. Files used in this demo can be found in our
+                <a href="https://github.com/primefaces-extensions/primefaces-extensions/tree/master/showcase/src/main/webapp/WEB-INF/pfe-localized"
+                   target="_blank" rel="noopener noreferrer">GitHub repo</a>.
+            </p>
+            <p>
+                Files should be named <code>{name}</code>, <code>{name}_{language}</code> or <code>{name}_{language}_{country}</code>.
+                Language and country should match those in the set view locale or the provided locale. See also the
+                <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Locale.html" target="_blank" rel="noopener noreferrer"><code>Locale</code></a>
+                documentation.
+            </p>
+        </div>
+    </ui:define>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <div class="card">
+            <!-- EXAMPLE: localized/basicUsage -->
+            <h5>Basic Usage</h5>
+            <p>These examples use the <code>locale</code> attribute. Normally you want to rely on the <code>Locale</code> set in the view.</p>
+            <div>
+                <pe:localized folder="folder1" name="content1" escape="false" locale="nl_NL"/>
+                <pe:localized folder="folder1" name="content1" escape="false" locale="nl_BE"/>
+                <pe:localized folder="folder1" name="content1" escape="false" locale="fr"/>
+                <pe:localized folder="folder1" name="content1" escape="false" locale="de"/>
+                <pe:localized name="content1"/>
+            </div>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: localized/markdownEL -->
+            <h5>Markdown and EL</h5>
+            <p>Markdown requires you to include <code>org.commonmark:commonmark</code> in your project.</p>
+            <div>
+                <pe:localized folder="folder2" name="content2" escape="false" evalEl="true" markdown="true"/>
+            </div>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: localized/inline -->
+            <h5>Inline</h5>
+            <p>Not recommended, as it is hard to add languages to an application, but useful for a small set of languages.
+                Facets also allow you to use components.</p>
+            <div>
+                <pe:localized locale="nl_NL">
+                    <f:facet name="nl_BE">Zeker en vast</f:facet>
+                    <f:facet name="nl">Vast en zeker</f:facet>
+                </pe:localized>
+                <hr/>
+                <pe:localized>
+                    <f:facet name="nl_BE">Vieruurtje</f:facet>
+                    <f:facet name="nl">Snack tussen lunch en avondeten</f:facet>
+                    <f:facet name="default">Snack between lunch and dinner</f:facet>
+                </pe:localized>
+            </div>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+</ui:composition>

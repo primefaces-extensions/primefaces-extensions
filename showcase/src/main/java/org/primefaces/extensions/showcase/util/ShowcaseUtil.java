@@ -21,38 +21,119 @@
  */
 package org.primefaces.extensions.showcase.util;
 
+import java.beans.IntrospectionException;
+import java.beans.PropertyDescriptor;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.logging.Logger;
 
+import jakarta.enterprise.inject.spi.CDI;
+import jakarta.faces.application.ProjectStage;
+import jakarta.faces.component.UIComponent;
+import jakarta.faces.component.UIPanel;
 import jakarta.faces.context.FacesContext;
 
-import org.apache.commons.lang3.StringUtils;
+import org.primefaces.cache.CacheProvider;
+import org.primefaces.component.tabview.Tab;
 
-/**
- * ShowcaseUtil
- *
- * @author Pavol Slany / last modified by $Author$
- * @version $Revision$
- */
 public class ShowcaseUtil {
-    public static String getFileContent(final String fullPathToFile) {
+
+    private static final Logger LOGGER = Logger.getLogger(ShowcaseUtil.class.getName());
+
+    private ShowcaseUtil() {
+
+    }
+
+    public static List<FileContent> getFilesContent(String fullPath, Boolean readBeans) {
+        CacheProvider provider = CDI.current().select(ShowcaseCacheProvider.class).get().getCacheProvider();
+        List<FileContent> files = (List<FileContent>) provider.get("contents", fullPath);
+
+        if (files == null) {
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+            FileContent srcContent = getFileContent(fullPath, readBeans);
+            if (srcContent == null) {
+                LOGGER.severe("File " + fullPath + " not found");
+            }
+            else {
+                UIComponent tabs = UIComponent.getCurrentComponent(facesContext).getFacet("static-tabs");
+                if (tabs != null) {
+                    attach(tabs, srcContent);
+                }
+                files = new ArrayList<>();
+                flatFileContent(srcContent, files);
+            }
+
+            if (facesContext.isProjectStage(ProjectStage.Production)) {
+                provider.put("contents", fullPath, files);
+            }
+        }
+        return files;
+    }
+
+    public static Object getPropertyValueViaReflection(Object o, String field)
+                throws ReflectiveOperationException, IllegalArgumentException, IntrospectionException {
+        return new PropertyDescriptor(field, o.getClass()).getReadMethod().invoke(o);
+    }
+
+    // EXCLUDE-SOURCE-START
+    private static FileContent getFileContent(String fullPath, Boolean readBeans) {
         try {
+            // in case we get a request with .jsf, we should remap it to .xhtml
+            // later we could remove .jsf mapping propably
+            if (fullPath.endsWith(".jsf")) {
+                fullPath = fullPath.substring(0, fullPath.length() - ".jsf".length()) + ".xhtml";
+            }
+
+            // only add .xhtml if the file has no extension
+            if (!fullPath.contains(".")) {
+                fullPath = fullPath + ".xhtml";
+            }
+
             // Finding in WEB ...
-            final FacesContext fc = FacesContext.getCurrentInstance();
-            InputStream is = fc.getExternalContext().getResourceAsStream(fullPathToFile);
+            FacesContext fc = FacesContext.getCurrentInstance();
+            InputStream is = fc.getExternalContext().getResourceAsStream(fullPath);
             if (is != null) {
-                return FileContentMarkerUtil.readFileContent(fullPathToFile, is);
+                return FileContentMarkerUtil.readFileContent(fullPath, is, readBeans);
             }
 
             // Finding in ClassPath ...
-            is = ShowcaseUtil.class.getResourceAsStream(fullPathToFile);
+            is = ShowcaseUtil.class.getResourceAsStream(fullPath);
             if (is != null) {
-                return FileContentMarkerUtil.readFileContent(fullPathToFile, is);
+                return FileContentMarkerUtil.readFileContent(fullPath, is, readBeans);
             }
         }
-        catch (final Exception e) {
-            throw new IllegalStateException("Internal error: file " + fullPathToFile + " could not be read", e);
+        catch (Exception e) {
+            throw new IllegalStateException("Internal error: file " + fullPath + " could not be read", e);
         }
 
-        return StringUtils.EMPTY;
+        return null;
     }
+
+    private static void attach(UIComponent component, FileContent file) {
+        if (component.isRendered()) {
+            if (component instanceof Tab tab) {
+                String flatten = (String) component.getAttributes().get("flatten");
+                FileContent content = getFileContent(
+                            tab.getTitle(),
+                            flatten == null ? false : Boolean.valueOf(flatten));
+                file.getAttached().add(content);
+            }
+            else if (component instanceof UIPanel) {
+                for (UIComponent child : component.getChildren()) {
+                    attach(child, file);
+                }
+            }
+        }
+    }
+
+    private static void flatFileContent(FileContent source, List<FileContent> dest) {
+        dest.add(new FileContent(source.getTitle(), source.getValue(), source.getType(), Collections.<FileContent> emptySet()));
+
+        for (FileContent file : source.getAttached()) {
+            flatFileContent(file, dest);
+        }
+    }
+    // EXCLUDE-SOURCE-END
 }

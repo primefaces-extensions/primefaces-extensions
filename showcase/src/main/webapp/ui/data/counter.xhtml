@@ -1,0 +1,64 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        Counter
+    </ui:define>
+
+    <ui:define name="description">
+        Counter animates a numerical value by counting to it.
+        Based on <a href="https://inorganik.github.io/countUp.js/" target="_blank" rel="noopener noreferrer">CountUp.js</a> by inorganik.
+    </ui:define>
+
+    <ui:param name="tagName" value="counter"/>
+    <ui:param name="widgetLink" value="counter"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <style>
+            .counter-label {
+                font-weight: bold;
+            }
+        </style>
+
+        <div class="card">
+            <!-- EXAMPLE: counter/basicUsage -->
+            <h5>Basic Usage</h5>
+            <p>Start value, count down, decimals, separators, locale, prefix and suffix. The last counter fires the AJAX events <i>start</i> and <i>end</i>.</p>
+            <h:form id="formBasicUsage">
+                <p:messages id="messages" showSummary="true" showDetail="true">
+                    <p:autoUpdate/>
+                </p:messages>
+
+                <h:panelGrid columns="2" columnClasses="normal, counter-label" cellpadding="4">
+                    <h:outputText value="Basic Usage"/>
+                    <pe:counter end="9000" separator=""/>
+                    <h:outputText value="Start Value"/>
+                    <pe:counter end="9000" start="1000"/>
+                    <h:outputText value="Count Down"/>
+                    <pe:counter start="9000" end="1000"/>
+                    <h:outputText value="Decimal Places"/>
+                    <pe:counter end="9000" decimals="2"/>
+                    <h:outputText value="Separators"/>
+                    <pe:counter end="9000" decimals="2" separator="." decimal=","/>
+                    <h:outputText value="Locale"/>
+                    <pe:counter end="9000" locale="fr_FR" decimals="2"/>
+                    <h:outputText value="Prefix Suffix"/>
+                    <pe:counter end="9000" prefix="USD " suffix=" $" style="background-color:black;color:MediumSeaGreen;"/>
+                    <h:outputText value="AJAX and Events"/>
+                    <pe:counter start="0" end="9000" duration="5" onstart="console.log('STARTED')" onend="console.log('ENDED')" autoStart="true">
+                        <p:ajax event="start" listener="#{counterController.startListener}"/>
+                        <p:ajax event="end" listener="#{counterController.endListener}"/>
+                    </pe:counter>
+                </h:panelGrid>
+            </h:form>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+</ui:composition>

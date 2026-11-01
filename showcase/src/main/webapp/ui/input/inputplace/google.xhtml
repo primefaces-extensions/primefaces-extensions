@@ -1,0 +1,125 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:jsf="jakarta.faces"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        InputPlace <span class="subitem">Google</span>
+    </ui:define>
+
+    <ui:define name="description">
+        InputPlace wraps Google Places or Azure Maps AutoComplete functionality to give your applications type-ahead place search.
+        Based on <a href="https://developers.google.com/maps/documentation/javascript/place-autocomplete" target="_blank" rel="noopener noreferrer">Google Places AutoComplete</a> by Google.
+    </ui:define>
+
+    <ui:param name="tagName" value="inputPlace"/>
+    <ui:param name="widgetLink" value="inputplace"/>
+
+    <ui:define name="static-documentation">
+        <h2>Background</h2>
+        <div class="card">
+            <p>Autocomplete is a feature of the Places library in the Maps JavaScript API. You can use autocomplete to give your
+                applications the type-ahead-search behavior of the Google Maps search field. The autocomplete service can match
+                on full words and substrings, resolving place names, addresses, and plus codes. Applications can therefore send
+                queries as the user types, to provide on-the-fly place predictions.</p>
+            <p>InputPlace can also be backed by
+                <a href="https://learn.microsoft.com/en-us/rest/api/maps/search/get-search-fuzzy" target="_blank" rel="noopener noreferrer">Azure Maps Search</a>
+                by Microsoft, see the Azure page.</p>
+        </div>
+    </ui:define>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <div class="card">
+            <!-- EXAMPLE: inputplace/googleUsage -->
+            <h5>Google Address Form</h5>
+            <p>The autocomplete service matches full words and substrings and resolves place names, addresses and plus codes. You must include the <code>&lt;script&gt;</code> with your <strong>Google API Key</strong>.</p>
+            <script async="true" defer="defer" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvCDkYieuUBmMWon_mfLAfjuaeuosuqow&amp;loading=async&amp;libraries=places"></script>
+
+            <h:form id="formGoogleUsage">
+                <p:growl id="growl" showDetail="true" showSummary="true" globalOnly="false"/>
+
+                <div jsf:id="inputGroup" class="field grid">
+                    <p:outputLabel for="txtPlace" value="Location:" styleClass="col-12 md:col-1"/>
+                    <div class="col-12 md:col-6">
+                        <div class="p-inputgroup">
+                            <div class="p-inputgroup-addon"><i class="fa-solid fa-location-dot"></i></div>
+                            <pe:inputPlace id="txtPlace" widgetVar="place" value="#{basicInputPlaceController.input}" required="true"
+                                           placeholder="Enter a location" styleClass="w-full" restrictCountries="us,ca">
+                                <p:ajax event="placeChanged" listener="#{basicInputPlaceController.onPlaceChanged}" update="selectedPlace growl"/>
+                            </pe:inputPlace>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-2">
+                        <p:commandButton value="Search" actionListener="#{basicInputPlaceController.submit}" update="inputGroup growl"/>
+                    </div>
+                </div>
+
+                <div jsf:id="selectedPlace">
+                    <p:card rendered="#{basicInputPlaceController.selectedPlace != null}">
+                        <f:facet name="title">
+                            Type: #{basicInputPlaceController.selectedPlace.types}
+                        </f:facet>
+                        <p:divider/>
+                        <div class="formgrid grid">
+                            <div class="field col-12 md:col-4">
+                                <label>Place ID</label>
+                                <p:inputText value="#{basicInputPlaceController.selectedPlace.placeId}" readonly="true" styleClass="w-full"/>
+                            </div>
+                            <div class="field col-12 md:col-4">
+                                <label>Latitude</label>
+                                <p:inputText value="#{basicInputPlaceController.selectedPlace.latitude}" readonly="true" styleClass="w-full"/>
+                            </div>
+                            <div class="field col-12 md:col-4">
+                                <label>Longitude</label>
+                                <p:inputText value="#{basicInputPlaceController.selectedPlace.longitude}" readonly="true" styleClass="w-full"/>
+                            </div>
+                            <div class="field col-12">
+                                <label>Formatted Address</label>
+                                <p:inputText value="#{basicInputPlaceController.selectedPlace.formattedAddress}" readonly="true" styleClass="w-full"/>
+                            </div>
+                            <div class="field col-12 md:col-6">
+                                <label>Name</label>
+                                <p:inputText value="#{basicInputPlaceController.selectedPlace.name}" readonly="true" styleClass="w-full"/>
+                            </div>
+                            <div class="field col-12 md:col-6">
+                                <label>Address Line</label>
+                                <p:inputText value="#{basicInputPlaceController.selectedPlace.addressLine}" readonly="true" styleClass="w-full"/>
+                            </div>
+                            <div class="field col-12 md:col-3">
+                                <label>City</label>
+                                <p:inputText value="#{basicInputPlaceController.selectedPlace.city}" readonly="true" styleClass="w-full"/>
+                            </div>
+                            <div class="field col-12 md:col-3">
+                                <label>State/Province</label>
+                                <p:inputText value="#{basicInputPlaceController.selectedPlace.state}" readonly="true" styleClass="w-full"/>
+                            </div>
+                            <div class="field col-12 md:col-3">
+                                <label>Country</label>
+                                <p:inputText value="#{basicInputPlaceController.selectedPlace.country}" readonly="true" styleClass="w-full"/>
+                            </div>
+                            <div class="field col-12 md:col-3">
+                                <label>Zip/Postal Code</label>
+                                <p:inputText value="#{basicInputPlaceController.selectedPlace.postalCode}" readonly="true" styleClass="w-full"/>
+                            </div>
+                            <div class="field col-12 md:col-6">
+                                <label>Area 2</label>
+                                <p:inputText value="#{basicInputPlaceController.selectedPlace.administrativeAreaLevel2}" readonly="true" styleClass="w-full"/>
+                            </div>
+                            <div class="field col-12 md:col-6">
+                                <label>Area 3</label>
+                                <p:inputText value="#{basicInputPlaceController.selectedPlace.administrativeAreaLevel3}" readonly="true" styleClass="w-full"/>
+                            </div>
+                        </div>
+                    </p:card>
+                </div>
+            </h:form>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+</ui:composition>

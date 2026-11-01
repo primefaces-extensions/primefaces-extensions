@@ -1,0 +1,168 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        Converters
+    </ui:define>
+
+    <ui:define name="description">
+        PrimeFaces Extensions has built-in converters: <code>pe:convertJson</code> and <code>pe:convertGson</code> convert values to and from JSON,
+        <code>pe:convertLocale</code> converts a locale string to a <code>java.util.Locale</code> and <code>pe:sanitizer</code> sanitizes input with an OWASP HTML policy.
+    </ui:define>
+
+    <ui:param name="tagName" value="convertJson"/>
+    <ui:param name="tagName2" value="convertLocale"/>
+    <ui:param name="tagName3" value="sanitizer"/>
+    <ui:param name="tagName4" value="convertGson"/>
+
+    <ui:define name="static-documentation">
+        <h2>JSON data types</h2>
+        <div class="card">
+            <p><code>pe:convertJson</code> has one optional attribute <code>type</code> which specifies the data type of the value object.
+                Any primitive type, array, non generic or generic type is supported. The data type is sometimes required to convert a value to or from its JSON representation.
+                All data types should be fully qualified. Examples:</p>
+            <ul>
+                <li><code>boolean</code></li>
+                <li><code>int</code></li>
+                <li><code>long[]</code></li>
+                <li><code>java.lang.String</code></li>
+                <li><code>java.util.Date</code></li>
+                <li><code>java.util.Collection&lt;java.lang.Integer&gt;</code></li>
+                <li><code>java.util.Map&lt;java.lang.String, com.prime.FooPair&lt;java.lang.Integer, java.util.Date&gt;&gt;</code></li>
+                <li><code>com.prime.FooNonGenericClass</code></li>
+                <li><code>com.prime.FooGenericClass&lt;java.lang.String, java.lang.Integer&gt;</code></li>
+                <li><code>com.prime.FooGenericClass&lt;int[], com.prime.FooGenericClass&lt;com.prime.FooNonGenericClass, java.lang.Boolean&gt;&gt;</code></li>
+            </ul>
+            <p>The tag documentation shows <code>convertJson</code>, <code>convertLocale</code>, <code>sanitizer</code> and <code>convertGson</code> (the Gson based alternative to <code>convertJson</code>); <code>sanitizerLenient</code> is the lenient variant of <code>sanitizer</code>.</p>
+        </div>
+    </ui:define>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <div class="card">
+            <h5>JsonConverter with pe:remoteCommand</h5>
+            <p>JsonConverter applied to a RemoteCommand: attach <code>pe:convertJson</code> to <code>pe:assignableParam</code>. The JavaScript objects are sent as JSON and converted to a <code>Circle</code> bean.</p>
+            <h:form id="formJsonRemoteCommand">
+                <p:growl id="growl" showDetail="true"/>
+
+                <pe:remoteCommand id="applyDataCommand" name="applyData" process="@this" update="subject date circle growl"
+                                  actionListener="#{remoteCommandController.parametersAssigned}">
+
+                    <pe:assignableParam name="subject" assignTo="#{remoteCommandController.subject}"/>
+                    <pe:assignableParam name="date" assignTo="#{remoteCommandController.date}">
+                        <f:convertDateTime type="both" pattern="MM/dd/yyyy HH:mm:ss"/>
+                    </pe:assignableParam>
+                    <pe:assignableParam name="circle" assignTo="#{remoteCommandController.circle}">
+                        <pe:convertJson/>
+                    </pe:assignableParam>
+                </pe:remoteCommand>
+
+                <h:outputLabel for="subject" value="Subject: "/>
+                <h:outputText id="subject" value="#{remoteCommandController.subject}"/>
+                <br/>
+                <h:outputLabel for="date" value="Date: "/>
+                <h:outputText id="date" value="#{remoteCommandController.date}"/>
+                <br/>
+                <h:outputLabel for="circle" value="Circle: "/>
+                <h:outputText id="circle"
+                              value="#{remoteCommandController.circle.radius} - #{remoteCommandController.circle.backgroundColor} - #{remoteCommandController.circle.borderColor} - #{remoteCommandController.circle.scaleFactor}"/>
+                <br/><br/>
+
+                <p:commandButton value="Apply Data" type="button" onclick="applyData('hello world', '05/14/2007 12:55:42', JSON.stringify(circle))"/>
+                <p:commandButton value="Apply Second Data" type="button" onclick="applyData('hello user', '07/11/2001 11:55:42', JSON.stringify(circle2))"/>
+            </h:form>
+
+            <script>
+                circle = {
+                    radius: 50,
+                    backgroundColor: "#FF0000",
+                    borderColor: "#DDDDDD",
+                    scaleFactor: 1.2
+                };
+                circle2 = {
+                    radius: 32,
+                    backgroundColor: "#FF0320",
+                    borderColor: "#DDFFFD",
+                    scaleFactor: 1.6
+                };
+            </script>
+        </div>
+
+        <div class="card">
+            <h5>JsonConverter with f:viewParam and URL parameters</h5>
+            <p>JsonConverter sets a value from a URL request parameter into a bean with <code>f:viewParam</code> and <code>pe:convertJson</code>. Use <code>RequestParameterBuilder</code> to build URL parameters in JSON representation. This pre-initializes forms with default values passed in the URL on the initial page load (GET request).
+                The demo covers primitives, arrays, simple types, <code>java.util.Date</code>, parametrized collections and maps, and generic and non generic classes. Click "Open Link" there to see the URL parameters set into the bean. URLs longer than 2083 characters may not work in old browsers.</p>
+            <p:linkButton value="Show JsonConverter with f:viewParam" icon="pi pi-external-link" target="_blank"
+                          href="#{request.contextPath}/ui/input/converters/standalone/viewParam"/>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: converters/localeConverter -->
+            <h5>LocaleConverter</h5>
+            <p>The LocaleConverter (<code>pe:convertLocale</code>) converts a locale string (for example <code>de_DE</code>) to a <code>java.util.Locale</code> object and back.</p>
+            <h:form id="formLocaleConverter">
+                <p:messages id="messages"/>
+
+                Enter a new locale here (a valid locale is for example de_DE):<br/>
+                <p:inputText id="enteredLocale" value="#{localeController.enteredLocale}" required="true">
+                    <pe:convertLocale/>
+                </p:inputText>
+
+                <h:panelGroup layout="block" style="margin-top: 10px;margin-bottom: 10px;">
+                    <p:commandButton value="Add" action="#{localeController.add}" update="messages addedLocales enteredLocale"/>
+                </h:panelGroup>
+
+                Available locales:<br/>
+                <h:selectManyListbox id="addedLocales" value="#{localeController.selectedLocales}" style="width: 200px;">
+                    <pe:convertLocale/>
+                    <f:selectItems value="#{localeController.addedLocales}"/>
+                </h:selectManyListbox>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: converters/sanitizingConverter -->
+            <h5>SanitizingConverter</h5>
+            <p>The SanitizingConverter (<code>pe:sanitizer</code>) sanitizes any input using an OWASP Java HTML Sanitizer <code>PolicyFactory</code>. It is useful for cleansing input that is displayed in an <code>h:outputText</code> with <code>escape="false"</code>.</p>
+            <h:form id="formSanitizingConverter">
+                <p:messages id="messages"/>
+
+                <h:panelGroup id="timePickerGroup" layout="block">
+                    <p>
+                        Enter text including HTML tags to see the default policy:
+                        <p:inputText id="defaultSanitizer" value="#{sanitizingController.defaultSanitizer}">
+                            <pe:sanitizer/>
+                        </p:inputText>
+                    </p>
+
+                    <p>
+                        Custom policy allows HTML tags including &lt;i&gt; and &lt;strong&gt;:
+                        <p:inputText id="customSanitizer" value="#{sanitizingController.customSanitizer}">
+                            <pe:sanitizer decodeHtml="true" policy="#{sanitizingController.policyFactory}"/>
+                        </p:inputText>
+                    </p>
+
+                    <p>
+                        Lenient converter allows &lt;i&gt; and &lt;strong&gt;:
+                        <h:outputText id="lenientSanitizer" escape="false" converter="primefaces.SanitizingLenientConverter" value="#{sanitizingController.customSanitizer}"/>
+                    </p>
+                </h:panelGroup>
+
+                <h:panelGroup layout="block" style="margin-top: 10px;margin-bottom: 10px;">
+                    <p:commandButton value="Submit" update="messages defaultSanitizer customSanitizer lenientSanitizer"/>
+                </h:panelGroup>
+            </h:form>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+    <ui:define name="more-source-tabs">
+        <p:tab title="/ui/input/converters/standalone/viewParam.xhtml" flatten="true"/>
+    </ui:define>
+
+</ui:composition>

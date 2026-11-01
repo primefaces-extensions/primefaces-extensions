@@ -1,183 +1,273 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:p="primefaces"
+                template="/WEB-INF/template-landing.xhtml">
+
+    <ui:define name="implementation">
+        <div class="landing-page">
+
+            <!-- ═══ HERO ═══════════════════════════════════════════════════════ -->
+            <section class="landing-hero">
+                <div class="landing-hero-inner">
+                    <a href="https://github.com/primefaces-extensions/primefaces-extensions/releases" target="_blank" rel="noopener noreferrer" class="landing-version-badge">
+                        <i class="pi pi-box"></i>
+                        primefaces-extensions@#{app.extensionsVersion}
+                    </a>
+
+                    <h1 class="landing-hero-title">
+                        Extensions for&#160;<span class="landing-hero-annotated">
+                            <span class="landing-hero-annotated-box"></span>
+                            <span class="landing-hero-annotated-label">pe:</span>
+                            <span class="landing-hero-highlight">PrimeFaces</span>
+                        </span>
+                    </h1>
+
+                    <p class="landing-hero-subtitle">
+                        PrimeFaces Extensions is a lightweight, open source component library built on top of PrimeFaces:
+                        components missing in other Jakarta Faces libraries, plus useful behaviors, converters and functions.
+                    </p>
+
+                    <div class="landing-hero-actions">
+                        <a href="#{request.contextPath}/ui/input/calculator" class="landing-btn landing-btn-primary">
+                            Get Started
+                        </a>
+                        <a href="https://github.com/primefaces-extensions/primefaces-extensions" target="_blank" rel="noopener noreferrer" class="landing-btn landing-btn-outline">
+                            <i class="pi pi-github mr-2"></i>View on GitHub
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══ COMPONENTS (one card per menu category) ═══════════════════ -->
+            <section class="landing-section landing-features">
+                <div class="landing-container">
+                    <div class="landing-features-header">
+                        <span class="landing-section-label">Components</span>
+                        <h2 class="landing-section-title">Everything PrimeFaces is missing</h2>
+                        <p class="landing-section-subtitle">
+                            Editors, charts and maps, data and layout components, overlays, media and more,
+                            all styled by the PrimeFaces themes. Pick a category to explore its examples.
+                        </p>
+                    </div>
+
+                    <!-- [category label (AppMenu), icon, color, contents] -->
+                    <ui:param name="categories" value="#{[
+                            ['Input', 'pi-pencil', 'indigo', 'Calculator, ClockPicker, TimePicker, CreditCard, InputPlace, CodeScanner, DynaForm, FuzzySearch and the converters.'],
+                            ['Editors', 'pi-code', 'green', 'CodeMirror, MarkdownEditor, MonacoEditor and SunEditor.'],
+                            ['Data', 'pi-table', 'purple', 'Sheet, Kanban, Gantt, OrgChart, MasterDetail, Timeago, Timer, Counter and MeterGroup.'],
+                            ['Charts &amp; Maps', 'pi-chart-bar', 'orange', 'ECharts, GChart, Legend, OSMap and QRCode.'],
+                            ['Panel &amp; Layout', 'pi-th-large', 'teal', 'Layout, FluidGrid, SlideOut, Keynote and Waypoint.'],
+                            ['Overlay &amp; Feedback', 'pi-clone', 'rose', 'BlockUI, Tooltip, CommandPalette, CookiePolicy and Session.'],
+                            ['Media', 'pi-image', 'amber', 'DocumentViewer, ImageAreaSelect, ImageRotateAndResize and ImageZoom.'],
+                            ['Misc', 'pi-box', 'cyan', 'Clipboard, FileDownload, LightSwitch, Localized, MarkText, RemoteCommand, Speedtest and the functions.']]}"/>
+
+                    <div class="landing-features-grid">
+                        <ui:repeat value="#{categories}" var="category">
+                            
+                            <ui:fragment rendered="#{not empty appMenu.getCategoryUrl(category[0])}">
+                                <a href="#{request.contextPath}#{appMenu.getCategoryUrl(category[0])}" class="landing-feature-card">
+                                    <div class="lf-icon lf-icon-#{category[2]}"><i class="pi #{category[1]}"></i></div>
+                                    <h3>#{category[0]}</h3>
+                                    <p>#{category[3]}</p>
+                                </a>
+                            </ui:fragment>
+                            <ui:fragment rendered="#{empty appMenu.getCategoryUrl(category[0])}">
+                                <div class="landing-feature-card">
+                                    <div class="lf-icon lf-icon-#{category[2]}"><i class="pi #{category[1]}"></i></div>
+                                    <h3>#{category[0]}</h3>
+                                    <p>#{category[3]}</p>
+                                </div>
+                            </ui:fragment>
+                        </ui:repeat>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══ QUICK START ════════════════════════════════════════════════ -->
+            <section class="landing-section landing-quickstart">
+                <div class="landing-container">
+                    <div class="landing-quickstart-grid">
+                        <div class="landing-quickstart-text">
+                            <span class="landing-section-label">Quick Start</span>
+                            <h2 class="landing-section-title">So simple to use</h2>
+                            <p>Add the Maven dependency next to PrimeFaces, declare the namespace, drop a component tag.
+                               The components use the PrimeFaces themes, no extra setup needed.</p>
+                            <a href="https://primefaces-extensions.github.io" target="_blank" rel="noopener noreferrer" class="landing-btn landing-btn-outline">
+                                <i class="pi pi-book mr-2"></i>Read the Docs
+                            </a>
+                        </div>
+                        <div class="landing-quickstart-code">
+                            <div class="landing-code-tab-bar" id="qs-tabs">
+                                <span class="landing-code-tab active" data-tab="qs-pom">pom.xml</span>
+                                <span class="landing-code-tab" data-tab="qs-page">page.xhtml</span>
+                            </div>
+                            <div id="qs-pom">
+                                <pre class="language-xml line-numbers"><code>&lt;dependency&gt;
+    &lt;groupId&gt;org.primefaces&lt;/groupId&gt;
+    &lt;artifactId&gt;primefaces&lt;/artifactId&gt;
+    &lt;version&gt;#{app.primeFacesVersion}&lt;/version&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+    &lt;groupId&gt;org.primefaces.extensions&lt;/groupId&gt;
+    &lt;artifactId&gt;primefaces-extensions&lt;/artifactId&gt;
+    &lt;version&gt;#{app.extensionsVersion}&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+                            </div>
+                            <div id="qs-page" style="display:none">
+                                <pre class="language-xml line-numbers"><code>&lt;html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="jakarta.faces.html"
-      xmlns:ui="jakarta.faces.facelets"
-      xmlns:f="jakarta.faces.core"
-      xmlns:p="primefaces">
-<ui:composition template="/templates/showcaseLayout.xhtml">
-    <ui:define name="centerContent">
-        <h:panelGroup layout="block" class="title p-panel-titlebar p-widget-header"
-                      style="padding: 8px; font-size: 16px !important; text-align: center; border-radius: var(--p-content-border-radius);">
-            <h:outputText value="Welcome to PrimeFaces Extensions ShowCase"/>
-        </h:panelGroup>
-        <p:panel styleClass="homePanel">
-            <h:panelGroup layout="block" styleClass="centerContent" style="font-size: 12px;">
-                <h:panelGrid columns="2">
-                    <h:graphicImage library="images" name="components.png" alt="PrimeFaces Extensions"/>
-                    <h:panelGroup layout="block" style="padding-left: 25px; line-height: 20px;">
-                        PrimeFaces Extensions is a lightweight open source component library for Java Server Faces 2.0.
-                        The project is built on top of PrimeFaces - a mature and robust component suite.
-                        PrimeFaces Extensions consists of extended components missing in other JSF 2 libraries or with improved components which already exist somewhere but don't work there smoothly.
-                        Besides that it provides useful ClientBehaviors, Converters, TagHandlers and more.
-                        They are shown on the left side. Corresponding use cases are shown at the top on the right and tag documentation along with client behavior events at the bottom on the right.
-                        <p/>
-                        This showcase was tested with current JSF implementations Mojarra and MyFaces.
-                    </h:panelGroup>
-                </h:panelGrid>
-            </h:panelGroup>
-            <h:panelGroup layout="block" styleClass="centerContent" style="font-size: 14px;height:100%;">
-                <h:panelGrid columns="2">
-                    <h:graphicImage library="images" name="medal.png" alt="Hall Of Fame"/>
-                    <p:panelGrid style="font-size: 14px;" layout="tabular" columns="0">
-                        <f:facet name="header">
-                            <p:row>
-                                <p:column colspan="2">Hall Of Fame</p:column>
-                            </p:row>
-                        </f:facet>
+      xmlns:p="primefaces"
+      xmlns:pe="http://primefaces.org/ui/extensions"&gt;
+&lt;h:head&gt;
+    &lt;title&gt;My App&lt;/title&gt;
+&lt;/h:head&gt;
+&lt;h:body&gt;
+    &lt;h:form&gt;
+        &lt;p:inputText value="\#{bean.amount}"&gt;
+            &lt;pe:calculator /&gt;
+        &lt;/p:inputText&gt;
+        &lt;pe:qrCode renderMethod="canvas" text="\#{bean.url}" /&gt;
+    &lt;/h:form&gt;
+&lt;/h:body&gt;
+&lt;/html&gt;</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-                        <p:row>
-                            <p:column
-                                    colspan="2">The following components were once Extensions components that have graduated into the PrimeFaces core library:</p:column>
-                        </p:row>
+            <!-- ═══ THEMING ════════════════════════════════════════════════════ -->
+            <section class="landing-section landing-theming">
+                <div class="landing-container">
+                    <div class="landing-theming-grid">
+                        <div class="landing-theming-preview">
+                            <div class="landing-theme-card">
+                                <div class="landing-theme-card-header">
+                                    <i class="pi pi-palette" style="font-size:1.1rem;color:var(--p-primary-color)"></i>
+                                    <span style="font-weight:700;font-size:.9rem;color:var(--p-text-color)">Available Themes</span>
+                                </div>
+                                <div class="landing-theme-list">
+                                    <div class="landing-theme-category">Presets</div>
+                                    <div class="landing-theme-items">
+                                        <ui:repeat value="#{app.presets}" var="preset">
+                                            <a class="landing-theme-item #{app.theme eq preset ? 'active' : ''}" href="?theme=#{preset}" title="#{preset}">
+                                                <i class="pi pi-palette"></i>
+                                                <span style="text-transform: capitalize">#{preset}</span>
+                                            </a>
+                                        </ui:repeat>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="landing-theming-text">
+                            <span class="landing-section-label">Theming</span>
+                            <h2 class="landing-section-title">Looks like PrimeFaces</h2>
+                            <p>The components follow the PrimeFaces design tokens: the presets Aura, Lara, Nora, Metal and Glass, each in a
+                               light and a dark color scheme. Change the primary color, density or any token without a build step.
+                               Try it with the palette button at the right edge.</p>
+                            <ul class="landing-check-list">
+                                <li><i class="pi pi-check-circle"></i>All PrimeFaces presets supported</li>
+                                <li><i class="pi pi-check-circle"></i>Light and dark variants for every preset</li>
+                                <li><i class="pi pi-check-circle"></i>Theme configurator with live token editing</li>
+                                <li><i class="pi pi-check-circle"></i>Right-to-left and localized components</li>
+                            </ul>
+                            <a href="#" class="landing-btn landing-btn-outline" onclick="cfg.toggle(true); return false;">
+                                <i class="pi pi-palette mr-2"></i>Open the Configurator
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-                        <p:row>
-                            <p:column>
-                                <p:link href="https://www.primefaces.org/showcase/ui/misc/badge.xhtml">Badge</p:link>
+            <!-- ═══ HALL OF FAME ═══════════════════════════════════════════════ -->
+            <section class="landing-section landing-hall-of-fame">
+                <div class="landing-container">
+                    <div class="landing-features-header">
+                        <span class="landing-section-label">Hall Of Fame</span>
+                        <h2 class="landing-section-title">Graduated into PrimeFaces</h2>
+                        <p class="landing-section-subtitle">
+                            The following components were once Extensions components that have graduated into the PrimeFaces core library.
+                        </p>
+                    </div>
+
+                    <!-- [component, PrimeFaces showcase link, description] -->
+                    <ui:param name="hallOfFame" value="#{[
+                            ['Badge', 'https://www.primefaces.org/showcase/ui/misc/badge.xhtml', 'Badge allows styling of any button to include the iOS like badge indicator'],
+                            ['FAB/SpeedDial', 'https://www.primefaces.org/showcase/ui/button/speedDial.xhtml', 'A floating action button can display multiple primary actions that can be performed on a page.'],
+                            ['Gravatar', 'https://www.primefaces.org/showcase/ui/misc/avatar.xhtml', 'Avatar using the Gravatar service'],
+                            ['ImportEnum', 'https://www.primefaces.org/showcase/ui/misc/importEnum.xhtml', 'ImportEnum allows in older EL versions (&lt; 3.0), to use enum constants or any other static fields/methods in an EL expression.'],
+                            ['ImportConstants', 'https://www.primefaces.org/showcase/ui/misc/importConstants.xhtml', 'ImportConstants allows in older EL versions (&lt; 3.0), to use constants or any other static fields/methods in an EL expression.'],
+                            ['InputNumber', 'https://www.primefaces.org/showcase/ui/input/inputNumber.xhtml', 'InputNumber formats input fields with numeric Strings. It supports currency symbols, minimum and maximum value, negative numbers, and a lot of round methods.'],
+                            ['InputOtp', 'https://www.primefaces.org/showcase/ui/input/inputOtp.xhtml', 'InputOtp is an input component suitable for inserting fixed-size PINs or one time passwords (OTP).'],
+                            ['InputPhone', 'https://www.primefaces.org/showcase/ui/input/inputPhone.xhtml', 'InputPhone is an input field for entering and validating international telephone numbers.'],
+                            ['JavascriptBehavior', 'https://www.primefaces.org/showcase/ui/ajax/callback.xhtml', 'pe:javascript executes JavaScript on a component event instead of an AJAX request, now available as p:callback.'],
+                            ['KeyFilter', 'https://www.primefaces.org/showcase/ui/input/keyFilter.xhtml', 'KeyFilter can be used to filter keyboard input on specified input components.'],
+                            ['Knob', 'https://www.primefaces.org/showcase/ui/input/knob.xhtml', 'Knob\'s useful to insert numeric values in a range.'],
+                            ['LetterAvatar', 'https://www.primefaces.org/showcase/ui/misc/avatar.xhtml', 'Letter Avatar generates an avatar based on characters'],
+                            ['Scaffolding', 'https://www.primefaces.org/showcase/ui/panel/outputPanel.xhtml', 'Scaffolding allows you to show skeletons while data is loading.'],
+                            ['SingleClick', 'https://www.primefaces.org/showcase/ui/button/commandButton.xhtml', 'Disable buttons while an Ajax action is being processed now built into PrimeFaces core.'],
+                            ['Spotlight', 'https://www.primefaces.org/showcase/ui/misc/spotlight.xhtml', 'Spotlight highlights a certain component on page.'],
+                            ['Timeline', 'https://www.primefaces.org/showcase/ui/data/timeline/basic.xhtml', 'Timeline is an interactive visualization chart to visualize events in time.'],
+                            ['TriStateCheckbox', 'https://www.primefaces.org/showcase/ui/input/triStateCheckbox.xhtml', 'TriStateCheckbox add a new state to a checkbox value.'],
+                            ['TriStateManyCheckbox', 'https://www.primefaces.org/showcase/ui/input/triStateManyCheckbox.xhtml', 'TriStateManyCheckbox adds a third state to each checkbox of a SelectManyCheckbox.']]}"/>
+
+                    <div class="landing-hall-of-fame-card">
+                        <p:dataTable value="#{hallOfFame}" var="graduate" rowHover="true" styleClass="landing-hall-of-fame-table">
+                            <f:facet name="header">
+                                <div class="landing-hall-of-fame-header">
+                                    <h:graphicImage name="images/medal.png" library="showcase" alt="Medal"/>
+                                    <span>Hall Of Fame</span>
+                                </div>
+                            </f:facet>
+                            <p:column headerText="Component" style="width: 14rem">
+                                <a href="#{graduate[1]}" target="_blank" rel="noopener noreferrer">#{graduate[0]}</a>
                             </p:column>
-                            <p:column>Badge allows styling of any button to include the iOS like badge indicator</p:column>
-                        </p:row>
-
-                        <p:row>
-                            <p:column>
-                                <p:link href="https://www.primefaces.org/showcase/ui/button/speedDial.xhtml">FAB/SpeedDial</p:link>
+                            <p:column headerText="Description">
+                                <h:outputText value="#{graduate[2]}"/>
                             </p:column>
-                            <p:column>A floating action button can display multiple primary actions that can be performed on a page.</p:column>
-                        </p:row>
+                        </p:dataTable>
+                    </div>
+                </div>
+            </section>
 
-                        <p:row>
-                            <p:column>
-                                <p:link href="https://www.primefaces.org/showcase/ui/misc/avatar.xhtml">Gravatar</p:link>
-                            </p:column>
-                            <p:column>Avatar using the Gravatar service</p:column>
-                        </p:row>
+            <!-- ═══ FINAL CTA ═══════════════════════════════════════════════════ -->
+            <section class="landing-section landing-cta">
+                <div class="landing-container landing-cta-inner">
+                    <h2>Ready to extend PrimeFaces?</h2>
+                    <p>PrimeFaces Extensions is open source under the MIT license, hosted at GitHub.</p>
+                    <div class="landing-hero-actions">
+                        <a href="#{request.contextPath}/ui/input/calculator" class="landing-btn landing-btn-primary">
+                            Get Started
+                        </a>
+                        <a href="https://github.com/primefaces-extensions/primefaces-extensions" target="_blank" rel="noopener noreferrer" class="landing-btn landing-btn-ghost">
+                            <i class="pi pi-github mr-2"></i>View on GitHub
+                        </a>
+                    </div>
+                </div>
+            </section>
 
-                        <p:row>
-                            <p:column>
-                                <p:link href="https://www.primefaces.org/showcase/ui/misc/importEnum.xhtml">ImportEnum</p:link>
-                            </p:column>
-                            <p:column>ImportEnum allows in older EL versions (&lt; 3.0), to use enum constants or any other static fields/methods in an EL expression.</p:column>
-                        </p:row>
+        </div>
 
-                        <p:row>
-                            <p:column>
-                                <p:link href="https://www.primefaces.org/showcase/ui/misc/importConstants.xhtml">ImportConstants</p:link>
-                            </p:column>
-                            <p:column>ImportConstants allows in older EL versions (&lt; 3.0), to use constants or any other static fields/methods in an EL expression.</p:column>
-                        </p:row>
-
-                        <p:row>
-                            <p:column>
-                                <p:link href="https://www.primefaces.org/showcase/ui/input/inputNumber.xhtml">InputNumber</p:link>
-                            </p:column>
-                            <p:column>InputNumber formats input fields with numeric Strings. It supports currency symbols, minimum and maximum value, negative numbers, and a lot of round methods.</p:column>
-                        </p:row>
-
-                        <p:row>
-                            <p:column>
-                                <p:link href="https://www.primefaces.org/showcase/ui/input/inputOtp.xhtml">InputOtp</p:link>
-                            </p:column>
-                            <p:column>InputOtp is an input component suitable for inserting fixed-size PINs or one time passwords (OTP).</p:column>
-                        </p:row>
-
-                        <p:row>
-                            <p:column>
-                                <p:link href="https://www.primefaces.org/showcase/ui/input/inputPhone.xhtml">InputPhone</p:link>
-                            </p:column>
-                            <p:column>InputPhone is an input field for entering and validating international telephone numbers.</p:column>
-                        </p:row>
-
-                        <p:row>
-                            <p:column>
-                                <p:link href="https://www.primefaces.org/showcase/ui/ajax/callback.xhtml">JavascriptBehavior</p:link>
-                            </p:column>
-                            <p:column>pe:javascript executes JavaScript on a component event instead of an AJAX request, now available as p:callback.</p:column>
-                        </p:row>
-
-                        <p:row>
-                            <p:column>
-                                <p:link href="https://www.primefaces.org/showcase/ui/input/keyFilter.xhtml">KeyFilter</p:link>
-                            </p:column>
-                            <p:column>KeyFilter can be used to filter keyboard input on specified input components.</p:column>
-                        </p:row>
-
-                        <p:row>
-                            <p:column>
-                                <p:link href="https://www.primefaces.org/showcase/ui/input/knob.xhtml">Knob</p:link>
-                            </p:column>
-                            <p:column>Knob's useful to insert numeric values in a range.</p:column>
-                        </p:row>
-
-                        <p:row>
-                            <p:column>
-                                <p:link href="https://www.primefaces.org/showcase/ui/misc/avatar.xhtml">LetterAvatar</p:link>
-                            </p:column>
-                            <p:column>Letter Avatar generates an avatar based on characters</p:column>
-                        </p:row>
-
-                        <p:row>
-                            <p:column>
-                                <p:link href="https://www.primefaces.org/showcase/ui/panel/outputPanel.xhtml">Scaffolding</p:link>
-                            </p:column>
-                            <p:column>Scaffolding allows you to show skeletons while data is loading.</p:column>
-                        </p:row>
-
-                        <p:row>
-                            <p:column>
-                                <p:link href="https://www.primefaces.org/showcase/ui/button/commandButton.xhtml">SingleClick</p:link>
-                            </p:column>
-                            <p:column>Disable buttons while an Ajax action is being processed now built into PrimeFaces core.</p:column>
-                        </p:row>
-
-                        <p:row>
-                            <p:column>
-                                <p:link href="https://www.primefaces.org/showcase/ui/misc/spotlight.xhtml">Spotlight</p:link>
-                            </p:column>
-                            <p:column>Spotlight highlights a certain component on page.</p:column>
-                        </p:row>
-
-                        <p:row>
-                            <p:column>
-                                <p:link href="https://www.primefaces.org/showcase/ui/data/timeline/basic.xhtml">Timeline</p:link>
-                            </p:column>
-                            <p:column>Timeline is an interactive visualization chart to visualize events in time.</p:column>
-                        </p:row>
-
-                        <p:row>
-                            <p:column>
-                                <p:link href="https://www.primefaces.org/showcase/ui/input/triStateCheckbox.xhtml">TriStateCheckbox</p:link>
-                            </p:column>
-                            <p:column>TriStateCheckbox add a new state to a checkbox value.</p:column>
-                        </p:row>
-
-                        <p:row>
-                            <p:column>
-                                <p:link href="https://www.primefaces.org/showcase/ui/input/triStateManyCheckbox.xhtml">TriStateManyCheckbox</p:link>
-                            </p:column>
-                            <p:column>TriStateManyCheckbox adds a third state to each checkbox of a SelectManyCheckbox.</p:column>
-                        </p:row>
-                    </p:panelGrid>
-                </h:panelGrid>
-            </h:panelGroup>
-            <p:spacer height="500"/>
-        </p:panel>
+        <script>
+        (function () {
+            document.getElementById('qs-tabs').addEventListener('click', function (e) {
+                var tab = e.target.closest('[data-tab]');
+                if (!tab) return;
+                var targetId = tab.getAttribute('data-tab');
+                // update tab active state
+                this.querySelectorAll('.landing-code-tab').forEach(function (t) {
+                    t.classList.toggle('active', t === tab);
+                });
+                // show/hide panels
+                ['qs-pom', 'qs-page'].forEach(function (id) {
+                    document.getElementById(id).style.display = (id === targetId) ? '' : 'none';
+                });
+            });
+        })();
+        </script>
     </ui:define>
-    <ui:define name="useCases">
-        <h:outputText value="Please select any component to see use cases"/>
-    </ui:define>
-    <ui:define name="docuTable">
-        <f:facet name="header">
-            <h:outputText value="Documentation"/>
-        </f:facet>
-        <h:outputText value="Please select any component to see documentation"/>
-    </ui:define>
+
 </ui:composition>
-</html>

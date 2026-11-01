@@ -105,7 +105,15 @@
     <!-- Context parameters - Primefaces & Extensions -->
     <context-param>
         <param-name>primefaces.THEME</param-name>
-        <param-value>#{empty userSettings ? 'aura' : userSettings.currentTheme.name}</param-value>
+        <param-value>#{app.theme}</param-value>
+    </context-param>
+    <context-param>
+        <param-name>primefaces.DIR</param-name>
+        <param-value>#{app.dir}</param-value>
+    </context-param>
+    <context-param>
+        <param-name>jakarta.faces.AUTOMATIC_EXTENSIONLESS_MAPPING</param-name>
+        <param-value>true</param-value>
     </context-param>
     <!-- enable script collecting and moves all script to end of body -->
     <context-param>
@@ -115,18 +123,10 @@
     <!-- Content Security Policy -->
     <context-param>
         <param-name>primefaces.CSP</param-name>
-        <param-value>true</param-value>
-    </context-param>
-    <context-param>
-        <param-name>primefaces.CSP_POLICY</param-name>
-        <param-value>frame-ancestors 'none'; script-src 'self' blob: https: *.googleapis.com 'unsafe-hashes' 'sha256-kbHtQyYDQKz4SWMQ8OHVol3EC0t3tHEJFPCSwNG9NxQ='</param-value>
+        <param-value>false</param-value>
     </context-param>
 
     <!-- Context parameters - OmniFaces -->
-    <context-param>
-        <param-name>org.omnifaces.COMBINED_RESOURCE_HANDLER_DISABLED</param-name>
-        <param-value>true</param-value>
-    </context-param>
     <context-param>
         <param-name>org.omnifaces.CDN_RESOURCE_HANDLER_URLS</param-name>
         <param-value>
@@ -238,10 +238,14 @@
 
     <error-page>
         <exception-type>java.lang.Throwable</exception-type>
-        <location>/views/error/throwable.jsf</location>
+        <location>/error</location>
     </error-page>
     <error-page>
         <exception-type>jakarta.faces.application.ViewExpiredException</exception-type>
-        <location>/views/error/viewExpired.jsf</location>
+        <location>/viewExpired</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error</location>
     </error-page>
 </web-app>

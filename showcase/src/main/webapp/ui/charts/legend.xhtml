@@ -1,0 +1,50 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        Legend
+    </ui:define>
+
+    <ui:define name="description">
+        Legend creates a key for a map and is useful for displaying titles, descriptions and keys for what is being mapped, horizontally or vertically.
+        Based on <a href="https://tilemill-project.github.io/tilemill/docs/guides/advanced-legends/" target="_blank" rel="noopener noreferrer">TileMill CSS Legend</a>.
+    </ui:define>
+
+    <ui:param name="tagName" value="legend"/>
+    <ui:param name="widgetLink" value="legend"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <div class="card">
+            <!-- EXAMPLE: legend/basicUsage -->
+            <h5>Basic Usage</h5>
+            <p>Legend makes it easy to add a key to your UI, for example to a map or to a PrimeFaces Timeline. Title and footer are attributes or facets.</p>
+            <h:form id="formBasicUsage">
+                <p:panelGrid id="pnlLegend" columns="2" styleClass="p-noborder" layout="tabular">
+                    <p:outputLabel value="Vertical"/>
+                    <pe:legend layout="vertical" widgetVar="lgndVertical" values="#{legendController.values}" title="Vertical Title" footer="Source: PrimeFaces"/>
+
+                    <p:spacer/>
+                    <p:spacer/>
+
+                    <p:outputLabel value="Horizontal"/>
+                    <pe:legend layout="horizontal" widgetVar="lgndHorizontal" values="#{legendController.values}">
+                        <f:facet name="title">
+                            Horizontal Title Facet
+                        </f:facet>
+                        <f:facet name="footer">
+                            Source: <a href="http://www.primefaces.org">PrimeFaces Rocks!</a>
+                        </f:facet>
+                    </pe:legend>
+                </p:panelGrid>
+            </h:form>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+</ui:composition>

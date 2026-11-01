@@ -1,0 +1,60 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        CreditCard
+    </ui:define>
+
+    <ui:define name="description">
+        Credit Card will take any credit card form and make it the best part of the checkout process (without you changing anything).
+        Everything is created with pure CSS, HTML and JavaScript, no images required.
+        Based on <a href="https://github.com/jessepollak/card" target="_blank" rel="noopener noreferrer">Card</a>.
+    </ui:define>
+
+    <ui:param name="tagName" value="creditCard"/>
+    <ui:param name="widgetLink" value="creditcard"/>
+
+    <ui:define name="static-documentation">
+        <h2>Field names</h2>
+        <div class="card">
+            <p><strong>Important:</strong> Card finds the form fields by their HTML <code>name</code> attribute, which must be
+                <code>number</code>, <code>name</code>, <code>cvc</code> and <code>expiry</code>.
+                JSF prefixes the name of a <code>p:inputText</code> with the form id, so the example uses plain HTML inputs.
+                Alternatively disable the form id prefix and use these component ids, see
+                <a href="https://stackoverflow.com/a/15900273/502366" target="_blank" rel="noopener noreferrer">Stack Overflow</a>.</p>
+        </div>
+    </ui:define>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <div class="card">
+            <!-- EXAMPLE: creditcard/basicUsage -->
+            <h5>Basic Usage</h5>
+            <p>Map the input fields to the fields you probably already have. The card follows what you type; the expiry month picker feeds the hidden <code>expiry</code> field.</p>
+            <h:form id="formBasicUsage">
+                <p:panelGrid id="pnlCreditCard" columns="4" layout="tabular">
+                    <f:facet name="header">
+                        <pe:creditCard id="creditCard" labelMonthYear="MM/YY" placeholderExpiry="**/**" placeholderName="Optimus Prime"/>
+                    </f:facet>
+                    <input type="text" id="number" name="number" class="p-inputfield p-inputtext p-widget p-state-default" placeholder="Card number" inputmode="numeric"/>
+                    <input type="text" id="name" name="name" class="p-inputfield p-inputtext p-widget p-state-default" placeholder="Full name"/>
+                    <p:outputPanel id="expiration">
+                        <p:datePicker id="month" widgetVar="monthPicker" view="month" pattern="MM/yy" yearNavigator="true" yearRange="2000:2050"
+                                      placeholder="MM/YY"
+                                      onchange="$('#expiry').val(PF('monthPicker').input.val()); $('#expiry')[0].dispatchEvent(new Event('change'));"/>
+                        <!-- Hide Expiration field so we can use PF MonthPicker -->
+                        <input type="text" id="expiry" name="expiry" class="p-inputfield p-inputtext p-widget p-state-default" placeholder="MM/YY" inputmode="numeric" style="display:none"/>
+                    </p:outputPanel>
+                    <input type="text" id="cvc" name="cvc" class="p-inputfield p-inputtext p-widget p-state-default" placeholder="CVC" inputmode="numeric"/>
+                </p:panelGrid>
+            </h:form>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+</ui:composition>

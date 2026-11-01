@@ -1,0 +1,220 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        DynaForm <span class="subitem">Features</span>
+    </ui:define>
+
+    <ui:define name="description">
+        DynaForm supports facets, the autoSubmit feature, an extended view area (grid) and a client-side widget API.
+        The examples show an advanced search form and two switchable forms rendered by the same XHTML.
+    </ui:define>
+
+    <ui:param name="tagName" value="dynaForm"/>
+    <ui:param name="tagName2" value="dynaFormControl"/>
+    <ui:param name="widgetLink" value="dynaform"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <style>
+            .dynaform-advanced .pe-dynaform-cell input,
+            .dynaform-advanced .pe-dynaform-cell textarea,
+            .dynaform-advanced .pe-dynaform-cell[colspan="1"] input,
+            .dynaform-advanced .pe-dynaform-cell[colspan="1"] textarea {
+                width: 130px;
+            }
+
+            .dynaform-advanced .pe-dynaform-cell.calendar input,
+            .dynaform-advanced .pe-dynaform-cell[colspan="1"].calendar input {
+                width: 100px;
+            }
+
+            .dynaform-advanced .pe-dynaform-headerfacet div,
+            .dynaform-advanced .pe-dynaform-footerfacet div {
+                border: 1px dotted #808080;
+                padding: 10px;
+                text-align: center;
+            }
+
+            .dynaform-another .pe-dynaform-cell {
+                padding-bottom: 8px;
+            }
+
+            .dynaform-another .pe-dynaform-label {
+                text-align: left;
+                padding: 2px 20px 0 0;
+            }
+
+            .dynaform-another .pe-dynaform-cell.separator {
+                padding: 10px 0 10px 0;
+            }
+
+            .dynaform-another .pe-dynaform-cell.separator .separatorText {
+                width: 15%;
+                padding-left: 0;
+            }
+
+            .dynaform-another .p-autocomplete .p-autocomplete-dropdown {
+                right: -2px;
+            }
+        </style>
+
+        <div class="card dynaform-advanced">
+            <!-- EXAMPLE: dynaform/advancedFeatures -->
+            <h5>Advanced features</h5>
+            <p>An advanced dynamic form with facets, the <code>autoSubmit</code> feature and an extended view area (grid). The form was already submitted on page load: <code>autoSubmit</code> allows passing form parameters in the URL, building the form on page load and submitting it automatically.
+                The extended grid is closed by default; open it with the client-side API ("Show / hide advanced search"). The open / close state is kept after a postback.</p>
+            <h:form id="formAdvancedFeatures">
+                <h:panelGroup id="dynaFormGroup">
+                    <p:messages id="messages" showSummary="true"/>
+
+                    <pe:dynaForm id="dynaForm" value="#{advancedDynaFormController.model}" var="data"
+                                 autoSubmit="true" buttonBarPosition="both" widgetVar="dynaFormWidgetAdvanced">
+                        <pe:dynaFormControl styleClass="pe-dynaform-label">
+                            <h:outputText value="#{data}"/>
+                        </pe:dynaFormControl>
+                        <pe:dynaFormControl type="input" for="input">
+                            <p:inputText id="input" value="#{data.value}" required="#{data.required}"/>
+                        </pe:dynaFormControl>
+                        <pe:dynaFormControl type="date" for="date" styleClass="calendar">
+                            <p:datePicker id="date" value="#{data.value}" required="#{data.required}" showIcon="true"/>
+                        </pe:dynaFormControl>
+                        <pe:dynaFormControl type="desc" for="desc">
+                            <p:inputTextarea id="desc" value="#{data.value}" required="#{data.required}" autoResize="false"/>
+                        </pe:dynaFormControl>
+
+                        <f:facet name="headerRegular">
+                            <div><h:outputText value="This is a regular header area"/></div>
+                        </f:facet>
+                        <f:facet name="footerRegular">
+                            <div><h:outputText value="This is a regular footer area"/></div>
+                        </f:facet>
+                        <f:facet name="headerExtended">
+                            <div><h:outputText value="This is an extended header area"/></div>
+                        </f:facet>
+                        <f:facet name="footerExtended">
+                            <div><h:outputText value="This is an extended footer area"/></div>
+                        </f:facet>
+                        <f:facet name="buttonBar">
+                            <p:commandButton value="Search" action="#{advancedDynaFormController.submitForm}"
+                                             process="dynaForm" update=":formAdvancedFeatures:dynaFormGroup :formAdvancedFeatures:inputValues"
+                                             oncomplete="handleCompleteAdvanced(xhr, status, args)"/>
+                            <p:commandButton type="reset" value="Reset" style="margin-left: 5px;"/>
+                            <p:commandButton type="button" value="Show / hide advanced search" style="margin-left: 5px;"
+                                             onclick="PF('dynaFormWidgetAdvanced').toggleExtended()"/>
+                        </f:facet>
+                    </pe:dynaForm>
+                </h:panelGroup>
+
+                <p:dialog header="Input values" widgetVar="inputValuesAdvanced">
+                    <h:outputText value="Search has been executed with values:"/>
+                    <p:dataList id="inputValues" value="#{advancedDynaFormController.inventoryProperties}" var="property"
+                                style="margin:10px;">
+                        <h:outputText value="#{property.position}: #{property.formattedValue}"
+                                      style="margin-right: 10px;"/>
+                    </p:dataList>
+                </p:dialog>
+            </h:form>
+
+            <script>
+                /* <![CDATA[ */
+                function handleCompleteAdvanced(xhr, status, args) {
+                    if (args && args.isValid) {
+                        PF('inputValuesAdvanced').show();
+                    } else {
+                        PF('inputValuesAdvanced').hide();
+                    }
+                }
+                /* ]]> */
+            </script>
+        </div>
+
+        <div class="card dynaform-another">
+            <!-- EXAMPLE: dynaform/anotherForms -->
+            <h5>Yet another forms</h5>
+            <p>Dynamic forms with labels above the fields and various elements such as the PrimeFaces divider. Click "Switch model" to switch between the two forms: the XHTML with <code>pe:dynaForm</code> stays the same, only the Java model changes.</p>
+            <h:form id="formAnotherForms">
+                <p:commandLink id="switch" value="Switch model" process="switch" update="dynaFormGroup"
+                               action="#{anotherDynaFormController.switchModel}" style="font-weight:bold;"/>
+
+                <h:panelGroup id="dynaFormGroup" layout="block" style="margin-top: 15px;">
+                    <p:messages id="messages" showSummary="true"/>
+
+                    <pe:dynaForm id="dynaForm" value="#{anotherDynaFormController.model}" var="data"
+                                 openExtended="true" widgetVar="dynaFormWidgetAnother">
+                        <pe:dynaFormControl styleClass="pe-dynaform-label">
+                            <h:outputText value="#{data}"/>
+                        </pe:dynaFormControl>
+                        <pe:dynaFormControl type="separator" styleClass="separator p-state-disabled">
+                            <h:panelGrid columns="2" style="width:100%;" columnClasses="separatorText">
+                                <h:outputText value="#{data}"/>
+                                <p:divider/>
+                            </h:panelGrid>
+                        </pe:dynaFormControl>
+                        <pe:dynaFormControl type="name" for="autocompl">
+                            <p:autoComplete id="autocompl" value="#{data.value}" required="#{data.required}"
+                                            dropdown="true" completeMethod="#{anotherDynaFormController.complete}"/>
+                        </pe:dynaFormControl>
+                        <pe:dynaFormControl type="address" for="txt">
+                            <p:inputText id="txt" value="#{data.value}" required="#{data.required}"/>
+                        </pe:dynaFormControl>
+                        <pe:dynaFormControl type="booleanchoice">
+                            <p:selectBooleanCheckbox value="#{data.value}" required="#{data.required}"
+                                                     style="vertical-align:middle;"/>
+                        </pe:dynaFormControl>
+                        <pe:dynaFormControl type="radiochoice">
+                            <p:selectOneRadio value="#{data.value}" required="#{data.required}">
+                                <f:selectItems value="#{data.selectItems}"/>
+                            </p:selectOneRadio>
+                        </pe:dynaFormControl>
+                        <pe:dynaFormControl type="editor">
+                            <p:textEditor value="#{data.value}" height="150" secure="false"/>
+                        </pe:dynaFormControl>
+                        <pe:dynaFormControl type="audioslider">
+                            <h:inputHidden id="input" value="#{data.value}"/>
+                            <h:panelGrid columns="2">
+                                <p:slider for="input" display="output" style="width:150px;"/>
+                                <h:outputText id="output" value="#{data.value}" style="margin-left: 5px;"/>
+                            </h:panelGrid>
+                        </pe:dynaFormControl>
+
+                        <f:facet name="buttonBar">
+                            <p:commandButton value="Submit" action="#{anotherDynaFormController.submitForm}"
+                                             process="dynaForm" update=":formAnotherForms:dynaFormGroup :formAnotherForms:inputValues"
+                                             oncomplete="handleCompleteAnother(xhr, status, args)"/>
+                            <p:commandButton type="reset" value="Reset" style="margin-left: 5px;"/>
+                            <p:commandButton type="button" value="Show / hide more fields"
+                                             rendered="#{anotherDynaFormController.model.existExtendedGrid}"
+                                             style="margin-left: 5px;" onclick="PF('dynaFormWidgetAnother').toggleExtended()"/>
+                        </f:facet>
+                    </pe:dynaForm>
+                </h:panelGroup>
+
+                <p:dialog header="Input values" widgetVar="inputValuesAnother">
+                    <h:panelGroup id="inputValues" layout="block" style="margin:10px;">
+                        <h:outputText value="#{anotherDynaFormController.formFields}" escape="false"/>
+                    </h:panelGroup>
+                </p:dialog>
+            </h:form>
+
+            <script>
+                /* <![CDATA[ */
+                function handleCompleteAnother(xhr, status, args) {
+                    if (args && args.isValid) {
+                        PF('inputValuesAnother').show();
+                    } else {
+                        PF('inputValuesAnother').hide();
+                    }
+                }
+                /* ]]> */
+            </script>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,65 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        Speedtest
+    </ui:define>
+
+    <ui:define name="description">
+        Speedtest tests the network speed of your server. It captures download, upload, ping and jitter speed and provides
+        the results in an Ajax callback.
+    </ui:define>
+
+    <ui:param name="tagName" value="speedtest"/>
+    <ui:param name="widgetLink" value="speedtest"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <div class="card">
+            <!-- EXAMPLE: speedtest/basicUsage -->
+            <h5>Basic Usage</h5>
+            <p>Start the test with the <code>start()</code> method of the widget. The speed results are sent to the server.</p>
+            <h:form id="formBasicUsage">
+                <p:growl id="growl" showDetail="true" showSummary="true"/>
+
+                <pe:speedtest id="speedtest" widgetVar="speedtest" bgColor="#65ed28" captionDownload="Down" captionUpload="Up"
+                              captionJitter="Jitter" captionPing="Ping" file="#{request.contextPath}/resources/other/dummy.payload">
+                    <p:ajax listener="#{speedTestController.saveResults}" process="@this" update="growl"/>
+                </pe:speedtest>
+
+                <div>
+                    <p:commandButton id="btnStart" value="Start Speedtest" icon="pi pi-play" style="width:100%;"
+                                     onclick="PF('speedtest').start();"/>
+                </div>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <h5>Dummy load file</h5>
+            <p>For testing the download speed you need an uncompressable payload file deployed on your server with a size of 1MB, 2MB, 5MB
+                or 10MB. We recommend using a 5MB file. It can be generated here.</p>
+            <h:form id="formPayload">
+                <div class="flex flex-column gap-3">
+                    <p:outputLabel value="Size in MB" for="SizeInMB"/>
+                    <p:selectOneMenu id="SizeInMB" value="#{speedTestController.sizeInMB}">
+                        <f:selectItem itemLabel="Select size" itemValue="" noSelectionOption="true" itemDisabled="true"/>
+                        <f:selectItem itemLabel="1MB" itemValue="1"/>
+                        <f:selectItem itemLabel="2MB" itemValue="2"/>
+                        <f:selectItem itemLabel="5MB" itemValue="5"/>
+                        <f:selectItem itemLabel="10MB" itemValue="10"/>
+                        <p:ajax listener="#{speedTestController.updateSizeInMB()}" update="@this"/>
+                    </p:selectOneMenu>
+                    <p:commandButton value="Generate speedtest dummy load file" ajax="false"
+                                     action="#{speedTestController.downloadPayloadFile()}"/>
+                </div>
+            </h:form>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+</ui:composition>

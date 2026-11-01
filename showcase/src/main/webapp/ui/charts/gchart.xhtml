@@ -1,0 +1,98 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        GChart
+    </ui:define>
+
+    <ui:define name="description">
+        GChart is a JSF wrapper of the <a href="https://developers.google.com/chart" target="_blank" rel="noopener noreferrer">Google Charts</a> API,
+        the chart library used by Google Analytics and other Google services. It also provides an organizational chart and a geo chart.
+    </ui:define>
+
+    <ui:param name="tagName" value="gChart"/>
+    <ui:param name="widgetLink" value="gchart"/>
+
+    <ui:define name="static-documentation">
+        <h2>Important</h2>
+        <div class="card">
+            <p>Due to the Google Charts <a href="https://developers.google.com/terms/" target="_blank" rel="noopener noreferrer">Terms of Service</a>
+                it is not possible to download the library to a server: the API is loaded from the servers of Google, so the client must be
+                connected to the internet for the component to work.</p>
+        </div>
+    </ui:define>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <script src="https://www.gstatic.com/charts/loader.js"></script>
+
+        <div class="card">
+            <!-- EXAMPLE: gchart/basic -->
+            <h5>Basic usage</h5>
+            <p>The component needs a <code>GChartModel</code>, created with a <code>GChartModelBuilder</code>. The <i>select</i> AJAX event contains a <code>JSONArray</code> with the selected rows.</p>
+            <h:form id="formBasic">
+                <p:messages id="messages"/>
+
+                <p:outputPanel id="container" layout="block">
+                    <h:panelGrid columns="4">
+                        <h:outputText value="Mushrooms"/>
+                        <h:outputText value="Onions"/>
+                        <h:outputText value="Type"/>
+                        <h:panelGroup/>
+                        <p:inputText converter="jakarta.faces.Integer" value="#{basicGChartController.mushrooms}"/>
+                        <p:inputText converter="jakarta.faces.Integer" value="#{basicGChartController.onions}"/>
+                        <h:selectOneMenu value="#{basicGChartController.chartType}">
+                            <f:selectItems value="#{basicGChartController.types}"/>
+                        </h:selectOneMenu>
+                        <p:commandButton value="Generate" update="container messages" action="#{basicGChartController.generateModel}"/>
+                    </h:panelGrid>
+
+                    <pe:gChart value="#{basicGChartController.chart}" title="How Much Pizza I Ate Last Night">
+                        <p:ajax listener="#{basicGChartController.onSelect}" update="messages"/>
+                    </pe:gChart>
+                </p:outputPanel>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: gchart/multiple -->
+            <h5>Multiple Series</h5>
+            <p>A chart can have multiple series: choose the right <code>GChartType</code> (<code>COLUMN</code> here) and fill more columns.</p>
+            <h:form id="formMultiple">
+                <pe:gChart value="#{multipleSeriesGChartController.chart}" title="Company Performance"/>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: gchart/organizational -->
+            <h5>Organizational Chart</h5>
+            <p>Google Charts is versatile: here it displays an organizational chart. A <code>TreeNode</code> can generate the <code>GChartModel</code> for this kind of chart.</p>
+            <h:form id="formOrganizational">
+                <p:tabView>
+                    <p:tab title="Standard">
+                        <pe:gChart value="#{organizationalGChartController.standardModel}"/>
+                    </p:tab>
+                    <p:tab title="TreeDataModel">
+                        <pe:gChart value="#{organizationalGChartController.treeModel}"/>
+                    </p:tab>
+                </p:tabView>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: gchart/geochart -->
+            <h5>Geo Chart</h5>
+            <p>A geo chart shows data about countries. Rows are added with simple strings or with <code>java.util.Locale</code>.</p>
+            <h:form id="formGeochart">
+                <pe:gChart value="#{geoChartGChartController.chart}"/>
+            </h:form>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+</ui:composition>

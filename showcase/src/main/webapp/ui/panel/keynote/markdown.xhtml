@@ -1,0 +1,78 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        Keynote <span class="subitem">Markdown</span>
+    </ui:define>
+
+    <ui:define name="description">
+        Slide content can be written in Markdown instead of HTML. Presentations are made with
+        <a href="https://revealjs.com" target="_blank" rel="noopener noreferrer">reveal.js</a>.
+    </ui:define>
+
+    <ui:param name="tagName" value="keynote"/>
+    <ui:param name="tagName2" value="keynoteItem"/>
+    <ui:param name="widgetLink" value="keynote"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <div class="card">
+            <!-- EXAMPLE: keynote/markdown -->
+            <h5>Markdown</h5>
+            <p>
+                Add <code>markdown="true"</code> to a <code>pe:keynoteItem</code> and wrap the contents in it. Slides are separated by three dashes
+                by default; <code>separator</code> and <code>separatorVertical</code> set a regular expression instead. Markdown is sensitive to
+                indentation (do not mix tabs and spaces) and line breaks (avoid consecutive breaks), so the content starts at the first column.
+            </p>
+            <h:form id="formMarkdown">
+                <pe:keynote width="480" height="350" style="width: 50vw; height: 50vh;">
+                    <pe:keynoteItem markdown="true">
+## Slide 1
+A paragraph with some text and a [link](https://primefaces-extensions.github.io).
+---
+## Slide 2
+* item1
+* item2
+---
+## Slide 3
+                    </pe:keynoteItem>
+                    <pe:keynoteItem markdown="true">
+## Slide 4
+A
+
+ ---
+
+B
+
+ ---
+
+C
+                    </pe:keynoteItem>
+                    <pe:keynoteItem markdown="true" separator="^\n---\n$" separatorVertical="^\n--\n$">
+## Slide 5
+Section 5.1
+
+--
+
+## Slide 5
+Section 5.2
+
+---
+
+## Slide 6
+                    </pe:keynoteItem>
+                    <pe:keynoteItem>
+                        <h2>Slide 7</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    </pe:keynoteItem>
+                </pe:keynote>
+            </h:form>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+</ui:composition>

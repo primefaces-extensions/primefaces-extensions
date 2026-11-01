@@ -24,45 +24,46 @@ package org.primefaces.extensions.showcase.util;
 /**
  * FileContentSettings
  *
- * @author Pavol Slany / last modified by $Author$
+ * @author Sébastien Lepage / last modified by $Author$
  * @version $Revision$
- * @since 0.5
+ * @since 6.3
  */
 public class FileContentSettings {
-    private String[] startMarkers = null;
-    private String[] endMarkers = null;
-    private boolean showLineWithMarker = false;
 
-    public String[] getStartMarkers() {
+    private Marker[] startMarkers = null;
+    private Marker[] endMarkers = null;
+    private String type;
+
+    public Marker[] getStartMarkers() {
         if (startMarkers == null) {
-            return new String[0];
+            return new Marker[0];
         }
         return startMarkers;
     }
 
-    public String[] getEndMarkers() {
-        if (endMarkers == null) {
-            return new String[0];
-        }
-        return endMarkers;
-    }
-
-    public boolean isShowLineWithMarker() {
-        return showLineWithMarker;
-    }
-
-    public FileContentSettings setStartMarkers(String... startMarkers) {
+    public FileContentSettings setStartMarkers(Marker... startMarkers) {
         this.startMarkers = startMarkers;
         return this;
     }
 
-    public FileContentSettings setEndMarkers(String... endMarkers) {
+    public Marker[] getEndMarkers() {
+        if (endMarkers == null) {
+            return new Marker[0];
+        }
+        return endMarkers;
+    }
+
+    public FileContentSettings setEndMarkers(Marker... endMarkers) {
         this.endMarkers = endMarkers;
         return this;
     }
 
-    public FileContentSettings setShowLineWithMarker(boolean showLineWithMarker) {
-        this.showLineWithMarker = showLineWithMarker;
+    public String getType() {
+        return type;
+    }
+
+    public FileContentSettings setType(String type) {
+        this.type = type;
         return this;
     }
 }

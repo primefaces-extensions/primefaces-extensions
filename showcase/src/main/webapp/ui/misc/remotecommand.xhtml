@@ -1,0 +1,137 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        RemoteCommand
+    </ui:define>
+
+    <ui:define name="description">
+        RemoteCommand executes backing bean methods and does a partial update, triggered by custom client side script.
+        It can pass parameters with <code>pe:assignableParam</code> (assigned to bean properties) or <code>pe:methodParam</code>
+        (arguments of a bean method).
+    </ui:define>
+
+    <ui:param name="tagName" value="remoteCommand"/>
+    <ui:param name="tagName2" value="assignableParam"/>
+    <ui:param name="tagName3" value="methodParam"/>
+    <ui:param name="tagName4" value="methodSignature"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <div class="card">
+            <!-- EXAMPLE: remoteCommand/basicUsage -->
+            <h5>Basic Usage</h5>
+            <p>A certain part of a page can be lazily loaded on demand.</p>
+            <h:form id="formBasicUsage">
+                <p:commandButton value="Load" type="button" onclick="lazyload()" style="margin-bottom: 10px;"/>
+                <p:outputPanel id="lazypanel" layout="block">
+                    <h:outputText
+                            value="This part of page is lazily loaded on demand using a RemoteCommand"
+                            rendered="#{requestScope.shouldRender}"/>
+                </p:outputPanel>
+                <pe:remoteCommand name="lazyload" update="lazypanel">
+                    <f:setPropertyActionListener value="#{true}"
+                                                 target="#{requestScope.shouldRender}"/>
+                </pe:remoteCommand>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <h5>Using AssignableParam</h5>
+            <p>Assign JavaScript parameters to a property in a bean with <code>pe:remoteCommand</code> and <code>pe:assignableParam</code>.
+                AssignableParam specifies a <code>name</code> of the parameter and an EL expression for the corresponding setter the parameter
+                is applied to (<code>assignTo</code>). A converter can be attached as a child or with the <code>converter</code> attribute.</p>
+            <h:form id="formAssignableParam">
+                <p:growl id="growl" showDetail="true"/>
+
+                <pe:remoteCommand id="assignDataCommand" name="assignData" process="@this" update="subject date circle growl"
+                                  actionListener="#{remoteCommandController.parametersAssigned}">
+                    <pe:assignableParam name="subject" assignTo="#{remoteCommandController.subject}"/>
+                    <pe:assignableParam name="date" assignTo="#{remoteCommandController.date}">
+                        <f:convertDateTime type="both" pattern="MM/dd/yyyy HH:mm:ss"/>
+                    </pe:assignableParam>
+                    <pe:assignableParam name="circle" assignTo="#{remoteCommandController.circle}">
+                        <pe:convertJson/>
+                    </pe:assignableParam>
+                </pe:remoteCommand>
+
+                <script type="text/javascript">
+                    var assignCircle = {
+                        radius: 50,
+                        backgroundColor: "#FF0000",
+                        borderColor: "#DDDDDD",
+                        scaleFactor: 1.2
+                    };
+                    var assignCircle2 = {
+                        radius: 32,
+                        backgroundColor: "#FF0320",
+                        borderColor: "#DDFFFD",
+                        scaleFactor: 1.6
+                    };
+                </script>
+
+                <h:outputLabel for="subject" value="Subject: "/>
+                <h:outputText id="subject" value="#{remoteCommandController.subject}"/>
+                <br/>
+                <h:outputLabel for="date" value="Date: "/>
+                <h:outputText id="date" value="#{remoteCommandController.date}"/>
+                <br/>
+                <h:outputLabel for="circle" value="Circle: "/>
+                <h:outputText id="circle"
+                              value="#{remoteCommandController.circle.radius} - #{remoteCommandController.circle.backgroundColor} - #{remoteCommandController.circle.borderColor} - #{remoteCommandController.circle.scaleFactor}"/>
+                <br/><br/>
+
+                <p:commandButton value="Apply Data" type="button" onclick="assignData('hello world', '05/14/2007 12:55:42', JSON.stringify(assignCircle))"/>
+                <p:commandButton value="Apply Second Data" type="button" onclick="assignData('hello user', '07/11/2001 11:55:42', JSON.stringify(assignCircle2))"/>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: remoteCommand/methodParam -->
+            <h5>Using MethodParam</h5>
+            <p>Call a remote Java method with any parameters from JavaScript with <code>pe:remoteCommand</code>, <code>pe:methodParam</code>
+                and <code>pe:methodSignature</code>. MethodParam specifies the <code>name</code> of a parameter and MethodSignature a comma
+                separated list of fully qualified class names, in the same order as the passed parameters.</p>
+            <h:form id="formMethodParam">
+                <p:growl id="growl" showDetail="true"/>
+
+                <pe:remoteCommand id="callMethodCommand" name="callMethod" process="@this" update="growl"
+                                  actionListener="#{remoteCommandController.printMethodParams}">
+                    <pe:methodSignature parameters="java.lang.String, java.util.Date, org.primefaces.extensions.showcase.model.Circle"/>
+                    <pe:methodParam name="subject"/>
+                    <pe:methodParam name="date">
+                        <f:convertDateTime type="both" pattern="MM/dd/yyyy HH:mm:ss"/>
+                    </pe:methodParam>
+                    <pe:methodParam name="circle">
+                        <pe:convertJson/>
+                    </pe:methodParam>
+                </pe:remoteCommand>
+
+                <script type="text/javascript">
+                    var methodCircle = {
+                        radius: 50,
+                        backgroundColor: "#FF0000",
+                        borderColor: "#DDDDDD",
+                        scaleFactor: 1.2
+                    };
+                    var methodCircle2 = {
+                        radius: 32,
+                        backgroundColor: "#FF0320",
+                        borderColor: "#DDFFFD",
+                        scaleFactor: 1.6
+                    };
+                </script>
+
+                <p:commandButton value="Apply Data" type="button" onclick="callMethod('hello world', '05/14/2007 12:55:42', JSON.stringify(methodCircle))"/>
+                <p:commandButton value="Apply Second Data" type="button" onclick="callMethod('hello user', '07/11/2001 11:55:42', JSON.stringify(methodCircle2))"/>
+            </h:form>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+</ui:composition>

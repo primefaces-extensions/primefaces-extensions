@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="primefaces"
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      xmlns:sc="primefaces.extensions.showcase"
+      lang="#{p:language()}" xml:lang="#{p:language()}" data-preset="#{app.theme}" dir="#{app.dir}">
+
+    <h:head>
+        <f:facet name="first">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            <meta name="mobile-web-app-capable" content="yes"/>
+            <meta name="description" content="PrimeFaces Extensions Showcase"/>
+            <link href="#{resource['showcase:images/favicon-32x32.png']}" rel="icon" type="image/png" sizes="32x32"/>
+            <link href="#{resource['showcase:images/favicon-16x16.png']}" rel="icon" type="image/png" sizes="16x16"/>
+        </f:facet>
+        <title>PrimeFaces Extensions - Components for PrimeFaces</title>
+
+        <h:outputStylesheet name="primeflex/4.0.0/primeflex.min.css" library="webjars" />
+        <h:outputStylesheet name="css/flags/flags.css" library="showcase"/>
+        <!-- maps the variables of the showcase layout to the tokens of the theme -->
+        <h:outputStylesheet name="theming/showcase.css"/>
+        <!-- Font Awesome: used by the PrimeFaces Extensions examples -->
+        <h:outputStylesheet name="font-awesome/7.2.0/css/all.min-jsf.css" library="webjars"/>
+        <h:outputStylesheet name="font-awesome/7.2.0/css/v4-shims.min-jsf.css" library="webjars"/>
+
+        <h:outputScript name="jquery/jquery.js" library="primefaces"/>
+        <h:outputScript name="locales/locale-#{app.locale.language}.js" library="primefaces"/>
+
+        <ui:insert name="head"/>
+    </h:head>
+
+    <h:body>
+        <f:view locale="#{app.locale.locale}">
+        <div class="layout-wrapper layout-landing-wrapper">
+            <ui:include src="./topbar.xhtml"/>
+            <!-- theme configurator: palette button at the right edge + overlay -->
+            <ui:include src="/theming/configurator.xhtml"/>
+            <div class="layout-mask"></div>
+
+            <div class="layout-landing-content">
+                <ui:insert name="content">
+                    <ui:insert name="implementation"/>
+                </ui:insert>
+            </div>
+
+            <ui:include src="./footer.xhtml"/>
+        </div>
+
+        <ui:insert name="status">
+            <p:ajaxStatus styleClass="status-indicator">
+                <f:facet name="start">
+                    <i class="pi pi-spin pi-spinner" aria-hidden="true"></i>
+                </f:facet>
+                <f:facet name="complete">
+                    <h:outputText value=""/>
+                </f:facet>
+            </p:ajaxStatus>
+        </ui:insert>
+
+        <ui:insert name="body"/>
+
+        <h:outputStylesheet name="css/layout/layout.css" library="showcase"/>
+        <h:outputScript name="script/layout.js" library="showcase" />
+        <!-- kept for parity with the PF showcase markdown documentation sidebar -->
+        <h:outputScript name="script/marked.min.js" library="showcase" />
+        <h:outputScript name="script/purify.min.js" library="showcase" />
+        <h:outputScript name="script/shiki-highlight.js" library="showcase" />
+        </f:view>
+    </h:body>
+
+</html>

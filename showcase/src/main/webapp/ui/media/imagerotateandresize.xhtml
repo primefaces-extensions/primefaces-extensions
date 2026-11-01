@@ -1,0 +1,54 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        ImageRotateAndResize
+    </ui:define>
+
+    <ui:define name="description">
+        The ImageRotateAndResize widget rotates or resizes images and provides events to catch the new image values on the server side.
+        It uses the HTML5 Canvas.
+    </ui:define>
+
+    <ui:param name="tagName" value="imageRotateAndResize"/>
+    <ui:param name="widgetLink" value="imagerotateandresize"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <div class="card">
+            <!-- EXAMPLE: imageRotateAndResize/basicUsage -->
+            <h5>Basic Usage</h5>
+            <p>The widget provides client side methods which can be called with JavaScript: <code>rotateLeft(degree)</code>,
+                <code>rotateRight(degree)</code>, <code>resize(width,height)</code>, <code>scale(scaleFactor)</code> and
+                <code>restoreDefaults()</code>. The events <i>rotate</i> and <i>resize</i> are sent to the server.</p>
+            <h:form id="formBasicUsage">
+                <p:growl id="growl" showDetail="true"/>
+
+                <h:graphicImage id="myImage" value="/resources/images/testImage1.png"/>
+
+                <pe:imageRotateAndResize id="rotateAndResize" for="myImage" widgetVar="rotateAndResizeWidget">
+                    <p:ajax event="rotate" listener="#{imageController.rotateListener}" update="growl"/>
+                    <p:ajax event="resize" listener="#{imageController.resizeListener}" update="growl"/>
+                </pe:imageRotateAndResize>
+
+                <br/>
+
+                <p:commandButton icon="pi pi-replay" value="Rotate Left"
+                                 onclick="PF('rotateAndResizeWidget').rotateLeft(90);return false;"/>
+                <p:commandButton icon="pi pi-refresh" value="Rotate Right"
+                                 onclick="PF('rotateAndResizeWidget').rotateRight(90);return false;"/>
+                <p:commandButton icon="pi pi-search-plus" value="Scale +"
+                                 onclick="PF('rotateAndResizeWidget').scale(1.05);return false;"/>
+                <p:commandButton icon="pi pi-search-minus" value="Scale -"
+                                 onclick="PF('rotateAndResizeWidget').scale(0.95);return false;"/>
+            </h:form>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+</ui:composition>

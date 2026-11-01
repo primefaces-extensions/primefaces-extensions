@@ -1,0 +1,191 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        Kanban <span class="subitem">Dragging</span>
+    </ui:define>
+
+    <ui:define name="description">
+        Kanban supports touch dragging, board dragging, drag handles and per-board drop restrictions. Kanban is a board component for visualizing workflow and managing tasks with drag-and-drop, including touch drag-and-drop on mobile devices.
+        Based on <a href="https://github.com/riktar/jkanban" target="_blank" rel="noopener noreferrer">jkanban</a> by Riktar.
+    </ui:define>
+
+    <ui:param name="tagName" value="kanban"/>
+    <ui:param name="widgetLink" value="kanban"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <style>
+            .kanban-item-title {
+                font-weight: 600;
+            }
+
+            .kanban-item-description {
+                font-size: 0.8rem;
+                opacity: 0.7;
+                margin-top: 2px;
+            }
+
+            #formTouchDrag .kanban-board header.kanban-todo,
+            #formDragHandle .kanban-board header.kanban-todo { background-color: #4f46e5; color: #fff; }
+            #formTouchDrag .kanban-board header.kanban-inprogress,
+            #formDragHandle .kanban-board header.kanban-inprogress { background-color: #ea580c; color: #fff; }
+            #formTouchDrag .kanban-board header.kanban-done,
+            #formDragHandle .kanban-board header.kanban-done { background-color: #16a34a; color: #fff; }
+
+            #formBoardDrag .kanban-board header.kanban-discovery { background-color: #8b5cf6; color: #fff; }
+            #formBoardDrag .kanban-board header.kanban-design { background-color: #f59e0b; color: #fff; }
+            #formBoardDrag .kanban-board header.kanban-development { background-color: #3b82f6; color: #fff; }
+            #formBoardDrag .kanban-board header.kanban-testing { background-color: #10b981; color: #fff; }
+
+            #formDropRestrictions .kanban-board header.kanban-backlog { background-color: #6b7280; color: #fff; }
+            #formDropRestrictions .kanban-board header.kanban-inprogress { background-color: #3b82f6; color: #fff; }
+            #formDropRestrictions .kanban-board header.kanban-review { background-color: #f59e0b; color: #fff; }
+            #formDropRestrictions .kanban-board header.kanban-done { background-color: #10b981; color: #fff; }
+            .kanban-board.disabled-board { opacity: 0.3; }
+
+            .drag_handler { margin-right: 8px; float: left; }
+            .drag_handler_grip {
+                float: left;
+                width: 16px;
+                height: 24px;
+                margin-right: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: grab;
+                opacity: .3;
+                transition: opacity .15s;
+            }
+            .drag_handler_grip:hover { opacity: .7; }
+            .drag_handler_grip_icon {
+                width: 3px;
+                height: 3px;
+                border-radius: 50%;
+                background: var(--p-text-muted-color);
+                box-shadow: 0 -6px 0 var(--p-text-muted-color), 0 6px 0 var(--p-text-muted-color);
+            }
+        </style>
+
+        <div class="card">
+            <!-- EXAMPLE: kanban/touchDrag -->
+            <h5>Touch Drag</h5>
+            <p>Set <code>touchDraggable</code> to enable touch drag-and-drop for mobile devices.</p>
+            <h:form id="formTouchDrag">
+                <p:messages id="messages" showSummary="true" showDetail="true"/>
+
+                <pe:kanban id="kanban"
+                            widgetVar="kanbanTouchWidget"
+                            value="#{kanbanController.columns}"
+                            draggable="true"
+                            touchDraggable="true"
+                            addItemButton="true"
+                            style="height:400px">
+                    <p:ajax event="drop" listener="#{kanbanController.onDrop}" update="messages" />
+                    <p:ajax event="itemAdd" listener="#{kanbanController.onAddItem}" update="kanban messages" />
+                </pe:kanban>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: kanban/boardDrag -->
+            <h5>Board Dragging</h5>
+            <p>Reorder entire boards (columns) by dragging them. Use <code>dragBoards</code> to enable or disable it and the <i>dragBoard</i> / <i>dragendBoard</i> events to react.</p>
+            <h:form id="formBoardDrag">
+                <p:messages id="messages" showSummary="true" showDetail="true"/>
+
+
+                <div style="margin-bottom:8px">
+                    <p:outputLabel for="dragBoards" value="Board Dragging" styleClass="font-bold" style="margin-right:8px" />
+                    <p:selectOneMenu id="dragBoards" value="#{kanbanBoardDragController.dragBoards}" style="width:120px">
+                        <f:selectItem itemLabel="Enabled" itemValue="true" />
+                        <f:selectItem itemLabel="Disabled" itemValue="false" />
+                        <p:ajax update="kanban" process="@this" />
+                    </p:selectOneMenu>
+                </div>
+
+                <pe:kanban id="kanban"
+                            widgetVar="kanbanBoardDragWidget"
+                            value="#{kanbanBoardDragController.columns}"
+                            draggable="true"
+                            dragBoards="#{kanbanBoardDragController.dragBoards}"
+                            style="height:450px">
+                    <p:ajax event="drop" listener="#{kanbanBoardDragController.onDrop}" update="messages" />
+                    <p:ajax event="dragBoard" listener="#{kanbanBoardDragController.onDragBoard}" update="messages" />
+                    <p:ajax event="dragendBoard" listener="#{kanbanBoardDragController.onDragendBoard}" update="messages" />
+                </pe:kanban>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: kanban/dragHandle -->
+            <h5>Drag Handles</h5>
+            <p>With <code>dragHandle</code> only the handle icon of an item is draggable, which prevents accidental drags on cards with interactive content. The handle style is set via the <code>extender</code>.</p>
+            <h:form id="formDragHandle">
+                <p:messages id="messages" showSummary="true" showDetail="true"/>
+
+
+                <div style="margin-bottom:8px">
+                    <p:outputLabel for="dragHandle" value="Drag Handle" styleClass="font-bold" style="margin-right:8px" />
+                    <p:selectOneMenu id="dragHandle" value="#{kanbanDragHandleController.dragHandle}" style="width:120px">
+                        <f:selectItem itemLabel="Enabled" itemValue="true" />
+                        <f:selectItem itemLabel="Disabled" itemValue="false" />
+                        <p:ajax update="kanban" process="@this" />
+                    </p:selectOneMenu>
+
+                    <p:outputLabel for="handleStyle" value="Handle Style" styleClass="font-bold" style="margin:0 8px 0 16px" />
+                    <p:selectOneMenu id="handleStyle" value="#{kanbanDragHandleController.handleStyle}" style="width:140px">
+                        <f:selectItem itemLabel="Default" itemValue="default" />
+                        <f:selectItem itemLabel="Grip" itemValue="grip" />
+                        <p:ajax update="kanban" process="@this" />
+                    </p:selectOneMenu>
+                </div>
+
+                <pe:kanban id="kanban"
+                            widgetVar="kanbanDragHandleWidget"
+                            value="#{kanbanDragHandleController.columns}"
+                            draggable="true"
+                            dragHandle="#{kanbanDragHandleController.dragHandle}"
+                            extender="#{kanbanDragHandleController.extender}"
+                            style="height:400px">
+                    <p:ajax event="drop" listener="#{kanbanDragHandleController.onDrop}" update="messages" />
+                </pe:kanban>
+            </h:form>
+            <h:outputScript>
+                function kanbanDragHandleDefault() {}
+
+                function kanbanDragHandleGrip() {
+                    this.cfg.itemHandleOptions = {
+                        customCssHandler: 'drag_handler_grip',
+                        customCssIconHandler: 'drag_handler_grip_icon'
+                    };
+                }
+            </h:outputScript>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: kanban/dropRestrictions -->
+            <h5>Drop Restrictions</h5>
+            <p>Use the <code>dragTo</code> property of a column to list the columns items may be dropped into. Items follow a strict workflow (Backlog, In Progress, Review, Done); restricted columns are dimmed while dragging and disallowed drops are cancelled.</p>
+            <h:form id="formDropRestrictions">
+                <p:messages id="messages" showSummary="true" showDetail="true"/>
+
+                <pe:kanban id="kanban"
+                            widgetVar="kanbanDropRestrictionsWidget"
+                            value="#{kanbanDropRestrictionsController.columns}"
+                            draggable="true"
+                            style="height:450px">
+                    <p:ajax event="drop" listener="#{kanbanDropRestrictionsController.onDrop}" update="messages" />
+                </pe:kanban>
+            </h:form>
+        </div>
+
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+</ui:composition>

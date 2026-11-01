@@ -1,0 +1,43 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        Keynote <span class="subitem">Dynamic</span>
+    </ui:define>
+
+    <ui:define name="description">
+        Keynotes can be rendered dynamically from a list, as in data iteration components. Presentations are made with
+        <a href="https://revealjs.com" target="_blank" rel="noopener noreferrer">reveal.js</a>.
+    </ui:define>
+
+    <ui:param name="tagName" value="keynote"/>
+    <ui:param name="tagName2" value="keynoteItem"/>
+    <ui:param name="widgetLink" value="keynote"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <div class="card">
+            <!-- EXAMPLE: keynote/dynamic -->
+            <h5>Dynamic</h5>
+            <p>
+                <code>value</code> takes a list of <code>KeynoteItem</code> instances, which are exposed via <code>var</code>. This presentation
+                loops and advances automatically every 3 seconds (<code>loop="true"</code>, <code>autoSlide="3000"</code>).
+            </p>
+            <h:form id="formDynamic">
+                <pe:keynote loop="true" autoSlide="3000" slideNumber="c/t" value="#{keynoteController.items}" var="item"
+                            width="480" height="350" style="width: 50vw; height: 50vh;">
+                    <pe:keynoteItem>
+                        <h2>#{item.headline}</h2>
+                        <p>#{item.content}</p>
+                    </pe:keynoteItem>
+                </pe:keynote>
+            </h:form>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+</ui:composition>
