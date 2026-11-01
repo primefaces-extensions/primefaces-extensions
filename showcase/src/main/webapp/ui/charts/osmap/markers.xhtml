@@ -1,0 +1,73 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        OSMap <span class="subitem">Markers</span>
+    </ui:define>
+
+    <ui:define name="description">
+        OSMap shows the markers of a map model and fires events when a marker is selected or dragged.
+        Based on <a href="https://leafletjs.com/" target="_blank" rel="noopener noreferrer">Leaflet</a> by Volodymyr Agafonkin and <a href="https://www.openstreetmap.org/" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>.
+    </ui:define>
+
+    <ui:param name="tagName" value="osmap"/>
+    <ui:param name="widgetLink" value="osmap"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <style>
+            /* the map tiles follow the color scheme of the page (data-dark on html, set by the theme configurator) */
+            html[data-dark="true"] .leaflet-tile-pane {
+                filter: invert(1) hue-rotate(180deg) brightness(0.95) contrast(0.9);
+            }
+        </style>
+
+        <div class="card">
+            <!-- EXAMPLE: osmap/markerUsage -->
+            <h5>Marker usage</h5>
+            <p>Markers are added to the <code>model</code> of the map.</p>
+            <h:form id="formMarkerUsage">
+                <pe:osmap style="width:100%; height:500px;"
+                          center="36.890257,30.707417"
+                          zoom="13" model="#{markersView.simpleModel}"/>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: osmap/markerSelection -->
+            <h5>Marker Selection</h5>
+            <p>The <i>overlaySelect</i> event fires when a marker is clicked: click a marker.</p>
+            <h:form id="formMarkerSelection">
+                <p:growl id="growl" showDetail="true" showSummary="true" globalOnly="false"/>
+
+                <pe:osmap style="width:100%; height:500px;"
+                          center="36.890257,30.707417"
+                          zoom="13" model="#{markerSelectionView.simpleModel}">
+                    <p:ajax event="overlaySelect" listener="#{markerSelectionView.onMarkerSelect}" update="growl"/>
+                </pe:osmap>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: osmap/draggableMarkers -->
+            <h5>Draggable Marker</h5>
+            <p>Markers can be draggable: the <i>markerDrag</i> event fires when a marker is dropped. Drag a marker.</p>
+            <h:form id="formDraggableMarkers">
+                <p:growl id="growl" showDetail="true" showSummary="true" globalOnly="false"/>
+
+                <pe:osmap style="width:100%; height:500px;"
+                          center="36.890257,30.707417"
+                          zoom="13" model="#{draggableMarkersView.draggableModel}">
+                    <p:ajax event="markerDrag" listener="#{draggableMarkersView.onMarkerDrag}" update="growl"/>
+                </pe:osmap>
+            </h:form>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+</ui:composition>

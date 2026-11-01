@@ -1,0 +1,234 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        ECharts
+    </ui:define>
+
+    <ui:define name="description">
+        Apache ECharts is an open-sourced JavaScript visualization tool which runs fluently on PC and mobile devices.
+        Based on <a href="https://echarts.apache.org/" target="_blank" rel="noopener noreferrer">Apache ECharts</a>.
+    </ui:define>
+
+    <ui:param name="tagName" value="echart"/>
+    <ui:param name="widgetLink" value="echarts"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <script>
+            //<![CDATA[
+            // Charts with the default theme follow the color scheme of the page (data-dark on html, set by the theme
+            // configurator): ECharts has the built-in themes "light" and "dark". A chart with its own theme keeps it.
+            function echartFollowScheme() {
+                var theme = document.documentElement.getAttribute('data-dark') === 'true' ? 'dark' : 'light';
+                Object.values(PrimeFaces.widgets).forEach(function (widget) {
+                    var own = widget.cfg && widget.cfg.theme;
+                    if (widget instanceof PrimeFaces.widget.ExtEChart && (!own || own === 'light' || own === 'dark') && own !== theme) {
+                        widget.cfg.theme = theme;
+                        if (widget.chart) {
+                            widget._remove();
+                            widget._render();
+                        }
+                    }
+                });
+            }
+            $(window).on('load', echartFollowScheme);
+            $(document).on('pfAjaxComplete', echartFollowScheme);
+            new MutationObserver(echartFollowScheme).observe(document.documentElement, {attributes: true, attributeFilter: ['data-dark']});
+            //]]>
+        </script>
+
+        <div class="card">
+            <!-- EXAMPLE: echarts/basicUsage -->
+            <h5>Basic Usage</h5>
+            <p>Apache ECharts is configured by sending a JSON payload from the server. The <i>itemSelect</i> AJAX event tells which series and data point was clicked: click a point of the chart.</p>
+            <h:form id="formBasicUsage">
+                <p:messages id="messages" showSummary="true" showDetail="true"/>
+
+                <pe:echart style="width: 100%; height: 400px;" value="#{eChartController.json}" widgetVar="jsonEChart">
+                    <p:ajax event="itemSelect" listener="#{eChartController.itemSelect}" update="messages"/>
+                </pe:echart>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: echarts/facetUsage -->
+            <h5>Facet Usage</h5>
+            <p>The chart is configured inline with the <code>value</code> facet.</p>
+            <h:form id="formFacetUsage">
+                <p:messages id="messages" showSummary="true" showDetail="true"/>
+
+                <pe:echart style="width: 100%; height: 400px;" widgetVar="facetEChart">
+                    <p:ajax event="itemSelect" listener="#{eChartController.itemSelect}" update="messages"/>
+                    <f:facet name="value">
+                    {
+                      series: [
+                        {
+                          type: 'gauge',
+                          startAngle: 180,
+                          endAngle: 0,
+                          center: ['50%', '75%'],
+                          radius: '90%',
+                          min: 0,
+                          max: 1,
+                          splitNumber: 8,
+                          axisLine: {
+                            lineStyle: {
+                              width: 6,
+                              color: [
+                                [0.25, '#FF6E76'],
+                                [0.5, '#FDDD60'],
+                                [0.75, '#58D9F9'],
+                                [1, '#7CFFB2']
+                              ]
+                            }
+                          },
+                          pointer: {
+                            icon: 'path://M12.8,0.7l12,40.1H0.7L12.8,0.7z',
+                            length: '12%',
+                            width: 20,
+                            offsetCenter: [0, '-60%'],
+                            itemStyle: {
+                              color: 'auto'
+                            }
+                          },
+                          axisTick: {
+                            length: 12,
+                            lineStyle: {
+                              color: 'auto',
+                              width: 2
+                            }
+                          },
+                          splitLine: {
+                            length: 20,
+                            lineStyle: {
+                              color: 'auto',
+                              width: 5
+                            }
+                          },
+                          axisLabel: {
+                            fontSize: 20,
+                            distance: -60,
+                            rotate: 'tangential',
+                            formatter: function (value) {
+                              if (value === 0.875) {
+                                return 'Grade A';
+                              } else if (value === 0.625) {
+                                return 'Grade B';
+                              } else if (value === 0.375) {
+                                return 'Grade C';
+                              } else if (value === 0.125) {
+                                return 'Grade D';
+                              }
+                              return '';
+                            }
+                          },
+                          title: {
+                            offsetCenter: [0, '-10%'],
+                            fontSize: 20
+                          },
+                          detail: {
+                            fontSize: 30,
+                            offsetCenter: [0, '-35%'],
+                            valueAnimation: true,
+                            formatter: function (value) {
+                              return Math.round(value * 100) + '';
+                            },
+                            color: 'inherit'
+                          },
+                          data: [
+                            {
+                              value: 0.7,
+                              name: 'Grade Rating'
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                    </f:facet>
+                </pe:echart>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: echarts/themeUsage -->
+            <h5>Custom Theme</h5>
+            <p>Apache ECharts supports custom themes such as the <code>vintage</code> theme in this example, see <a href="https://echarts.apache.org/en/download-theme.html" target="_blank" rel="noopener noreferrer">Apache ECharts Themes</a>. A chart with its own theme does not follow the color scheme of the page.</p>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/theme/vintage.min.js" integrity="sha512-P+U5OY6oUfmfXUqI9x5V18WdC5ujPMTOZJHC/BZ9nE+rihTUIZnjP1dveK6x3KTVocEW+9xEasqXXjOPciyupg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            <h:form id="formThemeUsage">
+                <p:messages id="messages" showSummary="true" showDetail="true"/>
+
+                <pe:echart style="width: 100%; height: 400px;" widgetVar="themeEChart" theme="vintage">
+                    <p:ajax event="itemSelect" listener="#{eChartController.itemSelect}" update="messages"/>
+                    <f:facet name="value">
+                    {
+                      tooltip: {
+                        trigger: 'item'
+                      },
+                      legend: {
+                        top: '5%',
+                        left: 'center'
+                      },
+                      series: [
+                        {
+                          name: 'Access From',
+                          type: 'pie',
+                          radius: ['40%', '70%'],
+                          center: ['50%', '70%'],
+                          // adjust the start and end angle
+                          startAngle: 180,
+                          endAngle: 360,
+                          data: [
+                            { value: 1048, name: 'Search Engine' },
+                            { value: 735, name: 'Direct' },
+                            { value: 580, name: 'Email' },
+                            { value: 484, name: 'Union Ads' },
+                            { value: 300, name: 'Video Ads' }
+                          ]
+                        }
+                      ]
+                    }
+                    </f:facet>
+                </pe:echart>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: echarts/exportUsage -->
+            <h5>Export + Print</h5>
+            <p>The chart can be exported to PNG, JPG or SVG and printed.</p>
+            <script>
+                //<![CDATA[
+                function exportChart() {
+                    //export image
+                    $('#exportOutput').empty().append(PF('exportEChart').exportAsImage());
+
+                    //show the dialog
+                    PF('exportDlg').show();
+                };
+                //]]>
+            </script>
+            <h:form id="formExportUsage">
+                <p:messages id="messages" showSummary="true" showDetail="true"/>
+
+                <pe:echart style="width: 100%; height: 400px;" id="echart" widgetVar="exportEChart" value="#{eChartController.json}">
+                    <p:ajax event="itemSelect" listener="#{eChartController.itemSelect}" update="messages"/>
+                </pe:echart>
+
+                <p:commandButton type="button" value="Export" icon="pi pi-home" onclick="exportChart()" styleClass="mr-2 mb-2"/>
+                <p:commandButton type="button" value="Print" icon="pi pi-print" onclick="PF('exportEChart').print()" styleClass="mr-2 mb-2"/>
+            </h:form>
+
+            <p:dialog widgetVar="exportDlg" showEffect="fade" modal="true" header="Chart as an Image" resizable="false">
+                <p:outputPanel id="exportOutput" layout="block" style="width: 50vw; height: 400px;"/>
+            </p:dialog>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+</ui:composition>

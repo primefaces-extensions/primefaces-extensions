@@ -115,6 +115,14 @@ public class AppMenu {
                     new MenuItem("Basic", "/ui/data/timer/basic"),
                     new MenuItem("Display", "/ui/data/timer/display"))));
 
+        add(CHARTS, new MenuItem("ECharts", "/ui/charts/echarts", "New"));
+        add(CHARTS, new MenuItem("GChart", "/ui/charts/gchart"));
+        add(CHARTS, new MenuItem("Legend", "/ui/charts/legend"));
+        add(CHARTS, new MenuItem("OSMap", List.of(
+                    new MenuItem("Basic", "/ui/charts/osmap/basic"),
+                    new MenuItem("Markers", "/ui/charts/osmap/markers")), "New"));
+        add(CHARTS, new MenuItem("QRCode", "/ui/charts/qrcode"));
+
         add(PANEL, new MenuItem("Layout", "/ui/panel/layout"));
 
         add(MISC, new MenuItem("MarkText", List.of(

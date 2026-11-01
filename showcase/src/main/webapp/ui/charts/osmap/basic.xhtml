@@ -1,0 +1,70 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        OSMap <span class="subitem">Basic</span>
+    </ui:define>
+
+    <ui:define name="description">
+        OSMap embeds an OpenStreetMap into your page. All you have to know is the GPS coordinate of the center of the map.
+        Based on <a href="https://leafletjs.com/" target="_blank" rel="noopener noreferrer">Leaflet</a> by Volodymyr Agafonkin and <a href="https://www.openstreetmap.org/" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>.
+    </ui:define>
+
+    <ui:param name="tagName" value="osmap"/>
+    <ui:param name="widgetLink" value="osmap"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <style>
+            /* the map tiles follow the color scheme of the page (data-dark on html, set by the theme configurator) */
+            html[data-dark="true"] .leaflet-tile-pane {
+                filter: invert(1) hue-rotate(180deg) brightness(0.95) contrast(0.9);
+            }
+        </style>
+
+        <div class="card">
+            <!-- EXAMPLE: osmap/basicUsage -->
+            <h5>Basic usage</h5>
+            <p>A map needs the GPS coordinates of its <code>center</code> and a <code>zoom</code> level.</p>
+            <h:form id="formBasicUsage">
+                <pe:osmap style="width:100%; height:500px;"
+                          center="42.3402,-3.6972"
+                          zoom="17"/>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: osmap/eventUsage -->
+            <h5>Event usage</h5>
+            <p>The <i>stateChange</i> event fires when the map is zoomed or moved, the <i>pointSelect</i> event when a point is clicked. Zoom, drag or click the map.</p>
+            <h:form id="formEventUsage">
+                <p:growl id="growl" showDetail="true" showSummary="true" globalOnly="false"/>
+
+                <pe:osmap style="width:100%; height:500px;"
+                          center="42.3402,-3.6972"
+                          zoom="17">
+                    <p:ajax event="stateChange" listener="#{eventView.onStateChange}" update="growl"/>
+                    <p:ajax event="pointSelect" listener="#{eventView.onPointSelect}" update="growl"/>
+                </pe:osmap>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: osmap/shapeUsage -->
+            <h5>Shape Usage</h5>
+            <p>The map model can also hold shapes: polylines, polygons, circles and rectangles.</p>
+            <h:form id="formShapeUsage">
+                <pe:osmap style="width:100%; height:500px;"
+                          center="36.890257,30.707417"
+                          zoom="13" model="#{shapesView.shapeModel}"/>
+            </h:form>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+</ui:composition>
