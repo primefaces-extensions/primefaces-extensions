@@ -81,6 +81,12 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
+            <groupId>org.webjars.npm</groupId>
+            <artifactId>primeflex</artifactId>
+            <version>4.0.0</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>font-awesome</artifactId>
             <version>${font-awesome.version}</version>
