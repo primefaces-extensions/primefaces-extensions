@@ -61,6 +61,18 @@ class FileContentMarkerUtilTest {
     }
 
     @Test
+    void xhtmlHidesMarkerLinesInsideImplementation() {
+        final String xhtml = "<ui:define name=\"implementation\">\n        <!-- EXAMPLE-SOURCE-START -->\n"
+                    + "        <div class=\"card\">\n            <!-- EXAMPLE: counter/basicUsage -->\n            <h5>Basic</h5>\n"
+                    + "        </div>\n        <!-- EXAMPLE-SOURCE-END -->\n</ui:define>";
+        final FileContent fc = FileContentMarkerUtil.readFileContent("/ui/x.xhtml", stream(xhtml), false);
+        assertFalse(fc.getValue().contains("EXAMPLE-SOURCE-START"), fc.getValue());
+        assertFalse(fc.getValue().contains("EXAMPLE:"), fc.getValue());
+        assertTrue(fc.getValue().startsWith("<div class=\"card\">"), fc.getValue());
+        assertTrue(fc.getValue().contains("<h5>Basic</h5>"), fc.getValue());
+    }
+
+    @Test
     void javaStartsAtPackage() throws IOException {
         Path p = Paths.get("src/main/java/org/primefaces/extensions/showcase/controller/CounterController.java");
         if (!Files.exists(p)) {

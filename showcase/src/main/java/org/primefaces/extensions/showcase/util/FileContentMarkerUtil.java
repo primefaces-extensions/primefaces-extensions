@@ -105,6 +105,12 @@ public class FileContentMarkerUtil {
                     }
                 }
 
+                // marker comments inside the shown region (e.g. EXAMPLE-SOURCE-START below <ui:define name="implementation">,
+                // or the <!-- EXAMPLE: dir/useCase --> tracking markers) are not part of the example
+                if (isMarkerComment(line)) {
+                    continue;
+                }
+
                 // if is before first end marker
                 if (started && getMatchingMarker(line, settings.getEndMarkers()) != null) {
                     started = false;
@@ -214,6 +220,12 @@ public class FileContentMarkerUtil {
                     is,
                     JAVA_FILE_SETTINGS,
                     false);
+    }
+
+    private static boolean isMarkerComment(String line) {
+        String trimmed = line.trim();
+        return trimmed.startsWith("<!--") && trimmed.endsWith("-->")
+                    && (trimmed.contains("EXAMPLE-SOURCE-START") || trimmed.contains("EXAMPLE:"));
     }
 
     private static Marker getMatchingMarker(String line, Marker[] markers) {

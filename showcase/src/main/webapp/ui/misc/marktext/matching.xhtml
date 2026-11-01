@@ -1,0 +1,140 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        MarkText <span class="subitem">Matching</span>
+    </ui:define>
+
+    <ui:define name="description">
+        MarkText highlights search terms within specified containers using
+        <a href="https://markjs.io/" target="_blank" rel="noopener noreferrer">mark.js</a> by Julien Royer.
+        These examples compare the options that control how a search term matches the text.
+    </ui:define>
+
+    <ui:param name="tagName" value="markText"/>
+    <ui:param name="widgetLink" value="mark"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <style>
+            .marktext-highlight,
+            mark {
+                background-color: yellow !important;
+                color: black !important;
+            }
+        </style>
+
+        <div class="card">
+            <!-- EXAMPLE: marktext/caseSensitivity -->
+            <h5>Case Sensitivity</h5>
+            <p>With <code>caseSensitive="true"</code> the search is case-sensitive; with <code>false</code> it is case-insensitive.</p>
+            <h:form id="formCaseSensitivity">
+                <h:panelGrid columns="3" cellpadding="4">
+                    <h:outputText value="Search term:"/>
+                    <p:inputText id="searchInput" value="#{markTextController.searchTermCaseSensitivity}" placeholder="Enter search term">
+                        <p:ajax event="keyup" delay="500" update="caseSensitivePanel caseInsensitivePanel markTextCaseSensitive markTextCaseInsensitive"/>
+                    </p:inputText>
+                    <p:commandButton value="Highlight" update="caseSensitivePanel caseInsensitivePanel markTextCaseSensitive markTextCaseInsensitive" icon="pi pi-search"/>
+                </h:panelGrid>
+
+                <h:panelGrid columns="2" style="width: 100%">
+                    <p:panel id="caseSensitivePanel" header="Case Sensitive (caseSensitive=true)" style="margin-right: 10px">
+                        <h:panelGroup id="caseSensitiveContent" layout="block">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        </h:panelGroup>
+                    </p:panel>
+
+                    <p:panel id="caseInsensitivePanel" header="Case Insensitive (caseSensitive=false)">
+                        <h:panelGroup id="caseInsensitiveContent" layout="block">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        </h:panelGroup>
+                    </p:panel>
+                </h:panelGrid>
+
+                <pe:markText id="markTextCaseSensitive" for="caseSensitiveContent" value="#{markTextController.searchTermCaseSensitivity}" styleClass="marktext-highlight" caseSensitive="true"/>
+                <pe:markText id="markTextCaseInsensitive" for="caseInsensitiveContent" value="#{markTextController.searchTermCaseSensitivity}" styleClass="marktext-highlight" caseSensitive="false"/>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: marktext/separateWordSearch -->
+            <h5>Separate Word Search</h5>
+            <p>With <code>separateWordSearch="true"</code> each word is searched separately; with <code>false</code> the exact phrase is searched.</p>
+            <h:form id="formSeparateWordSearch">
+                <h:panelGrid columns="3" cellpadding="4">
+                    <h:outputText value="Search term:"/>
+                    <p:inputText id="searchInput" value="#{markTextController.searchTermSeparateWord}" placeholder="Enter search term">
+                        <p:ajax event="keyup" delay="500" update="separateWordPanel exactPhrasePanel markTextSeparateWord markTextExactPhrase"/>
+                    </p:inputText>
+                    <p:commandButton value="Highlight" update="separateWordPanel exactPhrasePanel markTextSeparateWord markTextExactPhrase" icon="pi pi-search"/>
+                </h:panelGrid>
+
+                <h:panelGrid columns="2" style="width: 100%">
+                    <p:panel id="separateWordPanel" header="Separate Word Search (separateWordSearch=true)" style="margin-right: 10px">
+                        <h:panelGroup id="separateWordContent" layout="block">
+                            <p>This is a word search example. The word is here, and search is there. Word search together in this sentence.</p>
+                        </h:panelGroup>
+                    </p:panel>
+
+                    <p:panel id="exactPhrasePanel" header="Exact Phrase Search (separateWordSearch=false)">
+                        <h:panelGroup id="exactPhraseContent" layout="block">
+                            <p>This is a word search example. The word is here, and search is there. Word search together in this sentence.</p>
+                        </h:panelGroup>
+                    </p:panel>
+                </h:panelGrid>
+
+                <pe:markText id="markTextSeparateWord" for="separateWordContent" value="#{markTextController.searchTermSeparateWord}" styleClass="marktext-highlight" separateWordSearch="true"/>
+                <pe:markText id="markTextExactPhrase" for="exactPhraseContent" value="#{markTextController.searchTermSeparateWord}" styleClass="marktext-highlight" separateWordSearch="false"/>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: marktext/accuracyLevels -->
+            <h5>Accuracy Levels</h5>
+            <p>
+                <code>accuracy="partially"</code> matches if the search term is contained in the text, <code>exactly</code> only if the text
+                equals the search term, <code>complementarily</code> if the search term contains the text.
+            </p>
+            <h:form id="formAccuracyLevels">
+                <h:panelGrid columns="3" cellpadding="4">
+                    <h:outputText value="Search term:"/>
+                    <p:inputText id="searchInput" value="#{markTextController.searchTermAccuracy}" placeholder="Enter search term">
+                        <p:ajax event="keyup" delay="500" update="partiallyPanel exactlyPanel complementarilyPanel markTextPartially markTextExactly markTextComplementarily"/>
+                    </p:inputText>
+                    <p:commandButton value="Highlight" update="partiallyPanel exactlyPanel complementarilyPanel markTextPartially markTextExactly markTextComplementarily" icon="pi pi-search"/>
+                </h:panelGrid>
+
+                <h:panelGrid columns="3" style="width: 100%">
+                    <p:panel id="partiallyPanel" header="Partially (accuracy='partially')" style="margin-right: 10px">
+                        <h:panelGroup id="partiallyContent" layout="block">
+                            <p>ips sum ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        </h:panelGroup>
+                    </p:panel>
+
+                    <p:panel id="exactlyPanel" header="Exactly (accuracy='exactly')" style="margin-right: 10px">
+                        <h:panelGroup id="exactlyContent" layout="block">
+                            <p>ips sum ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        </h:panelGroup>
+                    </p:panel>
+
+                    <p:panel id="complementarilyPanel" header="Complementarily (accuracy='complementarily')">
+                        <h:panelGroup id="complementarilyContent" layout="block">
+                            <p>ips sum ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        </h:panelGroup>
+                    </p:panel>
+                </h:panelGrid>
+
+                <pe:markText id="markTextPartially" for="partiallyContent" value="#{markTextController.searchTermAccuracy}" styleClass="marktext-highlight" accuracy="partially"/>
+                <pe:markText id="markTextExactly" for="exactlyContent" value="#{markTextController.searchTermAccuracy}" styleClass="marktext-highlight" accuracy="exactly"/>
+                <pe:markText id="markTextComplementarily" for="complementarilyContent" value="#{markTextController.searchTermAccuracy}" styleClass="marktext-highlight" accuracy="complementarily"/>
+            </h:form>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+</ui:composition>

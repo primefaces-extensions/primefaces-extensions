@@ -1,0 +1,192 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        MarkText <span class="subitem">Scope</span>
+    </ui:define>
+
+    <ui:define name="description">
+        MarkText highlights search terms within specified containers using
+        <a href="https://markjs.io/" target="_blank" rel="noopener noreferrer">mark.js</a> by Julien Royer.
+        These examples control where matches are searched: across elements, outside excluded elements and inside iframes.
+    </ui:define>
+
+    <ui:param name="tagName" value="markText"/>
+    <ui:param name="widgetLink" value="mark"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <style>
+            .marktext-highlight,
+            mark {
+                background-color: yellow !important;
+                color: black !important;
+            }
+            .ignore,
+            .notes {
+                display: block;
+                padding: 0.5rem;
+                border-left: 4px solid #b0bec5;
+                background: #eceff1;
+                margin: 0.5rem 0;
+            }
+        </style>
+
+        <div class="card">
+            <!-- EXAMPLE: marktext/acrossElements -->
+            <h5>Across Elements</h5>
+            <p>
+                <code>acrossElements</code> highlights text that spans several HTML elements. This matters when
+                <code>separateWordSearch="false"</code> (exact phrases): a phrase split by tags like <code>&lt;strong&gt;</code> or
+                <code>&lt;em&gt;</code> would otherwise not be matched. Use the checkbox to compare.
+            </p>
+            <h:form id="formAcrossElements">
+                <h:panelGrid columns="5" cellpadding="4">
+                    <h:outputText value="Search term:"/>
+                    <p:inputText id="searchInput" value="#{acrossElementsMarkTextController.searchTermAcrossElements}" placeholder="Enter search term">
+                        <p:ajax event="keyup" delay="500" update="searchContainer markText"/>
+                    </p:inputText>
+                    <h:outputText value="Across Elements:"/>
+                    <p:selectBooleanCheckbox value="#{acrossElementsMarkTextController.acrossElements}">
+                        <p:ajax update="searchContainer markText"/>
+                    </p:selectBooleanCheckbox>
+                    <p:commandButton value="Highlight" update="searchContainer markText" icon="pi pi-search"/>
+                </h:panelGrid>
+
+                <p:panel id="searchContainer" header="Searchable Content with Spanning Elements" style="margin-top: 20px">
+                    <h:panelGroup id="searchContent" layout="block">
+                        <p>
+                            This example demonstrates how <code>acrossElements="true"</code> works.
+                            By default, <code>separateWordSearch</code> is <code>true</code>, which means "PrimeFaces Extensions" would be found as two separate words.
+                            However, in this example, we have set <code>separateWordSearch="false"</code> to search for the <strong>exact phrase</strong>.
+                        </p>
+                        <p>
+                            Try searching for "<strong>PrimeFaces Extensions</strong>".
+                            Below, it is rendered as <code>&lt;strong&gt;PrimeFaces&lt;/strong&gt; &lt;em&gt;Extensions&lt;/em&gt;</code>.
+                            Without <code>acrossElements="true"</code>, this would not be found as an exact phrase because it is split across two HTML nodes.
+                        </p>
+                        <hr/>
+                        <p><strong>PrimeFaces</strong> <em>Extensions</em> provides additional components for PrimeFaces.</p>
+                        <p>The <strong>MarkText</strong> component uses the <em>mark.js library</em> to highlight search terms.</p>
+                        <p>With <code>acrossElements</code> enabled, phrases like <strong>across</strong> elements can be highlighted even if they are split by tags.</p>
+                    </h:panelGroup>
+                </p:panel>
+
+                <pe:markText id="markText" for="searchContent" value="#{acrossElementsMarkTextController.searchTermAcrossElements}"
+                             styleClass="marktext-highlight" acrossElements="#{acrossElementsMarkTextController.acrossElements}" separateWordSearch="false"/>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: marktext/exclude -->
+            <h5>Exclude Selectors</h5>
+            <p>The <code>exclude</code> attribute skips highlighting inside selected elements, such as headings or regions marked with CSS classes.</p>
+            <h:form id="formExclude">
+                <h:panelGrid columns="2" columnClasses="label,value" cellpadding="4">
+                    <h:outputText value="Search term:"/>
+                    <p:inputText id="searchInput" value="#{markTextExcludeController.searchTerm}" placeholder="Enter search term">
+                        <p:ajax event="keyup" delay="300" update="markText activeExcludes" process="@this"/>
+                    </p:inputText>
+
+                    <h:outputText value="Excluded selectors:"/>
+                    <p:selectManyCheckbox id="excludeSelectors" value="#{markTextExcludeController.excludedSelectors}" layout="pageDirection">
+                        <f:selectItems value="#{markTextExcludeController.availableExcludes}" var="selector" itemLabel="#{selector}" itemValue="#{selector}"/>
+                        <p:ajax event="change" update="markText activeExcludes" process="@this"/>
+                    </p:selectManyCheckbox>
+                </h:panelGrid>
+
+                <p:panel id="activeExcludes" header="Current Exclusion Rules" style="margin-top: 1rem">
+                    <h:outputText value="#{empty markTextExcludeController.excludedSelectors ? 'No selectors excluded. All matching text can be highlighted.' : markTextExcludeController.excludedSelectors}"/>
+                </p:panel>
+
+                <p:panel id="searchContainer" header="Searchable Content" style="margin-top: 1rem">
+                    <h:panelGroup id="searchContent" layout="block">
+                        <h3>PrimeFaces heading stays unmarked when h3 is excluded</h3>
+                        <p>
+                            PrimeFaces Extensions enhances PrimeFaces with additional components. This PrimeFaces occurrence in a normal paragraph should be highlighted.
+                        </p>
+                        <span class="ignore">
+                            PrimeFaces inside this .ignore block should remain untouched when .ignore is excluded.
+                        </span>
+                        <p>
+                            You can toggle exclusions to compare normal matches against ignored regions and verify that PrimeFaces is only marked in eligible content.
+                        </p>
+                        <div class="notes">
+                            PrimeFaces inside this .notes block becomes ignored only when .notes is selected.
+                        </div>
+                    </h:panelGroup>
+                </p:panel>
+
+                <pe:markText id="markText" for="searchContent" value="#{markTextExcludeController.searchTerm}"
+                             exclude="#{markTextExcludeController.excludedSelectors}" styleClass="marktext-highlight"
+                             caseSensitive="false"/>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: marktext/iframeSupport -->
+            <h5>Iframes</h5>
+            <p>
+                With <code>iframes="true"</code> MarkText also searches same-origin iframe documents. <code>iframesTimeout</code> controls
+                how long the search waits for frame content before continuing.
+            </p>
+            <h:form id="formIframeSupport">
+                <h:panelGrid columns="7" cellpadding="6" style="margin-bottom: 12px;">
+                    <h:outputText value="Search term:"/>
+                    <p:inputText id="searchTerm" value="#{iframeMarkTextController.searchTerm}" placeholder="e.g. compliance">
+                        <p:ajax event="keyup" delay="500" update="searchArea markTextIframe"/>
+                    </p:inputText>
+
+                    <h:outputText value="Search iframes:"/>
+                    <p:selectBooleanCheckbox value="#{iframeMarkTextController.iframes}">
+                        <p:ajax update="searchArea markTextIframe"/>
+                    </p:selectBooleanCheckbox>
+
+                    <h:outputText value="Timeout (ms):"/>
+                    <p:inputNumber id="iframeTimeout" value="#{iframeMarkTextController.iframesTimeout}" minValue="0" decimalPlaces="0">
+                        <p:ajax event="blur" update="searchArea markTextIframe"/>
+                    </p:inputNumber>
+
+                    <p:commandButton value="Highlight" icon="pi pi-search" update="searchArea markTextIframe"/>
+                </h:panelGrid>
+
+                <p:panel id="searchArea" header="Operational Guide with Embedded Policy Frame">
+                    <p style="margin-top: 0;">
+                        This example searches both the parent document and a same-origin iframe.
+                        Enable <code>iframes</code> to include embedded frame content in the highlight result.
+                    </p>
+
+                    <h:panelGroup id="searchContent" layout="block">
+                        <h3>Parent Document Content</h3>
+                        <p>
+                            The compliance team reviews policy updates every sprint and tracks mandatory training tasks.
+                            A professional rollout plan should include communication, compliance checkpoints, and audit readiness.
+                        </p>
+                        <p>
+                            Use the controls above to test search behavior when iframe scanning is enabled or disabled.
+                        </p>
+
+                        <h3 style="margin-top: 18px;">Embedded Policy Frame (Same Origin)</h3>
+                        <iframe title="Policy Frame"
+                                src="#{request.contextPath}/ui/misc/marktext/iframe-policy-content.html"
+                                style="width: 100%; height: 210px; border: 1px solid var(--p-content-border-color); border-radius: 4px;"></iframe>
+                    </h:panelGroup>
+                </p:panel>
+
+                <pe:markText id="markTextIframe"
+                             for="searchContent"
+                             value="#{iframeMarkTextController.searchTerm}"
+                             styleClass="marktext-highlight"
+                             iframes="#{iframeMarkTextController.iframes}"
+                             iframesTimeout="#{iframeMarkTextController.iframesTimeout}"/>
+            </h:form>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+</ui:composition>

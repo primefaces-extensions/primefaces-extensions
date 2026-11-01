@@ -64,6 +64,16 @@ public class AppMenu {
         // Component entries are added by the migration tasks, e.g.:
         // add(INPUT, new MenuItem("<Label>", "<url>"));
 
+        add(DATA, new MenuItem("Counter", "/ui/data/counter"));
+
+        add(PANEL, new MenuItem("Layout", "/ui/panel/layout"));
+
+        add(MISC, new MenuItem("MarkText", List.of(
+                    new MenuItem("Basic", "/ui/misc/marktext/basic"),
+                    new MenuItem("Matching", "/ui/misc/marktext/matching"),
+                    new MenuItem("Search Terms", "/ui/misc/marktext/terms"),
+                    new MenuItem("Scope", "/ui/misc/marktext/scope")), "New"));
+
         add(RESOURCES, new MenuItem("Tag Library", "/taglib"));
         add(RESOURCES, new MenuItem("GitHub", "https://github.com/primefaces-extensions/primefaces-extensions"));
         add(RESOURCES, new MenuItem("Issues", "https://github.com/primefaces-extensions/primefaces-extensions/issues"));
