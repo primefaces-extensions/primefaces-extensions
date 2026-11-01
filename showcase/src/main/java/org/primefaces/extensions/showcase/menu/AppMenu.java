@@ -144,11 +144,23 @@ public class AppMenu {
                     new MenuItem("Auto Shown", "/ui/overlay/tooltip/autoshow"),
                     new MenuItem("Global", "/ui/overlay/tooltip/global"))));
 
+        add(MEDIA, new MenuItem("DocumentViewer", "/ui/media/documentviewer"));
+        add(MEDIA, new MenuItem("ImageAreaSelect", "/ui/media/imageareaselect"));
+        add(MEDIA, new MenuItem("ImageRotateAndResize", "/ui/media/imagerotateandresize"));
+        add(MEDIA, new MenuItem("ImageZoom", "/ui/media/imagezoom"));
+
+        add(MISC, new MenuItem("Clipboard", "/ui/misc/clipboard"));
+        add(MISC, new MenuItem("FileDownload", "/ui/misc/filedownload"));
+        add(MISC, new MenuItem("Functions/Utils", "/ui/misc/utils"));
+        add(MISC, new MenuItem("LightSwitch", "/ui/misc/lightswitch"));
+        add(MISC, new MenuItem("Localized", "/ui/misc/localized"));
         add(MISC, new MenuItem("MarkText", List.of(
                     new MenuItem("Basic", "/ui/misc/marktext/basic"),
                     new MenuItem("Matching", "/ui/misc/marktext/matching"),
                     new MenuItem("Search Terms", "/ui/misc/marktext/terms"),
                     new MenuItem("Scope", "/ui/misc/marktext/scope")), "New"));
+        add(MISC, new MenuItem("RemoteCommand", "/ui/misc/remotecommand"));
+        add(MISC, new MenuItem("Speedtest", "/ui/misc/speedtest"));
 
         add(RESOURCES, new MenuItem("Tag Library", "/taglib"));
         add(RESOURCES, new MenuItem("GitHub", "https://github.com/primefaces-extensions/primefaces-extensions"));

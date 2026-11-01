@@ -1,0 +1,115 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        ImageAreaSelect
+    </ui:define>
+
+    <ui:define name="description">
+        ImageAreaSelect is a widget for selecting a rectangular area of an image. It allows web developers to easily implement
+        image cropping functionality, as well as other user interface features, such as photo notes (like those on Flickr).
+    </ui:define>
+
+    <ui:param name="tagName" value="imageAreaSelect"/>
+    <ui:param name="tagName2" value="imageRotateAndResize"/>
+    <ui:param name="widgetLink" value="imageareaselect"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <div class="card">
+            <!-- EXAMPLE: imageAreaSelect/basicSelection -->
+            <h5>Basic Selection</h5>
+            <p>The basic configuration enables persistent and resizable selection of an area. The <i>selectEnd</i> event reports the selection.</p>
+            <h:form id="formBasicSelection">
+                <p:growl id="growl" showDetail="true" sticky="true"/>
+                <p:graphicImage id="myImage" value="/resources/images/testImage1.png"/>
+                <pe:imageAreaSelect id="areaSelect" for="myImage" handles="true">
+                    <p:ajax event="selectEnd" listener="#{imageController.selectEndListener}" update="growl"/>
+                </pe:imageAreaSelect>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: imageAreaSelect/customizedSelection -->
+            <h5>Customized Selection</h5>
+            <p>The widget is highly configurable. Here the selection is not persistent, hides automatically after the selection is done,
+                has no handles and can neither be moved nor resized.</p>
+            <h:form id="formCustomizedSelection">
+                <p:growl id="growl" showDetail="true" sticky="true"/>
+                <p:graphicImage id="myImage" value="/resources/images/testImage1.png"/>
+                <pe:imageAreaSelect id="areaSelect"
+                                    for="myImage"
+                                    autoHide="true"
+                                    handles="false"
+                                    movable="false"
+                                    persistent="false"
+                                    resizable="false">
+                    <p:ajax event="selectEnd" listener="#{imageController.selectEndListener}" update="growl"/>
+                </pe:imageAreaSelect>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <h5>ImageAreaSelect with ImageRotateAndResize</h5>
+            <p>ImageAreaSelect and ImageRotateAndResize can be combined. The image is completely redrawn after a resize or rotate action, so
+                the ImageAreaSelect stops working until its <code>reload()</code> is called. Without a server side listener for
+                the event, <code>p:callback</code> reloads the widget; here the <i>resize</i> event is caught with <code>p:callback</code>.</p>
+            <h:form id="formCombined">
+                <p:outputPanel id="example">
+                    <p:commandLink update="example">
+                        <f:setPropertyActionListener target="#{imageController.imageUrl}" value="/resources/images/testImage1.png"/>
+                        <p:graphicImage value="/resources/images/testImage1.png" width="150" height="100"/>
+                    </p:commandLink>
+                    <p:commandLink update="example">
+                        <f:setPropertyActionListener target="#{imageController.imageUrl}" value="/resources/images/testImage2.png"/>
+                        <p:graphicImage value="/resources/images/testImage2.png" width="150" height="100"/>
+                    </p:commandLink>
+                    <p:commandLink update="example">
+                        <f:setPropertyActionListener target="#{imageController.imageUrl}" value="/resources/images/testImage3.png"/>
+                        <p:graphicImage value="/resources/images/testImage3.png" width="150" height="100"/>
+                    </p:commandLink>
+
+                    <p:growl id="growl" showDetail="true" sticky="true"/>
+
+                    <div id="imageWrapper" style="width:600px; max-width:100%; height:400px; margin:auto; overflow:scroll; position:relative;">
+                        <p:graphicImage id="myImage" value="#{imageController.imageUrl}"/>
+                    </div>
+
+                    <pe:imageAreaSelect id="areaSelect"
+                                        for="myImage"
+                                        widgetVar="areaSelectWidget"
+                                        autoHide="true"
+                                        handles="false"
+                                        movable="false"
+                                        persistent="false"
+                                        resizable="false"
+                                        parentSelector="#imageWrapper">
+                        <p:ajax event="selectEnd" listener="#{imageController.selectEndListener}" update="growl"/>
+                    </pe:imageAreaSelect>
+
+                    <pe:imageRotateAndResize id="rotateAndResize" for="myImage" widgetVar="rotateAndResizeWidget">
+                        <p:ajax event="rotate" listener="#{imageController.rotateListener}"
+                                update="growl" oncomplete="PF('areaSelectWidget').reload();"/>
+                        <p:callback event="resize" execute="PF('areaSelectWidget').reload();"/>
+                    </pe:imageRotateAndResize>
+
+                    <p:commandButton icon="pi pi-replay" value="Rotate Left"
+                                     onclick="PF('rotateAndResizeWidget').rotateLeft(90);return false;"/>
+                    <p:commandButton icon="pi pi-refresh" value="Rotate Right"
+                                     onclick="PF('rotateAndResizeWidget').rotateRight(90);return false;"/>
+                    <p:commandButton icon="pi pi-search-plus" value="Scale +"
+                                     onclick="PF('rotateAndResizeWidget').scale(1.05);return false;"/>
+                    <p:commandButton icon="pi pi-search-minus" value="Scale -"
+                                     onclick="PF('rotateAndResizeWidget').scale(0.95);return false;"/>
+                </p:outputPanel>
+            </h:form>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+</ui:composition>

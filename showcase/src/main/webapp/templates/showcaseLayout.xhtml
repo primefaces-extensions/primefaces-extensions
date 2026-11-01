@@ -26,39 +26,6 @@
                 <h:outputText value="Components and more"/>
             </f:facet>
             <p:menu id="componentList">
-                <p:menuitem value="Functions, Utils" styleClass="#{navigationContext.getMenuitemStyleClass('utils')}"
-                            icon="#{technicalInfo.getMenuitemIconStyleClass('utils')}"
-                            onclick="Showcase.selectComponentLink(this)" ajax="false" url="#{request.contextPath}/views/utils.jsf"/>
-                <p:divider/>
-                <p:menuitem value="Clipboard" styleClass="#{navigationContext.getMenuitemStyleClass('clipboard')}"
-                            icon="#{technicalInfo.getMenuitemIconStyleClass('clipboard')}"
-                            onclick="Showcase.selectComponentLink(this)" ajax="false" url="#{request.contextPath}/views/clipboard.jsf"/>
-                <p:menuitem value="Document Viewer" styleClass="#{navigationContext.getMenuitemStyleClass('documentViewer')}"
-                            icon="#{technicalInfo.getMenuitemIconStyleClass('documentViewer')}"
-                            onclick="Showcase.selectComponentLink(this)" ajax="false" url="#{request.contextPath}/views/documentViewer.jsf"/>
-                <p:menuitem value="ImageAreaSelect" styleClass="#{navigationContext.getMenuitemStyleClass('imageAreaSelect')}"
-                            icon="#{technicalInfo.getMenuitemIconStyleClass('imageAreaSelect')}"
-                            onclick="Showcase.selectComponentLink(this)" ajax="false" url="#{request.contextPath}/views/imageAreaSelect.jsf"/>
-                <p:menuitem value="ImageRotateAndResize"
-                            styleClass="#{navigationContext.getMenuitemStyleClass('imageRotateAndResize')}"
-                            icon="#{technicalInfo.getMenuitemIconStyleClass('imageRotateAndResize')}"
-                            onclick="Showcase.selectComponentLink(this)" ajax="false" url="#{request.contextPath}/views/imageRotateAndResize.jsf"/>
-                <p:menuitem value="ImageZoom"
-                            styleClass="#{navigationContext.getMenuitemStyleClass('imageZoom')}"
-                            icon="#{technicalInfo.getMenuitemIconStyleClass('imageZoom')}"
-                            onclick="Showcase.selectComponentLink(this)" ajax="false" url="#{request.contextPath}/views/imageZoom.jsf"/>
-                <p:menuitem value="LightSwitch" styleClass="#{navigationContext.getMenuitemStyleClass('lightSwitch')}"
-                            icon="#{technicalInfo.getMenuitemIconStyleClass('lightSwitch')}"
-                            onclick="Showcase.selectComponentLink(this)" ajax="false" url="#{request.contextPath}/views/lightSwitch.jsf"/>
-                <p:menuitem value="Localized" styleClass="#{navigationContext.getMenuitemStyleClass('localized')}"
-                            icon="#{technicalInfo.getMenuitemIconStyleClass('localized')}"
-                            onclick="Showcase.selectComponentLink(this)" ajax="false" url="#{request.contextPath}/views/localized.jsf"/>
-                <p:menuitem value="RemoteCommand" styleClass="#{navigationContext.getMenuitemStyleClass('remoteCommand')}"
-                            icon="#{technicalInfo.getMenuitemIconStyleClass('remoteCommand')}"
-                            onclick="Showcase.selectComponentLink(this)" ajax="false" url="#{request.contextPath}/views/remoteCommand.jsf"/>
-                <p:menuitem value="Speedtest" styleClass="#{navigationContext.getMenuitemStyleClass('speedtest')}"
-                            icon="#{technicalInfo.getMenuitemIconStyleClass('speedtest')}"
-                            onclick="Showcase.selectComponentLink(this)" ajax="false" url="#{request.contextPath}/views/speedtest.jsf"/>
             </p:menu>
             <pe:tooltip value="New component in the current release" shared="true" for="@(.p-new-comp)" styleClass="qtip-default"/>
             <pe:tooltip value="Updated component / use case in the current release" shared="true" for="@(.p-updated-comp)" styleClass="qtip-default"/>

@@ -1,0 +1,44 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:pt="jakarta.faces.passthrough"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        ImageZoom
+    </ui:define>
+
+    <ui:define name="description">
+        ImageZoom is a widget for zooming an image to a high definition version.
+    </ui:define>
+
+    <ui:param name="tagName" value="imageZoom"/>
+    <ui:param name="widgetLink" value="imagezoom"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <div class="card">
+            <!-- EXAMPLE: imagezoom/basicZoom -->
+            <h5>Basic Zoom</h5>
+            <p>The basic configuration enables zooming in an image. This component can also be used against Galleria. Note that the
+                <code>xmlns:pt="jakarta.faces.passthrough"</code> namespace is needed for <code>pt:data-zoom-src</code> to work.</p>
+            <h:form id="formBasicZoom">
+                <p:growl id="growl" showDetail="true" sticky="true"/>
+
+                <p:graphicImage id="tibet"
+                                alt="Tibet"
+                                height="200"
+                                width="200"
+                                value="/resources/images/imagezoom/tibet-small.jpg"
+                                pt:data-zoom-src="#{request.contextPath}/resources/images/imagezoom/tibet-hd.jpg"/>
+
+                <pe:imageZoom for="tibet"/>
+            </h:form>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+</ui:composition>

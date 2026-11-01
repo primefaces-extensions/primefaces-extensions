@@ -1,0 +1,83 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        Clipboard
+    </ui:define>
+
+    <ui:define name="description">
+        Clipboard copies or cuts text to the OS clipboard. It shouldn't be hard and it shouldn't require dozens of steps to configure or
+        hundreds of KBs to load, and it doesn't depend on Flash or any bloated framework.
+        Based on <a href="https://clipboardjs.com/" target="_blank" rel="noopener noreferrer">Clipboard.js</a> by Zeno Rocha.
+    </ui:define>
+
+    <ui:param name="tagName" value="clipboard"/>
+    <ui:param name="widgetLink" value="clipboard"/>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <div class="card">
+            <!-- EXAMPLE: clipboard/basicUsage -->
+            <h5>Basic Usage</h5>
+            <p>A <code>pe:clipboard</code> can have a fixed <code>text</code> or point to a text component with <code>target</code>.
+                The <i>success</i> and <i>error</i> events are sent to the server. Clipboard can be used in menu options too: right click the
+                page background to show the context menu.</p>
+            <h:form id="formBasicUsage">
+                <p:growl id="growl" showDetail="true" showSummary="true">
+                    <p:autoUpdate/>
+                </p:growl>
+
+                <h:panelGrid columns="4">
+                    <h:outputText value="Copy"/>
+                    <p:inputText id="txtCopy" value="#{clipboardController.copyInput}"/>
+                    <p:commandButton id="btnCopy" value="Copy" icon="pi pi-copy"/>
+                    <pe:clipboard id="clipCopy" trigger="btnCopy" action="copy" target="txtCopy">
+                        <p:ajax event="success" listener="#{clipboardController.successListener}"/>
+                        <p:ajax event="error" listener="#{clipboardController.errorListener}"/>
+                    </pe:clipboard>
+
+                    <h:outputText value="Cut"/>
+                    <p:inputText id="txtCut" value="#{clipboardController.cutInput}"/>
+                    <p:commandButton id="btnCut" value="Cut" icon="pi pi-clipboard"/>
+                    <pe:clipboard id="clipCut" trigger="btnCut" action="cut" target="txtCut">
+                        <p:ajax event="success" listener="#{clipboardController.successListener}"/>
+                        <p:ajax event="error" listener="#{clipboardController.errorListener}"/>
+                    </pe:clipboard>
+                </h:panelGrid>
+
+                <h:panelGroup layout="block" style="text-align:left;margin:10px;">
+                    <p:commandButton id="btnAjaxCopy" value="Ajax Copy" icon="pi pi-copy" onclick="return false;"/>
+                    <pe:clipboard id="clipAjax" trigger="btnAjaxCopy" action="copy" text="#{clipboardController.lineBreaks}">
+                        <p:ajax event="success" listener="#{clipboardController.successListener}"/>
+                        <p:ajax event="error" listener="#{clipboardController.errorListener}"/>
+                    </pe:clipboard>
+
+                    <p:button id="btnNonAjax" value="Non-Ajax Copy" icon="pi pi-copy" href="#"/>
+                    <pe:clipboard id="clipNonAjax" trigger="btnNonAjax" action="copy" text="PrimeFaces Clipboard Rocks Without Ajax!"
+                                  onsuccess="alert('Action: ' + this.action + ' Text:' + this.text);"
+                                  onerror="alert('Action: ' + this.action + ' FAILED!');"/>
+                </h:panelGroup>
+
+                <h:panelGroup layout="block" style="text-align:left;margin:10px;">
+                    <h:outputText id="lblRightClick">Right click me to view the menu options!</h:outputText>
+
+                    <p:contextMenu>
+                        <p:menuitem id="mnuCopy" value="Copy" url="javascript:void(0);" icon="pi pi-copy"/>
+                    </p:contextMenu>
+
+                    <pe:clipboard id="clipContextCopy" trigger="mnuCopy" action="copy" text="#{clipboardController.copyInput}">
+                        <p:ajax event="success" listener="#{clipboardController.successListener}"/>
+                        <p:ajax event="error" listener="#{clipboardController.errorListener}"/>
+                    </pe:clipboard>
+                </h:panelGroup>
+            </h:form>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+</ui:composition>

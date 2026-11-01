@@ -1,0 +1,198 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="primefaces"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        Functions/Utils
+    </ui:define>
+
+    <ui:define name="description">
+        Built-in functions and utils are parts of PrimeFaces Extensions: the <code>pe:switch</code> tag and some configuration helpers
+        for the OmniFaces CombinedResourceHandler, HTML sanitizing and MongoDB lazy data models.
+    </ui:define>
+
+    <ui:param name="tagName" value="switch"/>
+    <ui:param name="tagName2" value="case"/>
+    <ui:param name="tagName3" value="defaultCase"/>
+
+    <ui:define name="static-documentation">
+        <h2>EscapeSanitizerComponentListener</h2>
+        <div class="card">
+            <p>System event listener that sanitizes HTML content in components with <code>escape="false"</code>. This helps prevent XSS
+                vulnerabilities while still allowing some HTML formatting using an OWASP Java HTML Sanitizer PolicyFactory.
+                See also <p:link outcome="/ui/input/converters" value="Sanitizing Converter"/>.</p>
+
+            <h3>pom.xml</h3>
+            <pre>
+&lt;dependency&gt;
+     &lt;groupId&gt;com.googlecode.owasp-java-html-sanitizer&lt;/groupId&gt;
+     &lt;artifactId&gt;owasp-java-html-sanitizer&lt;/artifactId&gt;
+     &lt;version&gt;20240325.1&lt;/version&gt;
+&lt;/dependency&gt;
+            </pre>
+
+            <h3>faces-config.xml</h3>
+            <pre>
+&lt;application&gt;
+    &lt;system-event-listener&gt;
+        &lt;system-event-listener-class&gt;org.primefaces.extensions.application.EscapeSanitizerComponentListener&lt;/system-event-listener-class&gt;
+        &lt;system-event-class&gt;jakarta.faces.event.PostAddToViewEvent&lt;/system-event-class&gt;
+        &lt;source-class&gt;jakarta.faces.component.html.HtmlBody&lt;/source-class&gt;
+    &lt;/system-event-listener&gt;
+&lt;/application&gt;
+            </pre>
+        </div>
+
+        <h2>CombinedResourceHandler</h2>
+        <div class="card">
+            <p>The <a href="https://showcase.omnifaces.org/resourcehandlers/CombinedResourceHandler" target="_blank" rel="noopener noreferrer">OmniFaces
+                CombinedResourceHandler</a> optimizes your website to send only 1 CSS and 1 JS file to the browser. It requires overriding some core
+                PrimeFaces code, because PrimeFaces hard codes some resources in the HeadRenderer, which leaves them outside the scope of being
+                combined, like the theme.css or beanvalidation.js.</p>
+            <p>BalusC has an excellent tutorial on how to make this work found
+                <a href="https://github.com/omnifaces/omnifaces/wiki/Combine-hardcoded-PrimeFaces-resources-using-CombinedResourceHandler"
+                   target="_blank" rel="noopener noreferrer">here</a>.
+                PrimeFaces Extensions includes these classes so you don't have to write your own or keep them up to date with every PrimeFaces release.</p>
+
+            <h3>faces-config.xml</h3>
+            <pre>
+&lt;application&gt;
+    &lt;system-event-listener&gt;
+        &lt;system-event-listener-class&gt;org.primefaces.extensions.application.PrimeFacesScriptProcessor&lt;/system-event-listener-class&gt;
+        &lt;system-event-class&gt;jakarta.faces.event.PostAddToViewEvent&lt;/system-event-class&gt;
+        &lt;source-class&gt;jakarta.faces.component.UIViewRoot&lt;/source-class&gt;
+    &lt;/system-event-listener&gt;
+&lt;/application&gt;
+
+&lt;lifecycle&gt;
+    &lt;phase-listener&gt;org.primefaces.extensions.application.PrimeFacesResourceProcessor&lt;/phase-listener&gt;
+&lt;/lifecycle&gt;
+            </pre>
+
+            <h3>Disable PrimeFaces HeadRenderer (Mojarra)</h3>
+            <pre>
+&lt;render-kit&gt;
+    &lt;renderer&gt;
+        &lt;component-family&gt;jakarta.faces.Output&lt;/component-family&gt;
+        &lt;renderer-type&gt;jakarta.faces.Head&lt;/renderer-type&gt;
+        &lt;renderer-class&gt;com.sun.faces.renderkit.html_basic.HeadRenderer&lt;/renderer-class&gt;
+    &lt;/renderer&gt;
+&lt;/render-kit&gt;
+            </pre>
+
+            <h3>Disable PrimeFaces HeadRenderer (MyFaces)</h3>
+            <pre>
+&lt;render-kit&gt;
+    &lt;renderer&gt;
+        &lt;component-family&gt;jakarta.faces.Output&lt;/component-family&gt;
+        &lt;renderer-type&gt;jakarta.faces.Head&lt;/renderer-type&gt;
+        &lt;renderer-class&gt;org.apache.myfaces.renderkit.html.HtmlHeadRenderer&lt;/renderer-class&gt;
+    &lt;/renderer&gt;
+&lt;/render-kit&gt;
+            </pre>
+        </div>
+
+        <h2>MorphiaLazyDataModel</h2>
+        <div class="card">
+            <p>PrimeFaces Extensions provides an out-of-the-box implementation of a lazy data model for MongoDB using Morphia, which
+                supports basic features.</p>
+
+            <h3>pom.xml</h3>
+            <pre>
+&lt;dependency&gt;
+    &lt;groupId&gt;dev.morphia.morphia&lt;/groupId&gt;
+    &lt;artifactId&gt;morphia-core&lt;/artifactId&gt;
+    &lt;version&gt;2.2.3&lt;/version&gt;
+    &lt;optional&gt;true&lt;/optional&gt;
+&lt;/dependency&gt;
+            </pre>
+
+            <h3>Bean (defaults using ID field)</h3>
+            <pre>
+new MorphiaLazyDataModel&lt;&gt;(MyEntity.class, () -&gt; datastore);
+            </pre>
+
+            <h3>Bean (using field name of class "getUuid()" for rowKey)</h3>
+            <pre>
+new MorphiaLazyDataModel&lt;&gt;(MyEntity.class, () -&gt; datastore, "uuid");
+            </pre>
+
+            <h3>Global Filter and customization</h3>
+            <pre>
+// let's implement a global filter here for the string fields
+dataModel.globalFilter((query, filterMeta) -&gt; {
+    Object val = filterMeta.getFilterValue();
+    query.filter(
+            Filters.or(
+                    Filters.regex("brand").pattern(val + "").caseInsensitive(),
+                    Filters.regex("previousOwners").pattern(val + "").caseInsensitive(),
+                    Filters.regex("color.name").pattern(val + "").caseInsensitive()
+            )
+    );
+});
+
+// override the default match mode query for the "sold" field to allow filtering with strings
+dataModel.overrideFieldQuery("sold", (query, filterMeta) -&gt; {
+    if (filterMeta.getFilterValue().toString().startsWith("y")) {
+        query.filter(Filters.eq("sold", true));
+    } else if (filterMeta.getFilterValue().toString().startsWith("n")) {
+        query.filter(Filters.eq("sold", false));
+    }
+});
+            </pre>
+        </div>
+    </ui:define>
+
+    <ui:define name="implementation">
+        <!-- EXAMPLE-SOURCE-START -->
+        <div class="card">
+            <!-- EXAMPLE: utils/switch -->
+            <h5>Switch</h5>
+            <p>Sometimes you need to display different outputs or components depending on a value. Usually you can achieve this with
+                <code>ui:fragment</code> and different <code>rendered</code> checks. The <code>pe:switch</code> util tag does it without
+                declaring those fragments.</p>
+            <h:form id="formSwitch">
+                <p:growl id="growl" showDetail="true"/>
+
+                <p:selectOneMenu id="caseSelection" value="#{switchController.value}">
+                    <f:selectItem itemLabel="Default case" itemValue="default"/>
+                    <f:selectItem itemLabel="Case 1" itemValue="case1"/>
+                    <f:selectItem itemLabel="null" itemValue="#{null}"/>
+                    <f:selectItem itemLabel="Case 2" itemValue="case2"/>
+
+                    <p:ajax update="swichWrapper" process="@this"/>
+                </p:selectOneMenu>
+
+                <p:divider/>
+
+                <p:outputPanel id="swichWrapper">
+                    <pe:switch id="switch" value="#{switchController.value}">
+                        <pe:defaultCase>
+                            Case: Default
+                        </pe:defaultCase>
+
+                        <pe:case value="case1">
+                            Case: <p:commandButton id="case1button" actionListener="#{switchController.listener('case1')}" update="growl"
+                                                   value="Call listener with 'case1'"/>
+                        </pe:case>
+
+                        <pe:case value="case2">
+                            Case: <p:commandButton id="case2button" actionListener="#{switchController.listener('case2')}" update="growl"
+                                                   value="Call listener with 'case2'"/>
+                        </pe:case>
+
+                        <pe:case value="#{null}">
+                            Case: Null
+                        </pe:case>
+                    </pe:switch>
+                </p:outputPanel>
+            </h:form>
+        </div>
+        <!-- EXAMPLE-SOURCE-END -->
+    </ui:define>
+
+</ui:composition>
