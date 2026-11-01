@@ -25,7 +25,7 @@ trap 'rm -rf "$TMP"' EXIT
 for u in "${URLS[@]}"; do
   jar="$TMP/jar.txt"; body="$TMP/body.html"
   rm -f "$jar"
-  code=$(curl -s -L -c "$jar" -b "$jar" -o "$body" -w '%{http_code}' "$BASE$u")
+  code=$(curl -s --max-time 60 -L -c "$jar" -b "$jar" -o "$body" -w '%{http_code}' "$BASE$u")
   reason=""
   if [ "$code" != "200" ]; then
     reason="HTTP $code"
