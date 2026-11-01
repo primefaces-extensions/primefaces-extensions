@@ -56,7 +56,7 @@ public class App implements Serializable {
     private static final String UNKNOWN = "unknown";
 
     // default preset of the showcase
-    private String theme = "glass";
+    private String theme = "aura";
     private Country locale = new Country(0, Locale.US);
     // text direction chosen via ?dir=ltr|rtl; null: the direction of the locale
     private String direction;

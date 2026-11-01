@@ -8,6 +8,12 @@
     var root = document.documentElement;
     var KEYS = { scheme: 'pf-demo-scheme', primary: 'pf-demo-primary', density: 'pf-demo-density', tokens: 'pf-demo-tokens',
         input: 'pf-demo-input' };
+    // PFE showcase default primary color (differs from the PrimeFaces showcase); a stored choice overrides it
+    var DEFAULT_PRIMARY = 'var(--p-yellow-500)';
+
+    function primaryValue() {
+        return read(KEYS.primary) || DEFAULT_PRIMARY;
+    }
 
     function read(key) {
         try { return localStorage.getItem(key); } catch (e) { return null; }
@@ -48,7 +54,7 @@
         var primary = read(KEYS.primary);
         var density = read(KEYS.density);
         if (scheme) { root.style.colorScheme = scheme; }
-        if (primary) { root.style.setProperty('--p-primary-base', primary); }
+        root.style.setProperty('--p-primary-base', primary || DEFAULT_PRIMARY);
         // "normal" is the page default: no attribute
         if (density && density !== 'normal') { root.setAttribute('data-p-density', density); }
         root.classList.toggle('p-input-filled', read(KEYS.input) === 'filled');
@@ -218,7 +224,7 @@
             select.value = match ? match[1] : '';
             select.parentNode.classList.toggle('changed', !!match);
         }
-        var primary = read(KEYS.primary);
+        var primary = primaryValue();
         document.querySelectorAll('.cfg-swatch').forEach(function (b) {
             b.setAttribute('aria-pressed', b.getAttribute('data-cfg-primary') === primary);
         });
@@ -236,10 +242,7 @@
         var add = function (name, value) {
             (/var\(/.test(value) ? referencing : literal).push('    ' + name + ': ' + value + ';');
         };
-        var primary = read(KEYS.primary);
-        if (primary) {
-            add('--p-primary-base', primary);
-        }
+        add('--p-primary-base', primaryValue());
         NAMES.forEach(function (name) {
             if (name in tokens && tokens[name] !== defaults[name]) {
                 add(name, tokens[name]);
@@ -336,12 +339,7 @@
         },
         // live: from the oninput of the color picker, refreshes once per frame
         primary: function (value, live) {
-            if (value) {
-                root.style.setProperty('--p-primary-base', value);
-            }
-            else {
-                root.style.removeProperty('--p-primary-base');
-            }
+            root.style.setProperty('--p-primary-base', value || DEFAULT_PRIMARY);
             write(KEYS.primary, value);
             if (live) {
                 refreshLater();
@@ -404,7 +402,7 @@
             Object.keys(tokens).forEach(function (name) { root.style.removeProperty(name); });
             tokens = {};
             saveTokens();
-            root.style.removeProperty('--p-primary-base');
+            root.style.setProperty('--p-primary-base', DEFAULT_PRIMARY);
             write(KEYS.primary, null);
             root.removeAttribute('data-p-density');
             write(KEYS.density, null);

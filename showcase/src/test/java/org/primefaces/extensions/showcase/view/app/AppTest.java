@@ -41,8 +41,8 @@ class AppTest {
     }
 
     @Test
-    void defaultThemeIsGlass() {
-        assertEquals("glass", new App().resolveTheme(null));
+    void defaultThemeIsAura() {
+        assertEquals("aura", new App().resolveTheme(null));
     }
 
     @Test
@@ -54,7 +54,7 @@ class AppTest {
 
     @Test
     void invalidPresetIgnored() {
-        assertEquals("glass", new App().resolveTheme("bootstrap"));
+        assertEquals("aura", new App().resolveTheme("bootstrap"));
     }
 
     @Test
