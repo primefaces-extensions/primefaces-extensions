@@ -31,6 +31,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.LangUtils;
@@ -167,7 +168,7 @@ public class CommandPaletteRenderer extends CoreRenderer {
         final WidgetBuilder wb = getWidgetBuilder(context);
 
         wb.init("ExtCommandPalette", component)
-                    .attr("for", component.getFor())
+                    .attr("for", SearchExpressionUtils.resolveClientIdsForClientSide(context, component, component.getFor()))
                     .attr("triggerEvent", component.getTriggerEvent(), "contextmenu")
                     .attr("label", component.getLabel())
                     .attr("filterPlaceholder", component.getFilterPlaceholder(), "Search...")

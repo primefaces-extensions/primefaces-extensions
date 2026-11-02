@@ -216,17 +216,7 @@ PrimeFaces.widget.ExtCommandPalette = class extends PrimeFaces.widget.BaseWidget
         if (!forValue) {
             return $();
         }
-        var triggerEl;
-        if (PrimeFaces.expressions && PrimeFaces.expressions.SearchExpressionFacade) {
-            triggerEl = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(forValue);
-        }
-        if ((!triggerEl || !triggerEl.length) && document.getElementById) {
-            triggerEl = $(document.getElementById(forValue));
-        }
-        if ((!triggerEl || !triggerEl.length)) {
-            triggerEl = $('#' + forValue);
-        }
-        return triggerEl;
+        return PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.jq, forValue);
     }
 
     destroy() {
