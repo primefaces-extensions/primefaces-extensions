@@ -27,10 +27,9 @@ import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 
 import org.primefaces.cache.CacheProvider;
-import org.primefaces.cache.DefaultCacheProvider;
 
 /**
- * Provides the cache used for example source and file contents. Uses PrimeFaces' in-memory {@link DefaultCacheProvider}; no EHCache dependency is needed.
+ * Provides the cache used for example source and file contents, backed by {@link CaffeineCacheProvider}.
  */
 @ApplicationScoped
 public class ShowcaseCacheProvider implements Serializable {
@@ -41,7 +40,7 @@ public class ShowcaseCacheProvider implements Serializable {
 
     @PostConstruct
     public void init() {
-        cacheProvider = new DefaultCacheProvider();
+        cacheProvider = new CaffeineCacheProvider();
     }
 
     public CacheProvider getCacheProvider() {
