@@ -27,28 +27,30 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
-import jakarta.enterprise.inject.spi.CDI;
 import jakarta.faces.application.ProjectStage;
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.component.UIPanel;
 import jakarta.faces.context.FacesContext;
 
-import org.primefaces.cache.CacheProvider;
 import org.primefaces.component.tabview.Tab;
 
 public class ShowcaseUtil {
 
     private static final Logger LOGGER = Logger.getLogger(ShowcaseUtil.class.getName());
 
+    /** Example source contents per page path; a small, fixed set of classpath files, cached in Production only. */
+    private static final Map<String, List<FileContent>> FILES_CONTENT_CACHE = new ConcurrentHashMap<>();
+
     private ShowcaseUtil() {
 
     }
 
     public static List<FileContent> getFilesContent(String fullPath, Boolean readBeans) {
-        CacheProvider provider = CDI.current().select(ShowcaseCacheProvider.class).get().getCacheProvider();
-        List<FileContent> files = (List<FileContent>) provider.get("contents", fullPath);
+        List<FileContent> files = FILES_CONTENT_CACHE.get(fullPath);
 
         if (files == null) {
             FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -65,8 +67,8 @@ public class ShowcaseUtil {
                 flatFileContent(srcContent, files);
             }
 
-            if (facesContext.isProjectStage(ProjectStage.Production)) {
-                provider.put("contents", fullPath, files);
+            if (files != null && facesContext.isProjectStage(ProjectStage.Production)) {
+                FILES_CONTENT_CACHE.put(fullPath, files);
             }
         }
         return files;
