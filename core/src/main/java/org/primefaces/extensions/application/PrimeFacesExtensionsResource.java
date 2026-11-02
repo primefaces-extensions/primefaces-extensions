@@ -36,12 +36,29 @@ import org.primefaces.util.Constants;
  */
 public class PrimeFacesExtensionsResource extends ResourceWrapper {
 
+    /** The version appended to the resource URLs ({@code &e=}), resolved once at startup. */
+    private static final String RESOURCE_VERSION = resolveResourceVersion(PrimeFacesExtensionsResource.class.getPackage().getImplementationVersion());
+
     private final String version;
 
     public PrimeFacesExtensionsResource(final Resource resource) {
         super(resource);
         version = PrimeRequestContext.getCurrentInstance(FacesContext.getCurrentInstance()).isHideResourceVersion() ? Constants.EMPTY_STRING
-                    : "&e=" + getClass().getPackage().getImplementationVersion();
+                    : "&e=" + RESOURCE_VERSION;
+    }
+
+    /**
+     * A SNAPSHOT keeps its version across builds, so the resource URLs would not change after a redeploy and the browser would serve the old CSS/JS from its
+     * cache. Append the startup time to bust the cache on every start (same as PrimeFaces does for its {@code &v=}).
+     *
+     * @param buildVersion the version of PrimeFaces Extensions, e.g. "17.0.0" or "17.0.0-SNAPSHOT"
+     * @return the build version, for a SNAPSHOT plus the startup time
+     */
+    static String resolveResourceVersion(final String buildVersion) {
+        if (buildVersion != null && buildVersion.endsWith("-SNAPSHOT")) {
+            return buildVersion + "." + Long.toString(System.currentTimeMillis(), Character.MAX_RADIX);
+        }
+        return buildVersion;
     }
 
     @Override
