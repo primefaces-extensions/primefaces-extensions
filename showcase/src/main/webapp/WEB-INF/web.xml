@@ -135,12 +135,6 @@
         </param-value>
     </context-param>
 
-    <!-- Combine head scripts/stylesheets into one request each; cached server side (not in Development stage) -->
-    <context-param>
-        <param-name>org.omnifaces.COMBINED_RESOURCE_HANDLER_CACHE_TTL</param-name>
-        <param-value>3628800</param-value> <!-- 6 weeks -->
-    </context-param>
-
     <!-- Enable PostConstruct on Faces ManagedBeans on Jetty -->
     <context-param>
         <param-name>org.apache.myfaces.config.annotation.LifecycleProvider</param-name>
