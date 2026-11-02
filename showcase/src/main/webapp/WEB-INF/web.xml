@@ -120,11 +120,6 @@
         <param-name>primefaces.MOVE_SCRIPTS_TO_BOTTOM</param-name>
         <param-value>true</param-value>
     </context-param>
-    <!-- Caffeine-backed cache provider for p:cache (avoids DefaultCacheProvider dev-only warning) -->
-    <context-param>
-        <param-name>primefaces.CACHE_PROVIDER</param-name>
-        <param-value>org.primefaces.extensions.showcase.util.CaffeineCacheProvider</param-value>
-    </context-param>
     <!-- Content Security Policy -->
     <context-param>
         <param-name>primefaces.CSP</param-name>

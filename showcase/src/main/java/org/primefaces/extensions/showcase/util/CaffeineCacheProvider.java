@@ -30,9 +30,7 @@ import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 
 /**
- * {@link CacheProvider} backed by Caffeine. Each region is its own size-bounded Caffeine cache.
- * <p>
- * Registered via the {@code primefaces.CACHE_PROVIDER} context parameter so {@code p:cache} uses it, and also used by {@link ShowcaseCacheProvider}.
+ * {@link CacheProvider} backed by Caffeine, used by {@link ShowcaseCacheProvider}. Each region is its own size-bounded Caffeine cache.
  */
 public class CaffeineCacheProvider implements CacheProvider {
 

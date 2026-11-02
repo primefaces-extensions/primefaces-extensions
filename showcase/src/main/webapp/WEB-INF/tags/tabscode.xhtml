@@ -7,12 +7,10 @@
 
     <p:tabView var="entry" value="#{value}" touchable="false">
         <p:tab title="#{entry.title}" >
-            <p:cache region="sources" key="#{entry}">
 <pre class="line-numbers"><code class="language-#{entry.type}">
 #{entry.value}
 
 </code></pre>
-            </p:cache>
         </p:tab>
 
         <f:facet name="static-tabs">
