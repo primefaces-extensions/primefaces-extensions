@@ -13423,7 +13423,7 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[ID of the target component that triggers the command palette on right-click.]]>
+                <![CDATA[Search expression of the target component that triggers the command palette.]]>
             </description>
             <name>for</name>
             <required>true</required>
