@@ -4,7 +4,7 @@
       xmlns:f="jakarta.faces.core"
       xmlns:ui="jakarta.faces.facelets"
       xmlns:p="primefaces"
-      xmlns:pe="http://primefaces.org/ui/extensions"
+      xmlns:pe="primefaces.extensions"
       xmlns:sc="primefaces.extensions.showcase"
       lang="#{p:language()}" xml:lang="#{p:language()}" data-preset="#{app.theme}" dir="#{app.dir}">
 
@@ -13,6 +13,7 @@
             <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
             <meta name="mobile-web-app-capable" content="yes"/>
             <meta name="description" content="PrimeFaces Extensions Showcase"/>
+            <link href="#{resource['showcase:images/favicon.svg']}" rel="icon" type="image/svg+xml"/>
             <link href="#{resource['showcase:images/favicon-32x32.png']}" rel="icon" type="image/png" sizes="32x32"/>
             <link href="#{resource['showcase:images/favicon-16x16.png']}" rel="icon" type="image/png" sizes="16x16"/>
         </f:facet>
