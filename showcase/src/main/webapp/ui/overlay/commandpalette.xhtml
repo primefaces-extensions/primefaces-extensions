@@ -11,7 +11,7 @@
     </ui:define>
 
     <ui:define name="description">
-        CommandPalette is a filterable grouped context menu: a searchable popup with categorized options, triggered by right-click on a target element.
+        CommandPalette is a filterable grouped context menu: a searchable popup with categorized options, triggered by right-click (or any other configurable event) on a target element.
         Based on <a href="https://github.com/newk5/stak-components" target="_blank" rel="noopener noreferrer">stak-grouplist</a> by newk5.
     </ui:define>
 
@@ -32,6 +32,9 @@
                 font-size: 14px;
                 color: var(--p-text-color);
                 user-select: none;
+            }
+            .palette-target-click {
+                cursor: pointer;
             }
         </style>
 
@@ -57,6 +60,27 @@
                     <pe:commandPaletteItem group="View" value="zoomIn" label="Zoom In"/>
                     <pe:commandPaletteItem group="View" value="zoomOut" label="Zoom Out"/>
                     <pe:commandPaletteItem group="View" value="fullscreen" label="Fullscreen"/>
+                </pe:commandPalette>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <!-- EXAMPLE: commandPalette/leftClick -->
+            <h5>Left-click Trigger</h5>
+            <p>Use <i>triggerEvent="click"</i> to open the CommandPalette on a regular left-click instead of a right-click.</p>
+            <h:form id="formLeftClick">
+                <h:panelGroup id="leftClickTarget" layout="block" styleClass="palette-target palette-target-click">
+                    Click here to open the CommandPalette
+                </h:panelGroup>
+                <pe:commandPalette id="leftClickPalette" for="leftClickTarget" triggerEvent="click"
+                                   label="Actions" filterPlaceholder="Search actions..." width="260" height="350">
+                    <pe:commandPaletteItem group="File" value="new" label="New File"/>
+                    <pe:commandPaletteItem group="File" value="open" label="Open File"/>
+                    <pe:commandPaletteItem group="File" value="save" label="Save"/>
+                    <pe:commandPaletteItem group="Edit" value="undo" label="Undo"/>
+                    <pe:commandPaletteItem group="Edit" value="redo" label="Redo"/>
+                    <pe:commandPaletteItem group="View" value="zoomIn" label="Zoom In"/>
+                    <pe:commandPaletteItem group="View" value="zoomOut" label="Zoom Out"/>
                 </pe:commandPalette>
             </h:form>
         </div>
