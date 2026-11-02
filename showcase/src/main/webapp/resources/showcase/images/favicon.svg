@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="62.47 -0.7 40 40" width="32" height="32">
+    <!-- emblem of logo.svg (mask geometry of the PrimeFaces showcase logo, recolored orange) -->
+    <defs>
+        <linearGradient id="pe-frame" x1="64" y1="0" x2="100" y2="38.6" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#c8641e"/>
+            <stop offset=".5" stop-color="#8a3f0c"/>
+            <stop offset="1" stop-color="#4f2206"/>
+        </linearGradient>
+        <linearGradient id="pe-face" x1="68" y1="1" x2="97" y2="37" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#ffd8a8"/>
+            <stop offset=".25" stop-color="#ff9a3c"/>
+            <stop offset=".5" stop-color="#e86a12"/>
+            <stop offset=".75" stop-color="#ffb066"/>
+            <stop offset="1" stop-color="#d0570c"/>
+        </linearGradient>
+    </defs>
+    <g fill-rule="evenodd" clip-rule="evenodd">
+        <path fill="url(#pe-frame)" d="M74.278 0l-4.057 4.484-5.884-1.12 3.274 11.43 2.178 13.923 8.584 10.345h7.557l8.476-10.316 2.285-14.057 3.491-11.325-5.83 1.12L90.14 0H74.278z"/>
+        <g fill="url(#pe-face)">
+            <path d="M89.412 17.912l-2.265-.505 1.762 2.526v7.83l6.042-5.052v-8.588l-2.77 1.01-2.769 2.779zm-14.098 0l2.266-.505-1.762 2.526v7.83l-6.042-5.052v-8.588l2.769 1.01 2.77 2.779z"/>
+            <path d="M76.573 20.438l2.014-3.031 1.259.758h5.035l1.259-.758 2.014 3.03v11.367l-1.51 2.273-1.763 1.768h-5.035l-1.763-1.768-1.51-2.273V20.438z"/>
+            <path d="M88.909 32.561l3.273-3.283v-3.284l-3.273 2.779v3.788zm-13.091 0l-3.273-3.283v-3.284l3.273 2.779v3.788z"/>
+            <path d="M79.09 2.757l-2.014 4.8 3.273 9.597h1.51V2.757h-2.768zm3.777 0v14.397h1.762l3.021-9.598-2.014-4.799h-2.77z"/>
+            <path d="M80.35 17.154l-10.826-4.041-1.51-6.314 9.65.784 3.217 9.571h-.532zm4.28 0l10.825-4.041 1.51-6.314-9.65.784-3.217 9.571h.531zm3.524-10.355l5.287-.506-3.525-3.536H86.39L88.154 6.8zm-11.581 0l-5.287-.506 3.525-3.536h3.524L76.573 6.8z"/>
+        </g>
+    </g>
+</svg>

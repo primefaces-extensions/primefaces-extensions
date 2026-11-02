@@ -65,6 +65,7 @@ public class AppMenu {
         // Component entries are added by the migration tasks, e.g.:
         // add(INPUT, new MenuItem("<Label>", "<url>"));
 
+        add(CORE, new MenuItem("Get Started", "/getstarted"));
         add(CORE, new MenuItem("Tag Library", "/taglib"));
 
         add(INPUT, new MenuItem("Calculator", "/ui/input/calculator"));
