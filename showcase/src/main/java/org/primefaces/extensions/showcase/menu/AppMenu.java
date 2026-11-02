@@ -39,6 +39,7 @@ import jakarta.inject.Named;
 @ApplicationScoped
 public class AppMenu {
 
+    static final String CORE = "Core";
     static final String INPUT = "Input";
     static final String EDITORS = "Editors";
     static final String DATA = "Data";
@@ -57,12 +58,14 @@ public class AppMenu {
     @PostConstruct
     public void init() {
         categoryItems.clear();
-        for (final String name : new String[] {INPUT, EDITORS, DATA, CHARTS, PANEL, OVERLAY, MEDIA, MISC, RESOURCES}) {
+        for (final String name : new String[] {CORE, INPUT, EDITORS, DATA, CHARTS, PANEL, OVERLAY, MEDIA, MISC, RESOURCES}) {
             categoryItems.put(name, new ArrayList<>());
         }
 
         // Component entries are added by the migration tasks, e.g.:
         // add(INPUT, new MenuItem("<Label>", "<url>"));
+
+        add(CORE, new MenuItem("Tag Library", "/taglib"));
 
         add(INPUT, new MenuItem("Calculator", "/ui/input/calculator"));
         add(INPUT, new MenuItem("ClockPicker", "/ui/input/clockpicker"));
@@ -162,7 +165,6 @@ public class AppMenu {
         add(MISC, new MenuItem("RemoteCommand", "/ui/misc/remotecommand"));
         add(MISC, new MenuItem("Speedtest", "/ui/misc/speedtest"));
 
-        add(RESOURCES, new MenuItem("Tag Library", "/taglib"));
         add(RESOURCES, new MenuItem("GitHub", "https://github.com/primefaces-extensions/primefaces-extensions"));
         add(RESOURCES, new MenuItem("Issues", "https://github.com/primefaces-extensions/primefaces-extensions/issues"));
         add(RESOURCES, new MenuItem("Website", "https://primefaces-extensions.github.io"));

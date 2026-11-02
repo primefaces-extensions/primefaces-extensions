@@ -133,3 +133,11 @@ html[data-preset="glass"] body {
     border-radius: var(--p-border-radius-sm);
     background: var(--p-content-hover-background);
 }
+
+/* the theme gives buttons no margin: space out buttons placed side by side in a demo.
+   Only when the parent is a plain container (not a PrimeFaces component such as
+   SelectOneButton, SplitButton, PickList or FileUpload that groups its own buttons),
+   and skipped when the previous button already sets its own mr-* utility. */
+.card :not([class^="p-"]):not([class*=" p-"]) > .p-button:not([class*="mr-"]) + .p-button {
+    margin-inline-start: .5rem;
+}
