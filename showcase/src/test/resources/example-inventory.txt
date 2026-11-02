@@ -17,6 +17,7 @@ codeMirror/jsCodeCompletion
 codeScanner/basicUsage
 commandPalette/basicUsage
 commandPalette/hotkey
+commandPalette/leftClick
 commandPalette/selectionEvent
 converters/localeConverter
 converters/sanitizingConverter

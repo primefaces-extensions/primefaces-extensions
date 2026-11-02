@@ -55,7 +55,7 @@ public abstract class CommandPaletteBase extends UIComponentBase implements Widg
         return COMPONENT_FAMILY;
     }
 
-    @Property(description = "ID of the target component that triggers the command palette on right-click.", required = true)
+    @Property(description = "Search expression of the target component that triggers the command palette.", required = true)
     public abstract String getFor();
 
     @Property(description = "Header label text displayed at the top of the palette.")
