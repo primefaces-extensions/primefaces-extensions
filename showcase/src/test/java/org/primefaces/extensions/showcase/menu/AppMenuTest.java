@@ -144,8 +144,10 @@ class AppMenuTest {
                 Assertions.assertTrue(urls.contains(url), category + ": " + url);
             }
         }
-        // first internal link of Resources
-        Assertions.assertEquals("/taglib", menu.getCategoryUrl(AppMenu.RESOURCES));
+        // Core holds the tag library; Resources only has external links
+        Assertions.assertEquals("/taglib", menu.getCategoryUrl(AppMenu.CORE));
+        Assertions.assertNull(menu.getCategoryUrl(AppMenu.RESOURCES));
+        Assertions.assertEquals(AppMenu.CORE, menu.getMenuCategories().get(0).getLabel());
         Assertions.assertNull(menu.getCategoryUrl("Unknown"));
     }
 
