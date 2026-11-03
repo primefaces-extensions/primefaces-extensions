@@ -120,13 +120,10 @@ public class TooltipRenderer extends CoreRenderer {
             wb.append(",hide:{fixed:true}");
         }
         else if (shared && !global) {
-            wb.append(",show:{target:PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector('"
-                        + target + "')" + ",delay:"
-                        + tooltip.getShowDelay() + ",effect:function(){$(this)." + tooltip.getShowEffect() + "("
+            // show and hide targets are set to the resolved forTarget by the widget
+            wb.append(",show:{delay:" + tooltip.getShowDelay() + ",effect:function(){$(this)." + tooltip.getShowEffect() + "("
                         + tooltip.getShowEffectLength() + ");}}");
-            wb.append(",hide:{target:PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector('"
-                        + target + "')" + ",delay:"
-                        + tooltip.getHideDelay() + ",fixed:" + tooltip.isFixed() + ",effect:function(){$(this)."
+            wb.append(",hide:{delay:" + tooltip.getHideDelay() + ",fixed:" + tooltip.isFixed() + ",effect:function(){$(this)."
                         + tooltip.getHideEffect() + "(" + tooltip.getHideEffectLength() + ");}}");
         }
         else if (autoShow) {
