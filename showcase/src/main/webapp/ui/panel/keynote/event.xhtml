@@ -31,7 +31,7 @@
             <h:form id="formEvent">
                 <p:messages id="messages" showSummary="true" showDetail="true"/>
 
-                <pe:keynote width="480" height="350" style="width: 50vw; height: 50vh;">
+                <pe:keynote width="480" height="350" style="width: 50vw; height: 50vh;" embedded="true">
                     <p:ajax event="slideChanged" listener="#{keynoteController.onSlideChanged}" update="btnSubmit messages"/>
                     <p:ajax event="slideTransitionEnd" listener="#{keynoteController.onSlideTransitionEnd}" update="btnSubmit messages"/>
                     <pe:keynoteItem>
