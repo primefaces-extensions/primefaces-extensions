@@ -153,7 +153,7 @@
                                     <div class="landing-theme-category">Presets</div>
                                     <div class="landing-theme-items">
                                         <ui:repeat value="#{app.presets}" var="preset">
-                                            <a class="landing-theme-item #{app.theme eq preset ? 'active' : ''}" href="?theme=#{preset}" title="#{preset}">
+                                            <a class="landing-theme-item #{p:theme() eq preset ? 'active' : ''}" href="#" data-preset-link="#{preset}" title="#{preset}">
                                                 <i class="pi pi-palette"></i>
                                                 <span style="text-transform: capitalize">#{preset}</span>
                                             </a>
@@ -174,9 +174,10 @@
                                 <li><i class="pi pi-check-circle"></i>Theme configurator with live token editing</li>
                                 <li><i class="pi pi-check-circle"></i>Right-to-left and localized components</li>
                             </ul>
-                            <a href="#" class="landing-btn landing-btn-outline" onclick="cfg.toggle(true); return false;">
+                            <button type="button" class="landing-btn landing-btn-outline" data-tc-toggle="themeConfigurator"
+                                    aria-controls="themeConfigurator_panel">
                                 <i class="pi pi-palette mr-2"></i>Open the Configurator
-                            </a>
+                            </button>
                         </div>
                     </div>
                 </div>

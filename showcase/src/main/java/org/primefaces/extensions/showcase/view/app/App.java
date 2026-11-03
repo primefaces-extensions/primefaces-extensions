@@ -39,7 +39,8 @@ import org.primefaces.context.PrimeApplicationContext;
 import org.primefaces.extensions.showcase.domain.Country;
 
 /**
- * Session bean holding the theme preset, locale and text direction of the showcase.
+ * Session bean holding the locale of the showcase. The preset and the text direction are chosen with the theme configurator of PrimeFaces
+ * (pc:themeConfigurator, primefaces.THEME_CONFIGURATOR): #{p:theme()} and #{p:dir()}.
  */
 @Named("app")
 @SessionScoped
@@ -49,61 +50,34 @@ public class App implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * The themes of PrimeFaces. The theme configurator switches with ?theme=..., the choice is kept in the session.
+     * The presets of PrimeFaces offered by the showcase (theme configurator and landing page).
      */
     public static final List<String> PRESETS = List.of("aura", "lara", "nora", "metal", "glass");
 
     private static final String UNKNOWN = "unknown";
 
-    // default preset of the showcase
-    private String theme = "aura";
     private Country locale = new Country(0, Locale.US);
-    // text direction chosen via ?dir=ltr|rtl; null: the direction of the locale
-    private String direction;
 
     /**
-     * The current preset (primefaces.THEME in web.xml); a valid ?theme= request parameter switches it.
-     *
-     * @return aura, lara, nora, metal or glass
-     */
-    public String getTheme() {
-        return resolveTheme(requestParameter("theme"));
-    }
-
-    String resolveTheme(final String requested) {
-        if (requested != null && PRESETS.contains(requested)) {
-            theme = requested;
-        }
-        return theme;
-    }
-
-    public void setTheme(final String theme) {
-        if (PRESETS.contains(theme)) {
-            this.theme = theme;
-        }
-    }
-
-    /**
-     * The text direction (primefaces.DIR in web.xml): a valid ?dir= request parameter sets it, without a choice it follows the locale.
+     * The direction of the locale: primefaces.DIR in web.xml, unless the user chose one in the theme configurator (the effective direction is #{p:dir()}).
      *
      * @return ltr or rtl
      */
-    public String getDir() {
-        return resolveDir(requestParameter("dir"));
-    }
-
-    String resolveDir(final String requested) {
-        if ("ltr".equals(requested) || "rtl".equals(requested)) {
-            direction = requested;
-        }
-        if (direction != null) {
-            return direction;
-        }
+    public String getLocaleDir() {
         return locale.isRtl() ? "rtl" : "ltr";
     }
 
     public List<String> getPresets() {
         return PRESETS;
+    }
+
+    /**
+     * The presets attribute of pc:themeConfigurator.
+     *
+     * @return the presets, comma separated
+     */
+    public String getPresetNames() {
+        return String.join(",", PRESETS);
     }
 
     public Country getLocale() {
@@ -157,11 +131,6 @@ public class App implements Serializable {
         catch (final NumberFormatException e) {
             return UNKNOWN;
         }
-    }
-
-    private static String requestParameter(final String name) {
-        final FacesContext context = FacesContext.getCurrentInstance();
-        return context == null ? null : context.getExternalContext().getRequestParameterMap().get(name);
     }
 
     /**

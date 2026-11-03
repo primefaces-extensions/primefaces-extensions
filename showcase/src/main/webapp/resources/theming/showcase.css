@@ -5,6 +5,7 @@
  * The themes only define --p-* tokens, so these variables are mapped to the tokens here: the topbar, menu
  * and footer follow the preset, its color scheme and the configurator.
  */
+
 :root {
     --primary-color: var(--p-primary-color);
     --primary-color-text: var(--p-primary-contrast-color);
