@@ -52,6 +52,8 @@ PrimeFaces.widget.ExtTooltip = class extends PrimeFaces.widget.BaseWidget {
             sharedDiv.appendTo(document.body);
 
             this.cfg.position.container = sharedDiv;
+            this.cfg.show.target = this.cfg.forTarget;
+            this.cfg.hide.target = this.cfg.forTarget;
             $('<div></div>').qtip(this.cfg);
         } else {
             this.cfg.position.container = $(document.body);
