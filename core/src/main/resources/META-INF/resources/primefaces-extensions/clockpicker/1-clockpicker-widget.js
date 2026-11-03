@@ -22,9 +22,6 @@ PrimeFaces.widget.ExtClockPicker = class extends PrimeFaces.widget.BaseWidget {
         this.input = $(this.jqEl);
         PrimeFaces.skinInput(this.input);
 
-        // check if being used in dialog and set the parent
-        this.setupDialogSupport();
-
         // create the clock picker
         this.clockpicker = this.createClockPicker();
 
@@ -48,23 +45,19 @@ PrimeFaces.widget.ExtClockPicker = class extends PrimeFaces.widget.BaseWidget {
     }
 
     /**
-     * Sets up support for using the overlay color picker within an overlay dialog.
-     * @private
-     */
-    setupDialogSupport() {
-        var dialog = this.input[0].closest('.p-dialog');
-        if (dialog) {
-            this.cfg.appendTo = $(PrimeFaces.escapeClientId(dialog.id));
-        }
-    }
-
-    /**
      * Creates the clock picker and sets up events.
      * @returns {JQuery} the clock picker
      * @private
      */
     createClockPicker() {
         this.clockpicker = this.container.clockpicker(this.cfg);
+
+        // like PrimeFaces.utils.resolveAppendTo: scroll with a fixed dialog
+        const dialog = this.input[0].closest('.p-dialog');
+        if (dialog && $(dialog).css('position') === 'fixed') {
+            this.container.data('clockpicker').popover.css('position', 'fixed');
+        }
+
         this.bindConstantEvents();
         return this.clockpicker;
     }
@@ -80,7 +73,7 @@ PrimeFaces.widget.ExtClockPicker = class extends PrimeFaces.widget.BaseWidget {
             $this.hide();
         });
 
-        PrimeFaces.utils.registerScrollHandler(this, 'scroll.' + this.id + '_hide', function () {
+        PrimeFaces.utils.registerConnectedOverlayScrollHandler(this, 'scroll.' + this.id + '_hide', this.container, function () {
             $this.hide();
         });
     }

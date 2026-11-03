@@ -66,7 +66,7 @@
 
 	// Popover template
 	let tpl = [
-		'<div class="popover clockpicker-popover p-widget" style="position:absolute;z-index:2000;">',
+		'<div class="popover clockpicker-popover p-widget" style="position:absolute;">',
 			'<div class="arrow"></div>',
 			'<div class="popover-title">',
 				'<span class="clockpicker-span-hours text-primary"></span>',
@@ -382,7 +382,10 @@
 	ClockPicker.prototype.locate = function(){
 		let element = this.element,
 			popover = this.popover,
-			offset = element.offset(),
+			// PFE patch: a fixed popover (inside a fixed dialog) is placed in viewport coordinates
+			fixed = popover.css('position') === 'fixed',
+			rect = element[0].getBoundingClientRect(),
+			offset = fixed ? {left: rect.left, top: rect.top} : element.offset(),
 			width = element.outerWidth(),
 			height = element.outerHeight(),
 			placement = this.options.placement,
@@ -393,7 +396,7 @@
 		popover.show();
 
 		let offsetParent = popover.offsetParent();
-		if (!offsetParent || !offsetParent.length || offsetParent.is('body') || offsetParent.is('html')) {
+		if (fixed || !offsetParent || !offsetParent.length || offsetParent.is('body') || offsetParent.is('html')) {
 			appendToOffset = {left: 0, top: 0};
 		}
 		else {
@@ -500,13 +503,17 @@
 		// Toggle to hours view
 		this.toggleView('hours');
 
+		// PFE patch: stack above the overlay that opened it, e.g. a dialog
+		PrimeFaces.nextZindex(this.popover);
+
 		// Set position
 		this.locate();
 
 		this.isShown = true;
 
 		// Hide when clicking or tabbing on any element except the clock, input and addon
-		$doc.on('click.clockpicker.' + this.id + ' focusin.clockpicker.' + this.id, function(e){
+		// PFE patch: mousedown instead of click, like PrimeFaces overlays, so e.g. dragging a dialog hides it too
+		$doc.on('mousedown.clockpicker.' + this.id + ' focusin.clockpicker.' + this.id, function(e){
 			let target = $(e.target);
 			if (target.closest(self.popover).length === 0 &&
 					target.closest(self.addon).length === 0 &&
@@ -532,7 +539,7 @@
 		this.isShown = false;
 
 		// Unbinding events on document
-		$doc.off('click.clockpicker.' + this.id + ' focusin.clockpicker.' + this.id);
+		$doc.off('mousedown.clockpicker.' + this.id + ' focusin.clockpicker.' + this.id);
 		$doc.off('keyup.clockpicker.' + this.id);
 
 		this.popover.hide();
