@@ -31,9 +31,9 @@
             <p><code>userBean</code> should be a session scoped bean with a <code>String</code> type <code>colorScheme</code> property
                 (with both getter and setter). Its value is <code>light</code> or <code>dark</code>. Rendering it on the <code>html</code>
                 element avoids a flash of the other mode on page load.</p>
-            <p>This showcase does not bind <code>selected</code>: the theme configurator (palette button at the right edge) keeps the
-                color scheme in the <code>localStorage</code> of the browser and applies it before the first paint, so the choice of the
-                configurator and of the demo below always agree and survive a reload.</p>
+            <p>This showcase does not bind <code>selected</code>: the color scheme chosen in the theme configurator of PrimeFaces
+                (palette button at the right edge) is kept in the <code>localStorage</code> of the browser and applied before the
+                first paint. The demo below switches the scheme of the current page only.</p>
 
             <h3>A different theme per mode</h3>
             <p>Optionally, the <code>light</code> and <code>dark</code> attributes name a theme to switch to as well, e.g.
@@ -64,7 +64,7 @@
             <!-- EXAMPLE: lightSwitch/jsAPI -->
             <h5>JavaScript API</h5>
             <p>The widget methods <code>light()</code>, <code>dark()</code>, <code>toggle()</code> and <code>automatic()</code> switch
-                the whole site. Open the theme configurator: its color scheme buttons follow the switch. <code>automatic="false"</code> keeps the switch from applying the OS setting on page load, so the stored choice wins.</p>
+                the page. <code>automatic="false"</code> keeps the switch from applying the OS setting on page load, so the color scheme stored by the theme configurator wins.</p>
             <h:form id="formJsAPI">
                 <pe:lightSwitch id="lightSwitch" widgetVar="lightSwitch" automatic="false"/>
 

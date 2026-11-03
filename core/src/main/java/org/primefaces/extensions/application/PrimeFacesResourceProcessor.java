@@ -69,20 +69,11 @@ public class PrimeFacesResourceProcessor implements PhaseListener {
         final PrimeApplicationContext applicationContext = requestContext.getApplicationContext();
         final PrimeConfiguration configuration = applicationContext.getConfig();
 
-        String theme;
-        String themeParamValue = applicationContext.getConfig().getTheme();
+        // the preset of this request, like the PrimeFaces HeadRenderer: chosen by the user (primefaces.THEME_CONFIGURATOR cookie),
+        // otherwise primefaces.THEME or aura; blank for none
+        final String theme = requestContext.getTheme();
 
-        if (themeParamValue != null) {
-            theme = context.getApplication().evaluateExpressionGet(context, themeParamValue, String.class);
-            if (LangUtils.isNotBlank(theme)) {
-                theme = theme.trim();
-            }
-        }
-        else {
-            theme = "aura"; // default (PrimeFaces 17 design token theme)
-        }
-
-        // the tokens of the theme (aura, lara, nora, metal, glass or a custom primefaces-<name>/theme.css), see PrimeFaces HeadRenderer
+        // the tokens of the theme (aura, lara, nora, material, metal, glass or a custom primefaces-<name>/theme.css)
         if (LangUtils.isNotBlank(theme) && !"none".equals(theme)) {
             ResourceExtUtils.addCssResource(context, LIBRARY + "-" + theme, "theme.css");
         }

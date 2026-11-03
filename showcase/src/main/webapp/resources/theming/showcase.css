@@ -5,6 +5,14 @@
  * The themes only define --p-* tokens, so these variables are mapped to the tokens here: the topbar, menu
  * and footer follow the preset, its color scheme and the configurator.
  */
+
+/* PFE showcase default primary color (differs from the PrimeFaces showcase), for every preset. Unlayered, it wins over
+   the presets' @layer primefaces.tokens, so it applies on the first paint and the theme configurator reads it as the
+   default; a primary color chosen in the configurator (inline style on <html>) overrides it. */
+:root {
+    --p-primary-base: var(--p-yellow-500);
+}
+
 :root {
     --primary-color: var(--p-primary-color);
     --primary-color-text: var(--p-primary-contrast-color);

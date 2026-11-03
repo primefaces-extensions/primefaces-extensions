@@ -105,11 +105,16 @@
     <!-- Context parameters - Primefaces & Extensions -->
     <context-param>
         <param-name>primefaces.THEME</param-name>
-        <param-value>#{app.theme}</param-value>
+        <param-value>aura</param-value>
     </context-param>
     <context-param>
         <param-name>primefaces.DIR</param-name>
-        <param-value>#{app.dir}</param-value>
+        <param-value>#{app.localeDir}</param-value>
+    </context-param>
+    <!-- preset and direction of the theme configurator (cookies), its other settings before the first paint -->
+    <context-param>
+        <param-name>primefaces.THEME_CONFIGURATOR</param-name>
+        <param-value>true</param-value>
     </context-param>
     <context-param>
         <param-name>jakarta.faces.AUTOMATIC_EXTENSIONLESS_MAPPING</param-name>

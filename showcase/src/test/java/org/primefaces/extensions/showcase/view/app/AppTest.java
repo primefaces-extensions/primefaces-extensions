@@ -36,25 +36,9 @@ class AppTest {
 
     @Test
     void presetsAreExactly() {
-        assertEquals(List.of("aura", "lara", "nora", "metal", "glass"), App.PRESETS);
+        assertEquals(List.of("aura", "lara", "nora", "material", "metal", "glass"), App.PRESETS);
         assertEquals(App.PRESETS, new App().getPresets());
-    }
-
-    @Test
-    void defaultThemeIsAura() {
-        assertEquals("aura", new App().resolveTheme(null));
-    }
-
-    @Test
-    void validPresetSwitchesTheme() {
-        final App app = new App();
-        assertEquals("lara", app.resolveTheme("lara"));
-        assertEquals("lara", app.resolveTheme(null));
-    }
-
-    @Test
-    void invalidPresetIgnored() {
-        assertEquals("aura", new App().resolveTheme("bootstrap"));
+        assertEquals("aura,lara,nora,material,metal,glass", new App().getPresetNames());
     }
 
     @Test
@@ -65,10 +49,9 @@ class AppTest {
                     .filter(c -> "ar".equals(c.getLanguage())).findFirst().orElseThrow();
         assertTrue(arabic.isRtl());
         final App app = new App();
-        assertEquals("ltr", app.resolveDir(null));
+        assertEquals("ltr", app.getLocaleDir());
         app.setLocale(arabic);
-        assertEquals("rtl", app.resolveDir(null));
-        assertEquals("ltr", app.resolveDir("ltr"));
+        assertEquals("rtl", app.getLocaleDir());
     }
 
     @Test
