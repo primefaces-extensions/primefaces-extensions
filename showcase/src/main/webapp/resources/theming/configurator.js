@@ -8,7 +8,8 @@
     var root = document.documentElement;
     var KEYS = { scheme: 'pf-demo-scheme', primary: 'pf-demo-primary', density: 'pf-demo-density', tokens: 'pf-demo-tokens',
         input: 'pf-demo-input' };
-    // PFE showcase default primary color (differs from the PrimeFaces showcase); a stored choice overrides it
+    // PFE showcase default primary color (differs from the PrimeFaces showcase); a stored choice overrides it.
+    // Also set in configurator.css, so it applies before this script runs (MOVE_SCRIPTS_TO_BOTTOM): keep both in sync
     var DEFAULT_PRIMARY = 'var(--p-yellow-500)';
 
     function primaryValue() {

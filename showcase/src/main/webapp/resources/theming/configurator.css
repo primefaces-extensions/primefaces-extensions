@@ -3,6 +3,14 @@
  * window opens the panel as an overlay from the right (no mask: the page stays visible and follows every change). The
  * panel itself is themed by the tokens it edits.
  */
+
+/* PFE showcase default primary color (DEFAULT_PRIMARY of configurator.js), in CSS so it applies before the first
+   paint: with primefaces.MOVE_SCRIPTS_TO_BOTTOM configurator.js runs at the end of the body. Unlayered, it wins over the
+   presets' @layer primefaces.tokens; a stored choice (inline style set by configurator.js) still overrides it. */
+:root {
+    --p-primary-base: var(--p-yellow-500);
+}
+
 .cfg {
     position: fixed;
     top: 0;
