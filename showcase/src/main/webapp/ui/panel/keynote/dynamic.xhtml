@@ -30,7 +30,7 @@
             </p>
             <h:form id="formDynamic">
                 <pe:keynote loop="true" autoSlide="3000" slideNumber="c/t" value="#{keynoteController.items}" var="item"
-                            width="480" height="350" style="width: 50vw; height: 50vh;">
+                            width="480" height="350" style="width: 50vw; height: 50vh;" embedded="true">
                     <pe:keynoteItem>
                         <h2>#{item.headline}</h2>
                         <p>#{item.content}</p>
