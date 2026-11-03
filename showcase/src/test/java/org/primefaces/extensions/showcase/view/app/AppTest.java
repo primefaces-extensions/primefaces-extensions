@@ -36,9 +36,9 @@ class AppTest {
 
     @Test
     void presetsAreExactly() {
-        assertEquals(List.of("aura", "lara", "nora", "metal", "glass"), App.PRESETS);
+        assertEquals(List.of("aura", "lara", "nora", "material", "metal", "glass"), App.PRESETS);
         assertEquals(App.PRESETS, new App().getPresets());
-        assertEquals("aura,lara,nora,metal,glass", new App().getPresetNames());
+        assertEquals("aura,lara,nora,material,metal,glass", new App().getPresetNames());
     }
 
     @Test

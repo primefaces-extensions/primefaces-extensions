@@ -52,7 +52,7 @@ public class App implements Serializable {
     /**
      * The presets of PrimeFaces offered by the showcase (theme configurator and landing page).
      */
-    public static final List<String> PRESETS = List.of("aura", "lara", "nora", "metal", "glass");
+    public static final List<String> PRESETS = List.of("aura", "lara", "nora", "material", "metal", "glass");
 
     private static final String UNKNOWN = "unknown";
 
