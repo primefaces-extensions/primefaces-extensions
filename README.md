@@ -12,7 +12,7 @@
 [![Stackoverflow](https://img.shields.io/badge/StackOverflow-primefaces-chocolate.svg)](https://stackoverflow.com/questions/tagged/primefaces-extensions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-This is an overview page, please visit [primefaces-extensions.github.io](http://primefaces-extensions.github.io/) or the [showcase](https://primefaces-extensions-showcase-55pq8.ondigitalocean.app/) for more information.
+This is an overview page, please visit [primefaces-extensions.github.io](http://primefaces-extensions.github.io/) or the [showcase](https://extensions.primefaces.org/) for more information.
 
 ## Versioning
 
@@ -20,8 +20,8 @@ There are multiple versions available please check which one for your PrimeFaces
 
 | Version | Explanation | Showcase |
 | --- | --- | --- |
-| ![16.x](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions?versionPrefix=16.0&color=cyan) | PrimeFaces 16.0.0 | [HTTPS](https://primefaces-extensions-showcase-55pq8.ondigitalocean.app/) |
-| ![15.x](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions?versionPrefix=15.0&color=cyan) | PrimeFaces 15.0.0 | [HTTPS](https://extensions.primefaces.org/) |
+| ![16.x](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions?versionPrefix=16.0&color=cyan) | PrimeFaces 16.0.0 | [HTTPS](https://extensions.primefaces.org/) |
+| ![15.x](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions?versionPrefix=15.0&color=cyan) | PrimeFaces 15.0.0 | |
 | ![14.x](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions?versionPrefix=14.0&color=cyan) | PrimeFaces 14.0.0 | |
 | ![13.x](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions?versionPrefix=13.0&color=cyan) | PrimeFaces 13.0.0 | |
 | ![12.x](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions?versionPrefix=12.0&color=cyan) | PrimeFaces 12.0.0 | |
