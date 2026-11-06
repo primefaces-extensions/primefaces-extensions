@@ -27,16 +27,16 @@
                 See also <p:link outcome="/ui/input/converters" value="Sanitizing Converter"/>.</p>
 
             <h3>pom.xml</h3>
-            <pre>
+            <pre class="language-xml line-numbers"><code>
 &lt;dependency&gt;
      &lt;groupId&gt;com.googlecode.owasp-java-html-sanitizer&lt;/groupId&gt;
      &lt;artifactId&gt;owasp-java-html-sanitizer&lt;/artifactId&gt;
      &lt;version&gt;20240325.1&lt;/version&gt;
 &lt;/dependency&gt;
-            </pre>
+            </code></pre>
 
             <h3>faces-config.xml</h3>
-            <pre>
+            <pre class="language-xml line-numbers"><code>
 &lt;application&gt;
     &lt;system-event-listener&gt;
         &lt;system-event-listener-class&gt;org.primefaces.extensions.application.EscapeSanitizerComponentListener&lt;/system-event-listener-class&gt;
@@ -44,7 +44,7 @@
         &lt;source-class&gt;jakarta.faces.component.html.HtmlBody&lt;/source-class&gt;
     &lt;/system-event-listener&gt;
 &lt;/application&gt;
-            </pre>
+            </code></pre>
         </div>
 
         <h2>CombinedResourceHandler</h2>
@@ -59,7 +59,7 @@
                 PrimeFaces Extensions includes these classes so you don't have to write your own or keep them up to date with every PrimeFaces release.</p>
 
             <h3>faces-config.xml</h3>
-            <pre>
+            <pre class="language-xml line-numbers"><code>
 &lt;application&gt;
     &lt;system-event-listener&gt;
         &lt;system-event-listener-class&gt;org.primefaces.extensions.application.PrimeFacesScriptProcessor&lt;/system-event-listener-class&gt;
@@ -71,10 +71,10 @@
 &lt;lifecycle&gt;
     &lt;phase-listener&gt;org.primefaces.extensions.application.PrimeFacesResourceProcessor&lt;/phase-listener&gt;
 &lt;/lifecycle&gt;
-            </pre>
+            </code></pre>
 
             <h3>Disable PrimeFaces HeadRenderer (Mojarra)</h3>
-            <pre>
+            <pre class="language-xml line-numbers"><code>
 &lt;render-kit&gt;
     &lt;renderer&gt;
         &lt;component-family&gt;jakarta.faces.Output&lt;/component-family&gt;
@@ -82,10 +82,10 @@
         &lt;renderer-class&gt;com.sun.faces.renderkit.html_basic.HeadRenderer&lt;/renderer-class&gt;
     &lt;/renderer&gt;
 &lt;/render-kit&gt;
-            </pre>
+            </code></pre>
 
             <h3>Disable PrimeFaces HeadRenderer (MyFaces)</h3>
-            <pre>
+            <pre class="language-xml line-numbers"><code>
 &lt;render-kit&gt;
     &lt;renderer&gt;
         &lt;component-family&gt;jakarta.faces.Output&lt;/component-family&gt;
@@ -93,7 +93,7 @@
         &lt;renderer-class&gt;org.apache.myfaces.renderkit.html.HtmlHeadRenderer&lt;/renderer-class&gt;
     &lt;/renderer&gt;
 &lt;/render-kit&gt;
-            </pre>
+            </code></pre>
         </div>
 
         <h2>MorphiaLazyDataModel</h2>
@@ -102,27 +102,27 @@
                 supports basic features.</p>
 
             <h3>pom.xml</h3>
-            <pre>
+            <pre class="language-xml line-numbers"><code>
 &lt;dependency&gt;
     &lt;groupId&gt;dev.morphia.morphia&lt;/groupId&gt;
     &lt;artifactId&gt;morphia-core&lt;/artifactId&gt;
     &lt;version&gt;2.2.3&lt;/version&gt;
     &lt;optional&gt;true&lt;/optional&gt;
 &lt;/dependency&gt;
-            </pre>
+            </code></pre>
 
             <h3>Bean (defaults using ID field)</h3>
-            <pre>
+            <pre class="language-java line-numbers"><code>
 new MorphiaLazyDataModel&lt;&gt;(MyEntity.class, () -&gt; datastore);
-            </pre>
+            </code></pre>
 
             <h3>Bean (using field name of class "getUuid()" for rowKey)</h3>
-            <pre>
+            <pre class="language-java line-numbers"><code>
 new MorphiaLazyDataModel&lt;&gt;(MyEntity.class, () -&gt; datastore, "uuid");
-            </pre>
+            </code></pre>
 
             <h3>Global Filter and customization</h3>
-            <pre>
+            <pre class="language-javascript line-numbers"><code>
 // let's implement a global filter here for the string fields
 dataModel.globalFilter((query, filterMeta) -&gt; {
     Object val = filterMeta.getFilterValue();
@@ -143,7 +143,7 @@ dataModel.overrideFieldQuery("sold", (query, filterMeta) -&gt; {
         query.filter(Filters.eq("sold", false));
     }
 });
-            </pre>
+            </code></pre>
         </div>
     </ui:define>
 
