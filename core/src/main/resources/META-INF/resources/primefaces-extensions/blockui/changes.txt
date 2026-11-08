@@ -1,7 +1,0 @@
-0-jquery.blockUI.js:
-------------------------------------------------
-- width 'auto' in "css" and "themedCSS".
-- no backgroundColor and opacity in "overlayCSS".
-- apply always overlay settings with lyr2.css(opts.overlayCSS)
-- patch https://github.com/malsup/blockui/pull/149
-- patch https://github.com/malsup/blockui/pull/130

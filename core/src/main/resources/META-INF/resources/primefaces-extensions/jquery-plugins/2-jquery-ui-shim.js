@@ -6,7 +6,7 @@
  * PrimeFaces.interactions, so existing code keeps working while it is migrated. Every plugin logs a deprecation
  * warning (development project stage only) the first time it is used.
  *
- * It is part of jquery-plugins.js, after the jQuery UI subset, and is also used by Layout and BlockUI. Plugins defined
+ * It is part of jquery-plugins.js, after the jQuery UI subset, and is also used by Layout. Plugins defined
  * by a full jQuery UI that is loaded anyway are not replaced.
  *
  * Not covered, see the PrimeFaces 17 migration guide: $.fn.position(options) beyond the jQuery UI subset, jQuery UI CSS

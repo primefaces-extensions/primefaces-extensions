@@ -1,8 +1,4 @@
 # Legacy showcase examples: <legacyDir>/<useCase>. Generated; one per line, sorted.
-blockui/blockCustom
-blockui/blockPage
-blockui/blockUIAjax
-blockui/blockUIAutoShow
 calculator/basicUsage
 calculator/javascript
 calculator/localization
