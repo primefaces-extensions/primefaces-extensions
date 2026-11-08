@@ -180,7 +180,6 @@
                     <resourcesSets>
                         <resourcesSet>
                             <includes>
-                                <include>blockui/**</include>
                                 <include>calculator/**</include>
                                 <include>clipboard/**</include>
                                 <include>clockpicker/**</include>

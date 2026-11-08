@@ -4,7 +4,6 @@ This product includes software developed by Michal Wojciechowski (http://odyniec
 This product includes software developed by Craig Thompson (http://craigsworks.com/projects/qtip2/)
 This product includes software developed by Kevin Dalman (http://layout.jquery-dev.net/)
 This product includes software developed by François Gélinas (https://github.com/fgelinas/timepicker)
-This product includes software developed by Mike Alsup (https://github.com/malsup/blockui)
 This product includes software developed by Bob Knothe (http://www.decorplanit.com/plugin/)
 This product includes software developed by Caleb Troughton (http://imakewebthings.com/jquery-waypoints/)
 This product includes software developed by David DeSandro (http://masonry.desandro.com/)

@@ -139,7 +139,6 @@ public class AppMenu {
         add(PANEL, new MenuItem("SlideOut", "/ui/panel/slideout"));
         add(PANEL, new MenuItem("Waypoint", "/ui/panel/waypoint"));
 
-        add(OVERLAY, new MenuItem("BlockUI", "/ui/overlay/blockui"));
         add(OVERLAY, new MenuItem("CommandPalette", "/ui/overlay/commandpalette", "New"));
         add(OVERLAY, new MenuItem("CookiePolicy", "/ui/overlay/cookiepolicy"));
         add(OVERLAY, new MenuItem("Session", "/ui/overlay/session"));
