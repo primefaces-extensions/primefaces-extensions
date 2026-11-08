@@ -154,7 +154,6 @@ public class AppMenu {
         add(MEDIA, new MenuItem("ImageZoom", "/ui/media/imagezoom"));
 
         add(MISC, new MenuItem("Clipboard", "/ui/misc/clipboard"));
-        add(MISC, new MenuItem("FileDownload", "/ui/misc/filedownload"));
         add(MISC, new MenuItem("Functions/Utils", "/ui/misc/utils"));
         add(MISC, new MenuItem("LightSwitch", "/ui/misc/lightswitch"));
         add(MISC, new MenuItem("Localized", "/ui/misc/localized"));

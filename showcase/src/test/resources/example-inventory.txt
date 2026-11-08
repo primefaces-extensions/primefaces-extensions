@@ -37,7 +37,6 @@ echarts/basicUsage
 echarts/exportUsage
 echarts/facetUsage
 echarts/themeUsage
-fileDownload/basic
 fluidgrid/dynaform
 fluidgrid/dynamic
 fluidgrid/dynamiclabels
