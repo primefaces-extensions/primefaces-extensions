@@ -1,8 +1,8 @@
 /**
  * @preserve
- * jQuery UI Layout 2.0.0
- * $Date: 2026-07-23 $
- * $Rev: 2.0.0 $
+ * jQuery UI Layout 2.0.1
+ * $Date: 2026-11-08 $
+ * $Rev: 2.0.1 $
  *
  * Copyright (c) 2014 Kevin Dalman (http://jquery-dev.com)
  * Based on work by Fabrizio Balliano (http://www.fabrizioballiano.net)
@@ -80,7 +80,7 @@
      * GENERIC $.layout METHODS - used by all layouts
      */
             $.layout = {
-                version:"2.0.0"
+                version:"2.0.1"
                 , revision:2.0000 // eg: ver 1.4.4 = rev 1.0404 - major(n+).minor(nn)+patch(nn+)
 
 
@@ -3007,8 +3007,10 @@
                         if (!isInitialized())
                             return;
                         var pane = evtPane.call(this, evt_or_pane)
+                            , o = options[pane]
                             , s = state[pane]
                             , $P = $Ps[pane]
+                            , $R = $Rs[pane]
                         ;
                         if (pane === "center" || !$P || s.isHidden)
                             return; // pane does not exist OR is already hidden
@@ -3258,7 +3260,7 @@
                         if (o.resizable && $.layout.plugins.draggable)
                             $R
                                 .draggable("disable")
-                                .removeClass("p-state-disabled") // do NOT apply disabled styling - not suitable here
+                                .removeClass("ui-state-disabled") // do NOT apply disabled styling - not suitable here
                                 .css("cursor", "default")
                                 .attr("title", "")
                             ;
@@ -3393,15 +3395,16 @@
                             }
 
                             // set classes, position handles and execute callbacks...
-                            setAsOpen(pane);
+                            setAsOpen(pane, false, isShowing);
                         }
                     }
 
                     /**
                      * @param {string} pane  The pane just opened, for example north, south, east, or west
                      * @param {boolean=} [skipCallback=false]
+                     * @param {boolean=} [isShowing=false] True when this open completes showing a hidden pane
                      */
-                    , setAsOpen = function (pane, skipCallback) {
+                    , setAsOpen = function (pane, skipCallback, isShowing) {
                         var
                             $P = $Ps[pane]
                             , $R = $Rs[pane]
@@ -3461,8 +3464,8 @@
                         if (!skipCallback && (state.initialized || o.triggerEventsOnLoad) && $P.is(":visible")) {
                             // onopen callback
                             _runCallbacks("onopen_end", pane);
-                            // onshow callback - TODO: should this be here?
-                            if (s.isShowing)
+                            // Use the opening operation's saved flag; pane state is already cleared.
+                            if (isShowing)
                                 _runCallbacks("onshow_end", pane);
 
                             // ALSO call onresize because layout-size *may* have changed while pane was closed
@@ -4525,7 +4528,7 @@
                         var pane = evtPane.call(this, evt_or_pane)
                             , $R = $Rs[pane]
                         ;
-                        if (!$R || !$R.data('ui-draggable'))
+                        if (!$R || !$R.data('draggable'))
                             return;
                         options[pane].slidable = true;
                         if (state[pane].isClosed)
@@ -4564,7 +4567,7 @@
                             , $R = $Rs[pane]
                             , o = options[pane]
                         ;
-                        if (!$R || !$R.data('ui-draggable'))
+                        if (!$R || !$R.data('draggable'))
                             return;
                         o.resizable = true;
                         $R.draggable("enable");
@@ -4581,7 +4584,7 @@
                         var pane = evtPane.call(this, evt_or_pane)
                             , $R = $Rs[pane]
                         ;
-                        if (!$R || !$R.data('ui-draggable'))
+                        if (!$R || !$R.data('draggable'))
                             return;
                         options[pane].resizable = false;
                         $R.draggable("disable")
