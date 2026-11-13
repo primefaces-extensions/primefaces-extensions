@@ -3,7 +3,7 @@
  * 
  * @author Oleg Varaksin
  */
-PrimeFaces.widget.ExtFluidGrid = class extends PrimeFaces.widget.DeferredWidget {
+PrimeFaces.component.ExtFluidGrid = class extends PrimeFaces.component.DeferredComponent {
 
     /**
      * Initializes the widget.

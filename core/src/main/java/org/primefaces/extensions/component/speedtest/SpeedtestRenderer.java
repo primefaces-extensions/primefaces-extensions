@@ -32,9 +32,9 @@ import jakarta.faces.render.FacesRenderer;
 import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.util.ComponentScriptBuilder;
 import org.primefaces.util.ComponentTraversalUtils;
 import org.primefaces.util.HTML;
-import org.primefaces.util.WidgetBuilder;
 
 /**
  * Renderer for the {@link Speedtest} component.
@@ -79,7 +79,7 @@ public class SpeedtestRenderer extends CoreRenderer<Speedtest> {
         if (component.getStyle() != null) {
             writer.writeAttribute(Attrs.STYLE, component.getStyle(), Attrs.STYLE);
         }
-        writer.writeAttribute(HTML.WIDGET_VAR, widgetVar, null);
+        writer.writeAttribute(HTML.REF, widgetVar, null);
         writer.startElement("div", component);
         writer.writeAttribute(Attrs.CLASS, "ui-g", null);
         // Download Gauge
@@ -122,7 +122,7 @@ public class SpeedtestRenderer extends CoreRenderer<Speedtest> {
             throw new FacesException("Speedtest:" + clientId + " needs to be enclosed in a form component");
         }
 
-        final WidgetBuilder wb = getWidgetBuilder(context);
+        final ComponentScriptBuilder wb = getComponentScriptBuilder(context);
         wb.init("ExtSpeedtest", component);
         wb.attr("idDown", clientId + "ggdown");
         wb.attr("idUp", clientId + "ggup");

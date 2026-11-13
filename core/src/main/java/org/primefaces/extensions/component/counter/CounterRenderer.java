@@ -32,9 +32,9 @@ import jakarta.faces.render.FacesRenderer;
 import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.util.ComponentScriptBuilder;
 import org.primefaces.util.Constants;
 import org.primefaces.util.LangUtils;
-import org.primefaces.util.WidgetBuilder;
 
 /**
  * <code>Counter</code> component.
@@ -58,7 +58,7 @@ public class CounterRenderer extends CoreRenderer<Counter> {
     }
 
     private void encodeScript(final FacesContext context, final Counter component) throws IOException {
-        final WidgetBuilder wb = getWidgetBuilder(context);
+        final ComponentScriptBuilder wb = getComponentScriptBuilder(context);
 
         final Locale locale = component.calculateLocale();
         final DecimalFormat formatter = (DecimalFormat) DecimalFormat.getInstance(locale);

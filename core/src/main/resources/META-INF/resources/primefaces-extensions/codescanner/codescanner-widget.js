@@ -5,7 +5,7 @@
  * @author Jasper de Vries jepsar@gmail.com
  * @since 10.0
  */
-PrimeFaces.widget.ExtCodeScanner = class extends PrimeFaces.widget.BaseWidget {
+PrimeFaces.component.ExtCodeScanner = class extends PrimeFaces.component.BaseComponent {
 
     init(cfg) {
         super.init(cfg);

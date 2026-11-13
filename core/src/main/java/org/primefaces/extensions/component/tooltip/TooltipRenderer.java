@@ -30,12 +30,12 @@ import jakarta.faces.render.FacesRenderer;
 import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.util.ComponentScriptBuilder;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
 import org.primefaces.util.EscapeUtils;
 import org.primefaces.util.FastStringWriter;
 import org.primefaces.util.LangUtils;
-import org.primefaces.util.WidgetBuilder;
 
 /**
  * Renderer for the {@link Tooltip} component.
@@ -78,7 +78,7 @@ public class TooltipRenderer extends CoreRenderer<Tooltip> {
             }
         }
 
-        final WidgetBuilder wb = getWidgetBuilder(context);
+        final ComponentScriptBuilder wb = getComponentScriptBuilder(context);
         wb.init("ExtTooltip", component);
         wb.attr("global", global);
         wb.attr("shared", shared);

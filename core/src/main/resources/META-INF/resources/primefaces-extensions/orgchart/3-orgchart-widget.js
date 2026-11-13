@@ -17,7 +17,7 @@ const PFE_ORGCHART_FILTER_ROLES = Object.freeze({
     clear: 'filter-clear'
 });
 
-PrimeFaces.widget.ExtOrgChart = class extends PrimeFaces.widget.BaseWidget {
+PrimeFaces.component.ExtOrgChart = class extends PrimeFaces.component.BaseComponent {
 
     /**
      * Initializes the widget.

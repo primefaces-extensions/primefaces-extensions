@@ -3,7 +3,7 @@
  *
  * @author Thomas Andraschko
  */
-PrimeFaces.widget.ExtCodeMirror = class extends PrimeFaces.widget.DeferredWidget {
+PrimeFaces.component.ExtCodeMirror = class extends PrimeFaces.component.DeferredComponent {
 
     /**
      * Initializes the widget.
@@ -163,7 +163,7 @@ PrimeFaces.widget.ExtCodeMirror = class extends PrimeFaces.widget.DeferredWidget
                             $this.suggestions.push($(this).text());
                         });
 
-                        CodeMirror.showHint($this.instance, PrimeFaces.widget.ExtCodeMirror.getSuggestions);
+                        CodeMirror.showHint($this.instance, PrimeFaces.component.ExtCodeMirror.getSuggestions);
                     }
                 });
 
@@ -227,18 +227,18 @@ PrimeFaces.widget.ExtCodeMirror = class extends PrimeFaces.widget.DeferredWidget
      * Disables this input so that the user cannot enter a value anymore.
      */
     disable() {
-        PrimeFaces.utils.disableInputWidget(this.jq);
+        PrimeFaces.utils.disableInputComponent(this.jq);
     }
 
     /**
      * Enables this input so that the user can enter a value.
      */
     enable() {
-        PrimeFaces.utils.enableInputWidget(this.jq);
+        PrimeFaces.utils.enableInputComponent(this.jq);
     }
 };
 
-PrimeFaces.widget.ExtCodeMirror.getSuggestions = function (editor) {
+PrimeFaces.component.ExtCodeMirror.getSuggestions = function (editor) {
     return {
         list: editor.widgetInstance.suggestions,
         from: {

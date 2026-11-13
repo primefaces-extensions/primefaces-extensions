@@ -30,8 +30,8 @@ import org.primefaces.context.PrimeRequestContext;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.shaded.json.JSONWriter;
 import org.primefaces.shaded.owasp.encoder.Encode;
+import org.primefaces.util.ComponentScriptBuilder;
 import org.primefaces.util.Constants;
-import org.primefaces.util.WidgetBuilder;
 
 /**
  * Base renderer for both the {@link MonacoEditorFramed framed} and {@link MonacoEditorInline inline} monaco editor as well as the diff editor.
@@ -48,9 +48,9 @@ abstract class MonacoEditorCommonRenderer<TEditor extends MonacoEditorCommon<TEd
         this.componentClass = clazz;
     }
 
-    protected abstract void addBaseWidgetProperties(FacesContext context, WidgetBuilder wb, TEditor monacoEditor) throws IOException;
+    protected abstract void addBaseWidgetProperties(FacesContext context, ComponentScriptBuilder wb, TEditor monacoEditor) throws IOException;
 
-    protected final void array(WidgetBuilder wb, String key, Iterable<String> values) throws IOException {
+    protected final void array(ComponentScriptBuilder wb, String key, Iterable<String> values) throws IOException {
         final StringBuilder builder = new StringBuilder();
         builder.append('[');
         for (final String item : values) {
@@ -117,7 +117,7 @@ abstract class MonacoEditorCommonRenderer<TEditor extends MonacoEditorCommon<TEd
     protected abstract void encodeMonacoEditor(final FacesContext context, final TEditor monacoEditor) throws IOException;
 
     protected final void encodeScript(final FacesContext context, final TEditor monacoEditor) throws IOException {
-        final WidgetBuilder wb = PrimeRequestContext.getCurrentInstance(context).getWidgetBuilder();
+        final ComponentScriptBuilder wb = PrimeRequestContext.getCurrentInstance(context).getComponentScriptBuilder();
 
         wb.init(getWidgetName(), monacoEditor);
 

@@ -45,10 +45,10 @@ import org.primefaces.extensions.model.dynaform.DynaFormRow;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.extensions.util.ExtLangUtils;
 import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.util.ComponentScriptBuilder;
 import org.primefaces.util.CompositeUtils;
 import org.primefaces.util.Constants;
 import org.primefaces.util.FacetUtils;
-import org.primefaces.util.WidgetBuilder;
 
 /**
  * Renderer for {@link DynaForm} component.
@@ -165,7 +165,7 @@ public class DynaFormRenderer extends CoreRenderer<DynaForm> {
     }
 
     protected void encodeScript(final FacesContext fc, final DynaForm component, final DynaFormModel dynaFormModel) throws IOException {
-        final WidgetBuilder wb = getWidgetBuilder(fc);
+        final ComponentScriptBuilder wb = getComponentScriptBuilder(fc);
         wb.init("ExtDynaForm", component);
         wb.attr("uuid", dynaFormModel.getUuid());
         wb.attr("autoSubmit", component.isAutoSubmit());

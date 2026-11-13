@@ -2,7 +2,7 @@
  * PrimeFaces Extensions ClockPicker Widget.
  *
  */
-PrimeFaces.widget.ExtClockPicker = class extends PrimeFaces.widget.BaseWidget {
+PrimeFaces.component.ExtClockPicker = class extends PrimeFaces.component.BaseComponent {
     /**
      * Initializes the widget.
      *
@@ -110,14 +110,14 @@ PrimeFaces.widget.ExtClockPicker = class extends PrimeFaces.widget.BaseWidget {
      */
     disable() {
         this.remove();
-        PrimeFaces.utils.disableInputWidget(this.container, this.input);
+        PrimeFaces.utils.disableInputComponent(this.container, this.input);
     }
 
     /**
      * Enables this input so that the user can enter a value.
      */
     enable() {
-        PrimeFaces.utils.enableInputWidget(this.container, this.input);
+        PrimeFaces.utils.enableInputComponent(this.container, this.input);
         this.clockpicker = this.createClockPicker();
     }
 };

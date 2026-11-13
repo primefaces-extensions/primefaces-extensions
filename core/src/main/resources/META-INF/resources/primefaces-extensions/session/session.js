@@ -4,7 +4,7 @@
  * @author Frank Cornelis
  * @since 12.0.4
  */
-PrimeFaces.widget.Session = class extends PrimeFaces.widget.BaseWidget {
+PrimeFaces.component.Session = class extends PrimeFaces.component.BaseComponent {
 
     init(cfg) {
         super.init(cfg);
@@ -16,7 +16,7 @@ PrimeFaces.widget.Session = class extends PrimeFaces.widget.BaseWidget {
     /**
      * @override
      * @inheritdoc
-     * @param {PrimeFaces.PartialWidgetCfg<TCfg>} cfg
+     * @param {PrimeFaces.PartialComponentCfg<TCfg>} cfg
      */
     refresh(cfg) {
         this.cancelTimers();

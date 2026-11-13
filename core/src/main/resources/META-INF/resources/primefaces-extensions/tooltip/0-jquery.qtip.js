@@ -55,7 +55,7 @@ PLUGINS = {},
 NAMESPACE = 'qtip',
 ATTR_HAS = 'data-hasqtip',
 ATTR_ID = 'data-qtip-id',
-WIDGET = ['p-widget', 'ui-tooltip'],
+WIDGET = ['p-component', 'ui-tooltip'],
 SELECTOR = '.'+NAMESPACE,
 INACTIVE_EVENTS = 'click dblclick mousedown mouseup mousemove mouseleave mouseenter'.split(' '),
 

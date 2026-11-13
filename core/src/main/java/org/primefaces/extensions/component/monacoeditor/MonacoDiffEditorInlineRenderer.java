@@ -29,7 +29,7 @@ import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.expression.SearchExpressionUtils;
-import org.primefaces.util.WidgetBuilder;
+import org.primefaces.util.ComponentScriptBuilder;
 
 /**
  * Default renderer for the inline Monaco diff editor that creates a new instance without iframes.
@@ -48,7 +48,7 @@ public class MonacoDiffEditorInlineRenderer extends MonacoDiffEditorBaseRenderer
     }
 
     @Override
-    protected void addWidgetProperties(FacesContext context, WidgetBuilder wb, MonacoDiffEditorInline monacoEditor) throws IOException {
+    protected void addWidgetProperties(FacesContext context, ComponentScriptBuilder wb, MonacoDiffEditorInline monacoEditor) throws IOException {
         final String overflowWidgetsDomNode = SearchExpressionUtils.resolveClientIdForClientSide( //
                     context, //
                     monacoEditor, //

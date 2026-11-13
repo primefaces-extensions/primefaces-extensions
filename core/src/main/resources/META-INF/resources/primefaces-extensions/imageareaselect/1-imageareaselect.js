@@ -3,7 +3,7 @@
  *
  * @author Thomas Andraschko
  */
-PrimeFaces.widget.ExtImageAreaSelect = class extends PrimeFaces.widget.BaseWidget {
+PrimeFaces.component.ExtImageAreaSelect = class extends PrimeFaces.component.BaseComponent {
 
     /**
      * Initializes the widget.

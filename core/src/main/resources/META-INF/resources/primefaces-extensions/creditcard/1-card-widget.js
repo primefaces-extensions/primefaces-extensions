@@ -4,12 +4,12 @@
  * @author Melloware mellowaredev@gmail.com
  * @since 8.0.1
  */
-PrimeFaces.widget.ExtCreditCard = class extends PrimeFaces.widget.BaseWidget {
+PrimeFaces.component.ExtCreditCard = class extends PrimeFaces.component.BaseComponent {
 
     /**
      * @override
      * @inheritdoc
-     * @param {PrimeFaces.BaseWidget} cfg
+     * @param {PrimeFaces.BaseComponent} cfg
      */
     init(cfg) {
         super.init(cfg);

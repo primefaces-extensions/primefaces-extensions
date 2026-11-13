@@ -46,8 +46,8 @@ import org.primefaces.util.LocaleUtils;
 @ResourceDependency(library = Constants.LIBRARY, name = "clockpicker/clockpicker.js")
 public class ClockPicker extends ClockPickerBaseImpl {
 
-    public static final String CONTAINER_CLASS = "pe-clockpicker p-widget clockpicker";
-    public static final String BUTTON_TRIGGER_CLASS = "pe-clockpicker-trigger p-button p-widget p-state-default p-button-icon-only input-group-addon";
+    public static final String CONTAINER_CLASS = "pe-clockpicker p-component clockpicker";
+    public static final String BUTTON_TRIGGER_CLASS = "pe-clockpicker-trigger p-button p-component p-state-default p-button-icon-only input-group-addon";
     public static final String BUTTON_TRIGGER_ICON_CLASS = "p-button-icon-left pi pi-clock";
     public static final String BUTTON_TRIGGER_TEXT_CLASS = "p-button-text";
 

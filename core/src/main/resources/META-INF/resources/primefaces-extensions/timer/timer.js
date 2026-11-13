@@ -3,12 +3,12 @@
  *
  * @author f.strazzullo
  */
-PrimeFaces.widget.ExtTimer = class extends PrimeFaces.widget.BaseWidget {
+PrimeFaces.component.ExtTimer = class extends PrimeFaces.component.BaseComponent {
 
     /**
      * @override
      * @inheritdoc
-     * @param {PrimeFaces.PartialWidgetCfg<TCfg>} cfg
+     * @param {PrimeFaces.PartialComponentCfg<TCfg>} cfg
      */
     init(cfg) {
         super.init(cfg);

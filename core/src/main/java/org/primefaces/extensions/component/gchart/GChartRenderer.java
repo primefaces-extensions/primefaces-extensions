@@ -29,8 +29,8 @@ import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.util.ComponentScriptBuilder;
 import org.primefaces.util.LangUtils;
-import org.primefaces.util.WidgetBuilder;
 
 @FacesRenderer(rendererType = GChart.DEFAULT_RENDERER, componentFamily = GChart.COMPONENT_FAMILY)
 @FacesRendererInfo
@@ -64,7 +64,7 @@ public class GChartRenderer extends CoreRenderer<GChart> {
             apiKey = getApiKey(context);
         }
 
-        final WidgetBuilder wb = getWidgetBuilder(context);
+        final ComponentScriptBuilder wb = getComponentScriptBuilder(context);
         wb.init("ExtGChart", component)
                     .attr("chart", component.getValue().toJson())
                     .attr("title", component.getTitle())

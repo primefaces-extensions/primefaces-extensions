@@ -7,19 +7,19 @@
  * @prop {object} editor Control handle for the underlying Markdown Editor
  * @prop {any | jQuery | HTMLElement} container Container for the DIV of EasyMDE.
  *
- * @interface {PrimeFaces.widget.MarkdownEditorCfg} cfg The configuration for the {@link  MarkdownEditor| MarkdownEditor widget}.
- * You can access this configuration via {@link PrimeFaces.widget.BaseWidget.cfg|BaseWidget.cfg}. Please note that this
+ * @interface {PrimeFaces.component.MarkdownEditorCfg} cfg The configuration for the {@link  MarkdownEditor| MarkdownEditor widget}.
+ * You can access this configuration via {@link PrimeFaces.component.BaseComponent.cfg|BaseComponent.cfg}. Please note that this
  * configuration is usually meant to be read-only and should not be modified.
- * @extends {PrimeFaces.widget.DeferredWidgetCfg} cfg
+ * @extends {PrimeFaces.component.DeferredComponentCfg} cfg
  *
  * @prop {boolean} cfg.direction Right To Left handling.
  */
-PrimeFaces.widget.ExtMarkdownEditor = class extends PrimeFaces.widget.BaseWidget {
+PrimeFaces.component.ExtMarkdownEditor = class extends PrimeFaces.component.BaseComponent {
 
     /**
      * @override
      * @inheritdoc
-     * @param {PrimeFaces.PartialWidgetCfg<TCfg>} cfg
+     * @param {PrimeFaces.PartialComponentCfg<TCfg>} cfg
      */
     init(cfg) {
         super.init(cfg);
@@ -170,13 +170,13 @@ PrimeFaces.widget.ExtMarkdownEditor = class extends PrimeFaces.widget.BaseWidget
      * Disables this input so that the user cannot enter a value anymore.
      */
     disable() {
-        PrimeFaces.utils.disableInputWidget(this.container, this.jq);
+        PrimeFaces.utils.disableInputComponent(this.container, this.jq);
     }
 
     /**
      * Enables this input so that the user can enter a value.
      */
     enable() {
-        PrimeFaces.utils.enableInputWidget(this.container, this.jq);
+        PrimeFaces.utils.enableInputComponent(this.container, this.jq);
     }
 };

@@ -37,8 +37,8 @@ import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.shaded.json.JSONArray;
 import org.primefaces.shaded.json.JSONObject;
+import org.primefaces.util.ComponentScriptBuilder;
 import org.primefaces.util.HTML;
-import org.primefaces.util.WidgetBuilder;
 
 /**
  * <code>orgchart</code> component.
@@ -129,7 +129,7 @@ public class OrgChartRenderer extends CoreRenderer<OrgChart> {
 
         writer.startElement("div", component);
         writer.writeAttribute("id", clientId, "id");
-        writer.writeAttribute(HTML.WIDGET_VAR, widgetVar, null);
+        writer.writeAttribute(HTML.REF, widgetVar, null);
         writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
         if (component.getStyle() != null) {
             writer.writeAttribute(Attrs.STYLE, component.getStyle(), Attrs.STYLE);
@@ -139,7 +139,7 @@ public class OrgChartRenderer extends CoreRenderer<OrgChart> {
 
     private void encodeScript(final FacesContext context, final OrgChart component)
                 throws IOException {
-        final WidgetBuilder wb = getWidgetBuilder(context);
+        final ComponentScriptBuilder wb = getComponentScriptBuilder(context);
 
         final OrgChartNode orgChartNode;
         if (component.getValue() == null) {

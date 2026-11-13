@@ -36,8 +36,8 @@ import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.util.ComponentScriptBuilder;
 import org.primefaces.util.LangUtils;
-import org.primefaces.util.WidgetBuilder;
 
 @FacesRenderer(rendererType = CommandPalette.DEFAULT_RENDERER, componentFamily = CommandPalette.COMPONENT_FAMILY)
 @FacesRendererInfo
@@ -167,7 +167,7 @@ public class CommandPaletteRenderer extends CoreRenderer<CommandPalette> {
     }
 
     private void encodeScript(final FacesContext context, final CommandPalette component) throws IOException {
-        final WidgetBuilder wb = getWidgetBuilder(context);
+        final ComponentScriptBuilder wb = getComponentScriptBuilder(context);
 
         wb.init("ExtCommandPalette", component)
                     .attr("for", SearchExpressionUtils.resolveClientIdsForClientSide(context, component, component.getFor()))

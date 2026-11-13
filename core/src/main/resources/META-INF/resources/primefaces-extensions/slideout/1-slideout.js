@@ -4,7 +4,7 @@
  * @author Melloware mellowaredev@gmail.com
  * @since 6.1
  */
-PrimeFaces.widget.ExtSlideOut = class extends PrimeFaces.widget.BaseWidget {
+PrimeFaces.component.ExtSlideOut = class extends PrimeFaces.component.BaseComponent {
 
     /**
      * Initializes the widget.

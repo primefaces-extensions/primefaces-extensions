@@ -32,9 +32,9 @@ import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.extensions.model.layout.LayoutOptions;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.util.ComponentScriptBuilder;
 import org.primefaces.util.FastStringWriter;
 import org.primefaces.util.LangUtils;
-import org.primefaces.util.WidgetBuilder;
 
 /**
  * Renderer for the {@link Layout} component.
@@ -110,7 +110,7 @@ public class LayoutRenderer extends CoreRenderer<Layout> {
     }
 
     protected void encodeScript(final FacesContext fc, final Layout component) throws IOException {
-        final WidgetBuilder wb = getWidgetBuilder(fc);
+        final ComponentScriptBuilder wb = getComponentScriptBuilder(fc);
         wb.init("ExtLayout", component);
         wb.attr("clientState", component.isStateCookie());
         wb.attr("full", component.isFullPage(), false);

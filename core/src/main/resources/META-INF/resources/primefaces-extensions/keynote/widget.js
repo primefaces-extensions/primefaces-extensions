@@ -1,4 +1,4 @@
-PrimeFaces.widget.ExtKeynote = class extends PrimeFaces.widget.BaseWidget {
+PrimeFaces.component.ExtKeynote = class extends PrimeFaces.component.BaseComponent {
 
     init(cfg) {
 

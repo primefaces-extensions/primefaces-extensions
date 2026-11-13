@@ -7,14 +7,14 @@
  * You can also define an extender function. The extender function allows access to the underlying
  * [echarts.js](https://echarts.apache.org/) API using the `setExtender` method of the model. You need to define
  * a global function and set it on the model, see the user guide for more details. The required typing of that function
- * is given by `PrimeFaces.widget.ExtEChart.ChartExtender`.
+ * is given by `PrimeFaces.component.ExtEChart.ChartExtender`.
  */
-PrimeFaces.widget.ExtEChart = class extends PrimeFaces.widget.DeferredWidget {
+PrimeFaces.component.ExtEChart = class extends PrimeFaces.component.DeferredComponent {
 
     /**
      * @override
      * @inheritdoc
-     * @param {PrimeFaces.PartialWidgetCfg<TCfg>} cfg
+     * @param {PrimeFaces.PartialComponentCfg<TCfg>} cfg
      */
     init(cfg) {
         super.init(cfg);
@@ -35,7 +35,7 @@ PrimeFaces.widget.ExtEChart = class extends PrimeFaces.widget.DeferredWidget {
     /**
      * @override
      * @inheritdoc
-     * @param {PrimeFaces.PartialWidgetCfg<TCfg>} cfg
+     * @param {PrimeFaces.PartialComponentCfg<TCfg>} cfg
      */
     refresh(cfg) {
         this._remove();

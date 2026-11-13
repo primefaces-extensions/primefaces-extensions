@@ -4,7 +4,7 @@
  * @author Melloware mellowaredev@gmail.com
  * @since 6.1
  */
-PrimeFaces.widget.ExtClipboard = class extends PrimeFaces.widget.BaseWidget {
+PrimeFaces.component.ExtClipboard = class extends PrimeFaces.component.BaseComponent {
 
     /**
      * Initializes the widget.
@@ -24,7 +24,7 @@ PrimeFaces.widget.ExtClipboard = class extends PrimeFaces.widget.BaseWidget {
     /**
      * @override
      * @inheritdoc
-     * @param {PrimeFaces.PartialWidgetCfg<TCfg>} cfg
+     * @param {PrimeFaces.PartialComponentCfg<TCfg>} cfg
      */
     refresh(cfg) {
         this._remove();

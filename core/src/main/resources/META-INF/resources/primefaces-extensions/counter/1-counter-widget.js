@@ -3,12 +3,12 @@
  *
  * @since 8.0.1
  */
-PrimeFaces.widget.ExtCounter = class extends PrimeFaces.widget.BaseWidget {
+PrimeFaces.component.ExtCounter = class extends PrimeFaces.component.BaseComponent {
 
     /**
      * @override
      * @inheritdoc
-     * @param {PrimeFaces.widget.BaseWidget.cfg} cfg
+     * @param {PrimeFaces.component.BaseComponent.cfg} cfg
      */
     init(cfg) {
 

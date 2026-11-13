@@ -37,7 +37,7 @@ public abstract class SunEditor extends AbstractComponent {
 
     public boolean isEditorReady() {
         return Boolean.TRUE.equals(PrimeSelenium.executeScript(
-                    "return !!(" + getWidgetByIdScript() + " && " + getWidgetByIdScript() + ".editor);"));
+                    "return !!(" + getClientComponentScript() + " && " + getClientComponentScript() + ".editor);"));
     }
 
     public void waitForEditor() {
@@ -49,7 +49,7 @@ public abstract class SunEditor extends AbstractComponent {
      */
     public WebElement getWysiwyg() {
         waitForEditor();
-        return PrimeSelenium.executeScript("return " + getWidgetByIdScript() + ".editor.$.frameContext.get('wysiwyg');");
+        return PrimeSelenium.executeScript("return " + getClientComponentScript() + ".editor.$.frameContext.get('wysiwyg');");
     }
 
     public WebElement getEditorContainer() {
@@ -84,7 +84,7 @@ public abstract class SunEditor extends AbstractComponent {
      * The value of the underlying textarea, i.e. what is submitted to the server.
      */
     public String getInputValue() {
-        return PrimeSelenium.executeScript("return " + getWidgetByIdScript() + ".input.val();");
+        return PrimeSelenium.executeScript("return " + getClientComponentScript() + ".input.val();");
     }
 
     /**
@@ -104,19 +104,19 @@ public abstract class SunEditor extends AbstractComponent {
     }
 
     public void clear() {
-        PrimeSelenium.executeScript(getWidgetByIdScript() + ".clear();");
+        PrimeSelenium.executeScript(getClientComponentScript() + ".clear();");
     }
 
     public void disable() {
-        PrimeSelenium.executeScript(getWidgetByIdScript() + ".disable();");
+        PrimeSelenium.executeScript(getClientComponentScript() + ".disable();");
     }
 
     public void enable() {
-        PrimeSelenium.executeScript(getWidgetByIdScript() + ".enable();");
+        PrimeSelenium.executeScript(getClientComponentScript() + ".enable();");
     }
 
     public boolean isDisabled() {
-        return Boolean.TRUE.equals(PrimeSelenium.executeScript("return " + getWidgetByIdScript() + ".disabled;"));
+        return Boolean.TRUE.equals(PrimeSelenium.executeScript("return " + getClientComponentScript() + ".disabled;"));
     }
 
     /**

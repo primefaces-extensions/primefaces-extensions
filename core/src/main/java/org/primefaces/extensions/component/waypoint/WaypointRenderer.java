@@ -29,7 +29,7 @@ import jakarta.faces.render.FacesRenderer;
 import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.renderkit.CoreRenderer;
-import org.primefaces.util.WidgetBuilder;
+import org.primefaces.util.ComponentScriptBuilder;
 
 /**
  * Renderer for the {@link Waypoint} component.
@@ -55,7 +55,7 @@ public class WaypointRenderer extends CoreRenderer<Waypoint> {
         final String context = SearchExpressionUtils.resolveClientIdsForClientSide(fc, component, component.getForContext());
         final String target = SearchExpressionUtils.resolveClientIdsForClientSide(fc, component, component.getFor());
 
-        final WidgetBuilder wb = getWidgetBuilder(fc);
+        final ComponentScriptBuilder wb = getComponentScriptBuilder(fc);
         wb.init("ExtWaypoint", component);
         wb.attr("target", target);
         wb.attr("continuous", component.isContinuous());

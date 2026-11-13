@@ -31,8 +31,8 @@ import jakarta.faces.render.FacesRenderer;
 import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.util.ComponentScriptBuilder;
 import org.primefaces.util.LangUtils;
-import org.primefaces.util.WidgetBuilder;
 
 import com.google.gson.Gson;
 
@@ -69,7 +69,7 @@ public class MarkTextRenderer extends CoreRenderer<MarkText> {
     }
 
     protected void encodeScript(final FacesContext context, final MarkText component) throws IOException {
-        final WidgetBuilder wb = getWidgetBuilder(context);
+        final ComponentScriptBuilder wb = getComponentScriptBuilder(context);
         wb.init("ExtMarkText", component);
 
         wb.attr("value", component.getValue());

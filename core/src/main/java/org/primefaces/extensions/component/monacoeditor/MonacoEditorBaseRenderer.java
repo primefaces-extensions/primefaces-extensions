@@ -31,8 +31,8 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.ResponseWriter;
 import jakarta.faces.convert.Converter;
 
+import org.primefaces.util.ComponentScriptBuilder;
 import org.primefaces.util.ComponentUtils;
-import org.primefaces.util.WidgetBuilder;
 
 /**
  * Base renderer for both the {@link MonacoEditorFramed framed} and {@link MonacoEditorInline inline} monaco editor.
@@ -54,7 +54,7 @@ abstract class MonacoEditorBaseRenderer<TEditor extends MonacoEditorBase>
         super(clazz);
     }
 
-    protected abstract void addWidgetProperties(FacesContext context, WidgetBuilder wb, TEditor monacoEditor)
+    protected abstract void addWidgetProperties(FacesContext context, ComponentScriptBuilder wb, TEditor monacoEditor)
                 throws IOException;
 
     @Override
@@ -121,7 +121,7 @@ abstract class MonacoEditorBaseRenderer<TEditor extends MonacoEditorBase>
     }
 
     @Override
-    protected final void addBaseWidgetProperties(final FacesContext context, final WidgetBuilder wb, final TEditor monacoEditor)
+    protected final void addBaseWidgetProperties(final FacesContext context, final ComponentScriptBuilder wb, final TEditor monacoEditor)
                 throws IOException {
         addWidgetProperties(context, wb, monacoEditor);
     }

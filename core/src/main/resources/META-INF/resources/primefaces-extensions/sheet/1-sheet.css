@@ -1,7 +1,7 @@
 /* ------------------------------------
  * Sheet Extensions
  */
-.p-handsontable.p-widget-content {
+.p-handsontable.p-component-content {
     border: none;
 }
 
@@ -99,7 +99,7 @@ span.handson-filter {
 }
 
 /* CSS3 only hack until I can figure out a better way */
-.p-widget-content .handsontable th:not(:first-child) {
+.p-component-content .handsontable th:not(:first-child) {
     border-left: none !important;
 }
 

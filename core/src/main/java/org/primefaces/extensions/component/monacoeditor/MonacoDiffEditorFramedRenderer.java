@@ -30,7 +30,7 @@ import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.shaded.json.JSONWriter;
-import org.primefaces.util.WidgetBuilder;
+import org.primefaces.util.ComponentScriptBuilder;
 
 /**
  * Default renderer for the framed Monaco diff editor that creates a new instance in an iframe for better scoping.
@@ -49,7 +49,7 @@ public class MonacoDiffEditorFramedRenderer extends MonacoDiffEditorBaseRenderer
     }
 
     @Override
-    protected void addWidgetProperties(FacesContext context, WidgetBuilder wb, MonacoDiffEditorFramed monacoEditor) throws IOException {
+    protected void addWidgetProperties(FacesContext context, ComponentScriptBuilder wb, MonacoDiffEditorFramed monacoEditor) throws IOException {
         wb.attr("extender", monacoEditor.getExtender(), null);
         if (monacoEditor.getIframeUrlParams() instanceof Map<?, ?>) {
             wb.nativeAttr("iframeUrlParams", JSONWriter.valueToString(monacoEditor.getIframeUrlParams()));

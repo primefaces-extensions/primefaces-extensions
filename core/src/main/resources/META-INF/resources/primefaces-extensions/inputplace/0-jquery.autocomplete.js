@@ -53,7 +53,7 @@ var widgetsMenu = $.widget( "ui.menu", {
 				tabIndex: 0
 			} );
 
-		this._addClass( "ui-menu", "p-widget p-widget-content" );
+		this._addClass( "ui-menu", "p-component p-component-content" );
 		this._on( {
 
 			// Prevent focus from sticking to links inside menu after clicking
@@ -319,7 +319,7 @@ var widgetsMenu = $.widget( "ui.menu", {
 				menu.attr( "aria-labelledby", item.attr( "id" ) );
 			} );
 
-		this._addClass( newSubmenus, "ui-menu", "p-widget p-widget-content ui-front" );
+		this._addClass( newSubmenus, "ui-menu", "p-component p-component-content ui-front" );
 
 		menus = submenus.add( this.element );
 		items = menus.find( this.options.items );
@@ -328,7 +328,7 @@ var widgetsMenu = $.widget( "ui.menu", {
 		items.not( ".ui-menu-item" ).each( function() {
 			var item = $( this );
 			if ( that._isDivider( item ) ) {
-				that._addClass( item, "ui-menu-divider", "p-widget-content" );
+				that._addClass( item, "ui-menu-divider", "p-component-content" );
 			}
 		} );
 

@@ -3,7 +3,7 @@
  *
  * @since 16.0.0
  */
-PrimeFaces.widget.ExtCommandPalette = class extends PrimeFaces.widget.BaseWidget {
+PrimeFaces.component.ExtCommandPalette = class extends PrimeFaces.component.BaseComponent {
 
     init(cfg) {
         super.init(cfg);

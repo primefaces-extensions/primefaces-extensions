@@ -33,8 +33,8 @@ import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.extensions.util.ExtLangUtils;
 import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.util.ComponentScriptBuilder;
 import org.primefaces.util.ComponentUtils;
-import org.primefaces.util.WidgetBuilder;
 
 /**
  * Renderer for the {@link Calculator} component.
@@ -67,7 +67,7 @@ public class CalculatorRenderer extends CoreRenderer<Calculator> {
             throw new FacesException("Calculator must use for=\"target\" or be nested inside an input!");
         }
 
-        final WidgetBuilder wb = getWidgetBuilder(context);
+        final ComponentScriptBuilder wb = getComponentScriptBuilder(context);
         wb.init("ExtCalculator", calculator);
         wb.attr("target", target);
         wb.attr("showOn", ExtLangUtils.lowerCase(calculator.getShowOn()));

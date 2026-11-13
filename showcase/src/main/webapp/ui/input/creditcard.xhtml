@@ -41,16 +41,16 @@
                     <f:facet name="header">
                         <pe:creditCard id="creditCard" labelMonthYear="MM/YY" placeholderExpiry="**/**" placeholderName="Optimus Prime"/>
                     </f:facet>
-                    <input type="text" id="number" name="number" class="p-inputfield p-inputtext p-widget p-state-default" placeholder="Card number" inputmode="numeric"/>
-                    <input type="text" id="name" name="name" class="p-inputfield p-inputtext p-widget p-state-default" placeholder="Full name"/>
+                    <input type="text" id="number" name="number" class="p-inputfield p-inputtext p-component p-state-default" placeholder="Card number" inputmode="numeric"/>
+                    <input type="text" id="name" name="name" class="p-inputfield p-inputtext p-component p-state-default" placeholder="Full name"/>
                     <p:outputPanel id="expiration">
                         <p:datePicker id="month" widgetVar="monthPicker" view="month" pattern="MM/yy" yearNavigator="true" yearRange="2000:2050"
                                       placeholder="MM/YY"
                                       onchange="$('#expiry').val(PF('monthPicker').input.val()); $('#expiry')[0].dispatchEvent(new Event('change'));"/>
                         <!-- Hide Expiration field so we can use PF MonthPicker -->
-                        <input type="text" id="expiry" name="expiry" class="p-inputfield p-inputtext p-widget p-state-default" placeholder="MM/YY" inputmode="numeric" style="display:none"/>
+                        <input type="text" id="expiry" name="expiry" class="p-inputfield p-inputtext p-component p-state-default" placeholder="MM/YY" inputmode="numeric" style="display:none"/>
                     </p:outputPanel>
-                    <input type="text" id="cvc" name="cvc" class="p-inputfield p-inputtext p-widget p-state-default" placeholder="CVC" inputmode="numeric"/>
+                    <input type="text" id="cvc" name="cvc" class="p-inputfield p-inputtext p-component p-state-default" placeholder="CVC" inputmode="numeric"/>
                 </p:panelGrid>
             </h:form>
         </div>

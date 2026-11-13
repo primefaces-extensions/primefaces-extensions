@@ -43,9 +43,9 @@ import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.extensions.util.MessageFactory;
 import org.primefaces.renderkit.InputRenderer;
+import org.primefaces.util.ComponentScriptBuilder;
 import org.primefaces.util.HTML;
 import org.primefaces.util.LangUtils;
-import org.primefaces.util.WidgetBuilder;
 
 @FacesRenderer(rendererType = ClockPicker.DEFAULT_RENDERER, componentFamily = ClockPicker.COMPONENT_FAMILY)
 @FacesRendererInfo
@@ -99,7 +99,7 @@ public class ClockPickerRenderer extends InputRenderer<ClockPicker> {
         writer.writeAttribute("size", inputSize, null);
         writer.writeAttribute("maxlength", inputSize, null);
 
-        final String styleClass = createStyleClass(component, "p-inputfield p-widget p-state-default");
+        final String styleClass = createStyleClass(component, "p-inputfield p-component p-state-default");
         writer.writeAttribute(Attrs.CLASS, styleClass, null);
 
         if (component.getStyle() != null) {
@@ -140,7 +140,7 @@ public class ClockPickerRenderer extends InputRenderer<ClockPicker> {
     private void encodeScript(final FacesContext context, final ClockPicker component, DateFormatSymbols symbols) throws IOException {
         final String[] ampm = symbols.getAmPmStrings();
 
-        final WidgetBuilder wb = getWidgetBuilder(context);
+        final ComponentScriptBuilder wb = getComponentScriptBuilder(context);
         wb.init("ExtClockPicker", component);
         wb.attr("appendTo", SearchExpressionUtils.resolveOptionalClientIdForClientSide(context, component, component.getAppendTo()));
         wb.attr("placement", component.getPlacement(), "bottom");

@@ -4,7 +4,7 @@
  * @author ssibitz ssibitz@me.com
  * @since 6.2
  */
-PrimeFaces.widget.ExtSpeedtest = class extends PrimeFaces.widget.BaseWidget {
+PrimeFaces.component.ExtSpeedtest = class extends PrimeFaces.component.BaseComponent {
 
     init(cfg) {
         super.init(cfg);

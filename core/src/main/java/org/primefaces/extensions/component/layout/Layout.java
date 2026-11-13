@@ -59,9 +59,9 @@ public class Layout extends LayoutBaseImpl {
 
     public static final String POSITION_SEPARATOR = "_";
     public static final String STYLE_CLASS = "ui-layout-";
-    public static final String STYLE_CLASS_PANE = "ui-layout-unit p-panel p-widget p-widget-content";
+    public static final String STYLE_CLASS_PANE = "ui-layout-unit p-panel p-component p-component-content";
     public static final String STYLE_CLASS_PANE_WITH_SUBPANES = "pe-layout-pane-withsubpanes";
-    public static final String STYLE_CLASS_PANE_HEADER = "ui-layout-unit-header p-panel-titlebar p-widget-header pe-layout-pane-header ";
+    public static final String STYLE_CLASS_PANE_HEADER = "ui-layout-unit-header p-panel-titlebar p-component-header pe-layout-pane-header ";
     public static final String STYLE_CLASS_PANE_CONTENT = "ui-layout-unit-content pe-layout-pane-content p-panel-content";
     public static final String STYLE_CLASS_LAYOUT_CONTENT = "ui-layout-content p-panel-content";
 

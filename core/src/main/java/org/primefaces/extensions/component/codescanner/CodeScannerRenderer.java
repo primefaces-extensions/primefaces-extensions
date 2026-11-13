@@ -33,7 +33,7 @@ import org.primefaces.component.api.InputHolder;
 import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
-import org.primefaces.util.WidgetBuilder;
+import org.primefaces.util.ComponentScriptBuilder;
 
 /**
  * Renderer for the {@link CodeScanner} component.
@@ -91,7 +91,7 @@ public class CodeScannerRenderer extends CoreRenderer<CodeScanner> {
     }
 
     protected void encodeScript(final FacesContext context, final CodeScanner component) throws IOException {
-        final WidgetBuilder wb = getWidgetBuilder(context);
+        final ComponentScriptBuilder wb = getComponentScriptBuilder(context);
         wb.init("ExtCodeScanner", component)
                     .attr("type", component.getTypeEnum().name())
                     .attr("autoStart", component.isAutoStart());
