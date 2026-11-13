@@ -116,7 +116,7 @@
                 <code>toggle()</code> and <code>bounce()</code>.
             </p>
             <h:form id="formBasicUsage">
-                <pe:slideout id="slideoutContact" title="Contact" icon="pi pi-envelope" location="top" widgetVar="slideoutBasic"
+                <pe:slideout id="slideoutContact" title="Contact" icon="pi pi-envelope" location="top" ref="slideoutBasic"
                              handleStyleClass="contact-handle" panelStyleClass="contact-panel" offset="550px" bounceTimes="5"
                              bounceDistance="100px">
                     <p:panelGrid styleClass="p-noborder" layout="tabular" columns="0">
@@ -175,7 +175,7 @@
                 places the handle of the blue tab on the other side of the tab.
             </p>
             <h:form id="formMultipleTabs">
-                <pe:slideout id="soAuto" title="AutoOpen" icon="pi pi-folder-open" location="top" widgetVar="slideoutAuto"
+                <pe:slideout id="soAuto" title="AutoOpen" icon="pi pi-folder-open" location="top" ref="slideoutAuto"
                              handleStyleClass="auto-handle" panelStyleClass="auto-panel" showOn="click" offset="250px" autoOpen="true">
                     <p:panelGrid styleClass="p-noborder" layout="tabular" columns="0">
                         <p:row>
@@ -191,7 +191,7 @@
                     </p:panelGrid>
                 </pe:slideout>
 
-                <pe:slideout id="soHover" title="Hover" icon="pi pi-arrow-right" location="top" widgetVar="slideoutHover"
+                <pe:slideout id="soHover" title="Hover" icon="pi pi-arrow-right" location="top" ref="slideoutHover"
                              handleStyleClass="hover-handle" panelStyleClass="hover-panel" showOn="hover" offset="350px">
                     <p:panelGrid styleClass="p-noborder" layout="tabular" columns="0">
                         <p:row>
@@ -207,7 +207,7 @@
                     </p:panelGrid>
                 </pe:slideout>
 
-                <pe:slideout id="soReverse" title="Reverse" icon="pi pi-backward" location="top" widgetVar="slideoutReverse"
+                <pe:slideout id="soReverse" title="Reverse" icon="pi pi-backward" location="top" ref="slideoutReverse"
                              handleStyleClass="reverse-handle" panelStyleClass="reverse-panel" showOn="click" offset="450px"
                              handleOffsetReverse="true">
                     <p:panelGrid styleClass="p-noborder" layout="tabular" columns="0">
@@ -237,7 +237,7 @@
             <h:form id="formAdvancedUsage">
                 <p:growl id="growl" showDetail="true" showSummary="true"/>
 
-                <pe:slideout id="slideoutFeedback" title="Feedback" icon="pi pi-thumbs-up" location="top" widgetVar="slideoutAdvanced"
+                <pe:slideout id="slideoutFeedback" title="Feedback" icon="pi pi-thumbs-up" location="top" ref="slideoutAdvanced"
                              handleStyleClass="feedback-handle" panelStyleClass="feedback-panel" offset="700px" bounceTimes="5"
                              bounceDistance="100px"
                              onopen="document.getElementById('formAdvancedUsage:lblOnOpenClose').textContent = 'Open Event!';"

@@ -16,7 +16,7 @@ PrimeFaces.component.ExtDynaForm = class extends PrimeFaces.component.BaseCompon
             this.toggledExtended = false;
         }
 
-        if (cfg.autoSubmit && !PF(cfg.widgetVar)) {
+        if (cfg.autoSubmit && !PF(cfg.ref)) {
             // Delay submission until the CSP handler was registered, needed when CSP is enabled
             // See https://github.com/primefaces-extensions/primefaces-extensions/issues/1794#issuecomment-2526318388
             $(() => this.submitForm());

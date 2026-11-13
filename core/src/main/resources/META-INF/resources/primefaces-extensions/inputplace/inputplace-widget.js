@@ -27,7 +27,7 @@ PrimeFaces.component.ExtInputPlace = class extends PrimeFaces.component.BaseComp
     /**
      * @override
      * @inheritdoc
-     * @param {PrimeFaces.PartialComponentCfg<TCfg>} cfg
+     * @param {PrimeFaces.component.PartialComponentCfg<TCfg>} cfg
      */
     init(cfg) {
         super.init(cfg);

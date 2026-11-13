@@ -54,7 +54,7 @@
                 <p:importEnum type="org.primefaces.extensions.showcase.model.sheet.AssetType" var="AssetType"/>
                 <p:importEnum type="org.primefaces.extensions.showcase.model.sheet.PlatformType" var="PlatformType"/>
 
-                <pe:sheet id="sheet" widgetVar="sheetBasicWidget" value="#{sheetController.assets}" var="row"
+                <pe:sheet id="sheet" ref="sheetBasicWidget" value="#{sheetController.assets}" var="row"
                           height="400" rowKey="#{row.assetId}" fixedCols="2" fixedRows="3" showRowHeaders="true"
                           resizableCols="true" resizableRows="true" filteredValue="#{sheetController.filteredAssets}"
                           sortBy="#{row.assetId}" sortOrder="ascending" readOnly="false" rowStyleClass="#{row.purchasePrice gt 0 ? 'positive' : 'negative'}">
@@ -157,7 +157,7 @@
                     </p:toolbarGroup>
                 </p:toolbar>
 
-                <pe:sheet id="sheet" widgetVar="sheetExportWidget" value="#{sheetExportController.assets}" var="row"
+                <pe:sheet id="sheet" ref="sheetExportWidget" value="#{sheetExportController.assets}" var="row"
                           height="400" rowKey="#{row.assetId}" fixedCols="2" showRowHeaders="true"
                           resizableCols="true" filteredValue="#{sheetExportController.filteredAssets}"
                           sortBy="#{row.assetId}" sortOrder="ascending">
@@ -199,7 +199,7 @@
             <h:form id="formDynamicColumns">
                 <pe:sheet id="sheet" value="#{sheetDynamicController.sheetRows}" var="row" height="400" rowKey="#{row.id}"
                           showRowHeaders="true" sortBy="#{row.id}" sortOrder="ascending" width="1000"
-                          widgetVar="sheetDynamicWidget" filteredValue="#{sheetDynamicController.filteredSheetRows}"
+                          ref="sheetDynamicWidget" filteredValue="#{sheetDynamicController.filteredSheetRows}"
                           extender="sheetExtender">
 
                     <f:facet name="header">

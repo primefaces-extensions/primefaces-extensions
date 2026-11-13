@@ -14,7 +14,7 @@ PrimeFaces.component.ExtEChart = class extends PrimeFaces.component.DeferredComp
     /**
      * @override
      * @inheritdoc
-     * @param {PrimeFaces.PartialComponentCfg<TCfg>} cfg
+     * @param {PrimeFaces.component.PartialComponentCfg<TCfg>} cfg
      */
     init(cfg) {
         super.init(cfg);
@@ -35,7 +35,7 @@ PrimeFaces.component.ExtEChart = class extends PrimeFaces.component.DeferredComp
     /**
      * @override
      * @inheritdoc
-     * @param {PrimeFaces.PartialComponentCfg<TCfg>} cfg
+     * @param {PrimeFaces.component.PartialComponentCfg<TCfg>} cfg
      */
     refresh(cfg) {
         this._remove();

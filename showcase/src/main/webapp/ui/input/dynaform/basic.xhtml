@@ -108,7 +108,7 @@
                     </pe:dynaForm>
                 </h:panelGroup>
 
-                <p:dialog header="Input values" widgetVar="inputValuesBasicUsage">
+                <p:dialog header="Input values" ref="inputValuesBasicUsage">
                     <p:dataList id="inputValues" value="#{dynaFormController.bookProperties}" var="bookProperty"
                                 style="margin:10px;">
                         <h:outputText value="#{bookProperty.name}: #{bookProperty.formattedValue}"
@@ -160,7 +160,7 @@
                     </pe:dynaForm>
                 </h:panelGroup>
 
-                <p:dialog header="Input values" widgetVar="inputValuesNestedModel">
+                <p:dialog header="Input values" ref="inputValuesNestedModel">
                     <p:dataList id="inputValues" value="#{nestedDynaFormController.bookProperties}" var="bookProperty"
                                 style="margin:10px;">
                         <h:outputText value="#{bookProperty.name}: #{bookProperty.formattedValue}"

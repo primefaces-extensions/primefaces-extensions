@@ -53,12 +53,12 @@ public class CreditCardRenderer extends CoreRenderer<CreditCard> {
     protected void encodeMarkup(final FacesContext context, final CreditCard component) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
         final String clientId = component.getClientId(context);
-        final String widgetVar = component.resolveWidgetVar();
+        final String ref = component.resolveRef();
         final String styleClass = CreditCard.STYLE_CLASS;
 
         writer.startElement("div", component);
         writer.writeAttribute("id", clientId, "id");
-        writer.writeAttribute(HTML.REF, widgetVar, null);
+        writer.writeAttribute(HTML.REF, ref, null);
         writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
         writer.endElement("div");
     }

@@ -27,7 +27,7 @@ import org.primefaces.cdk.api.FacesBehaviorEvent;
 import org.primefaces.cdk.api.FacesBehaviorEvents;
 import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
-import org.primefaces.component.api.Widget;
+import org.primefaces.component.api.PrimeClientComponent;
 import org.primefaces.extensions.event.ResizeEvent;
 import org.primefaces.extensions.event.RotateEvent;
 
@@ -44,7 +44,7 @@ import org.primefaces.extensions.event.RotateEvent;
             @FacesBehaviorEvent(name = "resize", event = ResizeEvent.class,
                         description = "Fires when the image is resized.", defaultEvent = true)
 })
-public abstract class ImageRotateAndResizeBase extends UIComponentBase implements Widget {
+public abstract class ImageRotateAndResizeBase extends UIComponentBase implements PrimeClientComponent {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.ImageRotateAndResize";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";

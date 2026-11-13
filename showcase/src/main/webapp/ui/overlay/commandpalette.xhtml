@@ -122,7 +122,7 @@
                 <p:hotkey bind="ctrl+shift+k" handler="PF('hotkeyPaletteWidget').showCentered();"/>
                 <pe:commandPalette id="hotkeyPalette" for="hotkeyTarget"
                                    label="Actions" filterPlaceholder="Search actions..." width="260" height="350"
-                                   widgetVar="hotkeyPaletteWidget">
+                                   ref="hotkeyPaletteWidget">
                     <pe:commandPaletteItem group="File" value="new" label="New File"/>
                     <pe:commandPaletteItem group="File" value="open" label="Open File"/>
                     <pe:commandPaletteItem group="File" value="save" label="Save"/>

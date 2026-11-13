@@ -14,11 +14,11 @@
                 <h:panelGroup id="clockpickerGroup" layout="block">
 
                     <p>AM/PM with Auto-Close</p>
-                    <pe:clockpicker id="autoclose" widgetVar="autocloseWidget" autoClose="true"
+                    <pe:clockpicker id="autoclose" ref="autocloseWidget" autoClose="true"
                                     twelveHour="true" locale="es"/>
 
                     <p>24 Hour with Manual Close Mode</p>
-                    <pe:clockpicker id="closeable" widgetVar="closeableWidget" autoClose="false"
+                    <pe:clockpicker id="closeable" ref="closeableWidget" autoClose="false"
                                     value="#{clockPickerController.time2}" showOn="button">
                         <p:ajax listener="#{clockPickerController.showTime2}" />
                     </pe:clockpicker>
@@ -26,9 +26,9 @@
                     <p>Open In Dialog</p>
                     <p:commandButton value="Open Dialog" type="button" icon="pi pi-external-link"
                                      onclick="PF('dlg1').show()"/>
-                    <p:dialog header="ClockPicker" widgetVar="dlg1" height="350" width="350"
+                    <p:dialog header="ClockPicker" ref="dlg1" height="350" width="350"
                               showEffect="fade" closeOnEscape="true">
-                        <pe:clockpicker id="dlgClockPicker" widgetVar="dialogClockPickerWidget"
+                        <pe:clockpicker id="dlgClockPicker" ref="dialogClockPickerWidget"
                                         autoClose="false" value="#{clockPickerController.time3}" showOn="button">
                             <p:ajax listener="#{clockPickerController.showTime3}" />
                         </pe:clockpicker>

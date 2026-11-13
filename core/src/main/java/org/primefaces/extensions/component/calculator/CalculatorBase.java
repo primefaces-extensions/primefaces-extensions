@@ -27,9 +27,9 @@ import org.primefaces.cdk.api.FacesBehaviorEvent;
 import org.primefaces.cdk.api.FacesBehaviorEvents;
 import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
+import org.primefaces.component.api.PrimeClientComponent;
 import org.primefaces.component.api.RTLAware;
 import org.primefaces.component.api.StyleAware;
-import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.ButtonEvent;
 import org.primefaces.extensions.event.CloseEvent;
 import org.primefaces.extensions.event.OpenEvent;
@@ -46,7 +46,7 @@ import org.primefaces.extensions.event.OpenEvent;
             @FacesBehaviorEvent(name = "close", event = CloseEvent.class, description = "Fires when the calculator panel is closed."),
             @FacesBehaviorEvent(name = "button", event = ButtonEvent.class, description = "Fires when a calculator button is pressed.")
 })
-public abstract class CalculatorBase extends UIComponentBase implements Widget, RTLAware, StyleAware {
+public abstract class CalculatorBase extends UIComponentBase implements PrimeClientComponent, RTLAware, StyleAware {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Calculator";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";

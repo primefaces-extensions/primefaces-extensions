@@ -9,7 +9,7 @@ PrimeFaces.component.ExtCreditCard = class extends PrimeFaces.component.BaseComp
     /**
      * @override
      * @inheritdoc
-     * @param {PrimeFaces.BaseComponent} cfg
+     * @param {PrimeFaces.component.PartialComponentCfg<PrimeFaces.component.BaseComponentCfg>} cfg
      */
     init(cfg) {
         super.init(cfg);

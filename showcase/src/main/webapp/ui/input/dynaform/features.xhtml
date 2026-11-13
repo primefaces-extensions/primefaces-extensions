@@ -74,7 +74,7 @@
                     <p:messages id="messages" showSummary="true"/>
 
                     <pe:dynaForm id="dynaForm" value="#{advancedDynaFormController.model}" var="data"
-                                 autoSubmit="true" buttonBarPosition="both" widgetVar="dynaFormWidgetAdvanced">
+                                 autoSubmit="true" buttonBarPosition="both" ref="dynaFormWidgetAdvanced">
                         <pe:dynaFormControl styleClass="pe-dynaform-label">
                             <h:outputText value="#{data}"/>
                         </pe:dynaFormControl>
@@ -111,7 +111,7 @@
                     </pe:dynaForm>
                 </h:panelGroup>
 
-                <p:dialog header="Input values" widgetVar="inputValuesAdvanced">
+                <p:dialog header="Input values" ref="inputValuesAdvanced">
                     <h:outputText value="Search has been executed with values:"/>
                     <p:dataList id="inputValues" value="#{advancedDynaFormController.inventoryProperties}" var="property"
                                 style="margin:10px;">
@@ -146,7 +146,7 @@
                     <p:messages id="messages" showSummary="true"/>
 
                     <pe:dynaForm id="dynaForm" value="#{anotherDynaFormController.model}" var="data"
-                                 openExtended="true" widgetVar="dynaFormWidgetAnother">
+                                 openExtended="true" ref="dynaFormWidgetAnother">
                         <pe:dynaFormControl styleClass="pe-dynaform-label">
                             <h:outputText value="#{data}"/>
                         </pe:dynaFormControl>
@@ -195,7 +195,7 @@
                     </pe:dynaForm>
                 </h:panelGroup>
 
-                <p:dialog header="Input values" widgetVar="inputValuesAnother">
+                <p:dialog header="Input values" ref="inputValuesAnother">
                     <h:panelGroup id="inputValues" layout="block" style="margin:10px;">
                         <h:outputText value="#{anotherDynaFormController.formFields}" escape="false"/>
                     </h:panelGroup>

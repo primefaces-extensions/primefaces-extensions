@@ -27,8 +27,8 @@ import org.primefaces.cdk.api.FacesBehaviorEvent;
 import org.primefaces.cdk.api.FacesBehaviorEvents;
 import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
+import org.primefaces.component.api.PrimeClientComponent;
 import org.primefaces.component.api.StyleAware;
-import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.CloseEvent;
 import org.primefaces.extensions.event.OpenEvent;
 import org.primefaces.extensions.event.ResizeEvent;
@@ -48,7 +48,7 @@ import org.primefaces.extensions.event.ResizeEvent;
             @FacesBehaviorEvent(name = "resize", event = ResizeEvent.class,
                         description = "Fires when a pane is resized.")
 })
-public abstract class LayoutBase extends UIComponentBase implements Widget, StyleAware {
+public abstract class LayoutBase extends UIComponentBase implements PrimeClientComponent, StyleAware {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Layout";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";

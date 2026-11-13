@@ -553,7 +553,7 @@ public class SheetRenderer extends CoreRenderer<Sheet> {
                 throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
         final String id = sheet.getClientId(context) + "_keyboard";
-        final String widgetVar = sheet.resolveWidgetVar(context);
+        final String ref = sheet.resolveRef(context);
         writer.startElement("div", null);
         writer.writeAttribute("class", "p-hidden-accessible", null);
         writer.startElement("input", null);
@@ -563,7 +563,7 @@ public class SheetRenderer extends CoreRenderer<Sheet> {
         writer.writeAttribute("autocomplete", "off", null);
         writer.writeAttribute(HTML.ARIA_HIDDEN, "true", null);
         writer.writeAttribute("tabindex", sheet.getTabindex(), null);
-        writer.writeAttribute("onfocus", String.format("PF('%s').focus();", widgetVar), null);
+        writer.writeAttribute("onfocus", String.format("PF('%s').focus();", ref), null);
         writer.endElement("input");
         writer.endElement("div");
     }

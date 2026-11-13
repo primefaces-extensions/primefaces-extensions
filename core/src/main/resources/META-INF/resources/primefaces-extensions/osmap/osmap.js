@@ -134,7 +134,7 @@ PrimeFaces.component.OSMap = class extends PrimeFaces.component.BaseComponent {
      * Triggers the behavior for when an overlay shape was selected.
      * @private
      * @param {MapMouseEvent | IconMouseEvent} event The event that occurred.
-     * @param {PrimeFaces.component.GMap.Overlay} overlay The shape that was selected.
+     * @param {L.Layer} overlay The shape that was selected.
      * @param {number} clickCount whether it was single or double click
      */
     fireOverlaySelectEvent(event, overlay, clickCount) {
@@ -236,7 +236,7 @@ PrimeFaces.component.OSMap = class extends PrimeFaces.component.BaseComponent {
 
     /**
      * Adds all overlay shapes (circle, polyline, or polygon) to this map.
-     * @param {PrimeFaces.component.GMap.Overlay[]} overlays A list of overlay shapes to add to this map.
+     * @param {L.Layer[]} overlays A list of overlay shapes to add to this map.
      */
     addOverlays(overlays) {
         var $this = this;

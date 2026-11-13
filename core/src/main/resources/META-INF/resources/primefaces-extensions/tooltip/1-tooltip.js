@@ -143,15 +143,15 @@ PrimeFaces.expressions.CssSelectorResolver = {
                     if (expression.indexOf("@") == -1) {
                         elements.push(expression);
                     }
-                    // @widget
-                    else if (expression.indexOf("@widgetVar(") == 0) {
-                        var widgetVar = expression.substring(11, expression.length - 1);
-                        var widget = PrimeFaces.components[widgetVar];
+                    // @ref(name) or deprecated @widgetVar(name)
+                    else if (expression.indexOf("@ref(") == 0 || expression.indexOf("@widgetVar(") == 0) {
+                        var ref = expression.substring(expression.indexOf("(") + 1, expression.length - 1);
+                        var component = PrimeFaces.components[ref];
 
-                        if (widget) {
-                            elements.push(widget.id);
+                        if (component) {
+                            elements.push(component.id);
                         } else {
-                            PrimeFaces.error("Widget for widgetVar \"" + widgetVar + "\" not avaiable");
+                            PrimeFaces.error("Component for ref \"" + ref + "\" not available");
                         }
                     }
                     // PFS

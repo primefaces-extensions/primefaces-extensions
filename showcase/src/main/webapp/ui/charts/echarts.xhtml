@@ -50,7 +50,7 @@
             <h:form id="formBasicUsage">
                 <p:messages id="messages" showSummary="true" showDetail="true"/>
 
-                <pe:echart style="width: 100%; height: 400px;" value="#{eChartController.json}" widgetVar="jsonEChart">
+                <pe:echart style="width: 100%; height: 400px;" value="#{eChartController.json}" ref="jsonEChart">
                     <p:ajax event="itemSelect" listener="#{eChartController.itemSelect}" update="messages"/>
                 </pe:echart>
             </h:form>
@@ -63,7 +63,7 @@
             <h:form id="formFacetUsage">
                 <p:messages id="messages" showSummary="true" showDetail="true"/>
 
-                <pe:echart style="width: 100%; height: 400px;" widgetVar="facetEChart">
+                <pe:echart style="width: 100%; height: 400px;" ref="facetEChart">
                     <p:ajax event="itemSelect" listener="#{eChartController.itemSelect}" update="messages"/>
                     <f:facet name="value">
                     {
@@ -163,7 +163,7 @@
             <h:form id="formThemeUsage">
                 <p:messages id="messages" showSummary="true" showDetail="true"/>
 
-                <pe:echart style="width: 100%; height: 400px;" widgetVar="themeEChart" theme="vintage">
+                <pe:echart style="width: 100%; height: 400px;" ref="themeEChart" theme="vintage">
                     <p:ajax event="itemSelect" listener="#{eChartController.itemSelect}" update="messages"/>
                     <f:facet name="value">
                     {
@@ -216,7 +216,7 @@
             <h:form id="formExportUsage">
                 <p:messages id="messages" showSummary="true" showDetail="true"/>
 
-                <pe:echart style="width: 100%; height: 400px;" id="echart" widgetVar="exportEChart" value="#{eChartController.json}">
+                <pe:echart style="width: 100%; height: 400px;" id="echart" ref="exportEChart" value="#{eChartController.json}">
                     <p:ajax event="itemSelect" listener="#{eChartController.itemSelect}" update="messages"/>
                 </pe:echart>
 
@@ -224,7 +224,7 @@
                 <p:commandButton type="button" value="Print" icon="pi pi-print" onclick="PF('exportEChart').print()" styleClass="mr-2 mb-2"/>
             </h:form>
 
-            <p:dialog widgetVar="exportDlg" showEffect="fade" modal="true" header="Chart as an Image" resizable="false">
+            <p:dialog ref="exportDlg" showEffect="fade" modal="true" header="Chart as an Image" resizable="false">
                 <p:outputPanel id="exportOutput" layout="block" style="width: 50vw; height: 400px;"/>
             </p:dialog>
         </div>

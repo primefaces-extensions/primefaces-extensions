@@ -58,7 +58,7 @@
             <p>A tree-like chart with dragging, panning, zooming and export to PDF.</p>
             <h:form id="formBasicUsage">
                 <pe:orgchart id="orgChart"
-                            widgetVar="orgChartBasicWidget"
+                            ref="orgChartBasicWidget"
                             value="#{orgchartController.orgChartNode}"
                             draggable="true"
                             exportButton="true"
@@ -79,7 +79,7 @@
             <p>Use CSS classes to color-code nodes by department, role or any other criteria. Set the <code>className</code> property on each node to apply custom styling.</p>
             <h:form id="formColorCoded">
                 <pe:orgchart id="orgChart"
-                             widgetVar="colorWidget"
+                             ref="colorWidget"
                              value="#{colorCodedOrgchartController.colorCodedChart}"
                              nodeId="id"
                              nodeContent="title"
@@ -103,7 +103,7 @@
             <p>Nodes can have different widths to accommodate varying content lengths. Use the <code>className</code> property and custom CSS on <code>.orgchart .your-class .title</code> and <code>.content</code> to set the widths (default 130px): <code>wide-node</code> 240px, <code>standard-node</code> 160px, <code>narrow-node</code> 100px.</p>
             <h:form id="formVariableWidth">
                 <pe:orgchart id="orgChart"
-                             widgetVar="variableWidthWidget"
+                             ref="variableWidthWidget"
                              value="#{variableWidthOrgchartController.orgChartModel}"
                              nodeId="id"
                              nodeContent="title"
@@ -128,7 +128,7 @@
                 </h:panelGroup>
 
                 <pe:orgchart id="orgChart"
-                             widgetVar="orgChartFilterWidget"
+                             ref="orgChartFilterWidget"
                              value="#{filterOrgchartController.orgChartNode}"
                              filterable="true"
                              draggable="true"
@@ -148,7 +148,7 @@
             <h:form id="formCompactMode">
                 <h:panelGroup layout="block" styleClass="compact-demo">
                     <pe:orgchart id="orgChart"
-                                 widgetVar="orgChartCompact"
+                                 ref="orgChartCompact"
                                  value="#{compactOrgchartController.orgChartNode}"
                                  nodeContent="title"
                                  parentNodeSymbol="fa-users"

@@ -25,7 +25,7 @@ import jakarta.faces.component.UIOutput;
 
 import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
-import org.primefaces.component.api.Widget;
+import org.primefaces.component.api.PrimeClientComponent;
 
 /**
  * <code>Tooltip</code> component base class.
@@ -34,7 +34,7 @@ import org.primefaces.component.api.Widget;
  * @since 0.2
  */
 @FacesComponentBase
-public abstract class TooltipBase extends UIOutput implements Widget {
+public abstract class TooltipBase extends UIOutput implements PrimeClientComponent {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Tooltip";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";

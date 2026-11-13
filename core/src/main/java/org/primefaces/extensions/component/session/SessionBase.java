@@ -25,7 +25,7 @@ import jakarta.faces.component.UIComponentBase;
 
 import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
-import org.primefaces.component.api.Widget;
+import org.primefaces.component.api.PrimeClientComponent;
 
 /**
  * CDK base for the Session component.
@@ -33,7 +33,7 @@ import org.primefaces.component.api.Widget;
  * @since 12.0.4
  */
 @FacesComponentBase
-public abstract class SessionBase extends UIComponentBase implements Widget {
+public abstract class SessionBase extends UIComponentBase implements PrimeClientComponent {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Session";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";

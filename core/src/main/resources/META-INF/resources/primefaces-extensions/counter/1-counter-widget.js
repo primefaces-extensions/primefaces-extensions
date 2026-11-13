@@ -8,7 +8,7 @@ PrimeFaces.component.ExtCounter = class extends PrimeFaces.component.BaseCompone
     /**
      * @override
      * @inheritdoc
-     * @param {PrimeFaces.component.BaseComponent.cfg} cfg
+     * @param {PrimeFaces.component.PartialComponentCfg<PrimeFaces.component.BaseComponentCfg>} cfg
      */
     init(cfg) {
 

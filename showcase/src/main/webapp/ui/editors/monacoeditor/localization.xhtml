@@ -51,7 +51,7 @@
                 </p:selectOneButton>
 
                 <h:panelGroup id="monacoEditorWrapper" layout="block" styleClass="monacoEditorBox monacoSync">
-                    <pe:monacoEditor id="monacoEditor" widgetVar="monacoEditorLocalization"
+                    <pe:monacoEditor id="monacoEditor" ref="monacoEditorLocalization"
                         oninitialized="monacoFollowScheme.call(this)"
                         rendered="#{monacoEditorController.type eq 'inline'}"
                         value="#{monacoEditorController.value}"
@@ -61,7 +61,7 @@
                         width="100%" height="400px"
                         autoResize="true"/>
 
-                    <pe:monacoEditorFramed id="monacoEditorFramed" widgetVar="monacoEditorFramedLocalization"
+                    <pe:monacoEditorFramed id="monacoEditorFramed" ref="monacoEditorFramedLocalization"
                         oninitialized="monacoFollowScheme.call(this)"
                         rendered="#{monacoEditorController.type eq 'framed'}"
                         value="#{monacoEditorController.valueFramed}"

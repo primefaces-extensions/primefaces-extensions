@@ -42,7 +42,7 @@ PrimeFaces.component.ExtCalculator = class extends PrimeFaces.component.BaseComp
     /**
      * @override
      * @inheritdoc
-     * @param {PrimeFaces.PartialComponentCfg<TCfg>} cfg
+     * @param {PrimeFaces.component.PartialComponentCfg<TCfg>} cfg
      */
     refresh(cfg) {
         this._remove();

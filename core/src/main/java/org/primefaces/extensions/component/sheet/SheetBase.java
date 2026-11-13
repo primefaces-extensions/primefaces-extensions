@@ -32,8 +32,8 @@ import org.primefaces.cdk.api.FacesBehaviorEvent;
 import org.primefaces.cdk.api.FacesBehaviorEvents;
 import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
+import org.primefaces.component.api.PrimeClientComponent;
 import org.primefaces.component.api.StyleAware;
-import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.SheetEvent;
 
 /**
@@ -50,7 +50,7 @@ import org.primefaces.extensions.event.SheetEvent;
             @FacesBehaviorEvent(name = "columnSelect", event = SheetEvent.class, description = "Fires when a column is selected."),
             @FacesBehaviorEvent(name = "rowSelect", event = SheetEvent.class, description = "Fires when a row is selected.")
 })
-public abstract class SheetBase extends UIInput implements ClientBehaviorHolder, Widget, StyleAware {
+public abstract class SheetBase extends UIInput implements ClientBehaviorHolder, PrimeClientComponent, StyleAware {
 
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
     public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.SheetRenderer";

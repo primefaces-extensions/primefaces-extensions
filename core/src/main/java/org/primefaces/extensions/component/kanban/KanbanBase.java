@@ -27,7 +27,7 @@ import org.primefaces.cdk.api.FacesBehaviorEvent;
 import org.primefaces.cdk.api.FacesBehaviorEvents;
 import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
-import org.primefaces.component.api.Widget;
+import org.primefaces.component.api.PrimeClientComponent;
 import org.primefaces.extensions.event.KanbanAddEvent;
 import org.primefaces.extensions.event.KanbanBoardDragEvent;
 import org.primefaces.extensions.event.KanbanDragEvent;
@@ -55,7 +55,7 @@ import org.primefaces.extensions.event.KanbanItemRightClickEvent;
             @FacesBehaviorEvent(name = "dragendBoard", event = KanbanBoardDragEvent.class,
                         description = "Fires when a Kanban board drag operation ends.")
 })
-public abstract class KanbanBase extends UIComponentBase implements Widget {
+public abstract class KanbanBase extends UIComponentBase implements PrimeClientComponent {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Kanban";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";

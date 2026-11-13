@@ -69,7 +69,7 @@ public class SpeedtestRenderer extends CoreRenderer<Speedtest> {
     private void encodeMarkup(final FacesContext context, final Speedtest component) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
         final String clientId = component.getClientId(context);
-        final String widgetVar = component.resolveWidgetVar();
+        final String ref = component.resolveRef();
         // Generate Speedtest:
         writer.startElement("div", component);
         writer.writeAttribute("id", clientId + "SpeedTest", "id");
@@ -79,7 +79,7 @@ public class SpeedtestRenderer extends CoreRenderer<Speedtest> {
         if (component.getStyle() != null) {
             writer.writeAttribute(Attrs.STYLE, component.getStyle(), Attrs.STYLE);
         }
-        writer.writeAttribute(HTML.REF, widgetVar, null);
+        writer.writeAttribute(HTML.REF, ref, null);
         writer.startElement("div", component);
         writer.writeAttribute(Attrs.CLASS, "ui-g", null);
         // Download Gauge

@@ -27,8 +27,8 @@ import org.primefaces.cdk.api.FacesBehaviorEvent;
 import org.primefaces.cdk.api.FacesBehaviorEvents;
 import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
+import org.primefaces.component.api.PrimeClientComponent;
 import org.primefaces.component.api.StyleAware;
-import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.SpeedTestEvent;
 
 /**
@@ -42,7 +42,7 @@ import org.primefaces.extensions.event.SpeedTestEvent;
             @FacesBehaviorEvent(name = SpeedTestEvent.NAME, event = SpeedTestEvent.class, description = "Fires when the speedtest is finished.",
                         defaultEvent = true)
 })
-public abstract class SpeedtestBase extends UIComponentBase implements Widget, StyleAware {
+public abstract class SpeedtestBase extends UIComponentBase implements PrimeClientComponent, StyleAware {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Speedtest";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";

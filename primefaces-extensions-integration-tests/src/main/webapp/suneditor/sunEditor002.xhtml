@@ -14,19 +14,19 @@
         <h:body>
             <h:form id="form">
                 <p>Custom toolbar</p>
-                <pe:sunEditor id="toolbar" widgetVar="toolbarWidget" value="#{sunEditorController.toolbarValue}"
+                <pe:sunEditor id="toolbar" ref="toolbarWidget" value="#{sunEditorController.toolbarValue}"
                               toolbar="[['bold', 'underline']]"/>
 
                 <p>Read only</p>
-                <pe:sunEditor id="readonly" widgetVar="readonlyWidget" value="#{sunEditorController.readonlyValue}"
+                <pe:sunEditor id="readonly" ref="readonlyWidget" value="#{sunEditorController.readonlyValue}"
                               readonly="true"/>
 
                 <p>Disabled</p>
-                <pe:sunEditor id="disabled" widgetVar="disabledWidget" value="#{sunEditorController.disabledValue}"
+                <pe:sunEditor id="disabled" ref="disabledWidget" value="#{sunEditorController.disabledValue}"
                               disabled="true"/>
 
                 <p>Unsafe content is sanitized</p>
-                <pe:sunEditor id="unsafe" widgetVar="unsafeWidget" value="#{sunEditorController.unsafeValue}"/>
+                <pe:sunEditor id="unsafe" ref="unsafeWidget" value="#{sunEditorController.unsafeValue}"/>
             </h:form>
         </h:body>
     </f:view>

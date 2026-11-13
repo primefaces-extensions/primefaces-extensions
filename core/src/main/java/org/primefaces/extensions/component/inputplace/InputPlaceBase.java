@@ -26,7 +26,7 @@ import org.primefaces.cdk.api.FacesBehaviorEvents;
 import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
 import org.primefaces.component.api.AbstractPrimeHtmlInputText;
-import org.primefaces.component.api.Widget;
+import org.primefaces.component.api.PrimeClientComponent;
 import org.primefaces.event.SelectEvent;
 
 /**
@@ -39,7 +39,7 @@ import org.primefaces.event.SelectEvent;
             @FacesBehaviorEvent(name = "placeChanged", event = SelectEvent.class,
                         description = "Fires when place is selected or changed.", defaultEvent = true)
 })
-public abstract class InputPlaceBase extends AbstractPrimeHtmlInputText implements Widget {
+public abstract class InputPlaceBase extends AbstractPrimeHtmlInputText implements PrimeClientComponent {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.InputPlace";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";

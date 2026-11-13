@@ -27,7 +27,7 @@ import org.primefaces.cdk.api.FacesBehaviorEvent;
 import org.primefaces.cdk.api.FacesBehaviorEvents;
 import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
-import org.primefaces.component.api.Widget;
+import org.primefaces.component.api.PrimeClientComponent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.extensions.component.gchart.model.GChartModel;
 
@@ -39,7 +39,7 @@ import org.primefaces.extensions.component.gchart.model.GChartModel;
             @FacesBehaviorEvent(name = "select", event = SelectEvent.class,
                         description = "Fires when a chart element is selected.", defaultEvent = true)
 })
-public abstract class GChartBase extends UIOutput implements Widget {
+public abstract class GChartBase extends UIOutput implements PrimeClientComponent {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.GChart";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";

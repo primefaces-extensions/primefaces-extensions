@@ -8,7 +8,7 @@ PrimeFaces.component.ExtTimer = class extends PrimeFaces.component.BaseComponent
     /**
      * @override
      * @inheritdoc
-     * @param {PrimeFaces.PartialComponentCfg<TCfg>} cfg
+     * @param {PrimeFaces.component.PartialComponentCfg<TCfg>} cfg
      */
     init(cfg) {
         super.init(cfg);

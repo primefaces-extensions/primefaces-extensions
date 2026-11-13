@@ -100,7 +100,7 @@ abstract class MonacoEditorCommonRenderer<TEditor extends MonacoEditorCommon<TEd
 
         writer.startElement("div", null);
         writer.writeAttribute("id", clientId, null);
-        writer.writeAttribute("data-widget-var", monacoEditor.resolveWidgetVar(), null);
+        writer.writeAttribute("data-widget-var", monacoEditor.resolveRef(), null);
         writer.writeAttribute("class", styleClass.toString(), null);
         writer.writeAttribute("style", style, null);
 

@@ -27,7 +27,7 @@
             <h:form id="formBasicUsage">
                 <p:growl id="growl" showDetail="true" showSummary="true"/>
 
-                <pe:speedtest id="speedtest" widgetVar="speedtest" bgColor="#65ed28" captionDownload="Down" captionUpload="Up"
+                <pe:speedtest id="speedtest" ref="speedtest" bgColor="#65ed28" captionDownload="Down" captionUpload="Up"
                               captionJitter="Jitter" captionPing="Ping" file="#{request.contextPath}/resources/other/dummy.payload">
                     <p:ajax listener="#{speedTestController.saveResults}" process="@this" update="growl"/>
                 </pe:speedtest>

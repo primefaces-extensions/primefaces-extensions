@@ -143,7 +143,7 @@
                     <h:outputText id="doneCount" value="0"/>
                 </p:panel>
 
-                <pe:markText id="markText" widgetVar="markTextWvDone" for="searchContainer" value="#{markTextDoneController.searchTerm}"
+                <pe:markText id="markText" ref="markTextWvDone" for="searchContainer" value="#{markTextDoneController.searchTerm}"
                              styleClass="marktext-highlight" caseSensitive="false"
                              onDone="markDone(totalMatches)"/>
             </h:form>

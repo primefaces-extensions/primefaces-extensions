@@ -27,13 +27,13 @@
             <h:form id="formBasicUsage">
                 <p:panelGrid id="pnlLegend" columns="2" styleClass="p-noborder" layout="tabular">
                     <p:outputLabel value="Vertical"/>
-                    <pe:legend layout="vertical" widgetVar="lgndVertical" values="#{legendController.values}" title="Vertical Title" footer="Source: PrimeFaces"/>
+                    <pe:legend layout="vertical" ref="lgndVertical" values="#{legendController.values}" title="Vertical Title" footer="Source: PrimeFaces"/>
 
                     <p:spacer/>
                     <p:spacer/>
 
                     <p:outputLabel value="Horizontal"/>
-                    <pe:legend layout="horizontal" widgetVar="lgndHorizontal" values="#{legendController.values}">
+                    <pe:legend layout="horizontal" ref="lgndHorizontal" values="#{legendController.values}">
                         <f:facet name="title">
                             Horizontal Title Facet
                         </f:facet>

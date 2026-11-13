@@ -61,7 +61,7 @@
                 <p:messages id="messages" showSummary="true" showDetail="true"/>
 
                 <pe:timer
-                    widgetVar="timerJsApi"
+                    ref="timerJsApi"
                     timeout="10000"
                     forward="true"
                     listener="#{jsApiTimerController.listener}" update="messages"

@@ -23,8 +23,8 @@ package org.primefaces.extensions.component.dynaform;
 
 import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
+import org.primefaces.component.api.PrimeClientComponent;
 import org.primefaces.component.api.StyleAware;
-import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.component.api.AbstractDynamicData;
 
 /**
@@ -34,7 +34,7 @@ import org.primefaces.extensions.component.api.AbstractDynamicData;
  * @since 0.5
  */
 @FacesComponentBase
-public abstract class DynaFormBase extends AbstractDynamicData implements Widget, StyleAware {
+public abstract class DynaFormBase extends AbstractDynamicData implements PrimeClientComponent, StyleAware {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.DynaForm";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";

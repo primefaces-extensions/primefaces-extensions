@@ -82,7 +82,7 @@
                 <h:panelGrid columns="3" cellpadding="4">
                     <p:outputLabel value="Callback: onOpen and onClose"/>
                     <p:inputText id="txtOnOpenClose" value="867">
-                        <pe:calculator id="calculator1" widgetVar="calc1" showOn="both"
+                        <pe:calculator id="calculator1" ref="calc1" showOn="both"
                                        onopen="$(PrimeFaces.escapeClientId('formJavascript:lblOnOpenClose')).text('Open Event: ' + value);"
                                        onclose="$(PrimeFaces.escapeClientId('formJavascript:lblOnOpenClose')).text('Close Event: ' + value);">
                             <p:ajax event="open" listener="#{calculatorController.openListener}" update="growl"/>
@@ -93,8 +93,8 @@
                     <h:outputText id="lblOnOpenClose" value="Event Result" style="font-weight:bold"/>
 
                     <p:outputLabel value="Callback: onButton"/>
-                    <p:inputText widgetVar="txtOnButton" value="5309">
-                        <pe:calculator id="calculator2" widgetVar="calc2" showOn="both"
+                    <p:inputText ref="txtOnButton" value="5309">
+                        <pe:calculator id="calculator2" ref="calc2" showOn="both"
                                        onbutton="$(PrimeFaces.escapeClientId('formJavascript:lblOnButton')).text('Button: ' + label + ' Current Value: ' + value)">
                             <p:ajax event="button" listener="#{calculatorController.buttonListener}" update="growl"/>
                         </pe:calculator>

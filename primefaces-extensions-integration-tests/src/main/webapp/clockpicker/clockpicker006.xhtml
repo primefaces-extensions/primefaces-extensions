@@ -18,7 +18,7 @@
                 <h:panelGroup id="clockpickerGroup" layout="block">
 
                     <p>12 Hour with Client-Side Lifecycle Callbacks</p>
-                    <pe:clockpicker id="callbacks" widgetVar="callbacksWidget" autoClose="false"
+                    <pe:clockpicker id="callbacks" ref="callbacksWidget" autoClose="false"
                                     value="#{clockPickerController.time7}" twelveHour="true" locale="en" showOn="button"
                                     onbeforeshow="window.cpEvents.push('beforeshow')"
                                     onaftershow="window.cpEvents.push('aftershow')"

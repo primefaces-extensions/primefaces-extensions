@@ -42,7 +42,7 @@ import org.primefaces.extensions.showcase.util.taglib.TagLibTestSupport;
  */
 class PageConventionsTest {
 
-    private static final Pattern WIDGET_VAR = Pattern.compile("\\bwidgetVar=\"([^\"#$]+)\"");
+    private static final Pattern REF = Pattern.compile("\\b(?:ref|widgetVar)=\"([^\"#$]+)\"");
     private static final Pattern FORM_ID = Pattern.compile("<h:form\\b[^>]*?\\sid=\"([^\"#$]+)\"");
     private static final Pattern PARAM = Pattern.compile("<ui:param\\b([^>]*)>");
     private static final Pattern ATTR_NAME = Pattern.compile("\\bname=\"(tagName[234]?)\"");
@@ -80,12 +80,12 @@ class PageConventionsTest {
     }
 
     @Test
-    void noDuplicateIdsOrWidgetVarsPerPage() {
+    void noDuplicateIdsOrRefsPerPage() {
         final List<String> problems = new ArrayList<>();
         for (final Path page : pages()) {
             final String content = ShowcaseFiles.read(page);
-            for (final String dup : duplicates(WIDGET_VAR, content)) {
-                problems.add(page.getFileName() + ": duplicate widgetVar '" + dup + "'");
+            for (final String dup : duplicates(REF, content)) {
+                problems.add(page.getFileName() + ": duplicate ref '" + dup + "'");
             }
             for (final String dup : duplicates(FORM_ID, content)) {
                 problems.add(page.getFileName() + ": duplicate h:form id '" + dup + "'");

@@ -61,7 +61,7 @@
                 <p:messages id="messages" showSummary="true" showDetail="true"/>
 
                 <pe:kanban id="kanban"
-                            widgetVar="kanbanItemWidget"
+                            ref="kanbanItemWidget"
                             value="#{kanbanController.columns}"
                             draggable="true"
                             addItemButton="true"
@@ -71,7 +71,7 @@
                     <p:ajax event="itemClick" listener="#{kanbanController.onItemClick}" update="dialogContent" oncomplete="PF('itemDialog').show()" />
                 </pe:kanban>
 
-                <p:dialog id="dialog" header="Task Details" widgetVar="itemDialog" modal="true" responsive="true" width="400">
+                <p:dialog id="dialog" header="Task Details" ref="itemDialog" modal="true" responsive="true" width="400">
                     <h:panelGroup id="dialogContent" layout="block" styleClass="p-fluid">
                         <h:panelGroup rendered="#{not empty kanbanController.selectedItem}">
                             <div class="field mb-3">
@@ -100,7 +100,7 @@
                 <p:messages id="messages" showSummary="true" showDetail="true"/>
 
                 <pe:kanban id="kanban"
-                            widgetVar="kanbanRightClickWidget"
+                            ref="kanbanRightClickWidget"
                             value="#{kanbanRightClickController.columns}"
                             draggable="true"
                             addItemButton="true"
@@ -110,7 +110,7 @@
                     <p:ajax event="itemAdd" listener="#{kanbanRightClickController.onItemAdd}" update="kanban messages" />
                 </pe:kanban>
 
-                <p:contextMenu id="contextMenu" for="kanban" widgetVar="kanbanContextMenu" targetFilter=".kanban-item">
+                <p:contextMenu id="contextMenu" for="kanban" ref="kanbanContextMenu" targetFilter=".kanban-item">
                     <p:menuitem value="Edit Task"
                                 icon="pi pi-pencil"
                                 update="dialogContent"
@@ -126,7 +126,7 @@
                                 onclick="PF('confirmDelete').show()" />
                 </p:contextMenu>
 
-                <p:confirmDialog id="confirmDeleteDialog" widgetVar="confirmDelete"
+                <p:confirmDialog id="confirmDeleteDialog" ref="confirmDelete"
                                  showEffect="fade" hideEffect="fade"
                                  message="Are you sure you want to delete this task?"
                                  header="Delete Task" icon="pi pi-exclamation-triangle"
@@ -145,7 +145,7 @@
                                      icon="pi pi-times" />
                 </p:confirmDialog>
 
-                <p:dialog header="Task Details" widgetVar="taskDialog"
+                <p:dialog header="Task Details" ref="taskDialog"
                           modal="true" responsive="true" width="400"
                           showEffect="fade" hideEffect="fade"
                           closeOnEscape="true">
@@ -166,7 +166,7 @@
                     </h:panelGroup>
                 </p:dialog>
 
-                <p:dialog header="Task History" widgetVar="historyDialog"
+                <p:dialog header="Task History" ref="historyDialog"
                           modal="true" responsive="true" width="400"
                           showEffect="fade" hideEffect="fade"
                           closeOnEscape="true">
@@ -192,7 +192,7 @@
             <h5>Client API</h5>
             <p>The widget exposes a client-side API via <code>PF(widgetVar).methodName()</code>: <code>addElement</code>, <code>findElement</code>, <code>findBoard</code>, <code>getParentBoardID</code>, <code>getBoardElements</code>, <code>replaceElement</code> and <code>removeBoard</code>. Try them with the toolbar; click a task to fill the item id.</p>
             <h:form id="formClientApi">
-                <p:growl id="growl" widgetVar="growlClientApi" showDetail="true" showSummary="true"/>
+                <p:growl id="growl" ref="growlClientApi" showDetail="true" showSummary="true"/>
 
 
                 <p:remoteCommand name="rcAddItem"       actionListener="#{kanbanClientApiController.onClientApiCommand}" update="@none" process="@this" oncomplete="KanbanDemo.onAddItem()" />
@@ -248,7 +248,7 @@
                 </div>
 
                 <pe:kanban id="kanban"
-                            widgetVar="kanbanClientApiWidget"
+                            ref="kanbanClientApiWidget"
                             value="#{kanbanClientApiController.columns}"
                             draggable="true"
                             addItemButton="true"

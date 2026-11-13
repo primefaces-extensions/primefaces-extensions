@@ -16,7 +16,7 @@ PrimeFaces.component.Session = class extends PrimeFaces.component.BaseComponent 
     /**
      * @override
      * @inheritdoc
-     * @param {PrimeFaces.PartialComponentCfg<TCfg>} cfg
+     * @param {PrimeFaces.component.PartialComponentCfg<TCfg>} cfg
      */
     refresh(cfg) {
         this.cancelTimers();

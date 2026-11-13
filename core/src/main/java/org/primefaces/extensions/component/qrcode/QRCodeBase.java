@@ -25,8 +25,8 @@ import jakarta.faces.component.UIOutput;
 
 import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
+import org.primefaces.component.api.PrimeClientComponent;
 import org.primefaces.component.api.StyleAware;
-import org.primefaces.component.api.Widget;
 
 /**
  * CDK base for the QRCode component.
@@ -34,7 +34,7 @@ import org.primefaces.component.api.Widget;
  * @since 1.2.0
  */
 @FacesComponentBase
-public abstract class QRCodeBase extends UIOutput implements Widget, StyleAware {
+public abstract class QRCodeBase extends UIOutput implements PrimeClientComponent, StyleAware {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.QRCode";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
