@@ -308,7 +308,7 @@
                         </p:commandButton>
                         <p:commandButton type="button" value="Delete" onclick="PF('deletedDlg').show()" style="margin-top:10px;"/>
 
-                        <p:dialog header="Delete confirmation" widgetVar="deletedDlg" resizable="false">
+                        <p:dialog header="Delete confirmation" ref="deletedDlg" resizable="false">
                             <h:panelGroup layout="block" style="padding:5px;">
                                 <h:outputText value="Are you sure you want to delete this person?"/>
                             </h:panelGroup>

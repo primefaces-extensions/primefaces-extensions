@@ -126,7 +126,7 @@
                     </h:panelGroup>
                 </p:panel>
 
-                <pe:markText id="markText" widgetVar="markTextWidget" for="searchContent" value="#{diacriticsMarkTextController.searchTerm}"
+                <pe:markText id="markText" ref="markTextWidget" for="searchContent" value="#{diacriticsMarkTextController.searchTerm}"
                              diacritics="#{diacriticsMarkTextController.diacritics}" styleClass="marktext-highlight">
                     <p:ajax event="mark" listener="#{diacriticsMarkTextController.onHighlight}" update="messages"/>
                 </pe:markText>

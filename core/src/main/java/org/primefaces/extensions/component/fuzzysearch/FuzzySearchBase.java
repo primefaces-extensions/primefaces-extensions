@@ -28,9 +28,9 @@ import org.primefaces.cdk.api.FacesBehaviorEvents;
 import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
 import org.primefaces.component.api.InputHolder;
+import org.primefaces.component.api.PrimeClientComponent;
 import org.primefaces.component.api.PrimeSelect;
 import org.primefaces.component.api.StyleAware;
-import org.primefaces.component.api.Widget;
 import org.primefaces.event.SelectEvent;
 
 /**
@@ -44,7 +44,7 @@ import org.primefaces.event.SelectEvent;
             @FacesBehaviorEvent(name = "change", event = SelectEvent.class,
                         description = "Fires when selection changes.", defaultEvent = true)
 })
-public abstract class FuzzySearchBase extends UISelectOne implements Widget, InputHolder, StyleAware, PrimeSelect {
+public abstract class FuzzySearchBase extends UISelectOne implements PrimeClientComponent, InputHolder, StyleAware, PrimeSelect {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.FuzzySearch";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";

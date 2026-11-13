@@ -65,7 +65,7 @@
                 <p:messages id="messages" showSummary="true" showDetail="true"/>
 
                 <pe:kanban id="kanban"
-                            widgetVar="kanbanBasicWidget"
+                            ref="kanbanBasicWidget"
                             value="#{kanbanController.columns}"
                             draggable="true"
                             addItemButton="true"
@@ -151,7 +151,7 @@
                 </h:panelGrid>
 
                 <pe:kanban id="kanban"
-                            widgetVar="kanbanLayoutWidget"
+                            ref="kanbanLayoutWidget"
                             value="#{kanbanLayoutController.columns}"
                             draggable="true"
                             gutter="#{kanbanLayoutController.gutter}"

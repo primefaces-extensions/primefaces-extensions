@@ -31,7 +31,7 @@
 
                 <h:graphicImage id="myImage" value="/resources/images/testImage1.png"/>
 
-                <pe:imageRotateAndResize id="rotateAndResize" for="myImage" widgetVar="rotateAndResizeWidget">
+                <pe:imageRotateAndResize id="rotateAndResize" for="myImage" ref="rotateAndResizeWidget">
                     <p:ajax event="rotate" listener="#{imageController.rotateListener}" update="growl"/>
                     <p:ajax event="resize" listener="#{imageController.resizeListener}" update="growl"/>
                 </pe:imageRotateAndResize>

@@ -55,7 +55,7 @@
                          jsf:rendered="#{basicInputPlaceController.azureApiKey != null}">
                         <div class="p-inputgroup">
                             <div class="p-inputgroup-addon"><i class="fa-solid fa-location-dot"></i></div>
-                            <pe:inputPlace id="txtPlace" widgetVar="place" value="#{basicInputPlaceController.input}"
+                            <pe:inputPlace id="txtPlace" ref="place" value="#{basicInputPlaceController.input}"
                                            required="true" placeholder="Enter a location" styleClass="w-full" restrictTypes="poi"
                                            apiType="azure" apiKey="#{basicInputPlaceController.azureApiKey}">
                                 <p:ajax event="placeChanged" listener="#{basicInputPlaceController.onPlaceChanged}" update="selectedPlace growl"/>

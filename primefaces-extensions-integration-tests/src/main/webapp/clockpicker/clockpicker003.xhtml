@@ -16,7 +16,7 @@
                 <h:panelGroup id="clockpickerGroup" layout="block">
 
                     <p>12 Hour with Midnight Value (12:00 AM)</p>
-                    <pe:clockpicker id="midnight" widgetVar="midnightWidget" autoClose="false"
+                    <pe:clockpicker id="midnight" ref="midnightWidget" autoClose="false"
                                     value="#{clockPickerController.time4}" twelveHour="true" locale="en" showOn="button"/>
 
                 </h:panelGroup>

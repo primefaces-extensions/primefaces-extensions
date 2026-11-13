@@ -83,11 +83,11 @@ public class SlideOutRenderer extends CoreRenderer<SlideOut> {
     private void encodeMarkup(final FacesContext context, final SlideOut component) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
         final String clientId = component.getClientId(context);
-        final String widgetVar = component.resolveWidgetVar();
+        final String ref = component.resolveRef();
 
         writer.startElement("div", component);
         writer.writeAttribute("id", clientId, "id");
-        writer.writeAttribute(HTML.REF, widgetVar, null);
+        writer.writeAttribute(HTML.REF, ref, null);
 
         if (component.getPanelStyleClass() != null) {
             writer.writeAttribute(Attrs.CLASS, component.getPanelStyleClass(), "styleClass");

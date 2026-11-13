@@ -92,7 +92,7 @@
                                  actionListener="#{infiniteScrollController.toggleSrc}"
                                  oncomplete="handleLoadStop()"/>
 
-                <p:dialog widgetVar="loadingDlg" resizable="false" showHeader="false">
+                <p:dialog ref="loadingDlg" resizable="false" showHeader="false">
                     <h:panelGrid columns="2">
                         <h:graphicImage library="images" name="ajax-loader1.gif"
                                         style="margin-right: 12px; vertical-align: middle;"/>
@@ -104,7 +104,7 @@
                     <p:divider/>
                     Copyright, PrimeFaces Extensions, 2013.
 
-                    <pe:waypoint id="waypoint" widgetVar="waypointWidget"
+                    <pe:waypoint id="waypoint" ref="waypointWidget"
                                  offset="function(){return $.waypoints('viewportHeight') - $(this).outerHeight()}">
                         <p:callback event="reached" execute="handleLoadStart(ext);"/>
                     </pe:waypoint>

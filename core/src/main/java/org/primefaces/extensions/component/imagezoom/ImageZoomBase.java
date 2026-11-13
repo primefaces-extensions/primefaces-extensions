@@ -25,7 +25,7 @@ import jakarta.faces.component.UIComponentBase;
 
 import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
-import org.primefaces.component.api.Widget;
+import org.primefaces.component.api.PrimeClientComponent;
 
 /**
  * Component base class for the <code>ImageZoom</code> component.
@@ -34,7 +34,7 @@ import org.primefaces.component.api.Widget;
  * @since 11.0.3
  */
 @FacesComponentBase
-public abstract class ImageZoomBase extends UIComponentBase implements Widget {
+public abstract class ImageZoomBase extends UIComponentBase implements PrimeClientComponent {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.ImageZoom";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";

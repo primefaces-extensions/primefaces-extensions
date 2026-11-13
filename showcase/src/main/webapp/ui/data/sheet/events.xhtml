@@ -37,7 +37,7 @@
             <h:form id="formAjaxEvents">
                 <p:messages id="messages" showSummary="true" showDetail="true"/>
 
-                <pe:sheet id="sheet" widgetVar="sheetEventsWidget" value="#{sheetAjaxController.assets}"
+                <pe:sheet id="sheet" ref="sheetEventsWidget" value="#{sheetAjaxController.assets}"
                           var="row" height="400" rowKey="#{row.assetId}" showRowHeaders="true"
                           sortBy="#{row.assetId}" sortOrder="ascending" width="1000"
                           stretchH="all" movableCols="true" movableRows="true"
@@ -101,7 +101,7 @@
                     </p:selectOneMenu>
                 </h:panelGroup>
 
-                <pe:sheet id="sheet" widgetVar="sheetOutsideWidget" value="#{sheetController.assets}" var="row" height="400"
+                <pe:sheet id="sheet" ref="sheetOutsideWidget" value="#{sheetController.assets}" var="row" height="400"
                           rowKey="#{row.assetId}" showRowHeaders="true" sortBy="#{row.assetId}" sortOrder="ascending"
                           outsideClickDeselects="false" filteredValue="#{sheetController.filteredAssets}">
 

@@ -28,7 +28,7 @@ import jakarta.faces.validator.Validator;
 
 import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
-import org.primefaces.component.api.Widget;
+import org.primefaces.component.api.PrimeClientComponent;
 import org.primefaces.extensions.model.monacoeditor.EditorStandaloneTheme;
 
 /**
@@ -38,7 +38,7 @@ import org.primefaces.extensions.model.monacoeditor.EditorStandaloneTheme;
  */
 @FacesComponentBase
 public abstract class MonacoEditorCommonBase extends HtmlInputTextarea
-            implements Widget {
+            implements PrimeClientComponent {
 
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 

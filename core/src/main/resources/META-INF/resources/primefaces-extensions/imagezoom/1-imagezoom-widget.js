@@ -26,7 +26,7 @@ PrimeFaces.component.ImageZoom = class extends PrimeFaces.component.BaseComponen
     /**
      * @override
      * @inheritdoc
-     * @param {PrimeFaces.PartialComponentCfg<TCfg>} cfg
+     * @param {PrimeFaces.component.PartialComponentCfg<TCfg>} cfg
      */
     refresh(cfg) {
         this._cleanup();

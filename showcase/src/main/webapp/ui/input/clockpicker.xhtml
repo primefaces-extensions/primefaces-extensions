@@ -37,18 +37,18 @@
 
                 <h:panelGroup id="timePickerGroup" layout="block">
                     <p>AM/PM with Auto-Close</p>
-                    <pe:clockpicker id="autoclose" widgetVar="autocloseWidget" autoClose="true" value="#{clockPickerController.time}"
+                    <pe:clockpicker id="autoclose" ref="autocloseWidget" autoClose="true" value="#{clockPickerController.time}"
                                     twelveHour="true" locale="es"/>
 
                     <p>24 Hour with Manual Close Mode</p>
-                    <pe:clockpicker id="closeable" widgetVar="closeableWidget" autoClose="false" value="#{clockPickerController.time2}" showOn="button">
+                    <pe:clockpicker id="closeable" ref="closeableWidget" autoClose="false" value="#{clockPickerController.time2}" showOn="button">
                         <p:ajax listener="#{clockPickerController.showTime2}" update="growl"/>
                     </pe:clockpicker>
 
                     <p>Open In Dialog</p>
                     <p:commandButton value="Open Dialog" type="button" icon="pi pi-external-link" onclick="PF('dlg1').show()"/>
-                    <p:dialog header="ClockPicker" widgetVar="dlg1" height="350" width="350" showEffect="fade" closeOnEscape="true">
-                        <pe:clockpicker id="dlgClockPicker" widgetVar="dialogClockPickerWidget" autoClose="false" value="#{clockPickerController.time3}" showOn="button">
+                    <p:dialog header="ClockPicker" ref="dlg1" height="350" width="350" showEffect="fade" closeOnEscape="true">
+                        <pe:clockpicker id="dlgClockPicker" ref="dialogClockPickerWidget" autoClose="false" value="#{clockPickerController.time3}" showOn="button">
                             <p:ajax listener="#{clockPickerController.showTime3}" update="growl"/>
                         </pe:clockpicker>
                     </p:dialog>
@@ -72,7 +72,7 @@
 
                 <h:panelGroup id="timePickerGroup" layout="block">
                     <p>12 Hour with Midnight Value (12:00 AM)</p>
-                    <pe:clockpicker id="midnight" widgetVar="midnightWidget" autoClose="false"
+                    <pe:clockpicker id="midnight" ref="midnightWidget" autoClose="false"
                                     value="#{clockPickerMidnightController.time}" twelveHour="true" showOn="button"/>
 
                     <h:panelGroup id="messagePanel">
@@ -94,28 +94,28 @@
                 <h:panelGroup id="placementGrid" layout="block" styleClass="placement-demo-grid">
                     <h:panelGroup layout="block" styleClass="placement-cell">
                         <p>Top</p>
-                        <pe:clockpicker id="placementTop" widgetVar="placementTopWidget" autoClose="false"
+                        <pe:clockpicker id="placementTop" ref="placementTopWidget" autoClose="false"
                                         value="#{clockPickerPlacementController.timeTop}" showOn="button" locale="en"
                                         placement="top"/>
                     </h:panelGroup>
 
                     <h:panelGroup layout="block" styleClass="placement-cell">
                         <p>Bottom</p>
-                        <pe:clockpicker id="placementBottom" widgetVar="placementBottomWidget" autoClose="false"
+                        <pe:clockpicker id="placementBottom" ref="placementBottomWidget" autoClose="false"
                                         value="#{clockPickerPlacementController.timeBottom}" showOn="button" locale="en"
                                         placement="bottom"/>
                     </h:panelGroup>
 
                     <h:panelGroup layout="block" styleClass="placement-cell">
                         <p>Left</p>
-                        <pe:clockpicker id="placementLeft" widgetVar="placementLeftWidget" autoClose="false"
+                        <pe:clockpicker id="placementLeft" ref="placementLeftWidget" autoClose="false"
                                         value="#{clockPickerPlacementController.timeLeft}" showOn="button" locale="en"
                                         placement="left"/>
                     </h:panelGroup>
 
                     <h:panelGroup layout="block" styleClass="placement-cell">
                         <p>Right</p>
-                        <pe:clockpicker id="placementRight" widgetVar="placementRightWidget" autoClose="false"
+                        <pe:clockpicker id="placementRight" ref="placementRightWidget" autoClose="false"
                                         value="#{clockPickerPlacementController.timeRight}" showOn="button" locale="en"
                                         placement="right"/>
                     </h:panelGroup>
@@ -131,35 +131,35 @@
                 <h:panelGroup id="alignGrid" layout="block" styleClass="placement-demo-grid">
                     <h:panelGroup layout="block" styleClass="placement-cell">
                         <p>Left (default)</p>
-                        <pe:clockpicker id="alignLeft" widgetVar="alignLeftWidget" autoClose="false"
+                        <pe:clockpicker id="alignLeft" ref="alignLeftWidget" autoClose="false"
                                         value="#{clockPickerAlignController.timeLeft}" showOn="button" locale="en"
                                         align="left" placement="bottom"/>
                     </h:panelGroup>
 
                     <h:panelGroup layout="block" styleClass="placement-cell">
                         <p>Center</p>
-                        <pe:clockpicker id="alignCenter" widgetVar="alignCenterWidget" autoClose="false"
+                        <pe:clockpicker id="alignCenter" ref="alignCenterWidget" autoClose="false"
                                         value="#{clockPickerAlignController.timeCenter}" showOn="button" locale="en"
                                         align="center" placement="bottom"/>
                     </h:panelGroup>
 
                     <h:panelGroup layout="block" styleClass="placement-cell">
                         <p>Right</p>
-                        <pe:clockpicker id="alignRight" widgetVar="alignRightWidget" autoClose="false"
+                        <pe:clockpicker id="alignRight" ref="alignRightWidget" autoClose="false"
                                         value="#{clockPickerAlignController.timeRight}" showOn="button" locale="en"
                                         align="right" placement="bottom"/>
                     </h:panelGroup>
 
                     <h:panelGroup layout="block" styleClass="placement-cell">
                         <p>Top</p>
-                        <pe:clockpicker id="alignTop" widgetVar="alignTopWidget" autoClose="false"
+                        <pe:clockpicker id="alignTop" ref="alignTopWidget" autoClose="false"
                                         value="#{clockPickerAlignController.timeTop}" showOn="button" locale="en"
                                         align="top" placement="right"/>
                     </h:panelGroup>
 
                     <h:panelGroup layout="block" styleClass="placement-cell">
                         <p>Bottom</p>
-                        <pe:clockpicker id="alignBottom" widgetVar="alignBottomWidget" autoClose="false"
+                        <pe:clockpicker id="alignBottom" ref="alignBottomWidget" autoClose="false"
                                         value="#{clockPickerAlignController.timeBottom}" showOn="button" locale="en"
                                         align="bottom" placement="right"/>
                     </h:panelGroup>

@@ -59,7 +59,7 @@
                     </p:selectBooleanCheckbox>
                 </h:panelGrid>
 
-                <pe:sunEditor id="sunEditor" widgetVar="sunEditorBasic" value="#{basicSunEditorController.html}"
+                <pe:sunEditor id="sunEditor" ref="sunEditorBasic" value="#{basicSunEditorController.html}"
                               mode="#{basicSunEditorController.mode}" dir="#{basicSunEditorController.rtl ? 'rtl' : 'ltr'}"
                               theme="#{basicSunEditorController.theme}" locale="#{basicSunEditorController.language}"
                               toolbar="[['font','fontSize','blockStyle'],['paragraphStyle','blockquote'], ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'],
@@ -87,8 +87,8 @@
                     <p:commandButton value="Open Dialog" type="button" icon="pi pi-external-link" onclick="PF('dlgSunEditor').show()"/>
                 </h:panelGrid>
 
-                <p:dialog header="Header" widgetVar="dlgSunEditor" minHeight="40" width="60vw" showEffect="fade" closable="true" closeOnEscape="true" modal="true">
-                    <pe:sunEditor id="sunEditor" widgetVar="sunEditorDialog" value="#{basicSunEditorController.htmlDialog}"
+                <p:dialog header="Header" ref="dlgSunEditor" minHeight="40" width="60vw" showEffect="fade" closable="true" closeOnEscape="true" modal="true">
+                    <pe:sunEditor id="sunEditor" ref="sunEditorDialog" value="#{basicSunEditorController.htmlDialog}"
                                   mode="classic" dir="#{basicSunEditorController.rtl ? 'rtl' : 'ltr'}"
                                   theme="#{basicSunEditorController.theme}" locale="#{basicSunEditorController.language}"
                                   toolbar="[['font','fontSize','blockStyle'],['paragraphStyle','blockquote'], ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'],
@@ -119,7 +119,7 @@
                 <link href="https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&amp;family=Roboto&amp;display=swap" rel="stylesheet" />
                 -->
 
-                <pe:sunEditor id="sunEditor" widgetVar="sunEditorExtender" value="#{basicSunEditorController.html}"
+                <pe:sunEditor id="sunEditor" ref="sunEditorExtender" value="#{basicSunEditorController.html}"
                               theme="#{basicSunEditorController.theme}" extender="editorExtender" toolbar="[['font','fontSize','blockStyle'],['math']]">
                 </pe:sunEditor>
             </h:form>

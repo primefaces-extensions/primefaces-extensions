@@ -27,8 +27,8 @@ import org.primefaces.cdk.api.FacesBehaviorEvent;
 import org.primefaces.cdk.api.FacesBehaviorEvents;
 import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
+import org.primefaces.component.api.PrimeClientComponent;
 import org.primefaces.component.api.StyleAware;
-import org.primefaces.component.api.Widget;
 import org.primefaces.event.SelectEvent;
 
 /**
@@ -40,7 +40,7 @@ import org.primefaces.event.SelectEvent;
 @FacesBehaviorEvents({
             @FacesBehaviorEvent(name = "select", event = SelectEvent.class, description = "Fires when an item is selected.", defaultEvent = true)
 })
-public abstract class CommandPaletteBase extends UIComponentBase implements Widget, StyleAware {
+public abstract class CommandPaletteBase extends UIComponentBase implements PrimeClientComponent, StyleAware {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.CommandPalette";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";

@@ -27,8 +27,8 @@ import org.primefaces.cdk.api.FacesBehaviorEvent;
 import org.primefaces.cdk.api.FacesBehaviorEvents;
 import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
+import org.primefaces.component.api.PrimeClientComponent;
 import org.primefaces.component.api.StyleAware;
-import org.primefaces.component.api.Widget;
 import org.primefaces.event.map.MarkerDragEvent;
 import org.primefaces.event.map.OverlaySelectEvent;
 import org.primefaces.event.map.PointSelectEvent;
@@ -49,7 +49,7 @@ import org.primefaces.model.map.MapModel;
             @FacesBehaviorEvent(name = "pointDblSelect", event = PointSelectEvent.class, description = "Fires when a point is double-selected."),
             @FacesBehaviorEvent(name = "markerDrag", event = MarkerDragEvent.class, description = "Fires when a marker is dragged.")
 })
-public abstract class OSMapBase extends UIComponentBase implements Widget, StyleAware {
+public abstract class OSMapBase extends UIComponentBase implements PrimeClientComponent, StyleAware {
 
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
     public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.OSMapRenderer";
@@ -62,9 +62,6 @@ public abstract class OSMapBase extends UIComponentBase implements Widget, Style
     public String getFamily() {
         return COMPONENT_FAMILY;
     }
-
-    @Property(description = "Client-side widget variable name.")
-    public abstract String getWidgetVar();
 
     @Property(description = "Map model with markers, polylines, polygons, etc.")
     public abstract MapModel getModel();

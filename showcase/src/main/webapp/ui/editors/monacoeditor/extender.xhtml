@@ -214,7 +214,7 @@
                   <p:tabView id="extenderTabs" style="flex:1">
                       <p:tab id="extenderCode" title="Extender">
                           <h:panelGroup id="monacoExtenderWrapper" layout="block" styleClass="monacoExtenderBox">
-                              <pe:monacoEditorFramed id="monacoExtender" widgetVar="monacoExtender"
+                              <pe:monacoEditorFramed id="monacoExtender" ref="monacoExtender"
                                   oninitialized="monacoFollowScheme.call(this)"
                                   value="#{monacoEditorController.valueExtender}" scheme="file"
                                   extender="#{resource['js/monacoExtender.js']}"
@@ -226,7 +226,7 @@
                       </p:tab>
                       <p:tab id="customCss" title="Custom CSS">
                           <h:panelGroup id="monacoCssWrapper" layout="block" styleClass="monacoExtenderBox">
-                              <pe:monacoEditorFramed id="monacoCss" widgetVar="monacoCss"
+                              <pe:monacoEditorFramed id="monacoCss" ref="monacoCss"
                                   oninitialized="monacoFollowScheme.call(this)"
                                   value="#{monacoEditorController.valueCss}" scheme="file"
                                   extender="#{resource['js/monacoExtender.js']}"
@@ -242,7 +242,7 @@
                   <!-- window.createShowcaseExtender wraps the createExtender function -->
                   <!-- defined in the editor above to catch and display errors. -->
                   <h:panelGroup id="monacoEditorWrapper" layout="block" style="flex:1" styleClass="monacoEditorBox">
-                      <pe:monacoEditor id="monacoEditor" widgetVar="monacoEditor"
+                      <pe:monacoEditor id="monacoEditor" ref="monacoEditor"
                           oninitialized="monacoFollowScheme.call(this)"
                           rendered="#{empty monacoEditorController.extenderError}"
                           value="#{monacoEditorController.value}"

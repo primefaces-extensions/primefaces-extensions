@@ -25,7 +25,7 @@ import org.primefaces.cdk.api.FacesBehaviorEvent;
 import org.primefaces.cdk.api.FacesBehaviorEvents;
 import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
-import org.primefaces.component.api.Widget;
+import org.primefaces.component.api.PrimeClientComponent;
 import org.primefaces.extensions.component.api.AbstractDynamicData;
 import org.primefaces.extensions.event.LayoutCompleteEvent;
 
@@ -40,7 +40,7 @@ import org.primefaces.extensions.event.LayoutCompleteEvent;
             @FacesBehaviorEvent(name = "layoutComplete", event = LayoutCompleteEvent.class,
                         description = "Fires when the layout is complete.", defaultEvent = true)
 })
-public abstract class FluidGridBase extends AbstractDynamicData implements Widget {
+public abstract class FluidGridBase extends AbstractDynamicData implements PrimeClientComponent {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.FluidGrid";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -54,9 +54,6 @@ public abstract class FluidGridBase extends AbstractDynamicData implements Widge
     public String getFamily() {
         return COMPONENT_FAMILY;
     }
-
-    @Property(description = "Name of the client-side widget variable.")
-    public abstract String getWidgetVar();
 
     @Property(description = "Inline style for the grid.")
     public abstract String getStyle();

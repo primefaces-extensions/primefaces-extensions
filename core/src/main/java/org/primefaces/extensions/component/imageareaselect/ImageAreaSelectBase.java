@@ -27,7 +27,7 @@ import org.primefaces.cdk.api.FacesBehaviorEvent;
 import org.primefaces.cdk.api.FacesBehaviorEvents;
 import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
-import org.primefaces.component.api.Widget;
+import org.primefaces.component.api.PrimeClientComponent;
 import org.primefaces.extensions.event.ImageAreaSelectEvent;
 
 /**
@@ -45,7 +45,7 @@ import org.primefaces.extensions.event.ImageAreaSelectEvent;
             @FacesBehaviorEvent(name = "selectChange", event = ImageAreaSelectEvent.class,
                         description = "Fires when area selection changes.")
 })
-public abstract class ImageAreaSelectBase extends UIComponentBase implements Widget {
+public abstract class ImageAreaSelectBase extends UIComponentBase implements PrimeClientComponent {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.ImageAreaSelect";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";

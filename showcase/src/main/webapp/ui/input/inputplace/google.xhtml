@@ -48,7 +48,7 @@
                     <div class="col-12 md:col-6">
                         <div class="p-inputgroup">
                             <div class="p-inputgroup-addon"><i class="fa-solid fa-location-dot"></i></div>
-                            <pe:inputPlace id="txtPlace" widgetVar="place" value="#{basicInputPlaceController.input}" required="true"
+                            <pe:inputPlace id="txtPlace" ref="place" value="#{basicInputPlaceController.input}" required="true"
                                            placeholder="Enter a location" styleClass="w-full" restrictCountries="us,ca">
                                 <p:ajax event="placeChanged" listener="#{basicInputPlaceController.onPlaceChanged}" update="selectedPlace growl"/>
                             </pe:inputPlace>

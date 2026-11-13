@@ -27,7 +27,7 @@ import org.primefaces.cdk.api.FacesBehaviorEvent;
 import org.primefaces.cdk.api.FacesBehaviorEvents;
 import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
-import org.primefaces.component.api.Widget;
+import org.primefaces.component.api.PrimeClientComponent;
 import org.primefaces.extensions.event.WaypointEvent;
 
 /**
@@ -41,7 +41,7 @@ import org.primefaces.extensions.event.WaypointEvent;
             @FacesBehaviorEvent(name = "reached", event = WaypointEvent.class,
                         description = "Fires when a waypoint is reached.", defaultEvent = true)
 })
-public abstract class WaypointBase extends UIComponentBase implements Widget {
+public abstract class WaypointBase extends UIComponentBase implements PrimeClientComponent {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Waypoint";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";

@@ -25,7 +25,7 @@ import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
 import org.primefaces.component.api.AbstractPrimeHtmlInputText;
 import org.primefaces.component.api.InputHolder;
-import org.primefaces.component.api.Widget;
+import org.primefaces.component.api.PrimeClientComponent;
 
 /**
  * <code>ClockPicker</code> component base class.
@@ -34,7 +34,7 @@ import org.primefaces.component.api.Widget;
  * @since 6.1
  */
 @FacesComponentBase
-public abstract class ClockPickerBase extends AbstractPrimeHtmlInputText implements Widget, InputHolder {
+public abstract class ClockPickerBase extends AbstractPrimeHtmlInputText implements PrimeClientComponent, InputHolder {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.ClockPicker";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";

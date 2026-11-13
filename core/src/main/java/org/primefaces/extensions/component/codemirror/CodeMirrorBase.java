@@ -29,11 +29,11 @@ import jakarta.faces.validator.Validator;
 import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
 import org.primefaces.component.api.InputAware;
-import org.primefaces.component.api.Widget;
+import org.primefaces.component.api.PrimeClientComponent;
 import org.primefaces.extensions.component.api.SanitizerAware;
 
 @FacesComponentBase
-public abstract class CodeMirrorBase extends HtmlInputTextarea implements InputAware, SanitizerAware, Widget {
+public abstract class CodeMirrorBase extends HtmlInputTextarea implements InputAware, SanitizerAware, PrimeClientComponent {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.CodeMirror";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";

@@ -57,7 +57,7 @@ public class GanttRenderer extends CoreRenderer<Gantt> {
     private void encodeMarkup(final FacesContext context, final Gantt component) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
         final String clientId = component.getClientId();
-        final String widgetVar = component.resolveWidgetVar();
+        final String ref = component.resolveRef();
         final String styleClass = getStyleClassBuilder(context)
                     .add(Gantt.STYLE_CLASS)
                     .add(component.getStyleClass())
@@ -65,7 +65,7 @@ public class GanttRenderer extends CoreRenderer<Gantt> {
 
         writer.startElement("div", component);
         writer.writeAttribute("id", clientId, "id");
-        writer.writeAttribute(HTML.REF, widgetVar, null);
+        writer.writeAttribute(HTML.REF, ref, null);
         writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
         if (component.getStyle() != null) {
             writer.writeAttribute(Attrs.STYLE, component.getStyle(), Attrs.STYLE);

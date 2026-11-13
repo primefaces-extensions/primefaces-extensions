@@ -27,7 +27,7 @@ import org.primefaces.cdk.api.FacesBehaviorEvent;
 import org.primefaces.cdk.api.FacesBehaviorEvents;
 import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
-import org.primefaces.component.api.Widget;
+import org.primefaces.component.api.PrimeClientComponent;
 import org.primefaces.extensions.event.CloseEvent;
 import org.primefaces.extensions.event.OpenEvent;
 
@@ -39,7 +39,7 @@ import org.primefaces.extensions.event.OpenEvent;
             @FacesBehaviorEvent(name = "open", event = OpenEvent.class, description = "Fires when the panel is opened.", defaultEvent = true),
             @FacesBehaviorEvent(name = "close", event = CloseEvent.class, description = "Fires when the panel is closed.", defaultEvent = false)
 })
-public abstract class SlideOutBase extends UIComponentBase implements Widget {
+public abstract class SlideOutBase extends UIComponentBase implements PrimeClientComponent {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.SlideOut";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";

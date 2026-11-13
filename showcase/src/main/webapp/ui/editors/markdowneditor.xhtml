@@ -36,7 +36,7 @@
                     </p:selectBooleanCheckbox>
                 </h:panelGrid>
 
-                <pe:markdownEditor id="txtMarkdown" widgetVar="mdeBasic" value="#{markdownEditorController.markdown}"
+                <pe:markdownEditor id="txtMarkdown" ref="mdeBasic" value="#{markdownEditorController.markdown}"
                                    maxHeight="300px" sideBySideFullscreen="false" required="true" mode="sidebyside"
                                    dir="#{markdownEditorController.rtl ? 'rtl' : 'ltr'}"
                                    toolbar="bold, italic, strikethrough, |, heading-1, heading-2, heading-3,|, code, quote, unordered-list, ordered-list,|, clean-block, link, image, table, horizontal-rule,|, preview, side-by-side, fullscreen, |, guide">
@@ -59,8 +59,8 @@
                     <p:commandButton value="Open Dialog" type="button" icon="pi pi-external-link" onclick="PF('dlgMarkdown').show()"/>
                 </h:panelGrid>
 
-                <p:dialog header="Header" widgetVar="dlgMarkdown" minHeight="40" width="60vw" showEffect="fade" closable="true" closeOnEscape="true" modal="true">
-                    <pe:markdownEditor id="txtMarkdown" widgetVar="mdeDialog" value="#{markdownEditorController.markdown}"
+                <p:dialog header="Header" ref="dlgMarkdown" minHeight="40" width="60vw" showEffect="fade" closable="true" closeOnEscape="true" modal="true">
+                    <pe:markdownEditor id="txtMarkdown" ref="mdeDialog" value="#{markdownEditorController.markdown}"
                                        maxHeight="200px" sideBySideFullscreen="false"
                                        toolbar="bold, italic, |, guide">
                     </pe:markdownEditor>
@@ -76,7 +76,7 @@
                 and custom prompts for links and images (<code>this</code> is the widget, <code>this.cfg</code> its JSON configuration).
             </p>
             <h:form id="formExtender">
-                <pe:markdownEditor id="txtMarkdown" widgetVar="mdeExtender" value="#{markdownEditorController.markdown}"
+                <pe:markdownEditor id="txtMarkdown" ref="mdeExtender" value="#{markdownEditorController.markdown}"
                                    maxHeight="200px" toolbar="bold, italic, link, |, guide"
                                    extender="editorExtender">
                 </pe:markdownEditor>

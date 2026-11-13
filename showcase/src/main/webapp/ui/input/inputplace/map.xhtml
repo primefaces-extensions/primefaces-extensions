@@ -53,11 +53,11 @@
                     <div class="col-12">
                         <div class="p-inputgroup mb-4">
                             <div class="p-inputgroup-addon"><i class="fa-solid fa-location-dot"></i></div>
-                            <pe:inputPlace widgetVar="place" placeholder="Enter a location" styleClass="w-full" onplacechanged="updateMap(place)"/>
+                            <pe:inputPlace ref="place" placeholder="Enter a location" styleClass="w-full" onplacechanged="updateMap(place)"/>
                         </div>
                     </div>
                     <div class="col-12">
-                        <p:gmap widgetVar="googleMap" center="41.381542, 2.122893" zoom="15" type="ROADMAP" style="width:100%;height:400px"/>
+                        <p:gmap ref="googleMap" center="41.381542, 2.122893" zoom="15" type="ROADMAP" style="width:100%;height:400px"/>
                     </div>
                 </div>
             </h:form>

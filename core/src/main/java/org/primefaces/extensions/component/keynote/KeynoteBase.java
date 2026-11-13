@@ -25,8 +25,8 @@ import org.primefaces.cdk.api.FacesBehaviorEvent;
 import org.primefaces.cdk.api.FacesBehaviorEvents;
 import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
+import org.primefaces.component.api.PrimeClientComponent;
 import org.primefaces.component.api.StyleAware;
-import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.component.api.AbstractDynamicData;
 import org.primefaces.extensions.event.KeynoteEvent;
 
@@ -43,7 +43,7 @@ import org.primefaces.extensions.event.KeynoteEvent;
             @FacesBehaviorEvent(name = "slideChanged", event = KeynoteEvent.class,
                         description = "Fires when the slide changes.", defaultEvent = true)
 })
-public abstract class KeynoteBase extends AbstractDynamicData implements Widget, StyleAware {
+public abstract class KeynoteBase extends AbstractDynamicData implements PrimeClientComponent, StyleAware {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Keynote";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";

@@ -25,8 +25,8 @@ import jakarta.faces.component.UIComponentBase;
 
 import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
+import org.primefaces.component.api.PrimeClientComponent;
 import org.primefaces.component.api.StyleAware;
-import org.primefaces.component.api.Widget;
 
 /**
  * <code>TimeAgo</code> component base class.
@@ -35,7 +35,7 @@ import org.primefaces.component.api.Widget;
  * @since 7.0.1
  */
 @FacesComponentBase
-public abstract class TimeAgoBase extends UIComponentBase implements Widget, StyleAware {
+public abstract class TimeAgoBase extends UIComponentBase implements PrimeClientComponent, StyleAware {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.TimeAgo";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";

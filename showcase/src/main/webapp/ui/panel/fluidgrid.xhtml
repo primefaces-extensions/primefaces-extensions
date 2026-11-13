@@ -164,7 +164,7 @@
             </style>
             <h:form id="formStamped">
                 <div class="fg-stamped">
-                    <pe:fluidGrid stamp="@(.fg-stamped .stamp)" resizeBound="false" widgetVar="fluidGridStampedWdgt">
+                    <pe:fluidGrid stamp="@(.fg-stamped .stamp)" resizeBound="false" ref="fluidGridStampedWdgt">
                         <div class="stamp"></div>
 
                         <pe:fluidGridItem styleClass="p-component-header"/>
@@ -265,7 +265,7 @@
 
                 <div class="fg-dynaform">
                     <pe:fluidGrid id="fluidGrid" value="#{fluidGridDynaFormController.items}" var="data"
-                                  resizeBound="false" hGutter="20" widgetVar="fluidGridDynaformWdgt" style="width:600px">
+                                  resizeBound="false" hGutter="20" ref="fluidGridDynaformWdgt" style="width:600px">
                         <pe:fluidGridItem type="input">
                             <div class="dynaFormLabel">
                                 <p:outputLabel for="txt" value="#{data.label}"/>
@@ -293,7 +293,7 @@
                                  process="fluidGrid" update="fluidGrid inputValues growl"
                                  oncomplete="if(!args.validationFailed) {PF('dynaformValuesWidget').show();}"/>
 
-                <p:dialog header="Input values" widgetVar="dynaformValuesWidget">
+                <p:dialog header="Input values" ref="dynaformValuesWidget">
                     <p:dataList id="inputValues" value="#{fluidGridDynaFormController.items}" var="item"
                                 style="margin:10px;">
                         <h:outputText value="#{item.data.label} : #{item.data.value}" style="margin-right:15px;"/>
@@ -347,7 +347,7 @@
                                  process="fluidGrid" update="fluidGrid inputValues growl"
                                  oncomplete="if(!args.validationFailed) {PF('dynamicLabelsValuesWidget').show();}"/>
 
-                <p:dialog header="Submitted Values" widgetVar="dynamicLabelsValuesWidget">
+                <p:dialog header="Submitted Values" ref="dynamicLabelsValuesWidget">
                     <p:dataList id="inputValues" value="#{fluidGridDynamicLabelsController.items}" var="item"
                                 style="margin:10px;">
                         <h:outputText value="#{item.data.label} : #{item.data.value}" style="margin-right:15px;"/>

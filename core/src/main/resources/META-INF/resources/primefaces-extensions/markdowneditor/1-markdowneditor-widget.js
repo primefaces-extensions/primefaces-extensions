@@ -19,7 +19,7 @@ PrimeFaces.component.ExtMarkdownEditor = class extends PrimeFaces.component.Base
     /**
      * @override
      * @inheritdoc
-     * @param {PrimeFaces.PartialComponentCfg<TCfg>} cfg
+     * @param {PrimeFaces.component.PartialComponentCfg<TCfg>} cfg
      */
     init(cfg) {
         super.init(cfg);

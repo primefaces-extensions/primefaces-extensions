@@ -1033,7 +1033,7 @@ public class Sheet extends SheetBaseImpl {
         final FacesContext context = FacesContext.getCurrentInstance();
         if (context.getPartialViewContext().isPartialRequest()) {
             final StringBuilder eval = new StringBuilder();
-            final String jsVar = resolveWidgetVar();
+            final String jsVar = resolveRef();
             eval.append("PF('").append(jsVar).append("')").append(".clearDataInput();");
             PrimeFaces.current().executeScript(eval.toString());
         }
@@ -1061,7 +1061,7 @@ public class Sheet extends SheetBaseImpl {
      * @param dirtyRows the set of dirty rows
      */
     public void renderRowUpdateScript(final FacesContext context, final Set<String> dirtyRows) {
-        final String jsVar = resolveWidgetVar();
+        final String jsVar = resolveRef();
         final StringBuilder eval = new StringBuilder();
 
         for (final String rowKey : dirtyRows) {
@@ -1114,18 +1114,18 @@ public class Sheet extends SheetBaseImpl {
      * Adds eval scripts to update the bad data array in the sheet to render validation failures produced by the most recent ajax update attempt.
      */
     public void renderBadUpdateScript() {
-        final String widgetVar = resolveWidgetVar();
+        final String ref = resolveRef();
         final String invalidValue = getInvalidDataValue();
-        StringBuilder sb = new StringBuilder("PF('" + widgetVar + "')");
+        StringBuilder sb = new StringBuilder("PF('" + ref + "')");
         sb.append(".cfg.errors=");
         sb.append(invalidValue);
         sb.append(";");
-        sb.append("PF('").append(widgetVar).append("')");
+        sb.append("PF('").append(ref).append("')");
         sb.append(".ht.render();");
         PrimeFaces.current().executeScript(sb.toString());
 
         sb = new StringBuilder();
-        sb.append("PF('").append(widgetVar).append("')");
+        sb.append("PF('").append(ref).append("')");
         sb.append(".sheetDiv.removeClass('p-state-error')");
         if (!getInvalidUpdates().isEmpty()) {
             sb.append(".addClass('p-state-error')");

@@ -193,7 +193,7 @@
 
                 <h:panelGroup id="monacoEditorWrapper" layout="block" styleClass="monacoEditorBox monacoSync">
 
-                    <pe:monacoDiffEditor id="monacoEditor" widgetVar="monacoEditorBasic"
+                    <pe:monacoDiffEditor id="monacoEditor" ref="monacoEditorBasic"
                         oninitialized="monacoFollowScheme.call(this)"
                         rendered="#{monacoEditorController.type eq 'inline'}"
                         value="#{monacoEditorController.valueDiff}"
@@ -209,7 +209,7 @@
                         placeholder="enter your code... (inline)"
                         width="100%" height="400px" autoResize="true" />
 
-                    <pe:monacoDiffEditorFramed id="monacoEditorFramed" widgetVar="monacoEditorFramedBasic"
+                    <pe:monacoDiffEditorFramed id="monacoEditorFramed" ref="monacoEditorFramedBasic"
                         oninitialized="monacoFollowScheme.call(this)"
                         rendered="#{monacoEditorController.type eq 'framed'}"
                         value="#{monacoEditorController.valueFramedDiff}"

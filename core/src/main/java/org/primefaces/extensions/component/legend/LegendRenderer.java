@@ -56,7 +56,7 @@ public class LegendRenderer extends CoreRenderer<Legend> {
     private void encodeMarkup(FacesContext context, Legend component) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
         final String clientId = component.getClientId(context);
-        final String widgetVar = component.resolveWidgetVar();
+        final String ref = component.resolveRef();
         final String styleClass = getStyleClassBuilder(context)
                     .add(component.getLayout().equalsIgnoreCase("vertical")
                                 ? Legend.STYLE_CLASS_VERTICAL
@@ -66,7 +66,7 @@ public class LegendRenderer extends CoreRenderer<Legend> {
 
         writer.startElement("div", component);
         writer.writeAttribute("id", clientId, "id");
-        writer.writeAttribute(HTML.REF, widgetVar, null);
+        writer.writeAttribute(HTML.REF, ref, null);
         writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
         if (component.getStyle() != null) {
             writer.writeAttribute(Attrs.STYLE, component.getStyle(), Attrs.STYLE);

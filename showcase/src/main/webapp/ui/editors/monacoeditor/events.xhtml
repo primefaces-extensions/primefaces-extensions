@@ -60,7 +60,7 @@
                 })();
                 </script>
                 <!-- EXCLUDE-SOURCE-END -->
-                <p:growl id="growl" showDetail="true" showSummary="true" life="1000" widgetVar="growl" />
+                <p:growl id="growl" showDetail="true" showSummary="true" life="1000" ref="growl" />
 
                 <p:selectOneButton id="type" value="#{monacoEditorController.type}" styleClass="monacoSync">
                     <f:selectItem itemLabel="Inline" itemValue="inline" />
@@ -69,7 +69,7 @@
                 </p:selectOneButton>
 
                 <h:panelGroup id="monacoEditorWrapper" layout="block" styleClass="monacoEditorBox monacoSync">
-                    <pe:monacoEditor id="monacoEditor" widgetVar="monacoEditorEvents"
+                    <pe:monacoEditor id="monacoEditor" ref="monacoEditorEvents"
                         rendered="#{monacoEditorController.type eq 'inline'}"
                         value="#{monacoEditorController.value}"
                         editorOptions="#{monacoEditorController.editorOptions}"
@@ -94,7 +94,7 @@
                         <p:ajax event="paste" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
                     </pe:monacoEditor>
 
-                    <pe:monacoEditorFramed id="monacoEditorFramed" widgetVar="monacoEditorFramedEvents"
+                    <pe:monacoEditorFramed id="monacoEditorFramed" ref="monacoEditorFramedEvents"
                         rendered="#{monacoEditorController.type eq 'framed'}"
                         value="#{monacoEditorController.valueFramed}"
                         editorOptions="#{monacoEditorController.editorOptionsFramed}"

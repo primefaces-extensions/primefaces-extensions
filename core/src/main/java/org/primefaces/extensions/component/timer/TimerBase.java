@@ -27,8 +27,8 @@ import jakarta.faces.component.UIComponentBase;
 import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
 import org.primefaces.component.api.AjaxSource;
+import org.primefaces.component.api.PrimeClientComponent;
 import org.primefaces.component.api.StyleAware;
-import org.primefaces.component.api.Widget;
 
 /**
  * <code>Timer</code> component base class.
@@ -36,7 +36,7 @@ import org.primefaces.component.api.Widget;
  * @author f.strazzullo
  */
 @FacesComponentBase
-public abstract class TimerBase extends UIComponentBase implements Widget, AjaxSource, StyleAware {
+public abstract class TimerBase extends UIComponentBase implements PrimeClientComponent, AjaxSource, StyleAware {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Timer";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";

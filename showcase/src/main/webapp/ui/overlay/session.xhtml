@@ -28,7 +28,7 @@
                         onexpired="PF('sessionDialog').hide();PF('sessionExpiredDialog').show()"
                         reactionPeriod="60"
                         multiWindowSupport="true"/>
-            <p:dialog widgetVar="sessionDialog" header="Session Warning">
+            <p:dialog ref="sessionDialog" header="Session Warning">
                 <p>
                     Your session is about to expire.
                 </p>
@@ -36,7 +36,7 @@
                     <p:commandButton value="Keep my session alive." update="@none" onsuccess="PF('sessionDialog').hide()"/>
                 </h:form>
             </p:dialog>
-            <p:dialog widgetVar="sessionExpiredDialog" header="Session Expired">
+            <p:dialog ref="sessionExpiredDialog" header="Session Expired">
                 <p>
                     Your session has expired. Reload the page to continue.
                 </p>

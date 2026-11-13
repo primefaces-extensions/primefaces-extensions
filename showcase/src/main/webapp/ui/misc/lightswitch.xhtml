@@ -66,9 +66,9 @@
             <p>The widget methods <code>light()</code>, <code>dark()</code>, <code>toggle()</code> and <code>automatic()</code> switch
                 the page. <code>automatic="false"</code> keeps the switch from applying the OS setting on page load, so the color scheme stored by the theme configurator wins.</p>
             <h:form id="formJsAPI">
-                <pe:lightSwitch id="lightSwitch" widgetVar="lightSwitch" automatic="false"/>
+                <pe:lightSwitch id="lightSwitch" ref="lightSwitch" automatic="false"/>
 
-                <p><p:toggleSwitch widgetVar="schemeToggle"
+                <p><p:toggleSwitch ref="schemeToggle"
                                    onchange="PF('lightSwitch').changeColorScheme(PF('schemeToggle').input.prop('checked') ? 'dark' : 'light')"/></p>
 
                 <p><p:button value="Dark" onclick="PF('lightSwitch').dark();return false"/></p>

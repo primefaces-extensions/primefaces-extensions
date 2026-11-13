@@ -29,8 +29,8 @@ import org.primefaces.cdk.api.FacesBehaviorEvent;
 import org.primefaces.cdk.api.FacesBehaviorEvents;
 import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
+import org.primefaces.component.api.PrimeClientComponent;
 import org.primefaces.component.api.StyleAware;
-import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.GanttDateChangeEvent;
 import org.primefaces.extensions.event.GanttDateClickEvent;
 import org.primefaces.extensions.event.GanttProgressChangeEvent;
@@ -53,7 +53,7 @@ import org.primefaces.extensions.event.GanttViewChangeEvent;
             @FacesBehaviorEvent(name = "dateClick", event = GanttDateClickEvent.class,
                         description = "Fires when a date cell is clicked.")
 })
-public abstract class GanttBase extends UIOutput implements Widget, StyleAware {
+public abstract class GanttBase extends UIOutput implements PrimeClientComponent, StyleAware {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Gantt";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";

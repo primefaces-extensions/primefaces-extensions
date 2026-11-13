@@ -82,7 +82,7 @@
 
                     <pe:imageAreaSelect id="areaSelect"
                                         for="myImage"
-                                        widgetVar="areaSelectWidget"
+                                        ref="areaSelectWidget"
                                         autoHide="true"
                                         handles="false"
                                         movable="false"
@@ -92,7 +92,7 @@
                         <p:ajax event="selectEnd" listener="#{imageController.selectEndListener}" update="growl"/>
                     </pe:imageAreaSelect>
 
-                    <pe:imageRotateAndResize id="rotateAndResize" for="myImage" widgetVar="rotateAndResizeWidget">
+                    <pe:imageRotateAndResize id="rotateAndResize" for="myImage" ref="rotateAndResizeWidget">
                         <p:ajax event="rotate" listener="#{imageController.rotateListener}"
                                 update="growl" oncomplete="PF('areaSelectWidget').reload();"/>
                         <p:callback event="resize" execute="PF('areaSelectWidget').reload();"/>

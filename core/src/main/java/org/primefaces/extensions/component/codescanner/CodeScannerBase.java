@@ -27,8 +27,8 @@ import org.primefaces.cdk.api.FacesBehaviorEvent;
 import org.primefaces.cdk.api.FacesBehaviorEvents;
 import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
+import org.primefaces.component.api.PrimeClientComponent;
 import org.primefaces.component.api.StyleAware;
-import org.primefaces.component.api.Widget;
 import org.primefaces.event.SelectEvent;
 
 /**
@@ -42,7 +42,7 @@ import org.primefaces.event.SelectEvent;
             @FacesBehaviorEvent(name = "codeScanned", event = SelectEvent.class,
                         description = "Fires when a code is successfully scanned.", defaultEvent = true)
 })
-public abstract class CodeScannerBase extends UIComponentBase implements Widget, StyleAware {
+public abstract class CodeScannerBase extends UIComponentBase implements PrimeClientComponent, StyleAware {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.CodeScanner";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";

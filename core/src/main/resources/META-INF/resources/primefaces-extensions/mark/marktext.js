@@ -8,7 +8,7 @@ PrimeFaces.component.ExtMarkText = class extends PrimeFaces.component.BaseCompon
     /**
      * @override
      * @inheritdoc
-     * @param {PrimeFaces.component.BaseComponent.cfg} cfg
+     * @param {PrimeFaces.component.PartialComponentCfg<PrimeFaces.component.BaseComponentCfg>} cfg
      */
     init(cfg) {
         super.init(cfg);
@@ -35,7 +35,7 @@ PrimeFaces.component.ExtMarkText = class extends PrimeFaces.component.BaseCompon
     /**
      * @override
      * @inheritdoc
-     * @param {PrimeFaces.component.BaseComponent.cfg} cfg
+     * @param {PrimeFaces.component.PartialComponentCfg<PrimeFaces.component.BaseComponentCfg>} cfg
      */
     refresh(cfg) {
         this._cleanUp();

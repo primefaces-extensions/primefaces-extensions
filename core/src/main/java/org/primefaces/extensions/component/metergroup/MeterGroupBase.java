@@ -25,8 +25,8 @@ import jakarta.faces.component.UIComponentBase;
 
 import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
+import org.primefaces.component.api.PrimeClientComponent;
 import org.primefaces.component.api.StyleAware;
-import org.primefaces.component.api.Widget;
 
 /**
  * <code>MeterGroup</code> component.
@@ -34,7 +34,7 @@ import org.primefaces.component.api.Widget;
  * @since 16.0.0
  */
 @FacesComponentBase
-public abstract class MeterGroupBase extends UIComponentBase implements Widget, StyleAware {
+public abstract class MeterGroupBase extends UIComponentBase implements PrimeClientComponent, StyleAware {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.MeterGroup";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";

@@ -18,11 +18,11 @@
                 </p:messages>
 
                 <p>Basic</p>
-                <pe:sunEditor id="basic" widgetVar="basicWidget" value="#{sunEditorController.value}"/>
+                <pe:sunEditor id="basic" ref="basicWidget" value="#{sunEditorController.value}"/>
                 <h:outputText id="output" value="#{sunEditorController.value}" escape="false"/>
 
                 <p>Ajax change</p>
-                <pe:sunEditor id="ajax" widgetVar="ajaxWidget" value="#{sunEditorController.ajaxValue}">
+                <pe:sunEditor id="ajax" ref="ajaxWidget" value="#{sunEditorController.ajaxValue}">
                     <p:ajax event="change" listener="#{sunEditorController.onChange}" update="ajaxOutput changeCount"/>
                 </pe:sunEditor>
                 <h:outputText id="ajaxOutput" value="#{sunEditorController.ajaxValue}" escape="false"/>

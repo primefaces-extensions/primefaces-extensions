@@ -29,7 +29,7 @@ import jakarta.faces.context.FacesContext;
 import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
 import org.primefaces.component.api.AbstractPrimeHtmlInputTextArea;
-import org.primefaces.component.api.Widget;
+import org.primefaces.component.api.PrimeClientComponent;
 import org.primefaces.context.PrimeApplicationContext;
 import org.primefaces.extensions.util.HtmlSanitizer;
 
@@ -37,7 +37,7 @@ import org.primefaces.extensions.util.HtmlSanitizer;
  * Abstract Editor for SunEditor and Markdown Editor.
  */
 @FacesComponentBase
-public abstract class AbstractEditorInputTextArea extends AbstractPrimeHtmlInputTextArea implements Widget {
+public abstract class AbstractEditorInputTextArea extends AbstractPrimeHtmlInputTextArea implements PrimeClientComponent {
 
     private static final Logger LOGGER = Logger.getLogger(AbstractEditorInputTextArea.class.getName());
 

@@ -15,7 +15,7 @@
 
         <h:form id="formFullPage">
             <pe:layout id="fullPage" options="#{fullLayoutController.layoutOptions}"
-                       stateCookie="true" widgetVar="fpLayoutWidget">
+                       stateCookie="true" ref="fpLayoutWidget">
                 <p:ajax event="open" listener="#{fullLayoutController.handleOpen}" update="msg"/>
                 <p:ajax event="close" listener="#{fullLayoutController.handleClose}" update="msg"/>
                 <p:ajax event="resize" listener="#{fullLayoutController.handleResize}" update=":growl"/>

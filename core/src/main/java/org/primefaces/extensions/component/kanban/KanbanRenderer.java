@@ -67,7 +67,7 @@ public class KanbanRenderer extends CoreRenderer {
     private void encodeMarkup(final FacesContext context, final Kanban kanban) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
         final String clientId = kanban.getClientId();
-        final String widgetVar = kanban.resolveWidgetVar();
+        final String ref = kanban.resolveRef();
         final String styleClass = getStyleClassBuilder(context)
                     .add(Kanban.STYLE_CLASS)
                     .add(kanban.getStyleClass())
@@ -75,7 +75,7 @@ public class KanbanRenderer extends CoreRenderer {
 
         writer.startElement("div", kanban);
         writer.writeAttribute("id", clientId, "id");
-        writer.writeAttribute(HTML.REF, widgetVar, null);
+        writer.writeAttribute(HTML.REF, ref, null);
         writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
         if (kanban.getStyle() != null) {
             writer.writeAttribute(Attrs.STYLE, kanban.getStyle(), Attrs.STYLE);

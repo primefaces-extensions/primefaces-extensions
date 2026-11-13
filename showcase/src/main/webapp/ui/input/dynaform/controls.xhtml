@@ -75,7 +75,7 @@
                     </pe:dynaForm>
                 </h:panelGroup>
 
-                <p:dialog id="dialogList" widgetVar="dialogListWdgt">
+                <p:dialog id="dialogList" ref="dialogListWdgt">
                     <f:facet name="header">
                         Please select an item
                     </f:facet>
@@ -93,7 +93,7 @@
                     </h:panelGroup>
                 </p:dialog>
 
-                <p:dialog header="Input values" widgetVar="inputValuesWidgetContainer">
+                <p:dialog header="Input values" ref="inputValuesWidgetContainer">
                     <p:dataList id="inputValues" value="#{containerDynaFormController.values}" var="value"
                                 style="margin:10px;">
                         <h:outputText value="#{value}" style="margin-right: 15px;"/>
@@ -154,7 +154,7 @@
                 <p:commandButton value="Show current values without submit" process="@none" update="conditions"
                                  style="margin-top:15px;" oncomplete="PF('condValuesDlg').show()"/>
 
-                <p:dialog header="Condition Values" widgetVar="condValuesDlg">
+                <p:dialog header="Condition Values" ref="condValuesDlg">
                     <h:panelGroup id="conditions" layout="block" style="margin:10px;">
                         <h:outputText value="#{clearDynaFormController.conditions}" escape="false"/>
                     </h:panelGroup>

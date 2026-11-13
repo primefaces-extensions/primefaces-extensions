@@ -80,7 +80,7 @@
                 <p:messages id="messages" showSummary="true" showDetail="true"/>
 
                 <pe:kanban id="kanban"
-                            widgetVar="kanbanTouchWidget"
+                            ref="kanbanTouchWidget"
                             value="#{kanbanController.columns}"
                             draggable="true"
                             touchDraggable="true"
@@ -110,7 +110,7 @@
                 </div>
 
                 <pe:kanban id="kanban"
-                            widgetVar="kanbanBoardDragWidget"
+                            ref="kanbanBoardDragWidget"
                             value="#{kanbanBoardDragController.columns}"
                             draggable="true"
                             dragBoards="#{kanbanBoardDragController.dragBoards}"
@@ -147,7 +147,7 @@
                 </div>
 
                 <pe:kanban id="kanban"
-                            widgetVar="kanbanDragHandleWidget"
+                            ref="kanbanDragHandleWidget"
                             value="#{kanbanDragHandleController.columns}"
                             draggable="true"
                             dragHandle="#{kanbanDragHandleController.dragHandle}"
@@ -176,7 +176,7 @@
                 <p:messages id="messages" showSummary="true" showDetail="true"/>
 
                 <pe:kanban id="kanban"
-                            widgetVar="kanbanDropRestrictionsWidget"
+                            ref="kanbanDropRestrictionsWidget"
                             value="#{kanbanDropRestrictionsController.columns}"
                             draggable="true"
                             style="height:450px">

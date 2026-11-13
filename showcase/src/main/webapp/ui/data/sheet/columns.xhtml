@@ -30,7 +30,7 @@
                 <p:importEnum type="org.primefaces.extensions.showcase.model.sheet.AssetType" var="AssetType"/>
                 <p:importEnum type="org.primefaces.extensions.showcase.model.sheet.PlatformType" var="PlatformType"/>
 
-                <pe:sheet id="sheet" widgetVar="sheetMovableWidget" value="#{sheetController.assets}" var="row"
+                <pe:sheet id="sheet" ref="sheetMovableWidget" value="#{sheetController.assets}" var="row"
                           height="400" rowKey="#{row.assetId}" showRowHeaders="true"
                           resizableCols="true" resizableRows="true"
                           movableCols="true" movableRows="true"
@@ -88,7 +88,7 @@
 
                 <pe:sheet id="sheet" value="#{sheetAjaxController.assets}" var="row" height="400" rowKey="#{row.assetId}"
                           showRowHeaders="true" sortBy="#{row.assetId}" sortOrder="ascending" width="1000"
-                          widgetVar="sheetValidationWidget">
+                          ref="sheetValidationWidget">
                     <p:ajax event="change" listener="#{sheetAjaxController.cellChangeEvent}" update="messages"/>
 
                     <f:facet name="header">

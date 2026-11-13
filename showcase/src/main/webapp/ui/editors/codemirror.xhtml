@@ -94,7 +94,7 @@
                 to open the proposals; the mode can be changed with AJAX.
             </p>
             <h:form id="formCodeCompletion" styleClass="cm-follow-scheme">
-                <pe:codeMirror id="codeMirror" mode="#{codeMirrorController.mode}" widgetVar="codeMirrorCompletion"
+                <pe:codeMirror id="codeMirror" mode="#{codeMirrorController.mode}" ref="codeMirrorCompletion"
                                theme="eclipse" value="#{codeMirrorController.content}" lineNumbers="true"
                                completeMethod="#{codeMirrorController.complete}"
                                extraKeys="{ 'Ctrl-Space': function(cm) { PF('codeMirrorCompletion').complete(); }}"/>

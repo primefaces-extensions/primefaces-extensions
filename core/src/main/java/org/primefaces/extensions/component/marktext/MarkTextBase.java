@@ -29,8 +29,8 @@ import org.primefaces.cdk.api.FacesBehaviorEvent;
 import org.primefaces.cdk.api.FacesBehaviorEvents;
 import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
+import org.primefaces.component.api.PrimeClientComponent;
 import org.primefaces.component.api.StyleAware;
-import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.MarkEvent;
 
 /**
@@ -43,7 +43,7 @@ import org.primefaces.extensions.event.MarkEvent;
 @FacesBehaviorEvents({
             @FacesBehaviorEvent(name = "mark", event = MarkEvent.class, description = "Fires when text is marked/highlighted.", defaultEvent = true)
 })
-public abstract class MarkTextBase extends UIComponentBase implements Widget, StyleAware {
+public abstract class MarkTextBase extends UIComponentBase implements PrimeClientComponent, StyleAware {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.MarkText";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -57,9 +57,6 @@ public abstract class MarkTextBase extends UIComponentBase implements Widget, St
     public String getFamily() {
         return COMPONENT_FAMILY;
     }
-
-    @Property(description = "Name of the client-side widget.")
-    public abstract String getWidgetVar();
 
     @Property(description = "Search terms to highlight. Can be a string or array of strings.", required = true)
     public abstract String getValue();

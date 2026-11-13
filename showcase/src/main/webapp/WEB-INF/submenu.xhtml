@@ -10,7 +10,7 @@
 
         <!-- one tagDocumentation per tag of the page: tagName, tagName2, tagName3, tagName4 (components made of several tags) -->
         <ui:fragment rendered="#{not empty tagName}">
-            <p:sidebar widgetVar="currentTagLib" styleClass="taglib-sidebar" appendTo="@(body)" modal="true" position="right" blockScroll="true">
+            <p:sidebar ref="currentTagLib" styleClass="taglib-sidebar" appendTo="@(body)" modal="true" position="right" blockScroll="true">
                 <h:form>
                     <ui:repeat value="#{[tagName, tagName2, tagName3, tagName4]}" var="tag">
                         <ui:fragment rendered="#{not empty tag}">

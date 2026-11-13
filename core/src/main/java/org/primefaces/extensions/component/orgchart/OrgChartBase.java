@@ -27,8 +27,8 @@ import org.primefaces.cdk.api.FacesBehaviorEvent;
 import org.primefaces.cdk.api.FacesBehaviorEvents;
 import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
+import org.primefaces.component.api.PrimeClientComponent;
 import org.primefaces.component.api.StyleAware;
-import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.OrgChartClickEvent;
 import org.primefaces.extensions.event.OrgChartDropEvent;
 
@@ -44,7 +44,7 @@ import org.primefaces.extensions.event.OrgChartDropEvent;
                         defaultEvent = true),
             @FacesBehaviorEvent(name = "drop", event = OrgChartDropEvent.class, description = "Fires when a node is dropped after dragging.")
 })
-public abstract class OrgChartBase extends UIOutput implements Widget, StyleAware {
+public abstract class OrgChartBase extends UIOutput implements PrimeClientComponent, StyleAware {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.OrgChart";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";

@@ -27,7 +27,7 @@ import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
 import org.primefaces.component.api.AbstractPrimeHtmlInputText;
 import org.primefaces.component.api.InputHolder;
-import org.primefaces.component.api.Widget;
+import org.primefaces.component.api.PrimeClientComponent;
 import org.primefaces.extensions.event.BeforeShowEvent;
 import org.primefaces.extensions.event.CloseEvent;
 import org.primefaces.extensions.event.TimeSelectEvent;
@@ -47,7 +47,7 @@ import org.primefaces.extensions.event.TimeSelectEvent;
             @FacesBehaviorEvent(name = "close", event = CloseEvent.class,
                         description = "Fires when the time picker panel is closed.")
 })
-public abstract class TimePickerBase extends AbstractPrimeHtmlInputText implements Widget, InputHolder {
+public abstract class TimePickerBase extends AbstractPrimeHtmlInputText implements PrimeClientComponent, InputHolder {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.TimePicker";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";

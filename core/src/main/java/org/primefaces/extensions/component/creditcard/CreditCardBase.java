@@ -25,7 +25,7 @@ import jakarta.faces.component.UIComponentBase;
 
 import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
-import org.primefaces.component.api.Widget;
+import org.primefaces.component.api.PrimeClientComponent;
 
 /**
  * <code>CreditCard</code> component base class.
@@ -34,7 +34,7 @@ import org.primefaces.component.api.Widget;
  * @since 8.0.1
  */
 @FacesComponentBase
-public abstract class CreditCardBase extends UIComponentBase implements Widget {
+public abstract class CreditCardBase extends UIComponentBase implements PrimeClientComponent {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.CreditCard";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";

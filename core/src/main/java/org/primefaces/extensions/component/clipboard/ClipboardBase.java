@@ -27,7 +27,7 @@ import org.primefaces.cdk.api.FacesBehaviorEvent;
 import org.primefaces.cdk.api.FacesBehaviorEvents;
 import org.primefaces.cdk.api.FacesComponentBase;
 import org.primefaces.cdk.api.Property;
-import org.primefaces.component.api.Widget;
+import org.primefaces.component.api.PrimeClientComponent;
 import org.primefaces.extensions.event.ClipboardErrorEvent;
 import org.primefaces.extensions.event.ClipboardSuccessEvent;
 
@@ -44,7 +44,7 @@ import org.primefaces.extensions.event.ClipboardSuccessEvent;
             @FacesBehaviorEvent(name = "error", event = ClipboardErrorEvent.class,
                         description = "Fires when the clipboard copy/cut action fails.")
 })
-public abstract class ClipboardBase extends UIComponentBase implements Widget {
+public abstract class ClipboardBase extends UIComponentBase implements PrimeClientComponent {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Clipboard";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
