@@ -1,7 +1,7 @@
 /**
  * PrimeFaces OpenStreetMap Widget
  */
-PrimeFaces.widget.OSMap = class extends PrimeFaces.widget.BaseWidget {
+PrimeFaces.component.OSMap = class extends PrimeFaces.component.BaseComponent {
 
     init(cfg) {
         super.init(cfg);
@@ -134,7 +134,7 @@ PrimeFaces.widget.OSMap = class extends PrimeFaces.widget.BaseWidget {
      * Triggers the behavior for when an overlay shape was selected.
      * @private
      * @param {MapMouseEvent | IconMouseEvent} event The event that occurred.
-     * @param {PrimeFaces.widget.GMap.Overlay} overlay The shape that was selected.
+     * @param {PrimeFaces.component.GMap.Overlay} overlay The shape that was selected.
      * @param {number} clickCount whether it was single or double click
      */
     fireOverlaySelectEvent(event, overlay, clickCount) {
@@ -236,7 +236,7 @@ PrimeFaces.widget.OSMap = class extends PrimeFaces.widget.BaseWidget {
 
     /**
      * Adds all overlay shapes (circle, polyline, or polygon) to this map.
-     * @param {PrimeFaces.widget.GMap.Overlay[]} overlays A list of overlay shapes to add to this map.
+     * @param {PrimeFaces.component.GMap.Overlay[]} overlays A list of overlay shapes to add to this map.
      */
     addOverlays(overlays) {
         var $this = this;

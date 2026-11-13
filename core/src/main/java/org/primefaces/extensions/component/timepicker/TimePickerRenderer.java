@@ -40,10 +40,10 @@ import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.extensions.util.MessageFactory;
 import org.primefaces.renderkit.InputRenderer;
+import org.primefaces.util.ComponentScriptBuilder;
 import org.primefaces.util.Constants;
 import org.primefaces.util.HTML;
 import org.primefaces.util.LangUtils;
-import org.primefaces.util.WidgetBuilder;
 
 /**
  * Renderer for the {@link TimePicker} component.
@@ -220,7 +220,7 @@ public class TimePickerRenderer extends InputRenderer<TimePicker> {
                 throws IOException {
         final String clientId = component.getClientId(fc);
 
-        final WidgetBuilder wb = getWidgetBuilder(fc);
+        final ComponentScriptBuilder wb = getComponentScriptBuilder(fc);
         wb.init("ExtTimePicker", component);
         wb.attr("timeSeparator", component.getTimeSeparator());
         wb.attr("myPosition", component.getDialogPosition());

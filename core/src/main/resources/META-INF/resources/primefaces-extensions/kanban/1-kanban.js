@@ -2,8 +2,8 @@
  * PrimeFaces Extensions Kanban Widget
  * Copyright (c) 2011-2026 PrimeFaces Extensions
  */
-if (PrimeFaces.widget) {
-    PrimeFaces.widget.ExtKanban = class extends PrimeFaces.widget.DeferredWidget {
+if (PrimeFaces.component) {
+    PrimeFaces.component.ExtKanban = class extends PrimeFaces.component.DeferredComponent {
 
         init(cfg) {
             super.init(cfg);

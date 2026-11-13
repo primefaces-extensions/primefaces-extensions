@@ -66,7 +66,7 @@
 
 	// Popover template
 	let tpl = [
-		'<div class="popover clockpicker-popover p-widget" style="position:absolute;">',
+		'<div class="popover clockpicker-popover p-component" style="position:absolute;">',
 			'<div class="arrow"></div>',
 			'<div class="popover-title">',
 				'<span class="clockpicker-span-hours text-primary"></span>',

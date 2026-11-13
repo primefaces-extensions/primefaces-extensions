@@ -359,7 +359,7 @@
 						$('<img></img>').attr({src: inst.options.buttonImage,
 							alt: inst.options.buttonStatus, title: inst.options.buttonStatus}) :
 						inst.options.useThemeRoller ? 
-							$('<button type="button" title="' + inst.options.buttonStatus + '" class="p-button p-widget p-state-default p-button-icon-only"></button>').
+							$('<button type="button" title="' + inst.options.buttonStatus + '" class="p-button p-component p-state-default p-button-icon-only"></button>').
 							html('<span class="p-button-icon-left pi pi-calculator"></span><span class="p-button-text">p-button</span>')
 						:
 						$('<button type="button" title="' + inst.options.buttonStatus + '"></button>').
@@ -617,7 +617,7 @@
 			var borders = this._getBorders(inst._mainDiv);
 			inst._mainDiv.html(this._generateHTML(inst)).removeClass().
 				addClass(inst.options.calculatorClass +
-					(inst.options.useThemeRoller ? ' p-widget p-widget-content' : '') +
+					(inst.options.useThemeRoller ? ' p-component p-component-content' : '') +
 					(inst.options.isRTL ? ' ' + plugin._rtlClass : '') + ' ' +
 					(inst._inline ? this._inlineClass : this._mainDivClass));
 			if (this.isDisabled(inst.elem[0])) {
@@ -845,9 +845,9 @@
 			@return {string} The HTML for this calculator. */
 		_generateHTML: function(inst) {
 			var html = (!inst.options.prompt ? '' : '<div class="' + this._promptClass +
-				(inst.options.useThemeRoller ? ' p-widget-header' : '') + '">' +
+				(inst.options.useThemeRoller ? ' p-component-header' : '') + '">' +
 				inst.options.prompt + '</div>') + '<div class="' + this._resultClass +
-				(inst.options.useThemeRoller ? ' p-widget-header' : '' ) +
+				(inst.options.useThemeRoller ? ' p-component-header' : '' ) +
 				(inst._focussed ? ' ' + this._focussedClass: '') + '">' +
 				(inst.options.showFormula ?
 				'<span class="' + this._formulaClass + '">' + inst._formula + '</span>' : '') + 
@@ -888,7 +888,7 @@
 						(def[0].match(/^#mem(Clear|Recall)$/) && !inst.memory ?
 						' ' + this._memEmptyClass : '')))) +
 						// Common
-						(inst.options.useThemeRoller ? ' p-button p-widget p-state-default' : '') +
+						(inst.options.useThemeRoller ? ' p-button p-component p-state-default' : '') +
 						(styles ? ' ' + styles : '') + '" ' +
 						(status ? 'title="' + status + '"' : '') + '>' +
 						(code === '_.' ? inst.options.decimalChar : label) +

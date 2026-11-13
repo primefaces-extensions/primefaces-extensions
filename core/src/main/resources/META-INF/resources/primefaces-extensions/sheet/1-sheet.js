@@ -5,7 +5,7 @@
  * @author Mark Lassiter
  * @since 6.2
  */
-PrimeFaces.widget.ExtSheet = class extends PrimeFaces.widget.DeferredWidget {
+PrimeFaces.component.ExtSheet = class extends PrimeFaces.component.DeferredComponent {
 
     // initialize the component
     init(cfg) {
@@ -241,7 +241,7 @@ PrimeFaces.widget.ExtSheet = class extends PrimeFaces.widget.DeferredWidget {
                     if (f == 'true') {
                         header
                             .append(
-                                '<span class="handson-filter"><input type="text" class="p-inputfield p-inputtext p-widget p-state-default" role="textbox" aria-disabled="false" aria-readonly="false" aria-multiline="false" value="'
+                                '<span class="handson-filter"><input type="text" class="p-inputfield p-inputtext p-component p-state-default" role="textbox" aria-disabled="false" aria-readonly="false" aria-multiline="false" value="'
                                 + v + '"></input></span>');
                         header.find('input').off().on('change.sheetfilter', function () {
                             $this.filterchange($this, physicalCol, this.value, false)
@@ -259,7 +259,7 @@ PrimeFaces.widget.ExtSheet = class extends PrimeFaces.widget.DeferredWidget {
                     } else {
                         header
                             .append(
-                                '<span class="handson-filter"><select class="p-column-filter p-widget p-state-default" ></select></span>');
+                                '<span class="handson-filter"><select class="p-column-filter p-component p-state-default" ></select></span>');
                         let selectInput = header.find('select');
                         for (let i = 0; i < f.length; i++) {
                             selectInput.append('<option value="' + f[i].value + '"'
@@ -319,7 +319,7 @@ PrimeFaces.widget.ExtSheet = class extends PrimeFaces.widget.DeferredWidget {
         $this.ht.addHook('beforeKeyDown', $this.handleHotBeforeKeyDown);
 
         // fix tbody
-        $('.htCore > tbody').addClass('p-datatable-data p-widget-content');
+        $('.htCore > tbody').addClass('p-datatable-data p-component-content');
 
         // Check if data exist. If not insert No Records Found message
         if (options.data.length === 0) {

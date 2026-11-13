@@ -4,7 +4,7 @@
  * @author Oleg Varaksin
  * @author Melloware
  */
-PrimeFaces.widget.ExtTooltip = class extends PrimeFaces.widget.BaseWidget {
+PrimeFaces.component.ExtTooltip = class extends PrimeFaces.component.BaseComponent {
 
     /**
      * Initializes the widget.
@@ -146,7 +146,7 @@ PrimeFaces.expressions.CssSelectorResolver = {
                     // @widget
                     else if (expression.indexOf("@widgetVar(") == 0) {
                         var widgetVar = expression.substring(11, expression.length - 1);
-                        var widget = PrimeFaces.widgets[widgetVar];
+                        var widget = PrimeFaces.components[widgetVar];
 
                         if (widget) {
                             elements.push(widget.id);

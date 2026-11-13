@@ -30,9 +30,9 @@ import jakarta.faces.render.FacesRenderer;
 import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.util.ComponentScriptBuilder;
 import org.primefaces.util.HTML;
 import org.primefaces.util.LangUtils;
-import org.primefaces.util.WidgetBuilder;
 
 /**
  * Renderer for the {@link CreditCard} component.
@@ -58,13 +58,13 @@ public class CreditCardRenderer extends CoreRenderer<CreditCard> {
 
         writer.startElement("div", component);
         writer.writeAttribute("id", clientId, "id");
-        writer.writeAttribute(HTML.WIDGET_VAR, widgetVar, null);
+        writer.writeAttribute(HTML.REF, widgetVar, null);
         writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
         writer.endElement("div");
     }
 
     protected void encodeScript(final FacesContext context, final CreditCard component) throws IOException {
-        final WidgetBuilder wb = getWidgetBuilder(context);
+        final ComponentScriptBuilder wb = getComponentScriptBuilder(context);
         wb.init("ExtCreditCard", component);
         wb.attr("width", component.getWidth() != null ? component.getWidth() : 350, 350);
         wb.attr("formatting", component.isFormatting(), true);

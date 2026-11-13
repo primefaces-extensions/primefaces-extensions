@@ -55,13 +55,13 @@ import org.primefaces.util.LocaleUtils;
 @ResourceDependency(library = org.primefaces.extensions.util.Constants.LIBRARY, name = "timepicker/timepicker.js")
 public class TimePicker extends TimePickerBaseImpl {
 
-    public static final String CONTAINER_CLASS = "pe-timepicker p-widget";
+    public static final String CONTAINER_CLASS = "pe-timepicker p-component";
     public static final String INPUT_CLASS = "p-inputfield p-state-default";
-    public static final String UP_BUTTON_CLASS = "p-spinner-button p-spinner-up p-button p-widget p-state-default p-button-text-only";
-    public static final String DOWN_BUTTON_CLASS = "p-spinner-button p-spinner-down p-button p-widget p-state-default p-button-text-only";
+    public static final String UP_BUTTON_CLASS = "p-spinner-button p-spinner-up p-button p-component p-state-default p-button-text-only";
+    public static final String DOWN_BUTTON_CLASS = "p-spinner-button p-spinner-down p-button p-component p-state-default p-button-text-only";
     public static final String UP_ICON_CLASS = "p-icon p-up-icon p-spinner-increment-icon p-c";
     public static final String DOWN_ICON_CLASS = "p-icon p-down-icon p-spinner-decrement-icon p-c";
-    public static final String BUTTON_TRIGGER_CLASS = "pe-timepicker-trigger p-button p-widget p-state-default p-button-icon-only";
+    public static final String BUTTON_TRIGGER_CLASS = "pe-timepicker-trigger p-button p-component p-state-default p-button-icon-only";
     public static final String BUTTON_TRIGGER_ICON_CLASS = "p-button-icon-left pi pi-clock";
     public static final String BUTTON_TRIGGER_TEXT_CLASS = "p-button-text";
 

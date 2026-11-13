@@ -30,7 +30,7 @@ import jakarta.faces.render.FacesRenderer;
 import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
-import org.primefaces.util.WidgetBuilder;
+import org.primefaces.util.ComponentScriptBuilder;
 
 /**
  * Renderer for the QRCode component.
@@ -48,7 +48,7 @@ public class QRCodeRenderer extends CoreRenderer<QRCode> {
     }
 
     protected void encodeScript(final FacesContext context, final QRCode component) throws IOException {
-        final WidgetBuilder wb = getWidgetBuilder(context);
+        final ComponentScriptBuilder wb = getComponentScriptBuilder(context);
         wb.init("ExtQRCode", component);
         wb.attr("render", component.getRenderMethod())
                     .attr("mode", component.getRenderMode())

@@ -30,7 +30,7 @@ import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.extensions.util.ExtLangUtils;
 import org.primefaces.renderkit.CoreRenderer;
-import org.primefaces.util.WidgetBuilder;
+import org.primefaces.util.ComponentScriptBuilder;
 
 /**
  * Renderer for the {@link Clipboard} component.
@@ -60,7 +60,7 @@ public class ClipboardRenderer extends CoreRenderer<Clipboard> {
 
         final String target = SearchExpressionUtils.resolveClientIdsForClientSide(context, clipboard, clipboard.getTarget());
 
-        final WidgetBuilder wb = getWidgetBuilder(context);
+        final ComponentScriptBuilder wb = getComponentScriptBuilder(context);
         wb.init("ExtClipboard", clipboard);
         wb.attr("action", ExtLangUtils.lowerCase(clipboard.getAction()));
         wb.attr("trigger", trigger);

@@ -30,7 +30,7 @@ import jakarta.servlet.http.HttpSession;
 
 import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.renderkit.CoreRenderer;
-import org.primefaces.util.WidgetBuilder;
+import org.primefaces.util.ComponentScriptBuilder;
 
 /**
  * Renderer for the Session component.
@@ -48,7 +48,7 @@ public class SessionRenderer extends CoreRenderer<Session> {
             reactionPeriod = 60;
         }
 
-        final WidgetBuilder wb = getWidgetBuilder(facesContext);
+        final ComponentScriptBuilder wb = getComponentScriptBuilder(facesContext);
         wb.init("Session", component);
         wb.attr("reactionPeriod", reactionPeriod);
         wb.attr("multiWindowSupport", component.isMultiWindowSupport());

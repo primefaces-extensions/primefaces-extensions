@@ -11,8 +11,8 @@ function monacoFollowScheme() {
 
 // switching the scheme later: update the editors that are ready
 new MutationObserver(function () {
-    Object.values(PrimeFaces.widgets).forEach(function (widget) {
-        if (widget instanceof PrimeFaces.widget.ExtMonacoBaseEditor && widget.isReady()) {
+    Object.values(PrimeFaces.components).forEach(function (widget) {
+        if (widget instanceof PrimeFaces.component.ExtMonacoBaseEditor && widget.isReady()) {
             monacoFollowScheme.call(widget);
         }
     });

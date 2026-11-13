@@ -3,7 +3,7 @@
  *
  * @author Oleg Varaksin
  */
-PrimeFaces.widget.ExtDynaForm = class extends PrimeFaces.widget.BaseWidget {
+PrimeFaces.component.ExtDynaForm = class extends PrimeFaces.component.BaseComponent {
 
     /**
      * Initializes the widget.

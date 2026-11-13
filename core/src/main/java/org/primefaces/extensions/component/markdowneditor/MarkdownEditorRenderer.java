@@ -33,9 +33,9 @@ import jakarta.faces.render.FacesRenderer;
 import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.component.inputtextarea.InputTextarea;
 import org.primefaces.renderkit.InputRenderer;
+import org.primefaces.util.ComponentScriptBuilder;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.HTML;
-import org.primefaces.util.WidgetBuilder;
 
 /**
  * Markdown Editor.
@@ -72,7 +72,7 @@ public class MarkdownEditorRenderer extends InputRenderer<MarkdownEditor> {
     }
 
     protected void encodeScript(FacesContext context, MarkdownEditor component) throws IOException {
-        WidgetBuilder wb = getWidgetBuilder(context);
+        ComponentScriptBuilder wb = getComponentScriptBuilder(context);
         wb.init("ExtMarkdownEditor", component)
                     .attr("minHeight", component.getMinHeight(), "300px")
                     .attr("maxHeight", component.getMaxHeight(), null)

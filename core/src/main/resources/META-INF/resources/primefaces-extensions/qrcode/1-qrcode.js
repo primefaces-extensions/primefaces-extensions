@@ -3,7 +3,7 @@
  *
  * @author Mauricio Fenoglio
  */
-PrimeFaces.widget.ExtQRCode = class extends PrimeFaces.widget.BaseWidget {
+PrimeFaces.component.ExtQRCode = class extends PrimeFaces.component.BaseComponent {
     /**
      * Initializes the widget.
      *

@@ -29,7 +29,7 @@ import jakarta.faces.render.FacesRenderer;
 import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.renderkit.CoreRenderer;
-import org.primefaces.util.WidgetBuilder;
+import org.primefaces.util.ComponentScriptBuilder;
 
 /**
  * Renderer for the {@link ImageZoom} component.
@@ -43,7 +43,7 @@ public class ImageZoomRenderer extends CoreRenderer<ImageZoom> {
 
     @Override
     public void encodeEnd(final FacesContext context, final ImageZoom component) throws IOException {
-        final WidgetBuilder wb = getWidgetBuilder(context);
+        final ComponentScriptBuilder wb = getComponentScriptBuilder(context);
         wb.init("ImageZoom", component);
         wb.attr("target", SearchExpressionUtils.resolveClientIdsForClientSide(context, component, component.getFor()))
                     .attr("margin", component.getMargin(), 0)

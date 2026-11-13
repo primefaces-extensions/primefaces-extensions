@@ -4,7 +4,7 @@
  *
  * @author Matthieu Valente
  */
-PrimeFaces.widget.ExtSunEditor = class extends PrimeFaces.widget.DeferredWidget {
+PrimeFaces.component.ExtSunEditor = class extends PrimeFaces.component.DeferredComponent {
 
     /**
      * Initializes the widget.
@@ -201,7 +201,7 @@ PrimeFaces.widget.ExtSunEditor = class extends PrimeFaces.widget.DeferredWidget 
     }
 
     repositionDialog(dlgEl) {
-        const dlgWidget = PrimeFaces.getWidgetById(dlgEl.id);
+        const dlgWidget = PrimeFaces.getComponentById(dlgEl.id);
         if (dlgWidget && dlgWidget.initPosition && dlgWidget.isVisible()) {
             dlgWidget.initPosition();
         }
@@ -250,7 +250,7 @@ PrimeFaces.widget.ExtSunEditor = class extends PrimeFaces.widget.DeferredWidget 
         if (this.editor) {
             this.editor.$.ui.enable();
         }
-        PrimeFaces.utils.enableInputWidget(this.jq, this.input);
+        PrimeFaces.utils.enableInputComponent(this.jq, this.input);
         this.disabled = false;
     }
 
@@ -261,7 +261,7 @@ PrimeFaces.widget.ExtSunEditor = class extends PrimeFaces.widget.DeferredWidget 
         if (this.editor) {
             this.editor.$.ui.disable();
         }
-        PrimeFaces.utils.disableInputWidget(this.jq, this.input);
+        PrimeFaces.utils.disableInputComponent(this.jq, this.input);
         this.disabled = true;
     }
 };

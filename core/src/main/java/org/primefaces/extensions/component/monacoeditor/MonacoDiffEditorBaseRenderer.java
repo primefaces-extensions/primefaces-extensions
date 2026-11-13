@@ -34,7 +34,7 @@ import jakarta.faces.context.ResponseWriter;
 
 import org.primefaces.config.PrimeConfiguration;
 import org.primefaces.context.PrimeApplicationContext;
-import org.primefaces.util.WidgetBuilder;
+import org.primefaces.util.ComponentScriptBuilder;
 
 /**
  * Base renderer for both the {@link MonacoEditorFramed framed} and {@link MonacoEditorInline inline} monaco editor.
@@ -145,7 +145,7 @@ abstract class MonacoDiffEditorBaseRenderer<TEditor extends MonacoDiffEditorBase
     }
 
     @Override
-    protected final void addBaseWidgetProperties(final FacesContext context, final WidgetBuilder wb,
+    protected final void addBaseWidgetProperties(final FacesContext context, final ComponentScriptBuilder wb,
                 final TEditor monacoEditor)
                 throws IOException {
         wb.attr("originalDisabled", monacoEditor.isOriginalDisabled(), MonacoDiffEditorBehaviorBase.DEFAULT_ORIGINAL_DISABLED);
@@ -171,7 +171,7 @@ abstract class MonacoDiffEditorBaseRenderer<TEditor extends MonacoDiffEditorBase
         addWidgetProperties(context, wb, monacoEditor);
     }
 
-    protected abstract void addWidgetProperties(FacesContext context, WidgetBuilder wb, TEditor monacoEditor)
+    protected abstract void addWidgetProperties(FacesContext context, ComponentScriptBuilder wb, TEditor monacoEditor)
                 throws IOException;
 
     @Override

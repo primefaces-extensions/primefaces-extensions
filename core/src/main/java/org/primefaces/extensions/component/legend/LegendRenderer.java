@@ -33,9 +33,9 @@ import jakarta.faces.render.FacesRenderer;
 import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.util.ComponentScriptBuilder;
 import org.primefaces.util.FacetUtils;
 import org.primefaces.util.HTML;
-import org.primefaces.util.WidgetBuilder;
 
 /**
  * Renderer for the {@link Legend} component.
@@ -66,7 +66,7 @@ public class LegendRenderer extends CoreRenderer<Legend> {
 
         writer.startElement("div", component);
         writer.writeAttribute("id", clientId, "id");
-        writer.writeAttribute(HTML.WIDGET_VAR, widgetVar, null);
+        writer.writeAttribute(HTML.REF, widgetVar, null);
         writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
         if (component.getStyle() != null) {
             writer.writeAttribute(Attrs.STYLE, component.getStyle(), Attrs.STYLE);
@@ -143,7 +143,7 @@ public class LegendRenderer extends CoreRenderer<Legend> {
     }
 
     private void encodeScript(FacesContext context, Legend component) throws IOException {
-        final WidgetBuilder wb = getWidgetBuilder(context);
+        final ComponentScriptBuilder wb = getComponentScriptBuilder(context);
         wb.init("ExtLegend", component);
         wb.attr("layout", component.getLayout());
         wb.finish();

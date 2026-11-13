@@ -4,7 +4,7 @@
  * @author Melloware info@melloware.com
  * @since 7.1
  */
-PrimeFaces.widget.ExtLegend = class extends PrimeFaces.widget.BaseWidget {
+PrimeFaces.component.ExtLegend = class extends PrimeFaces.component.BaseComponent {
 
     /**
      * Initializes the widget.

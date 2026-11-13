@@ -3,7 +3,7 @@
  *
  * @author Thomas Andraschko
  */
-PrimeFaces.widget.ExtImageRotateAndResize = class extends PrimeFaces.widget.BaseWidget {
+PrimeFaces.component.ExtImageRotateAndResize = class extends PrimeFaces.component.BaseComponent {
 
     /**
      * Initializes the widget.

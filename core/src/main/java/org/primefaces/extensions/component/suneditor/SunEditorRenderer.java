@@ -36,10 +36,10 @@ import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.renderkit.InputRenderer;
+import org.primefaces.util.ComponentScriptBuilder;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.HTML;
 import org.primefaces.util.LangUtils;
-import org.primefaces.util.WidgetBuilder;
 
 /**
  * <code>SunEditor</code> component.
@@ -160,7 +160,7 @@ public class SunEditorRenderer extends InputRenderer<SunEditor> {
     }
 
     protected void encodeScript(final FacesContext context, final SunEditor component) throws IOException {
-        final WidgetBuilder wb = getWidgetBuilder(context);
+        final ComponentScriptBuilder wb = getComponentScriptBuilder(context);
         wb.init("ExtSunEditor", component)
                     .attr("width", component.getWidth())
                     .attr("height", component.getHeight())

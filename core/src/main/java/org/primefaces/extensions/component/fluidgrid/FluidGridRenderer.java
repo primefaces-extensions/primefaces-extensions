@@ -35,7 +35,7 @@ import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.extensions.model.fluidgrid.FluidGridItem;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
-import org.primefaces.util.WidgetBuilder;
+import org.primefaces.util.ComponentScriptBuilder;
 
 /**
  * Renderer for {@link FluidGrid} component.
@@ -131,7 +131,7 @@ public class FluidGridRenderer extends CoreRenderer<FluidGrid> {
     }
 
     protected void encodeScript(final FacesContext fc, final FluidGrid component) throws IOException {
-        final WidgetBuilder wb = getWidgetBuilder(fc);
+        final ComponentScriptBuilder wb = getComponentScriptBuilder(fc);
         wb.init("ExtFluidGrid", component);
         wb.append(",opts:{");
         wb.append("isFitWidth:" + component.isFitWidth());

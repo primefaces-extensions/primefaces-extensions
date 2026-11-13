@@ -135,7 +135,7 @@
         };
         $.extend(this._defaults, this.regional['']);
 
-        this.tpDiv = $('<div id="' + this._mainDivId + '" class="ui-timepicker p-widget " style="display: none"></div>');
+        this.tpDiv = $('<div id="' + this._mainDivId + '" class="ui-timepicker p-component " style="display: none"></div>');
     }
 
     $.extend(FGTimepicker.prototype, {
@@ -204,7 +204,7 @@
                 id: id, input: target, // associated target
                 inline: inline, // is timepicker inline or not :
                 tpDiv: (!inline ? this.tpDiv : // presentation div
-                    $('<div class="' + this._inlineClass + ' ui-timepicker p-widget "></div>'))
+                    $('<div class="' + this._inlineClass + ' ui-timepicker p-component "></div>'))
             };
         },
 
@@ -615,12 +615,12 @@
             }
 
 
-            html = '<table class="ui-timepicker-table p-widget-content"><tr>';
+            html = '<table class="ui-timepicker-table p-component-content"><tr>';
 
             if (showHours) {
 
                 html += '<td class="ui-timepicker-hours">' +
-                    '<div class="ui-timepicker-title p-widget-header">' +
+                    '<div class="ui-timepicker-title p-component-header">' +
                     hourLabel +
                     '</div>' +
                     '<table class="ui-timepicker">';
@@ -659,8 +659,8 @@
 
 
             if (showButtonPanel) {
-                var buttonPanel = '<tr><td colspan="3"><div class="ui-timepicker-buttonpane p-widget-content">';
-                var btnClasses = 'p-button p-widget p-state-default p-button-text-only';
+                var buttonPanel = '<tr><td colspan="3"><div class="ui-timepicker-buttonpane p-component-content">';
+                var btnClasses = 'p-button p-component p-state-default p-button-text-only';
                 var btnSpan = '<span class="p-button-text" data-timepicker-instance-id="#' + inst.id.replace(/\\\\/g, "\\") + '">';
                 if (showNowButton) {
                     buttonPanel += '<button type="button" class="ui-timepicker-now ' + btnClasses + '" '
@@ -764,7 +764,7 @@
             }
 
 
-            html += '<div class="ui-timepicker-title p-widget-header">' +
+            html += '<div class="ui-timepicker-title p-component-header">' +
                 minuteLabel +
                 '</div>' +
                 '<table class="ui-timepicker">';

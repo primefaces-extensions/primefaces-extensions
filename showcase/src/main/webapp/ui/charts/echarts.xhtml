@@ -28,8 +28,8 @@
             var echartSchemes = new WeakMap();
             function echartFollowScheme() {
                 var scheme = PrimeFaces.env.getThemeContrast();
-                Object.values(PrimeFaces.widgets).forEach(function (widget) {
-                    if (widget instanceof PrimeFaces.widget.ExtEChart && !widget.cfg.theme) {
+                Object.values(PrimeFaces.components).forEach(function (widget) {
+                    if (widget instanceof PrimeFaces.component.ExtEChart && !widget.cfg.theme) {
                         if (echartSchemes.has(widget) && echartSchemes.get(widget) !== scheme && widget.chart) {
                             widget.refresh(widget.cfg);
                         }

@@ -71,7 +71,7 @@
                     <p:ajax event="cut" listener="#{basicSunEditorController.onCut}" update="messages"/>
                     <p:ajax event="drop" listener="#{basicSunEditorController.onDrop}" update="messages"/>
                     <p:ajax event="save" listener="#{basicSunEditorController.onSave}" update="@this messages"/>
-                    <f:attribute name="widgetPostConstruct" value="widget.editor.onPaste = function (e, cleanData, maxCharCount) {console.log('onpaste event detected!'); };"/>
+                    <f:attribute name="clientPostConstruct" value="component.editor.onPaste = function (e, cleanData, maxCharCount) {console.log('onpaste event detected!'); };"/>
                 </pe:sunEditor>
             </h:form>
         </div>

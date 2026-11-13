@@ -3,12 +3,12 @@
  *
  * @since 16.0.0
  */
-PrimeFaces.widget.ExtMarkText = class extends PrimeFaces.widget.BaseWidget {
+PrimeFaces.component.ExtMarkText = class extends PrimeFaces.component.BaseComponent {
 
     /**
      * @override
      * @inheritdoc
-     * @param {PrimeFaces.widget.BaseWidget.cfg} cfg
+     * @param {PrimeFaces.component.BaseComponent.cfg} cfg
      */
     init(cfg) {
         super.init(cfg);
@@ -35,7 +35,7 @@ PrimeFaces.widget.ExtMarkText = class extends PrimeFaces.widget.BaseWidget {
     /**
      * @override
      * @inheritdoc
-     * @param {PrimeFaces.widget.BaseWidget.cfg} cfg
+     * @param {PrimeFaces.component.BaseComponent.cfg} cfg
      */
     refresh(cfg) {
         this._cleanUp();

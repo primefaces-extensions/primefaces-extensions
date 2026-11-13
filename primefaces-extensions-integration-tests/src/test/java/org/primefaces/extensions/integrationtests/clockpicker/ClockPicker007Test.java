@@ -59,7 +59,7 @@ public class ClockPicker007Test extends AbstractPrimeExtensionsPageTest {
         assertEquals("10:00", placementRight.getRoot().findElement(By.tagName("input")).getAttribute("value"));
 
         // Assert: each widget's rendered placement config matches the attribute.
-        // Note: placement="bottom" is the component default, so WidgetBuilder omits it
+        // Note: placement="bottom" is the component default, so ComponentScriptBuilder omits it
         // from the widget cfg to save bytes (wb.attr with default). Fall back to 'bottom'
         // when cfg.placement is undefined, mirroring ClockPicker.DEFAULTS on the client.
         assertEquals("top", PrimeSelenium.executeScript("return window.PF('placementTopWidget').cfg.placement;"));

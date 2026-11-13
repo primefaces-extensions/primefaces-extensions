@@ -4,7 +4,7 @@
  * @author Jasper de Vries jepsar@gmail.com
  * @since 7.0.1
  */
-PrimeFaces.widget.ExtTimeAgo = class extends PrimeFaces.widget.BaseWidget {
+PrimeFaces.component.ExtTimeAgo = class extends PrimeFaces.component.BaseComponent {
 
     /**
      * Initializes the widget.

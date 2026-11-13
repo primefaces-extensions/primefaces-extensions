@@ -38,9 +38,9 @@ import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.shaded.json.JSONArray;
 import org.primefaces.shaded.json.JSONObject;
+import org.primefaces.util.ComponentScriptBuilder;
 import org.primefaces.util.EscapeUtils;
 import org.primefaces.util.HTML;
-import org.primefaces.util.WidgetBuilder;
 
 /**
  * Renderer for the <code>Kanban</code> component.
@@ -75,7 +75,7 @@ public class KanbanRenderer extends CoreRenderer {
 
         writer.startElement("div", kanban);
         writer.writeAttribute("id", clientId, "id");
-        writer.writeAttribute(HTML.WIDGET_VAR, widgetVar, null);
+        writer.writeAttribute(HTML.REF, widgetVar, null);
         writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
         if (kanban.getStyle() != null) {
             writer.writeAttribute(Attrs.STYLE, kanban.getStyle(), Attrs.STYLE);
@@ -85,7 +85,7 @@ public class KanbanRenderer extends CoreRenderer {
 
     private void encodeScript(final FacesContext context, final Kanban kanban)
                 throws IOException {
-        final WidgetBuilder wb = getWidgetBuilder(context);
+        final ComponentScriptBuilder wb = getComponentScriptBuilder(context);
 
         final Object value = kanban.getValue();
         if (value == null) {

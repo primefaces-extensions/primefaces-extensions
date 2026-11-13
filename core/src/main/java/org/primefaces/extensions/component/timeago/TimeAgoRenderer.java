@@ -30,7 +30,7 @@ import jakarta.faces.render.FacesRenderer;
 import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
-import org.primefaces.util.WidgetBuilder;
+import org.primefaces.util.ComponentScriptBuilder;
 
 /**
  * <code>TimeAgo</code> component renderer.
@@ -85,7 +85,7 @@ public class TimeAgoRenderer extends CoreRenderer<TimeAgo> {
 
     protected void encodeScript(final FacesContext context, final TimeAgo component) throws IOException {
         final String locale = component.calculateLocale().getLanguage();
-        final WidgetBuilder wb = getWidgetBuilder(context);
+        final ComponentScriptBuilder wb = getComponentScriptBuilder(context);
         wb.init("ExtTimeAgo", component);
         if (locale != null) {
             wb.attr("locale", locale);

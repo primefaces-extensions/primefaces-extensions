@@ -3,7 +3,7 @@
  *
  * @author Oleg Varaksin
  */
-PrimeFaces.widget.ExtWaypoint = class extends PrimeFaces.widget.BaseWidget {
+PrimeFaces.component.ExtWaypoint = class extends PrimeFaces.component.BaseComponent {
 
     /**
      * Initializes the widget.

@@ -31,8 +31,8 @@ import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.extensions.util.ExtLangUtils;
 import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.util.ComponentScriptBuilder;
 import org.primefaces.util.HTML;
-import org.primefaces.util.WidgetBuilder;
 
 /**
  * Renderer for the {@link SlideOut} component.
@@ -87,7 +87,7 @@ public class SlideOutRenderer extends CoreRenderer<SlideOut> {
 
         writer.startElement("div", component);
         writer.writeAttribute("id", clientId, "id");
-        writer.writeAttribute(HTML.WIDGET_VAR, widgetVar, null);
+        writer.writeAttribute(HTML.REF, widgetVar, null);
 
         if (component.getPanelStyleClass() != null) {
             writer.writeAttribute(Attrs.CLASS, component.getPanelStyleClass(), "styleClass");
@@ -155,7 +155,7 @@ public class SlideOutRenderer extends CoreRenderer<SlideOut> {
      * Create the Javascript.
      */
     private void encodeScript(final FacesContext context, final SlideOut component) throws IOException {
-        final WidgetBuilder wb = getWidgetBuilder(context);
+        final ComponentScriptBuilder wb = getComponentScriptBuilder(context);
         final String handleId = getHandleId(context, component);
         wb.init("ExtSlideOut", component);
         wb.attr("tabLocation", component.getLocation());

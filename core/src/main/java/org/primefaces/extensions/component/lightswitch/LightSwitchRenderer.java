@@ -29,8 +29,8 @@ import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.util.ComponentScriptBuilder;
 import org.primefaces.util.Constants;
-import org.primefaces.util.WidgetBuilder;
 
 /**
  * Renderer for the {@link LightSwitch} component.
@@ -65,7 +65,7 @@ public class LightSwitchRenderer extends CoreRenderer<LightSwitch> {
     }
 
     protected void encodeScript(FacesContext context, LightSwitch component) throws IOException {
-        final WidgetBuilder wb = getWidgetBuilder(context)
+        final ComponentScriptBuilder wb = getComponentScriptBuilder(context)
                     .init("ExtLightSwitch", component)
                     .attr("selected", component.getSelected())
                     .attr("light", component.getLight())

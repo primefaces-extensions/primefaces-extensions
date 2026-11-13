@@ -30,10 +30,10 @@ import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.renderkit.InputRenderer;
+import org.primefaces.util.ComponentScriptBuilder;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.HTML;
 import org.primefaces.util.LangUtils;
-import org.primefaces.util.WidgetBuilder;
 
 /**
  * Renderer for the {@link InputPlace} component.
@@ -73,7 +73,7 @@ public class InputPlaceRenderer extends InputRenderer<InputPlace> {
     }
 
     protected void encodeScript(FacesContext context, InputPlace component) throws IOException {
-        WidgetBuilder wb = getWidgetBuilder(context);
+        ComponentScriptBuilder wb = getComponentScriptBuilder(context);
         wb.init("ExtInputPlace", component)
                     .attr("apiType", component.getApiType().toLowerCase(Locale.ROOT))
                     .attr("apiKey", component.getApiKey(), null)

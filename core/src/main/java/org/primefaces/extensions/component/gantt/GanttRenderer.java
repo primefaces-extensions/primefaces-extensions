@@ -33,8 +33,8 @@ import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.shaded.json.JSONArray;
 import org.primefaces.shaded.json.JSONObject;
+import org.primefaces.util.ComponentScriptBuilder;
 import org.primefaces.util.HTML;
-import org.primefaces.util.WidgetBuilder;
 
 /**
  * <code>gantt</code> component.
@@ -65,7 +65,7 @@ public class GanttRenderer extends CoreRenderer<Gantt> {
 
         writer.startElement("div", component);
         writer.writeAttribute("id", clientId, "id");
-        writer.writeAttribute(HTML.WIDGET_VAR, widgetVar, null);
+        writer.writeAttribute(HTML.REF, widgetVar, null);
         writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
         if (component.getStyle() != null) {
             writer.writeAttribute(Attrs.STYLE, component.getStyle(), Attrs.STYLE);
@@ -75,7 +75,7 @@ public class GanttRenderer extends CoreRenderer<Gantt> {
 
     private void encodeScript(final FacesContext context, final Gantt component)
                 throws IOException {
-        final WidgetBuilder wb = getWidgetBuilder(context);
+        final ComponentScriptBuilder wb = getComponentScriptBuilder(context);
 
         final List<GanttTask> tasks;
         if (component.getTasks() == null) {

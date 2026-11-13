@@ -8,7 +8,7 @@
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
  * @since 10.0
  */
-PrimeFaces.widget.ExtLightSwitch = class extends PrimeFaces.widget.BaseWidget {
+PrimeFaces.component.ExtLightSwitch = class extends PrimeFaces.component.BaseComponent {
 
     /**
      * Initializes the widget.

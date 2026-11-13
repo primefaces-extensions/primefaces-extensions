@@ -4,7 +4,7 @@
  * @author Melloware info@melloware.com
  * @since 6.1
  */
-PrimeFaces.widget.ExtCalculator = class extends PrimeFaces.widget.BaseWidget {
+PrimeFaces.component.ExtCalculator = class extends PrimeFaces.component.BaseComponent {
 
     /**
      * Initializes the widget.
@@ -42,7 +42,7 @@ PrimeFaces.widget.ExtCalculator = class extends PrimeFaces.widget.BaseWidget {
     /**
      * @override
      * @inheritdoc
-     * @param {PrimeFaces.PartialWidgetCfg<TCfg>} cfg
+     * @param {PrimeFaces.PartialComponentCfg<TCfg>} cfg
      */
     refresh(cfg) {
         this._remove();
@@ -160,8 +160,8 @@ PrimeFaces.widget.ExtCalculator = class extends PrimeFaces.widget.BaseWidget {
                 // PF InputNumber must call custom setValue() function
                 if (id.endsWith("_hinput")) {
                     id = id.replace("_hinput", "");
-                    var widget = PrimeFaces.getWidgetById(id);
-                    if (widget && widget instanceof PrimeFaces.widget.InputNumber) {
+                    var widget = PrimeFaces.getComponentById(id);
+                    if (widget && widget instanceof PrimeFaces.component.InputNumber) {
                         widget.setValue(value);
                     } else {
                         PrimeFaces.error("Widget not found for id: " + id);

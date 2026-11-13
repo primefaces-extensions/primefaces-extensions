@@ -36,9 +36,9 @@ import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.SelectOneRenderer;
 import org.primefaces.shaded.json.JSONArray;
 import org.primefaces.shaded.json.JSONObject;
+import org.primefaces.util.ComponentScriptBuilder;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.HTML;
-import org.primefaces.util.WidgetBuilder;
 
 /**
  * <code>FuzzySearch</code> component.
@@ -164,7 +164,7 @@ public class FuzzySearchRenderer extends SelectOneRenderer<FuzzySearch> {
     }
 
     protected void encodeScript(final FacesContext context, final FuzzySearch component) throws IOException {
-        final WidgetBuilder wb = getWidgetBuilder(context);
+        final ComponentScriptBuilder wb = getComponentScriptBuilder(context);
 
         final List<SelectItem> selectItems = getSelectItems(context, component);
         final JSONArray ja = new JSONArray();

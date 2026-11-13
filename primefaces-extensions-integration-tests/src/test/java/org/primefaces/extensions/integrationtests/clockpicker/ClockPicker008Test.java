@@ -51,7 +51,7 @@ public class ClockPicker008Test extends AbstractPrimeExtensionsPageTest {
         assertEquals("10:00", inputValue(page.alignBottom));
 
         // Assert: each widget's rendered align config matches the attribute.
-        // Note: align="left" is the component default, so WidgetBuilder omits it
+        // Note: align="left" is the component default, so ComponentScriptBuilder omits it
         // from the widget cfg to save bytes (wb.attr with default). Fall back to 'left'
         // when cfg.align is undefined, mirroring ClockPicker.DEFAULTS on the client.
         // Placement="bottom" is likewise the default (see ClockPicker007Test).

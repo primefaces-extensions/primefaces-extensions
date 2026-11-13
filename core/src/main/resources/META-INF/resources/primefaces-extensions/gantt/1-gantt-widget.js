@@ -1,7 +1,7 @@
 /**
  * PrimeFaces Extensions Gantt Widget.
  */
-PrimeFaces.widget.ExtGantt = class extends PrimeFaces.widget.BaseWidget {
+PrimeFaces.component.ExtGantt = class extends PrimeFaces.component.BaseComponent {
 
     /**
      * Initializes the widget.

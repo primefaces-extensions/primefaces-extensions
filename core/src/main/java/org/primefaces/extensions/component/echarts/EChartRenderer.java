@@ -30,9 +30,9 @@ import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.util.ComponentScriptBuilder;
 import org.primefaces.util.FacetUtils;
 import org.primefaces.util.FastStringWriter;
-import org.primefaces.util.WidgetBuilder;
 
 @FacesRenderer(rendererType = EChart.DEFAULT_RENDERER, componentFamily = EChart.COMPONENT_FAMILY)
 @FacesRendererInfo
@@ -71,7 +71,7 @@ public class EChartRenderer extends CoreRenderer<EChart> {
     }
 
     protected void encodeScript(FacesContext context, EChart chart) throws IOException {
-        WidgetBuilder wb = getWidgetBuilder(context);
+        ComponentScriptBuilder wb = getComponentScriptBuilder(context);
         wb.init("ExtEChart", chart)
                     .attr("theme", chart.getTheme(), "default")
                     .nativeAttr("config", renderConfig(context, chart))

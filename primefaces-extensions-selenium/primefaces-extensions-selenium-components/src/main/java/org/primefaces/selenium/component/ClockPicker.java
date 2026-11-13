@@ -47,7 +47,7 @@ public abstract class ClockPicker extends AbstractInputComponent {
      */
     public void show() {
         if (!isShown()) {
-            PrimeSelenium.executeScript(getWidgetByIdScript() + ".show();");
+            PrimeSelenium.executeScript(getClientComponentScript() + ".show();");
             waitForPopover();
         }
     }
@@ -57,7 +57,7 @@ public abstract class ClockPicker extends AbstractInputComponent {
      */
     public void hide() {
         if (isShown()) {
-            PrimeSelenium.executeScript(getWidgetByIdScript() + ".hide();");
+            PrimeSelenium.executeScript(getClientComponentScript() + ".hide();");
             waitForPopoverHidden();
         }
     }

@@ -37,7 +37,7 @@ import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.extensions.model.keynote.KeynoteItem;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
-import org.primefaces.util.WidgetBuilder;
+import org.primefaces.util.ComponentScriptBuilder;
 
 @FacesRenderer(rendererType = Keynote.DEFAULT_RENDERER, componentFamily = Keynote.COMPONENT_FAMILY)
 @FacesRendererInfo
@@ -144,7 +144,7 @@ public class KeynoteRenderer extends CoreRenderer<Keynote> {
      * Create the Javascript.
      */
     private void encodeScript(final FacesContext context, final Keynote component) throws IOException {
-        final WidgetBuilder wb = getWidgetBuilder(context);
+        final ComponentScriptBuilder wb = getComponentScriptBuilder(context);
 
         wb.init("ExtKeynote", component)
                     .attr("width", component.getWidth(), 960)

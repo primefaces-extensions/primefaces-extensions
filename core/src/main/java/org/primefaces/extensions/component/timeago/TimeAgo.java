@@ -54,7 +54,7 @@ import org.primefaces.util.LocaleUtils;
 @FacesComponentInfo(description = "TimeAgo displays relative time for a given date/time value.")
 public class TimeAgo extends TimeAgoBaseImpl {
 
-    public static final String STYLE_CLASS = "p-timeago p-widget";
+    public static final String STYLE_CLASS = "p-timeago p-component";
 
     private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
 

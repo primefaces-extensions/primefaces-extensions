@@ -3,7 +3,7 @@
  *
  * @author Oleg Varaksin
  */
-PrimeFaces.widget.ExtLayout = class extends PrimeFaces.widget.DeferredWidget {
+PrimeFaces.component.ExtLayout = class extends PrimeFaces.component.DeferredComponent {
     /**
      * Initializes the widget.
      *

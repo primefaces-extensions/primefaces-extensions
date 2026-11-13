@@ -70,7 +70,7 @@ img.calculator-trigger {
     text-align: center;
 }
 
-.calculator-prompt.p-widget-header {
+.calculator-prompt.p-component-header {
     margin: 2px;
 }
 

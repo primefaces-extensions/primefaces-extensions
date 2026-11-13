@@ -37,9 +37,9 @@ import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.extensions.event.CompleteEvent;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.InputRenderer;
+import org.primefaces.util.ComponentScriptBuilder;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.HTML;
-import org.primefaces.util.WidgetBuilder;
 
 /**
  * Renderer for the {@link CodeMirror} component.
@@ -123,7 +123,7 @@ public class CodeMirrorRenderer extends InputRenderer<CodeMirror> {
     }
 
     protected void encodeScript(final FacesContext context, final CodeMirror codeMirror) throws IOException {
-        final WidgetBuilder wb = getWidgetBuilder(context);
+        final ComponentScriptBuilder wb = getComponentScriptBuilder(context);
         wb.init("ExtCodeMirror", codeMirror);
         wb.attr("theme", codeMirror.getTheme())
                     .attr("mode", codeMirror.getMode())

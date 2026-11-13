@@ -50,11 +50,11 @@ import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.shaded.json.JSONArray;
 import org.primefaces.shaded.json.JSONException;
 import org.primefaces.shaded.json.JSONObject;
+import org.primefaces.util.ComponentScriptBuilder;
 import org.primefaces.util.Constants;
 import org.primefaces.util.FacetUtils;
 import org.primefaces.util.HTML;
 import org.primefaces.util.LangUtils;
-import org.primefaces.util.WidgetBuilder;
 
 /**
  * The Sheet renderer.
@@ -117,7 +117,7 @@ public class SheetRenderer extends CoreRenderer<Sheet> {
         responseWriter.writeAttribute("name", clientId, "clientId");
         // note: can't use p-datatable here because it will mess with
         // handsontable cell rendering
-        String divclass = "p-handsontable p-widget";
+        String divclass = "p-handsontable p-component";
         if (styleClass != null) {
             divclass = divclass + " " + styleClass;
         }
@@ -166,12 +166,12 @@ public class SheetRenderer extends CoreRenderer<Sheet> {
     /**
      * Encodes an optional attribute to the widget builder specified.
      *
-     * @param wb the WidgetBuilder to append to
+     * @param wb the ComponentScriptBuilder to append to
      * @param attrName the attribute name
      * @param value the value
      * @throws IOException if any IO error occurs
      */
-    protected void encodeOptionalAttr(final WidgetBuilder wb, final String attrName, final String value)
+    protected void encodeOptionalAttr(final ComponentScriptBuilder wb, final String attrName, final String value)
                 throws IOException {
         if (value != null) {
             wb.attr(attrName, value);
@@ -181,12 +181,12 @@ public class SheetRenderer extends CoreRenderer<Sheet> {
     /**
      * Encodes an optional native attribute (unquoted).
      *
-     * @param wb the WidgetBuilder to append to
+     * @param wb the ComponentScriptBuilder to append to
      * @param attrName the attribute name
      * @param value the value
      * @throws IOException if any IO error occurs
      */
-    protected void encodeOptionalNativeAttr(final WidgetBuilder wb, final String attrName, final Object value)
+    protected void encodeOptionalNativeAttr(final ComponentScriptBuilder wb, final String attrName, final Object value)
                 throws IOException {
         if (value != null) {
             wb.nativeAttr(attrName, value.toString());
@@ -202,7 +202,7 @@ public class SheetRenderer extends CoreRenderer<Sheet> {
      */
     protected void encodeScript(final FacesContext context, final Sheet sheet)
                 throws IOException {
-        final WidgetBuilder wb = getWidgetBuilder(context);
+        final ComponentScriptBuilder wb = getComponentScriptBuilder(context);
         wb.init("ExtSheet", sheet);
 
         // errors
@@ -267,7 +267,7 @@ public class SheetRenderer extends CoreRenderer<Sheet> {
      *
      * @throws IOException if any IO error occurs
      */
-    protected void encodeInvalidData(final Sheet sheet, final WidgetBuilder wb)
+    protected void encodeInvalidData(final Sheet sheet, final ComponentScriptBuilder wb)
                 throws IOException {
         wb.attr("errors", sheet.getInvalidDataValue());
     }
@@ -277,7 +277,7 @@ public class SheetRenderer extends CoreRenderer<Sheet> {
      *
      * @throws IOException if any IO error occurs
      */
-    protected void encodeColHeaders(final Sheet sheet, final WidgetBuilder wb)
+    protected void encodeColHeaders(final Sheet sheet, final ComponentScriptBuilder wb)
                 throws IOException {
         final JavascriptVarBuilder vb = new JavascriptVarBuilder(null, false);
         for (final SheetColumn column : sheet.getColumns()) {
@@ -294,7 +294,7 @@ public class SheetRenderer extends CoreRenderer<Sheet> {
      *
      * @throws IOException if any IO error occurs
      */
-    protected void encodeColOptions(final Sheet sheet, final WidgetBuilder wb)
+    protected void encodeColOptions(final Sheet sheet, final ComponentScriptBuilder wb)
                 throws IOException {
         final JavascriptVarBuilder vb = new JavascriptVarBuilder(null, false);
         for (final SheetColumn column : sheet.getColumns()) {
@@ -434,7 +434,7 @@ public class SheetRenderer extends CoreRenderer<Sheet> {
     /**
      * Encode the row data. Builds row data, style data and read only object.
      */
-    protected void encodeData(final FacesContext context, final Sheet sheet, final WidgetBuilder wb)
+    protected void encodeData(final FacesContext context, final Sheet sheet, final ComponentScriptBuilder wb)
                 throws IOException {
 
         final JavascriptVarBuilder jsData = new JavascriptVarBuilder(null, false);
@@ -571,7 +571,7 @@ public class SheetRenderer extends CoreRenderer<Sheet> {
     /**
      * Encode client behaviors to widget config
      */
-    private void encodeBehaviors(final FacesContext context, final Sheet sheet, final WidgetBuilder wb)
+    private void encodeBehaviors(final FacesContext context, final Sheet sheet, final ComponentScriptBuilder wb)
                 throws IOException {
         // note we write out the onchange event here so we have the selected
         // cell too
@@ -651,7 +651,7 @@ public class SheetRenderer extends CoreRenderer<Sheet> {
         final UIComponent footer = sheet.getFacet("footer");
         if (FacetUtils.shouldRenderFacet(footer)) {
             responseWriter.startElement("div", null);
-            responseWriter.writeAttribute(Attrs.CLASS, "p-datatable-footer p-widget-header", null);
+            responseWriter.writeAttribute(Attrs.CLASS, "p-datatable-footer p-component-header", null);
             footer.encodeAll(context);
             responseWriter.endElement("div");
         }
@@ -666,7 +666,7 @@ public class SheetRenderer extends CoreRenderer<Sheet> {
         final UIComponent header = sheet.getFacet("header");
         if (FacetUtils.shouldRenderFacet(header)) {
             responseWriter.startElement("div", null);
-            responseWriter.writeAttribute(Attrs.CLASS, "p-datatable-header p-widget-header", null);
+            responseWriter.writeAttribute(Attrs.CLASS, "p-datatable-header p-component-header", null);
             header.encodeAll(context);
             responseWriter.endElement("div");
         }
@@ -701,7 +701,7 @@ public class SheetRenderer extends CoreRenderer<Sheet> {
      * ["false","true",["option 1", "option 2"]] False indicates no filtering for the column. True indicates simple input text filter. Array of values indicates
      * a drop down filter with the listed options.
      */
-    protected void encodeFilterVar(final Sheet sheet, final WidgetBuilder wb)
+    protected void encodeFilterVar(final Sheet sheet, final ComponentScriptBuilder wb)
                 throws IOException {
         final JavascriptVarBuilder vb = new JavascriptVarBuilder(null, false);
 
@@ -736,7 +736,7 @@ public class SheetRenderer extends CoreRenderer<Sheet> {
      * Encodes a javascript sort var that informs the col header event of the column's sorting options. The var is an array of boolean indicating whether or not
      * the column is sortable.
      */
-    protected void encodeSortVar(final Sheet sheet, final WidgetBuilder wb)
+    protected void encodeSortVar(final Sheet sheet, final ComponentScriptBuilder wb)
                 throws IOException {
         final JavascriptVarBuilder vb = new JavascriptVarBuilder(null, false);
 

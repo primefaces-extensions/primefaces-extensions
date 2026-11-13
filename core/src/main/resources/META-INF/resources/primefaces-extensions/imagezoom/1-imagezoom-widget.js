@@ -4,7 +4,7 @@
  * @author Melloware
  * @since 11..3
  */
-PrimeFaces.widget.ImageZoom = class extends PrimeFaces.widget.BaseWidget {
+PrimeFaces.component.ImageZoom = class extends PrimeFaces.component.BaseComponent {
 
     init(cfg) {
         super.init(cfg);
@@ -15,8 +15,8 @@ PrimeFaces.widget.ImageZoom = class extends PrimeFaces.widget.BaseWidget {
         }
 
         var selector = PrimeFaces.escapeClientId(this.cfg.target);
-        var targetWidget = PrimeFaces.getWidgetById(this.cfg.target);
-        if (targetWidget && targetWidget instanceof PrimeFaces.widget.Galleria) {
+        var targetWidget = PrimeFaces.getComponentById(this.cfg.target);
+        if (targetWidget && targetWidget instanceof PrimeFaces.component.Galleria) {
             selector = selector + " li[class='p-galleria-item'] > img";
         }
 
@@ -26,7 +26,7 @@ PrimeFaces.widget.ImageZoom = class extends PrimeFaces.widget.BaseWidget {
     /**
      * @override
      * @inheritdoc
-     * @param {PrimeFaces.PartialWidgetCfg<TCfg>} cfg
+     * @param {PrimeFaces.PartialComponentCfg<TCfg>} cfg
      */
     refresh(cfg) {
         this._cleanup();

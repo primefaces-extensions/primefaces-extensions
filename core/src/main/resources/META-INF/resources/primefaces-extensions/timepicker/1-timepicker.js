@@ -3,7 +3,7 @@
  *
  * @author Oleg Varaksin
  */
-PrimeFaces.widget.ExtTimePicker = class extends PrimeFaces.widget.BaseWidget {
+PrimeFaces.component.ExtTimePicker = class extends PrimeFaces.component.BaseComponent {
 
     /**
      * Initializes the widget.

@@ -4,7 +4,7 @@
  * @author f.strazzullo
  * @author Melloware
  */
-PrimeFaces.widget.ExtGChart = class extends PrimeFaces.widget.BaseWidget {
+PrimeFaces.component.ExtGChart = class extends PrimeFaces.component.BaseComponent {
     init(cfg) {
 
         var that = this;

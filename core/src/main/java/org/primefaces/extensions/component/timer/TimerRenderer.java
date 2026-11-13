@@ -36,10 +36,10 @@ import org.primefaces.context.PrimeRequestContext;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.AjaxRequestBuilder;
+import org.primefaces.util.ComponentScriptBuilder;
 import org.primefaces.util.ComponentTraversalUtils;
 import org.primefaces.util.Constants;
 import org.primefaces.util.LangUtils;
-import org.primefaces.util.WidgetBuilder;
 
 /**
  * Renderer for {@link Timer}
@@ -115,7 +115,7 @@ public class TimerRenderer extends CoreRenderer<Timer> {
                         .build();
         }
 
-        final WidgetBuilder wb = getWidgetBuilder(context);
+        final ComponentScriptBuilder wb = getComponentScriptBuilder(context);
 
         wb.init("ExtTimer", component)
                     .attr("timeout", component.getTimeout()).attr("interval", component.getInterval())
