@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:pe="primefaces.extensions">
+
+    <f:view contentType="text/html;charset=UTF-8" encoding="UTF-8">
+        <h:head>
+            <link rel="icon" href="data:,"/>
+            <style>
+                body {
+                    font-family: "Courier New", monospace !important;
+                }
+            </style>
+        </h:head>
+
+        <h:body>
+            <pe:orgchart id="orgChart" ref="orgChartWidget"
+                         value="#{orgChartController.orgChartNode}"
+                         parentNodeSymbol="fa-folder-open"
+                         style="width: 600px; height: 300px;">
+            </pe:orgchart>
+        </h:body>
+    </f:view>
+
+</html>

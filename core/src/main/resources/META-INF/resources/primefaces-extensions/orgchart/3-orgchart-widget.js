@@ -59,7 +59,7 @@ PrimeFaces.component.ExtOrgChart = class extends PrimeFaces.component.BaseCompon
         if (opts.parentNodeSymbol) {
             var isFa = opts.parentNodeSymbol.startsWith('fa-');
             var defaults = isFa ? {
-                'theme': 'oci',
+                'theme': '',
                 'parentNode': 'fa ' + opts.parentNodeSymbol,
                 'expandToUp': 'oci-chevron-up',
                 'collapseToDown': 'oci-chevron-down',
