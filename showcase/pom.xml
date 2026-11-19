@@ -31,6 +31,8 @@
         <omnifaces.version>3.14.6</omnifaces.version>
         <hibernate-validator.version>9.0.1.Final</hibernate-validator.version>
         <font-awesome.version>6.4.0</font-awesome.version>
+        <!-- not published to Maven Central -->
+        <maven.deploy.skip>true</maven.deploy.skip>
     </properties>
 
     <dependencies>
