@@ -23,6 +23,8 @@
         <jetty.version>12.1.15</jetty.version>
         <font-awesome.version>7.2.0</font-awesome.version>
         <dart-sass.version>1.79.6</dart-sass.version>
+        <!-- not published to Maven Central -->
+        <maven.deploy.skip>true</maven.deploy.skip>
     </properties>
     <dependencies>
         <dependency>
