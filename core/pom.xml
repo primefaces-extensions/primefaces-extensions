@@ -772,7 +772,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>taglist-maven-plugin</artifactId>
-                <version>3.2.3</version>
+                <version>3.3.0</version>
                 <configuration>
                     <tagListOptions>
                         <tagClasses>
