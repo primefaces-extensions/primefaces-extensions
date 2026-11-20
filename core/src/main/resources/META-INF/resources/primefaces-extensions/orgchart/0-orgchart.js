@@ -18,6 +18,8 @@
   }
 }(function (window, document, undefined) {
   const elementDataStore = new WeakMap();
+  const nodeLayoutStore = new WeakMap();
+  let exportSequence = 0;
   const getWindow = () => (typeof globalThis !== 'undefined' && globalThis.window ? globalThis.window : window);
   const getDocument = () => {
     const currentWindow = getWindow();
@@ -41,8 +43,222 @@
     return normalizeInput(input, context || getDocument());
   }
 
+  function getChildNodesContainer(nodeElement) {
+    const nodeData = getState(nodeElement, 'sourceData');
+    const containers = Array.from(nodeElement.parentElement ? nodeElement.parentElement.children : []).filter(function (element) {
+      return element.classList.contains('nodes');
+    });
+    const ownedContainer = containers.find(function (container) {
+      return nodeData && getState(container, 'parentData') === nodeData;
+    });
+    if (ownedContainer) {
+      return ownedContainer;
+    }
+    if (containers.some(function (container) { return !!getState(container, 'parentData'); })) {
+      return null;
+    }
+    const nextElement = nodeElement.nextElementSibling;
+    if (nextElement && nextElement.classList.contains('nodes')) {
+      return nextElement;
+    }
+    if (nodeElement.parentElement && nodeElement.parentElement.classList.contains('hierarchy')) {
+      return Array.from(nodeElement.parentElement.children).find(function (element) {
+        return element.classList.contains('nodes');
+      }) || null;
+    }
+    return null;
+  }
+
+  function getChildControlNode(nodeElement) {
+    const familyElement = nodeElement.parentElement;
+    if (getChildNodesContainer(nodeElement) || !familyElement || !familyElement.classList.contains('couple')) {
+      return nodeElement;
+    }
+    const containers = Array.from(familyElement.children).filter(function (element) {
+      return element.classList.contains('nodes');
+    });
+    if (containers.length !== 1) {
+      return nodeElement;
+    }
+    const parentData = getState(containers[0], 'parentData');
+    return Array.from(familyElement.children).find(function (element) {
+      return element.classList.contains('node') && getState(element, 'sourceData') === parentData;
+    }) || nodeElement;
+  }
+
   function mergeObjects() {
     return Object.assign.apply(Object, [{}].concat(Array.from(arguments)));
+  }
+
+  function mergeChartOptions(defaults) {
+    const options = mergeObjects({}, defaults);
+    options.icons = mergeObjects({}, defaults.icons);
+    Array.from(arguments).slice(1).forEach(function (overrides) {
+      if (!overrides) {
+        return;
+      }
+      Object.assign(options, overrides, { icons: mergeObjects({}, options.icons, overrides.icons) });
+      if (Object.prototype.hasOwnProperty.call(overrides, 'drag')
+        && !Object.prototype.hasOwnProperty.call(overrides, 'draggable')) {
+        options.draggable = overrides.drag;
+      }
+      if (Object.prototype.hasOwnProperty.call(overrides, 'visibleLevel')
+        && overrides.visibleLevel === true) {
+        options.visibleLevel = defaults.visibleLevel;
+      }
+    });
+    options.visibleLevel = options.visibleLevel === true ? defaults.visibleLevel
+      : options.visibleLevel === false ? 1 : Number(options.visibleLevel);
+    if (!Number.isInteger(options.visibleLevel) || options.visibleLevel < 0) {
+      throw new RangeError('visibleLevel must be a nonnegative integer or boolean');
+    }
+    options.zoomoutLimit = Number(options.zoomoutLimit);
+    options.zoominLimit = Number(options.zoominLimit);
+    if (!Number.isFinite(options.zoomoutLimit) || !Number.isFinite(options.zoominLimit)
+      || options.zoomoutLimit <= 0 || options.zoominLimit < options.zoomoutLimit) {
+      throw new RangeError('zoom limits must be positive and zoomoutLimit must not exceed zoominLimit');
+    }
+    if (!['t2b', 'b2t', 'l2r', 'r2l'].includes(options.direction)) {
+      throw new RangeError('direction must be t2b, b2t, l2r, or r2l');
+    }
+    return options;
+  }
+
+  function normalizeDatasource(data, nodeId) {
+    if (!Array.isArray(data) || Array.isArray(data[0])) {
+      return data;
+    }
+    if (!data.length) {
+      return {};
+    }
+    const nodes = new Map();
+    const roots = [];
+    data.forEach(function (row) {
+      const id = row && row[nodeId];
+      if (!isPlainObject(row) || (typeof id !== 'string' && typeof id !== 'number')
+        || id === '' || (typeof id === 'number' && !Number.isFinite(id))) {
+        throw new TypeError('Flat datasource rows must have a nonempty string or finite numeric node ID');
+      }
+      const key = String(id);
+      if (nodes.has(key)) {
+        throw new Error('Duplicate node ID in flat datasource: ' + key);
+      }
+      nodes.set(key, Object.assign({}, row, { children: [] }));
+    });
+    data.forEach(function (row) {
+      const node = nodes.get(String(row[nodeId]));
+      if (row.parent_id === null || row.parent_id === undefined) {
+        roots.push(node);
+      } else {
+        const parent = nodes.get(String(row.parent_id));
+        if (!parent) {
+          throw new Error('Missing parent in flat datasource: ' + row.parent_id);
+        }
+        parent.children.push(node);
+      }
+    });
+    if (roots.length !== 1) {
+      throw new Error('Flat datasource must contain exactly one root');
+    }
+    const pending = [roots[0]];
+    let visitedCount = 0;
+    while (pending.length) {
+      const node = pending.pop();
+      visitedCount += 1;
+      node.children.forEach(function (child) {
+        pending.push(child);
+      });
+      if (!node.children.length) {
+        delete node.children;
+      }
+    }
+    if (visitedCount !== nodes.size) {
+      throw new Error('Flat datasource contains a cycle');
+    }
+    return roots[0];
+  }
+
+  function cloneDatasource(data) {
+    if (Array.isArray(data)) {
+      return data.map(cloneDatasource);
+    }
+    if (!isPlainObject(data)) {
+      return data;
+    }
+    const copy = Object.assign({}, data);
+    if (Array.isArray(data.children)) {
+      copy.children = data.children.map(cloneDatasource);
+    }
+    return copy;
+  }
+
+  function prepareNodeData(data, resetLayout) {
+    if (Array.isArray(data)) {
+      data.forEach(function (item) {
+        prepareNodeData(item, resetLayout);
+      });
+      return;
+    }
+    if (!isPlainObject(data)) {
+      return;
+    }
+    const layoutKeys = ['compact', 'associatedCompact', 'vertical', 'level', 'parentId'];
+    let layout = nodeLayoutStore.get(data);
+    if (!layout) {
+      layout = {};
+      layoutKeys.forEach(function (key) {
+        if (Object.prototype.hasOwnProperty.call(data, key)) {
+          layout[key] = data[key];
+        }
+      });
+      nodeLayoutStore.set(data, layout);
+    }
+    if (resetLayout) {
+      delete layout.level;
+      delete layout.parentId;
+    }
+    layoutKeys.forEach(function (key) {
+      if (Object.prototype.hasOwnProperty.call(layout, key)) {
+        data[key] = layout[key];
+      } else {
+        delete data[key];
+      }
+    });
+    (data.children || []).forEach(function (child) {
+      prepareNodeData(child, resetLayout);
+    });
+  }
+
+  function usesCompactLayout(data, options, level) {
+    return !!data.compact && !data.hybrid && !data.vertical
+      && !(options.verticalLevel && level + 1 >= options.verticalLevel);
+  }
+
+  function findDataLocation(datasource, target) {
+    let location = null;
+    const visit = function (data, parent, list, index, outerList, outerIndex) {
+      if (location) {
+        return;
+      }
+      if (Array.isArray(data)) {
+        data.forEach(function (item, itemIndex) {
+          visit(item, parent, data, itemIndex, list, index);
+        });
+      } else if (data === target) {
+        location = { parent: parent, list: list, index: index, outerList: outerList, outerIndex: outerIndex };
+      } else if (data && data.children) {
+        visit(data.children, data, null, null, null, null);
+      }
+    };
+    visit(datasource, null, null, null, null, null);
+    return location;
+  }
+
+  function hasHybridNodes(data) {
+    if (Array.isArray(data)) {
+      return data.some(hasHybridNodes);
+    }
+    return !!data && (data.hybrid === true || (Array.isArray(data.children) && data.children.some(hasHybridNodes)));
   }
 
   function forEachValue(collection, callback) {
@@ -88,11 +304,11 @@
       hidden: false,
       visible: false
     };
-    meta.selector = meta.selector.replace(/:first\b/g, function () {
+    meta.selector = meta.selector.replace(/:first(?![\w-])/g, function () {
       meta.first = true;
       return '';
     });
-    meta.selector = meta.selector.replace(/:last\b/g, function () {
+    meta.selector = meta.selector.replace(/:last(?![\w-])/g, function () {
       meta.last = true;
       return '';
     });
@@ -112,12 +328,31 @@
     return meta;
   }
 
-  function isVisibleElement(element) {
+  function isVisibleElement(element, cache) {
     if (!element || element.nodeType !== 1) {
       return false;
     }
-    const style = getWindow().getComputedStyle(element);
-    return style.display !== 'none' && style.visibility !== 'hidden';
+    const visited = [];
+    let visible = true;
+    let currentElement = element;
+    while (currentElement && currentElement.nodeType === 1) {
+      if (cache && cache.has(currentElement)) {
+        visible = cache.get(currentElement);
+        break;
+      }
+      visited.push(currentElement);
+      const style = getWindow().getComputedStyle(currentElement);
+      if (currentElement.classList.contains('hidden') || style.display === 'none'
+        || style.visibility === 'hidden' || style.visibility === 'collapse' || style.opacity === '0') {
+        visible = false;
+        break;
+      }
+      currentElement = currentElement.parentElement;
+    }
+    if (cache) {
+      visited.forEach(function (ancestor) { cache.set(ancestor, visible); });
+    }
+    return visible;
   }
 
   function matchesSelector(element, selector) {
@@ -138,10 +373,12 @@
     const meta = parseSelector(selector);
     let filtered = elements.filter((element) => matchesSelector(element, meta.selector));
     if (meta.hidden) {
-      filtered = filtered.filter((element) => !isVisibleElement(element));
+      const cache = new WeakMap();
+      filtered = filtered.filter((element) => !isVisibleElement(element, cache));
     }
     if (meta.visible) {
-      filtered = filtered.filter((element) => isVisibleElement(element));
+      const cache = new WeakMap();
+      filtered = filtered.filter((element) => isVisibleElement(element, cache));
     }
     if (meta.gt !== null) {
       filtered = filtered.filter((_, index) => index > meta.gt);
@@ -209,37 +446,28 @@
       }
       const currentDocument = getDocument();
       const parents = normalizeInput(context || currentDocument, currentDocument);
+      const select = function (parent) {
+        try {
+          return Array.from(parent.querySelectorAll(input));
+        } catch (error) {
+          const meta = parseSelector(input);
+          if (meta.selector === input) {
+            throw error;
+          }
+          return filterBySelector(Array.from(parent.querySelectorAll(meta.selector)), input);
+        }
+      };
       const selected = parents.length
         ? parents.flatMap((parent) => {
             if (parent.nodeType !== 1 && parent.nodeType !== 9) {
               return [];
             }
-            return filterBySelector(Array.from(parent.querySelectorAll(parseSelector(input).selector)), input);
+            return select(parent);
           })
-        : filterBySelector(Array.from(currentDocument.querySelectorAll(parseSelector(input).selector)), input);
+        : select(currentDocument);
       return unique(selected);
     }
     return [];
-  }
-
-  function toNodeArray(content) {
-    if (content instanceof DocumentFragment) {
-      return Array.from(content.childNodes);
-    }
-    if (Array.isArray(content)) {
-      return content.flatMap((item) => toNodeArray(item));
-    }
-    if (isNode(content)) {
-      return [content];
-    }
-    if (typeof content === 'string') {
-      return isHtmlString(content) ? createNodesFromHtml(content) : [getDocument().createTextNode(content)];
-    }
-    return [];
-  }
-
-  function cloneNodesForTarget(nodes, needsClone) {
-    return nodes.map((node) => (needsClone ? node.cloneNode(true) : node));
   }
 
   function createTriggeredEvent(eventLike, extraData) {
@@ -292,6 +520,9 @@
     const fallbackColor = 'rgba(217, 83, 79, 0.8)';
     const titleElement = nodeElement ? nodeElement.querySelector('.title') : null;
     const primaryColor = titleElement ? getWindow().getComputedStyle(titleElement).backgroundColor : '';
+    if (!isTransparentColor(primaryColor)) {
+      return toReadableMinimapColor(primaryColor);
+    }
     const secondaryColorCandidates = [
       nodeElement,
       titleElement,
@@ -321,9 +552,10 @@
 
   function renderMinimapNodes(chartElement, minimapContentElement, chartRect, chartScale) {
     const fragment = getDocument().createDocumentFragment();
+    const visibilityCache = new WeakMap();
 
     Array.from(chartElement.querySelectorAll('.node')).filter(function (nodeElement) {
-      return isVisibleElement(nodeElement);
+      return isVisibleElement(nodeElement, visibilityCache);
     }).forEach(function (nodeElement) {
       const nodeRect = nodeElement.getBoundingClientRect();
       const minimapNodeElement = getDocument().createElement('div');
@@ -344,7 +576,7 @@
 
   function getChartTransform(chartElement) {
     let currentTransform;
-    let matrixValues;
+    let matrixValues = [1, 0, 0, 1, 0, 0];
     let currentScale = 1;
     let currentTranslateX = 0;
     let currentTranslateY = 0;
@@ -353,7 +585,8 @@
       return {
         scale: currentScale,
         translateX: currentTranslateX,
-        translateY: currentTranslateY
+        translateY: currentTranslateY,
+        matrix: matrixValues
       };
     }
 
@@ -363,14 +596,14 @@
         matrixValues = currentTransform.slice(9, -1).split(',').map(function (value) {
           return getWindow().parseFloat(value.trim());
         });
-        currentScale = Math.abs(matrixValues[0]) || 1;
+        currentScale = Math.hypot(matrixValues[0], matrixValues[1], matrixValues[2]) || 1;
         currentTranslateX = matrixValues[12] || 0;
         currentTranslateY = matrixValues[13] || 0;
       } else if (currentTransform.indexOf('matrix(') === 0) {
         matrixValues = currentTransform.slice(7, -1).split(',').map(function (value) {
           return getWindow().parseFloat(value.trim());
         });
-        currentScale = Math.abs(matrixValues[0]) || 1;
+        currentScale = Math.hypot(matrixValues[0], matrixValues[1]) || 1;
         currentTranslateX = matrixValues[4] || 0;
         currentTranslateY = matrixValues[5] || 0;
       } else if (currentTransform.indexOf('scale3d(') === 0) {
@@ -378,19 +611,305 @@
           return getWindow().parseFloat(value.trim());
         });
         currentScale = Math.abs(matrixValues[0]) || 1;
+        matrixValues = [matrixValues[0], 0, 0, 0, 0, matrixValues[1], 0, 0, 0, 0, matrixValues[2], 0, 0, 0, 0, 1];
       } else if (currentTransform.indexOf('scale(') === 0) {
         matrixValues = currentTransform.slice(6, -1).split(',').map(function (value) {
           return getWindow().parseFloat(value.trim());
         });
         currentScale = Math.abs(matrixValues[0]) || 1;
+        matrixValues = [matrixValues[0], 0, 0, matrixValues[1] === undefined ? matrixValues[0] : matrixValues[1], 0, 0];
       }
     }
 
     return {
       scale: currentScale,
       translateX: currentTranslateX,
-      translateY: currentTranslateY
+      translateY: currentTranslateY,
+      matrix: matrixValues
     };
+  }
+
+  function applyChartTransform(chartElement, chartTransform, scale, translateX, translateY) {
+    const matrixValues = chartTransform.matrix.slice();
+    const scaleRatio = scale / chartTransform.scale;
+    const is3d = matrixValues.length === 16;
+    const linearIndexes = is3d ? [0, 1, 2, 4, 5, 6, 8, 9, 10] : [0, 1, 2, 3];
+
+    linearIndexes.forEach(function (index) {
+      matrixValues[index] *= scaleRatio;
+    });
+    matrixValues[is3d ? 12 : 4] = translateX;
+    matrixValues[is3d ? 13 : 5] = translateY;
+    chartElement.style.transformOrigin = '0 0';
+    chartElement.style.transform = (is3d ? 'matrix3d(' : 'matrix(') + matrixValues.join(', ') + ')';
+  }
+
+  function getCommonAncestorData(orgChart, firstNode, secondNode) {
+    const ancestors = new Set();
+    let current = firstNode;
+    while (current) {
+      ancestors.add(current);
+      current = orgChart.getParent(current);
+    }
+    current = secondNode;
+    while (current) {
+      if (ancestors.has(current)) {
+        return getState(current, 'sourceData');
+      }
+      current = orgChart.getParent(current);
+    }
+    return null;
+  }
+
+  function synchronizeNodeData(orgChart, node, level, parentData) {
+    const data = getState(node, 'sourceData');
+    if (!data) {
+      return;
+    }
+    data.level = level;
+    if (parentData && parentData[orgChart.options.nodeId] !== undefined) {
+      data.parentId = parentData[orgChart.options.nodeId];
+      node.setAttribute('data-parent', data.parentId);
+    } else {
+      delete data.parentId;
+      node.removeAttribute('data-parent');
+    }
+    const stored = Object.assign({}, data);
+    delete stored.children;
+    setState(node, 'nodeData', stored);
+    node.__ocNodeData = stored;
+    orgChart.getChildren(node).forEach(function (child) {
+      synchronizeNodeData(orgChart, child, level + 1, data);
+    });
+  }
+
+  function rebuildFromData(orgChart, expandedData, updatedDatasource, affectedData) {
+    const chartElement = orgChart.chart;
+    const datasource = updatedDatasource || getState(chartElement, 'datasource') || orgChart.options.data;
+    const expansionStates = new Map();
+    const transform = chartElement.style.transform;
+    const transformOrigin = chartElement.style.transformOrigin;
+    const scrollLeft = orgChart.chartContainer.scrollLeft;
+    const scrollTop = orgChart.chartContainer.scrollTop;
+    const activeElement = getDocument().activeElement;
+    const focusedNode = activeElement && activeElement.closest ? activeElement.closest('.node') : null;
+    const hadFocus = !!focusedNode && chartElement.contains(focusedNode);
+    const focusedData = focusedNode ? getState(focusedNode, 'sourceData') : null;
+    const focusControl = activeElement ? ['topEdge', 'bottomEdge', 'leftEdge', 'rightEdge', 'toggleBtn', 'backToCompactSymbol', 'backToLooseSymbol']
+      .find(function (className) { return activeElement.classList.contains(className); }) : null;
+    let rebuildNode = !updatedDatasource && (affectedData || expandedData) ? orgChart.nodeIndex.get(affectedData || expandedData) : null;
+    while (rebuildNode && rebuildNode.parentElement.classList.contains('node')) {
+      rebuildNode = rebuildNode.parentElement;
+    }
+    const oldNodes = [];
+    const pendingNodes = rebuildNode ? [rebuildNode] : Array.from(chartElement.querySelectorAll('.node'));
+    if (rebuildNode) {
+      while (pendingNodes.length) {
+        const node = pendingNodes.pop();
+        oldNodes.push(node);
+        Array.prototype.push.apply(pendingNodes, orgChart.getChildren(node));
+      }
+    } else {
+      Array.prototype.push.apply(oldNodes, pendingNodes);
+    }
+    oldNodes.forEach(function (nodeElement) {
+      const hierarchy = nodeElement.closest('.hierarchy');
+      expansionStates.set(getState(nodeElement, 'sourceData'), {
+        visible: orgChart.getNodeState(nodeElement).visible,
+        focused: nodeElement.classList.contains('focused'),
+        selected: nodeElement.classList.contains('selected'),
+        controls: nodeElement.classList.contains('controls-active'),
+        hidden: nodeElement.classList.contains('hidden'),
+        hierarchyHidden: hierarchy && hierarchy.classList.contains('hidden'),
+        hierarchyClasses: hierarchy ? ['isSiblingsCollapsed', 'left-sibs', 'right-sibs', 'isAncestorsCollapsed']
+          .filter(function (className) { return hierarchy.classList.contains(className); }) : [],
+        expanded: nodeElement.classList.contains('compact')
+          ? nodeElement.classList.contains('looseMode')
+          : orgChart.getNodeState(nodeElement, 'children').visible
+      });
+    });
+    if (rebuildNode) {
+      const data = getState(rebuildNode, 'sourceData');
+      const parent = orgChart.getParent(rebuildNode);
+      const parentData = parent ? getState(parent, 'sourceData') : null;
+      const level = orgChart.getUpperLevel(rebuildNode);
+      const layer = getChildNodesContainer(rebuildNode);
+      const oldNodeSet = new Set(oldNodes);
+      const transitions = getState(chartElement, 'pendingTransitions');
+      if (transitions) {
+        transitions.forEach(function (cancel) {
+          if (oldNodeSet.has(cancel.element)) {
+            cancel();
+          }
+        });
+      }
+      oldNodes.slice(1).forEach(function (node) { orgChart.nodeIndex.delete(getState(node, 'sourceData')); });
+      if (layer) {
+        layer.remove();
+      }
+      Array.from(rebuildNode.children).filter(function (child) { return child.matches('.node, .nodes'); })
+        .forEach(function (child) { child.remove(); });
+      prepareNodeData(data, true);
+      data.level = level;
+      if (parentData && (parentData.hybrid || parentData.vertical)) {
+        data.vertical = true;
+      } else if (parentData && parentData.compact) {
+        data.compact = !!(data.children && data.children.length);
+        data.associatedCompact = !data.compact;
+      }
+      if ((orgChart.options.compact === true && data.children && data.children.length)
+        || (typeof orgChart.options.compact === 'function' && orgChart.options.compact(data))) {
+        data.compact = true;
+      }
+      const compact = !!(data.children && data.children.length) && usesCompactLayout(data, orgChart.options, level);
+      rebuildNode.classList.toggle('compact', compact);
+      rebuildNode.style.gridTemplateColumns = compact ? 'repeat(' + Math.floor(Math.sqrt(data.children.length + 1)) + ', auto)' : '';
+      rebuildNode.classList.remove('sliding');
+      if (data.children && data.children.length) {
+        data.children.flat().forEach(function (child) { child.parentId = data[orgChart.options.nodeId]; });
+        orgChart.buildInferiorNodes(rebuildNode.parentElement, rebuildNode, data, level);
+      }
+      synchronizeNodeData(orgChart, rebuildNode, level, parentData);
+      orgChart.handleCompactNodes();
+      orgChart.refreshNodeControls(rebuildNode);
+    } else {
+      prepareNodeData(datasource, true);
+      orgChart.datasource = datasource;
+      orgChart.init({ data: datasource });
+    }
+    orgChart.chart.style.transform = transform;
+    orgChart.chart.style.transformOrigin = transformOrigin;
+    const restoredNodes = rebuildNode ? [rebuildNode] : Array.from(orgChart.chart.querySelectorAll('.node'));
+    if (rebuildNode) {
+      const pending = orgChart.getChildren(rebuildNode);
+      while (pending.length) {
+        const node = pending.pop();
+        restoredNodes.push(node);
+        Array.prototype.push.apply(pending, orgChart.getChildren(node));
+      }
+    }
+    restoredNodes.forEach(function (nodeElement) {
+      const nodeData = getState(nodeElement, 'sourceData');
+      const state = expansionStates.get(nodeData);
+      const expanded = nodeData === expandedData || (state && state.expanded);
+      if (state) {
+        nodeElement.classList.toggle('focused', state.focused);
+        nodeElement.classList.toggle('selected', state.selected);
+        nodeElement.classList.toggle('hidden', state.hidden);
+        const hierarchy = nodeElement.closest('.hierarchy');
+        if (hierarchy) {
+          hierarchy.classList.toggle('hidden', !!state.hierarchyHidden);
+          state.hierarchyClasses.forEach(function (className) { hierarchy.classList.add(className); });
+        }
+      }
+      if (state && state.visible) {
+        nodeElement.classList.remove('slide-up');
+      }
+      if (nodeElement.classList.contains('compact')) {
+        if (expanded && orgChart.getChildren(nodeElement).length) {
+          orgChart.backToLooseHandler({ compactNode: nodeElement });
+        }
+      } else {
+        const childContainer = getChildNodesContainer(nodeElement);
+        if (childContainer && (state || nodeData === expandedData)) {
+          childContainer.classList.toggle('hidden', !expanded);
+          nodeElement.closest('.hierarchy').classList.toggle('isChildrenCollapsed', !expanded);
+          if (expanded) {
+            orgChart.getChildren(nodeElement).forEach(function (child) { child.classList.remove('slide-up'); });
+          }
+        }
+      }
+    });
+    expansionStates.forEach(function (state, data) {
+      const node = orgChart.nodeIndex.get(data);
+      if (node && state.controls) {
+        orgChart.nodeEnterLeaveHandler({ type: 'mouseenter', node: node });
+      }
+    });
+    const focusTarget = focusedData ? orgChart.nodeIndex.get(focusedData) : null;
+    if (focusTarget && hadFocus) {
+      const control = focusControl ? focusTarget.querySelector(':scope > .' + focusControl) : null;
+      (control || focusTarget).focus({ preventScroll: true });
+    }
+    orgChart.chartContainer.scrollLeft = scrollLeft;
+    orgChart.chartContainer.scrollTop = scrollTop;
+    orgChart.scheduleMinimapUpdate(true);
+  }
+
+  function waitForTransition(element, callback) {
+    const chart = element.closest('.orgchart');
+    let pending = chart ? getState(chart, 'pendingTransitions') : null;
+    if (chart && !pending) {
+      pending = new Set();
+      setState(chart, 'pendingTransitions', pending);
+    }
+    const style = getWindow().getComputedStyle(element);
+    const durations = (style.transitionDuration || '0.3s').split(',');
+    const delays = (style.transitionDelay || '0s').split(',');
+    const milliseconds = function (value) {
+      return parseFloat(value) * (value.trim().endsWith('ms') ? 1 : 1000) || 0;
+    };
+    const duration = Math.max.apply(Math, durations.map(function (value, index) {
+      return milliseconds(value) + milliseconds(delays[index % delays.length]);
+    }));
+    let timer;
+    let finished = false;
+    const cancel = function () {
+      finished = true;
+      getWindow().clearTimeout(timer);
+      element.removeEventListener('transitionend', finish);
+      element.removeEventListener('transitioncancel', finish);
+      if (pending) {
+        pending.delete(cancel);
+      }
+    };
+    cancel.element = element;
+    const finish = function (event) {
+      if (finished || (event && (event.target !== element
+        || (event.propertyName && !['transform', 'opacity'].includes(event.propertyName))))) {
+        return;
+      }
+      cancel();
+      callback(event || { target: element });
+    };
+    if (pending) {
+      pending.add(cancel);
+    }
+    element.addEventListener('transitionend', finish);
+    element.addEventListener('transitioncancel', finish);
+    if (duration > 0) {
+      timer = getWindow().setTimeout(function () { finish(); }, duration + 50);
+    } else {
+      Promise.resolve().then(function () { finish(); });
+    }
+  }
+
+  function releaseChart(orgChart) {
+    orgChart.detachMinimap();
+    if (!orgChart.chart) {
+      return;
+    }
+    const initObserver = getState(orgChart.chart, 'initMutationObserver');
+    if (initObserver) {
+      initObserver.disconnect();
+    }
+    const transitions = getState(orgChart.chart, 'pendingTransitions');
+    if (transitions) {
+      transitions.forEach(function (cancel) { cancel(); });
+    }
+    orgChart.panEndHandler({ chart: orgChart.chart });
+    orgChart.unbindPan();
+    orgChart.unbindZoom();
+    orgChart.destroyDragImage();
+    orgChart.touchHandled = false;
+    orgChart.touchTargetNode = null;
+    if (orgChart.exportState) {
+      orgChart.exportState.active = false;
+      orgChart.exportState.mask.remove();
+      orgChart.chartContainer.classList.remove('canvasContainer');
+      orgChart.exportState = null;
+    }
+    orgChart.chart.remove();
   }
 
   const OrgChart = function (elem, opts) {
@@ -405,6 +924,7 @@
       this.opts = opts || {};
     }
     this.chart = null;
+    this.exportButtonElement = null;
     this.defaultOptions = {
       'icons': {
         'theme': 'oci',
@@ -451,10 +971,15 @@
     });
   }
   //
-  OrgChart.prototype = {
+  const lifecycleMethods = {
     //
     init: function (opts) {
-      this.options = mergeObjects({}, this.defaultOptions, this.opts, opts);
+      const options = mergeChartOptions(this.defaultOptions, this.opts, opts);
+      const normalizedData = normalizeDatasource(options.data, options.nodeId);
+      const data = normalizedData === this.datasource ? normalizedData : cloneDatasource(normalizedData);
+      options.data = data;
+      this.opts = options;
+      this.options = options;
       // build the org-chart
       const chartContainerElement = this.chartContainer;
       let chartElement;
@@ -462,15 +987,19 @@
       let rootNodesContainerElement;
       let rootHierarchyElement;
 
-      this.detachMinimap();
-      if (this.chart) {
-        this.chart.remove();
-      }
-      const data = this.options.data;
+      releaseChart(this);
       chartElement = getDocument().createElement('div');
       chartElement.className = 'orgchart' + (this.options.chartClass !== '' ? ' ' + this.options.chartClass : '') + (this.options.direction !== 't2b' ? ' ' + this.options.direction : '');
       setState(chartElement, 'options', this.options);
       this.chart = chartElement;
+      this.nodeIndex = new WeakMap();
+      this.touchHandled = false;
+      this.touchMoved = false;
+      this.touchTargetNode = null;
+      this.bindNodeEvents(chartElement);
+      if (this.options.draggable) {
+        this.bindDragDrop(chartElement);
+      }
       chartElement.addEventListener('click', function (event) {
         const nativeEvent = event.originalEvent || event;
         const clickTargetElement = getElement(nativeEvent.target);
@@ -479,17 +1008,27 @@
           Array.from(chartElement.querySelectorAll('.node.focused')).forEach(function (focusedNodeEl) {
             focusedNodeEl.classList.remove('focused');
           });
+          const activeElement = getDocument().activeElement;
+          if (activeElement && chartElement.contains(activeElement) && activeElement.closest('.node')) {
+            activeElement.blur();
+          }
         }
       });
       if (typeof getWindow().MutationObserver !== 'undefined') {
         this.triggerInitEvent();
       }
       const isListElementData = isElement(data) && data.tagName === 'UL';
+      const datasource = isListElementData ? this.buildJsonDS(data.firstElementChild) : data;
+      prepareNodeData(datasource);
+      this.datasource = datasource;
+      setState(chartElement, 'datasource', datasource);
+      this.options.data = datasource;
+      this.opts.data = datasource;
       rootNodesContainerElement = getDocument().createElement('ul');
       rootNodesContainerElement.className = 'nodes';
       chartElement.appendChild(rootNodesContainerElement);
 
-      if (!isListElementData && Array.isArray(data)) {
+      if (!isListElementData && Array.isArray(datasource)) {
         rootElement = rootNodesContainerElement;
       } else {
         rootHierarchyElement = getDocument().createElement('li');
@@ -498,23 +1037,22 @@
         rootElement = rootHierarchyElement;
       }
 
-        if (isListElementData) { // ul datasource
-          this.buildHierarchy(rootElement, this.buildJsonDS(data.firstElementChild));
-        } else { // local json datasource
-          if (data.relationship) {
-            this.buildHierarchy(rootElement, data);
-          } else {
-            this.buildHierarchy(rootElement, Array.isArray(data) ? data : this.attachRel(data, '00'));
-          }
-        }
+      this.buildHierarchy(rootElement, datasource);
 
       if (chartContainerElement) {
         chartContainerElement.appendChild(chartElement);
       }
 
       // append the export button
-      if (this.options.exportButton && !getDocument().querySelector('.oc-export-btn')) {
-        this.attachExportButton();
+      if (this.options.exportButton) {
+        if (!this.exportButtonElement || !this.exportButtonElement.parentElement) {
+          this.attachExportButton();
+        } else {
+          this.exportButtonElement.textContent = this.options.exportButtonName;
+        }
+      } else if (this.exportButtonElement) {
+        this.exportButtonElement.remove();
+        this.exportButtonElement = null;
       }
 
       if (this.options.pan) {
@@ -529,6 +1067,24 @@
         this.attachMinimap();
       }
 
+      return this;
+    },
+    destroy: function () {
+      releaseChart(this);
+      if (this.exportButtonElement) {
+        this.exportButtonElement.remove();
+        this.exportButtonElement = null;
+      }
+      if (this.exportMaskElement) {
+        this.exportMaskElement.remove();
+        this.exportMaskElement = null;
+      }
+      if (this.downloadAnchorElement) {
+        this.downloadAnchorElement.remove();
+        this.downloadAnchorElement = null;
+      }
+      this.chart = null;
+      this.nodeIndex = new WeakMap();
       return this;
     },
     handleCompactNodes: function () {
@@ -556,26 +1112,30 @@
     //
     triggerInitEvent: function () {
       const orgChart = this;
+      const chartElement = this.chart;
+      const options = this.options;
       const MutationObserverCtor = getWindow().MutationObserver;
       const mo = new MutationObserverCtor(function (mutations) {
         mo.disconnect();
+        setState(chartElement, 'initMutationObserver', null);
         initTime:
         for (let i = 0; i < mutations.length; i++) {
           for (let j = 0; j < mutations[i].addedNodes.length; j++) {
-            if (mutations[i].addedNodes[j].classList && mutations[i].addedNodes[j].classList.contains('orgchart')) {
+            if (mutations[i].addedNodes[j] === chartElement) {
               orgChart.handleCompactNodes();
-              if (!orgChart.chart) {
+              if (!chartElement.isConnected) {
                 break initTime;
               }
-              if (orgChart.options.initCompleted && typeof orgChart.options.initCompleted === 'function') {
-                orgChart.options.initCompleted(orgChart.chart);
+              if (options.initCompleted && typeof options.initCompleted === 'function') {
+                options.initCompleted(chartElement);
               }
-              mutations[i].addedNodes[j].dispatchEvent(createTriggeredEvent('init.orgchart'));
+              chartElement.dispatchEvent(createTriggeredEvent('init.orgchart'));
               break initTime;
             }
           }
         }
       });
+      setState(chartElement, 'initMutationObserver', mo);
       mo.observe(this.chartContainer, { childList: true });
     },
     triggerShowEvent: function (targetEl, rel) {
@@ -601,74 +1161,61 @@
       exportButtonElement = getDocument().createElement('button');
       exportButtonElement.className = 'oc-export-btn';
       exportButtonElement.textContent = this.options.exportButtonName;
+      setState(exportButtonElement, 'orgChart', this);
       exportButtonElement.addEventListener('click', function (event) {
         event.preventDefault();
-        orgChart.export();
+        const result = orgChart.export();
+        if (result && typeof result.catch === 'function') {
+          result.catch(function () {});
+        }
       });
+      this.exportButtonElement = exportButtonElement;
       chartContainerElement.insertAdjacentElement('afterend', exportButtonElement);
     },
     setOptions: function (opts, val) {
-      if (typeof opts === 'string') {
-        if (opts === 'pan') {
-          if (val) {
-            this.bindPan();
-          } else {
-            this.unbindPan();
-          }
-        }
-        if (opts === 'zoom') {
-          if (val) {
-            this.bindZoom();
-          } else {
-            this.unbindZoom();
-          }
-        }
-        if (opts === 'minimap') {
-          this.options = mergeObjects({}, this.options || {}, { minimap: val });
-          if (this.chart) {
-            setState(this.chart, 'options', this.options);
-          }
-          if (val) {
-            this.attachMinimap();
-          } else {
-            this.detachMinimap();
-          }
-        }
+      const overrides = typeof opts === 'string' ? { [opts]: val } : opts;
+      if (!overrides || typeof overrides !== 'object') {
+        return this;
       }
-      if (typeof opts === 'object') {
-        if (opts.data) {
-          this.init(opts);
+      const options = mergeChartOptions(this.defaultOptions, this.opts, this.options, overrides);
+      const needsRebuild = Object.keys(overrides).some(function (key) {
+        return !['pan', 'zoom', 'minimap', 'zoominLimit', 'zoomoutLimit', 'exportScale', 'exportFilename', 'exportFileextension'].includes(key);
+      });
+      if (needsRebuild) {
+        return this.init(options);
+      }
+      this.opts = options;
+      this.options = options;
+      if (this.chart) {
+        setState(this.chart, 'options', options);
+      }
+      if (Object.prototype.hasOwnProperty.call(overrides, 'pan')) {
+        if (options.pan) {
+          this.bindPan();
         } else {
-          if (typeof opts.pan !== 'undefined') {
-            if (opts.pan) {
-              this.bindPan();
-            } else {
-              this.unbindPan();
-            }
-          }
-          if (typeof opts.zoom !== 'undefined') {
-            if (opts.zoom) {
-              this.bindZoom();
-            } else {
-              this.unbindZoom();
-            }
-          }
-          if (typeof opts.minimap !== 'undefined') {
-            this.options = mergeObjects({}, this.options || {}, { minimap: opts.minimap });
-            if (this.chart) {
-              setState(this.chart, 'options', this.options);
-            }
-            if (opts.minimap) {
-              this.attachMinimap();
-            } else {
-              this.detachMinimap();
-            }
-          }
+          this.panEndHandler({ chart: this.chart });
+          this.unbindPan();
         }
       }
-
+      if (Object.prototype.hasOwnProperty.call(overrides, 'zoom')) {
+        if (options.zoom) {
+          this.bindZoom();
+        } else {
+          this.unbindZoom();
+        }
+      }
+      if (Object.prototype.hasOwnProperty.call(overrides, 'minimap')) {
+        if (options.minimap) {
+          this.attachMinimap();
+        } else {
+          this.detachMinimap();
+        }
+      }
       return this;
     },
+  };
+
+  const minimapMethods = {
     attachMinimap: function () {
       const orgChart = this;
       const chartContainerElement = this.chartContainer;
@@ -679,7 +1226,9 @@
       let minimapViewportElement;
       let minimapWheelBoundHandler;
       let minimapPointerDownBoundHandler;
+      let minimapViewportChangeBoundHandler;
       let minimapMutationObserver;
+      let minimapResizeObserver;
 
       if (!chartContainerElement || !chartElement) {
         return;
@@ -712,20 +1261,52 @@
       minimapPointerDownBoundHandler = function (event) {
         orgChart.minimapStartHandler(event);
       };
+      minimapViewportChangeBoundHandler = function () {
+        orgChart.scheduleMinimapUpdate();
+      };
 
-      minimapElement.addEventListener('wheel', minimapWheelBoundHandler);
+      minimapElement.addEventListener('wheel', minimapWheelBoundHandler, { passive: false });
       minimapViewportElement.addEventListener('mousedown', minimapPointerDownBoundHandler);
+      chartContainerElement.addEventListener('scroll', minimapViewportChangeBoundHandler);
+      getWindow().addEventListener('resize', minimapViewportChangeBoundHandler);
 
       if (typeof getWindow().MutationObserver !== 'undefined') {
-        minimapMutationObserver = new (getWindow().MutationObserver)(function () {
-          orgChart.updateMinimap(true);
+        minimapMutationObserver = new (getWindow().MutationObserver)(function (mutations) {
+          const controlsSelector = '.edge, .toggleBtn, .backToCompactSymbol, .backToLooseSymbol';
+          const needsRefresh = mutations.some(function (mutation) {
+            if (mutation.type === 'childList') {
+              return Array.from(mutation.addedNodes).concat(Array.from(mutation.removedNodes)).some(function (node) {
+                return node.nodeType !== 1 || !node.matches(controlsSelector);
+              });
+            }
+            if (mutation.target.matches(controlsSelector)) {
+              return false;
+            }
+            const layoutClasses = function (value) {
+              return (value || '').split(/\s+/).filter(function (className) {
+                return className && !['controls-active', 'focused', 'allowedDrop', 'currentDropTarget'].includes(className);
+              }).sort().join(' ');
+            };
+            return layoutClasses(mutation.oldValue) !== layoutClasses(mutation.target.getAttribute('class'));
+          });
+          if (needsRefresh) {
+            orgChart.scheduleMinimapUpdate(true);
+          }
         });
         minimapMutationObserver.observe(chartElement, {
           childList: true,
           subtree: true,
           attributes: true,
+          attributeOldValue: true,
           attributeFilter: ['class']
         });
+      }
+      if (typeof getWindow().ResizeObserver !== 'undefined') {
+        minimapResizeObserver = new (getWindow().ResizeObserver)(function () {
+          orgChart.scheduleMinimapUpdate(true);
+        });
+        minimapResizeObserver.observe(chartContainerElement);
+        minimapResizeObserver.observe(chartElement);
       }
 
       setState(chartElement, 'minimapElement', minimapElement);
@@ -734,7 +1315,9 @@
       setState(chartElement, 'minimapViewportElement', minimapViewportElement);
       setState(chartElement, 'minimapWheelBoundHandler', minimapWheelBoundHandler);
       setState(chartElement, 'minimapPointerDownBoundHandler', minimapPointerDownBoundHandler);
+      setState(chartElement, 'minimapViewportChangeBoundHandler', minimapViewportChangeBoundHandler);
       setState(chartElement, 'minimapMutationObserver', minimapMutationObserver || null);
+      setState(chartElement, 'minimapResizeObserver', minimapResizeObserver || null);
 
       this.updateMinimap(true);
     },
@@ -748,8 +1331,19 @@
       let minimapMoveBoundHandler;
       let minimapEndBoundHandler;
       let minimapMutationObserver;
+      let minimapViewportChangeBoundHandler;
+      let minimapResizeObserver;
 
       if (chartElement) {
+        const frame = getState(chartElement, 'minimapFrame');
+        if (frame !== null && frame !== undefined) {
+          if (getWindow().cancelAnimationFrame) {
+            getWindow().cancelAnimationFrame(frame);
+          } else {
+            getWindow().clearTimeout(frame);
+          }
+          setState(chartElement, 'minimapFrame', null);
+        }
         minimapElement = getState(chartElement, 'minimapElement');
         minimapViewportElement = getState(chartElement, 'minimapViewportElement');
         minimapWheelBoundHandler = getState(chartElement, 'minimapWheelBoundHandler');
@@ -757,6 +1351,8 @@
         minimapMoveBoundHandler = getState(chartElement, 'minimapMoveBoundHandler');
         minimapEndBoundHandler = getState(chartElement, 'minimapEndBoundHandler');
         minimapMutationObserver = getState(chartElement, 'minimapMutationObserver');
+        minimapViewportChangeBoundHandler = getState(chartElement, 'minimapViewportChangeBoundHandler');
+        minimapResizeObserver = getState(chartElement, 'minimapResizeObserver');
 
         if (minimapElement && minimapWheelBoundHandler) {
           minimapElement.removeEventListener('wheel', minimapWheelBoundHandler);
@@ -773,6 +1369,13 @@
         if (minimapMutationObserver) {
           minimapMutationObserver.disconnect();
         }
+        if (minimapViewportChangeBoundHandler) {
+          chartContainerElement.removeEventListener('scroll', minimapViewportChangeBoundHandler);
+          getWindow().removeEventListener('resize', minimapViewportChangeBoundHandler);
+        }
+        if (minimapResizeObserver) {
+          minimapResizeObserver.disconnect();
+        }
         if (minimapElement && minimapElement.parentElement) {
           minimapElement.remove();
         }
@@ -787,6 +1390,8 @@
           'minimapMoveBoundHandler',
           'minimapEndBoundHandler',
           'minimapMutationObserver',
+          'minimapViewportChangeBoundHandler',
+          'minimapResizeObserver',
           'minimapDragState',
           'minimapScale',
           'minimapOffsetX',
@@ -812,6 +1417,9 @@
       }
       if (typeof event.preventDefault === 'function') {
         event.preventDefault();
+      }
+      if (typeof event.stopPropagation === 'function') {
+        event.stopPropagation();
       }
 
       this.setChartScale(this.chart, 1 + (event.deltaY > 0 ? -0.2 : 0.2), {
@@ -897,8 +1505,7 @@
       let localViewportHeight;
       let localLeft;
       let localTop;
-      let baseLeft;
-      let baseTop;
+      let transformedRect;
 
       if (!chartElement || !chartContainerElement || !minimapStageElement || !minimapScale || !chartRect || !containerRect) {
         return;
@@ -908,18 +1515,41 @@
       localViewportHeight = viewportHeight / minimapScale;
       localLeft = clampValue((stageLeft - minimapOffsetX) / minimapScale, 0, Math.max(minimapContentWidth - localViewportWidth, 0));
       localTop = clampValue((stageTop - minimapOffsetY) / minimapScale, 0, Math.max(minimapContentHeight - localViewportHeight, 0));
-      baseLeft = chartRect.left - chartTransform.translateX;
-      baseTop = chartRect.top - chartTransform.translateY;
-
-      chartElement.style.transformOrigin = '0 0';
-      chartElement.style.transform = 'matrix(' + chartTransform.scale + ', 0, 0, ' + chartTransform.scale + ', '
-        + (containerRect.left - baseLeft - (localLeft * chartTransform.scale)) + ', '
-        + (containerRect.top - baseTop - (localTop * chartTransform.scale)) + ')';
-      this.updateMinimap();
+      applyChartTransform(chartElement, chartTransform, chartTransform.scale, chartTransform.translateX, chartTransform.translateY);
+      transformedRect = chartElement.getBoundingClientRect();
+      applyChartTransform(chartElement, chartTransform, chartTransform.scale,
+        chartTransform.translateX + containerRect.left - (localLeft * chartTransform.scale) - transformedRect.left,
+        chartTransform.translateY + containerRect.top - (localTop * chartTransform.scale) - transformedRect.top);
+      this.scheduleMinimapUpdate();
+    },
+    scheduleMinimapUpdate: function (forceRefresh) {
+      const chart = this.chart;
+      if (!chart || !this.options.minimap || !getState(chart, 'minimapElement')) {
+        return;
+      }
+      setState(chart, 'minimapNeedsRefresh', !!forceRefresh || !!getState(chart, 'minimapNeedsRefresh'));
+      if (getState(chart, 'minimapFrame') !== null && getState(chart, 'minimapFrame') !== undefined) {
+        return;
+      }
+      const schedule = getWindow().requestAnimationFrame
+        ? getWindow().requestAnimationFrame.bind(getWindow())
+        : function (callback) { return getWindow().setTimeout(callback, 0); };
+      setState(chart, 'minimapFrame', schedule(function () {
+        setState(chart, 'minimapFrame', null);
+        const refresh = getState(chart, 'minimapNeedsRefresh');
+        setState(chart, 'minimapNeedsRefresh', false);
+        if (this.chart === chart && this.options.minimap) {
+          this.updateMinimap(refresh);
+        }
+      }.bind(this)));
     },
     updateMinimap: function (forceRefresh) {
       const chartElement = this.chart;
       const chartContainerElement = this.chartContainer;
+      if (!this.options || !this.options.minimap || !chartElement || !chartContainerElement
+        || !getState(chartElement, 'minimapElement')) {
+        return;
+      }
       const minimapStageElement = chartElement ? getState(chartElement, 'minimapStageElement') : null;
       const minimapContentElement = chartElement ? getState(chartElement, 'minimapContentElement') : null;
       const minimapViewportElement = chartElement ? getState(chartElement, 'minimapViewportElement') : null;
@@ -953,15 +1583,16 @@
       minimapScale = Math.min(stageWidth / Math.max(contentWidth, 1), stageHeight / Math.max(contentHeight, 1));
       minimapOffsetX = (stageWidth - (contentWidth * minimapScale)) / 2;
       minimapOffsetY = (stageHeight - (contentHeight * minimapScale)) / 2;
+      if (forceRefresh || !minimapContentElement.firstElementChild) {
+        renderMinimapNodes(chartElement, minimapContentElement, chartRect, chartTransform.scale || 1);
+      }
+      const minimapElement = getState(chartElement, 'minimapElement');
+      minimapElement.style.transform = 'translate(' + chartContainerElement.scrollLeft + 'px, ' + chartContainerElement.scrollTop + 'px)';
 
       minimapContentElement.style.width = contentWidth + 'px';
       minimapContentElement.style.height = contentHeight + 'px';
       minimapContentElement.style.transformOrigin = '0 0';
       minimapContentElement.style.transform = 'translate(' + minimapOffsetX + 'px, ' + minimapOffsetY + 'px) scale(' + minimapScale + ')';
-
-      if (forceRefresh || !minimapContentElement.firstElementChild) {
-        renderMinimapNodes(chartElement, minimapContentElement, chartRect, chartTransform.scale || 1);
-      }
 
       viewportLeft = clampValue((containerRect.left - chartRect.left) / chartTransform.scale, 0, Math.max(contentWidth, 0));
       viewportTop = clampValue((containerRect.top - chartRect.top) / chartTransform.scale, 0, Math.max(contentHeight, 0));
@@ -979,19 +1610,18 @@
       setState(chartElement, 'minimapContentHeight', contentHeight);
     },
     //
+  };
+
+  const viewportMethods = {
     panStartHandler: function (e) {
       const orgChart = this;
       const nativeEvent = e.originalEvent || e;
       const chartElement = getElement(e.chart || nativeEvent.currentTarget);
       const targetElement = getElement(nativeEvent.target);
-      let lastTf;
-      let existingPanMoveHandler;
-      let panMoveHandler;
-
       if (!chartElement) {
         return;
       }
-
+      this.panEndHandler({ chart: chartElement });
       if ((targetElement && typeof targetElement.closest === 'function' && targetElement.closest('.node')) || (nativeEvent.touches && nativeEvent.touches.length > 1)) {
         setState(chartElement, 'panning', false);
         return;
@@ -999,74 +1629,26 @@
         chartElement.style.cursor = 'move';
         setState(chartElement, 'panning', true);
       }
-      let lastX = 0;
-      let lastY = 0;
-      lastTf = chartElement.style.transform || getWindow().getComputedStyle(chartElement).transform || 'none';
-      if (lastTf !== 'none') {
-        const temp = lastTf.split(',');
-        if (lastTf.indexOf('3d') === -1) {
-          lastX = parseInt(temp[4]);
-          lastY = parseInt(temp[5]);
-        } else {
-          lastX = parseInt(temp[12]);
-          lastY = parseInt(temp[13]);
-        }
-      }
-      let startX = 0;
-      let startY = 0;
-      if (!nativeEvent.targetTouches) { // pand on desktop
-        startX = (typeof nativeEvent.pageX === 'number' ? nativeEvent.pageX : nativeEvent.clientX) - lastX;
-        startY = (typeof nativeEvent.pageY === 'number' ? nativeEvent.pageY : nativeEvent.clientY) - lastY;
-      } else if (nativeEvent.targetTouches.length === 1) { // pan on mobile device
-        startX = nativeEvent.targetTouches[0].pageX - lastX;
-        startY = nativeEvent.targetTouches[0].pageY - lastY;
-      } else if (nativeEvent.targetTouches.length > 1) {
-        return;
-      }
-
-      existingPanMoveHandler = getState(chartElement, 'panMoveHandler');
-      if (existingPanMoveHandler) {
-        chartElement.removeEventListener('mousemove', existingPanMoveHandler);
-        chartElement.removeEventListener('touchmove', existingPanMoveHandler);
-      }
-
-      panMoveHandler = function (e) {
-        let currentTransform;
-        let matrix;
-
-        if (!getState(chartElement, 'panning')) {
+      const chartTransform = getChartTransform(chartElement);
+      const point = nativeEvent.targetTouches ? nativeEvent.targetTouches[0] : nativeEvent;
+      const startX = typeof point.pageX === 'number' ? point.pageX : point.clientX;
+      const startY = typeof point.pageY === 'number' ? point.pageY : point.clientY;
+      const beforeRect = chartElement.getBoundingClientRect();
+      applyChartTransform(chartElement, chartTransform, chartTransform.scale, chartTransform.translateX, chartTransform.translateY);
+      const afterRect = chartElement.getBoundingClientRect();
+      chartTransform.translateX += beforeRect.left - afterRect.left;
+      chartTransform.translateY += beforeRect.top - afterRect.top;
+      applyChartTransform(chartElement, chartTransform, chartTransform.scale, chartTransform.translateX, chartTransform.translateY);
+      const panMoveHandler = function (event) {
+        if (!getState(chartElement, 'panning') || (event.targetTouches && event.targetTouches.length !== 1)) {
           return;
         }
-        let newX = 0;
-        let newY = 0;
-        if (!e.targetTouches) { // pand on desktop
-          newX = (typeof e.pageX === 'number' ? e.pageX : e.clientX) - startX;
-          newY = (typeof e.pageY === 'number' ? e.pageY : e.clientY) - startY;
-        } else if (e.targetTouches.length === 1) { // pan on mobile device
-          newX = e.targetTouches[0].pageX - startX;
-          newY = e.targetTouches[0].pageY - startY;
-        } else if (e.targetTouches.length > 1) {
-          return;
-        }
-        currentTransform = chartElement.style.transform || getWindow().getComputedStyle(chartElement).transform || 'none';
-        if (currentTransform === 'none') {
-          if (currentTransform.indexOf('3d') === -1) {
-            chartElement.style.transform = 'matrix(1, 0, 0, 1, ' + newX + ', ' + newY + ')';
-          } else {
-            chartElement.style.transform = 'matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, ' + newX + ', ' + newY + ', 0, 1)';
-          }
-        } else {
-          matrix = currentTransform.split(',');
-          if (currentTransform.indexOf('3d') === -1) {
-            matrix[4] = ' ' + newX;
-            matrix[5] = ' ' + newY + ')';
-          } else {
-            matrix[12] = ' ' + newX;
-            matrix[13] = ' ' + newY;
-          }
-          chartElement.style.transform = matrix.join(',');
-          orgChart.updateMinimap();
-        }
+        const currentPoint = event.targetTouches ? event.targetTouches[0] : event;
+        const currentX = typeof currentPoint.pageX === 'number' ? currentPoint.pageX : currentPoint.clientX;
+        const currentY = typeof currentPoint.pageY === 'number' ? currentPoint.pageY : currentPoint.clientY;
+        applyChartTransform(chartElement, chartTransform, chartTransform.scale,
+          chartTransform.translateX + currentX - startX, chartTransform.translateY + currentY - startY);
+        orgChart.scheduleMinimapUpdate();
       };
 
       setState(chartElement, 'panMoveHandler', panMoveHandler);
@@ -1083,7 +1665,7 @@
         return;
       }
 
-      if (getState(chartElement, 'panning')) {
+      if (getState(chartElement, 'panning') || getState(chartElement, 'panMoveHandler')) {
         panMoveHandler = getState(chartElement, 'panMoveHandler');
         setState(chartElement, 'panning', false);
         chartElement.style.cursor = 'default';
@@ -1107,6 +1689,8 @@
       }
 
       this.unbindPan();
+      setState(chartElement, 'panOriginalOverflow', chartContainerElement.style.overflow);
+      setState(chartElement, 'panManagedOverflow', true);
       chartContainerElement.style.overflow = 'hidden';
       panStartBoundHandler = function (event) {
         orgChart.panStartHandler({
@@ -1126,6 +1710,7 @@
       chartElement.addEventListener('touchstart', panStartBoundHandler);
       getDocument().addEventListener('mouseup', panEndBoundHandler);
       getDocument().addEventListener('touchend', panEndBoundHandler);
+      getDocument().addEventListener('touchcancel', panEndBoundHandler);
     },
     //
     unbindPan: function () {
@@ -1138,7 +1723,10 @@
         return;
       }
 
-      chartContainerElement.style.overflow = 'auto';
+      if (getState(chartElement, 'panManagedOverflow')) {
+        chartContainerElement.style.overflow = getState(chartElement, 'panOriginalOverflow') || '';
+        setState(chartElement, 'panManagedOverflow', false);
+      }
       panStartBoundHandler = getState(chartElement, 'panStartBoundHandler');
       panEndBoundHandler = getState(chartElement, 'panEndBoundHandler');
       if (panStartBoundHandler) {
@@ -1149,6 +1737,7 @@
       if (panEndBoundHandler) {
         getDocument().removeEventListener('mouseup', panEndBoundHandler);
         getDocument().removeEventListener('touchend', panEndBoundHandler);
+        getDocument().removeEventListener('touchcancel', panEndBoundHandler);
         setState(chartElement, 'panEndBoundHandler', null);
       }
     },
@@ -1203,6 +1792,7 @@
         dist = orgChart.getPinchDist(nativeEvent);
         pinchCenter = orgChart.getPinchCenter(nativeEvent);
         setState(chartElement, 'pinchDistStart', dist);
+        setState(chartElement, 'pinchDistEnd', dist);
         setState(chartElement, 'pinchCenterStart', pinchCenter);
         setState(chartElement, 'pinchCenterEnd', pinchCenter);
       }
@@ -1214,7 +1804,7 @@
       let dist;
       let pinchCenter;
 
-      if(chartElement && getState(chartElement, 'pinching')) {
+      if(chartElement && getState(chartElement, 'pinching') && nativeEvent.touches && nativeEvent.touches.length === 2) {
         dist = orgChart.getPinchDist(nativeEvent);
         pinchCenter = orgChart.getPinchCenter(nativeEvent);
         setState(chartElement, 'pinchDistEnd', dist);
@@ -1340,16 +1930,9 @@
       const chartContainerElement = this.chartContainer;
       let opts;
       let chartRect;
-      let currentScale = 1;
-      let currentTranslateX = 0;
-      let currentTranslateY = 0;
+      let chartTransform;
+      let transformedRect;
       let targetScale = 1;
-      let anchorX;
-      let anchorY;
-      let localAnchorX;
-      let localAnchorY;
-      let baseLeft;
-      let baseTop;
       let containerRect;
       let targetTranslateX;
       let targetTranslateY;
@@ -1359,17 +1942,18 @@
       }
 
       opts = getState(chartElement, 'options');
-      currentScale = getChartTransform(chartElement).scale;
-      currentTranslateX = getChartTransform(chartElement).translateX;
-      currentTranslateY = getChartTransform(chartElement).translateY;
+      chartTransform = getChartTransform(chartElement);
 
-      targetScale = currentScale * newScale;
-      if (!(targetScale > opts.zoomoutLimit && targetScale < opts.zoominLimit)) {
+      if (!Number.isFinite(newScale) || newScale <= 0) {
+        return;
+      }
+      targetScale = clampValue(chartTransform.scale * newScale, opts.zoomoutLimit, opts.zoominLimit);
+      if (targetScale === chartTransform.scale) {
         return;
       }
 
-      targetTranslateX = currentTranslateX;
-      targetTranslateY = currentTranslateY;
+      targetTranslateX = chartTransform.translateX;
+      targetTranslateY = chartTransform.translateY;
       chartRect = typeof chartElement.getBoundingClientRect === 'function'
         ? chartElement.getBoundingClientRect()
         : null;
@@ -1380,22 +1964,21 @@
           y: containerRect.top + (containerRect.height / 2)
         };
       }
-      if (zoomAnchor && chartRect && typeof zoomAnchor.x === 'number' && typeof zoomAnchor.y === 'number' && currentScale !== 0) {
-        anchorX = zoomAnchor.x;
-        anchorY = zoomAnchor.y;
-        localAnchorX = (anchorX - chartRect.left) / currentScale;
-        localAnchorY = (anchorY - chartRect.top) / currentScale;
-        baseLeft = chartRect.left - currentTranslateX;
-        baseTop = chartRect.top - currentTranslateY;
-        targetTranslateX = anchorX - baseLeft - (localAnchorX * targetScale);
-        targetTranslateY = anchorY - baseTop - (localAnchorY * targetScale);
+      applyChartTransform(chartElement, chartTransform, targetScale, targetTranslateX, targetTranslateY);
+      if (zoomAnchor && chartRect && typeof zoomAnchor.x === 'number' && typeof zoomAnchor.y === 'number' && chartTransform.scale !== 0) {
+        const scaleRatio = targetScale / chartTransform.scale;
+        transformedRect = chartElement.getBoundingClientRect();
+        targetTranslateX += zoomAnchor.x + ((chartRect.left - zoomAnchor.x) * scaleRatio) - transformedRect.left;
+        targetTranslateY += zoomAnchor.y + ((chartRect.top - zoomAnchor.y) * scaleRatio) - transformedRect.top;
       }
 
-      chartElement.style.transformOrigin = '0 0';
-      chartElement.style.transform = 'matrix(' + targetScale + ', 0, 0, ' + targetScale + ', ' + targetTranslateX + ', ' + targetTranslateY + ')';
-      this.updateMinimap();
+      applyChartTransform(chartElement, chartTransform, targetScale, targetTranslateX, targetTranslateY);
+      this.scheduleMinimapUpdate();
     },
     //
+  };
+
+  const datasourceMethods = {
     buildJsonDS: function (liEl) {
       const orgChart = this;
       const liElement = getElement(liEl);
@@ -1411,12 +1994,7 @@
       }) || null;
 
       jsonNodeData = {
-        'name': ((liElement.childNodes && liElement.childNodes[0]) ? liElement.childNodes[0].textContent : '').trim(),
-        'relationship': (liElement.parentElement && liElement.parentElement.parentElement && liElement.parentElement.parentElement.tagName === 'LI' ? '1' : '0')
-          + (liElement.parentElement ? Array.from(liElement.parentElement.children).filter(function (siblingEl) {
-              return siblingEl !== liElement && siblingEl.tagName === 'LI';
-            }).length ? 1 : 0 : 0)
-          + (childListElement ? 1 : 0)
+        'name': ((liElement.childNodes && liElement.childNodes[0]) ? liElement.childNodes[0].textContent : '').trim()
       };
       forEachValue(getDatasetSnapshot(liElement), function(key, value) {
         jsonNodeData[key] = value;
@@ -1435,33 +2013,10 @@
 
       return jsonNodeData;
     },
-    // process datasource and add necessary information
-    attachRel: function (data, flags) {
-      const orgChart = this;
-      data.relationship = flags + (data.children && data.children.length > 0 ? 1 : 0);
-      if (this.options?.compact?.constructor === Function && this.options.compact(data)) {
-        data.compact = true;
-      }
-      if (data.children) {
-        data.children.forEach(function(item) {
-          if (data.hybrid || data.vertical) { // identify all the descendant nodes except the root node of hybrid structure
-            item.vertical = true;
-          } else if (data.compact && item.children) { // identify all the compact ancestor nodes
-            item.compact = true;
-          } else if (data.compact && !item.children) { // identify all the compact descendant nodes
-            item.associatedCompact = true;
-          }
-          orgChart.attachRel(item, '1' + (data.children.length > 1 ? 1 : 0));
-        });
-      }
-      return data;
-    },
-    //
     loopChart: function (chartEl, includeNodeData) {
       const orgChart = this;
       const chartElement = getElement(chartEl);
       let nodeElement;
-      let childNodesContainerElement;
       let hierarchyNodeData;
 
       includeNodeData = (includeNodeData !== null && includeNodeData !== undefined) ? includeNodeData : false;
@@ -1470,11 +2025,13 @@
         return {};
       }
 
-      nodeElement = chartElement.classList && chartElement.classList.contains('hierarchy')
-        ? Array.from(chartElement.children || []).find(function (childEl) {
+      nodeElement = chartElement.classList && chartElement.classList.contains('node')
+        ? chartElement
+        : chartElement.classList && chartElement.classList.contains('hierarchy')
+          ? Array.from(chartElement.children || []).find(function (childEl) {
             return childEl.classList && childEl.classList.contains('node');
           })
-        : chartElement.querySelector('.node');
+          : chartElement.querySelector('.node');
       if (!nodeElement) {
         return {};
       }
@@ -1485,18 +2042,10 @@
           hierarchyNodeData[key] = value;
         });
       }
-      childNodesContainerElement = Array.from(nodeElement.parentElement ? nodeElement.parentElement.children : []).find(function (childEl) {
-        return childEl !== nodeElement && childEl.classList && childEl.classList.contains('nodes');
-      }) || null;
-      if (childNodesContainerElement) {
-        Array.from(childNodesContainerElement.children).forEach(function (childEl) {
-          if (!childEl.classList || !childEl.classList.contains('hierarchy')) {
-            return;
-          }
-          if (!hierarchyNodeData.children) {
-            hierarchyNodeData.children = [];
-          }
-          hierarchyNodeData.children.push(orgChart.loopChart(childEl, includeNodeData));
+      const childNodeElements = this.getChildren(nodeElement);
+      if (childNodeElements.length) {
+        hierarchyNodeData.children = childNodeElements.map(function (childNodeElement) {
+          return orgChart.loopChart(childNodeElement, includeNodeData);
         });
       }
 
@@ -1520,95 +2069,94 @@
           }
         }
       }
+      const datasource = getState(chartElement, 'datasource');
+      if (Array.isArray(datasource)) {
+        const exportFamily = function (groups) {
+          return groups.map(function (group) {
+            return group.map(function (data) {
+              const node = this.nodeIndex.get(data);
+              const result = includeNodeData ? mergeObjects({}, getState(node, 'nodeData')) : {};
+              result.id = node.id;
+              if (data.children && data.children.length) {
+                result.children = Array.isArray(data.children[0]) ? exportFamily(data.children)
+                  : data.children.map(function (childData) {
+                    const childNode = this.nodeIndex.get(childData);
+                    return this.loopChart(childNode, includeNodeData);
+                  }, this);
+              }
+              return result;
+            }, this);
+          }, this);
+        }.bind(this);
+        return exportFamily(datasource);
+      }
       return this.loopChart(chartElement, includeNodeData);
+    },
+    getFlatDatasource: function () {
+      const hierarchy = this.getHierarchy(true);
+      if (typeof hierarchy === 'string') {
+        return hierarchy;
+      }
+      const records = [];
+      const nodeId = this.options.nodeId;
+      let familyIndex = 0;
+      const flatten = function (data, parentId, familyId) {
+        if (Array.isArray(data)) {
+          data.forEach(function (group) {
+            const groupId = 'family-' + (++familyIndex);
+            group.forEach(function (member) {
+              flatten(member, parentId, groupId);
+            });
+          });
+          return;
+        }
+        const record = Object.assign({}, data, { parent_id: parentId });
+        delete record.children;
+        delete record.level;
+        delete record.parentId;
+        if (familyId !== undefined) {
+          record.family_id = familyId;
+        }
+        records.push(record);
+        (data.children || []).forEach(function (child) {
+          flatten(Array.isArray(child) ? [child] : child, data[nodeId], undefined);
+        });
+      };
+      flatten(hierarchy, null, undefined);
+      return records;
     },
     // detect the exist/display state of related node
     getNodeState: function (nodeEl, relation) {
       const nodeElement = getElement(nodeEl);
-      let relatedElement;
-      let isVerticalNode;
-      let siblingElements;
 
       if (!nodeElement || !nodeElement.classList || !nodeElement.classList.contains('node')) {
         return { 'exist': false, 'visible': false };
       }
 
       relation = relation || 'self';
-      isVerticalNode = !!nodeElement.closest('vertical');
-
       if (relation === 'parent') {
-        if (isVerticalNode) {
-          relatedElement = nodeElement.closest('ul');
-          relatedElement = relatedElement ? relatedElement.parentElement && relatedElement.parentElement.closest('ul') : null;
-          if (!relatedElement) {
-            relatedElement = nodeElement.closest('.nodes');
-            if (!relatedElement) {
-              relatedElement = nodeElement.closest('.vertical');
-              relatedElement = relatedElement && relatedElement.parentElement ? relatedElement.parentElement.firstElementChild : null;
-            }
-          }
-        } else {
-          relatedElement = nodeElement.closest('.nodes');
-          relatedElement = relatedElement ? relatedElement.previousElementSibling : null;
-        }
-
-        if (relatedElement) {
-          if (relatedElement.classList.contains('hidden')
-            || (relatedElement.closest('.nodes') && relatedElement.closest('.nodes').classList.contains('hidden'))
-            || (relatedElement.closest('.vertical') && relatedElement.closest('.vertical').classList.contains('hidden'))) {
-            return { 'exist': true, 'visible': false };
-          }
-          return { 'exist': true, 'visible': true };
-        }
+        const parentElement = this.getParent(nodeElement);
+        return { exist: !!parentElement, visible: !!parentElement && this.getNodeState(parentElement).visible };
       } else if (relation === 'children') {
-        relatedElement = isVerticalNode
-          ? Array.from(nodeElement.parentElement ? nodeElement.parentElement.children : []).find(function (childEl) {
-              return childEl.tagName === 'UL';
-            }) || null
-          : Array.from(nodeElement.parentElement ? nodeElement.parentElement.children : []).find(function (childEl) {
-              return childEl !== nodeElement && childEl.classList && childEl.classList.contains('nodes');
-            }) || null;
-
-        if (relatedElement) {
-          if (!relatedElement.classList.contains('hidden')) {
-            return { 'exist': true, 'visible': true };
-          }
-          return { 'exist': true, 'visible': false };
-        }
+        const childElements = this.getChildren(nodeElement);
+        const childContainer = getChildNodesContainer(nodeElement);
+        return {
+          exist: childElements.length > 0 || !!childContainer,
+          visible: childElements.length > 0
+            ? childElements.some(function (childElement) { return this.getNodeState(childElement).visible; }, this)
+            : !!childContainer && !childContainer.closest('.hidden') && this.getNodeState(nodeElement).visible
+        };
       } else if (relation === 'siblings') {
-        if (isVerticalNode) {
-          relatedElement = nodeElement.closest('ul');
-          siblingElements = relatedElement ? Array.from(relatedElement.children || []).filter(function (childEl) {
-            return childEl.tagName === 'LI';
-          }) : [];
-        } else {
-          siblingElements = nodeElement.parentElement && nodeElement.parentElement.parentElement
-            ? Array.from(nodeElement.parentElement.parentElement.children).filter(function (childEl) {
-                return childEl !== nodeElement.parentElement;
-              })
-            : [];
-          relatedElement = siblingElements[0] || null;
-        }
-
-        if (relatedElement && (!isVerticalNode || siblingElements.length > 1)) {
-          if (!siblingElements.some(function (siblingEl) { return siblingEl.classList.contains('hidden'); })
-            && !siblingElements.some(function (siblingEl) { return siblingEl.parentElement && siblingEl.parentElement.classList.contains('hidden'); })
-            && (!isVerticalNode || !relatedElement.closest('.vertical') || !relatedElement.closest('.vertical').classList.contains('hidden'))) {
-            return { 'exist': true, 'visible': true };
-          }
-          return { 'exist': true, 'visible': false };
-        }
-      } else {
-        if (!((nodeElement.closest('.nodes') && nodeElement.closest('.nodes').classList.contains('hidden')) ||
-          (nodeElement.closest('.hierarchy') && nodeElement.closest('.hierarchy').classList.contains('hidden')) ||
-          (nodeElement.closest('.vertical') && ((nodeElement.closest('.nodes') && nodeElement.closest('.nodes').classList.contains('hidden')) || nodeElement.closest('.vertical').classList.contains('hidden')))
-        )) {
-          return { 'exist': true, 'visible': true };
-        }
-        return { 'exist': true, 'visible': false };
+        const siblingElements = this.getSiblings(nodeElement);
+        return {
+          exist: siblingElements.length > 0,
+          visible: siblingElements.length > 0
+            && siblingElements.every(function (siblingElement) { return this.getNodeState(siblingElement).visible; }, this)
+        };
       }
-
-      return { 'exist': false, 'visible': false };
+      const collapsedCompactAncestor = nodeElement.parentElement
+        ? nodeElement.parentElement.closest('.node.compact:not(.looseMode)') : null;
+      return { exist: true, visible: !nodeElement.closest('.hidden') && !collapsedCompactAncestor };
     },
     getParent: function (nodeEl) {
       return this.getRelatedNodes(nodeEl, 'parent');
@@ -1631,12 +2179,23 @@
       }
 
       if (relation === 'parent') {
+        if (nodeElement.parentElement && nodeElement.parentElement.classList.contains('node')) {
+          return nodeElement.parentElement;
+        }
         nodesContainerEl = nodeElement.closest('.nodes');
+        const parentData = nodesContainerEl ? getState(nodesContainerEl, 'parentData') : null;
+        if (parentData) {
+          return this.nodeIndex.get(parentData) || null;
+        }
         return nodesContainerEl ? nodesContainerEl.previousElementSibling : null;
       } else if (relation === 'children') {
-        childNodesContainerElement = Array.from(nodeElement.parentElement ? nodeElement.parentElement.children : []).find(function (childEl) {
-          return childEl !== nodeElement && childEl.classList && childEl.classList.contains('nodes');
+        const nestedNodeElements = Array.from(nodeElement.children).filter(function (childElement) {
+          return childElement.classList.contains('node');
         });
+        if (nestedNodeElements.length) {
+          return nestedNodeElements;
+        }
+        childNodesContainerElement = getChildNodesContainer(nodeElement);
 
         if (!childNodesContainerElement) {
           return [];
@@ -1644,24 +2203,34 @@
 
         return Array.from(childNodesContainerElement.children).filter(function (childEl) {
           return childEl.classList && childEl.classList.contains('hierarchy');
-        }).map(function (childHierarchyEl) {
-          return childHierarchyEl.querySelector('.node');
-        }).filter(Boolean);
+        }).flatMap(function (childHierarchyEl) {
+          return Array.from(childHierarchyEl.children).filter(function (element) { return element.classList.contains('node'); });
+        });
       } else if (relation === 'siblings') {
+        if (nodeElement.parentElement && nodeElement.parentElement.classList.contains('node')) {
+          return Array.from(nodeElement.parentElement.children).filter(function (siblingElement) {
+            return siblingElement !== nodeElement && siblingElement.classList.contains('node');
+          });
+        }
         hierarchyEl = nodeElement.closest('.hierarchy');
         if (!hierarchyEl || !hierarchyEl.parentElement) {
           return [];
         }
 
         return Array.from(hierarchyEl.parentElement.children).filter(function (siblingEl) {
-          return siblingEl !== hierarchyEl;
-        }).map(function (siblingHierarchyEl) {
-          return siblingHierarchyEl.querySelector('.node');
-        }).filter(Boolean);
+          return siblingEl.classList.contains('hierarchy');
+        }).flatMap(function (siblingHierarchyEl) {
+          return Array.from(siblingHierarchyEl.children).filter(function (element) {
+            return element !== nodeElement && element.classList.contains('node');
+          });
+        });
       }
 
       return [];
     },
+  };
+
+  const visibilityMethods = {
     hideParentEnd: function (event) {
       const nativeEvent = event.originalEvent || event;
       const animatedNodeElement = getElement(event.animatedNode || nativeEvent.animatedNode || nativeEvent.target);
@@ -1703,11 +2272,11 @@
       }
       if (this.getNodeState(parentEl).visible) {
         parentEl.classList.add('sliding', 'slide-down');
-        parentEl.addEventListener('transitionend', function (event) {
+        waitForTransition(parentEl, function (event) {
           event.animatedNode = parentEl;
             event.parent = parentEl;
           OrgChart.prototype.hideParentEnd(event);
-        }, { once: true });
+        });
       }
 
       if (this.getNodeState(parentEl, 'parent').visible) {
@@ -1753,11 +2322,11 @@
       if (parentEl && parentEl.classList) {
         parentEl.classList.add('sliding');
         parentEl.classList.remove('slide-down');
-        parentEl.addEventListener('transitionend', function (event) {
+        waitForTransition(parentEl, function (event) {
           event.animatedNode = parentEl;
           event.node = nodeElement;
           orgChart.showParentEnd(event);
-        }, { once: true });
+        });
       }
     },
     stopAjax: function (nodeLevelEl) {
@@ -1805,6 +2374,9 @@
           }) || null : null;
           this.switchVerticalArrow(bottomEdgeElement);
       }
+      if (nodeElement && nodeElement.parentElement && nodeElement.parentElement.classList.contains('couple')) {
+        this.refreshNodeControls(nodeElement);
+      }
     },
     // recursively hide the descendant nodes of the specified node
     hideChildren: function (nodeEl) {
@@ -1820,9 +2392,7 @@
       }
 
       hierarchyElement = nodeElement.closest('.hierarchy');
-      lowerLevelElement = Array.from(nodeElement.parentElement ? nodeElement.parentElement.children : []).find(function (childEl) {
-        return childEl !== nodeElement && childEl.classList && childEl.classList.contains('nodes');
-      }) || null;
+      lowerLevelElement = getChildNodesContainer(nodeElement);
 
       if (!lowerLevelElement) {
         return;
@@ -1858,11 +2428,11 @@
         animatedNodeEl.classList.add('sliding', 'slide-up');
       });
       if (animatedNodeElements[0]) {
-        animatedNodeElements[0].addEventListener('transitionend', function (event) {
+        waitForTransition(animatedNodeElements[0], function (event) {
           event.node = nodeElement;
           event.animatedNodes = animatedNodeElements;
           orgChart.hideChildrenEnd(event);
-        }, { once: true });
+        });
       }
     },
     //
@@ -1883,6 +2453,9 @@
         }) || null : null;
         this.switchVerticalArrow(bottomEdgeElement);
       }
+      if (nodeElement && nodeElement.parentElement && nodeElement.parentElement.classList.contains('couple')) {
+        this.refreshNodeControls(nodeElement);
+      }
     },
     // show the children nodes of the specified node
     showChildren: function (nodeEl) {
@@ -1898,9 +2471,7 @@
       }
 
       hierarchyElement = nodeElement.closest('.hierarchy');
-      levelsElement = Array.from(nodeElement.parentElement ? nodeElement.parentElement.children : []).find(function (childEl) {
-        return childEl !== nodeElement && childEl.classList && childEl.classList.contains('nodes');
-      }) || null;
+      levelsElement = getChildNodesContainer(nodeElement);
 
       if (!levelsElement) {
         return;
@@ -1915,11 +2486,7 @@
         ? Array.from(levelsElement.querySelectorAll('.node')).filter(function (visibleNodeEl, index) {
             return this.isVisibleNode(index, visibleNodeEl);
           }, this)
-        : Array.from(levelsElement.children).filter(function (childEl) {
-            return childEl.classList && childEl.classList.contains('hierarchy');
-          }).map(function (childHierarchyEl) {
-            return childHierarchyEl.querySelector('.node');
-          }).filter(function (visibleNodeEl, index) {
+        : this.getChildren(nodeElement).filter(function (visibleNodeEl, index) {
             return this.isVisibleNode(index, visibleNodeEl);
           }, this);
       if (!isVerticalDesc) {
@@ -1940,11 +2507,11 @@
         animatedNodeEl.classList.remove('slide-up');
       });
       if (animatedNodeElements[0]) {
-        animatedNodeElements[0].addEventListener('transitionend', function (event) {
+        waitForTransition(animatedNodeElements[0], function (event) {
           event.node = nodeElement;
           event.animatedNodes = animatedNodeElements;
           orgChart.showChildrenEnd(event);
-        }, { once: true });
+        });
       }
     },
     //
@@ -1993,8 +2560,8 @@
       });
       siblingElements.forEach(function (siblingElement) {
         Array.from(siblingElement.querySelectorAll('.node')).filter(function (siblingNodeEl) {
-          return orgChart.isVisibleNode(null, siblingNodeEl);
-        }).slice(1)
+          return siblingNodeEl.parentElement !== siblingElement && orgChart.isVisibleNode(null, siblingNodeEl);
+        })
           .forEach(function (siblingNodeEl) {
             siblingNodeEl.classList.remove('slide-left', 'slide-right');
             if (!orgChart.options.compact) {
@@ -2005,6 +2572,10 @@
           descendantEl.classList.add('hidden');
         });
         siblingElement.classList.add('hidden');
+      });
+
+      getElements(event.siblingNodes || nativeEvent.siblingNodes).forEach(function (siblingNodeEl) {
+        siblingNodeEl.classList.add('hidden');
       });
 
       if (this.isInAction(nodeElement)) {
@@ -2110,14 +2681,27 @@
         }, this);
       }
 
+      const siblingNodeElements = this.getSiblings(nodeElement).filter(function (siblingNodeEl) {
+        const isPrevious = !!(siblingNodeEl.compareDocumentPosition(nodeElement) & Node.DOCUMENT_POSITION_FOLLOWING);
+        return siblingNodeEl.parentElement === nodeContainerElement
+          && orgChart.getNodeState(siblingNodeEl).visible
+          && (!direction || (direction === 'left' ? isPrevious : !isPrevious));
+      });
+      siblingNodeElements.forEach(function (siblingNodeEl) {
+        const isPrevious = !!(siblingNodeEl.compareDocumentPosition(nodeElement) & Node.DOCUMENT_POSITION_FOLLOWING);
+        siblingNodeEl.classList.add('sliding', isPrevious ? 'slide-right' : 'slide-left');
+      });
+      animatedNodeElements = animatedNodeElements.concat(siblingNodeElements);
+
       if (animatedNodeElements[0]) {
-        animatedNodeElements[0].addEventListener('transitionend', function (event) {
+        waitForTransition(animatedNodeElements[0], function (event) {
           event.node = nodeElement;
           event.nodeContainer = nodeContainerElement;
           event.direction = direction;
           event.animatedNodes = animatedNodeElements;
+          event.siblingNodes = siblingNodeElements;
           orgChart.hideSiblingsEnd(event);
-        }, { once: true });
+        });
       }
     },
     //
@@ -2223,29 +2807,37 @@
           this.repaint(upperLevelElement);
           upperLevelElement.classList.add('sliding');
           upperLevelElement.classList.remove('slide-down');
-          upperLevelElement.addEventListener('transitionend', function (event) {
+          waitForTransition(upperLevelElement, function (event) {
             event.animatedNode = upperLevelElement;
             orgChart.showRelatedParentEnd(event);
-          }, { once: true });
+          });
         }
       }
       // lastly, show the sibling nodes with animation
+      const siblingNodeElements = this.getSiblings(nodeElement).filter(function (siblingNodeEl) {
+        const isPrevious = !!(siblingNodeEl.compareDocumentPosition(nodeElement) & Node.DOCUMENT_POSITION_FOLLOWING);
+        return siblingNodeEl.parentElement === nodeContainerElement
+          && (!direction || (direction === 'left' ? isPrevious : !isPrevious));
+      });
+      siblingNodeElements.forEach(function (siblingNodeEl) {
+        siblingNodeEl.classList.remove('hidden');
+      });
       visibleNodeElements = siblingElements.flatMap(function (siblingEl) {
         return Array.from(siblingEl.querySelectorAll('.node'));
       }, this).filter(function (visibleNodeEl, index) {
         return this.isVisibleNode(index, visibleNodeEl);
-      }, this);
+      }, this).concat(siblingNodeElements);
       this.repaint(visibleNodeElements[0]);
       visibleNodeElements.forEach(function (visibleNodeEl) {
         visibleNodeEl.classList.add('sliding');
         visibleNodeEl.classList.remove('slide-left', 'slide-right');
       });
       if (visibleNodeElements[0]) {
-        visibleNodeElements[0].addEventListener('transitionend', function (event) {
+        waitForTransition(visibleNodeElements[0], function (event) {
           event.node = nodeElement;
           event.visibleNodes = visibleNodeElements;
           orgChart.showSiblingsEnd(event);
-        }, { once: true });
+        });
       }
     },
     // start up loading status for requesting new nodes
@@ -2266,18 +2858,22 @@
       edgeElement.classList.add('hidden');
       nodeElement = edgeElement.parentElement;
       if (nodeElement) {
+        setState(nodeElement, 'loadingEdge', edgeElement);
         nodeElement.insertAdjacentHTML('beforeend', `<i class="${this.options.icons.theme} ${this.options.icons.spinner} spinner"></i>`);
         spinnerElement = Array.from(nodeElement.children || []).find(function (childEl) {
           return childEl.classList && childEl.classList.contains('spinner');
         }) || null;
         Array.from(nodeElement.children || []).forEach(function (childEl) {
           if (childEl !== spinnerElement) {
+            setState(childEl, 'loadingOriginalOpacity', childEl.style.opacity);
             childEl.style.opacity = 0.2;
           }
         });
       }
       setState(chartElement, 'inAjax', true);
-      Array.from(getDocument().querySelectorAll('.oc-export-btn')).forEach(function (exportButtonEl) {
+      Array.from(getDocument().querySelectorAll('.oc-export-btn')).filter(function (exportButtonEl) {
+        return !getState(exportButtonEl, 'orgChart') || getState(exportButtonEl, 'orgChart') === this;
+      }, this).forEach(function (exportButtonEl) {
         exportButtonEl.disabled = true;
       });
       return true;
@@ -2299,32 +2895,136 @@
           spinnerEl.remove();
         });
         Array.from(nodeElement.children || []).forEach(function (childEl) {
-          childEl.removeAttribute('style');
+          childEl.style.opacity = getState(childEl, 'loadingOriginalOpacity') || '';
+          if (!childEl.style.cssText) {
+            childEl.removeAttribute('style');
+          }
         });
+        setState(nodeElement, 'loadingEdge', null);
+        if (this.isInAction(nodeElement)) {
+          this.nodeEnterLeaveHandler({ type: 'mouseenter', node: nodeElement });
+        } else {
+          this.removeNodeControls(nodeElement);
+        }
       }
       setState(chartElement, 'inAjax', false);
-      Array.from(getDocument().querySelectorAll('.oc-export-btn')).forEach(function (exportButtonEl) {
+      Array.from(getDocument().querySelectorAll('.oc-export-btn')).filter(function (exportButtonEl) {
+        return !getState(exportButtonEl, 'orgChart') || getState(exportButtonEl, 'orgChart') === this;
+      }, this).forEach(function (exportButtonEl) {
         exportButtonEl.disabled = false;
       });
     },
     // whether the cursor is hovering over the node
     isInAction: function (nodeEl) {
       const nodeElement = getElement(nodeEl);
-      const edgeClassName = Array.from(nodeElement ? nodeElement.children : []).filter(function (childEl) {
-        return childEl.classList && childEl.classList.contains('edge');
-      }).map(function (edgeEl) {
-        return edgeEl.className;
-      }).join(' ');
-
-      // TODO: 展开/折叠的按钮不止4个箭头，还有toggleBtn
-      return [
-        this.options.icons.expandToUp,
-        this.options.icons.collapseToDown,
-        this.options.icons.collapseToLeft,
-        this.options.icons.expandToRight
-      ].some(function (icon) {
-        return edgeClassName.indexOf(icon) > -1;
+      return !!nodeElement && nodeElement.classList.contains('controls-active');
+    },
+    renderNodeControls: function (nodeEl) {
+      const nodeElement = getElement(nodeEl);
+      if (!nodeElement || !this.isInAction(nodeElement) || getState(nodeElement, 'loadingEdge')
+        || getState(nodeElement, 'updatingControls')) {
+        return;
+      }
+      const data = getState(nodeElement, 'sourceData') || {};
+      const opts = this.options;
+      const icons = opts.icons;
+      const hasChildren = this.getNodeState(nodeElement, 'children').exist;
+      const isVertical = data.vertical || (opts.verticalLevel && data.level >= opts.verticalLevel)
+        || !!nodeElement.closest('.nodes.vertical');
+      const controls = [];
+      if (isVertical) {
+        if (hasChildren) {
+          controls.push(`<i class="toggleBtn ${icons.theme}"></i>`);
+        }
+      } else if (data.hybrid) {
+        if (hasChildren) {
+          controls.push(`<i class="edge verticalEdge bottomEdge ${icons.theme}"></i>`);
+        }
+      } else if (usesCompactLayout(data, opts, data.level)) {
+        if (hasChildren) {
+          const isLoose = nodeElement.classList.contains('looseMode');
+          controls.push(`<i class="${icons.theme} ${icons.backToCompact} backToCompactSymbol${isLoose ? '' : ' hidden'}"></i>`);
+          controls.push(`<i class="${icons.theme} ${icons.backToLoose} backToLooseSymbol${isLoose ? ' hidden' : ''}"></i>`);
+        }
+      } else if (!data.associatedCompact) {
+        if (this.getNodeState(nodeElement, 'parent').exist) {
+          controls.push(`<i class="edge verticalEdge topEdge ${icons.theme}"></i>`);
+        }
+        if (this.getNodeState(nodeElement, 'siblings').exist) {
+          controls.push(`<i class="edge horizontalEdge rightEdge ${icons.theme}"></i>`);
+          controls.push(`<i class="edge horizontalEdge leftEdge ${icons.theme}"></i>`);
+        }
+        if (this.getNodeState(getChildControlNode(nodeElement), 'children').exist) {
+          controls.push(`<i class="edge verticalEdge bottomEdge ${icons.theme}"></i>`);
+        }
+      }
+      const controlClasses = ['topEdge', 'bottomEdge', 'leftEdge', 'rightEdge', 'toggleBtn', 'backToCompactSymbol', 'backToLooseSymbol'];
+      const newControls = createNodesFromHtml(controls.join(''));
+      const desiredClasses = newControls.map(function (control) {
+        return controlClasses.find(function (className) { return control.classList.contains(className); });
       });
+      setState(nodeElement, 'updatingControls', true);
+      try {
+        Array.from(nodeElement.children).filter(function (child) {
+          return controlClasses.some(function (className) { return child.classList.contains(className); })
+            && !desiredClasses.some(function (className) { return child.classList.contains(className); });
+        }).forEach(function (control) { control.remove(); });
+        newControls.forEach(function (control, index) {
+          const existingControl = nodeElement.querySelector(':scope > .' + desiredClasses[index]);
+          const label = desiredClasses[index] === 'topEdge' ? 'Toggle parent nodes'
+            : desiredClasses[index] === 'leftEdge' || desiredClasses[index] === 'rightEdge' ? 'Toggle sibling nodes'
+            : desiredClasses[index] === 'backToCompactSymbol' ? 'Use compact layout'
+            : desiredClasses[index] === 'backToLooseSymbol' ? 'Expand compact layout' : 'Toggle child nodes';
+          if (existingControl) {
+            existingControl.className = control.className;
+          } else {
+            control.tabIndex = 0;
+            control.setAttribute('role', 'button');
+            control.setAttribute('aria-label', label);
+            control.title = label;
+            nodeElement.appendChild(control);
+          }
+        });
+      } finally {
+        setState(nodeElement, 'updatingControls', false);
+      }
+    },
+    removeNodeControls: function (nodeEl) {
+      const nodeElement = getElement(nodeEl);
+      if (!nodeElement || getState(nodeElement, 'updatingControls')) {
+        return;
+      }
+      setState(nodeElement, 'updatingControls', true);
+      try {
+        Array.from(nodeElement.children).filter(function (child) {
+          return child.matches('.edge, .toggleBtn, .backToCompactSymbol, .backToLooseSymbol')
+            && child !== getState(nodeElement, 'loadingEdge');
+        }).forEach(function (control) { control.remove(); });
+      } finally {
+        setState(nodeElement, 'updatingControls', false);
+      }
+    },
+    refreshNodeControls: function (nodeEl) {
+      const nodeElement = getElement(nodeEl);
+      const familyElement = nodeElement ? nodeElement.parentElement : null;
+      const relatedNodes = familyElement && familyElement.classList.contains('couple')
+        ? Array.from(familyElement.children).filter(function (element) { return element.classList.contains('node'); })
+        : nodeElement ? [nodeElement] : [];
+      relatedNodes.forEach(function (relatedNode) {
+        const titleElement = relatedNode.querySelector(':scope > .title');
+        const symbol = titleElement ? titleElement.querySelector('.parentNodeSymbol') : null;
+        const hasChildren = this.getNodeState(getChildControlNode(relatedNode), 'children').exist;
+        if (titleElement && hasChildren && !symbol) {
+          titleElement.insertAdjacentHTML('afterbegin', `<i class="${this.options.icons.theme} ${this.options.icons.parentNode} parentNodeSymbol"></i>`);
+        } else if (!hasChildren && symbol) {
+          symbol.remove();
+        }
+      }, this);
+      if (this.chart) {
+        Array.from(this.chart.querySelectorAll('.node.controls-active')).forEach(function (activeNode) {
+          this.nodeEnterLeaveHandler({ type: 'mouseenter', node: activeNode });
+        }, this);
+      }
     },
     //
     switchVerticalArrow: function (arrowEl) {
@@ -2347,8 +3047,6 @@
       let rightEdgeElement;
       let previousSiblingElement;
       let nextSiblingElement;
-      let siblingElements;
-      let sibsVisible;
 
       if (!nodeElement) {
         return;
@@ -2375,12 +3073,7 @@
           rightEdgeElement.classList.toggle(opts.icons.collapseToLeft, !nextSiblingElement.classList.contains('hidden'));
         }
       } else {
-        siblingElements = hierarchyElement && hierarchyElement.parentElement
-          ? Array.from(hierarchyElement.parentElement.children).filter(function (childEl) {
-              return childEl !== hierarchyElement;
-            })
-          : [];
-        sibsVisible = siblingElements.length ? !siblingElements[0].classList.contains('hidden') : false;
+        const sibsVisible = this.getNodeState(nodeElement, 'siblings').visible;
         if (leftEdgeElement) {
           leftEdgeElement.classList.toggle(opts.icons.expandToRight, sibsVisible);
           leftEdgeElement.classList.toggle(opts.icons.collapseToLeft, !sibsVisible);
@@ -2394,69 +3087,92 @@
     //
     repaint: function (node) {
       if (node) {
-        node.style.offsetWidth = node.offsetWidth;
+        return node.offsetWidth;
       }
+    },
+    bindNodeEvents: function (chartElement) {
+      const controlSelector = '.edge, .toggleBtn, .backToCompactSymbol, .backToLooseSymbol';
+      const route = function (event) {
+        const target = event.target;
+        const node = target && target.closest ? target.closest('.node') : null;
+        if (!node || node.closest('.orgchart') !== chartElement) {
+          return;
+        }
+        const control = target.closest(controlSelector);
+        const routed = { node: node, compactNode: node, edge: control, toggleButton: control, originalEvent: event };
+        if (event.type === 'transitionend' || event.type === 'transitioncancel') {
+          if (target === node && ['transform', 'opacity'].includes(event.propertyName)) {
+            this.scheduleMinimapUpdate(true);
+          }
+        } else if (['mouseenter', 'mouseleave', 'focusin', 'focusout'].includes(event.type)) {
+          if (event.type.startsWith('mouse') && event.relatedTarget && event.relatedTarget.nodeType
+            && node.contains(event.relatedTarget)) {
+            return;
+          }
+          this.nodeEnterLeaveHandler(routed);
+        } else if (event.type === 'keydown') {
+          if (control && control.parentElement === node && (event.key === 'Enter' || event.key === ' ')) {
+            event.preventDefault();
+            control.click();
+          }
+        } else {
+          this.nodeClickHandler(routed);
+          if (!control || control.parentElement !== node) {
+            return;
+          }
+          const handler = control.classList.contains('topEdge') ? this.topEdgeClickHandler
+            : control.classList.contains('bottomEdge') ? this.bottomEdgeClickHandler
+            : control.classList.contains('horizontalEdge') ? this.hEdgeClickHandler
+            : control.classList.contains('toggleBtn') ? this.toggleVNodes
+            : control.classList.contains('backToCompactSymbol') ? this.backToCompactHandler : this.backToLooseHandler;
+          handler.call(this, routed);
+        }
+      }.bind(this);
+      ['mouseenter', 'mouseleave', 'focusin', 'focusout', 'click', 'keydown', 'transitionend', 'transitioncancel'].forEach(function (type) {
+        chartElement.addEventListener(type, route, true);
+      });
     },
     // determines how to show arrow buttons 
     nodeEnterLeaveHandler: function (event) {
       const nativeEvent = event.originalEvent || event;
       const eventType = nativeEvent.type;
       const nodeElement = event.node || nativeEvent.currentTarget;
-      const childElements = Array.from(nodeElement ? nodeElement.children : []);
-      const isVerticalNode = !!(nodeElement && nodeElement.closest('.nodes.vertical'));
-      const toggleBtnElement = childElements.find(function (childEl) {
-        return childEl.classList && childEl.classList.contains('toggleBtn');
-      }) || null;
-      const topEdgeElement = childElements.find(function (childEl) {
-        return childEl.classList && childEl.classList.contains('topEdge');
-      }) || null;
-      const rightEdgeElement = childElements.find(function (childEl) {
-        return childEl.classList && childEl.classList.contains('rightEdge');
-      }) || null;
-      const bottomEdgeElement = childElements.find(function (childEl) {
-        return childEl.classList && childEl.classList.contains('bottomEdge');
-      }) || null;
-      const leftEdgeElement = childElements.find(function (childEl) {
-        return childEl.classList && childEl.classList.contains('leftEdge');
-      }) || null;
-      let isExpanded = false;
-      if (isVerticalNode) {
-        if (eventType === 'mouseenter') {
-          if (toggleBtnElement) {
-            isExpanded = this.getNodeState(nodeElement, 'children').visible;
-            toggleBtnElement.classList.toggle(this.options.icons.collapsed, !isExpanded);
-            toggleBtnElement.classList.toggle(this.options.icons.expanded, isExpanded);
-          }
-        } else if (toggleBtnElement) {
-          toggleBtnElement.classList.remove(this.options.icons.collapsed, this.options.icons.expanded);
+      if (!nodeElement || getState(nodeElement, 'updatingControls')) {
+        return;
+      }
+      if (eventType === 'mouseleave' || eventType === 'focusout') {
+        const activeElement = getDocument().activeElement;
+        if ((eventType === 'mouseleave' && activeElement && activeElement.closest('.node') === nodeElement)
+          || (eventType === 'focusout' && ((nativeEvent.relatedTarget && nodeElement.contains(nativeEvent.relatedTarget))
+            || nodeElement.matches(':hover')))) {
+          return;
         }
-      } else {
-        if (eventType === 'mouseenter') {
-          if (topEdgeElement) {
-            isExpanded = this.getNodeState(nodeElement, 'parent').visible;
-            topEdgeElement.classList.toggle(this.options.icons.expandToUp, !isExpanded);
-            topEdgeElement.classList.toggle(this.options.icons.collapseToDown, isExpanded);
-          }
-          if (bottomEdgeElement) {
-            isExpanded = this.getNodeState(nodeElement, 'children').visible;
-            bottomEdgeElement.classList.toggle(this.options.icons.collapseToDown, !isExpanded);
-            bottomEdgeElement.classList.toggle(this.options.icons.expandToUp, isExpanded);
-          }
-          if (leftEdgeElement || rightEdgeElement) {
-            this.switchHorizontalArrow(nodeElement);
-          }
-        } else {
-          childElements.forEach(function (childEl) {
-            if (childEl.classList && childEl.classList.contains('edge')) {
-              childEl.classList.remove(
-                this.options.icons.expandToUp,
-                this.options.icons.collapseToDown,
-                this.options.icons.collapseToLeft,
-                this.options.icons.expandToRight
-              );
-            }
-          }, this);
-        }
+        nodeElement.classList.remove('controls-active');
+        this.removeNodeControls(nodeElement);
+        return;
+      }
+      nodeElement.classList.add('controls-active');
+      this.renderNodeControls(nodeElement);
+      const toggle = nodeElement.querySelector(':scope > .toggleBtn');
+      const topEdge = nodeElement.querySelector(':scope > .topEdge');
+      const bottomEdge = nodeElement.querySelector(':scope > .bottomEdge');
+      if (toggle) {
+        const expanded = this.getNodeState(nodeElement, 'children').visible;
+        toggle.classList.toggle(this.options.icons.collapsed, !expanded);
+        toggle.classList.toggle(this.options.icons.expanded, expanded);
+      }
+      if (topEdge) {
+        const expanded = this.getNodeState(nodeElement, 'parent').visible;
+        topEdge.classList.toggle(this.options.icons.expandToUp, !expanded);
+        topEdge.classList.toggle(this.options.icons.collapseToDown, expanded);
+      }
+      if (bottomEdge) {
+        const expanded = this.getNodeState(getChildControlNode(nodeElement), 'children').visible;
+        bottomEdge.classList.toggle(this.options.icons.collapseToDown, !expanded);
+        bottomEdge.classList.toggle(this.options.icons.expandToUp, expanded);
+      }
+      if (nodeElement.querySelector(':scope > .horizontalEdge')) {
+        this.switchHorizontalArrow(nodeElement);
       }
     },
     //
@@ -2468,13 +3184,21 @@
       if (!chartElement || !nodeElement || !nodeElement.classList) {
         return;
       }
+      if (nativeEvent.target && nativeEvent.target.closest && nativeEvent.target.closest('.node') !== nodeElement) {
+        return;
+      }
 
       Array.from(chartElement.querySelectorAll('.focused')).forEach(function (focusedEl) {
         focusedEl.classList.remove('focused');
       });
       nodeElement.classList.add('focused');
+      if (!this.isInAction(nodeElement)) {
+        nodeElement.focus({ preventScroll: true });
+        this.nodeEnterLeaveHandler({ type: 'mouseenter', node: nodeElement });
+      }
     },
     addAncestors: function (data, parentId) {
+      data = cloneDatasource(data);
       const rootHierarchyElement = this.chart ? this.chart.querySelector(':scope > .nodes > .hierarchy') : null;
       let originalRootChildren;
       let ancestorWrapperElement;
@@ -2502,6 +3226,7 @@
       if (targetSiblingsContainerElement && targetSiblingsContainerElement !== ancestorWrapperElement.parentElement) {
         targetSiblingsContainerElement.appendChild(ancestorWrapperElement);
       }
+      this.refreshNodeControls(targetParentNodeElement);
     },
     addDescendants:function (data, parentEl) {
       const orgChart = this;
@@ -2511,7 +3236,12 @@
       if (!parentElement || !parentElement.parentElement) {
         return;
       }
+      if (getState(parentElement, 'sourceData')) {
+        this.addChildren(parentElement, data);
+        return;
+      }
 
+      data = cloneDatasource(data);
       descendantsElement = getDocument().createElement('ul');
       descendantsElement.className = 'nodes';
       parentElement.after(descendantsElement);
@@ -2526,8 +3256,9 @@
     //
     HideFirstParentEnd: function (event) {
       const nativeEvent = event.originalEvent || event;
-      const topEdgeElement = getElement(event.topEdge || nativeEvent.topEdge);
-      const nodeElement = topEdgeElement ? topEdgeElement.parentElement : null;
+      const previousEdge = getElement(event.topEdge || nativeEvent.topEdge);
+      const nodeElement = getElement(event.node || nativeEvent.node) || (previousEdge ? previousEdge.parentElement : null);
+      const topEdgeElement = nodeElement ? nodeElement.querySelector(':scope > .topEdge') : null;
 
       if (this.isInAction(nodeElement)) {
         this.switchVerticalArrow(topEdgeElement);
@@ -2552,10 +3283,10 @@
         if (parentState.visible && !parentHiding) {
           this.hideParent(nodeElement);
           if (parentEl) {
-            parentEl.addEventListener('transitionend', function (transitionEvent) {
-              transitionEvent.topEdge = topEdgeElement;
+            waitForTransition(parentEl, function (transitionEvent) {
+              transitionEvent.node = nodeElement;
               orgChart.HideFirstParentEnd(transitionEvent);
-            }, { once: true });
+            });
           }
           this.triggerHideEvent(nodeElement, 'parent');
         } else { // show the ancestors and siblings
@@ -2568,27 +3299,20 @@
     bottomEdgeClickHandler: function (event) {
       const nativeEvent = event.originalEvent || event;
       const nodeElement = event.node || nativeEvent.currentTarget;
-      const childrenState = this.getNodeState(nodeElement, 'children');
+      const childControlNode = getChildControlNode(nodeElement);
+      const childrenState = this.getNodeState(childControlNode, 'children');
       let childNodesContainerElement;
       let childNodeElements;
       if (childrenState.exist) {
-        childNodesContainerElement = Array.from(nodeElement.parentElement ? nodeElement.parentElement.children : []).find(function (childEl) {
-          return childEl !== nodeElement && childEl.classList && childEl.classList.contains('nodes');
-        }) || null;
-        childNodeElements = childNodesContainerElement
-          ? Array.from(childNodesContainerElement.children).filter(function (childEl) {
-              return childEl.classList && childEl.classList.contains('hierarchy');
-            }).map(function (childHierarchyEl) {
-              return childHierarchyEl.querySelector('.node');
-            }).filter(Boolean)
-          : [];
+        childNodesContainerElement = getChildNodesContainer(childControlNode);
+        childNodeElements = childNodesContainerElement ? this.getChildren(childControlNode) : [];
         if (childNodeElements.some(function (childNodeEl) { return childNodeEl.classList.contains('sliding'); })) { return; }
         // hide the descendant nodes of the specified node
         if (childrenState.visible) {
-          this.hideChildren(nodeElement);
+          this.hideChildren(childControlNode);
           this.triggerHideEvent(nodeElement, 'children');
         } else { // show the descendants
-          this.showChildren(nodeElement);
+          this.showChildren(childControlNode);
           this.triggerShowEvent(nodeElement, 'children');
         }
       }
@@ -2611,7 +3335,9 @@
               return childEl !== hierarchyElement;
             })
           : [];
-        if (siblingElements.some(function (siblingEl) {
+        if (this.getSiblings(nodeElement).some(function (siblingEl) {
+          return siblingEl.classList.contains('sliding');
+        }) || siblingElements.some(function (siblingEl) {
           return siblingEl.querySelector('.sliding');
         })) { return; }
         if (opts.toggleSiblingsResp) {
@@ -2658,7 +3384,13 @@
       }
 
       compactNodeEl.classList.remove('looseMode');
-      nestedLooseModeElements = Array.from(compactNodeEl.querySelectorAll('.looseMode'));
+      const familyContainer = getChildNodesContainer(compactNodeEl);
+      if (familyContainer && familyContainer.classList.contains('compact-family')) {
+        familyContainer.classList.add('hidden');
+      }
+      nestedLooseModeElements = Array.from(compactNodeEl.querySelectorAll('.looseMode')).concat(
+        familyContainer ? Array.from(familyContainer.querySelectorAll('.looseMode')) : []
+      );
       nestedLooseModeElements.forEach(function (nestedLooseModeEl) {
         const nestedBackToCompactSymbolElement = Array.from(nestedLooseModeEl.children || []).find(function (childEl) {
           return childEl.classList && childEl.classList.contains('backToCompactSymbol');
@@ -2668,6 +3400,10 @@
         }) || null;
 
         nestedLooseModeEl.classList.remove('looseMode');
+        const nestedContainer = getChildNodesContainer(nestedLooseModeEl);
+        if (nestedContainer && nestedContainer.classList.contains('compact-family')) {
+          nestedContainer.classList.add('hidden');
+        }
         if (nestedBackToCompactSymbolElement) {
           nestedBackToCompactSymbolElement.classList.add('hidden');
         }
@@ -2701,6 +3437,13 @@
       }
 
       compactNodeEl.classList.add('looseMode');
+      const familyContainer = getChildNodesContainer(compactNodeEl);
+      if (familyContainer && familyContainer.classList.contains('compact-family')) {
+        familyContainer.classList.remove('hidden');
+      }
+      this.getChildren(compactNodeEl).forEach(function (childElement) {
+        childElement.classList.remove('slide-up');
+      });
       backToLooseSymbolElement = Array.from(compactNodeEl.children || []).find(function (childEl) {
         return childEl.classList && childEl.classList.contains('backToLooseSymbol');
       }) || null;
@@ -2771,20 +3514,20 @@
           childNodeEl.classList.remove('slide-up');
         });
         if (childNodeElements[0]) {
-          childNodeElements[0].addEventListener('transitionend', function (transitionEvent) {
+          waitForTransition(childNodeElements[0], function (transitionEvent) {
             transitionEvent.vNodes = childNodeElements;
             orgChart.expandVNodesEnd(transitionEvent);
-          }, { once: true });
+          });
         }
       } else {
         descendantNodeElements.forEach(function (descendantNodeEl) {
           descendantNodeEl.classList.add('sliding', 'slide-up');
         });
         if (descendantNodeElements[0]) {
-          descendantNodeElements[0].addEventListener('transitionend', function (transitionEvent) {
+          waitForTransition(descendantNodeElements[0], function (transitionEvent) {
             transitionEvent.vNodes = descendantNodeElements;
             orgChart.collapseVNodesEnd(transitionEvent);
-          }, { once: true });
+          });
         }
         descendantNodeElements.forEach(function (descendantNodeEl) {
           Array.from(descendantNodeEl.querySelectorAll('.toggleBtn')).forEach(function (nestedToggleBtnEl) {
@@ -2794,6 +3537,9 @@
       }
     },
     //
+  };
+
+  const dragDropMethods = {
     createGhostNode: function (event) {
       const nativeEvent = event.originalEvent || event;
       const sourceNodeEl = event.sourceNode || nativeEvent.target;
@@ -2804,8 +3550,6 @@
       const origEvent = nativeEvent;
       const isFirefox = /firefox/.test(getWindow().navigator.userAgent.toLowerCase());
       let sourceRect;
-      let transformValue;
-      let transformValues;
       let isVerticalChartDirection;
       let scaleFactor;
       let ghostNodeEl, nodeCoverEl;
@@ -2831,10 +3575,8 @@
       }
 
       sourceRect = sourceNodeEl.getBoundingClientRect();
-      transformValue = chartElement.style.transform || getWindow().getComputedStyle(chartElement).transform || 'none';
-      transformValues = transformValue.split(',');
       isVerticalChartDirection = opts.direction === 't2b' || opts.direction === 'b2t';
-      scaleFactor = Math.abs(getWindow().parseFloat(isVerticalChartDirection ? transformValues[0].slice(transformValues[0].indexOf('(') + 1) : transformValues[1]));
+      scaleFactor = getChartTransform(chartElement).scale;
       ghostNodeEl.setAttribute('width', isVerticalChartDirection ? sourceRect.width : sourceRect.height);
       ghostNodeEl.setAttribute('height', isVerticalChartDirection ? sourceRect.height : sourceRect.width);
       nodeCoverEl.setAttribute('x',5 * scaleFactor);
@@ -2878,12 +3620,10 @@
         return 0;
       }
 
-      currentElement = nodeElement.parentElement;
+      currentElement = nodeElement;
       while (currentElement) {
-        if (currentElement.classList && currentElement.classList.contains('hierarchy')) {
-          levelCount += 1;
-        }
-        currentElement = currentElement.parentElement;
+        levelCount += 1;
+        currentElement = this.getParent(currentElement);
       }
 
       return levelCount;
@@ -2913,7 +3653,7 @@
     // get nodes in level order traversal
     getLevelOrderNodes: function (rootEl) {
       const rootElement = getElement(rootEl);
-      const pendingNodeElements = [];
+      let pendingNodeElements = [];
       const nodesByLevel = [];
       if (!rootElement) {
         return [];
@@ -2921,16 +3661,11 @@
 
       pendingNodeElements.push(rootElement);
       while(pendingNodeElements.length) {
-        const levelNodeElements = [];
-        const levelNodeCount = pendingNodeElements.length;
-        for(let i = 0; i < levelNodeCount; i++) {
-            const currentNodeElement = pendingNodeElements.shift();
-            const childNodeElements = this.getChildren(currentNodeElement);
-            if(childNodeElements.length) {
-              Array.prototype.push.apply(pendingNodeElements, childNodeElements);
-            }
-            levelNodeElements.push(currentNodeElement);
-        }
+        const levelNodeElements = pendingNodeElements;
+        pendingNodeElements = [];
+        levelNodeElements.forEach(function (node) {
+          Array.prototype.push.apply(pendingNodeElements, this.getChildren(node));
+        }, this);
         nodesByLevel.push(levelNodeElements);
       }
       return nodesByLevel;
@@ -2955,15 +3690,18 @@
         ? draggedNodeEl.closest('[draggable]')
         : null;
       draggingNode = !!(draggableHostEl && draggableHostEl.classList && draggableHostEl.classList.contains('node'));
-      draggedParentNodeEl = draggedNodeEl && draggedNodeEl.closest('.nodes')
-        ? draggedNodeEl.closest('.nodes').previousElementSibling
-        : null;
-      draggedSubtreeNodeEls = draggedNodeEl && draggedNodeEl.closest('.hierarchy')
-        ? Array.from(draggedNodeEl.closest('.hierarchy').querySelectorAll('.node'))
-        : [];
+      draggedParentNodeEl = this.getParent(draggedNodeEl);
+      draggedSubtreeNodeEls = [];
+      const pendingNodes = draggingNode ? [draggedNodeEl.closest('.node')] : [];
+      while (pendingNodes.length) {
+        const currentNode = pendingNodes.pop();
+        draggedSubtreeNodeEls.push(currentNode);
+        Array.prototype.push.apply(pendingNodes, this.getChildren(currentNode));
+      }
       excludedNodeEls = new Set(draggedSubtreeNodeEls);
       setState(chartElement, 'dragged', draggedNodeEl);
       Array.from(chartElement.querySelectorAll('.node')).forEach(function (node) {
+        node.classList.remove('allowedDrop');
         if (!draggingNode || !excludedNodeEls.has(node)) {
           if (opts.dropCriteria) {
             if (opts.dropCriteria(draggedNodeEl, draggedParentNodeEl, node)) {
@@ -3024,7 +3762,6 @@
     // when user drops the node, it will be removed from original parent node and be added to new parent node
     dropHandler: async function (event) {
       const nativeEvent = event.originalEvent || event;
-      const orgChart = this;
       const chartElement = this.chart;
       const dropZoneEl = event.dropZone || nativeEvent.currentTarget;
       const draggedEl = chartElement ? getElement(getState(chartElement, 'dragged')) : null;
@@ -3052,7 +3789,7 @@
           return;
       }
 
-      draggedParentNodeEl = draggedEl.closest('.nodes') ? draggedEl.closest('.nodes').previousElementSibling : null;
+      draggedParentNodeEl = this.getParent(draggedEl);
       const dropEvent = createEventLike('nodedrop.orgchart');
       if (chartElement) {
         const triggeredDropEvent = createTriggeredEvent(dropEvent, {
@@ -3068,83 +3805,84 @@
       if (dropEvent.isDefaultPrevented()) {
         return;
       }
-      // special process for hybrid chart
-      const datasource = chartOptions.data;
-      const dataDigger = new JSONDigger(datasource, chartOptions.nodeId, 'children');
-      const hybridNodeData = dataDigger.findOneNode({ 'hybrid': true });
-      if (chartOptions.verticalLevel > 1 || hybridNodeData) {
-        const draggedNodeData = dataDigger.findNodeById(getState(draggedEl, 'nodeData').id);
-        const draggedNodeCopy = Object.assign({}, draggedNodeData);
-        dataDigger.removeNode(draggedNodeData.id);
-        const dropNodeData = dataDigger.findNodeById(getState(dropZoneEl, 'nodeData').id);
-        if (dropNodeData.children) {
-          dropNodeData.children.push(draggedNodeCopy);
-        } else {
-          dropNodeData.children = [draggedNodeCopy];
+      const sourceData = getState(draggedEl, 'sourceData');
+      const parentData = draggedParentNodeEl ? getState(draggedParentNodeEl, 'sourceData') : null;
+      const targetData = getState(dropZoneEl, 'sourceData');
+      const datasource = getState(chartElement, 'datasource') || chartOptions.data;
+      const sourceLocation = sourceData ? findDataLocation(datasource, sourceData) : null;
+      if (sourceData && targetData && findDataLocation(sourceData, targetData)) {
+        return;
+      }
+      const needsRebuild = Array.isArray(datasource) || this.options.compact || chartOptions.verticalLevel
+        || chartElement.querySelector('.node.compact, .nodes.vertical') || hasHybridNodes(datasource);
+      if (needsRebuild && sourceLocation && sourceLocation.list && targetData) {
+        const affectedData = getCommonAncestorData(this, draggedParentNodeEl, dropZoneEl);
+        sourceLocation.list.splice(sourceLocation.index, 1);
+        if (!sourceLocation.list.length && sourceLocation.outerList) {
+          sourceLocation.outerList.splice(sourceLocation.outerIndex, 1);
         }
-		orgChart.attachRel(datasource, '00');
-        orgChart.init({ 'data': datasource });
+        if (sourceLocation.parent && sourceLocation.parent.children && !sourceLocation.parent.children.length) {
+          delete sourceLocation.parent.children;
+        }
+        const isGrouped = Array.isArray(datasource) || (targetData.children && Array.isArray(targetData.children[0]));
+        if (!targetData.children) {
+          targetData.children = [];
+        }
+        targetData.children.push(isGrouped ? [sourceData] : sourceData);
+        rebuildFromData(this, targetData, null, affectedData || datasource);
+        return;
+      }
+      if (sourceData && parentData && targetData && parentData.children
+        && parentData.children.indexOf(sourceData) !== -1) {
+        parentData.children.splice(parentData.children.indexOf(sourceData), 1);
+        if (!parentData.children.length) {
+          delete parentData.children;
+        }
+        if (!targetData.children) {
+          targetData.children = [];
+        }
+        targetData.children.push(sourceData);
+        sourceData.parentId = targetData[chartOptions.nodeId];
+        getState(draggedEl, 'nodeData').parentId = sourceData.parentId;
+        draggedEl.setAttribute('data-parent', sourceData.parentId);
+      }
+      // The folowing code snippets are used to process horizontal chart
+      draggedHierarchyEl = draggedEl.closest('.hierarchy');
+      dropChildrenContainerEl = Array.from(dropZoneEl.parentElement ? dropZoneEl.parentElement.children : []).find(function (childEl) {
+        return childEl !== dropZoneEl && childEl.classList && childEl.classList.contains('nodes');
+      }) || null;
+      // firstly, deal with the hierarchy of drop zone
+      if (!dropChildrenContainerEl) { // if the drop zone is a leaf node
+        dropZoneEl.insertAdjacentHTML('afterend', '<ul class="nodes"></ul>');
+        dropChildrenContainerEl = dropZoneEl.nextElementSibling;
+        dropChildrenContainerEl.appendChild(draggedHierarchyEl);
       } else {
-        // The folowing code snippets are used to process horizontal chart
-        draggedHierarchyEl = draggedEl.closest('.hierarchy');
-        dropChildrenContainerEl = Array.from(dropZoneEl.parentElement ? dropZoneEl.parentElement.children : []).find(function (childEl) {
-          return childEl !== dropZoneEl && childEl.classList && childEl.classList.contains('nodes');
-        }) || null;
-        // firstly, deal with the hierarchy of drop zone
-        if (!dropChildrenContainerEl) { // if the drop zone is a leaf node
-          dropZoneEl.insertAdjacentHTML('beforeend', `<i class="edge verticalEdge bottomEdge ${this.options.icons.theme}"></i>`);
-          dropZoneEl.insertAdjacentHTML('afterend', '<ul class="nodes"></ul>');
-          dropChildrenContainerEl = dropZoneEl.nextElementSibling;
-          Array.from(draggedEl.querySelectorAll('.horizontalEdge')).forEach(function (edgeEl) {
-            edgeEl.remove();
-          });
-          dropChildrenContainerEl.appendChild(draggedHierarchyEl);
-          const titleEl = Array.from(dropZoneEl.children || []).find(function (childEl) {
-            return childEl.classList && childEl.classList.contains('title');
-          }) || null;
-          if (titleEl) {
-            titleEl.insertAdjacentHTML('afterbegin', `<i class="${this.options.icons.theme} ${chartOptions.icons.parentNode} parentNodeSymbol"></i>`);
-          }
-        } else {
-          const horizontalEdges = `<i class="edge horizontalEdge rightEdge ${this.options.icons.theme}"></i><i class="edge horizontalEdge leftEdge ${this.options.icons.theme}"></i>`;
-          if (!draggedEl.querySelector('.horizontalEdge')) {
-            draggedEl.insertAdjacentHTML('beforeend', horizontalEdges);
-          }
-          dropChildrenContainerEl.appendChild(draggedHierarchyEl);
-          const dropSiblingNodeEls = Array.from(dropChildrenContainerEl.children || []).filter(function (childEl) {
-            return childEl !== draggedHierarchyEl && childEl.classList && childEl.classList.contains('hierarchy');
-          }).map(function (siblingHierarchyEl) {
-            return siblingHierarchyEl.querySelector('.node');
-          }).filter(Boolean);
-          if (dropSiblingNodeEls.length === 1) {
-            dropSiblingNodeEls[0].insertAdjacentHTML('beforeend', horizontalEdges);
-          }
-        }
-        // secondly, deal with the hierarchy of dragged node
-        draggedParentChildrenContainerEl = Array.from(draggedParentNodeEl && draggedParentNodeEl.parentElement ? draggedParentNodeEl.parentElement.children : []).find(function (childEl) {
-          return childEl !== draggedParentNodeEl && childEl.classList && childEl.classList.contains('nodes');
-        }) || null;
-        remainingHierarchyEls = draggedParentChildrenContainerEl
-          ? Array.from(draggedParentChildrenContainerEl.children || []).filter(function (childEl) {
-              return childEl.classList && childEl.classList.contains('hierarchy');
-            })
-          : [];
-        if (remainingHierarchyEls.length === 1) { // if there is only one sibling node left
-          const remainingNodeEl = remainingHierarchyEls[0].querySelector('.node');
-          if (remainingNodeEl) {
-            Array.from(remainingNodeEl.querySelectorAll('.horizontalEdge')).forEach(function (edgeEl) {
-              edgeEl.remove();
-            });
-          }
-        } else if (remainingHierarchyEls.length === 0) {
-          Array.from(draggedParentNodeEl.querySelectorAll('.bottomEdge, .parentNodeSymbol')).forEach(function (edgeEl) {
-            edgeEl.remove();
-          });
-          if (draggedParentChildrenContainerEl) {
-            draggedParentChildrenContainerEl.remove();
-          }
+        dropChildrenContainerEl.appendChild(draggedHierarchyEl);
+      }
+      // secondly, deal with the hierarchy of dragged node
+      draggedParentChildrenContainerEl = Array.from(draggedParentNodeEl && draggedParentNodeEl.parentElement ? draggedParentNodeEl.parentElement.children : []).find(function (childEl) {
+        return childEl !== draggedParentNodeEl && childEl.classList && childEl.classList.contains('nodes');
+      }) || null;
+      remainingHierarchyEls = draggedParentChildrenContainerEl
+        ? Array.from(draggedParentChildrenContainerEl.children || []).filter(function (childEl) {
+            return childEl.classList && childEl.classList.contains('hierarchy');
+          })
+        : [];
+      if (remainingHierarchyEls.length === 0) {
+        if (draggedParentChildrenContainerEl) {
+          draggedParentChildrenContainerEl.remove();
         }
       }
+      dropChildrenContainerEl.classList.remove('hidden');
+      dropZoneEl.closest('.hierarchy').classList.remove('isChildrenCollapsed');
+      this.getChildren(dropZoneEl).forEach(function (childNode) {
+        childNode.classList.remove('slide-up', 'sliding');
+        childNode.closest('.hierarchy').classList.remove('isCollapsedDescendant');
+      });
+      this.refreshNodeControls(draggedParentNodeEl);
+      this.refreshNodeControls(dropZoneEl);
+      synchronizeNodeData(this, draggedEl, this.getUpperLevel(draggedEl), targetData);
+      this.scheduleMinimapUpdate(true);
     },
     //
     touchstartHandler: function (event) {
@@ -3251,8 +3989,32 @@
     },
     //
     createDragImage: function (event, sourceEl) {
-      const dragImageEl = sourceEl.cloneNode(true);
+      const clonePreview = function (element) {
+        const clone = element.cloneNode(false);
+        Array.from(element.childNodes).forEach(function (child) {
+          if (child.nodeType === 1 && child.matches('.node, .nodes')) {
+            return;
+          }
+          clone.appendChild(child.nodeType === 1 ? clonePreview(child) : child.cloneNode(true));
+        });
+        return clone;
+      };
+      const dragImageEl = clonePreview(sourceEl);
       this.copyStyle(sourceEl, dragImageEl);
+      if (sourceEl.querySelector(':scope > .node, :scope > .nodes')) {
+        const style = getWindow().getComputedStyle(sourceEl);
+        const title = sourceEl.querySelector(':scope > .title');
+        const content = sourceEl.querySelector(':scope > .content');
+        const horizontalInset = parseFloat(style.paddingLeft) + parseFloat(style.paddingRight)
+          + parseFloat(style.borderLeftWidth) + parseFloat(style.borderRightWidth);
+        const verticalInset = parseFloat(style.paddingTop) + parseFloat(style.paddingBottom)
+          + parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth);
+        if (title) {
+          dragImageEl.style.width = (Math.max(title.offsetWidth, content ? content.offsetWidth : 0) + horizontalInset) + 'px';
+          dragImageEl.style.height = (title.offsetHeight + (content ? content.offsetHeight : 0) + verticalInset) + 'px';
+          dragImageEl.style.display = 'block';
+        }
+      }
       dragImageEl.style.top = dragImageEl.style.left = '-9999px';
       const sourceRect = sourceEl.getBoundingClientRect();
       const sourcePoint = this.getTouchPoint(event);
@@ -3263,10 +4025,19 @@
     },
     //
     destroyDragImage: function () {
+      if (this.touchDragFrame !== undefined && this.touchDragFrame !== null) {
+        if (getWindow().cancelAnimationFrame) {
+          getWindow().cancelAnimationFrame(this.touchDragFrame);
+        } else {
+          getWindow().clearTimeout(this.touchDragFrame);
+        }
+      }
       if (this.touchDragImage && this.touchDragImage.parentElement)
         this.touchDragImage.parentElement.removeChild(this.touchDragImage);
       this.touchDragImageOffset = null;
       this.touchDragImage = null;
+      this.touchDragFrame = null;
+      this.touchDragPoint = null;
     },
     //
     copyStyle: function (sourceEl, targetEl) {
@@ -3284,18 +4055,16 @@
         targetCanvas.getContext('2d').drawImage(sourceCanvas, 0, 0);
       }
       // copy style (without transitions)
-      const computedStyle = getComputedStyle(sourceEl);
-        for (let i = 0; i < computedStyle.length; i++) {
-        const key = computedStyle[i];
-        if (key.indexOf('transition') < 0) {
-          targetEl.style[key] = computedStyle[key];
-        }
-      }
+      const computedStyle = getWindow().getComputedStyle(sourceEl);
+      ['display', 'box-sizing', 'position', 'top', 'left', 'right', 'bottom', 'width', 'height', 'min-width',
+        'max-width', 'min-height', 'max-height', 'margin', 'padding', 'border', 'border-radius', 'background',
+        'color', 'font', 'line-height', 'text-align', 'text-overflow', 'white-space', 'overflow', 'opacity',
+        'transform', 'transform-origin', 'grid-template-columns', 'gap', 'align-items', 'justify-content', 'box-shadow']
+        .forEach(function (property) { targetEl.style.setProperty(property, computedStyle.getPropertyValue(property)); });
       targetEl.style.pointerEvents = 'none';
       // and repeat for all children
-        for (let i = 0; i < sourceEl.children.length; i++) {
-        this.copyStyle(sourceEl.children[i], targetEl.children[i]);
-      }
+      Array.from(sourceEl.children).filter(function (child) { return !child.matches('.node, .nodes'); })
+        .forEach(function (child, index) { this.copyStyle(child, targetEl.children[index]); }, this);
     },
     //
     getTouchPoint: function (event) {
@@ -3314,15 +4083,25 @@
       if (!event || !dragImageEl)
         return;
       const orgChartMaster = this;
-      requestAnimationFrame(function () {
-        const touchPoint = orgChartMaster.getTouchPoint(event);
+      this.touchDragPoint = this.getTouchPoint(event);
+      if (this.touchDragFrame !== undefined && this.touchDragFrame !== null) {
+        return;
+      }
+      const schedule = getWindow().requestAnimationFrame
+        ? getWindow().requestAnimationFrame.bind(getWindow())
+        : function (callback) { return getWindow().setTimeout(callback, 0); };
+      this.touchDragFrame = schedule(function () {
+        orgChartMaster.touchDragFrame = null;
+        const touchPoint = orgChartMaster.touchDragPoint;
         const dragImageStyle = dragImageEl.style;
-        dragImageStyle.position = 'absolute';
+        dragImageStyle.position = 'fixed';
         dragImageStyle.pointerEvents = 'none';
         dragImageStyle.zIndex = '999999';
         if (orgChartMaster.touchDragImageOffset) {
-            dragImageStyle.left = Math.round(touchPoint.x - orgChartMaster.touchDragImageOffset.x) + 'px';
-            dragImageStyle.top = Math.round(touchPoint.y - orgChartMaster.touchDragImageOffset.y) + 'px';
+          dragImageStyle.left = '0';
+          dragImageStyle.top = '0';
+          dragImageStyle.transform = 'translate(' + Math.round(touchPoint.x - orgChartMaster.touchDragImageOffset.x)
+            + 'px, ' + Math.round(touchPoint.y - orgChartMaster.touchDragImageOffset.y) + 'px)';
         }
       });
     },
@@ -3333,20 +4112,48 @@
       if (!nodeElement) {
         return;
       }
+      if (getState(nodeElement, 'dragDropBound')) {
+        return;
+      }
+      setState(nodeElement, 'dragDropBound', true);
 
-      nodeElement.addEventListener('dragstart', this.dragstartHandler.bind(this));
-      nodeElement.addEventListener('dragover', this.dragoverHandler.bind(this));
-      nodeElement.addEventListener('dragend', this.dragendHandler.bind(this));
-      nodeElement.addEventListener('drop', this.dropHandler.bind(this));
-      nodeElement.addEventListener('touchstart', this.touchstartHandler.bind(this));
-      nodeElement.addEventListener('touchmove', this.touchmoveHandler.bind(this));
-      nodeElement.addEventListener('touchend', this.touchendHandler.bind(this));
+      const orgChart = this;
+      const handlers = {
+        dragstart: this.dragstartHandler,
+        dragover: this.dragoverHandler,
+        dragend: this.dragendHandler,
+        drop: this.dropHandler,
+        touchstart: this.touchstartHandler,
+        touchmove: this.touchmoveHandler,
+        touchend: this.touchendHandler,
+        touchcancel: function () {
+          this.destroyDragImage();
+          this.touchHandled = false;
+          this.touchTargetNode = null;
+          this.dragendHandler();
+        }
+      };
+      Object.keys(handlers).forEach(function (eventType) {
+        nodeElement.addEventListener(eventType, function (event) {
+          const node = event.target.closest ? event.target.closest('.node') : null;
+          if (node && (nodeElement === orgChart.chart || node === nodeElement)) {
+            handlers[eventType].call(orgChart, { draggedNode: node, dropZone: node, originalEvent: event });
+          }
+        }, { passive: false });
+      });
     },
     // create node
+  };
+
+  const renderingMethods = {
     createNode: function (data) {
       const opts = this.options;
       const level = data.level;
-      const flags = data.relationship || '';
+      if ((opts.compact === true && data.children && data.children.length)
+        || (typeof opts.compact === 'function' && opts.compact(data))) {
+        data.compact = true;
+      }
+      const isCompactLayout = usesCompactLayout(data, opts, level);
       const nodeClassName = [
         'node',
         data.className || '',
@@ -3356,9 +4163,10 @@
       const titleMarkupParts = [];
       const contentMarkupParts = [];
       const nodeMarkupParts = [];
-      const shouldAddParentSymbol = Number(flags.substr(2, 1));
+      const shouldAddParentSymbol = !!(data.children && data.children.length);
+      const hasNodeId = !!data[opts.nodeId] || data[opts.nodeId] === 0;
 
-      if (data.children && data[opts.nodeId]) {
+      if (data.children && hasNodeId) {
         forEachValue(data.children, function (index, child) {
           child.parentId = data[opts.nodeId]
         });
@@ -3367,96 +4175,49 @@
       if (shouldAddParentSymbol) {
         titleMarkupParts.push(`<i class="${opts.icons.theme} ${opts.icons.parentNode} parentNodeSymbol"></i>`);
       }
-      titleMarkupParts.push(data[opts.nodeTitle]);
 
       if (opts.nodeTemplate) {
         nodeMarkupParts.push(opts.nodeTemplate(data));
       } else {
         nodeMarkupParts.push(`<div class="title">${titleMarkupParts.join('')}</div>`);
         if (typeof opts.nodeContent !== 'undefined') {
-          contentMarkupParts.push(`<div class="content">${data[opts.nodeContent] || ''}</div>`);
+          contentMarkupParts.push('<div class="content"></div>');
         }
         nodeMarkupParts.push(contentMarkupParts.join(''));
       }
 
-      if ((opts.verticalLevel && level >= opts.verticalLevel) || data.vertical) {
-        if (shouldAddParentSymbol) {
-          nodeMarkupParts.push(`<i class="toggleBtn ${opts.icons.theme}"></i>`);
-        }
-      } else if (data.hybrid) {
-        if (shouldAddParentSymbol) {
-          nodeMarkupParts.push(`<i class="edge verticalEdge bottomEdge ${opts.icons.theme}"></i>`);
-        }
-      } else if (data.compact) {
-        if (shouldAddParentSymbol) {
-          nodeMarkupParts.push(`<i class="${opts.icons.theme} ${opts.icons.backToCompact} backToCompactSymbol hidden"></i>`);
-          nodeMarkupParts.push(`<i class="${opts.icons.theme} ${opts.icons.backToLoose} backToLooseSymbol"></i>`);
-        }
-      } else if (!data.associatedCompact) {
-        if (Number(flags.substr(0, 1))) {
-          nodeMarkupParts.push(`<i class="edge verticalEdge topEdge ${opts.icons.theme}"></i>`);
-        }
-        if (Number(flags.substr(1, 1))) {
-          nodeMarkupParts.push(`<i class="edge horizontalEdge rightEdge ${opts.icons.theme}"></i>`);
-          nodeMarkupParts.push(`<i class="edge horizontalEdge leftEdge ${opts.icons.theme}"></i>`);
-        }
-        if (shouldAddParentSymbol) {
-          nodeMarkupParts.push(`<i class="edge verticalEdge bottomEdge ${opts.icons.theme}"></i>`);
-        }
-      }
-
       // construct the content of node
       const nodeElement = getDocument().createElement('div');
-      const routeNodeClick = function (selector, handler) {
-        nodeElement.addEventListener('click', function (event) {
-          const matchedElement = event.target && typeof event.target.closest === 'function'
-            ? event.target.closest(selector)
-            : null;
-
-          if (!matchedElement || matchedElement.parentElement !== nodeElement) {
-            return;
-          }
-
-          handler.call(this, event);
-        }.bind(this));
-      }.bind(this);
 
       if (opts.draggable) {
         nodeElement.setAttribute('draggable', 'true');
       }
-      if (data[opts.nodeId]) {
+      if (hasNodeId) {
         nodeElement.id = data[opts.nodeId];
       }
-      if (data.parentId) {
+      if (data.parentId || data.parentId === 0) {
         nodeElement.setAttribute('data-parent', data.parentId);
       }
       nodeElement.className = nodeClassName;
+      nodeElement.tabIndex = 0;
       nodeElement.insertAdjacentHTML('beforeend', nodeMarkupParts.join(''));
+      if (!opts.nodeTemplate) {
+        nodeElement.querySelector(':scope > .title').appendChild(getDocument().createTextNode(data[opts.nodeTitle] ?? ''));
+        if (typeof opts.nodeContent !== 'undefined') {
+          nodeElement.querySelector(':scope > .content').textContent = data[opts.nodeContent] ?? '';
+        }
+      }
       //
       const storedNodeData = mergeObjects({}, data);
       delete storedNodeData.children;
       setState(nodeElement, 'nodeData', storedNodeData);
+      setState(nodeElement, 'sourceData', data);
+      this.nodeIndex.set(data, nodeElement);
       nodeElement.__ocNodeData = storedNodeData;
-      if (data.compact && nodeElement && nodeElement.style) {
-        nodeElement.style.gridTemplateColumns = `repeat(${Math.floor(Math.sqrt(data.children.length + 1))}, auto)`;
+      if (isCompactLayout && nodeElement && nodeElement.style) {
+        nodeElement.style.gridTemplateColumns = `repeat(${Math.floor(Math.sqrt((data.children || []).length + 1))}, auto)`;
       }
 
-      nodeElement.addEventListener('mouseenter', this.nodeEnterLeaveHandler.bind(this));
-      nodeElement.addEventListener('mouseleave', this.nodeEnterLeaveHandler.bind(this));
-      nodeElement.addEventListener('click', this.nodeClickHandler.bind(this));
-      routeNodeClick('.topEdge', this.topEdgeClickHandler);
-      routeNodeClick('.bottomEdge', this.bottomEdgeClickHandler);
-      routeNodeClick('.leftEdge, .rightEdge', this.hEdgeClickHandler);
-      routeNodeClick('.toggleBtn', this.toggleVNodes);
-      routeNodeClick('.backToCompactSymbol', this.backToCompactHandler);
-      routeNodeClick('.backToLooseSymbol', this.backToLooseHandler);
-
-      if (opts.draggable) {
-        this.bindDragDrop(nodeElement);
-        this.touchHandled = false;
-        this.touchMoved = false;
-        this.touchTargetNode = null;
-      }
       // allow user to append dom modification after finishing node create of orgchart
       if (opts.createNode) {
         opts.createNode(nodeElement, data);
@@ -3471,16 +4232,27 @@
       const hierarchyElement = getElement(hierarchyEl);
       const nodeElement = getElement(nodeEl);
       const isHidden = level + 1 > opts.visibleLevel || (data.collapsed !== undefined && data.collapsed);
+      const isCompactLayout = usesCompactLayout(data, opts, level);
       let nodesLayerElement;
 
       if (!hierarchyElement) {
         return;
       }
 
-      if ((opts.verticalLevel && (level + 1) >= opts.verticalLevel) || data.hybrid) {
+      data.children.flat().forEach(function (child) {
+        if (data.hybrid || data.vertical) {
+          child.vertical = true;
+        } else if (data.compact && child.children) {
+          child.compact = true;
+        } else if (data.compact) {
+          child.associatedCompact = true;
+        }
+      });
+
+      if ((opts.verticalLevel && (level + 1) >= opts.verticalLevel) || data.hybrid || data.vertical) {
         nodesLayerElement = getDocument().createElement('ul');
         nodesLayerElement.className = 'nodes';
-        if (isHidden && (opts.verticalLevel && (level + 1) >= opts.verticalLevel)) {
+        if (isHidden) {
           nodesLayerElement.classList.add('hidden');
         }
         if (((opts.verticalLevel && level + 1 === opts.verticalLevel) || data.hybrid)
@@ -3488,9 +4260,15 @@
             nodesLayerElement.classList.add('vertical');
         }
         hierarchyElement.appendChild(nodesLayerElement);
-      } else if (data.compact) {
+      } else if (isCompactLayout) {
         if (nodeElement && nodeElement.classList) {
           nodeElement.classList.add('compact');
+        }
+        if (Array.isArray(data.children[0])) {
+          nodesLayerElement = getDocument().createElement('ul');
+          nodesLayerElement.className = 'nodes compact-family hidden';
+          nodesLayerElement.style.setProperty('--compact-columns', Math.ceil(Math.sqrt(data.children.length)));
+          hierarchyElement.appendChild(nodesLayerElement);
         }
       } else {
         nodesLayerElement = getDocument().createElement('ul');
@@ -3500,16 +4278,20 @@
         }
         hierarchyElement.appendChild(nodesLayerElement);
       }
+      if (nodesLayerElement) {
+        const parentNode = nodeElement || hierarchyElement.querySelector(':scope > .node');
+        setState(nodesLayerElement, 'parentData', parentNode ? getState(parentNode, 'sourceData') || data : data);
+      }
       // recurse through children nodes
       if (Array.isArray(data.children[0])) {
         forEachValue(data.children, function() {
-          this.level = level + 1;
+          forEachValue(this, function () { this.level = level + 1; });
         });
         this.buildHierarchy(nodesLayerElement, data.children); // 构造子一层的夫妻组合（每个组合可能有多妻多夫情况）
       } else {
         forEachValue(data.children, function () {
           this.level = level + 1;
-          if (data.compact) {
+          if (isCompactLayout) {
             orgChart.buildHierarchy(nodeElement, this);
           } else {
             const nodeCellElement = getDocument().createElement('li');
@@ -3533,8 +4315,8 @@
         return;
       }
 
-      if (data.level || data[0]?.level) {
-        level = data.level;
+      if (data.level || data[0]?.level || data[0]?.[0]?.level) {
+        level = data.level || data[0]?.level || data[0]?.[0]?.level;
       } else {
         let currentAncestorElement = hierarchyElement.parentElement;
 
@@ -3545,6 +4327,7 @@
           currentAncestorElement = currentAncestorElement.parentElement;
         }
         if (Array.isArray(data) && Array.isArray(data[0])) {
+          level = Math.max(level, 1);
           forEachValue(data, function () {
             forEachValue(this, function () {
               this.level = level;
@@ -3565,9 +4348,7 @@
             nodeElement = orgChart.createNode(this);
             // if there are only two persons in a marriage, two single nodes will appear in a hierarchy
             if (familyNodes.length === 2 && i === 1) {
-              spouseNodeElement = Array.from(hierarchyElement.querySelectorAll('.node')).find(function (candidateNodeEl) {
-                return candidateNodeEl.id === familyNodes[0].id;
-              }) || null;
+              spouseNodeElement = orgChart.nodeIndex.get(familyNodes[0]) || null;
               if (spouseNodeElement && spouseNodeElement.parentElement) {
                 spouseNodeElement.after(nodeElement);
               }
@@ -3598,9 +4379,12 @@
               }
             }
           });
+          if (familyNodes.length === 2 && !orgChart.options.nodeTemplate) {
+            orgChart.refreshNodeControls(nodeElement);
+          }
         });
       } else {
-        if (Object.keys(data).length > 2) { // TODO: 应该用更好的方式来判断是否是供父一级节点创建的信息
+        if (Object.keys(data).some(function (key) { return key !== 'children' && key !== 'level'; })) {
           nodeElement = this.createNode(data);
           hierarchyElement.appendChild(nodeElement);
         }
@@ -3639,35 +4423,27 @@
     // exposed method
     addChildren: function (nodeEl, data) {
       const nodeElement = getElement(nodeEl);
-      let titleElement;
-      let bottomEdgeElement;
 
       if (!nodeElement) {
         return;
       }
+      data = cloneDatasource(data);
+      const nodeData = getState(nodeElement, 'sourceData');
+      if (nodeData) {
+        const datasource = getState(this.chart, 'datasource');
+        const isGrouped = Array.isArray(datasource) || (nodeData.children && Array.isArray(nodeData.children[0]));
+        if (!nodeData.children) {
+          nodeData.children = [];
+        }
+        Array.prototype.push.apply(nodeData.children, isGrouped ? data.map(function (item) { return Array.isArray(item) ? item : [item]; }) : data);
+        if (isGrouped || this.chart.querySelector('.node.compact') || this.options.compact) {
+          rebuildFromData(this, nodeData);
+          return;
+        }
+      }
 
       this.buildChildNode(nodeElement.closest('.hierarchy'), data);
-      if (!nodeElement.querySelector('.parentNodeSymbol')) {
-        titleElement = Array.from(nodeElement.children || []).find(function (childEl) {
-          return childEl.classList && childEl.classList.contains('title');
-        }) || null;
-        if (titleElement) {
-          titleElement.insertAdjacentHTML('afterbegin', `<i class="${this.options.icons.theme} ${this.options.icons.parentNode} parentNodeSymbol"></i>`);
-        }
-      }
-      if (nodeElement.closest('.nodes.vertical')) {
-        if (!nodeElement.querySelector(':scope > .toggleBtn')) {
-          nodeElement.insertAdjacentHTML('beforeend', `<i class="toggleBtn ${this.options.icons.theme}"></i>`);
-        }
-      } else if (!nodeElement.querySelector(':scope > .bottomEdge')) {
-        nodeElement.insertAdjacentHTML('beforeend', `<i class="edge verticalEdge bottomEdge ${this.options.icons.theme}"></i>`);
-      }
-      if (this.isInAction(nodeElement)) {
-        bottomEdgeElement = Array.from(nodeElement.children || []).find(function (childEl) {
-          return childEl.classList && childEl.classList.contains('bottomEdge');
-        }) || null;
-        this.switchVerticalArrow(bottomEdgeElement);
-      }
+      this.refreshNodeControls(nodeElement);
     },
     // build the parent node of specific node
     buildParentNode: function (currentRootEl, data) {
@@ -3683,7 +4459,6 @@
         return;
       }
 
-      data.relationship = data.relationship || '001';
       currentRootListElement = currentRootElement.closest('ul');
       currentRootHierarchyElement = currentRootElement.closest('.hierarchy');
       parentHierarchyElement = currentRootListElement ? currentRootListElement.closest('.hierarchy') : null;
@@ -3714,28 +4489,53 @@
     // exposed method
     addParent: function (currentRootEl, data) {
       const currentRootElement = getElement(currentRootEl);
-      let titleElement;
-      let topEdgeElement;
 
       if (!currentRootElement) {
         return;
       }
-
-      this.buildParentNode(currentRootElement, data);
-      if (!currentRootElement.querySelector(':scope > .topEdge')) {
-        titleElement = Array.from(currentRootElement.children || []).find(function (childEl) {
-          return childEl.classList && childEl.classList.contains('title');
-        }) || null;
-        if (titleElement) {
-          titleElement.insertAdjacentHTML('afterend', `<i class="edge verticalEdge topEdge ${this.options.icons.theme}"></i>`);
+      data = cloneDatasource(data);
+      const currentData = getState(currentRootElement, 'sourceData');
+      const datasource = getState(this.chart, 'datasource');
+      if (currentData && (Array.isArray(datasource) || this.chart.querySelector('.node.compact') || this.options.compact)) {
+        const parentElement = this.getParent(currentRootElement);
+        const parentData = parentElement ? getState(parentElement, 'sourceData') : null;
+        const newParentData = mergeObjects({}, data, { children: Array.isArray(datasource) ? [[currentData]] : [currentData] });
+        const location = findDataLocation(datasource, currentData);
+        if (Array.isArray(datasource) && location && location.list) {
+          location.list.splice(location.index, 1, newParentData);
+          rebuildFromData(this, newParentData);
+          return;
         }
+        if (parentData && parentData.children) {
+          const index = parentData.children.indexOf(currentData);
+          if (index === -1) {
+            return;
+          }
+          parentData.children.splice(index, 1, newParentData);
+          rebuildFromData(this, newParentData);
+        } else {
+          rebuildFromData(this, newParentData, newParentData);
+        }
+        return;
       }
-      if (this.isInAction(currentRootElement)) {
-        topEdgeElement = Array.from(currentRootElement.children || []).find(function (childEl) {
-          return childEl.classList && childEl.classList.contains('topEdge');
-        }) || null;
-        this.switchVerticalArrow(topEdgeElement);
+
+      const currentLocation = currentData ? findDataLocation(datasource, currentData) : null;
+      this.buildParentNode(currentRootElement, data);
+      if (currentData) {
+        data.children = [currentData];
+        if (currentLocation && currentLocation.list) {
+          currentLocation.list.splice(currentLocation.index, 1, data);
+        } else {
+          setState(this.chart, 'datasource', data);
+          this.datasource = data;
+          this.options.data = data;
+          this.opts.data = data;
+        }
+        currentData.parentId = data[this.options.nodeId];
+        getState(currentRootElement, 'nodeData').parentId = currentData.parentId;
+        currentRootElement.setAttribute('data-parent', currentData.parentId);
       }
+      this.refreshNodeControls(this.getParent(currentRootElement));
     },
     // build the sibling nodes of specific node
     buildSiblingNode: function (nodeChartEl, data) {
@@ -3836,48 +4636,89 @@
     addSiblings: function (nodeEl, data) {
       const nodeElement = getElement(nodeEl);
       let nodesContainerElement;
-      let topEdgeElement;
 
       if (!nodeElement) {
         return;
       }
+      data = cloneDatasource(data);
+      const nodeData = getState(nodeElement, 'sourceData');
+      const datasource = getState(this.chart, 'datasource');
+      if (nodeData && (Array.isArray(datasource) || this.chart.querySelector('.node.compact') || this.options.compact)) {
+        const parentElement = this.getParent(nodeElement);
+        const parentData = parentElement ? getState(parentElement, 'sourceData') : null;
+        const newSiblings = Array.isArray(data) ? data : data.children;
+        if (parentData && parentData.children) {
+          const siblings = Array.isArray(datasource) ? (newSiblings || []).map(function (item) { return Array.isArray(item) ? item : [item]; }) : newSiblings || [];
+          Array.prototype.push.apply(parentData.children, siblings);
+          rebuildFromData(this, parentData);
+        } else if (Array.isArray(datasource) && Array.isArray(data)) {
+          Array.prototype.push.apply(datasource, data.map(function (item) { return Array.isArray(item) ? item : [item]; }));
+          rebuildFromData(this, null, null, parentData);
+        } else if (!Array.isArray(data)) {
+          const children = (newSiblings || []).slice();
+          const insertPosition = Math.floor((children.length + 1) / 2 - 1) + 1;
+          children.splice(Math.max(insertPosition, 0), 0, nodeData);
+          const newParentData = mergeObjects({}, data, { children: children });
+          rebuildFromData(this, newParentData, newParentData);
+        }
+        return;
+      }
 
+      const oldParent = this.getParent(nodeElement);
+      const oldParentData = oldParent ? getState(oldParent, 'sourceData') : null;
       this.buildSiblingNode(nodeElement.closest('.hierarchy'), data);
+      if (nodeData && oldParentData && oldParentData.children && Array.isArray(data)) {
+        Array.prototype.push.apply(oldParentData.children, data);
+      } else if (nodeData && !oldParentData && !Array.isArray(data) && data.children) {
+        const insertPosition = Math.floor((data.children.length + 1) / 2 - 1) + 1;
+        data.children.splice(Math.max(insertPosition, 0), 0, nodeData);
+        setState(this.chart, 'datasource', data);
+        this.datasource = data;
+        this.options.data = data;
+        this.opts.data = data;
+      }
       nodesContainerElement = nodeElement.closest('.nodes');
       if (nodesContainerElement) {
         setState(nodesContainerElement, 'siblingsLoaded', true);
       }
-      if (!Array.from(nodeElement.children || []).some(function (childEl) {
-        return childEl.classList && childEl.classList.contains('leftEdge');
-      })) {
-        topEdgeElement = Array.from(nodeElement.children || []).find(function (childEl) {
-          return childEl.classList && childEl.classList.contains('topEdge');
-        }) || null;
-        if (topEdgeElement) {
-          topEdgeElement.insertAdjacentHTML('afterend', `<i class="edge horizontalEdge rightEdge ${this.options.icons.theme}"></i><i class="edge horizontalEdge leftEdge ${this.options.icons.theme}"></i>`);
-        }
-      }
-      if (this.isInAction(nodeElement)) {
-        this.switchHorizontalArrow(nodeElement);
-        topEdgeElement = Array.from(nodeElement.children || []).find(function (childEl) {
-          return childEl.classList && childEl.classList.contains('topEdge');
-        }) || null;
-        if (topEdgeElement && topEdgeElement.classList) {
-          topEdgeElement.classList.remove(this.options.icons.expandToUp);
-          topEdgeElement.classList.add(this.options.icons.collapseToDown);
-        }
-      }
+      this.refreshNodeControls(this.getParent(nodeElement));
     },
     // remove node and its descendent nodes
     removeNodes: function (nodeEl) {
       const nodeElement = getElement(nodeEl);
       let hierarchyElement;
       let wrapperElement;
-      let remainingNodeElement;
-      let parentNodeElement;
 
       if (!nodeElement) {
         return;
+      }
+      const parentElement = this.getParent(nodeElement);
+      const parentData = parentElement ? getState(parentElement, 'sourceData') : null;
+      const nodeData = getState(nodeElement, 'sourceData');
+      const datasource = getState(this.chart, 'datasource');
+      if (Array.isArray(datasource) && nodeData) {
+        const location = findDataLocation(datasource, nodeData);
+        if (location && location.list) {
+          location.list.splice(location.index, 1);
+          if (!location.list.length && location.outerList) {
+            location.outerList.splice(location.outerIndex, 1);
+          }
+          if (location.parent && location.parent.children && !location.parent.children.length) {
+            delete location.parent.children;
+          }
+          rebuildFromData(this, null, null, parentData);
+          return;
+        }
+      }
+      if (parentData && parentData.children && parentData.children.indexOf(nodeData) !== -1) {
+        parentData.children.splice(parentData.children.indexOf(nodeData), 1);
+        if (!parentData.children.length) {
+          delete parentData.children;
+        }
+        if (this.chart.querySelector('.node.compact') || this.options.compact) {
+          rebuildFromData(this);
+          return;
+        }
       }
 
       hierarchyElement = nodeElement.closest('.hierarchy');
@@ -3890,31 +4731,21 @@
       if (wrapperElement.parentElement && wrapperElement.parentElement.classList && wrapperElement.parentElement.classList.contains('hierarchy')) {
         if (this.getNodeState(nodeElement, 'siblings').exist) {
           hierarchyElement.remove();
-          if (wrapperElement.children.length === 1) {
-            remainingNodeElement = wrapperElement.querySelector('.node');
-            if (remainingNodeElement) {
-              Array.from(remainingNodeElement.querySelectorAll('.horizontalEdge')).forEach(function (edgeEl) {
-                edgeEl.remove();
-              });
-            }
-          }
         } else {
-          parentNodeElement = wrapperElement.parentElement.querySelector(':scope > .node');
-          if (parentNodeElement) {
-            Array.from(parentNodeElement.querySelectorAll('.bottomEdge, .parentNodeSymbol')).forEach(function (edgeEl) {
-              edgeEl.remove();
-            });
-          }
           wrapperElement.remove();
         }
+        this.refreshNodeControls(parentElement);
       } else { // if $node is root node
         const chartElement = wrapperElement.closest('.orgchart');
         if (chartElement) {
-          chartElement.remove();
+          this.destroy();
         }
       }
     },
     //
+  };
+
+  Object.assign(dragDropMethods, {
     hideDropZones: function () {
       const chartElement = this.chart;
 
@@ -3965,23 +4796,27 @@
       droppedOnNodeEl.dispatchEvent(createTriggeredEvent('drop'));
     },
     //
+  });
+
+  const exportMethods = {
     exportPDF: function(canvas, exportFilename, exportScale){
       let doc = {};
       const scale = exportScale > 0 ? exportScale : 1;
       const docWidth = Math.floor(canvas.width / scale);
       const docHeight = Math.floor(canvas.height / scale);
-      if (!getWindow().jsPDF) {
-        getWindow().jsPDF = getWindow().jspdf.jsPDF;
+      const PDF = getWindow().jsPDF || (getWindow().jspdf && getWindow().jspdf.jsPDF);
+      if (typeof PDF !== 'function') {
+        throw new Error('PDF export requires jsPDF');
       }
 
       if (docWidth > docHeight) {
-        doc = new jsPDF({
+        doc = new PDF({
           orientation: 'landscape',
           unit: 'px',
           format: [docWidth, docHeight]
         });
       } else {
-        doc = new jsPDF({
+        doc = new PDF({
           orientation: 'portrait',
           unit: 'px',
           format: [docHeight, docWidth]
@@ -3992,25 +4827,25 @@
     },
     //
     exportPNG: function(canvas, exportFilename){
-      const isWebkit = 'WebkitAppearance' in getDocument().documentElement.style;
-      const isFf = !!getWindow().sidebar;
       const navigatorObject = getWindow().navigator;
-      const isEdge = navigatorObject.appName === 'Microsoft Internet Explorer' || (navigatorObject.appName === 'Netscape' && navigatorObject.appVersion.indexOf('Edge') > -1);
       const chartContainerElement = this.chartContainer;
       let downloadButtonClassName;
-      let downloadSelector;
       let downloadAnchorElement;
 
       if (!chartContainerElement) {
         return;
       }
 
-      if ((!isWebkit && !isFf) || isEdge) {
-        getWindow().navigator.msSaveBlob(canvas.msToBlob(), exportFilename + '.png');
+      if (typeof navigatorObject.msSaveBlob === 'function' && typeof canvas.msToBlob === 'function') {
+        navigatorObject.msSaveBlob(canvas.msToBlob(), exportFilename + '.png');
       } else {
         downloadButtonClassName = 'download-btn' + (this.options.chartClass !== '' ? ' ' + this.options.chartClass : '');
-        downloadSelector = '.download-btn' + (this.options.chartClass !== '' ? '.' + this.options.chartClass : '');
-        downloadAnchorElement = chartContainerElement.querySelector(downloadSelector);
+        const chartClassNames = this.options.chartClass.split(/\s+/).filter(Boolean);
+        downloadAnchorElement = Array.from(chartContainerElement.querySelectorAll('a.download-btn')).find(function (anchorElement) {
+          return chartClassNames.every(function (className) {
+            return anchorElement.classList.contains(className);
+          });
+        });
 
         if (!downloadAnchorElement) {
           downloadAnchorElement = getDocument().createElement('a');
@@ -4018,6 +4853,7 @@
           chartContainerElement.appendChild(downloadAnchorElement);
         }
 
+        this.downloadAnchorElement = downloadAnchorElement;
         downloadAnchorElement.setAttribute('download', exportFilename + '.png');
         downloadAnchorElement.setAttribute('href', canvas.toDataURL());
         downloadAnchorElement.click();
@@ -4034,11 +4870,15 @@
 
       exportFilename = (typeof exportFilename !== 'undefined') ?  exportFilename : this.options.exportFilename;
       exportFileextension = (typeof exportFileextension !== 'undefined') ?  exportFileextension : this.options.exportFileextension;
-      if (chartContainerElement && chartContainerElement.querySelector('.spinner')) {
+      if ((this.exportState && this.exportState.active) || (chartContainerElement
+        && Array.from(chartContainerElement.querySelectorAll('.spinner')).some(function (spinner) {
+          return !spinner.closest('.mask.hidden');
+        }))) {
         return false;
       }
 
-      if (!chartContainerElement) {
+      sourceChartElement = this.chart;
+      if (!chartContainerElement || !sourceChartElement || !chartContainerElement.contains(sourceChartElement)) {
         return false;
       }
 
@@ -4051,37 +4891,49 @@
       } else {
         maskElement.classList.remove('hidden');
       }
+      this.exportMaskElement = maskElement;
+      const exportState = { active: true, mask: maskElement };
+      this.exportState = exportState;
+      const exportToken = String(++exportSequence);
+      const originalExportToken = sourceChartElement.getAttribute('data-orgchart-export');
+      sourceChartElement.setAttribute('data-orgchart-export', exportToken);
       chartContainerElement.classList.add('canvasContainer');
-      sourceChartElement = Array.from(chartContainerElement.querySelectorAll('.orgchart')).find(function (chartEl) {
-        return !chartEl.classList.contains('hidden');
-      }) || null;
       isHorizontalDirection = orgChart.options.direction === 'l2r' || orgChart.options.direction === 'r2l';
       exportScale = orgChart.options.exportScale > 0 ? orgChart.options.exportScale : 1;
-      html2canvas(sourceChartElement, {
+      const renderer = getWindow().html2canvas || (typeof html2canvas === 'function' ? html2canvas : null);
+      const result = Promise.resolve().then(function () {
+        if (!exportState.active) {
+          throw new Error('Chart was destroyed during export');
+        }
+        if (typeof renderer !== 'function') {
+          throw new Error('Chart export requires html2canvas');
+        }
+        return renderer(sourceChartElement, {
         'width': isHorizontalDirection ? sourceChartElement.clientHeight : sourceChartElement.clientWidth,
         'height': isHorizontalDirection ? sourceChartElement.clientWidth : sourceChartElement.clientHeight,
         'scale': exportScale,
         'useCORS': true,
         'onclone': function (cloneDoc) {
-          const clonedContainerElement = cloneDoc.querySelector('.canvasContainer');
-          let clonedChartElement;
+          let clonedChartElement = cloneDoc.querySelector('[data-orgchart-export="' + exportToken + '"]');
+          const clonedContainerElement = clonedChartElement ? clonedChartElement.parentElement : cloneDoc.querySelector('.canvasContainer');
 
           if (!clonedContainerElement) {
             return;
           }
 
           clonedContainerElement.style.overflow = 'visible';
-          clonedChartElement = Array.from(clonedContainerElement.querySelectorAll('.orgchart')).find(function (chartEl) {
+          clonedChartElement = clonedChartElement || Array.from(clonedContainerElement.querySelectorAll('.orgchart')).find(function (chartEl) {
             return !chartEl.classList.contains('hidden');
           }) || null;
           if (clonedChartElement) {
             clonedChartElement.style.transform = '';
           }
         }
+        });
       })
       .then(function (canvas) {
-        if (maskElement) {
-          maskElement.classList.add('hidden');
+        if (!exportState.active || orgChart.chart !== sourceChartElement) {
+          throw new Error('Chart was destroyed during export');
         }
 
         if (exportFileextension.toLowerCase() === 'pdf') {
@@ -4090,12 +4942,30 @@
           orgChart.exportPNG(canvas, exportFilename);
         }
 
-        chartContainerElement.classList.remove('canvasContainer');
-      }, function () {
-        chartContainerElement.classList.remove('canvasContainer');
+        return canvas;
+      }).catch(function (error) {
+        sourceChartElement.dispatchEvent(createTriggeredEvent('export-error.orgchart', { error: error }));
+        throw error;
+      }).finally(function () {
+        exportState.active = false;
+        maskElement.classList.add('hidden');
+        if (originalExportToken === null) {
+          sourceChartElement.removeAttribute('data-orgchart-export');
+        } else {
+          sourceChartElement.setAttribute('data-orgchart-export', originalExportToken);
+        }
+        if (orgChart.exportState === exportState) {
+          chartContainerElement.classList.remove('canvasContainer');
+          orgChart.exportState = null;
+        }
       });
+      exportState.promise = result;
+      return result;
     }
   };
+
+  OrgChart.prototype = Object.assign({ constructor: OrgChart }, lifecycleMethods, minimapMethods, viewportMethods,
+    datasourceMethods, visibilityMethods, dragDropMethods, renderingMethods, exportMethods);
 
   return OrgChart;
 }));

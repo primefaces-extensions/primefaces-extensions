@@ -158,6 +158,7 @@ PrimeFaces.widget.ExtOrgChart = class extends PrimeFaces.widget.BaseWidget {
     refresh(cfg) {
         this._unbindFilterControls();
         this._unbindDropEvent();
+        this._destroyOrgChart();
         super.refresh(cfg);
     }
 
@@ -165,7 +166,15 @@ PrimeFaces.widget.ExtOrgChart = class extends PrimeFaces.widget.BaseWidget {
     destroy() {
         this._unbindFilterControls();
         this._unbindDropEvent();
+        this._destroyOrgChart();
         super.destroy();
+    }
+
+    _destroyOrgChart() {
+        if (this.orgchart) {
+            this.orgchart.destroy();
+            this.orgchart = null;
+        }
     }
 
     _unbindDropEvent() {
