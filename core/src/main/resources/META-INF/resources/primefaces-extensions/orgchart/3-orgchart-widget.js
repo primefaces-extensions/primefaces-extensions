@@ -158,6 +158,7 @@ PrimeFaces.component.ExtOrgChart = class extends PrimeFaces.component.BaseCompon
     refresh(cfg) {
         this._unbindFilterControls();
         this._unbindDropEvent();
+        this._destroyOrgChart();
         super.refresh(cfg);
     }
 
@@ -165,7 +166,15 @@ PrimeFaces.component.ExtOrgChart = class extends PrimeFaces.component.BaseCompon
     destroy() {
         this._unbindFilterControls();
         this._unbindDropEvent();
+        this._destroyOrgChart();
         super.destroy();
+    }
+
+    _destroyOrgChart() {
+        if (this.orgchart) {
+            this.orgchart.destroy();
+            this.orgchart = null;
+        }
     }
 
     _unbindDropEvent() {
