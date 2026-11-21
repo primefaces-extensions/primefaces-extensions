@@ -107,7 +107,6 @@ public class AppMenu {
                     new MenuItem("Dragging", "/ui/data/kanban/dragging")), "New"));
         add(DATA, new MenuItem("MasterDetail", "/ui/data/masterdetail"));
         add(DATA, new MenuItem("MeterGroup", "/ui/data/metergroup", "New"));
-        add(DATA, new MenuItem("OrgChart", "/ui/data/orgchart", "Updated"));
         add(DATA, new MenuItem("Sheet", List.of(
                     new MenuItem("Basic", "/ui/data/sheet/basic"),
                     new MenuItem("Events", "/ui/data/sheet/events"),
@@ -125,7 +124,7 @@ public class AppMenu {
         add(CHARTS, new MenuItem("OSMap", List.of(
                     new MenuItem("Basic", "/ui/charts/osmap/basic"),
                     new MenuItem("Markers", "/ui/charts/osmap/markers")), "New"));
-        add(CHARTS, new MenuItem("QRCode", "/ui/charts/qrcode"));
+        add(CHARTS, new MenuItem("OrgChart", "/ui/charts/orgchart", "Updated"));
 
         add(PANEL, new MenuItem("FluidGrid", "/ui/panel/fluidgrid"));
         add(PANEL, new MenuItem("Keynote", List.of(
@@ -151,6 +150,7 @@ public class AppMenu {
         add(MEDIA, new MenuItem("ImageAreaSelect", "/ui/media/imageareaselect"));
         add(MEDIA, new MenuItem("ImageRotateAndResize", "/ui/media/imagerotateandresize"));
         add(MEDIA, new MenuItem("ImageZoom", "/ui/media/imagezoom"));
+        add(MEDIA, new MenuItem("QRCode", "/ui/media/qrcode"));
 
         add(MISC, new MenuItem("Clipboard", "/ui/misc/clipboard"));
         add(MISC, new MenuItem("Functions/Utils", "/ui/misc/utils"));
