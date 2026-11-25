@@ -113,11 +113,16 @@
 
                 <p:dialog header="Input values" ref="inputValuesAdvanced">
                     <h:outputText value="Search has been executed with values:"/>
-                    <p:dataList id="inputValues" value="#{advancedDynaFormController.inventoryProperties}" var="property"
-                                style="margin:10px;">
-                        <h:outputText value="#{property.position}: #{property.formattedValue}"
-                                      style="margin-right: 10px;"/>
-                    </p:dataList>
+                    <h:panelGroup id="inputValues" layout="block" style="margin:10px;">
+                        <ul>
+                            <ui:repeat value="#{advancedDynaFormController.inventoryProperties}" var="property">
+                                <li>
+                                    <h:outputText value="#{property.position}: #{property.formattedValue}"
+                                                  style="margin-right: 10px;"/>
+                                </li>
+                            </ui:repeat>
+                        </ul>
+                    </h:panelGroup>
                 </p:dialog>
             </h:form>
 
