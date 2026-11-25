@@ -294,10 +294,15 @@
                                  oncomplete="if(!args.validationFailed) {PF('dynaformValuesWidget').show();}"/>
 
                 <p:dialog header="Input values" ref="dynaformValuesWidget">
-                    <p:dataList id="inputValues" value="#{fluidGridDynaFormController.items}" var="item"
-                                style="margin:10px;">
-                        <h:outputText value="#{item.data.label} : #{item.data.value}" style="margin-right:15px;"/>
-                    </p:dataList>
+                    <h:panelGroup id="inputValues" layout="block" style="margin:10px;">
+                        <ul>
+                            <ui:repeat value="#{fluidGridDynaFormController.items}" var="item">
+                                <li>
+                                    <h:outputText value="#{item.data.label} : #{item.data.value}" style="margin-right:15px;"/>
+                                </li>
+                            </ui:repeat>
+                        </ul>
+                    </h:panelGroup>
                 </p:dialog>
             </h:form>
         </div>
@@ -348,10 +353,15 @@
                                  oncomplete="if(!args.validationFailed) {PF('dynamicLabelsValuesWidget').show();}"/>
 
                 <p:dialog header="Submitted Values" ref="dynamicLabelsValuesWidget">
-                    <p:dataList id="inputValues" value="#{fluidGridDynamicLabelsController.items}" var="item"
-                                style="margin:10px;">
-                        <h:outputText value="#{item.data.label} : #{item.data.value}" style="margin-right:15px;"/>
-                    </p:dataList>
+                    <h:panelGroup id="inputValues" layout="block" style="margin:10px;">
+                        <ul>
+                            <ui:repeat value="#{fluidGridDynamicLabelsController.items}" var="item">
+                                <li>
+                                    <h:outputText value="#{item.data.label} : #{item.data.value}" style="margin-right:15px;"/>
+                                </li>
+                            </ui:repeat>
+                        </ul>
+                    </h:panelGroup>
                 </p:dialog>
             </h:form>
         </div>

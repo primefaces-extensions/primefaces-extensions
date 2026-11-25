@@ -285,9 +285,11 @@
                             </p:inputText>
                             <h:outputText value="Language skills"/>
                             <h:panelGrid columns="2" style="vertical-align: middle;">
-                                <p:dataList value="#{person.languageSkills}" var="skill" itemType="circle">
-                                    <h:outputText value="#{skill}"/>
-                                </p:dataList>
+                                <ul style="list-style-type: circle; margin: 0;">
+                                    <ui:repeat value="#{person.languageSkills}" var="skill">
+                                        <li><h:outputText value="#{skill}"/></li>
+                                    </ui:repeat>
+                                </ul>
                                 <p:commandLink immediate="true" style="padding:5px 0 0 8px; vertical-align:middle;">
                                     <h:graphicImage library="images" name="flashlight_plus.png" style="border:none;"/>
                                     <pe:selectDetailLevel contextValue="#{person}" preserveInputs="@all"/>

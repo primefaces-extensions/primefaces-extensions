@@ -94,10 +94,15 @@
                 </p:dialog>
 
                 <p:dialog header="Input values" ref="inputValuesWidgetContainer">
-                    <p:dataList id="inputValues" value="#{containerDynaFormController.values}" var="value"
-                                style="margin:10px;">
-                        <h:outputText value="#{value}" style="margin-right: 15px;"/>
-                    </p:dataList>
+                    <h:panelGroup id="inputValues" layout="block" style="margin:10px;">
+                        <ul>
+                            <ui:repeat value="#{containerDynaFormController.values}" var="value">
+                                <li>
+                                    <h:outputText value="#{value}" style="margin-right: 15px;"/>
+                                </li>
+                            </ui:repeat>
+                        </ul>
+                    </h:panelGroup>
                 </p:dialog>
             </h:form>
         </div>

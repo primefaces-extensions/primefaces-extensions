@@ -109,11 +109,16 @@
                 </h:panelGroup>
 
                 <p:dialog header="Input values" ref="inputValuesBasicUsage">
-                    <p:dataList id="inputValues" value="#{dynaFormController.bookProperties}" var="bookProperty"
-                                style="margin:10px;">
-                        <h:outputText value="#{bookProperty.name}: #{bookProperty.formattedValue}"
-                                      style="margin-right: 10px;"/>
-                    </p:dataList>
+                    <h:panelGroup id="inputValues" layout="block" style="margin:10px;">
+                        <ul>
+                            <ui:repeat value="#{dynaFormController.bookProperties}" var="bookProperty">
+                                <li>
+                                    <h:outputText value="#{bookProperty.name}: #{bookProperty.formattedValue}"
+                                                  style="margin-right: 10px;"/>
+                                </li>
+                            </ui:repeat>
+                        </ul>
+                    </h:panelGroup>
                 </p:dialog>
             </h:form>
 
@@ -161,11 +166,16 @@
                 </h:panelGroup>
 
                 <p:dialog header="Input values" ref="inputValuesNestedModel">
-                    <p:dataList id="inputValues" value="#{nestedDynaFormController.bookProperties}" var="bookProperty"
-                                style="margin:10px;">
-                        <h:outputText value="#{bookProperty.name}: #{bookProperty.formattedValue}"
-                                      style="margin-right: 10px;"/>
-                    </p:dataList>
+                    <h:panelGroup id="inputValues" layout="block" style="margin:10px;">
+                        <ul>
+                            <ui:repeat value="#{nestedDynaFormController.bookProperties}" var="bookProperty">
+                                <li>
+                                    <h:outputText value="#{bookProperty.name}: #{bookProperty.formattedValue}"
+                                                  style="margin-right: 10px;"/>
+                                </li>
+                            </ui:repeat>
+                        </ul>
+                    </h:panelGroup>
                 </p:dialog>
             </h:form>
 
