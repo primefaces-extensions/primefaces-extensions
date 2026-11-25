@@ -20,7 +20,8 @@ There are multiple versions available please check which one for your PrimeFaces
 
 | Version | Explanation | Showcase |
 | --- | --- | --- |
-| ![16.x](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions?versionPrefix=16.0&color=cyan) | PrimeFaces 16.0.0 | [HTTPS](https://extensions.primefaces.org/) |
+| unreleased | PrimeFaces 17.0.0 | [HTTPS](https://extensions.primefaces.org/) |
+| ![16.x](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions?versionPrefix=16.0&color=cyan) | PrimeFaces 16.0.0 | [HTTPS](https://primefaces-extensions16-showcase-d6e9a.ondigitalocean.app/) |
 | ![15.x](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions?versionPrefix=15.0&color=cyan) | PrimeFaces 15.0.0 | |
 | ![14.x](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions?versionPrefix=14.0&color=cyan) | PrimeFaces 14.0.0 | |
 | ![13.x](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions?versionPrefix=13.0&color=cyan) | PrimeFaces 13.0.0 | |
