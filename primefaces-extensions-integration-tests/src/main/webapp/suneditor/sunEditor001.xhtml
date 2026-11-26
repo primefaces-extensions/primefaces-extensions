@@ -18,7 +18,8 @@
                 </p:messages>
 
                 <p>Basic</p>
-                <pe:sunEditor id="basic" ref="basicWidget" value="#{sunEditorController.value}"/>
+                <pe:sunEditor id="basic" ref="basicWidget" value="#{sunEditorController.value}"
+                              allowedURLProtocols="#{sunEditorController.allowedURLProtocols}"/>
                 <h:outputText id="output" value="#{sunEditorController.value}" escape="false"/>
 
                 <p>Ajax change</p>

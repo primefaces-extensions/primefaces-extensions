@@ -41,6 +41,8 @@ import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.HTML;
 import org.primefaces.util.LangUtils;
 
+import com.google.gson.Gson;
+
 /**
  * <code>SunEditor</code> component.
  *
@@ -170,8 +172,11 @@ public class SunEditorRenderer extends InputRenderer<SunEditor> {
                     .attr("locale", component.calculateLocale().toString())
                     .attr("readOnly", component.isReadonly(), false)
                     .attr("disabled", component.isDisabled(), false)
-                    .attr("strictMode", component.isStrictMode(), true)
-                    .attr("toolbar", component.getToolbar())
+                    .attr("strictMode", component.isStrictMode(), true);
+        if (component.getAllowedURLProtocols() != null) {
+            wb.nativeAttr("allowedURLProtocols", new Gson().toJson(component.getAllowedURLProtocols()));
+        }
+        wb.attr("toolbar", component.getToolbar())
                     .nativeAttr("extender", component.getExtender());
 
         encodeClientBehaviors(context, component);

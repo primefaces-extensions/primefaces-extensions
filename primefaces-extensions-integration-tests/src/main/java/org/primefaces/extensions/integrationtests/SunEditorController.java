@@ -23,6 +23,8 @@ package org.primefaces.extensions.integrationtests;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
 
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
@@ -42,6 +44,7 @@ public class SunEditorController implements Serializable {
     private String readonlyValue;
     private String disabledValue;
     private String unsafeValue;
+    private List<String> allowedURLProtocols;
     private int changeCount;
 
     public SunEditorController() {
@@ -51,6 +54,7 @@ public class SunEditorController implements Serializable {
         readonlyValue = "<p>Read only</p>";
         disabledValue = "<p>Disabled</p>";
         unsafeValue = "<p>Safe</p><script>window.sunEditorXss = true;</script>";
+        allowedURLProtocols = Arrays.asList("zoommtg", "slack");
     }
 
     public void submit() {
@@ -111,6 +115,10 @@ public class SunEditorController implements Serializable {
 
     public void setUnsafeValue(String unsafeValue) {
         this.unsafeValue = unsafeValue;
+    }
+
+    public List<String> getAllowedURLProtocols() {
+        return allowedURLProtocols;
     }
 
     public int getChangeCount() {
