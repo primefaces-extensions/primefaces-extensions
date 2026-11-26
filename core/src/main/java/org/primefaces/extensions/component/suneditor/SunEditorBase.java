@@ -21,6 +21,8 @@
  */
 package org.primefaces.extensions.component.suneditor;
 
+import java.util.List;
+
 import jakarta.faces.event.AjaxBehaviorEvent;
 
 import org.primefaces.cdk.api.FacesBehaviorEvent;
@@ -79,4 +81,7 @@ public abstract class SunEditorBase extends AbstractEditorInputTextArea {
 
     @Property(description = "Whether to use strict mode.", defaultValue = "true")
     public abstract boolean isStrictMode();
+
+    @Property(description = "Additional URL protocols allowed by the editor's HTML sanitizer, e.g. zoommtg, slack, vscode.")
+    public abstract List<String> getAllowedURLProtocols();
 }
