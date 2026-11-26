@@ -150,7 +150,7 @@ public class SunEditor001Test extends AbstractPrimeExtensionsPageTest {
         editor.waitForEditor();
 
         PrimeSelenium.executeScript(
-                    "PF('basicWidget').editor.$.html.setContents('<a href=\"zoommtg://meeting\">join</a><a href=\"javascript:alert(1)\">bad</a>');");
+                    "PF('basicWidget').editor.$.html.insert('<a href=\"zoommtg://meeting\">join</a><a href=\"javascript:alert(1)\">bad</a>');");
 
         PrimeSelenium.waitGui().until(driver -> editor.getContent().contains("zoommtg://meeting"));
         assertTrue(editor.getContent().contains("zoommtg://meeting"), editor.getContent());
