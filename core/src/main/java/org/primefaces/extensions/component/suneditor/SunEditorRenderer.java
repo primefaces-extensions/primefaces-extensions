@@ -36,12 +36,11 @@ import jakarta.faces.render.FacesRenderer;
 
 import org.primefaces.cdk.api.FacesRendererInfo;
 import org.primefaces.renderkit.InputRenderer;
+import org.primefaces.shaded.json.JSONArray;
 import org.primefaces.util.ComponentScriptBuilder;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.HTML;
 import org.primefaces.util.LangUtils;
-
-import com.google.gson.Gson;
 
 /**
  * <code>SunEditor</code> component.
@@ -174,7 +173,11 @@ public class SunEditorRenderer extends InputRenderer<SunEditor> {
                     .attr("disabled", component.isDisabled(), false)
                     .attr("strictMode", component.isStrictMode(), true);
         if (component.getAllowedURLProtocols() != null) {
-            wb.nativeAttr("allowedURLProtocols", new Gson().toJson(component.getAllowedURLProtocols()));
+            final JSONArray allowedURLProtocols = new JSONArray();
+            for (final String protocol : component.getAllowedURLProtocols()) {
+                allowedURLProtocols.put(protocol);
+            }
+            wb.nativeAttr("allowedURLProtocols", allowedURLProtocols.toString());
         }
         wb.attr("toolbar", component.getToolbar())
                     .nativeAttr("extender", component.getExtender());
