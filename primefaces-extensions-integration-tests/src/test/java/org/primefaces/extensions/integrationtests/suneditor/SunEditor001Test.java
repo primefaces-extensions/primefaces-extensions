@@ -142,6 +142,22 @@ public class SunEditor001Test extends AbstractPrimeExtensionsPageTest {
         assertEquals("Enabled again", editor.getText());
     }
 
+    @Test
+    @Order(8)
+    @DisplayName("SunEditor: allowed URL protocols are preserved and unsafe URLs are rejected")
+    void allowedURLProtocols(Page page) {
+        SunEditor editor = page.basic;
+        editor.waitForEditor();
+
+        PrimeSelenium.executeScript(
+                    "PF('basicWidget').editor.$.html.insert('<a href=\"zoommtg://meeting\">join</a><a href=\"javascript:alert(1)\">bad</a>');");
+
+        PrimeSelenium.waitGui().until(driver -> editor.getContent().contains("zoommtg://meeting"));
+        assertTrue(editor.getContent().contains("zoommtg://meeting"), editor.getContent());
+        assertFalse(editor.getContent().toLowerCase().contains("javascript:"), editor.getContent());
+        assertNoJavascriptErrors();
+    }
+
     public static class Page extends AbstractPrimePage {
 
         @FindBy(id = "form:basic")
